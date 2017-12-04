@@ -13,6 +13,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/loader/SubresourceIntegrityHelper.h"
 #include "core/loader/resource/ScriptResource.h"
+#include "core/preemption/PreemptionOptInScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "public/platform/TaskType.h"
@@ -162,6 +163,18 @@ void ClassicPendingScript::CancelStreaming() {
 }
 
 void ClassicPendingScript::NotifyFinished(Resource* resource) {
+  GetElement()
+      ->GetDocument()
+      .GetTaskRunner(TaskType::kNetworking)
+      ->PostTask(
+          FROM_HERE,
+          WTF::Bind(&ClassicPendingScript::NotifyFinishedInternal,
+                    WrapWeakPersistent(this), WrapWeakPersistent(resource)));
+}
+
+void ClassicPendingScript::NotifyFinishedInternal(Resource* resource) {
+  PreemptionOptInScope scope(ToIsolate(&GetElement()->GetDocument()));
+
   // The following SRI checks need to be here because, unfortunately, fetches
   // are not done purely according to the Fetch spec. In particular,
   // different requests for the same resource do not have different

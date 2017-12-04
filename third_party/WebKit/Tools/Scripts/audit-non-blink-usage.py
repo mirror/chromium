@@ -46,6 +46,10 @@ _CONFIG = [
             # Debugging helpers from //base/debug are allowed everywhere.
             'base::debug::.+',
 
+            # TODO(tzik): Revisit before submitting this CL.
+            'base::RunLoop',
+            'base::ThreadTaskRunnerHandle',
+
             # Standalone utility libraries that only depend on //base
             'skia::.+',
             'url::.+',

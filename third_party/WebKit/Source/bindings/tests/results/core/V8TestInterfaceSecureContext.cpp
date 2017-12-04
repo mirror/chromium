@@ -16,6 +16,7 @@
 #include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/runtime_enabled_features.h"
@@ -66,6 +67,8 @@ static_assert(
 namespace TestInterfaceSecureContextV8Internal {
 
 static void secureContextAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -75,7 +78,7 @@ static void secureContextAttributeAttributeGetter(const v8::FunctionCallbackInfo
 
 static void secureContextAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -97,6 +100,8 @@ static void secureContextAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
 }
 
 static void secureContextRuntimeEnabledAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -106,7 +111,7 @@ static void secureContextRuntimeEnabledAttributeAttributeGetter(const v8::Functi
 
 static void secureContextRuntimeEnabledAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -128,6 +133,8 @@ static void secureContextRuntimeEnabledAttributeAttributeSetter(v8::Local<v8::Va
 }
 
 static void secureContextWindowExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -137,7 +144,7 @@ static void secureContextWindowExposedAttributeAttributeGetter(const v8::Functio
 
 static void secureContextWindowExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -159,6 +166,8 @@ static void secureContextWindowExposedAttributeAttributeSetter(v8::Local<v8::Val
 }
 
 static void secureContextWorkerExposedAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -168,7 +177,7 @@ static void secureContextWorkerExposedAttributeAttributeGetter(const v8::Functio
 
 static void secureContextWorkerExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -190,6 +199,8 @@ static void secureContextWorkerExposedAttributeAttributeSetter(v8::Local<v8::Val
 }
 
 static void secureContextWindowExposedRuntimeEnabledAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -199,7 +210,7 @@ static void secureContextWindowExposedRuntimeEnabledAttributeAttributeGetter(con
 
 static void secureContextWindowExposedRuntimeEnabledAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -221,6 +232,8 @@ static void secureContextWindowExposedRuntimeEnabledAttributeAttributeSetter(v8:
 }
 
 static void secureContextWorkerExposedRuntimeEnabledAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestInterfaceSecureContext* impl = V8TestInterfaceSecureContext::ToImpl(holder);
@@ -230,7 +243,7 @@ static void secureContextWorkerExposedRuntimeEnabledAttributeAttributeGetter(con
 
 static void secureContextWorkerExposedRuntimeEnabledAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -374,36 +387,42 @@ void V8TestInterfaceSecureContext::secureContextWorkerExposedRuntimeEnabledAttri
 }
 
 void V8TestInterfaceSecureContext::secureContextMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextMethodMethod(info);
 }
 
 void V8TestInterfaceSecureContext::secureContextRuntimeEnabledMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextRuntimeEnabledMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextRuntimeEnabledMethodMethod(info);
 }
 
 void V8TestInterfaceSecureContext::secureContextWindowExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextWindowExposedMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextWindowExposedMethodMethod(info);
 }
 
 void V8TestInterfaceSecureContext::secureContextWorkerExposedMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextWorkerExposedMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextWorkerExposedMethodMethod(info);
 }
 
 void V8TestInterfaceSecureContext::secureContextWindowExposedRuntimeEnabledMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextWindowExposedRuntimeEnabledMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextWindowExposedRuntimeEnabledMethodMethod(info);
 }
 
 void V8TestInterfaceSecureContext::secureContextWorkerExposedRuntimeEnabledMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
   RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT(info.GetIsolate(), "Blink_TestInterfaceSecureContext_secureContextWorkerExposedRuntimeEnabledMethod");
 
   TestInterfaceSecureContextV8Internal::secureContextWorkerExposedRuntimeEnabledMethodMethod(info);

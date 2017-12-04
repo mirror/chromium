@@ -14,6 +14,8 @@ const v8::FunctionCallbackInfo<v8::Value>& info
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kGetterContext, "{{interface_name}}", "{{attribute.name}}");
   {%- endset %}
 
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   {% if attribute.is_lenient_this %}
   // [LenientThis]
   // Make sure that info.Holder() really points to an instance if [LenientThis].
@@ -309,7 +311,7 @@ v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info
 {%- endif %}) {
   {% filter format_remove_duplicates(['ExceptionState exceptionState']) %}
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
