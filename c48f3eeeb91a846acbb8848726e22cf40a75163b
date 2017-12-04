@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "d2196e28_3f78b4a0",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "Unfortunately, this can\u0027t land until we resolve https://bugs.chromium.org/p/chromium/issues/detail?id\u003d789809",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9d303f_ada05b91",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "This should live somewhere else. Perhaps a subdirectory of //tools/android?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e4d394_f42637c6",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "Hrm -- is there a way we can handle this without requiring manual acceptance here?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e44f94_65063466",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "nit: if we have to keep the manual acceptance logic, this break should be on its own line.",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53c3dc8_7a97e2f6",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "You may find this easier to deal with if you split this into two functions: one that implements the logic and has fully qualified arguments, and one that simply unmarshals those objects from the Namespace from argparse. Splitting like this, particularly if you make the first function public, would let you potentially reuse some common logic in the internal equivalent.",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b58d8dc_3074d9ff",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "Use argparse.add_mutually_exclusive_group with required\u003dTrue: https://docs.python.org/3/library/argparse.html#argparse.ArgumentParser.add_mutually_exclusive_group",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1d0dc9_a4d5a93a",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "nit: debugging statement?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fca9cbfb_2129cfe9",
         "filename": "build/args/android/sdk/sdk_update_script.py",
         "patchSetId": 5
@@ -36,6 +155,99 @@
         "endLine": 123,
         "endChar": 11
       },
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9ceb25_2b023e1d",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "My inclination is that the public SDK shouldn\u0027t have a version in the path.",
+      "parentUuid": "7c86e65c_a87007b2",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34d2a8b_f3c2dbf2",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should allow users to specify either:\n\n- specific packages\n- latest\n\nand that\u0027s it. If a user asks for latest, for the packages that have names that include a version, we take what looks like the highest version.",
+      "parentUuid": "fca9cbfb_2129cfe9",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25b6a04_c1db4139",
+        "filename": "build/args/android/sdk/sources.ensure",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "Is this the most recently released set of public sources?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c286e3e_c7433b7e",
+        "filename": "third_party/.gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "How did you get your files uploaded with this...?\n\nI think this will ignore everything in //third_party/android_sdk. That works for android_tools because android_tools is its own repository; that\u0027s not the case here.",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad07995_1e736c9d",
+        "filename": "third_party/android_sdk/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-04T22:31:21Z",
+      "side": 1,
+      "message": "This shouldn\u0027t have * OWNERS. Maybe the existing owners of //third_party/android_tools plus you?",
       "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
