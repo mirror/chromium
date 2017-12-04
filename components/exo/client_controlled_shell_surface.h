@@ -19,6 +19,9 @@ namespace ash {
 namespace mojom {
 enum class WindowPinType;
 }
+namespace wm {
+class ClientControlledState;
+}
 }  // namespace ash
 
 namespace exo {
@@ -44,6 +47,16 @@ class ClientControlledShellSurface
   void InitializeWindowState(ash::wm::WindowState* window_state) override;
   void AttemptToStartDrag(int component) override;
   void UpdateBackdrop() override;
+
+  // State change methods.
+  void Restore() override;
+  void Minimize() override;
+  void Maximize() override;
+  void SetFullscreen(bool fullscreen) override;
+
+  // Bounds change methods.
+  void SetBounds(const gfx::Rect& bounds) override;
+  void SetBoundsInParent(const gfx::Rect& bounds) override;
 
   // Pin/unpin the surface. Pinned surface cannot be switched to
   // other windows unless its explicitly unpinned.
@@ -75,6 +88,8 @@ class ClientControlledShellSurface
   void OnSurfaceCommit() override;
 
   // Overridden from views::WidgetDelegate:
+  views::NonClientFrameView* CreateNonClientFrameView(
+      views::Widget* widget) override;
   void SaveWindowPlacement(const gfx::Rect& bounds,
                            ui::WindowShowState show_state) override;
   bool GetSavedWindowPlacement(const views::Widget* widget,
@@ -104,6 +119,8 @@ class ClientControlledShellSurface
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
 
+  ash::wm::WindowState* GetWindowState();
+
   int64_t primary_display_id_;
 
   int top_inset_height_ = 0;
@@ -118,6 +135,8 @@ class ClientControlledShellSurface
   Orientation expected_orientation_ = Orientation::LANDSCAPE;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
+
+  ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ClientControlledShellSurface);
 };
