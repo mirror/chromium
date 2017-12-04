@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72de6b0a_129c38cd",
+        "filename": "content/browser/cache_storage/cache_storage.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-04T01:32:30Z",
+      "side": 1,
+      "message": "Q: is it also possible to comment out the line? That\u0027s what I did in service_worker_database.proto\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_database.proto?l\u003d44\u0026rcl\u003d891184d01481bfe9af1318345ca22211ff53e020\n\nSeems cleaner than just tagging it as deprecated. AFAIK the protobuf will ignore content that isn\u0027t declared in this .proto file.",
+      "revId": "f8d8741a2f5e9e0ea7e1ccb73c8e83ff510baf9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
