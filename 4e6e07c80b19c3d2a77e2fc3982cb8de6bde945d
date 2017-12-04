@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e86976_189dc99a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-04T11:12:08Z",
+      "side": 1,
+      "message": "This could just take a boolean \u0027forWebApk\u0027 - I\u0027d reinstate that local variable (forWebApk \u003d !webApkPackage.isEmpty()) and reuse on L638 as before.",
+      "revId": "4e6e07c80b19c3d2a77e2fc3982cb8de6bde945d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354803cc_23accb59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-04T11:12:08Z",
+      "side": 1,
+      "message": "move the exception to NotificationBuilderForO.java so this is never called for web apks - see my other comment",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 74
+      },
+      "revId": "4e6e07c80b19c3d2a77e2fc3982cb8de6bde945d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

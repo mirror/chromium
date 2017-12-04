@@ -70,6 +70,30 @@
       "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9560e051_2d8841c1",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-04T11:12:08Z",
+      "side": 1,
+      "message": "Ah yes, I forgot that creating a chrome notification builder with a non-null channel id will also (attempt to) create the channel, via NotificationBuilderForO.java. (In fact, it was me that added the presubmit check that devs must use this for all notifications, so I should have remembered ^^)\n\nI see you\u0027ve added an exception for the web apk channel to ChannelsInitializer, so we don\u0027t initialize in that case. This makes sense and I agree that web apks should get an exception, however, I think it should go in NotificationBuilderForO.java constructor, something like:\n\n  if (channelId !\u003d WEBAPK_CH_ID) {\n    ensureInitialized(channelId);\n  }\n  builder.setChannel(channelId);\n\nYou can also remove the nullcheck from this constructor since I\u0027m pretty sure it was only web apks that ever set the channel id to null, and now they won\u0027t be.",
+      "parentUuid": "8271451b_fdb87982",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 99
+      },
+      "revId": "c3aaa57e3d96ddf47bc4f19525ee3883600cb536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
