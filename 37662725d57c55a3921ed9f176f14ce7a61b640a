@@ -69,6 +69,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8458a76_44830350",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-04T04:24:32Z",
+      "side": 1,
+      "message": "Good catch. Looks like that is called via the extensions management API - https://developer.chrome.com/extensions/management#method-generateAppForLink.\n\nHowever, it\u0027s always called with a null |web_contents| parameter so it won\u0027t fetch a manifest and hence will never be able to install a PWA (see the BookmarkAppHelper constructor). Possibly you could DCHECK(source \u003d\u003d MAX \u0026\u0026 web_contents \u003d\u003d nullptr) as a way of specifying a null InstallSource parameter? I don\u0027t think we should pollute the metric with a bucket that will never be used. WDYT?",
+      "parentUuid": "e1068dbe_e6200ab0",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
