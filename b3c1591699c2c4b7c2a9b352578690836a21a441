@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0cb686c_0e6427ea",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T21:41:03Z",
+      "side": 1,
+      "message": "nit: combine these two?\n\n  if (!context_document || !context_document-\u003eGetFrame()) {\n    pending_script-\u003eDispose();\n    return;\n  }",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
