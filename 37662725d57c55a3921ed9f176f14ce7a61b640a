@@ -117,6 +117,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbabb85a_4151205a",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-04T05:39:51Z",
+      "side": 1,
+      "message": "Hmm, I worry that allows an easy way to not record metrics properly. It would also be a little strange that you construct the object, and then pass it a new parameter separately right after construction. I\u0027d prefer a new enum value over that.\n\nThat being said, I don\u0027t own BookmarkAppHelper, so if benwells/calamity have a different opinion I\u0027ll defer to their ownership. :)",
+      "parentUuid": "c88973b0_cd5412a1",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
