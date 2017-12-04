@@ -1773,7 +1773,7 @@ Elements.StylePropertiesSection = class {
     this.element.style.removeProperty('contain');
     this.element.removeEventListener('input', this._scheduleHeightUpdate, true);
     this._editing = false;
-    if (this._parentPane.element.hasFocus())
+    if (this._parentPane.element === this._parentPane.element.ownerDocument.deepActiveElement())
       this.element.focus();
   }
 };
