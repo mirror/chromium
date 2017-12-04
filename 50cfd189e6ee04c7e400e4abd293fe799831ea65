@@ -87,6 +87,24 @@
       "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02b0103_b1417f00",
+        "filename": "components/omnibox/browser/history_quick_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-04T20:02:34Z",
+      "side": 1,
+      "message": "\u003e \n\u003e I still wonder if we can\u0027t get this information more directly out of AutocompleteInput, though. What about !autocomplete_input_.scheme().empty()?\n\nIt looks like input.parts().scheme.len does what we want.",
+      "parentUuid": "ef884e5a_7c6b89c3",
+      "revId": "50cfd189e6ee04c7e400e4abd293fe799831ea65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
