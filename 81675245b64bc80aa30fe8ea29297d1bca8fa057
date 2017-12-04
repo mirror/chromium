@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "583f0474_8e8acd1f",
+        "filename": "chrome/browser/chrome_browser_application_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-04T20:50:11Z",
+      "side": 1,
+      "message": "Conceptually size is part of the type of CrashKeyString because it\u0027s doing a static allocation, while name is part of initialization. But more practically it\u0027s because crash_reporter::CrashKeyString\u003cS\u003e is really a crashpad::StringAnnotation\u003cS\u003e, which inherits from crashpad::Annotation. The base annotation class has no template args because it needs to go into a list structure which cannot have heterogenous template args.\n\nThese still could be typedefs for crash_reporter::CrashKeyString\u003c256\u003e but I didn\u0027t want to do that generally (in the old crash key system we had size classes and they were more confusing than helpful).",
+      "parentUuid": "107e9733_bbca4305",
+      "range": {
+        "startLine": 227,
+        "startChar": 40,
+        "endLine": 227,
+        "endChar": 43
+      },
+      "revId": "81675245b64bc80aa30fe8ea29297d1bca8fa057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f384c1_b4422ef6",
         "filename": "chrome/browser/ui/cocoa/toolbar/toolbar_controller.mm",
         "patchSetId": 1
