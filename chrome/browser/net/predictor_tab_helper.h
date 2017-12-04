@@ -27,9 +27,6 @@ class PredictorTabHelper
   // content::WebContentsObserver:
   void DidStartNavigation(
       content::NavigationHandle* navigation_handle) override;
-  void DidStartNavigationToPendingEntry(
-      const GURL& url,
-      content::ReloadType reload_type) override;
   void DocumentOnLoadCompletedInMainFrame() override;
 
  private:
@@ -37,15 +34,6 @@ class PredictorTabHelper
   friend class content::WebContentsUserData<PredictorTabHelper>;
 
   void PreconnectUrl(const GURL& url);
-
-  // This boolean is set to true after a call to
-  // DidStartNavigationToPendingEntry, which fires off predictive preconnects.
-  // This ensures that the resulting call to DidStartNavigation does not
-  // duplicate these preconnects. The tab helper spawns preconnects on the
-  // navigation to the pending entry because DidStartNavigation is called after
-  // render process spawn (pre-PlzNavigate), which can take substantial time
-  // especially on Android.
-  bool predicted_from_pending_entry_;
 
   DISALLOW_COPY_AND_ASSIGN(PredictorTabHelper);
 };
