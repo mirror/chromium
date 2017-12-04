@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91979553_c9553a79",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-04T00:00:03Z",
+      "side": 1,
+      "message": "Is this recorded for any navigation started from the context menu? Won\u0027t most of them be unimportant as far as we\u0027re concerned?",
+      "revId": "572b5360b7d9e5dceca9036f7f0017353a04256e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
