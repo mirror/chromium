@@ -22,6 +22,30 @@
       "revId": "7ce6069c5ebfdf2181ceeb4351607962f6135278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bb1e3a_260c2c59",
+        "filename": "chrome/browser/extensions/extension_webkit_preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-04T11:00:45Z",
+      "side": 1,
+      "message": "Ahah, good catch. I mean to say *should not*. It applies to apps and extensions.",
+      "parentUuid": "a4a0c675_248e0fd3",
+      "range": {
+        "startLine": 44,
+        "startChar": 32,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "7ce6069c5ebfdf2181ceeb4351607962f6135278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
