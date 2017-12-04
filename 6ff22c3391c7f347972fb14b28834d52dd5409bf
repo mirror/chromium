@@ -16,6 +16,24 @@
       "revId": "6ff22c3391c7f347972fb14b28834d52dd5409bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bdca12_2f3f710d",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-04T19:52:32Z",
+      "side": 1,
+      "message": "Yes.  I\u0027m hoping I can lower it in the next release.  But I have seen pages take longer than this :(",
+      "parentUuid": "fedda9c5_5dda8ced",
+      "revId": "6ff22c3391c7f347972fb14b28834d52dd5409bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
