@@ -452,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "07f7f1a4_d866f301",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-04T15:54:06Z",
+      "side": 1,
+      "message": "That path would be taken if e.g. l.57 (of this patch)\nor l.66 are hit, correct? In that case, I\u0027d just merge\nthis method Detect() and BeginDetect() and do the \nDetectedEmptyFace(std::move(callback)) in those locations,\nso the error situation and its handling happen in the\nsame place, and not in different methods.",
+      "parentUuid": "b59fe923_52a42480",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0bb69b_eed26e1b",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 6
