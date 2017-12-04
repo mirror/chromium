@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c29028b_2e5b18d2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:39:26Z",
+      "side": 1,
+      "message": "Why unique_ptr? It doesn\u0027t seem like these are ever reallocated.",
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c6eb50_3d8996c7",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:39:26Z",
+      "side": 1,
+      "message": "Is it possible to use mojo.common.mojom.TimeDelta here?",
+      "range": {
+        "startLine": 135,
+        "startChar": 14,
+        "endLine": 135,
+        "endChar": 20
+      },
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee2e306c_c09808f1",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 5
@@ -41,6 +81,52 @@
         "startChar": 2,
         "endLine": 717,
         "endChar": 4
+      },
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f93f60a_304fd9ea",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:39:26Z",
+      "side": 1,
+      "message": "Nit: Blink style is kUninitialized, kMailbox, kTextureHandle",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6531fa11_d9f0ad2c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-04T19:39:26Z",
+      "side": 1,
+      "message": "Ditto to naming this kUninitialized, kNoWait, kBeforeBitmap, kAfterBitmap",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 17
       },
       "revId": "f062aa0da202ea2426c25d47522016f50d00324c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
