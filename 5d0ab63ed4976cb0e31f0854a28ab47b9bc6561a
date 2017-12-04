@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3bb28cc_3ba43609",
+        "filename": "content/renderer/image_downloader/image_downloader_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-04T07:28:46Z",
+      "side": 1,
+      "message": "altimin: Do you think kUnspecedTimer is OK in this case? I\u0027m not confident...",
+      "revId": "5d0ab63ed4976cb0e31f0854a28ab47b9bc6561a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
