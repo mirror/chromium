@@ -89,7 +89,8 @@ class PreviewsUIService {
       const GURL& url,
       base::Time time,
       PreviewsType type,
-      std::vector<PreviewsEligibilityReason>&& passed_reasons);
+      std::vector<PreviewsEligibilityReason>&& passed_reasons,
+      uint64_t page_id);
 
   // Expose the pointer to PreviewsLogger to extract logging messages. This
   // pointer's life time is the same as of |this|, and it is guaranteed to not
