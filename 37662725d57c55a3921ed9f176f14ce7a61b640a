@@ -45,6 +45,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1068dbe_e6200ab0",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-04T04:09:09Z",
+      "side": 1,
+      "message": "OK. BookmarkAppHelper is also used from here --\n\n https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/management/chrome_management_api_delegate.cc?rcl\u003d259450762b26c56504650f27f06405507d33e7bf\u0026l\u003d153\n\n-- which I\u0027m not familiar with. Could a PWA be installed via the management API? If so, we should probably have another InstallSource enum entry. If not, we still need some way of specifying a null InstallSource parameter in the relevant BookmarkAppHelper call.",
+      "parentUuid": "a8933dda_5bfbe48f",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
