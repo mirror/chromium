@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07609ef_3fa95ee5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3525,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "I think this can go.",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64896644_b24ee6ce",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4190,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "color_chooser_info_ \u003d std::make_unique\u003cColorChooserInfo\u003e(",
+      "range": {
+        "startLine": 4190,
+        "startChar": 2,
+        "endLine": 4190,
+        "endChar": 49
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07547fc_8c0ffaca",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4192,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "Do this inside the ColorChooserInfo constructor. ColorChooserInfo probably should be a class too.",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8ad4c0_27591a80",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "Move this into ColorChooserInfo.",
+      "range": {
+        "startLine": 783,
+        "startChar": 7,
+        "endLine": 783,
+        "endChar": 23
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c1a94e_f46e3916",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "Can this definition live in the .cc file?",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b65e02_2c0fc1a8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4421,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "color_suggestions.reserve(suggestions.size());",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3561105_d01c064d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4422,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "Consider switching this to a for-each loop.",
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21849e9_5a798f3e",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4423,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "emplace_back(std::in_place, suggestions[i].color, suggestions[i].label.Utf8());",
+      "range": {
+        "startLine": 4423,
+        "startChar": 22,
+        "endLine": 4423,
+        "endChar": 31
+      },
+      "revId": "06393ebfd0bf86e22de1b9d719b126fcf598afc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

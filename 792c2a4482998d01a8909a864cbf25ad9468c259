@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "61e20134_20cc25f6",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-04T06:15:58Z",
+      "side": 1,
+      "message": "The ColorChooser interface as it previously existed wasn\u0027t the window shown since it could be reused for different windows with different IDs.",
+      "parentUuid": "df0bc6e9_48f549cf",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "792c2a4482998d01a8909a864cbf25ad9468c259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c214f1_62ba5cd4",
         "filename": "content/common/color_chooser.mojom",
         "patchSetId": 3
