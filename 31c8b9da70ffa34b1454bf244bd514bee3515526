@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1bcba786_c7561e87",
+        "filename": "services/shape_detection/detection_utils_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-04T01:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c17d25_34548ec2",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfcbfd3_26224df3",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 6
@@ -165,6 +189,30 @@
       "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec925b73_8c1c8ffa",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-04T01:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2370c259_358acbd2",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +416,30 @@
       "side": 1,
       "message": "I mean, BeginDetect() should be declared+defined as:\n\nstd::unique_ptr\u003cAsyncOperation\u003cIVector\u003cDetectedFace*\u003e\u003e\u003e\nFaceDetectionImplWin::BeginDetect(DetectCallback callback,\n                                  const SkBitmap\u0026 bitmap) { \n//...\n\nand call in l.40 as:\n  BeginDetect(std::move(callback), bitmap)",
       "parentUuid": "ff327d3d_16e1b42f",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59fe923_52a42480",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-04T01:00:38Z",
+      "side": 1,
+      "message": "\u003e and call in l.40 as:\n  BeginDetect(std::move(callback), bitmap)\n\nBut the else case will be crashed if BeginDetect return nullptr because the |callback| still need to be used in the else case.",
+      "parentUuid": "4ebde6b3_4d20c8f8",
       "range": {
         "startLine": 42,
         "startChar": 0,
