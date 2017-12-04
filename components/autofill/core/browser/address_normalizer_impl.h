@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "components/autofill/core/browser/address_normalizer.h"
+#include "third_party/libaddressinput/chromium/chrome_address_validator.h"
 
 namespace i18n {
 namespace addressinput {
@@ -49,14 +50,18 @@ class AddressNormalizerImpl : public AddressNormalizer {
   void OnAddressValidationRulesLoaded(const std::string& region_code,
                                       bool success) override;
 
+  void AssignValidator(std::unique_ptr<AddressValidator> validator);
+
   // Map associating a region code to pending normalizations.
   class NormalizationRequest;
   std::map<std::string, std::vector<std::unique_ptr<NormalizationRequest>>>
       pending_normalization_;
 
   // The address validator used to normalize addresses.
-  AddressValidator address_validator_;
+  std::unique_ptr<AddressValidator> address_validator_;
   const std::string app_locale_;
+
+  base::WeakPtrFactory<AddressNormalizerImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AddressNormalizerImpl);
 };

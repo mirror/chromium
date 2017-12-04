@@ -13,6 +13,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/autofill/core/browser/address_i18n.h"
@@ -66,6 +67,14 @@ void FormatPhoneNumberToE164(AutofillProfile* profile,
 
   profile->SetRawInfo(PHONE_HOME_WHOLE_NUMBER,
                       base::UTF8ToUTF16(formatted_number));
+}
+
+std::unique_ptr<AddressValidator> CreateAddressValidator(
+    std::unique_ptr<::i18n::addressinput::Source> source,
+    std::unique_ptr<::i18n::addressinput::Storage> storage,
+    LoadRulesListener* load_rules_listener) {
+  return std::make_unique<AddressValidator>(
+      std::move(source), std::move(storage), load_rules_listener);
 }
 
 }  // namespace
@@ -135,13 +144,20 @@ class AddressNormalizerImpl::NormalizationRequest {
 AddressNormalizerImpl::AddressNormalizerImpl(std::unique_ptr<Source> source,
                                              std::unique_ptr<Storage> storage,
                                              const std::string& app_locale)
-    : address_validator_(std::move(source), std::move(storage), this),
-      app_locale_(app_locale) {}
+    : app_locale_(app_locale), weak_ptr_factory_(this) {
+  // |address_validator_| is created in the background.
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::BindOnce(&CreateAddressValidator, std::move(source),
+                     std::move(storage), this),
+      base::BindOnce(&AddressNormalizerImpl::AssignValidator,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
 
 AddressNormalizerImpl::~AddressNormalizerImpl() {}
 
 void AddressNormalizerImpl::LoadRulesForRegion(const std::string& region_code) {
-  address_validator_.LoadRules(region_code);
+  address_validator_->LoadRules(region_code);
 }
 
 void AddressNormalizerImpl::NormalizeAddressAsync(
@@ -150,10 +166,16 @@ void AddressNormalizerImpl::NormalizeAddressAsync(
     AddressNormalizer::NormalizationCallback callback) {
   DCHECK_GE(timeout_seconds, 0);
 
+  // The |address_validator_| is not yet initialized. Cannot normalize.
+  if (!address_validator_) {
+    std::move(callback).Run(/*success=*/false, profile);
+    return;
+  }
+
   std::unique_ptr<NormalizationRequest> request =
       std::make_unique<NormalizationRequest>(
           profile, app_locale_, timeout_seconds, std::move(callback),
-          &address_validator_);
+          address_validator_.get());
 
   // If the rules are already loaded for |region_code|, the |request| will
   // callback synchronously.
@@ -189,7 +211,7 @@ bool AddressNormalizerImpl::NormalizeAddressSync(AutofillProfile* profile) {
   const std::string region_code =
       data_util::GetCountryCodeWithFallback(*profile, app_locale_);
   FormatPhoneNumberToE164(profile, region_code, app_locale_);
-  if (!AreRulesLoadedForRegion(region_code)) {
+  if (!AreRulesLoadedForRegion(region_code) || !address_validator_) {
     // Start loading the rules for that region so that they are available next
     // time.
     LoadRulesForRegion(region_code);
@@ -197,12 +219,12 @@ bool AddressNormalizerImpl::NormalizeAddressSync(AutofillProfile* profile) {
   }
 
   return NormalizeProfileWithValidator(profile, app_locale_,
-                                       &address_validator_);
+                                       address_validator_.get());
 }
 
 bool AddressNormalizerImpl::AreRulesLoadedForRegion(
     const std::string& region_code) {
-  return address_validator_.AreRulesLoadedForRegion(region_code);
+  return address_validator_->AreRulesLoadedForRegion(region_code);
 }
 
 void AddressNormalizerImpl::OnAddressValidationRulesLoaded(
@@ -218,6 +240,11 @@ void AddressNormalizerImpl::OnAddressValidationRulesLoaded(
     }
     pending_normalization_.erase(it);
   }
+}
+
+void AddressNormalizerImpl::AssignValidator(
+    std::unique_ptr<AddressValidator> validator) {
+  address_validator_ = std::move(validator);
 }
 
 }  // namespace autofill
