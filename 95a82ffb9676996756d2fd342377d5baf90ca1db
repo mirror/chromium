@@ -116,6 +116,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aabd107_101c7770",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1178840
+      },
+      "writtenOn": "2017-12-04T18:59:01Z",
+      "side": 1,
+      "message": "I guess that leaves the possibility that the device periodically responds with … something on the broadcast channel that is not the expected reply and hence this keeps looping forever. This might be more of a theoretical concern, but I guess it would be nice if there was some kind of obvious guarantee that it wasn\u0027t a concern at all?\n\nI think re-structuring the code by wrapping the state machine switch in |Transition| in a` for(;state_ !\u003d IDLE;) { }` might make this a bit easier (the for-condition is probably a little more complicated than that)?  Then the handling methods could simply return into |Transition|, rather than having to recurse to it. That would perhaps make it easier to centralize things like the timeout and retries a little better? Just an idea, I haven\u0027t fully thought this through.",
+      "parentUuid": "e39a83c8_b4a164f4",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
