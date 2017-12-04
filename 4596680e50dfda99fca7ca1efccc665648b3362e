@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2263dc29_b07e1859",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-04T13:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788d4614_1815e8a0",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740b9196_2e916796",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9da5955_8ac951ea",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-04T13:19:32Z",
+      "side": 1,
+      "message": "The redirect was to let OpenPageInfoBubble() complete before navigating the iframe, but doing it synchronously from here achieves that more effectively.\n\nAlso, TIL NavigateIframeToURL - thanks :)",
+      "parentUuid": "740b9196_2e916796",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41c4ad32_a2df49a2",
         "filename": "chrome/browser/ui/views/page_info/testdata/empty0.html",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a678674_5319a60e",
+        "filename": "chrome/browser/ui/views/page_info/testdata/empty0.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-04T13:19:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure that it matters (?) but it can\u0027t hurt, so, done.",
+      "parentUuid": "41c4ad32_a2df49a2",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
