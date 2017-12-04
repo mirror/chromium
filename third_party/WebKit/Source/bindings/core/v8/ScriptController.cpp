@@ -84,7 +84,7 @@ void ScriptController::UpdateSecurityOrigin(SecurityOrigin* security_origin) {
 
 namespace {
 
-V8CacheOptions CacheOptions(const ScriptResource* resource,
+V8CacheOptions CacheOptions(const TextResource* resource,
                             const Settings* settings) {
   V8CacheOptions v8_cache_options(kV8CacheOptionsDefault);
   if (settings) {

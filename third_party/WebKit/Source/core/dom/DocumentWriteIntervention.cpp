@@ -9,7 +9,7 @@
 #include "core/frame/Settings.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ScriptFetchOptions.h"
@@ -217,7 +217,7 @@ void PossiblyFetchBlockedDocWriteScript(const Resource* resource,
       resource->Url(), element_document.GetSecurityOrigin(),
       resource->Encoding(), FetchParameters::kIdleLoad);
   AddHeader(&params);
-  ScriptResource::Fetch(params, element_document.Fetcher());
+  TextResource::FetchScript(params, element_document.Fetcher());
 }
 
 }  // namespace blink

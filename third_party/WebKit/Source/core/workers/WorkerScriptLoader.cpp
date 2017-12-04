@@ -34,7 +34,6 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/AllowedByNosniff.h"
 #include "core/loader/WorkerThreadableLoader.h"
-#include "core/loader/resource/ScriptResource.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"

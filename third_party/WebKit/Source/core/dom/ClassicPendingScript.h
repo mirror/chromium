@@ -9,9 +9,10 @@
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "core/dom/ClassicScript.h"
 #include "core/dom/PendingScript.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "platform/MemoryCoordinator.h"
 #include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 
 namespace blink {
@@ -26,7 +27,7 @@ namespace blink {
 // guarantee that the data buffer will not be purged.
 class CORE_EXPORT ClassicPendingScript final
     : public PendingScript,
-      public ResourceOwner<ScriptResource>,
+      public ResourceOwner<TextResource>,
       public MemoryCoordinatorClient {
   USING_GARBAGE_COLLECTED_MIXIN(ClassicPendingScript);
   USING_PRE_FINALIZER(ClassicPendingScript, Prefinalize);
@@ -34,7 +35,7 @@ class CORE_EXPORT ClassicPendingScript final
  public:
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-classic-script
   //
-  // For a script from an external file, calls ScriptResource::Fetch() and
+  // For a script from an external file, calls TextResource::FetchScript() and
   // creates ClassicPendingScript. Returns nullptr if Fetch() returns nullptr.
   static ClassicPendingScript* Fetch(const KURL&,
                                      Document&,
@@ -43,9 +44,9 @@ class CORE_EXPORT ClassicPendingScript final
                                      ScriptElementBase*,
                                      FetchParameters::DeferOption);
 
-  // For a script from an external file, with a supplied ScriptResource.
+  // For a script from an external file, with a supplied TextResource.
   static ClassicPendingScript* CreateExternalForTest(ScriptElementBase*,
-                                                     ScriptResource*);
+                                                     TextResource*);
 
   // For an inline script.
   static ClassicPendingScript* CreateInline(ScriptElementBase*,

@@ -6,10 +6,50 @@
 
 #include "core/html/parser/TextResourceDecoder.h"
 #include "platform/SharedBuffer.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
+
+TextResource* TextResource::FetchScript(FetchParameters& params,
+                                        ResourceFetcher* fetcher) {
+  DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
+            WebURLRequest::kFrameTypeNone);
+  params.SetRequestContext(WebURLRequest::kRequestContextScript);
+  return ToTextResource(fetcher->RequestResource(params, Factory(kScript)));
+}
+
+static void ApplyXSLRequestProperties(FetchParameters& params) {
+  params.SetRequestContext(WebURLRequest::kRequestContextXSLT);
+  // TODO(japhet): Accept: headers can be set manually on XHRs from script, in
+  // the browser process, and... here. The browser process can't tell the
+  // difference between an XSL stylesheet and a CSS stylesheet, so it assumes
+  // stylesheets are all CSS unless they already have an Accept: header set.
+  // Should we teach the browser process the difference?
+  DEFINE_STATIC_LOCAL(const AtomicString, accept_xslt,
+                      ("text/xml, application/xml, application/xhtml+xml, "
+                       "text/xsl, application/rss+xml, application/atom+xml"));
+  params.MutableResourceRequest().SetHTTPAccept(accept_xslt);
+}
+
+TextResource* TextResource::FetchXSL(FetchParameters& params,
+                                     ResourceFetcher* fetcher) {
+  DCHECK(RuntimeEnabledFeatures::XSLTEnabled());
+  ApplyXSLRequestProperties(params);
+  return ToTextResource(
+      fetcher->RequestResource(params, Factory(kXSLStyleSheet)));
+}
+
+TextResource* TextResource::FetchXSLSynchronously(FetchParameters& params,
+                                                  ResourceFetcher* fetcher) {
+  ApplyXSLRequestProperties(params);
+  params.MakeSynchronous();
+  return ToTextResource(
+      fetcher->RequestResource(params, Factory(kXSLStyleSheet)));
+}
 
 TextResource::TextResource(const ResourceRequest& resource_request,
                            Resource::Type type,
@@ -73,6 +113,26 @@ void TextResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
   dump->AddScalar("size", "bytes", DecodedText().CharactersSizeInBytes());
   memory_dump->AddSuballocation(
       dump->Guid(), String(WTF::Partitions::kAllocatedObjectPoolName));
+}
+
+AccessControlStatus TextResource::CalculateAccessControlStatus() const {
+  if (GetCORSStatus() == CORSStatus::kServiceWorkerOpaque)
+    return kOpaqueResource;
+
+  if (IsSameOriginOrCORSSuccessful())
+    return kSharableCrossOrigin;
+
+  return kNotSharableCrossOrigin;
+}
+
+bool TextResource::CanUseCacheValidator() const {
+  // Do not revalidate until ClassicPendingScript is removed, i.e. the script
+  // content is retrieved in ScriptLoader::ExecuteScriptBlock().
+  // crbug.com/692856
+  if (Type() == kScript && HasClientsOrObservers())
+    return false;
+
+  return Resource::CanUseCacheValidator();
 }
 
 }  // namespace blink

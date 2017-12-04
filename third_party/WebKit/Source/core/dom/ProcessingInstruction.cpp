@@ -28,7 +28,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/IncrementLoadEventDelayCount.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
-#include "core/loader/resource/XSLStyleSheetResource.h"
 #include "core/xml/DocumentXSLT.h"
 #include "core/xml/XSLStyleSheet.h"
 #include "core/xml/parser/XMLDocumentParser.h"  // for parseAttributes()
@@ -156,7 +155,7 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
                          options);
   if (is_xsl_) {
     if (RuntimeEnabledFeatures::XSLTEnabled())
-      resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+      resource = TextResource::FetchXSL(params, GetDocument().Fetcher());
   } else {
     params.SetCharset(charset.IsEmpty() ? GetDocument().Encoding()
                                         : WTF::TextEncoding(charset));
@@ -201,7 +200,7 @@ void ProcessingInstruction::NotifyFinished(Resource* resource) {
     sheet_ = XSLStyleSheet::Create(this, resource->Url(),
                                    resource->GetResponse().Url());
     ToXSLStyleSheet(sheet_.Get())
-        ->ParseString(ToXSLStyleSheetResource(resource)->DecodedText());
+        ->ParseString(ToTextResource(resource)->DecodedText());
   } else {
     DCHECK(is_css_);
     CSSStyleSheetResource* style_resource = ToCSSStyleSheetResource(resource);

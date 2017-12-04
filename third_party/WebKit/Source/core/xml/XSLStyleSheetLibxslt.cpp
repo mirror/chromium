@@ -27,7 +27,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/TransformSource.h"
 #include "core/frame/LocalFrame.h"
-#include "core/loader/resource/XSLStyleSheetResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "core/xml/XSLTProcessor.h"
 #include "core/xml/parser/XMLDocumentParserScope.h"
 #include "core/xml/parser/XMLParserInput.h"
@@ -228,8 +228,8 @@ void XSLStyleSheet::LoadChildSheet(const String& href) {
   FetchParameters params(
       ResourceRequest(OwnerDocument()->CompleteURL(url_string)), fetch_options);
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
-  XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
-      params, OwnerDocument()->Fetcher());
+  TextResource* resource =
+      TextResource::FetchXSLSynchronously(params, OwnerDocument()->Fetcher());
   if (!resource || !resource->DecodedText())
     return;
 

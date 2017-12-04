@@ -60,7 +60,7 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/FontResource.h"
 #include "core/loader/resource/ImageResource.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
@@ -206,7 +206,7 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
       resource = ImageResource::Fetch(params, Fetcher());
       break;
     case Resource::kScript:
-      resource = ScriptResource::Fetch(params, Fetcher());
+      resource = TextResource::FetchScript(params, Fetcher());
       break;
     case Resource::kCSSStyleSheet:
       resource = CSSStyleSheetResource::Fetch(params, Fetcher());

@@ -75,26 +75,26 @@ DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
 void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
                                         ModuleScriptFetcher::Client* client) {
   SetClient(client);
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params, fetcher_);
+  TextResource* resource = TextResource::FetchScript(fetch_params, fetcher_);
   if (was_fetched_) {
-    // ScriptResource::Fetch() has succeeded synchronously,
+    // FetchScript() has succeeded synchronously,
     // ::NotifyFinished() already took care of the |resource|.
     return;
   }
   if (!resource) {
-    // ScriptResource::Fetch() has failed synchronously.
+    // FetchScript() has failed synchronously.
     NotifyFinished(nullptr /* resource */);
     return;
   }
 
-  // ScriptResource::Fetch() is processed asynchronously.
+  // FetchScript() is processed asynchronously.
   SetResource(resource);
 }
 
 void DocumentModuleScriptFetcher::NotifyFinished(Resource* resource) {
   ClearResource();
 
-  ScriptResource* script_resource = ToScriptResource(resource);
+  TextResource* script_resource = ToTextResource(resource);
 
   HeapVector<Member<ConsoleMessage>> error_messages;
   if (!WasModuleLoadSuccessful(script_resource, &error_messages)) {
@@ -118,7 +118,7 @@ void DocumentModuleScriptFetcher::Finalize(
 
 void DocumentModuleScriptFetcher::Trace(blink::Visitor* visitor) {
   visitor->Trace(fetcher_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
+  ResourceOwner<TextResource>::Trace(visitor);
   ModuleScriptFetcher::Trace(visitor);
 }
 

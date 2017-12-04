@@ -12,7 +12,7 @@
 #include "core/dom/ScriptLoader.h"
 #include "core/frame/LocalFrame.h"
 #include "core/loader/SubresourceIntegrityHelper.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "public/platform/TaskType.h"
@@ -45,8 +45,8 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // Step 2. Set request's client to settings object. [spec text]
   //
   // Note: |element_document| corresponds to the settings object.
-  ScriptResource* resource =
-      ScriptResource::Fetch(params, element_document.Fetcher());
+  TextResource* resource =
+      TextResource::FetchScript(params, element_document.Fetcher());
   if (!resource)
     return nullptr;
   pending_script->SetResource(resource);
@@ -56,7 +56,7 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
 
 ClassicPendingScript* ClassicPendingScript::CreateExternalForTest(
     ScriptElementBase* element,
-    ScriptResource* resource) {
+    TextResource* resource) {
   DCHECK(resource);
   ClassicPendingScript* pending_script = new ClassicPendingScript(
       element, TextPosition(), ScriptSourceLocationType::kExternalFile,
@@ -219,12 +219,12 @@ void ClassicPendingScript::DataReceived(Resource* resource,
                                         const char*,
                                         size_t) {
   if (streamer_)
-    streamer_->NotifyAppendData(ToScriptResource(resource));
+    streamer_->NotifyAppendData(ToTextResource(resource));
 }
 
 void ClassicPendingScript::Trace(blink::Visitor* visitor) {
   visitor->Trace(streamer_);
-  ResourceOwner<ScriptResource>::Trace(visitor);
+  ResourceOwner<TextResource>::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);
   PendingScript::Trace(visitor);
 }

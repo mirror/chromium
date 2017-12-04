@@ -118,12 +118,8 @@ blink_core_sources("loader") {
     "resource/LinkFetchResource.h",
     "resource/MultipartImageResourceParser.cpp",
     "resource/MultipartImageResourceParser.h",
-    "resource/ScriptResource.cpp",
-    "resource/ScriptResource.h",
     "resource/TextResource.cpp",
     "resource/TextResource.h",
-    "resource/XSLStyleSheetResource.cpp",
-    "resource/XSLStyleSheetResource.h",
   ]
 
   configs += [

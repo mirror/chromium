@@ -15,7 +15,7 @@ ScriptSourceCode::ScriptSourceCode(
       url_(url),
       start_position_(start_position),
       source_location_type_(source_location_type) {
-  // External files should use a ScriptResource.
+  // External files should use a TextResource.
   DCHECK(source_location_type != ScriptSourceLocationType::kExternalFile);
 
   TreatNullSourceAsEmpty();
@@ -24,7 +24,7 @@ ScriptSourceCode::ScriptSourceCode(
 }
 
 ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
-                                   ScriptResource* resource)
+                                   TextResource* resource)
     : source_(resource->DecodedText()),
       resource_(resource),
       streamer_(streamer),

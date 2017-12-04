@@ -756,6 +756,9 @@ Resource* ResourceFetcher::RequestResource(
     // would be Use.
   }
 
+  if (!params.IntegrityMetadata().IsEmpty())
+    resource->SetIntegrityMetadata(params.IntegrityMetadata());
+
   // If only the fragment identifiers differ, it is the same resource.
   DCHECK(EqualIgnoringFragmentIdentifier(resource->Url(), params.Url()));
   RequestLoadStarted(identifier, resource, params, policy, is_static_data);

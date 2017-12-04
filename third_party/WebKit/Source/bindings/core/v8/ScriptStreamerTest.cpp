@@ -37,7 +37,7 @@ class ScriptStreamingTest : public ::testing::Test {
                                  ->LoadingTaskRunner()),
         settings_(Settings::Create()),
         dummy_document_(Document::CreateForTest()) {
-    resource_ = ScriptResource::CreateForTest(
+    resource_ = TextResource::CreateScriptForTest(
         KURL("http://www.streaming-test.com/"), UTF8Encoding());
     resource_->SetStatus(ResourceStatus::kPending);
 
@@ -102,8 +102,8 @@ class ScriptStreamingTest : public ::testing::Test {
   std::unique_ptr<Settings> settings_;
   // The Resource and PendingScript where we stream from. These don't really
   // fetch any data outside the test; the test controls the data by calling
-  // ScriptResource::appendData.
-  Persistent<ScriptResource> resource_;
+  // Resource::AppendData.
+  Persistent<TextResource> resource_;
   Persistent<ClassicPendingScript> pending_script_;
 
   Persistent<Document> dummy_document_;
@@ -234,7 +234,7 @@ TEST_F(ScriptStreamingTest, CancellingStreaming) {
 TEST_F(ScriptStreamingTest, SuppressingStreaming) {
   // If we notice during streaming that there is a code cache, streaming
   // is suppressed (V8 doesn't parse while the script is loading), and the
-  // upper layer (ScriptResourceClient) should get a notification when the
+  // upper layer (ResourceClient) should get a notification when the
   // script is loaded.
   V8TestingScope scope;
   ScriptStreamer::StartStreaming(
@@ -269,7 +269,7 @@ TEST_F(ScriptStreamingTest, SuppressingStreaming) {
 
 TEST_F(ScriptStreamingTest, EmptyScripts) {
   // Empty scripts should also be streamed properly, that is, the upper layer
-  // (ScriptResourceClient) should be notified when an empty script has been
+  // (ResourceClient) should be notified when an empty script has been
   // loaded.
   V8TestingScope scope;
   ScriptStreamer::StartStreaming(
