@@ -15,7 +15,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "gpu/ipc/service/gpu_command_buffer_stub.h"
+#include "gpu/ipc/service/command_buffer_stub_common.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/d3d11_h264_accelerator.h"
 #include "media/gpu/gles2_decoder_helper.h"
@@ -28,7 +28,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
                                                public D3D11VideoDecoderClient {
  public:
   D3D11VideoDecoderImpl(
-      base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
+      base::Callback<gpu::CommandBufferStubCommon*()> get_stub_cb,
       OutputWithReleaseMailboxCB output_cb);
   ~D3D11VideoDecoderImpl() override;
 
@@ -62,8 +62,8 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
   void OnMailboxReleased(D3D11PictureBuffer* buffer,
                          const gpu::SyncToken& sync_token);
 
-  base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb_;
-  gpu::GpuCommandBufferStub* stub_ = nullptr;
+  base::Callback<gpu::CommandBufferStubCommon*()> get_stub_cb_;
+  gpu::CommandBufferStubCommon* stub_ = nullptr;
   // A helper for creating textures. Only valid while |stub_| is valid.
   std::unique_ptr<GLES2DecoderHelper> decoder_helper_;
 
