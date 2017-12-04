@@ -99,6 +99,7 @@ void AppBannerManagerDesktop::ShowBannerUi(WebAppInstallSource install_source) {
     TrackDisplayEvent(DISPLAY_EVENT_WEB_APP_BANNER_CREATED);
     TrackUserResponse(USER_RESPONSE_WEB_APP_ACCEPTED);
     ReportStatus(SHOWING_APP_INSTALLATION_DIALOG);
+    InstallableMetrics::TrackInstallSource(WebAppInstallSource::API);
     bookmark_app_helper_->Create(base::Bind(
         &AppBannerManager::DidFinishCreatingBookmarkApp, GetWeakPtr()));
     return;
