@@ -34,6 +34,29 @@
       "revId": "37f87947eed13c50de18ee61adc7bd07b565f111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98322ff7_1cb0ba49",
+        "filename": "ui/display/types/display_snapshot.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-04T16:47:27Z",
+      "side": 1,
+      "message": "Does this impact platforms other than ChromeOS?",
+      "range": {
+        "startLine": 143,
+        "startChar": 28,
+        "endLine": 143,
+        "endChar": 37
+      },
+      "revId": "37f87947eed13c50de18ee61adc7bd07b565f111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
