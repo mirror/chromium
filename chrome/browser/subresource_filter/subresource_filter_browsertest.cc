@@ -57,7 +57,6 @@
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/referrer.h"
@@ -449,10 +448,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
   NavigateFrame(kSubframeNames[0], allowed_empty_subdocument_url);
 
   // Finally, navigate the first subframe to an allowed URL that redirects to a
-  // disallowed URL, and verify that:
-  //  -- The navigation gets blocked and the frame collapsed (with PlzNavigate).
-  //  -- The navigation is cancelled, but the frame is not collapsed (without
-  //  PlzNavigate, where BLOCK_REQUEST_AND_COLLAPSE is not supported).
+  // disallowed URL, and verify that the navigation gets blocked and the frame
+  // collapsed.
   GURL disallowed_subdocument_url(
       GetTestUrl("subresource_filter/frame_with_included_script.html"));
   GURL redirect_to_disallowed_subdocument_url(embedded_test_server()->GetURL(
@@ -465,13 +462,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 
   content::RenderFrameHost* frame = FindFrameByName(kSubframeNames[0]);
   ASSERT_TRUE(frame);
-  if (content::IsBrowserSideNavigationEnabled()) {
-    EXPECT_EQ(disallowed_subdocument_url, frame->GetLastCommittedURL());
-    ExpectFramesIncludedInLayout(kSubframeNames, kExpectOnlySecondSubframe);
-  } else {
-    EXPECT_EQ(allowed_empty_subdocument_url, frame->GetLastCommittedURL());
-    ExpectFramesIncludedInLayout(kSubframeNames, kExpectFirstAndSecondSubframe);
-  }
+  EXPECT_EQ(disallowed_subdocument_url, frame->GetLastCommittedURL());
+  ExpectFramesIncludedInLayout(kSubframeNames, kExpectOnlySecondSubframe);
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,

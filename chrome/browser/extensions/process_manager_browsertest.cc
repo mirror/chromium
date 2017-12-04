@@ -33,7 +33,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -930,16 +929,13 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
 // https://crbug.com/656752.  These requests should still be allowed inside
 // actual <webview> guest processes created by a Chrome app; this is checked in
 // WebViewTest.Shim_TestBlobURL.
+// TODO(alexmos):  Re-enable this test for PlzNavigate after tightening nested
+// URL blocking for apps with the "webview" permission in
+// ExtensionNavigationThrottle and removing the corresponding check from
+// ChromeExtensionsNetworkDelegate.  The latter is incompatible with
+// PlzNavigate.
 IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
-                       NestedURLNavigationsToAppBlocked) {
-  // TODO(alexmos):  Re-enable this test for PlzNavigate after tightening
-  // nested URL blocking for apps with the "webview" permission in
-  // ExtensionNavigationThrottle and removing the corresponding check from
-  // ChromeExtensionsNetworkDelegate.  The latter is incompatible with
-  // PlzNavigate.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
+                       DISABLED_NestedURLNavigationsToAppBlocked) {
   // Disabling web security is necessary to test the browser enforcement;
   // without it, the loads in this test would be blocked by
   // SecurityOrigin::canDisplay() as invalid local resource loads.

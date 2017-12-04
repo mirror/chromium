@@ -98,7 +98,6 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_request_body.h"
 #include "content/public/common/url_constants.h"
@@ -566,24 +565,6 @@ class TestContentBrowserClient : public ChromeContentBrowserClient {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestContentBrowserClient);
-};
-
-// A ContentBrowserClient that forces cross-process navigations.
-class SwapProcessesContentBrowserClient : public ChromeContentBrowserClient {
- public:
-  SwapProcessesContentBrowserClient() {}
-  ~SwapProcessesContentBrowserClient() override {}
-
-  // ChromeContentBrowserClient:
-  bool ShouldSwapProcessesForRedirect(
-      content::BrowserContext* browser_context,
-      const GURL& current_url,
-      const GURL& new_url) override {
-    return true;
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(SwapProcessesContentBrowserClient);
 };
 
 base::FilePath GetTestPath(const std::string& file_name) {
@@ -2942,51 +2923,6 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, PrerenderCapturedWebContents) {
   web_contents->IncrementCapturerCount(gfx::Size());
   NavigateToDestURLWithDisposition(WindowOpenDisposition::CURRENT_TAB, false);
   web_contents->DecrementCapturerCount();
-}
-
-// Checks that prerenders are aborted on cross-process navigation from
-// a server redirect.
-IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
-                       PrerenderCrossProcessServerRedirect) {
-  // Cross-process navigations don't happen for prerendering with PlzNavigate,
-  // since we decide on a process after redirects are followed.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
-  // Force everything to be a process swap.
-  SwapProcessesContentBrowserClient test_browser_client;
-  content::ContentBrowserClient* original_browser_client =
-      content::SetBrowserClientForTesting(&test_browser_client);
-
-  PrerenderTestURL(CreateServerRedirect("/prerender/prerender_page.html"),
-                   FINAL_STATUS_OPEN_URL, 0);
-
-  content::SetBrowserClientForTesting(original_browser_client);
-}
-
-// Checks that URLRequests for prerenders being aborted on cross-process
-// navigation from a server redirect are cleaned up, so they don't keep cache
-// entries locked.
-// See http://crbug.com/341134
-IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest,
-                       PrerenderCrossProcessServerRedirectNoHang) {
-  // Cross-process navigations don't happen for prerendering with PlzNavigate,
-  // since we decide on a process after redirects are followed.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
-  const char kDestPath[] = "/prerender/prerender_page.html";
-  // Force everything to be a process swap.
-  SwapProcessesContentBrowserClient test_browser_client;
-  content::ContentBrowserClient* original_browser_client =
-      content::SetBrowserClientForTesting(&test_browser_client);
-
-  PrerenderTestURL(CreateServerRedirect(kDestPath), FINAL_STATUS_OPEN_URL, 0);
-
-  ui_test_utils::NavigateToURL(browser(),
-                               embedded_test_server()->GetURL(kDestPath));
-
-  content::SetBrowserClientForTesting(original_browser_client);
 }
 
 // Checks that prerenders are aborted on cross-process navigation from
