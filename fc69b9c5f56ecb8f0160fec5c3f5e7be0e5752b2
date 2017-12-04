@@ -16,6 +16,24 @@
       "revId": "fc69b9c5f56ecb8f0160fec5c3f5e7be0e5752b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3b9d7f_78bf274a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetSwipeDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-04T16:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed598de7_33ca3466",
+      "revId": "fc69b9c5f56ecb8f0160fec5c3f5e7be0e5752b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
