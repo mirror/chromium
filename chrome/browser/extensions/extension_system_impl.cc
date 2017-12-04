@@ -351,7 +351,7 @@ void ExtensionSystemImpl::Shared::Observe(
 //
 
 ExtensionSystemImpl::ExtensionSystemImpl(Profile* profile)
-    : profile_(profile) {
+    : cookie_notifier_(profile), profile_(profile) {
   shared_ = ExtensionSystemSharedFactory::GetForBrowserContext(profile);
 
   if (!profile->IsOffTheRecord()) {

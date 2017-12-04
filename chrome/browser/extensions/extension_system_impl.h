@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/extension_cookie_notifier.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/browser/extension_system.h"
@@ -155,6 +156,8 @@ class ExtensionSystemImpl : public ExtensionSystem {
 
     OneShotEvent ready_;
   };
+
+  ExtensionCookieNotifier cookie_notifier_;
 
   Profile* profile_;
 
