@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada5737c_a20a23e0",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-04T13:59:08Z",
+      "side": 1,
+      "message": "Not sure we want to keep this or not - partial pointer overwrite is still potentially an issue with the offset-only approach, although much less severe?",
+      "range": {
+        "startLine": 568,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 69
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
