@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67a31dc_c2011824",
+        "filename": "sandbox/linux/seccomp-bpf/sandbox_bpf_test_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-12-04T16:17:17Z",
+      "side": 1,
+      "message": "Remove \"and\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "5009734f1687978f94ce58a2d1724cdd46e6d89f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
