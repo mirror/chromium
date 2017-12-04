@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c6be4438_b703eb6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-04T23:20:49Z",
+      "side": 1,
+      "message": "I see, this is why we can\u0027t simply change the definition of LayoutBox::ShouldClipOverflow().\n\nI think it is weird for PaintLayerPainter to apply overflow clip for foreground phase though. BlockPainter/BoxClipper would have applied it at object level anyway. IMO PaintLayerPainter should always only apply background clip. (There may be some implication with multicol though, will need to try and see.)",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1753b845_c0ebae34",
         "filename": "third_party/WebKit/LayoutTests/TestExpectations",
         "patchSetId": 10

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab845f75_4b86e6d0",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-04T23:20:49Z",
+      "side": 1,
+      "message": "You\u0027ll need to adjust for negative visual overflow like the code below. If you meant to position and size the child containment layer to the padding box, you can copy the code below but replace ClippingRect with PaddingBoxRect.\n\n(But ideally if we can just redefine LayoutBox::ShouldClipOverflow that would be awesome.)",
+      "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
