@@ -28,7 +28,7 @@
 #include "content/browser/renderer_host/browser_compositor_view_mac.h"
 #include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
 #include "content/browser/renderer_host/input/mouse_wheel_rails_filter_mac.h"
-#include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/renderer_host/render_widget_host_view_desktop_base.h"
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/content_export.h"
 #include "content/common/cursors/webcursor.h"
@@ -247,7 +247,7 @@ namespace content {
 //
 // RenderWidgetHostView class hierarchy described in render_widget_host_view.h.
 class CONTENT_EXPORT RenderWidgetHostViewMac
-    : public RenderWidgetHostViewBase,
+    : public RenderWidgetHostViewDesktopBase,
       public BrowserCompositorMacClient,
       public TextInputManager::Observer,
       public ui::AcceleratedWidgetMacNSView,

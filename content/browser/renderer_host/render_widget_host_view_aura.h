@@ -26,7 +26,7 @@
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/compositor/owned_mailbox.h"
-#include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/renderer_host/render_widget_host_view_desktop_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_event_handler.h"
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/content_export.h"
@@ -78,7 +78,7 @@ class TouchSelectionControllerClientAura;
 
 // RenderWidgetHostView class hierarchy described in render_widget_host_view.h.
 class CONTENT_EXPORT RenderWidgetHostViewAura
-    : public RenderWidgetHostViewBase,
+    : public RenderWidgetHostViewDesktopBase,
       public RenderWidgetHostViewEventHandler::Delegate,
       public TextInputManager::Observer,
       public ui::TextInputClient,
