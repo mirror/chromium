@@ -38,7 +38,7 @@ namespace {
 const viz::ResourceFormat kRGBResourceFormat = viz::RGBA_8888;
 
 VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
-    GLuint format,
+    media::VideoPixelFormat format,
     GLuint target,
     int num_textures,
     gfx::BufferFormat* buffer_format,
