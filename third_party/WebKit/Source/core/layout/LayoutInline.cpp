@@ -408,6 +408,7 @@ void LayoutInline::AddChildIgnoringContinuation(LayoutObject* new_child,
 
 LayoutInline* LayoutInline::Clone() const {
   LayoutInline* clone_inline = new LayoutInline(GetNode());
+  DCHECK(!IsAnonymous());
   clone_inline->SetStyle(MutableStyle());
   clone_inline->SetIsInsideFlowThread(IsInsideFlowThread());
   return clone_inline;
