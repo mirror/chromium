@@ -100,11 +100,17 @@ void AccessibilityFocusRingController::SetFocusRing(
   OnLayerChange(&focus_animation_info_);
   focus_rects_ = rects;
   UpdateFocusRingsFromFocusRects();
+  if (observer_) {
+    observer_->Run();
+  }
 }
 
 void AccessibilityFocusRingController::HideFocusRing() {
   focus_rects_.clear();
   UpdateFocusRingsFromFocusRects();
+  if (observer_) {
+    observer_->Run();
+  }
 }
 
 void AccessibilityFocusRingController::UpdateFocusRingsFromFocusRects() {
@@ -208,6 +214,15 @@ void AccessibilityFocusRingController::SetNoFadeForTesting() {
   cursor_animation_info_.fade_out_time = base::TimeDelta::FromHours(1);
   caret_animation_info_.fade_in_time = base::TimeDelta();
   caret_animation_info_.fade_out_time = base::TimeDelta::FromHours(1);
+}
+
+void AccessibilityFocusRingController::SetFocusRingObserver(
+    const base::RepeatingCallback<void()>& observer) {
+  observer_ = &observer;
+}
+
+void AccessibilityFocusRingController::ClearFocusRingObserver() {
+  observer_ = nullptr;
 }
 
 void AccessibilityFocusRingController::RectsToRings(

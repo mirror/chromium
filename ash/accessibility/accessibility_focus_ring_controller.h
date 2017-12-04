@@ -12,6 +12,7 @@
 #include "ash/accessibility/accessibility_focus_ring_layer.h"
 #include "ash/accessibility/accessibility_highlight_layer.h"
 #include "ash/ash_export.h"
+#include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/optional.h"
@@ -61,12 +62,24 @@ class ASH_EXPORT AccessibilityFocusRingController
   // Don't fade in / out, for testing.
   void SetNoFadeForTesting();
 
+  // Get accessibility layers, for testing.
   AccessibilityCursorRingLayer* cursor_layer_for_testing() {
     return cursor_layer_.get();
   }
   AccessibilityCursorRingLayer* caret_layer_for_testing() {
     return caret_layer_.get();
   }
+  std::vector<std::unique_ptr<AccessibilityFocusRingLayer>>*
+  focus_ring_layers_for_testing() {
+    return &focus_layers_;
+  }
+  AccessibilityHighlightLayer* highlight_layer_for_testing() {
+    return highlight_layer_.get();
+  }
+
+  // For tests
+  void SetFocusRingObserver(const base::RepeatingCallback<void()>& observer);
+  void ClearFocusRingObserver();
 
  protected:
   AccessibilityFocusRingController();
@@ -144,6 +157,8 @@ class ASH_EXPORT AccessibilityFocusRingController
   float highlight_opacity_;
 
   friend struct base::DefaultSingletonTraits<AccessibilityFocusRingController>;
+
+  const base::RepeatingCallback<void()>* observer_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(AccessibilityFocusRingController);
 };
