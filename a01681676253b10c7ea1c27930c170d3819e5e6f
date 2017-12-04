@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "448809eb_e88d1ef6",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-04T21:25:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8512adb1_e3e11c6f",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0ccb43c_4a9fd41e",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4b10bfa5_323841f9",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-04T21:25:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1310d06a_fb6d84e1",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee6ebb6_9977f907",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
         "patchSetId": 5
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Removed unused ids.",
       "parentUuid": "8ee6ebb6_9977f907",
+      "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b1dc4ce_3a3c2f17",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-04T21:25:03Z",
+      "side": 1,
+      "message": "Maybe the \u003cspan\u003e can be removed entirely if it doesn\u0027t affect layout?",
+      "parentUuid": "adc2bc00_0c9322af",
       "revId": "a01681676253b10c7ea1c27930c170d3819e5e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
