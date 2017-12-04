@@ -16,6 +16,24 @@
       "revId": "d3be0d9e057ae132768b39af5dde543c9b6eba85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b2cca9_bf8ce1ba",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-04T20:36:34Z",
+      "side": 1,
+      "message": "Changed to last_committed_source_id_, initialized to ukm::kInvalidSourceId",
+      "parentUuid": "22ea3cf4_e5b60135",
+      "revId": "d3be0d9e057ae132768b39af5dde543c9b6eba85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

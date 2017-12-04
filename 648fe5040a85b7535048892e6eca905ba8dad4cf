@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19ad75cb_b7b70643",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-04T20:36:34Z",
+      "side": 1,
+      "message": "Changed to tracking last_committed_source_id_ instead, this will now return ukm::kInvalidSourceId if unset.",
+      "parentUuid": "906b5a8d_a4c6c2c2",
+      "revId": "648fe5040a85b7535048892e6eca905ba8dad4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7083a44b_abd85bac",
         "filename": "components/ukm/content/source_url_recorder.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "648fe5040a85b7535048892e6eca905ba8dad4cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f507159_f6eaaabf",
+        "filename": "components/ukm/content/source_url_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-04T20:36:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7083a44b_abd85bac",
+      "revId": "648fe5040a85b7535048892e6eca905ba8dad4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
