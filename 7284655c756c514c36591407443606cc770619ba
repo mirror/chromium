@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3607f72_c59f863f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-04T11:43:09Z",
+      "side": 1,
+      "message": "the remainder",
+      "range": {
+        "startLine": 66,
+        "startChar": 54,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4479d905_d7105418",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-04T11:43:09Z",
+      "side": 1,
+      "message": "For my understanding: is the code better than this?\n\nfor (const auto\u0026 token: tokens) {\n  if (token.size() \u003c kMinimumWordLength)\n    short_tokens.push_back(token.as_string());\n}",
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc707c7_9adbbd97",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-04T11:43:09Z",
+      "side": 1,
+      "message": "Does it make sense first to strip characters and then copy the whole thing?\n\nHere is my proposal for lines 92-102:\n\nif (!tokens.empty())\n  field_data_value-\u003epush_back(\u0027$\u0027);\n\nfield_data_value-\u003ereserve(field_data_value.size() + lowercase_value.size());\nfor (const auto\u0026 token : tokens)\n  field_data_value-\u003eappend(token);\n\nIf you like you could combine these two loops (this and the one from line 88) into one.",
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf611150_216a01a9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-04T11:43:09Z",
+      "side": 1,
+      "message": "should this be base::char16?",
+      "range": {
+        "startLine": 95,
+        "startChar": 19,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "7284655c756c514c36591407443606cc770619ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
