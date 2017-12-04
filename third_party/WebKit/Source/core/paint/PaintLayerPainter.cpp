@@ -629,8 +629,8 @@ bool PaintLayerPainter::NeedsToClip(
   // Clipping will be applied by property nodes directly for SPv2.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return false;
+  DCHECK(!(paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase));
   return clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
-         (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) ||
          clip_rect.HasRadius();
 }
 
@@ -958,7 +958,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
 
   Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    DCHECK(phase != PaintPhase::kClippingMask);
     PaintChunkProperties chunk_properties(
         *fragment.fragment_data->LocalBorderBoxProperties());
     chunk_properties.backface_hidden =
@@ -980,42 +979,16 @@ void PaintLayerPainter::PaintFragmentWithPhase(
     DisplayItem::Type clip_type =
         DisplayItem::PaintPhaseToClipLayerFragmentType(phase);
     LayerClipRecorder::BorderRadiusClippingRule clipping_rule;
-    switch (phase) {
-      case PaintPhase::kSelfBlockBackgroundOnly:  // Background painting will
-                                                  // handle clipping to self.
-      case PaintPhase::kSelfOutlineOnly:
-      case PaintPhase::kMask:  // Mask painting will handle clipping to self.
-        clipping_rule = LayerClipRecorder::kDoNotIncludeSelfForBorderRadius;
-        break;
-      case PaintPhase::kClippingMask:
-        if (paint_flags & kPaintLayerPaintingAncestorClippingMaskPhase) {
-          // The ancestor is the thing that needs to clip, so do not include
-          // this layer's clips.
-          clipping_rule = LayerClipRecorder::kDoNotIncludeSelfForBorderRadius;
-          // The ancestor clipping mask may have a larger visual rect than
-          // paint_layer_, since it includes ancestor clips.
-          client = paint_layer_.GetCompositedLayerMapping()
-                       ->AncestorClippingMaskLayer();
-          break;
-        }
-      default:
-        clipping_rule = LayerClipRecorder::kIncludeSelfForBorderRadius;
-        break;
-    }
+    // For these phases the painting will handle clipping to self.
+    if (phase == PaintPhase::kSelfBlockBackgroundOnly ||
+        phase == PaintPhase::kSelfOutlineOnly || phase == PaintPhase::kMask)
+      clipping_rule = LayerClipRecorder::kDoNotIncludeSelfForBorderRadius;
+    else
+      clipping_rule = LayerClipRecorder::kIncludeSelfForBorderRadius;
 
     clip_recorder.emplace(context, paint_layer_, clip_type, clip_rect,
                           painting_info.root_layer, fragment.pagination_offset,
                           paint_flags, *client, clipping_rule);
-  }
-
-  // If we are painting a mask for any reason and we have already processed the
-  // clips, there is no need to go through the remaining painting pipeline.
-  // We know that the mask just needs the area bounded by the clip rects to be
-  // filled with black.
-  if (clip_recorder && phase == PaintPhase::kClippingMask) {
-    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
-    FillMaskingFragment(context, clip_rect, *client);
-    return;
   }
 
   LayoutRect new_cull_rect(clip_rect.Rect());
@@ -1214,9 +1187,11 @@ void PaintLayerPainter::PaintAncestorClippingMask(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
+  const DisplayItemClient& client =
+      *paint_layer_.GetCompositedLayerMapping()->AncestorClippingMaskLayer();
+  Optional<ScopedPaintChunkProperties> properties;
+  Optional<LayerClipRecorder> clip_recorder;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    const DisplayItemClient& client =
-        *paint_layer_.GetCompositedLayerMapping()->AncestorClippingMaskLayer();
     auto state = paint_layer_.GetLayoutObject()
                      .FirstFragment()
                      .GetRarePaintData()
@@ -1224,16 +1199,18 @@ void PaintLayerPainter::PaintAncestorClippingMask(
     state.SetEffect(context.GetPaintController()
                         .CurrentPaintChunkProperties()
                         .property_tree_state.Effect());
-    ScopedPaintChunkProperties properties(
-        context.GetPaintController(), state, client,
-        DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
-    FillMaskingFragment(context, fragment.foreground_rect, client);
-    return;
+    properties.emplace(context.GetPaintController(), state, client,
+                       DisplayItem::kClippingMask);
+  } else {
+    clip_recorder.emplace(
+        context, paint_layer_, DisplayItem::kClipLayerClippingMask,
+        fragment.foreground_rect, local_painting_info.root_layer,
+        fragment.pagination_offset, paint_flags, client,
+        // The ancestor is the thing that needs to clip, so do not include
+        // this layer's clips.
+        LayerClipRecorder::kDoNotIncludeSelfForBorderRadius);
   }
-
-  PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
-                         fragment.foreground_rect, local_painting_info,
-                         paint_flags, kHasNotClipped);
+  FillMaskingFragment(context, fragment.foreground_rect, client);
 }
 
 void PaintLayerPainter::PaintChildClippingMaskForFragments(
@@ -1245,25 +1222,37 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
   if (layer_fragments.size() > 1)
     cache_skipper.emplace(context);
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    const DisplayItemClient& client =
-        *paint_layer_.GetCompositedLayerMapping()->ChildClippingMaskLayer();
-    for (auto& fragment : layer_fragments) {
-      ScopedPaintChunkProperties fragment_paint_chunk_properties(
+  const DisplayItemClient& client =
+      *paint_layer_.GetCompositedLayerMapping()->ChildClippingMaskLayer();
+  for (auto& fragment : layer_fragments) {
+    Optional<ScopedPaintChunkProperties> fragment_paint_chunk_properties;
+    Optional<LayerClipRecorder> clip_recorder;
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      fragment_paint_chunk_properties.emplace(
           context.GetPaintController(),
           fragment.fragment_data->GetRarePaintData()->ContentsProperties(),
-          client,
-          DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask));
-      FillMaskingFragment(context, fragment.foreground_rect, client);
+          client, DisplayItem::kClippingMask);
+    } else {
+      clip_recorder.emplace(
+          context, paint_layer_, DisplayItem::kClipLayerClippingMask,
+          fragment.foreground_rect, local_painting_info.root_layer,
+          fragment.pagination_offset, paint_flags, client,
+          LayerClipRecorder::kIncludeSelfForBorderRadius);
     }
-    return;
+    FillMaskingFragment(context, fragment.foreground_rect, client);
   }
+}
 
-  for (auto& fragment : layer_fragments) {
-    PaintFragmentWithPhase(PaintPhase::kClippingMask, fragment, context,
-                           fragment.foreground_rect, local_painting_info,
-                           paint_flags, kHasNotClipped);
-  }
+void PaintLayerPainter::FillMaskingFragment(GraphicsContext& context,
+                                            const ClipRect& clip_rect,
+                                            const DisplayItemClient& client) {
+  auto type = DisplayItem::kClippingMask;
+  if (DrawingRecorder::UseCachedDrawingIfPossible(context, client, type))
+    return;
+
+  DrawingRecorder recorder(context, client, type);
+  IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
+  context.FillRect(snapped_clip_rect, Color::kBlack);
 }
 
 void PaintLayerPainter::PaintOverlayScrollbars(
@@ -1279,19 +1268,6 @@ void PaintLayerPainter::PaintOverlayScrollbars(
   Paint(context, painting_info, kPaintLayerPaintingOverlayScrollbars);
 
   paint_layer_.SetContainsDirtyOverlayScrollbars(false);
-}
-
-void PaintLayerPainter::FillMaskingFragment(GraphicsContext& context,
-                                            const ClipRect& clip_rect,
-                                            const DisplayItemClient& client) {
-  DisplayItem::Type type =
-      DisplayItem::PaintPhaseToDrawingType(PaintPhase::kClippingMask);
-  if (DrawingRecorder::UseCachedDrawingIfPossible(context, client, type))
-    return;
-
-  DrawingRecorder recorder(context, client, type);
-  IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
-  context.FillRect(snapped_clip_rect, Color::kBlack);
 }
 
 }  // namespace blink

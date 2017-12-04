@@ -161,9 +161,6 @@ void NGBoxFragmentPainter::PaintObject(const PaintInfo& paint_info,
   if (paint_phase == PaintPhase::kMask && is_visible)
     return PaintMask(paint_info, paint_offset);
 
-  if (paint_phase == PaintPhase::kClippingMask && is_visible)
-    return PaintClippingMask(paint_info, paint_offset);
-
   // TODO(eae): Add PDF URL painting for printing.
   // if (paint_phase == PaintPhase::kForeground && paint_info.IsPrinting())
   //  ObjectPainter(box_fragment_)
@@ -248,11 +245,6 @@ void NGBoxFragmentPainter::PaintFloats(const PaintInfo&, const LayoutPoint&) {
 }
 
 void NGBoxFragmentPainter::PaintMask(const PaintInfo&, const LayoutPoint&) {
-  // TODO(eae): Implement.
-}
-
-void NGBoxFragmentPainter::PaintClippingMask(const PaintInfo&,
-                                             const LayoutPoint&) {
   // TODO(eae): Implement.
 }
 
