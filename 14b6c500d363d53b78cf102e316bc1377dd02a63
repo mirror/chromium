@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9406171a_c93b5909",
+        "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-12-04T06:32:06Z",
+      "side": 0,
+      "message": "I don\u0027t know how to handle this. The variable is used in another code line so I\u0027m not sure if it\u0027s okey to remove this.",
+      "parentUuid": "15ef1bf7_dddfdfdc",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 23
+      },
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dad39260_c066dc84",
         "filename": "chrome/browser/safe_browsing/services_delegate_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-27T19:05:58Z",
       "side": 0,
       "message": "This is disabling the CSD feature completely -- we don\u0027t want that.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b45e62d_46621370",
+        "filename": "chrome/browser/safe_browsing/services_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-12-04T06:32:06Z",
+      "side": 0,
+      "message": "Should I make it always be called?",
+      "parentUuid": "dad39260_c066dc84",
       "range": {
         "startLine": 50,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fb5e99_434f6e61",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-12-04T06:32:06Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "32885431_b757ddf2",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 41
+      },
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
