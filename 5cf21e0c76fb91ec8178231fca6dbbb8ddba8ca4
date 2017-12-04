@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0d894b_9ac4cda8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/regions-id.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-04T14:26:53Z",
+      "side": 1,
+      "message": "Since we don\u0027t update the .test files (because they are not imported it seems...) this makes the generated files out-of-sync with the test description file. Do you have the test description file locally and could upstream that separately? (Or should we file a bug to see about getting the .test files properly imported?)\n\nDitto for other added/modified tests.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb33878e_49b19798",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-04T14:26:53Z",
+      "side": 1,
+      "message": "Did you run this through the parser \"reference implementation\"? (webvtt/parsing/file-parsing/tools/parser.py)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

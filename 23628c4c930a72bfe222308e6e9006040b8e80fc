@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "83cb8b60_73126d61",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-04T14:26:53Z",
+      "side": 1,
+      "message": "I meant to represent it by adding additional states to ParseState as needed.",
+      "parentUuid": "82f39bfc_9f7f7d3a",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "23628c4c930a72bfe222308e6e9006040b8e80fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df4977a_a0962298",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
         "patchSetId": 11
