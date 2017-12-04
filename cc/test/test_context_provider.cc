@@ -67,6 +67,12 @@ class TestGLES2InterfaceForContextProvider : public TestGLES2Interface {
       case GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS:
         *params = 8;
         return;
+      case GL_MAX_TEXTURE_SIZE:
+        *params = 2048;
+        break;
+      case GL_MAX_RENDERBUFFER_SIZE:
+        *params = 2048;
+        break;
       default:
         break;
     }
