@@ -787,9 +787,12 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
     } else {
       // Creating the raster task here will acquire resources, but
       // this resource usage has already been accounted for above.
-      tile->raster_task_ =
-          CreateRasterTask(prioritized_tile, client_->GetRasterColorSpace(),
-                           &work_to_schedule.checker_image_decode_queue);
+      auto raster_task = CreateRasterTask(
+          prioritized_tile, client_->GetRasterColorSpace(), &work_to_schedule);
+      if (!raster_task)
+        break;
+
+      tile->raster_task_ = std::move(raster_task);
     }
 
     memory_usage += memory_required_by_tile_to_be_scheduled;
@@ -1049,6 +1052,11 @@ void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
   std::vector<scoped_refptr<TileTask>> new_locked_image_tasks =
       image_controller_.SetPredecodeImages(std::move(new_locked_images),
                                            tracing_info);
+
+  new_locked_image_tasks.insert(new_locked_image_tasks.end(),
+                                work_to_schedule.bitcoin_images.begin(),
+                                work_to_schedule.bitcoin_images.end());
+
   for (auto& task : new_locked_image_tasks) {
     auto decode_it = std::find_if(graph_.nodes.begin(), graph_.nodes.end(),
                                   [&task](const TaskGraph::Node& node) {
@@ -1112,7 +1120,7 @@ void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
 scoped_refptr<TileTask> TileManager::CreateRasterTask(
     const PrioritizedTile& prioritized_tile,
     const gfx::ColorSpace& color_space,
-    CheckerImageTracker::ImageDecodeQueue* checker_image_decode_queue) {
+    PrioritizedWorkToSchedule* work_to_schedule) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "TileManager::CreateRasterTask");
   Tile* tile = prioritized_tile.tile();
@@ -1155,27 +1163,13 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
       scheduled_draw_images_[tile->id()];
   sync_decoded_images.clear();
   PaintImageIdFlatSet images_to_skip;
+  std::vector<PaintImage> checkered_images;
   base::flat_map<PaintImage::Id, size_t> image_id_to_current_frame_index;
   if (!skip_images) {
-    std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(
         prioritized_tile, color_space, &sync_decoded_images, &checkered_images,
         partial_tile_decode ? &invalidated_rect : nullptr,
         &image_id_to_current_frame_index);
-    for (const auto& image : checkered_images) {
-      DCHECK(!image.ShouldAnimate());
-
-      images_to_skip.insert(image.stable_id());
-
-      // This can be the case for tiles on the active tree that will be replaced
-      // or are occluded on the pending tree. While we still need to continue
-      // skipping images for these tiles, we don't need to decode them since
-      // they will not be required on the next active tree.
-      if (prioritized_tile.should_decode_checkered_images_for_tile()) {
-        checker_image_decode_queue->emplace_back(
-            image, CheckerImageTracker::DecodeType::kRaster);
-      }
-    }
   }
 
   const bool has_checker_images = !images_to_skip.empty();
@@ -1190,6 +1184,33 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   std::vector<DrawImage> at_raster_images;
   image_controller_.GetTasksForImagesAndRef(
       &sync_decoded_images, &at_raster_images, &decode_tasks, tracing_info);
+
+  bool is_prepaint =
+      !prioritized_tile.tile()->required_for_activation() &&
+      !prioritized_tile.tile()->required_for_draw() &&
+      prioritized_tile.priority().priority_bin != TilePriority::NOW;
+  if (at_raster_images.size() > 0 && is_prepaint) {
+    image_controller_.UnrefImages(sync_decoded_images);
+    work_to_schedule->bitcoin_images.insert(
+        work_to_schedule->bitcoin_images.end(), decode_tasks.begin(),
+        decode_tasks.end());
+    return nullptr;
+  }
+
+  for (const auto& image : checkered_images) {
+    DCHECK(!image.ShouldAnimate());
+
+    images_to_skip.insert(image.stable_id());
+
+    // This can be the case for tiles on the active tree that will be replaced
+    // or are occluded on the pending tree. While we still need to continue
+    // skipping images for these tiles, we don't need to decode them since
+    // they will not be required on the next active tree.
+    if (prioritized_tile.should_decode_checkered_images_for_tile()) {
+      work_to_schedule->checker_image_decode_queue.emplace_back(
+          image, CheckerImageTracker::DecodeType::kRaster);
+    }
+  }
 
   std::unique_ptr<RasterBuffer> raster_buffer =
       raster_buffer_provider_->AcquireBufferForRaster(
