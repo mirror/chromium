@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f39c4e09_fd81fe70",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-12-04T22:50:13Z",
+      "side": 0,
+      "message": "Why remove this? This still needs to be verified.",
+      "range": {
+        "startLine": 596,
+        "startChar": 2,
+        "endLine": 596,
+        "endChar": 34
+      },
+      "revId": "6f6a454a09f5ec162d0c4c9061b346698a4b1c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
