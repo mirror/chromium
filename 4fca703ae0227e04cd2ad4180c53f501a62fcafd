@@ -22,6 +22,30 @@
       "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf2d8fd_0781c185",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-04T17:14:24Z",
+      "side": 1,
+      "message": "You probably know this, but to to be overcommunication:\n* The only targets that currently use annotation processors are the robolectric ones\n* Errorprone uses processorpath to have its plugin discovered, but it isn\u0027t actually an annotation processor.\n\nBuildConfig.java is special in that it uses \"jar_excluded_patterns\" to exclude itself from being put into base_java\u0027s .jar. However, it will still exist in base_java\u0027s .inferface.jar.\n\nIt looks like there\u0027s logic above (_enable_interface_jars_javac) that toggles from interface.jar -\u003e .jar when an annotation processor is present.\n\nJust tried removing it and I get:\n\njava.lang.ClassFormatError: Absent Code attribute in method that is not native or abstract in class file com/google/auto/service/processor/AutoServiceProcessor\n\n\nThe stack doesn\u0027t have any robolectric classes, so I think all annotation processors are broken with interface jars.\n\nSo.....\n\nPossible fixes:\n 1 Change from interface .jars -\u003e Bazel\u0027s turbine (this is interface jars v2)\n 2 Create a third output for java_library: foo.classpath.jar\n 3 Change jar_excluded_patterns so that they are not applied until link-time\n\n3 is the best fix vs effort I think. I can look at adding it today.",
+      "parentUuid": "2e14a43f_670ff217",
+      "range": {
+        "startLine": 2491,
+        "startChar": 6,
+        "endLine": 2491,
+        "endChar": 21
+      },
+      "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
