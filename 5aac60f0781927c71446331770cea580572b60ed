@@ -22,6 +22,30 @@
       "revId": "5aac60f0781927c71446331770cea580572b60ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ce7a7a_cf4bb509",
+        "filename": "chrome/browser/cryptauth/chrome_cryptauth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-12-04T19:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590ed1af_01bddf89",
+      "range": {
+        "startLine": 322,
+        "startChar": 29,
+        "endLine": 322,
+        "endChar": 59
+      },
+      "revId": "5aac60f0781927c71446331770cea580572b60ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
