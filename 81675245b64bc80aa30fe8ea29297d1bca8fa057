@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "107e9733_bbca4305",
+        "filename": "chrome/browser/chrome_browser_application_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-04T19:55:39Z",
+      "side": 1,
+      "message": "Just a question, not specific to this CL: why is the size part of the type but the name isn\u0027t? If it were, then I *think* these could just be typedefs (or could be specified at the time of use).",
+      "range": {
+        "startLine": 227,
+        "startChar": 40,
+        "endLine": 227,
+        "endChar": 43
+      },
+      "revId": "81675245b64bc80aa30fe8ea29297d1bca8fa057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f384c1_b4422ef6",
         "filename": "chrome/browser/ui/cocoa/toolbar/toolbar_controller.mm",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-12-04T18:08:45Z",
       "side": 1,
       "message": "Did you still want to collect this?",
+      "revId": "81675245b64bc80aa30fe8ea29297d1bca8fa057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cc67df_194a9263",
+        "filename": "chrome/browser/ui/cocoa/toolbar/toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-04T19:55:39Z",
+      "side": 1,
+      "message": "You can nuke it.",
+      "parentUuid": "d4f384c1_b4422ef6",
       "revId": "81675245b64bc80aa30fe8ea29297d1bca8fa057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
