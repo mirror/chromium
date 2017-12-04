@@ -81,6 +81,9 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
   TextMetrics* measureText(const String& text);
 
   // BaseRenderingContext2D implementation
+  RenderingContext2DType GetRenderingContext2DType() const override {
+    return Offscreen2D;
+  }
   bool OriginClean() const final;
   void SetOriginTainted() final;
   bool WouldTaintOrigin(CanvasImageSource*, ExecutionContext*) final;
