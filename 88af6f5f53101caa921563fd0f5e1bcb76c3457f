@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8069fe92_07056554",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-04T17:24:47Z",
+      "side": 1,
+      "message": "nit: out of date, delete",
+      "range": {
+        "startLine": 312,
+        "startChar": 37,
+        "endLine": 313,
+        "endChar": 51
+      },
+      "revId": "88af6f5f53101caa921563fd0f5e1bcb76c3457f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e566d0f_c2c77462",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-04T17:24:47Z",
+      "side": 1,
+      "message": "also out of date",
+      "range": {
+        "startLine": 315,
+        "startChar": 19,
+        "endLine": 317,
+        "endChar": 22
+      },
+      "revId": "88af6f5f53101caa921563fd0f5e1bcb76c3457f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
