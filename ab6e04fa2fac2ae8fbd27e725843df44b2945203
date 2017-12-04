@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b0420a_61abf5f0",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T18:34:10Z",
+      "side": 1,
+      "message": "nit: this actually isn\u0027t necessary - RunLoops allow Quit() to be called before Run(), and correctly exit.  So this could just be:\n\nwait_for_logs_response_run_loop_.Run();\nASSERT_TRUE(response());",
+      "revId": "ab6e04fa2fac2ae8fbd27e725843df44b2945203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
