@@ -16,6 +16,24 @@
       "revId": "7146806395549ce8a7193bd73ae35938f4d7a2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18383b4f_223bc3dd",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-04T05:15:51Z",
+      "side": 1,
+      "message": "Either |host_for_client_| or |host_for_global_scope_| should be non-null here, because they are set to null only by DetachAndMaybeDestroy() when Blink GC released the last reference to |this|, here we\u0027re inside the Update() called from Blink, means Blink is still holding reference to |this|.\nOf course, although they\u0027re non-null, maybe the SWRegistrationHost Mojo connection has already broken, in such a case line255 will just drop the Mojo request silently without any error.",
+      "parentUuid": "af64d843_5f0b502e",
+      "revId": "7146806395549ce8a7193bd73ae35938f4d7a2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
