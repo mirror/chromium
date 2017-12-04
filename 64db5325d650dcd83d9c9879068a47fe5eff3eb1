@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "8ac83959_576e97cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-04T19:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ccfc77c_ea5ee90d",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f5c8eba_82e31ad8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -402,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "9ae2ae3c_9dc7e077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-04T19:30:14Z",
+      "side": 1,
+      "message": "It makes sense to have the presenter handle the concept of the current dialog. See changes in the ModalDialogManager.Presenter class.",
+      "parentUuid": "e07edbea_330ff036",
+      "range": {
+        "startLine": 74,
+        "startChar": 63,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f483868a_1974df23",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 8
@@ -577,6 +625,24 @@
       "writtenOn": "2017-11-27T22:47:44Z",
       "side": 1,
       "message": "Should we add an assert here that the view needs to be scrollable (potentially a TODO)?\n\nI think it would need to be one of the following:\nhttps://developer.android.com/reference/android/support/v4/view/ScrollingView.html\nhttps://developer.android.com/reference/android/widget/AbsListView.html\nhttps://developer.android.com/reference/android/widget/ScrollView.html\n\nIf we don\u0027t add such a thing, then I worry that people will start adding views that won\u0027t play nicely with small phones.",
+      "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e3feb1_589b24f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-04T19:30:14Z",
+      "side": 1,
+      "message": "Asserting such a thing might be difficult, since the JS modal dialog is already an exception. It has a scroll view for the message view, but the PromptTextView and the suppress box are not scrollable so that it is visible without scrolling even if message is too long.",
+      "parentUuid": "9a68cf79_9b72845f",
       "revId": "64db5325d650dcd83d9c9879068a47fe5eff3eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
