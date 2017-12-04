@@ -55,6 +55,9 @@ class _SourceMapper(object):
   def unmatched_paths_count(self):
     return len(self._unmatched_paths)
 
+  def AllPaths(self):
+    return self._dep_map.keys()
+
 
 def _ParseNinjaPathList(path_list):
   ret = path_list.replace('\\ ', '\b')
