@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b2b2cd_fe37f508",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-12-04T17:02:17Z",
+      "side": 1,
+      "message": "Agreed that the template could be cached, however, not sure about the statement that the template is leaked. v8::Function::New allocates on the JS heap, meaning the object will be GC-ed by v8 - am I missing something?",
+      "revId": "da41776e57685c169abda2435c4f0b92f3b4265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
