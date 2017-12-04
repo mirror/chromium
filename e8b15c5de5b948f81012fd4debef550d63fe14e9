@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ae41a5_317c2b15",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T02:13:28Z",
+      "side": 1,
+      "message": "nit: Maybe also be more specific about what \"network-specific callbacks\" refer to?\nOr could move this variable to |mNetworkCallback| and |mNetworkRequest| so it\u0027s clearer that these three members are related.",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbe739a_59c6e3aa",
+        "filename": "net/android/java/src/org/chromium/net/NetworkChangeNotifierAutoDetect.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T02:13:28Z",
+      "side": 1,
+      "message": "Could you expand on why \"it will almost certainly fail\" ? \nI read the bug report but didn\u0027t get why subsequent attempts would fail as well.\n\nMaybe link to crbug.com/791025 here as well.",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba0e897_7f3cfce7",
+        "filename": "net/android/network_change_notifier_delegate_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T02:13:28Z",
+      "side": 1,
+      "message": "*Optional*: One thing I found hard to grok about the NCN Android is that the initialization is done in different places and needs to be in a specific order.\n\nMaybe we could add a note here or in the header file?\n\nFor instance, even though we do Java_NetworkChangeNotifier_init() here, the initialization of the global java singleton is actually done earlier than this. The init() just returns us a pointer to the Java object that we then use. The AutoDetect is also expected to be initialized with the appropriate policy for |register_network_callback_failed_| to be meaningful.",
+      "revId": "e8b15c5de5b948f81012fd4debef550d63fe14e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
