@@ -67,6 +67,9 @@ extern const LayoutOffset kButtonFadeOutXOffset;
 // a popover anchored to it.
 extern const CGFloat kPopoverAnchorHorizontalPadding;
 
+// Height of the shadown displayed below the toolbar.
+extern const CGFloat kToolbarShadowHeight;
+
 // Toolbar style.  Determines which button images are used.
 enum ToolbarControllerStyle {
   ToolbarControllerStyleLightMode = 0,
