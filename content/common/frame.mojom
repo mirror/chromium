@@ -176,5 +176,10 @@ interface FrameHost {
   BeginNavigation(
       CommonNavigationParams common_params,
       BeginNavigationParams begin_params);
+
+  // Sent by the renderer to indicate that a same document navigation
+  // started in the renderer process.
+  DidCommitSameDocumentNavigation(
+      DidCommitProvisionalLoadParams params);
 };
 
