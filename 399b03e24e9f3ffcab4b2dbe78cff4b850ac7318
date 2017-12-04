@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ebc6e77_eafb00c1",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9526,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-04T15:24:25Z",
+      "side": 1,
+      "message": "Why does this need to be fuzzy?",
+      "range": {
+        "startLine": 9526,
+        "startChar": 2,
+        "endLine": 9526,
+        "endChar": 11
+      },
+      "revId": "399b03e24e9f3ffcab4b2dbe78cff4b850ac7318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9e5f1c_3bc8e815",
+        "filename": "ui/latency/latency_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-04T15:24:25Z",
+      "side": 1,
+      "message": "We use these outside of tracing sometimes. dtapuska@ just added a test relying on this method, I think.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "399b03e24e9f3ffcab4b2dbe78cff4b850ac7318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
