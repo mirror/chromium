@@ -8,6 +8,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/dictionary_sequence_or_dictionary.h"
 #include "core/animation/AnimationTestHelper.h"
 #include "core/animation/KeyframeEffectModel.h"
@@ -28,142 +29,154 @@ Element* AppendElement(Document& document) {
 
 TEST(AnimationEffectInputTest, SortedOffsets) {
   V8TestingScope scope;
-  Vector<Dictionary> js_keyframes;
-  v8::Local<v8::Object> keyframe1 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe2 = v8::Object::New(scope.GetIsolate());
+  ScriptState* script_state = scope.GetScriptState();
 
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "width", "100px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "offset", "0");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "width", "0px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "offset", "1");
+  V8ObjectBuilder keyframe1(script_state);
+  keyframe1.AddString("width", "100px");
+  keyframe1.AddString("offset", "0");
 
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe1, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe2, scope.GetExceptionState()));
+  V8ObjectBuilder keyframe2(script_state);
+  keyframe2.AddString("width", "0px");
+  keyframe2.AddString("offset", "1");
+
+  Vector<ScriptValue> blink_keyframes;
+  blink_keyframes.push_back(keyframe1.GetScriptValue());
+  blink_keyframes.push_back(keyframe2.GetScriptValue());
+
+  ScriptValue js_keyframes(
+      script_state,
+      ToV8(blink_keyframes, scope.GetContext()->Global(), scope.GetIsolate()));
 
   Element* element = AppendElement(scope.GetDocument());
   KeyframeEffectModelBase* effect = EffectInput::Convert(
-      element,
-      DictionarySequenceOrDictionary::FromDictionarySequence(js_keyframes),
-      EffectModel::kCompositeReplace, nullptr, scope.GetExceptionState());
+      element, js_keyframes, EffectModel::kCompositeReplace,
+      scope.GetScriptState(), scope.GetExceptionState());
   EXPECT_FALSE(scope.GetExceptionState().HadException());
   EXPECT_EQ(1.0, effect->GetFrames()[1]->Offset());
 }
 
 TEST(AnimationEffectInputTest, UnsortedOffsets) {
   V8TestingScope scope;
-  Vector<Dictionary> js_keyframes;
-  v8::Local<v8::Object> keyframe1 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe2 = v8::Object::New(scope.GetIsolate());
+  ScriptState* script_state = scope.GetScriptState();
 
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "width", "0px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "offset", "1");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "width", "100px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "offset", "0");
+  V8ObjectBuilder keyframe1(script_state);
+  keyframe1.AddString("width", "0px");
+  keyframe1.AddString("offset", "1");
 
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe1, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe2, scope.GetExceptionState()));
+  V8ObjectBuilder keyframe2(script_state);
+  keyframe2.AddString("width", "100px");
+  keyframe2.AddString("offset", "0");
+
+  Vector<ScriptValue> blink_keyframes;
+  blink_keyframes.push_back(keyframe1.GetScriptValue());
+  blink_keyframes.push_back(keyframe2.GetScriptValue());
+
+  ScriptValue js_keyframes(
+      script_state,
+      ToV8(blink_keyframes, scope.GetContext()->Global(), scope.GetIsolate()));
 
   Element* element = AppendElement(scope.GetDocument());
-  EffectInput::Convert(
-      element,
-      DictionarySequenceOrDictionary::FromDictionarySequence(js_keyframes),
-      EffectModel::kCompositeReplace, nullptr, scope.GetExceptionState());
+  EffectInput::Convert(element, js_keyframes, EffectModel::kCompositeReplace,
+                       scope.GetScriptState(), scope.GetExceptionState());
   EXPECT_TRUE(scope.GetExceptionState().HadException());
   EXPECT_EQ(kV8TypeError, scope.GetExceptionState().Code());
 }
 
 TEST(AnimationEffectInputTest, LooslySorted) {
   V8TestingScope scope;
-  Vector<Dictionary> js_keyframes;
-  v8::Local<v8::Object> keyframe1 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe2 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe3 = v8::Object::New(scope.GetIsolate());
+  ScriptState* script_state = scope.GetScriptState();
 
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "width", "100px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "offset", "0");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "width", "200px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "width", "0px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "offset", "1");
+  V8ObjectBuilder keyframe1(script_state);
+  keyframe1.AddString("width", "100px");
+  keyframe1.AddString("offset", "0");
 
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe1, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe2, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe3, scope.GetExceptionState()));
+  V8ObjectBuilder keyframe2(script_state);
+  keyframe2.AddString("width", "200px");
+
+  V8ObjectBuilder keyframe3(script_state);
+  keyframe3.AddString("width", "0px");
+  keyframe3.AddString("offset", "1");
+
+  Vector<ScriptValue> blink_keyframes;
+  blink_keyframes.push_back(keyframe1.GetScriptValue());
+  blink_keyframes.push_back(keyframe2.GetScriptValue());
+  blink_keyframes.push_back(keyframe3.GetScriptValue());
+
+  ScriptValue js_keyframes(
+      script_state,
+      ToV8(blink_keyframes, scope.GetContext()->Global(), scope.GetIsolate()));
 
   Element* element = AppendElement(scope.GetDocument());
   KeyframeEffectModelBase* effect = EffectInput::Convert(
-      element,
-      DictionarySequenceOrDictionary::FromDictionarySequence(js_keyframes),
-      EffectModel::kCompositeReplace, nullptr, scope.GetExceptionState());
+      element, js_keyframes, EffectModel::kCompositeReplace,
+      scope.GetScriptState(), scope.GetExceptionState());
   EXPECT_FALSE(scope.GetExceptionState().HadException());
   EXPECT_EQ(1, effect->GetFrames()[2]->Offset());
 }
 
 TEST(AnimationEffectInputTest, OutOfOrderWithNullOffsets) {
   V8TestingScope scope;
-  Vector<Dictionary> js_keyframes;
-  v8::Local<v8::Object> keyframe1 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe2 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe3 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe4 = v8::Object::New(scope.GetIsolate());
+  ScriptState* script_state = scope.GetScriptState();
 
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "height", "100px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "offset", "0.5");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "height", "150px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "height", "200px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "offset", "0");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe4, "height", "300px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe4, "offset", "1");
+  V8ObjectBuilder keyframe1(script_state);
+  keyframe1.AddString("height", "100px");
+  keyframe1.AddString("offset", "0.5");
 
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe1, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe2, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe3, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe4, scope.GetExceptionState()));
+  V8ObjectBuilder keyframe2(script_state);
+  keyframe2.AddString("height", "150px");
+
+  V8ObjectBuilder keyframe3(script_state);
+  keyframe3.AddString("height", "200px");
+  keyframe3.AddString("offset", "0");
+
+  V8ObjectBuilder keyframe4(script_state);
+  keyframe4.AddString("height", "300px");
+  keyframe4.AddString("offset", "1");
+
+  Vector<ScriptValue> blink_keyframes;
+  blink_keyframes.push_back(keyframe1.GetScriptValue());
+  blink_keyframes.push_back(keyframe2.GetScriptValue());
+  blink_keyframes.push_back(keyframe3.GetScriptValue());
+  blink_keyframes.push_back(keyframe4.GetScriptValue());
+
+  ScriptValue js_keyframes(
+      script_state,
+      ToV8(blink_keyframes, scope.GetContext()->Global(), scope.GetIsolate()));
 
   Element* element = AppendElement(scope.GetDocument());
-  EffectInput::Convert(
-      element,
-      DictionarySequenceOrDictionary::FromDictionarySequence(js_keyframes),
-      EffectModel::kCompositeReplace, nullptr, scope.GetExceptionState());
+  EffectInput::Convert(element, js_keyframes, EffectModel::kCompositeReplace,
+                       scope.GetScriptState(), scope.GetExceptionState());
   EXPECT_TRUE(scope.GetExceptionState().HadException());
 }
 
 TEST(AnimationEffectInputTest, Invalid) {
   V8TestingScope scope;
+  ScriptState* script_state = scope.GetScriptState();
+
   // Not loosely sorted by offset, and there exists a keyframe with null offset.
-  Vector<Dictionary> js_keyframes;
-  v8::Local<v8::Object> keyframe1 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe2 = v8::Object::New(scope.GetIsolate());
-  v8::Local<v8::Object> keyframe3 = v8::Object::New(scope.GetIsolate());
+  V8ObjectBuilder keyframe1(script_state);
+  keyframe1.AddString("width", "0px");
+  keyframe1.AddString("offset", "1");
 
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "width", "0px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe1, "offset", "1");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe2, "width", "200px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "width", "100px");
-  SetV8ObjectPropertyAsString(scope.GetIsolate(), keyframe3, "offset", "0");
+  V8ObjectBuilder keyframe2(script_state);
+  keyframe2.AddString("width", "200px");
 
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe1, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe2, scope.GetExceptionState()));
-  js_keyframes.push_back(
-      Dictionary(scope.GetIsolate(), keyframe3, scope.GetExceptionState()));
+  V8ObjectBuilder keyframe3(script_state);
+  keyframe3.AddString("width", "200px");
+  keyframe3.AddString("offset", "0");
+
+  Vector<ScriptValue> blink_keyframes;
+  blink_keyframes.push_back(keyframe1.GetScriptValue());
+  blink_keyframes.push_back(keyframe2.GetScriptValue());
+  blink_keyframes.push_back(keyframe3.GetScriptValue());
+
+  ScriptValue js_keyframes(
+      script_state,
+      ToV8(blink_keyframes, scope.GetContext()->Global(), scope.GetIsolate()));
 
   Element* element = AppendElement(scope.GetDocument());
-  EffectInput::Convert(
-      element,
-      DictionarySequenceOrDictionary::FromDictionarySequence(js_keyframes),
-      EffectModel::kCompositeReplace, nullptr, scope.GetExceptionState());
+  EffectInput::Convert(element, js_keyframes, EffectModel::kCompositeReplace,
+                       scope.GetScriptState(), scope.GetExceptionState());
   EXPECT_TRUE(scope.GetExceptionState().HadException());
   EXPECT_EQ(kV8TypeError, scope.GetExceptionState().Code());
 }
