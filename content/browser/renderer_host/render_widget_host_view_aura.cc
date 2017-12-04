@@ -546,7 +546,6 @@ void RenderWidgetHostViewAura::Show() {
     return;
 
   window_->Show();
-  WasUnOccluded();
 }
 
 void RenderWidgetHostViewAura::Hide() {
@@ -554,7 +553,6 @@ void RenderWidgetHostViewAura::Hide() {
     return;
 
   window_->Hide();
-  WasOccluded();
 }
 
 void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
@@ -696,7 +694,7 @@ Visibility RenderWidgetHostViewAura::GetVisibility() const {
   return Visibility::VISIBLE;
 }
 
-void RenderWidgetHostViewAura::WasUnOccluded() {
+void RenderWidgetHostViewAura::WasShown() {
   if (!host_->is_hidden())
     return;
 
@@ -728,7 +726,7 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
 #endif
 }
 
-void RenderWidgetHostViewAura::WasOccluded() {
+void RenderWidgetHostViewAura::WasHidden() {
   if (!host_->is_hidden()) {
     host_->WasHidden();
     if (delegated_frame_host_)
@@ -1628,6 +1626,10 @@ void RenderWidgetHostViewAura::OnWindowDestroyed(aura::Window* window) {
 }
 
 void RenderWidgetHostViewAura::OnWindowTargetVisibilityChanged(bool visible) {
+}
+
+void RenderWidgetHostViewAura::OnWindowOcclusionChanged(bool is_occluded) {
+  VisibilityChanged();
 }
 
 bool RenderWidgetHostViewAura::HasHitTestMask() const {
