@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dfe69c5_7c1ed692",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-04T12:27:04Z",
+      "side": 1,
+      "message": "I\u0027d suggest `GetFrame()-\u003eGetSecurityContext()-\u003eGetSecurityOrigin()` instead of reparsing the URL. That will also address documents sandboxed into opaque origins.",
+      "revId": "e614ad7c8cc207c10672e87441ec5e83101bb53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8227647e_b762174d",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-04T12:27:04Z",
+      "side": 1,
+      "message": "Hrm. Why is this the dragged data as a URL? That might be correct, but I don\u0027t really understand what it means in this context. Can you add some comments?",
+      "revId": "e614ad7c8cc207c10672e87441ec5e83101bb53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
