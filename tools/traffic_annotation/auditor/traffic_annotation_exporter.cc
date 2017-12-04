@@ -63,13 +63,13 @@ void ExtractXMLItems(const std::string& serialized_xml,
 
 }  // namespace
 
-TrafficAnnotationExporter::ReportItem::ReportItem()
+TrafficAnnotationExporter::AnnotationItem::AnnotationItem()
     : unique_id_hash_code(-1), content_hash_code(-1) {}
 
-TrafficAnnotationExporter::ReportItem::ReportItem(
-    const TrafficAnnotationExporter::ReportItem& other) = default;
+TrafficAnnotationExporter::AnnotationItem::AnnotationItem(
+    const TrafficAnnotationExporter::AnnotationItem& other) = default;
 
-TrafficAnnotationExporter::ReportItem::~ReportItem() = default;
+TrafficAnnotationExporter::AnnotationItem::~AnnotationItem() = default;
 
 TrafficAnnotationExporter::TrafficAnnotationExporter(
     const base::FilePath& source_path)
@@ -81,7 +81,7 @@ TrafficAnnotationExporter::TrafficAnnotationExporter(
 TrafficAnnotationExporter::~TrafficAnnotationExporter() = default;
 
 bool TrafficAnnotationExporter::LoadAnnotationsXML() {
-  report_items_.clear();
+  annotation_items_.clear();
   XmlReader reader;
   if (!reader.LoadFile(
           source_path_.Append(kAnnotationsXmlPath).MaybeAsASCII())) {
@@ -97,7 +97,7 @@ bool TrafficAnnotationExporter::LoadAnnotationsXML() {
     if (reader.NodeName() != "item")
       continue;
 
-    ReportItem item;
+    AnnotationItem item;
     std::string temp;
     std::string unique_id;
 
@@ -121,7 +121,7 @@ bool TrafficAnnotationExporter::LoadAnnotationsXML() {
       break;
     }
 
-    report_items_.insert(std::make_pair(unique_id, item));
+    annotation_items_.insert(std::make_pair(unique_id, item));
   }
 
   modified_ = false;
@@ -140,7 +140,7 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
   NOTREACHED() << "Other platforms are not supported yet.";
 #endif
 
-  if (report_items_.empty() && !LoadAnnotationsXML())
+  if (annotation_items_.empty() && !LoadAnnotationsXML())
     return false;
 
   std::set<int> current_platform_hashcodes;
@@ -158,8 +158,9 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
 
     // If annotation unique id is already in the reported list, just check if
     // platform is correct and content is not changed.
-    if (base::ContainsKey(report_items_, annotation.proto.unique_id())) {
-      ReportItem* current = &report_items_[annotation.proto.unique_id()];
+    if (base::ContainsKey(annotation_items_, annotation.proto.unique_id())) {
+      AnnotationItem* current =
+          &annotation_items_[annotation.proto.unique_id()];
       if (!base::ContainsValue(current->os_list, platform)) {
         current->os_list.push_back(platform);
         modified_ = true;
@@ -171,18 +172,18 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
     } else {
       // If annotation is new, add it and assume it is on all platforms. Tests
       // running on other platforms will request updating this if required.
-      ReportItem new_item;
+      AnnotationItem new_item;
       new_item.unique_id_hash_code = annotation.unique_id_hash_code;
       new_item.content_hash_code = content_hash_code;
       new_item.os_list = all_supported_platforms_;
-      report_items_[annotation.proto.unique_id()] = new_item;
+      annotation_items_[annotation.proto.unique_id()] = new_item;
       modified_ = true;
     }
     current_platform_hashcodes.insert(annotation.unique_id_hash_code);
   }
 
   // If a none-reserved annotation is removed from current platform, update it.
-  for (auto& item : report_items_) {
+  for (auto& item : annotation_items_) {
     if (base::ContainsValue(item.second.os_list, platform) &&
         item.second.content_hash_code != -1 &&
         !base::ContainsKey(current_platform_hashcodes,
@@ -194,18 +195,18 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
 
   // If there is a new reserved id, add it.
   for (const auto& item : reserved_ids) {
-    if (!base::ContainsKey(report_items_, item.second)) {
-      ReportItem new_item;
+    if (!base::ContainsKey(annotation_items_, item.second)) {
+      AnnotationItem new_item;
       new_item.unique_id_hash_code = item.first;
       new_item.os_list = all_supported_platforms_;
-      report_items_[item.second] = new_item;
+      annotation_items_[item.second] = new_item;
       modified_ = true;
     }
   }
 
   // If there are annotations that are not used in any OS, set the deprecation
   // flag.
-  for (auto& item : report_items_) {
+  for (auto& item : annotation_items_) {
     if (item.second.os_list.empty() && item.second.deprecation_date.empty()) {
       base::Time::Exploded now;
       base::Time::Now().UTCExplode(&now);
@@ -215,7 +216,7 @@ bool TrafficAnnotationExporter::UpdateAnnotations(
     }
   }
 
-  return CheckReportItems();
+  return CheckAnnotationItems();
 }
 
 std::string TrafficAnnotationExporter::GenerateSerializedXML() {
@@ -223,7 +224,7 @@ std::string TrafficAnnotationExporter::GenerateSerializedXML() {
   writer.StartWriting();
   writer.StartElement("annotations");
 
-  for (const auto& item : report_items_) {
+  for (const auto& item : annotation_items_) {
     writer.StartElement("item");
     writer.AddAttribute("id", item.first);
     writer.AddAttribute(
@@ -264,21 +265,21 @@ bool TrafficAnnotationExporter::SaveAnnotationsXML() {
 
 bool TrafficAnnotationExporter::GetDeprecatedHashCodes(
     std::set<int>* hash_codes) {
-  if (report_items_.empty() && !LoadAnnotationsXML())
+  if (annotation_items_.empty() && !LoadAnnotationsXML())
     return false;
 
   hash_codes->clear();
-  for (const auto& item : report_items_) {
+  for (const auto& item : annotation_items_) {
     if (!item.second.deprecation_date.empty())
       hash_codes->insert(item.second.unique_id_hash_code);
   }
   return true;
 }
 
-bool TrafficAnnotationExporter::CheckReportItems() {
+bool TrafficAnnotationExporter::CheckAnnotationItems() {
   // Check for annotation hash code duplications.
   std::set<int> used_codes;
-  for (auto& item : report_items_) {
+  for (auto& item : annotation_items_) {
     if (base::ContainsKey(used_codes, item.second.unique_id_hash_code)) {
       LOG(ERROR) << "Unique id hash code " << item.second.unique_id_hash_code
                  << " is used more than once.";
@@ -289,7 +290,7 @@ bool TrafficAnnotationExporter::CheckReportItems() {
   }
 
   // Check for coexistence of OS(es) and deprecation date.
-  for (auto& item : report_items_) {
+  for (auto& item : annotation_items_) {
     if (!item.second.deprecation_date.empty() && !item.second.os_list.empty()) {
       LOG(ERROR) << "Annotation " << item.first
                  << " has a deprecation date and at least one active OS.";

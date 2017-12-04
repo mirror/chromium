@@ -19,6 +19,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/traffic_annotation/auditor/traffic_annotation_exporter.h"
 #include "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h"
+#include "tools/traffic_annotation/auditor/traffic_annotation_id_checker.h"
 
 namespace {
 
@@ -52,6 +53,7 @@ const base::FilePath kDownstreamUnittests =
         .Append(FILE_PATH_LITERAL("scripts"))
         .Append(FILE_PATH_LITERAL("annotations_xml_downstream_caller.py"));
 
+const std::set<int> kDummyDeprecatedIDs = {100, 101, 102};
 }  // namespace
 
 using namespace testing;
@@ -86,11 +88,16 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
         source_path_.Append(FILE_PATH_LITERAL("out"))
             .Append(FILE_PATH_LITERAL("Default")),
         clang_tool_path);
+
+    id_checker_ = std::make_unique<TrafficAnnotationIDChecker>(
+        TrafficAnnotationAuditor::GetReservedIDsSet(), kDummyDeprecatedIDs);
   }
 
   const base::FilePath source_path() const { return source_path_; }
   const base::FilePath tests_folder() const { return tests_folder_; };
   TrafficAnnotationAuditor& auditor() { return *auditor_; }
+  TrafficAnnotationIDChecker& id_checker() { return *id_checker_; }
+  std::vector<AuditorResult>* errors() { return &errors_; }
 
  protected:
   // Deserializes an annotation or a call instance from a sample file similar to
@@ -108,10 +115,20 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
     auditor_->ClearErrorsForTesting();
   }
 
+  void IDCheckerTest(const AnnotationInstance& instance) {
+    std::vector<AnnotationInstance> annotations;
+    annotations.push_back(instance);
+    errors_.clear();
+    id_checker_->Load(annotations);
+    id_checker_->CheckIDs(&errors_);
+  }
+
  private:
   base::FilePath source_path_;
   base::FilePath tests_folder_;
   std::unique_ptr<TrafficAnnotationAuditor> auditor_;
+  std::unique_ptr<TrafficAnnotationIDChecker> id_checker_;
+  std::vector<AuditorResult> errors_;
 };
 
 AuditorResult::Type TrafficAnnotationAuditorTest::Deserialize(
@@ -344,7 +361,7 @@ TEST_F(TrafficAnnotationAuditorTest, AssignmentDeserialization) {
 
 // Tests if TrafficAnnotationAuditor::GetReservedUniqueIDs has all known ids and
 // they have correct text.
-TEST_F(TrafficAnnotationAuditorTest, GetReservedUniqueIDs) {
+TEST_F(TrafficAnnotationAuditorTest, GetReservedIDsExistence) {
   int expected_ids[] = {
       TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code,
       PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code,
@@ -353,7 +370,7 @@ TEST_F(TrafficAnnotationAuditorTest, GetReservedUniqueIDs) {
       MISSING_TRAFFIC_ANNOTATION.unique_id_hash_code};
 
   std::map<int, std::string> reserved_words =
-      TrafficAnnotationAuditor::GetReservedUniqueIDs();
+      TrafficAnnotationAuditor::GetReservedIDsMap();
 
   for (int id : expected_ids) {
     EXPECT_TRUE(base::ContainsKey(reserved_words, id));
@@ -362,57 +379,76 @@ TEST_F(TrafficAnnotationAuditorTest, GetReservedUniqueIDs) {
   }
 }
 
-// Tests if TrafficAnnotationAuditor::CheckDuplicateHashes works as expected.
-TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
-  // Load a valid annotation.
+// Tests if use of reserved ids are detected.
+TEST_F(TrafficAnnotationAuditorTest, CheckReservedIDsUsageDetection) {
+  // Load a valid annotation.Set the type to partial so that both unique id and
+  // extra id would be required.
   AnnotationInstance instance = CreateAnnotationInstanceSample();
+  instance.proto.set_unique_id("A");
+  instance.extra_id = "B";
 
-  const std::map<int, std::string>& reserved_words =
-      TrafficAnnotationAuditor::GetReservedUniqueIDs();
+  for (const auto& reserved_id : auditor().GetReservedIDsSet()) {
+    instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
+    instance.unique_id_hash_code = reserved_id;
+    instance.extra_id_hash_code = 1;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), 1u);
+    EXPECT_EQ((*errors())[0].type(),
+              AuditorResult::Type::ERROR_RESERVED_UNIQUE_ID_HASH_CODE);
 
-  std::vector<AnnotationInstance> annotations;
-
-  // Check for reserved words hash code duplication errors.
-  int next_id = 0;
-  for (const auto& reserved_word : reserved_words) {
-    EXPECT_FALSE(base::ContainsKey(reserved_words, next_id));
-    instance.unique_id_hash_code = next_id;
-    instance.extra_id_hash_code = reserved_word.first;
-    instance.extra_id = "SomeID";
-    annotations.push_back(instance);
-    next_id++;
-
-    EXPECT_FALSE(base::ContainsKey(reserved_words, next_id));
-    instance.unique_id_hash_code = reserved_word.first;
-    instance.extra_id_hash_code = next_id;
-    instance.extra_id.clear();
-    annotations.push_back(instance);
-    next_id++;
-  }
-
-  auditor().SetExtractedAnnotationsForTesting(annotations);
-  auditor().ClearErrorsForTesting();
-  auditor().CheckDuplicateHashes();
-  EXPECT_EQ(auditor().errors().size(), annotations.size());
-  for (const auto& error : auditor().errors()) {
-    EXPECT_EQ(error.type(),
+    instance.type = AnnotationInstance::Type::ANNOTATION_PARTIAL;
+    instance.unique_id_hash_code = 1;
+    instance.extra_id_hash_code = reserved_id;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), 1u);
+    EXPECT_EQ((*errors())[0].type(),
               AuditorResult::Type::ERROR_RESERVED_UNIQUE_ID_HASH_CODE);
   }
+}
+
+// Tests if use of deprecated ids are detected.
+TEST_F(TrafficAnnotationAuditorTest, CheckDeprecatedIDsUsageDetection) {
+  // Load a valid annotation. Set the type to partial so that both unique id and
+  // extra id would be required.
+  AnnotationInstance instance = CreateAnnotationInstanceSample();
+  instance.proto.set_unique_id("A");
+  instance.extra_id = "B";
+
+  for (const auto& reserved_id : kDummyDeprecatedIDs) {
+    instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
+    instance.unique_id_hash_code = reserved_id;
+    instance.extra_id_hash_code = 1;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), 1u);
+    EXPECT_EQ((*errors())[0].type(),
+              AuditorResult::Type::ERROR_DEPRECATED_UNIQUE_ID_HASH_CODE);
+
+    instance.type = AnnotationInstance::Type::ANNOTATION_PARTIAL;
+    instance.unique_id_hash_code = 1;
+    instance.extra_id_hash_code = reserved_id;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), 1u);
+    EXPECT_EQ((*errors())[0].type(),
+              AuditorResult::Type::ERROR_DEPRECATED_UNIQUE_ID_HASH_CODE);
+  }
+}
+
+// Tests if use of repeated ids are detected.
+TEST_F(TrafficAnnotationAuditorTest, CheckRepeatedIDsDetection) {
+  std::vector<AnnotationInstance> annotations;
+  AnnotationInstance instance = CreateAnnotationInstanceSample();
+  instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
+  instance.proto.set_unique_id("A");
 
   // Check if several different hash codes result in no error.
-  annotations.clear();
-  instance.extra_id_hash_code = 0;
-  instance.extra_id.clear();
   for (int i = 0; i < 10; i++) {
-    // Ensure that the test id is not a reserved hash code.
-    EXPECT_FALSE(base::ContainsKey(reserved_words, i));
     instance.unique_id_hash_code = i;
     annotations.push_back(instance);
   }
-  auditor().SetExtractedAnnotationsForTesting(annotations);
-  auditor().ClearErrorsForTesting();
-  auditor().CheckDuplicateHashes();
-  EXPECT_EQ(auditor().errors().size(), 0u);
+  id_checker().Load(annotations);
+  errors()->clear();
+  id_checker().CheckIDs(errors());
+  EXPECT_EQ(errors()->size(), 0u);
 
   // Check if repeating the same hash codes results in errors.
   annotations.clear();
@@ -421,145 +457,194 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     annotations.push_back(instance);
     annotations.push_back(instance);
   }
-  auditor().SetExtractedAnnotationsForTesting(annotations);
-  auditor().ClearErrorsForTesting();
-  auditor().CheckDuplicateHashes();
-  EXPECT_EQ(auditor().errors().size(), 10u);
-  for (const auto& error : auditor().errors()) {
-    EXPECT_EQ(error.type(),
-              AuditorResult::Type::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
+  id_checker().Load(annotations);
+  errors()->clear();
+  id_checker().CheckIDs(errors());
+  EXPECT_EQ(errors()->size(), 10u);
+  for (const auto& error : *errors()) {
+    EXPECT_EQ(error.type(), AuditorResult::Type::ERROR_REPEATED_ID);
   }
+}
 
-  // Check if the same value for unique id and extra id only results in error in
-  // types with valid extra id.
+// Check if the same unique id and extra id is detected.
+TEST_F(TrafficAnnotationAuditorTest, CheckSimilarUniqueAndExtraIDsDetection) {
+  AnnotationInstance instance = CreateAnnotationInstanceSample();
   instance.unique_id_hash_code = 1;
   instance.extra_id_hash_code = 1;
+  instance.extra_id = instance.proto.unique_id();
+
   const int last_type =
       static_cast<int>(AnnotationInstance::Type::ANNOTATION_INSTANCE_TYPE_LAST);
   for (int type = 0; type <= last_type; type++) {
     instance.type = static_cast<AnnotationInstance::Type>(type);
-    SetAnnotationForTesting(instance);
-    auditor().CheckDuplicateHashes();
-    SCOPED_TRACE(type);
-    if (instance.type == AnnotationInstance::Type::ANNOTATION_COMPLETE ||
-        instance.type == AnnotationInstance::Type::ANNOTATION_COMPLETING) {
-      // Extra id of these two types is not used.
-      EXPECT_EQ(auditor().errors().size(), 0u);
-    } else {
-      EXPECT_EQ(auditor().errors().size(), 1u);
-    }
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), instance.NeedsExtraID() ? 1u : 0u)
+        << type << "\t" << errors()->size();
   }
+}
 
-  // Check for unique id / extra id collision cases.
+// Check Unique ID and Extra ID Collision cases.
+TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateIDsDetection) {
+  AnnotationInstance instance = CreateAnnotationInstanceSample();
+  instance.extra_id = "other_id";
   AnnotationInstance other = instance;
+  const int last_type =
+      static_cast<int>(AnnotationInstance::Type::ANNOTATION_INSTANCE_TYPE_LAST);
+
   for (int type1 = 0; type1 < last_type; type1++) {
     for (int type2 = type1; type2 <= last_type; type2++) {
       // Iterate different possiblities of common id.
-      for (int common1 = 0; common1 < 2; common1++) {
-        for (int common2 = 0; common2 < 2; common2++) {
-          instance.type = static_cast<AnnotationInstance::Type>(type1);
-          other.type = static_cast<AnnotationInstance::Type>(type2);
-          instance.unique_id_hash_code = common1 ? 1 : 2;
-          instance.extra_id_hash_code = common1 ? 2 : 1;
-          other.unique_id_hash_code = common2 ? 2 : 3;
-          other.extra_id_hash_code = common2 ? 3 : 2;
+      for (int id1 = 0; id1 < 4; id1++) {
+        for (int id2 = 0; id2 < 4; id2++) {
+          for (int id3 = 0; id3 < 4; id3++) {
+            for (int id4 = 0; id4 < 4; id4++) {
+              SCOPED_TRACE(
+                  base::StringPrintf("Testing (%i, %i, %i, %i, %i, %i).", type1,
+                                     type2, id1, id2, id3, id4));
 
-          annotations.clear();
-          annotations.push_back(instance);
-          annotations.push_back(other);
-          auditor().SetExtractedAnnotationsForTesting(annotations);
-          auditor().ClearErrorsForTesting();
-          auditor().CheckDuplicateHashes();
+              instance.type = static_cast<AnnotationInstance::Type>(type1);
+              other.type = static_cast<AnnotationInstance::Type>(type2);
+              instance.unique_id_hash_code = id1;
+              instance.extra_id_hash_code = id2;
+              other.unique_id_hash_code = id3;
+              other.extra_id_hash_code = id4;
+              instance.proto.set_unique_id(base::StringPrintf("%i", id1));
+              instance.extra_id = base::StringPrintf("%i", id2);
+              other.proto.set_unique_id(base::StringPrintf("%i", id3));
+              other.extra_id = base::StringPrintf("%i", id4);
 
-          bool acceptable = false;
-          switch (instance.type) {
-            case AnnotationInstance::Type::ANNOTATION_COMPLETE:
-              // The unique id of a complete annotation must not be reused.
-              acceptable =
-                  (instance.unique_id_hash_code != other.unique_id_hash_code &&
-                   instance.unique_id_hash_code != other.extra_id_hash_code);
-              break;
+              std::vector<AnnotationInstance> annotations;
+              annotations.push_back(instance);
+              annotations.push_back(other);
+              id_checker().Load(annotations);
+              errors()->clear();
+              id_checker().CheckIDs(errors());
 
-            case AnnotationInstance::Type::ANNOTATION_PARTIAL:
-              // The unique id of a partial annotation should be unique.
-              // It's extra id can be used as unique id of a completing
-              // annotation or extra id of a branched completing one.
-              if (instance.unique_id_hash_code != other.unique_id_hash_code &&
-                  instance.unique_id_hash_code != other.extra_id_hash_code) {
-                if (instance.extra_id_hash_code == other.unique_id_hash_code) {
-                  acceptable =
-                      (other.type ==
-                       AnnotationInstance::Type::ANNOTATION_COMPLETING);
-                } else if (instance.extra_id_hash_code ==
-                           other.extra_id_hash_code) {
-                  acceptable =
-                      (other.type == AnnotationInstance::Type::
-                                         ANNOTATION_BRANCHED_COMPLETING);
+              std::set<int> uniques;
+              if (instance.NeedsExtraID()) {
+                if (other.NeedsExtraID()) {
+                  // Both need two ids.
+                  uniques.insert(id1);
+                  uniques.insert(id2);
+                  uniques.insert(id3);
+                  uniques.insert(id4);
+                  switch (uniques.size()) {
+                    case 4:
+                      EXPECT_TRUE(errors()->empty());
+                      break;
+
+                    case 3: {
+                      bool acceptable = (id2 == id4);
+
+                      acceptable &=
+                          (type1 == static_cast<int>(AnnotationInstance::Type::
+                                                         ANNOTATION_PARTIAL) ||
+                           type1 == static_cast<int>(
+                                        AnnotationInstance::Type::
+                                            ANNOTATION_BRANCHED_COMPLETING));
+                      acceptable &=
+                          (type2 == static_cast<int>(AnnotationInstance::Type::
+                                                         ANNOTATION_PARTIAL) ||
+                           type2 == static_cast<int>(
+                                        AnnotationInstance::Type::
+                                            ANNOTATION_BRANCHED_COMPLETING));
+
+                      EXPECT_EQ(errors()->empty(), acceptable);
+                      break;
+                    }
+                    default:
+                      EXPECT_FALSE(errors()->empty());
+                  }
                 } else {
-                  acceptable = true;
+                  // First one needs 2 ids, second one doesn't.
+                  uniques.insert(id1);
+                  uniques.insert(id2);
+                  uniques.insert(id3);
+
+                  switch (uniques.size()) {
+                    case 3:
+                      EXPECT_TRUE(errors()->empty());
+                      break;
+                    case 2: {
+                      // The first one should be a PARTIAL annotation and the
+                      // second one a COMPLETING.
+                      bool acceptable = (id2 == id3);
+                      acceptable &=
+                          (type1 == static_cast<int>(AnnotationInstance::Type::
+                                                         ANNOTATION_PARTIAL) &&
+                           type2 ==
+                               static_cast<int>(AnnotationInstance::Type::
+                                                    ANNOTATION_COMPLETING));
+                      EXPECT_EQ(errors()->empty(), acceptable);
+                      break;
+                    }
+                    default:
+                      EXPECT_FALSE(errors()->empty());
+                  }
+                }
+              } else {
+                if (other.NeedsExtraID()) {
+                  // First Doesn't need, second does.
+                  uniques.insert(id1);
+                  uniques.insert(id3);
+                  uniques.insert(id4);
+                  EXPECT_EQ(errors()->empty(), uniques.size() == 3);
+                } else {
+                  // Both have just one id.
+                  EXPECT_EQ(errors()->empty(), id1 != id3);
                 }
               }
-              break;
-
-            case AnnotationInstance::Type::ANNOTATION_COMPLETING:
-            case AnnotationInstance::Type::ANNOTATION_INSTANCE_TYPE_LAST:
-              // Considering the other annotation has a higher type number,
-              // unique id of a completing or branched completing annotation
-              // should not be used as unique or extra id of another one.
-              acceptable =
-                  (instance.unique_id_hash_code != other.unique_id_hash_code &&
-                   instance.unique_id_hash_code != other.extra_id_hash_code);
-              break;
-
-            default:
-              NOTREACHED();
+            }
+          }
           }
         }
-      }
     }
   }
 }
 
-// Tests if TrafficAnnotationAuditor::CheckUniqueIDsFormat results are as
-// expected.
-TEST_F(TrafficAnnotationAuditorTest, CheckUniqueIDsFormat) {
+// Tests if IDs format is correctly checked.
+TEST_F(TrafficAnnotationAuditorTest, CheckIDsFormat) {
   std::map<std::string, bool> test_cases = {
       {"ID1", true},   {"id2", true},   {"Id_3", true},
       {"ID?4", false}, {"ID:5", false}, {"ID>>6", false},
   };
 
-  std::vector<AnnotationInstance> annotations;
   AnnotationInstance instance = CreateAnnotationInstanceSample();
-  unsigned int false_samples_count = 0;
-
-  // Test cases one by one.
   for (const auto& test_case : test_cases) {
+    // Set type to complete to require just unique id.
     instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
     instance.proto.set_unique_id(test_case.first);
-    instance.extra_id.clear();
-    SetAnnotationForTesting(instance);
-    annotations.push_back(instance);
-    auditor().CheckUniqueIDsFormat();
-    EXPECT_EQ(auditor().errors().size(), test_case.second ? 0u : 1u);
-    if (!test_case.second)
-      false_samples_count++;
+    instance.unique_id_hash_code = 1;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), test_case.second ? 0u : 1u) << test_case.first;
 
-    instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETING;
+    // Set type to partial to require both ids.
+    instance.type = AnnotationInstance::Type::ANNOTATION_PARTIAL;
     instance.proto.set_unique_id("Something_Good");
     instance.extra_id = test_case.first;
-    SetAnnotationForTesting(instance);
-    annotations.push_back(instance);
-    auditor().CheckUniqueIDsFormat();
-    EXPECT_EQ(auditor().errors().size(), test_case.second ? 0u : 1u);
-    if (!test_case.second)
-      false_samples_count++;
+    instance.unique_id_hash_code = 1;
+    instance.extra_id_hash_code = 2;
+    IDCheckerTest(instance);
+    EXPECT_EQ(errors()->size(), test_case.second ? 0u : 1u) << test_case.first;
   }
 
   // Test all cases together.
-  auditor().SetExtractedAnnotationsForTesting(annotations);
-  auditor().ClearErrorsForTesting();
-  auditor().CheckUniqueIDsFormat();
-  EXPECT_EQ(auditor().errors().size(), false_samples_count);
+  std::vector<AnnotationInstance> annotations;
+  instance.type = AnnotationInstance::Type::ANNOTATION_COMPLETE;
+  instance.unique_id_hash_code = 1;
+
+  unsigned int false_samples_count = 0;
+  for (const auto& test_case : test_cases) {
+    instance.proto.set_unique_id(test_case.first);
+    instance.unique_id_hash_code++;
+    annotations.push_back(instance);
+    if (!test_case.second)
+      false_samples_count++;
+  }
+  id_checker().Load(annotations);
+  errors()->clear();
+  id_checker().CheckIDs(errors());
+  EXPECT_EQ(errors()->size(), false_samples_count);
 }
 
 // Tests if TrafficAnnotationAuditor::CheckAllRequiredFunctionsAreAnnotated
@@ -859,7 +944,7 @@ TEST_F(TrafficAnnotationAuditorTest, AnnotationsXML) {
   TrafficAnnotationExporter exporter(source_path());
 
   EXPECT_TRUE(exporter.LoadAnnotationsXML());
-  EXPECT_TRUE(exporter.CheckReportItems());
+  EXPECT_TRUE(exporter.CheckAnnotationItems());
 }
 
 // Tests if downstream files depending on of Annotations.xml are updated.
