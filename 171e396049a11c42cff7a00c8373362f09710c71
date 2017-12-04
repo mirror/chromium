@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d7ce934_300439d5",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2485,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-04T16:07:08Z",
+      "side": 0,
+      "message": "This stops the discovery of other processors, so I removed it. Having the jar added to the classpath is supposed to be enough.",
+      "range": {
+        "startLine": 2485,
+        "startChar": 13,
+        "endLine": 2485,
+        "endChar": 26
+      },
+      "revId": "171e396049a11c42cff7a00c8373362f09710c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

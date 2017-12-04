@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e14a43f_670ff217",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-04T16:07:08Z",
+      "side": 1,
+      "message": "When I add the dagger processor, (and leave in the other changes in the patch), chrome_java is not able to find org.chromium.base.BuildConfig anymore, and fails compiling because of that. I tried to reverse the processor list hoping that it was related to the order in which processors run but it does not seem to be the case...\nAny idea what I\u0027m missing?",
+      "range": {
+        "startLine": 2491,
+        "startChar": 6,
+        "endLine": 2491,
+        "endChar": 21
+      },
+      "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

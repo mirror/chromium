@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fd52d0b_7eec8cf5",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-04T16:07:08Z",
+      "side": 1,
+      "message": "Thanks I added that.",
+      "parentUuid": "9d31b729_5836253b",
+      "revId": "3a6727ac1ed4a648228f4ab74a958fcf69844e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84718cb2_03709555",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 1
