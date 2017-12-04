@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "fe3c8010_e209430a",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "\u003e \u003e LinkDoctorBaseURL is https://www.googleapis.com/rpc, which is an interface to a lot of things besides just link doctor. The link doctorness of this particular request is given by the {\"method\": \"linkdoctor.fixurl.fixurl\", ...} in the JSON of the POST request body.\n\u003e \u003e \n\u003e \u003e I would reasonably expect this to be fixed by switching this request to be CORS enabled. googleapis certainly supports CORS.\n\u003e \u003e \n\u003e \u003e Because this is currently the only caller of ResourceFetcherImpl, you could do this hackily, say in content/renderer/fetchers/resource_fetcher_impl.cc!ResourceFetcherImpl::SetMethod --\n\u003e \u003e \n\u003e \u003e   request_.fetch_request_mode \u003d network::mojom::FetchRequestMode::kCORS;\n\u003e \n\u003e Thanks for the suggestion!  Fixed.  (I updated mock-link-doctor.json.mock-http-headers as well to have it return CORS.)\n\nI put this back, as we discussed.  The particular URL doesn\u0027t seem to be hosting user-specific data.  (I didn\u0027t add the resource type check yet, but I can do that next.)",
+      "parentUuid": "94cf47de_83557936",
+      "revId": "60a4fa523a6fda2e2bd838a252e901f4db4d87c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec0fb01b_af6f9f5b",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 15

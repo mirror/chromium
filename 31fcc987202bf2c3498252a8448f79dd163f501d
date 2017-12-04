@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7fd8f79_47973561",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "\u003e nit: Would you mind also confirming that sendRequest is not blocked for something that wouldn\u0027t otherwise fail e.g. some image? Just to make sure that the bytes\u003d logic is correct.\n\nGood idea.  I\u0027ve added valid.js to this test and the one above, and I tested the CORS case as well.",
+      "parentUuid": "d8bd8c16_6529dcf6",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d4b0f9f_a10f2850",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 26
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bae6e98d_971f4506",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "\u003e Maybe mime_type_confirmed_blockable?\n\nSure.  I went with confirmed_blockable, both for brevity and because the TODO mentions we might use small reads as a cause as well.",
+      "parentUuid": "8d4b0f9f_a10f2850",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5158b9d3_2049fba8",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 26
@@ -56,6 +98,24 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbef959_d7e44165",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5158b9d3_2049fba8",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "e7412c00_9c47ad68",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f2bb96e_e03d1e10",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07975fb2_7dd20f7f",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 26
@@ -108,6 +186,24 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2e0b4d_6624c21d",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "\u003e perf nit: would be nice to have an early out like ChildProcessSecurityPolicyImpl::GetInstance()-\u003eHasAnyIsolatedOrigins() to avoid creating the origin from the URL in the normal case. Feel free to do it in a followup.\n\nInteresting.  I\u0027m not opposed for a followup, but I think it may be unnecessary since (1) we\u0027re on track to launch accounts.google.com isolation in M63, so it will always be true in Chrome, and (2) I\u0027m hoping to remove this check in the fairly near future, per the TODO above.",
+      "parentUuid": "07975fb2_7dd20f7f",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "59043d57_a44f4223",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a8a5f1_5d22ecfb",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119a188d_9025bc5c",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 26
@@ -142,6 +256,24 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfe8e3f_303f0957",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "119a188d_9025bc5c",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "50f7294a_927bde33",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076b7c35_e90ae2ff",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a23f4e7f_692113d9",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 26
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "01d84f16_2607ccec",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23f4e7f_692113d9",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edfccbd4_04f43fe8",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 26
@@ -190,6 +358,24 @@
       "writtenOn": "2017-12-04T16:17:01Z",
       "side": 1,
       "message": "It feels a bit wrong that this test reaches so deep into the guts of document_blocker_ to verify state, but since many of these members are write-once it\u0027s probably fine.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70cb5383_014c80fd",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "edfccbd4_04f43fe8",
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "d7d489db_bf75090e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "880d2121_bb560716",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43a2145_759e5d6b",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 26
@@ -230,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "8d4e8379_1302e546",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e43a2145_759e5d6b",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a01c9b_b89359ac",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 26
@@ -244,6 +466,24 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7d52da_e8f32427",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T20:15:33Z",
+      "side": 1,
+      "message": "\u003e nit: No implementation actually needs |url|, so you could omit it.\n\nActually, Nick and I decided to put the LinkDoctor check back into ChromeContentBrowserClient, since the resource_fetcher_impl.cc change wasn\u0027t looking good.",
+      "parentUuid": "51a01c9b_b89359ac",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
