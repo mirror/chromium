@@ -22,6 +22,30 @@
       "revId": "ccccf007bf5217290005e6815edd1ab16fc6a3d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b5f6c7_a2f57eae",
+        "filename": "chrome/browser/android/metrics/launch_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-04T00:36:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d925680_8b03e9dd",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 51
+      },
+      "revId": "ccccf007bf5217290005e6815edd1ab16fc6a3d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
