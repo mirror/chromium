@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9fead1b_3c02cded",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T09:17:02Z",
+      "side": 1,
+      "message": "Hm, so the width will scale with the number of tile columns? Is there a particular reason for that? It seems a bit inconsistent with other doodles. (It\u0027s also possible that the doodles might not handle such a resize correctly, though I guess they should.)",
+      "range": {
+        "startLine": 167,
+        "startChar": 30,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0f45a9_9858e28f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-04T09:17:02Z",
+      "side": 1,
+      "message": "What does setting width/height to null do? Should we just leave the values alone in that case?",
+      "range": {
+        "startLine": 584,
+        "startChar": 33,
+        "endLine": 584,
+        "endChar": 0
+      },
+      "revId": "028d63d69ff0d04e9141d08cbfbb10112aef0ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
