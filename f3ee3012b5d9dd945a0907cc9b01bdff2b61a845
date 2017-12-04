@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a7c71bd_11b72a3c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-04T17:04:23Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/806424 refactors SPv1 clipping mask painting, but for now it fails fast/borders/border-radius-mask-canvas*.html because of missing border radius clipping on canvas. I may need to change PaintLayerClipper to add back the clipping which was done in BoxClipper, but I would like to put it in priority lower than SPv175 work.",
+      "parentUuid": "bb3e436c_e0ade20b",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f216b901_e80751f8",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
