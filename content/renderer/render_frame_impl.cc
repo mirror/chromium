@@ -4424,12 +4424,13 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
     const blink::WebVector<blink::WebColorSuggestion>& suggestions) {
   RendererWebColorChooserImpl* color_chooser =
       new RendererWebColorChooserImpl(this, client);
-  std::vector<ColorSuggestion> color_suggestions;
+  std::vector<content::mojom::ColorSuggestionPtr> color_suggestions;
   for (size_t i = 0; i < suggestions.size(); i++) {
-    color_suggestions.push_back(
-        ColorSuggestion(suggestions[i].color, suggestions[i].label.Utf16()));
+    color_suggestions.push_back(content::mojom::ColorSuggestion::New(
+        suggestions[i].color, suggestions[i].label.Utf8()));
   }
-  color_chooser->Open(static_cast<SkColor>(initial_color), color_suggestions);
+  color_chooser->Open(static_cast<SkColor>(initial_color),
+                      std::move(color_suggestions));
   return color_chooser;
 }
 
