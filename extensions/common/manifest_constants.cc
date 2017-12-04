@@ -130,9 +130,6 @@ const char kPlatformAppBackground[] = "app.background";
 const char kPlatformAppBackgroundPage[] = "app.background.page";
 const char kPlatformAppBackgroundScripts[] = "app.background.scripts";
 const char kPlatformAppContentSecurityPolicy[] = "app.content_security_policy";
-const char kPlugins[] = "plugins";
-const char kPluginsPath[] = "path";
-const char kPluginsPublic[] = "public";
 const char kPublicKey[] = "key";
 const char kRemoveButton[] = "remove_button";
 const char kRequirements[] = "requirements";
@@ -603,12 +600,6 @@ const char kInvalidPermissions[] =
     "Invalid value for 'permissions'.";
 const char kInvalidPermissionScheme[] =
     "Invalid scheme for 'permissions[*]'.";
-const char kInvalidPlugins[] =
-    "Invalid value for 'plugins'.";
-const char kInvalidPluginsPath[] =
-    "Invalid value for 'plugins[*].path'.";
-const char kInvalidPluginsPublic[] =
-    "Invalid value for 'plugins[*].public'.";
 const char kInvalidRequirement[] =
     "Invalid value for requirement \"*\"";
 const char kInvalidRequirements[] =
@@ -739,6 +730,7 @@ const char kMultipleOverrides[] =
     "An extension cannot override more than one page.";
 const char kNoWildCardsInPaths[] =
   "Wildcards are not allowed in extent URL pattern paths.";
+const char kNPAPIPluginsNotSupported[] = "NPAPI plugins are not supported.";
 const char kOneUISurfaceOnly[] =
     "Only one of 'browser_action', 'page_action', and 'app' can be specified.";
 const char kPermissionMustBeOptional[] =
@@ -749,6 +741,8 @@ const char kPermissionNotAllowedInManifest[] =
     "Permission '*' cannot be specified in the manifest.";
 const char kPermissionUnknownOrMalformed[] =
     "Permission '*' is unknown or URL pattern is malformed.";
+const char kPluginsRequirementDeprecated[] =
+    "The \"plugins\" requirement is deprecated.";
 const char kReservedMessageFound[] =
     "Reserved key * found in message catalog.";
 const char kRulesFileIsInvalid[] =
