@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a2c915_15a4d9b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-04T09:24:40Z",
+      "side": 1,
+      "message": "Can you remove the spaces around \"LayoutNG\" here too?",
+      "revId": "d3c2b86e12591850415ed407a88de4c3cb290a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
