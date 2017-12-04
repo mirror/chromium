@@ -1023,4 +1023,21 @@ TEST_P(PaintPropertyTreeUpdateTest, WillTransformChangeAboveFixed) {
             fixed->FirstFragment().LocalBorderBoxProperties()->Transform());
 }
 
+TEST_P(PaintPropertyTreeUpdateTest, CompositingReasonForAnimation) {
+  SetBodyInnerHTML(R"HTML(
+    <style>#target { transition: 10s; opacity: 0.2; position: relative }</style>
+    <div id='target'>TARGET</div>
+  )HTML");
+
+  auto* target = GetDocument().getElementById("target");
+  auto* effect =
+      target->GetLayoutObject()->FirstFragment().PaintProperties()->Effect();
+  ASSERT_TRUE(effect);
+  EXPECT_FALSE(effect->HasDirectCompositingReasons());
+
+  target->setAttribute(HTMLNames::styleAttr, "opacity: 0.2000001");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  EXPECT_TRUE(effect->HasDirectCompositingReasons());
+}
+
 }  // namespace blink
