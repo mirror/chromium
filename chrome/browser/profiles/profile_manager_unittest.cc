@@ -215,7 +215,7 @@ class ProfileManagerTest : public testing::Test {
         profile_helper->GetUserIdHashByUserIdForTesting(
             account_id.GetUserEmail());
     user_manager::UserManager::Get()->UserLoggedIn(account_id, user_id_hash,
-                                                   false);
+                                                   false, false);
     g_browser_process->profile_manager()->GetProfile(
         profile_helper->GetProfilePathByUserIdHash(user_id_hash));
   }
@@ -329,7 +329,8 @@ TEST_F(ProfileManagerTest, UserProfileLoading) {
   const std::string user_id_hash =
       ProfileHelper::Get()->GetUserIdHashByUserIdForTesting(user_id);
   user_manager::UserManager::Get()->UserLoggedIn(
-      AccountId::FromUserEmailGaiaId(user_id, gaia_id), user_id_hash, false);
+      AccountId::FromUserEmailGaiaId(user_id, gaia_id), user_id_hash, false,
+      false);
 
   // Sign-in profile should be returned at this stage. Otherwise, login code
   // ends up in an invalid state. Strange things as in http://crbug.com/728683

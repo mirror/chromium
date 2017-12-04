@@ -212,7 +212,7 @@ TEST_F(ArcUtilTest, IsArcAllowedForUser) {
   fake_user_manager->SetEphemeralUsersEnabled(true);
   fake_user_manager->UserLoggedIn(
       AccountId::FromUserEmailGaiaId("test@test.com", "9876543210"),
-      "test@test.com-hash", false);
+      "test@test.com-hash", false, false);
   const user_manager::User* ephemeral_user = fake_user_manager->GetActiveUser();
   ASSERT_TRUE(ephemeral_user);
   ASSERT_TRUE(fake_user_manager->IsUserCryptohomeDataEphemeral(
