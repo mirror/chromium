@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6620fa4d_96e19f8f",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-04T22:41:24Z",
+      "side": 1,
+      "message": "3000 seconds is like an hour. Did you mean 3?",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "03efab4cca2553bccbbeadc099c0a54fdfbbeb88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
