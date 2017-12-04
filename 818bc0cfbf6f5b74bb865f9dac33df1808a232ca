@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a01110ec_5b626c9b",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T19:02:48Z",
+      "side": 1,
+      "message": "Done - I plan to move this to a typemap once the interface is moved inside WebKit/common.",
+      "parentUuid": "42c8b482_4a2cfba2",
+      "revId": "818bc0cfbf6f5b74bb865f9dac33df1808a232ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d006935_197a0c5f",
         "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "818bc0cfbf6f5b74bb865f9dac33df1808a232ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd370527_a40d2ffa",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-04T19:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d006935_197a0c5f",
+      "revId": "818bc0cfbf6f5b74bb865f9dac33df1808a232ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
