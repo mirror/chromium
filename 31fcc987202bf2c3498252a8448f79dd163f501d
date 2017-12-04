@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8bd8c16_6529dcf6",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "nit: Would you mind also confirming that sendRequest is not blocked for something that wouldn\u0027t otherwise fail e.g. some image? Just to make sure that the bytes\u003d logic is correct.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4b0f9f_a10f2850",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "Maybe mime_type_confirmed_blockable?",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5158b9d3_2049fba8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "nit: would be nice to inline this in the trace event, so we avoid doing serialization if tracing is turned off. If inlining is very ugly you could also use a helper function / lambda.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2bb96e_e03d1e10",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "I think memcpy is in \u003ccstring\u003e, so let\u0027s include that.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07975fb2_7dd20f7f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "perf nit: would be nice to have an early out like ChildProcessSecurityPolicyImpl::GetInstance()-\u003eHasAnyIsolatedOrigins() to avoid creating the origin from the URL in the normal case. Feel free to do it in a followup.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a8a5f1_5d22ecfb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "Would prefer setting:\nneeds_sniffing_ \u003d !base::LowerCaseEqualsASCII(nosniff_header, \"nosniff\") \u0026\u0026 range_header.empty();\n\nSo we only set the bool once. A comment like:\n  // Only sniff if there is no nosniff header, and the request is not a range request, so that attackers...\n\nYou can probably combine the above comments as well into one paragraph.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119a188d_9025bc5c",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "nit: prefer constant-style naming for new enums:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names\n\ne.g. kOmit, kAllowAny, etc.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076b7c35_e90ae2ff",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "std::make_unique to avoid bare new:\nauto stream_sink \u003d std::make_unique\u003cTestResourceHandler\u003e(\u0026stream_sink_status_, \u0026stream_sink_body_);",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23f4e7f_692113d9",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "base::MakeRefCounted",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfccbd4_04f43fe8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "It feels a bit wrong that this test reaches so deep into the guts of document_blocker_ to verify state, but since many of these members are write-once it\u0027s probably fine.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "880d2121_bb560716",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "nit: I would just pull the scenarios into the top anon namespace.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43a2145_759e5d6b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "Should we have one that was allowed due to a too small first read?",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a01c9b_b89359ac",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-04T16:17:01Z",
+      "side": 1,
+      "message": "nit: No implementation actually needs |url|, so you could omit it.",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
