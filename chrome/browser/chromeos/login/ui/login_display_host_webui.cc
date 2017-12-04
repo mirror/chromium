@@ -47,7 +47,7 @@
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/ui/input_events_blocker.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_views.h"
-#include "chrome/browser/chromeos/login/ui/webui_login_display.h"
+#include "chrome/browser/chromeos/login/ui/login_display_webui.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/mobile_config.h"
@@ -584,7 +584,7 @@ LoginDisplayHostWebUI::~LoginDisplayHostWebUI() {
 
 LoginDisplay* LoginDisplayHostWebUI::CreateLoginDisplay(
     LoginDisplay::Delegate* delegate) {
-  webui_login_display_ = new WebUILoginDisplay(delegate);
+  webui_login_display_ = new LoginDisplayWebUI(delegate);
   return webui_login_display_;
 }
 
