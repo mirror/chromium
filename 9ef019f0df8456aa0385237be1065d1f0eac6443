@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c1bed7f_8c43367e",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "masked -\u003e offset?",
+      "range": {
+        "startLine": 566,
+        "startChar": 2,
+        "endLine": 566,
+        "endChar": 11
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada5737c_a20a23e0",
         "filename": "base/allocator/partition_allocator/partition_alloc.h",
         "patchSetId": 1
@@ -19,6 +42,150 @@
         "endLine": 575,
         "endChar": 69
       },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bebd9d_5b88b966",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "Yeah...I was dubious about this as well.  I think the right thing here is to replace this masking with some sort of cookie as suggested by the rickyz/jschuh/palmer IRC conversation.",
+      "parentUuid": "ada5737c_a20a23e0",
+      "range": {
+        "startLine": 568,
+        "startChar": 0,
+        "endLine": 575,
+        "endChar": 69
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052867c1_f86a164a",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "Use \n  return ~offset;\n\nhere instead of a local variable?",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3385d90d_63ec960b",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "Call this masked_offset?",
+      "range": {
+        "startLine": 588,
+        "startChar": 12,
+        "endLine": 588,
+        "endChar": 18
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549d097f_fb58f4af",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "So this does add a branch?  I assume this should be UNLIKELY()?  Or do we not know?",
+      "range": {
+        "startLine": 592,
+        "startChar": 12,
+        "endLine": 592,
+        "endChar": 13
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565aeaa8_4ced0fcd",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "We\u0027re doing a conditional on the masked value...Won\u0027t this be incorrect on big endian?",
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c6d9f3_a7fd4fc3",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "Use \u003d assignment to stay consistent with other pointer assignments in the file.",
+      "range": {
+        "startLine": 831,
+        "startChar": 26,
+        "endLine": 831,
+        "endChar": 35
+      },
+      "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60741011_da517e77",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-04T19:16:08Z",
+      "side": 1,
+      "message": "So the original code did this weird thing where the PartitionBucket\u0027s freelist_head pointer was Not masked.  This changes that behavior. Is there a reason for that?\n\nNote, I had it on a TODO in an upcoming CL to actually create 2 types.. PartitionEncodedFreelistEntry PartitionFreeListEntry which the mask/unmask functions being member methods that flipped between the two. The idea would be then that PartitionBucket holds PartitionFreeListEntry which contains a PartitionEncodedFreelistEntry member...  Not suggesting that you have to introduce that change in this CL, but if the concern is keeping all \"freelist\" entry pointers consistently masked/unmasked, a fix is coming soon...",
       "revId": "9ef019f0df8456aa0385237be1065d1f0eac6443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
