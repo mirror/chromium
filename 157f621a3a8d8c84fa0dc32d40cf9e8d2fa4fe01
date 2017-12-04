@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa2efde_0e271f03",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-04T18:00:47Z",
+      "side": 1,
+      "message": "Could you copy this code: https://cs.chromium.org/chromium/src/chrome/browser/ui/autofill/chrome_autofill_client.cc?rcl\u003d557e241ccca2b2847c39d86a383807dc452c018a\u0026l\u003d156\n\nallows us to turn it off in the future",
+      "revId": "157f621a3a8d8c84fa0dc32d40cf9e8d2fa4fe01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
