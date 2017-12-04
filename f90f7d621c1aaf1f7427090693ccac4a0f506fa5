@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c27d65da_20a5fa32",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T17:51:15Z",
+      "side": 1,
+      "message": "\u003e related Q: should we DCHECK(!main_job_is_resumed_)? Since ResumeMainJob will only be called once. Despite the reconsider proxy case and alt job success case, main job should always be resumed before its deletion, right?\n\nYes. You are right. I have changed this to a DCHECK. \n\n\u003e I guess we have a new invariant always cancel the resume_main_job_callback when resetting main_job_?\n\nYes. I think it\u0027s a good idea to cancel a ResumeMainJob() when resetting |main_job_| and also when we post ResumeMainJob() with a different delay (e.g. the 0 delay case when alt job fails).",
+      "parentUuid": "c2e13b35_14302b69",
+      "range": {
+        "startLine": 572,
+        "startChar": 27,
+        "endLine": 572,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2c2575a_cb613bee",
         "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0cd9f6d6_a0fb2dd2",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T17:51:15Z",
+      "side": 1,
+      "message": "No. The ScopedTaskEnvironment doesn\u0027t allow two instances at the same time. We need to reset the former in order to construct a new global one.",
+      "parentUuid": "f2c2575a_cb613bee",
+      "range": {
+        "startLine": 1438,
+        "startChar": 50,
+        "endLine": 1438,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47abb2cf_1ef52274",
         "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T17:36:49Z",
       "side": 1,
       "message": "Will alt svc always mark broken? Could it be possible that we will still have two jobs racing after reconsider proxy? In particular, I want to see if we have two new jobs racing, the callback and booleans will not break ResumeMainJob logic, i.e., we are still able to delay and resume main job if needed. Would that scenario make sense?",
+      "range": {
+        "startLine": 1495,
+        "startChar": 67,
+        "endLine": 1495,
+        "endChar": 0
+      },
+      "revId": "f90f7d621c1aaf1f7427090693ccac4a0f506fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9739134_e0cb1f7d",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T17:51:15Z",
+      "side": 1,
+      "message": "The two jobs scenario is possible, but I wasn\u0027t able to get one to reproduce the bug.\nThis test is a simplified scenario to reproduce the bug where we resume the wrong main job.\n\nAndrei wrote one last week (SecondMainJobIsResumedAfterProxyConfigChange). That test resume and race both jobs.",
+      "parentUuid": "47abb2cf_1ef52274",
       "range": {
         "startLine": 1495,
         "startChar": 67,
