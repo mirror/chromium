@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "86c29c7d_6d833a6a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e dcheng\u0027s suggestion not yet resolved.\n\nWoops, his comment must have come in while I was working on yours.  Done.",
+      "parentUuid": "7e29624a_558ca86f",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07975fb2_7dd20f7f",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 26
@@ -522,6 +540,24 @@
     },
     {
       "key": {
+        "uuid": "12396577_3e2d8834",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "452f14a6_ee8f329f",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "676361ce_a3f0e7e1",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 26
@@ -536,6 +572,24 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eee8520_9b545858",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e Super minor nit: either const ref here, or std::move() below when calling SetRequestorOrigin().\n\nDone.  (It was just a move from below but const ref works.)",
+      "parentUuid": "676361ce_a3f0e7e1",
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

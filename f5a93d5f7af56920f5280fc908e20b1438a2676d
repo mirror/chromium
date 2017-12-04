@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "97df1916_7d1603aa",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e434f755_fd7c8943",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a76716a_96bdca64",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 25
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "dc8275b8_364e15be",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e Nice.\n\u003e \n\u003e It looks like our testserver impl only supports a single range, but I think the spec allows multiple ranges, like \"bytes\u003d1-24,26-100\" ?\n\u003e \n\u003e I\u0027d like to find an actual server with an html/json/xml resource that honors such requests, and see if there\u0027s any more protection we could offer.\n\nOh, that\u0027s fun.  Let\u0027s investigate multipart/byteranges MIME types after landing this.",
+      "parentUuid": "9a76716a_96bdca64",
+      "range": {
+        "startLine": 157,
+        "startChar": 54,
+        "endLine": 157,
+        "endChar": 66
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d3b233f_9ea70285",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 25
@@ -137,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "0fb88613_4331a71f",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e This test has no way of failing, correct?\n\nYeah.  This is copied from site_isolation_stats_gatherer_browsertest.cc.  I added a TODO, since I\u0027m not sure how to solve at the moment.",
+      "parentUuid": "5d3b233f_9ea70285",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f747f92_4ad40272",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 25
@@ -151,6 +217,24 @@
       "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27308065_8138fcb6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e s/expected_verdict/verdict/ -- or is that intentional?\n\nIt was at the time, but it feels unnecessary, depending on how you read it.  I\u0027ve removed it.",
+      "parentUuid": "8f747f92_4ad40272",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "9ffc7b6c_8e7f9488",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6605b94e_74a20d88",
+      "range": {
+        "startLine": 143,
+        "startChar": 14,
+        "endLine": 143,
+        "endChar": 20
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea7577dc_11605806",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 25
@@ -191,6 +299,24 @@
       "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19572699_a5b910e4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e FTP doesn\u0027t support headers; I guess the idea here is to make a scenario that would fail if the ftp were changed to https?\n\nOops.  Agreed, this should omit.",
+      "parentUuid": "ea7577dc_11605806",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "036b7b22_8465227a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e Is it intentional to OMIT the Origin header here from the request?\n\nNope, thanks for catching.",
+      "parentUuid": "dbac357e_75e07b55",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c09717c2_69a20df5",
         "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
         "patchSetId": 25
@@ -225,6 +369,24 @@
       "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c98400_f272c807",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e What about file://, or content:// ?\n\nAdded a file:// test next to FTP.  (We might lock that down later if we add plumbing for allow_universal_access_from_files, but we can update the test.)\n\nNot focusing on Android just yet-- we can add a content:// test later.",
+      "parentUuid": "c09717c2_69a20df5",
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +505,30 @@
       "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22ce0cd_8da4bd73",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e \u003e I\u0027m still not sure when and why this is needed here.\n\u003e \u003e Maybe better to handle this in FetchContext::PrepareRequest?\n\u003e \u003e \n\u003e \u003e Can you explain an example case? Content scripts of Chrome Extension?\n\u003e \n\u003e Yes, this is for content scripts in extensions.  It\u0027s awkward that we can\u0027t really mention them directly here, but it\u0027s covered by the CrossOriginXHR.ContentScript browser_test.  (Also http/tests/xmlhttprequest/origin-whitelisting-*.html, but those tests will require some more test plumbing to fix and are disabled in --site-per-process for now.)\n\nSee the discussion between dcheng@ and nick@ in patch 26 for more details.",
+      "parentUuid": "317fb8c8_aa12ab21",
+      "range": {
+        "startLine": 618,
+        "startChar": 0,
+        "endLine": 618,
+        "endChar": 48
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

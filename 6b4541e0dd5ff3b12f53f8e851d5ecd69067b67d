@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37905d2b_aa2462ed",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "Added a resource_type check as well.",
+      "revId": "6b4541e0dd5ff3b12f53f8e851d5ecd69067b67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

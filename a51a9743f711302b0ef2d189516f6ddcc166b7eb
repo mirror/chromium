@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4af88646_5bc0b147",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12382fe_6cf16c67",
+      "range": {
+        "startLine": 1239,
+        "startChar": 45,
+        "endLine": 1239,
+        "endChar": 62
+      },
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c083628f_365a371b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 27
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "*buf points into resource loader memory: https://cs.chromium.org/chromium/src/content/browser/loader/resource_loader.cc?rcl\u003d62fe5b7ce29d093f44c3a630517499e75b5959d3\u0026l\u003d695\n\nSo a ResourceHandler should be safe to deref it on resume. One thing to do would be to make this class a ResourceController and wait until Resume is called before executing this block.",
       "parentUuid": "c083628f_365a371b",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c52eeb_0197fb19",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e *buf points into resource loader memory: https://cs.chromium.org/chromium/src/content/browser/loader/resource_loader.cc?rcl\u003d62fe5b7ce29d093f44c3a630517499e75b5959d3\u0026l\u003d695\n\u003e \n\u003e So a ResourceHandler should be safe to deref it on resume. One thing to do would be to make this class a ResourceController and wait until Resume is called before executing this block.\n\nIs that something we should do now, or in a followup?  Would it be something like DetachableResourceHandler::Controller?",
+      "parentUuid": "a36bbb6c_01e78be1",
       "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -92,6 +134,24 @@
       "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a357e7_13910d67",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-04T22:26:37Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think it should be possible, but I\u0027m not 100% sure. I didn\u0027t think you could get e.g. 2 OnWillReads in a row without an OnReadCompleted for the first one.\n\nAdded a DCHECK(!blocked_read_completed_), so at least we\u0027ll know.",
+      "parentUuid": "20ccf287_20d831b0",
+      "revId": "a51a9743f711302b0ef2d189516f6ddcc166b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
