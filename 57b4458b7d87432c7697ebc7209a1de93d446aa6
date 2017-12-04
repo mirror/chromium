@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "747ceda6_6aebd9e1",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T16:26:04Z",
+      "side": 1,
+      "message": "I\u0027m going to look into it. The clip for the mask layer is either not applied or is not rounded. We are filling the mask, however, which is an improvement.",
+      "parentUuid": "1753b845_c0ebae34",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb19170c_9779f745",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01da5877_bf1192c2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T16:26:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb19170c_9779f745",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29f75bfe_5ca55a0b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T16:26:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45dc2e9c_0825ef97",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a83f6afa_6c91049e",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a70ef6cb_8acaf6c6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T16:26:04Z",
+      "side": 1,
+      "message": "The comment needs revision. The embedded object content does paint into the primary graphics layer. The issue here is that the clip in the child containment layer assumes the containment layer is the same size and position as the iframe.",
+      "parentUuid": "a83f6afa_6c91049e",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f55ab01_84cc350a",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-01T22:55:31Z",
       "side": 1,
       "message": "Instead of this, I think it suffices to write this:\n\nbool contains_composited_iframe \u003d layer-\u003eGetLayoutObject().IsLayoutEmbeddedContent() \u0026\u0026\nToLayoutEmbeddedContent(layer-\u003eGetLayoutObject()).RequiresAcceleratedCompositing());\n\nand change line 526 to:\n\nlayer-\u003eSetHasCompositingDescendant(\n      child_recursion_data.subtree_is_compositing_ || contains_composited_iframe);",
+      "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed90fb8_ba978360",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-04T16:26:04Z",
+      "side": 1,
+      "message": "I\u0027ll check.",
+      "parentUuid": "8f55ab01_84cc350a",
       "revId": "57b4458b7d87432c7697ebc7209a1de93d446aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
