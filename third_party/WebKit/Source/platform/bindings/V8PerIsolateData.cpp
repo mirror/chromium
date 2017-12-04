@@ -82,6 +82,7 @@ V8PerIsolateData::V8PerIsolateData(
   // TODO(peria): Remove this fallback routine.
   if (v8_context_snapshot_mode_ == V8ContextSnapshotMode::kUseSnapshot &&
       !startup_data_.data) {
+    NOTREACHED();
     v8_context_snapshot_mode_ = V8ContextSnapshotMode::kDontUseSnapshot;
   }
 
