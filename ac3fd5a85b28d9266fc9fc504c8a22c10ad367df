@@ -46,6 +46,30 @@
       "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b1e481_f2a28f0d",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-04T15:05:00Z",
+      "side": 1,
+      "message": "No, a \"mock\" is a specific kind of test double. What I\u0027m suggesting is modifying the TabUsageRecorder API to instead allow use of a stub which is another kind of test double.\n\nThe different kinds of test doubles currently used are:\n-   mocks\n\n    A mock is an object that keeps track of how its methods are called. A test should\n    fail if its methods aren\u0027t called the right way—for example, if a method isn\u0027t\n    called at all, it\u0027s called too many times, or it\u0027s called with the wrong arguments.\n\n-   stubs\n\n    A stub is an object that doesn\u0027t know how to behave on its own. Its methods only\n    return what you tell them to return.\n\n-   fakes\n\n    A fake is a lightweight implementation of an API that behaves like the real\n    implementation, but isn\u0027t suitable for production—for example, an in-memory\n    database.\n\nThe recommendation at Google is to avoid using mocks, recommending instead to use a real object if possible, otherwise in order try to use a stub, a fake or a mock. My point is that changing the API to use a stub is not that hard.\n\nReference (googler only): http://goto.google.com/mock-objects",
+      "parentUuid": "3c1fd345_8fd2ec28",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3fd5a85b28d9266fc9fc504c8a22c10ad367df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
