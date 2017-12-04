@@ -105,6 +105,30 @@
       "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1aed34_8678d27e",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-04T17:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b825d75_dc439fe4",
+      "range": {
+        "startLine": 1364,
+        "startChar": 49,
+        "endLine": 1364,
+        "endChar": 59
+      },
+      "revId": "5d10d06664330d53e1d5fc4bf767ea41053543c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
