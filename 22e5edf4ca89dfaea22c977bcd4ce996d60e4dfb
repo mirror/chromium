@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5991afb8_95c875af",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-04T19:33:33Z",
+      "side": 1,
+      "message": "Remove braces on one line if statement for consistency with file",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bc914e_228d398e",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-04T19:33:33Z",
+      "side": 1,
+      "message": "So all Smb file systems would have the same provider_id and capabilities?",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
