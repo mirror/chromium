@@ -173,18 +173,19 @@ def _FormatPluralMessage(message):
   if not plural_match:
     return None
   body_in = plural_match.group('items').strip()
-  lines = []
+  lines = {}
   for item_match in _PLURALS_ITEM_PATTERN.finditer(body_in):
     quantity_in = item_match.group('quantity')
     quantity_out = _PLURALS_QUANTITY_MAP.get(quantity_in)
     value_in = item_match.group('value')
     value_out = '"' + value_in.replace('#', '%d') + '"'
     if quantity_out:
-      lines.append(_PLURALS_ITEM_TEMPLATE % (quantity_out, value_out))
+      # only one line per quantity out
+      lines[quantity_out] = _PLURALS_ITEM_TEMPLATE % (quantity_out, value_out)
     else:
       raise Exception('Unsupported plural quantity for android '
                       'strings.xml: %s' % quantity_in)
-  return ''.join(lines)
+  return ''.join(lines.values())
 
 
 def _FormatMessage(item, lang):
