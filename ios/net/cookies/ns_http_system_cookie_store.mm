@@ -72,6 +72,10 @@ NSHTTPCookieAcceptPolicy NSHTTPSystemCookieStore::GetCookieAcceptPolicy() {
   return [cookie_store_ cookieAcceptPolicy];
 }
 
+const char* NSHTTPSystemCookieStore::GetClassName() const {
+  return "NSHTTPSystemCookieStore";
+}
+
 #pragma mark private methods
 
 NSArray* NSHTTPSystemCookieStore::GetCookiesForURL(const GURL& url) {

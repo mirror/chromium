@@ -67,6 +67,9 @@ class SystemCookieStore {
   // Returns the Cookie Accept policy for the internal cookie store.
   virtual NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() = 0;
 
+  // Returns the receiving class name.
+  virtual const char* GetClassName() const = 0;
+
   // Returns the creation time of a specific cookie
   base::Time GetCookieCreationTime(NSHTTPCookie* cookie);
 
