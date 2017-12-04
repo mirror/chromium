@@ -16,6 +16,24 @@
       "revId": "efb5cb0ce0085054d6e1faedece8c6bbb0c191fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd40c051_b512c1e7",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-04T22:26:30Z",
+      "side": 1,
+      "message": "Filed follow-up crbug: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d791631.",
+      "parentUuid": "bdd37fee_12bc8b93",
+      "revId": "efb5cb0ce0085054d6e1faedece8c6bbb0c191fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
