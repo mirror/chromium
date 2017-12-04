@@ -339,6 +339,7 @@ Polymer({
    * @private
    */
   onIdle_: function(idleReason) {
+    console.log('onIdle_ ' + idleReason);
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.NONE;
 
     // If user-initiated cleanups are disabled, then the card will be shown at
@@ -452,6 +453,7 @@ Polymer({
    * @private
    */
   onCleaning_: function(files) {
+    console.log('onCleaning_');
     this.ongoingAction_ = settings.ChromeCleanupOngoingAction.CLEANING;
     this.renderScanOfferedByDefault_ = false;
     this.renderCleanupCard_(settings.ChromeCleanerCardState.CLEANING, files);
