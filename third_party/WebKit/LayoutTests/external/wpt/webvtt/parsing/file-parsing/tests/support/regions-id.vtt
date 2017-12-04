@@ -3,18 +3,15 @@ WEBVTT
 NOTE No API for accessing region ids, so using lines to uniquely identify regions
 
 REGION
-id:foo
 id:bar
 lines:1
 
 REGION
-id:bar id:foo
+id:foo
 lines:2
 
 REGION
 id:id
-id: foo
-id :bar
 lines:3
 
 REGION

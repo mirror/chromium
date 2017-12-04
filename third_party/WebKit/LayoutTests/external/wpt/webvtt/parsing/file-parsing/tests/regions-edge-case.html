@@ -1,8 +1,8 @@
 <!doctype html>
-<!-- DO NOT EDIT! This file and support/regions-lines.vtt are generated. -->
+<!-- DO NOT EDIT! This file and support/regions-edge-case.vtt are generated. -->
 <!-- See /webvtt/parsing/file-parsing/README.md -->
 <meta charset=utf-8>
-<title>WebVTT parser test: regions, lines</title>
+<title>WebVTT parser test: multiple regions edge cases</title>
 <link rel="help" href="https://w3c.github.io/webvtt/#collect-webvtt-region-settings">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
@@ -13,7 +13,7 @@ t.step(function(){
     var video = document.createElement('video');
     var track = document.createElement('track');
     assert_true('src' in track, 'track element not supported');
-    track.src = 'support/regions-lines.vtt';
+    track.src = 'support/regions-edge-case.vtt';
     track['default'] = true;
     track.kind = 'subtitles';
     track.onload = this.step_func(trackLoaded);
@@ -27,33 +27,21 @@ function trackLoaded(event) {
     var video = track.parentNode;
     var cues = video.textTracks[0].cues;
     {
-assert_equals(cues.length, 13);
+assert_equals(cues.length, 4);
 
 var regions = Array.from(cues).map(function(cue) {
     return cue.region;
 });
 
 var valid_lines = [
-    0,
     1,
-    100,
-    101,
-    65536,
-    2147483647,
-    2147483647,
-    2147483647,
     2,
+    3,
+    4
 ];
 valid_lines.forEach(function(valid, index) {
     assert_equals(regions[index].lines, valid, 'Failed with region ' + index);
 });
-
-for (var i = 0; i < 4; i++) {
-    var index = valid_lines.length + i;
-
-    assert_equals(regions[index].lines, 3, 'Failed with region ' + index);
-}
-
     }
     this.done();
 }
