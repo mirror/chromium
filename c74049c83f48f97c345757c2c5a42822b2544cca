@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "04168f45_88b5462a",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "I can live with it for now, I guess, but I\u0027d really rather avoid the awkwardness. Do you know why there was hesitation? The fact that this trick can be used to essentially implement that API suggests that we might as well provide it directly (and efficiently).",
+      "parentUuid": "ab44b63e_cde198b8",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2334ca83_dfddbc99",
         "filename": "extensions/renderer/bindings/event_emitter.h",
         "patchSetId": 5

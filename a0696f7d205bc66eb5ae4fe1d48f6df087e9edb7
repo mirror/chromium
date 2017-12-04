@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a86624_3f81132e",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "nit: Should the try catch ever have not caught here? It seems to me that if ToLocal returns false, it should signify an exception. If so, we can just say:\n\n} else {\n  DCHECK(try_catch.HasCaught());\n  // ...\n}",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176deb0b_0570d7a0",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "nit: why not simply *filter?",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e08954_bc1f3e55",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "Since the FunctionTemplate here is essentially empty, I\u0027m 85% sure the answer is \"no\". But feel free to leave the comment if you\u0027d prefer.",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d90392_ac2720e9",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "nit: a surrounding handle scope is implied when in a V8 callback",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e8dbd4_30327d3f",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "nit: I\u0027d just rely on the V8 dcheck and do this:\n\n  v8::Local\u003cv8::Object\u003e data \u003d info.Data().As\u003cv8::Object\u003e();",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c6504c_39782d6c",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-04T20:27:53Z",
+      "side": 1,
+      "message": "nit: to get the implied DCHECK and avoid the extra work of preparing for an exception being thrown during coercion to number, I\u0027d just do:\n\n  int filter_id \u003d filter_id_value.As\u003cv8::Int32\u003e()-\u003eValue();",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
