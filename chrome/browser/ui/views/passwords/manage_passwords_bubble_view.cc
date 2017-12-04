@@ -501,7 +501,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() && is_password_credential) {
+      is_password_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -591,6 +591,9 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ && !parent_->model()->TryToViewPasswords())
+    return;
+
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);
