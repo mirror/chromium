@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22bdf254_dc697792",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-04T20:01:28Z",
+      "side": 1,
+      "message": "This is used for the TabularContextMenu, which needs a larger scrim or a black nav bar. Is that OK to leave for a follow-up (as a pre-tabular context menu launch item)?",
+      "revId": "8090fe842cf50e6d85ca9212cfad8d987c3fb700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
