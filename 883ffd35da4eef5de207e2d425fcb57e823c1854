@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7de5d708_3968d2da",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-04T19:32:50Z",
+      "side": 1,
+      "message": "Thanks for the pointers!  Done.  I\u0027m not sure it\u0027s a ton cleaner (there\u0027s no good way to set a return value for these mocks :/), but perhaps a bit.",
+      "parentUuid": "85021ddc_b6223103",
+      "range": {
+        "startLine": 180,
+        "startChar": 9,
+        "endLine": 180,
+        "endChar": 42
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5562ad97_a7e76298",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
