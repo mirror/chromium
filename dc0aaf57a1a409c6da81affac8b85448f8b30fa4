@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb5427a_0d2b10d4",
+        "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-04T09:31:47Z",
+      "side": 1,
+      "message": "For readbility reasons, it is good to add a comment after the boolean argument explaining what it is:\ns/false/false /* is_child */",
+      "range": {
+        "startLine": 145,
+        "startChar": 35,
+        "endLine": 145,
+        "endChar": 40
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d191a9_bbd9d7a8",
+        "filename": "chrome/browser/policy/profile_policy_connector_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-04T09:31:47Z",
+      "side": 1,
+      "message": "I would expect the method CreateRegularUser to only create regular users. So passing a user type of USER_TYPE_REGULAR is unexpected.\nConsider renaming the function CreateRegularUser (is the method is poorly named) or avoid passing the user type.",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118d744d_8601bb81",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-04T09:31:47Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "dc0aaf57a1a409c6da81affac8b85448f8b30fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
