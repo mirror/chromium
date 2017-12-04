@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "507d4252_ad87f165",
+        "filename": "media/midi/midi_message_queue_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-12-04T19:13:23Z",
+      "side": 1,
+      "message": "Oh, I see. \n\nMy intent was to indeed have the same object which preserves its state (I thought that would be more useful for the purposes of testing). Would doing that be a violation of the libfuzzer guidelines? If so, then I shall go ahead and make it a local queue. Just wanted to confirm before proceeeding.",
+      "parentUuid": "ab052956_5017d438",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 13
+      },
+      "revId": "a71fee012c66e7ed8c2c20a739bd08e4d4764261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6101db5b_bcdfd31d",
         "filename": "media/midi/midi_message_queue_fuzzer.cc",
         "patchSetId": 3
