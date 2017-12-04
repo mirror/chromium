@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "947bc26f_6b7b8c49",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-04T22:05:49Z",
+      "side": 1,
+      "message": "The \"including MSE\" bit looks wrong given HasMediaSource() below, and KURL::IsLocalFile just checks if the protocol is \"file\".",
+      "range": {
+        "startLine": 1893,
+        "startChar": 10,
+        "endLine": 1893,
+        "endChar": 11
+      },
+      "revId": "95acb7f2bce620a09c8480ca4759e881de8cc49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeeca5f7_56671606",
         "filename": "third_party/WebKit/Source/core/page/ContextMenuClientTest.cpp",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-12-04T15:58:33Z",
       "side": 1,
       "message": "I\u0027ve added this unit test because it is actually a change in behaviour.",
+      "revId": "95acb7f2bce620a09c8480ca4759e881de8cc49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb86f97a_0bd278d9",
+        "filename": "third_party/WebKit/Source/core/page/ContextMenuClientTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-04T22:05:49Z",
+      "side": 1,
+      "message": "Nice, thanks!",
+      "parentUuid": "aeeca5f7_56671606",
       "revId": "95acb7f2bce620a09c8480ca4759e881de8cc49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
