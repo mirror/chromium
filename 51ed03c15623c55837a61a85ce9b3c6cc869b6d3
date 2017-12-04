@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3666ead0_71193e17",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "nit: initialization\n\nhttps://developers.google.com/style/spelling",
+      "range": {
+        "startLine": 42,
+        "startChar": 59,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f3983f_ff597cb6",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "With the native notification flag (which will become default eventually) Chrome OS uses the message center via ash/mojo, which is quite a bit different than directly using MessageCenter in-process. Can you make sure to explain that distinction here?",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a70530_0868e14e",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "why is this necessary? It seems like in most (all?) places we can go on using NDS::GetForProfile",
+      "range": {
+        "startLine": 103,
+        "startChar": 32,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb79d472_4922002e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "nit: capitalization and punctuation for comments",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9109a61d_43662074",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "what are your plans for this param? Will profile_ be removed from NPBMC? Will profile_id be removed from (several methods in) the interface? If we\u0027re keeping both for some reason, should we dcheck they are equivalent?",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6726b29c_29b635f8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-04T22:27:38Z",
+      "side": 1,
+      "message": "nit: I don\u0027t understand the relevance of this comment. It seems to imply readiness is a conditional but the value of success is hardcoded to true.",
+      "range": {
+        "startLine": 163,
+        "startChar": 3,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
