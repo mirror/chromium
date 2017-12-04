@@ -596,5 +596,10 @@
     "prefix": "incremental-shadow-dom",
     "base": "shadow-dom",
     "args": ["--enable-blink-features=IncrementalShadowDOM"]
+  },
+  {
+    "prefix": "unified-autoplay",
+    "base": "external/wpt/feature-policy",
+    "args": ["--enable-features=ForceUnifiedAutoplayForTest"]
   }
 ]

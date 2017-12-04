@@ -1,0 +1,13 @@
+<script src="/common/media.js"></script>
+<script src=/feature-policy/resources/autoplay.js></script>
+<script>
+'use strict';
+
+window.addEventListener('load', () => {
+  isAutoplayAllowed().then(() => {
+    window.parent.postMessage({ enabled: true }, '*');
+  }, (e) => {
+    window.parent.postMessage({ enabled: false }, '*');
+  });
+}, { once: true });
+</script>
