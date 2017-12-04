@@ -52,6 +52,24 @@
       "revId": "08c755385f06397347fe111e7433d6366a3731b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e35436_a2c55dae",
+        "filename": "base/allocator/partition_allocator/partition_alloc.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-04T23:38:42Z",
+      "side": 1,
+      "message": "Thanks for the clarification!",
+      "parentUuid": "61fc828b_e6a82142",
+      "revId": "08c755385f06397347fe111e7433d6366a3731b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
