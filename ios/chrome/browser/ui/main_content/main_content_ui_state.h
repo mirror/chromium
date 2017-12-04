@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class CRWWebViewScrollViewProxy;
+
 // An object encapsulating the broadcasted state of the main scrollable content.
 @interface MainContentUIState : NSObject
 
