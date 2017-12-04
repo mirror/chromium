@@ -16,6 +16,24 @@
       "revId": "3f2f2421a68befee67b0f512f3f748822631abce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439c9e6a_8ca5a5ab",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-04T03:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a123e81f_23a1621e",
+      "revId": "3f2f2421a68befee67b0f512f3f748822631abce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
