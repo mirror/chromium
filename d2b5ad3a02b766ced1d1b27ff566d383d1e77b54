@@ -34,6 +34,24 @@
       "revId": "d2b5ad3a02b766ced1d1b27ff566d383d1e77b54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a385ee9c_60d023f6",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-04T22:39:38Z",
+      "side": 1,
+      "message": "Thanks Ken. I agree that users won\u0027t care, and I doubt client code will handle anything more than success/failure checking. But, I do expect to see results logged in UMA so I suspect returning better failure code will pay dividends fixing future bugs.",
+      "parentUuid": "c5c3da6d_3d4f2df3",
+      "revId": "d2b5ad3a02b766ced1d1b27ff566d383d1e77b54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
