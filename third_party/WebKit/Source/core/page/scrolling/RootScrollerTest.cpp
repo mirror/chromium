@@ -5,6 +5,7 @@
 #include "bindings/core/v8/node_or_string.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/frame/BrowserControls.h"
+#include "core/frame/DOMVisualViewport.h"
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RootFrameViewport.h"
@@ -1169,6 +1170,32 @@ TEST_P(RootScrollerTest, ImmediateUpdateOfLayoutViewport) {
 
   EXPECT_EQ(MainFrameView()->LayoutViewportScrollableArea(),
             &MainFrameView()->GetRootFrameViewport()->LayoutViewport());
+}
+
+// Tests that the root scroller doesn't affect visualViewport pageLeft and
+// pageTop.
+TEST_P(RootScrollerTest, RootScrollerDoesntAffectVisualViewport) {
+  Initialize("root-scroller.html");
+
+  Element* container = MainFrame()->GetDocument()->getElementById("container");
+  MainFrame()->GetDocument()->setRootScroller(container);
+  MainFrameView()->UpdateAllLifecyclePhases();
+
+  ASSERT_EQ(container, EffectiveRootScroller(MainFrame()->GetDocument()));
+
+  GetVisualViewport().SetScale(2);
+  GetVisualViewport().SetLocation(FloatPoint(100, 120));
+
+  ASSERT_EQ(100, MainFrame()->DomWindow()->visualViewport()->pageLeft());
+  ASSERT_EQ(120, MainFrame()->DomWindow()->visualViewport()->pageTop());
+
+  container->setScrollTop(50);
+  container->setScrollLeft(60);
+
+  ASSERT_EQ(50, container->scrollTop());
+  ASSERT_EQ(60, container->scrollLeft());
+  ASSERT_EQ(100, MainFrame()->DomWindow()->visualViewport()->pageLeft());
+  EXPECT_EQ(120, MainFrame()->DomWindow()->visualViewport()->pageTop());
 }
 
 class RootScrollerHitTest : public RootScrollerTest {
