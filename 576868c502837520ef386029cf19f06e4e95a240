@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff89034_5a0f4cf4",
+        "filename": "components/test/data/autofill/heuristics/output/018_checkout_ae.com.out",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-04T19:21:00Z",
+      "side": 0,
+      "message": "Any objection to losing these?",
+      "revId": "576868c502837520ef386029cf19f06e4e95a240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
