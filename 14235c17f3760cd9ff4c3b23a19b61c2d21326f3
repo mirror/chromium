@@ -94,6 +94,53 @@
       "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc1117d_832c6211",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-04T17:13:36Z",
+      "side": 1,
+      "message": "Thanks for checking Yaron!  Downloads uses Chrome\u0027s network stack, so we\u0027ll have to load native.\n\nIt\u0027d be interesting if we could categorize this by Activity (or some startup path though) to see if things like custom tabs/web apps show different numbers than Clank proper.  IIUC Clank has a bunch of UI and potentially a bunch of extra things to load from disk.",
+      "parentUuid": "14bad31a_57faab51",
+      "range": {
+        "startLine": 212,
+        "startChar": 27,
+        "endLine": 212,
+        "endChar": 28
+      },
+      "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ec72c8_0df489e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsObserver.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-04T17:13:36Z",
+      "side": 1,
+      "message": "Feels like we\u0027re bleeding too much about how this all works to this class.  Should we just poke something and say, \"if you\u0027re tracking, now\u0027s a good time to log a timestamp\" and put the variable setting/calculation/histogram logic in that class?  e.g.:\n\nif (/*all the things this observer would know about*/) {\n  UmaUtils.logNavigationCommitOrSomethingThatMakesSense();\n}\n\nThat would also give me the opportunity to do stuff like ask for the value later if I wanted to send it up as part of our feedback collection efforts, etc..",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 43
+      },
+      "revId": "14235c17f3760cd9ff4c3b23a19b61c2d21326f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
