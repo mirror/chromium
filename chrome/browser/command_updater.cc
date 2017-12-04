@@ -77,6 +77,26 @@ void CommandUpdater::UpdateCommandEnabled(int id, bool enabled) {
     observer.EnabledStateChangedForCommand(id, enabled);
 }
 
+void CommandUpdater::SaveCommandState() {
+  DCHECK(saved_commands_.empty());
+  for (const auto& command_pair : commands_) {
+    std::unique_ptr<Command>& entry = saved_commands_[command_pair.first];
+    entry = std::make_unique<Command>();
+    entry->enabled = command_pair.second->enabled;
+  }
+}
+
+void CommandUpdater::RestoreSavedCommandState() {
+  for (const auto& command_pair : saved_commands_)
+    UpdateCommandEnabled(command_pair.first, command_pair.second->enabled);
+  saved_commands_.clear();
+}
+
+void CommandUpdater::DisableAllCommands() {
+  for (const auto& command_pair : commands_)
+    UpdateCommandEnabled(command_pair.first, false);
+}
+
 CommandUpdater::Command* CommandUpdater::GetCommand(int id, bool create) {
   bool supported = SupportsCommand(id);
   if (supported)
