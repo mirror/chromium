@@ -20,10 +20,10 @@ source_set("instrumentation") {
     "tracing/web_memory_allocator_dump.h",
     "tracing/web_process_memory_dump.cc",
     "tracing/web_process_memory_dump.h",
+    "//services/network/public/interfaces:interfaces_blink",
   ]
 
   public_deps = [
-    "//services/network/public/interfaces:interfaces_blink",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/interfaces:interfaces_blink",
     "//skia",
