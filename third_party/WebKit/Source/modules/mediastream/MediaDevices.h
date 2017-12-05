@@ -12,11 +12,13 @@
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "platform/AsyncMethodRunner.h"
+#include "public/platform/modules/mediastream/media_devices.mojom-blink.h"
 
 namespace blink {
 
 class MediaStreamConstraints;
 class MediaTrackSupportedConstraints;
+class ScriptPromiseResolver;
 class ScriptState;
 class UserMediaController;
 
@@ -71,11 +73,15 @@ class MODULES_EXPORT MediaDevices final
   void StopObserving();
   UserMediaController* GetUserMediaController();
   void Dispose();
+  void DevicesEnumerated(ScriptPromiseResolver*,
+                         Vector<Vector<mojom::blink::MediaDeviceInfoPtr>>);
+  void OnDispatcherHostConnectionError();
 
   bool observing_;
   bool stopped_;
   Member<AsyncMethodRunner<MediaDevices>> dispatch_scheduled_event_runner_;
   HeapVector<Member<Event>> scheduled_events_;
+  mojom::blink::MediaDevicesDispatcherHostPtr dispatcher_host_;
 };
 
 }  // namespace blink
