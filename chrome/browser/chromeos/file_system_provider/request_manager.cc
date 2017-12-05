@@ -20,8 +20,8 @@ namespace chromeos {
 namespace file_system_provider {
 namespace {
 
-// Timeout in seconds, before a request is considered as stale and hence
-// aborted.
+// Timeout in seconds, before a request is considered as stale and show a
+// notification to the user, providing an option to request abort.
 const int kDefaultTimeout = 10;
 
 }  // namespace
