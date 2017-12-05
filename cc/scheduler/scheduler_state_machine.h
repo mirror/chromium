@@ -293,6 +293,12 @@ class CC_EXPORT SchedulerStateMachine {
   bool previous_pending_tree_was_impl_side() const {
     return previous_pending_tree_was_impl_side_;
   }
+  void set_should_defer_invalidation_for_main_frame(bool defer) {
+    should_defer_invalidation_for_main_frame_ = defer;
+  }
+  bool did_block_commit_on_impl_side_tree() const {
+    return did_block_commit_on_impl_side_tree_;
+  }
 
  protected:
   bool BeginFrameRequiredForAction() const;
@@ -388,6 +394,8 @@ class CC_EXPORT SchedulerStateMachine {
   bool did_submit_in_last_frame_ = false;
   bool needs_impl_side_invalidation_ = false;
   bool next_invalidation_needs_first_draw_on_activation_ = false;
+  bool should_defer_invalidation_for_main_frame_ = false;
+  bool did_block_commit_on_impl_side_tree_ = false;
 
   bool previous_pending_tree_was_impl_side_ = false;
   bool current_pending_tree_is_impl_side_ = false;
