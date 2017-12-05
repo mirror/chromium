@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34c05b0_6a2d1e27",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:28:23Z",
+      "side": 1,
+      "message": "nit: we should also actually check that PageInfoBubbleView::GetShownBubbleType() returns the expected value before we call OpenPageInfoBubble just to be sure that something is actually happening :)",
+      "revId": "a64daad0c63254165dee5ad1ea170cd1fcc55f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945ed14b_16211f51",
+        "filename": "chrome/browser/ui/views/page_info/testdata/subframe.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:28:23Z",
+      "side": 1,
+      "message": "hmm redirect.html doesn\u0027t exist in the CL anymore?",
+      "revId": "a64daad0c63254165dee5ad1ea170cd1fcc55f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
