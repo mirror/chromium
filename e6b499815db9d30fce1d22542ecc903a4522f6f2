@@ -57,6 +57,24 @@
       "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39635cc1_0ae89e52",
+        "filename": "jingle/notifier/communicator/login.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-05T14:36:29Z",
+      "side": 1,
+      "message": "Pushed a patch https://chromium-review.googlesource.com/c/chromium/src/+/808547\n\nCould you please review the same?",
+      "parentUuid": "bb0c55f0_9065011d",
+      "revId": "e6b499815db9d30fce1d22542ecc903a4522f6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
