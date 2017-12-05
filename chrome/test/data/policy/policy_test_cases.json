@@ -126,16 +126,7 @@
   },
 
   "DnsPrefetchingEnabled": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "can_be_recommended": true,
-    "test_policy": { "DnsPrefetchingEnabled": false },
-    "pref_mappings": [
-      { "pref": "net.network_prediction_options",
-        "indicator_tests": [
-          { "policy": { "DnsPrefetchingEnabled": false } }
-        ]
-      }
-    ]
+    "note": "This policy has been removed. See https://bugs.chromium.org/p/chromium/issues/detail?id=624095"
   },
 
   "NetworkPredictionOptions": {
@@ -152,11 +143,7 @@
   },
 
   "DisableSpdy": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": { "DisableSpdy": true },
-    "pref_mappings": [
-      { "pref": "spdy.disabled" }
-    ]
+    "note": "This policy has been removed. See https://bugs.chromium.org/p/chromium/issues/detail?id=624095"
   },
 
   "QuicAllowed": {
@@ -540,9 +527,7 @@
   },
 
   "DisablePluginFinder": {
-    "note": "This policy is not in use anymore.",
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": { "DisablePluginFinder": true }
+    "note": "This policy is not in use anymore since Chrome 65."
   },
 
   "SyncDisabled": {
@@ -562,8 +547,7 @@
   },
 
   "EnableDeprecatedWebBasedSignin": {
-    "os": ["win", "linux", "mac"],
-    "test_policy": { "EnableDeprecatedWebBasedSignin": false }
+    "note": "This policy has been removed in Chrome 42."
   },
 
   "UserDataDir": {
@@ -724,6 +708,7 @@
           { "policy": { "ProxySettings": { "ProxyMode": "direct" } } }
         ]
       }
+
     ]
   },
 
@@ -732,13 +717,7 @@
   },
 
   "DisableSSLRecordSplitting": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": { "DisableSSLRecordSplitting": true },
-    "pref_mappings": [
-      { "pref": "ssl.ssl_record_splitting.disabled",
-        "local_state": true
-      }
-    ]
+    "note": "This policy is retired, see https://bugs.chromium.org/p/chromium/issues/detail?id=485097#c17."
   },
 
   "EnableOnlineRevocationChecks": {
@@ -1113,16 +1092,7 @@
   },
 
   "DefaultSearchProviderInstantURL": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": {
-      "DefaultSearchProviderEnabled": true,
-      "DefaultSearchProviderSearchURL": "http://www.google.com/?q={searchTerms}",
-      "DefaultSearchProviderKeyword": "google",
-      "DefaultSearchProviderInstantURL": "http://www.google.com/instant?q={searchTerms}"
-    },
-    "pref_mappings": [
-      { "pref": "default_search_provider_data.template_url_data" }
-    ]
+    "note": "Deprecated since Chrome 63. See https://crbug.com/476079"
   },
 
   "DefaultSearchProviderNewTabURL": {
@@ -1178,16 +1148,7 @@
   },
 
   "DefaultSearchProviderSearchTermsReplacementKey": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": {
-      "DefaultSearchProviderEnabled": true,
-      "DefaultSearchProviderSearchURL": "http://www.google.com/?q={searchTerms}",
-      "DefaultSearchProviderKeyword": "google",
-      "DefaultSearchProviderSearchTermsReplacementKey": "espv"
-    },
-    "pref_mappings": [
-      { "pref": "default_search_provider_data.template_url_data" }
-    ]
+    "note": "Deprecated since Chrome 63. See https://crbug.com/476079"
   },
 
   "DefaultSearchProviderImageURL": {
@@ -1230,16 +1191,7 @@
   },
 
   "DefaultSearchProviderInstantURLPostParams": {
-    "os": ["win", "linux", "mac", "chromeos"],
-    "test_policy": {
-      "DefaultSearchProviderEnabled": true,
-      "DefaultSearchProviderSearchURL": "http://www.google.com/?q={searchTerms}",
-      "DefaultSearchProviderKeyword": "google",
-      "DefaultSearchProviderInstantURLPostParams": ""
-    },
-    "pref_mappings": [
-      { "pref": "default_search_provider_data.template_url_data" }
-    ]
+    "note": "Deprecated since Chrome 63. See https://crbug.com/476079"
   },
 
   "DefaultSearchProviderImageURLPostParams": {
@@ -2165,7 +2117,7 @@
   },
 
   "ForceBrowserSignin": {
-    "os": ["win", "linux", "mac"],
+    "os": ["win"],
     "test_policy": { "ForceBrowserSignin": false },
     "pref_mappings": [
       { "pref": "profile.force_browser_signin",
