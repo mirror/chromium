@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0301d833_1ffa0462",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c16cbda_515dd57b",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4d8d2cd_278d0723",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T18:42:26Z",
       "side": 1,
       "message": "I gather this file will be used by other code in platform/?",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982e966b_21113f44",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "Snap Points will also be implemented at the cc side. In a follow-up patch, we would like to share this data structure across blink and cc, like ScrollStateData and MainThreadScrollingReasons. So we temporarily put the code here.",
+      "parentUuid": "a4d8d2cd_278d0723",
       "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fab6e750_17a97c51",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "This data structures are simply moved from core/style/ComputedStyleConstants.h and core/style/ScrollSnap.h so that it could be used by the cc side code later. The declarations are from a previous patch and are not perfect in many ways. I just filed a bug to fix them.",
+      "parentUuid": "2a5f16f2_6f67bad9",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab19bed5_6eba69ca",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9a4aea_6682f763",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab19bed5_6eba69ca",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "98c7bf07_dd5d335b",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752336f3_d9f6459c",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c74e1c22_76a16461",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
         "patchSetId": 23
@@ -101,6 +191,24 @@
       "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3357bfcf_6f9e8307",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c74e1c22_76a16461",
+      "revId": "671c2a50e7944715d5a1e5a09bf90e900bed7030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
