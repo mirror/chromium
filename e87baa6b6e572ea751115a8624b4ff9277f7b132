@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff61dc3e_3175324a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-05T00:49:47Z",
+      "side": 1,
+      "message": "nit: this should line up with `Fail or bring down the previous line.",
+      "revId": "e87baa6b6e572ea751115a8624b4ff9277f7b132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
