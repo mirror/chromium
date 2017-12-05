@@ -22,6 +22,30 @@
       "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f35d31_2d8f15bf",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-05T16:39:15Z",
+      "side": 1,
+      "message": "A given file can be examined only once.  They\u0027re processed oldest-to-newest; each \"next\" is guaranteed to be newer than the previous one.\n\nThus, after looking through an entire directory, it\u0027ll stop even if it fails to delete them after processing.",
+      "parentUuid": "bec6c8ef_131934b4",
+      "range": {
+        "startLine": 416,
+        "startChar": 47,
+        "endLine": 416,
+        "endChar": 48
+      },
+      "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
