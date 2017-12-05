@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "75f29f85_8f0b7dca",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-05T07:22:02Z",
+      "side": 1,
+      "message": "I would like the argument here is rvalue reference so that ScopedBitstreamBuffer takes the ownership of |bitstream_buffer|.\nBut, by some reasons (I don\u0027t know why to be honest), rvalue reference argument like this is prohibited in Google C++ coding style guide.\nTherefore I changed this to const lvalue reference.",
+      "parentUuid": "ce3cd315_b46c2f4a",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd6072c_b265921d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
