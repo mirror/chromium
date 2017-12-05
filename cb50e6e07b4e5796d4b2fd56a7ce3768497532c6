@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c90b641e_1280ed84",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-05T03:35:51Z",
+      "side": 1,
+      "message": "The shortcut work (i.e., support toast activator CLSID) has already been landed in https://chromium-review.googlesource.com/c/chromium/src/+/744296\n\nIf you install/update Chrome (chromium/canary/dev/etc), the shortcut should be taken good care of automatically. The only exception is when you build chromium locally. In this case, you need to build mini_installer and install it by running mini_installer.exe. \n\nHope this helps.",
+      "parentUuid": "79ed287d_538061b3",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2baa886f_837ef9aa",
         "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
         "patchSetId": 4
@@ -177,6 +201,24 @@
       "side": 1,
       "message": "for starters, you will need to stop using __uuidof and instead use the runtime-provided clsid. that might be enough. i think it\u0027s worth getting this right now so that you don\u0027t end up in a hole later (or forget about it).",
       "parentUuid": "30c10a22_babf65df",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90c9f1f_83fabf3b",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-05T03:35:51Z",
+      "side": 1,
+      "message": "This CLSID_KEY is needed at compile time via the code like:\n\"class DECLSPEC_UUID(CLSID_KEY) NotificationActivator: public mswr::RuntimeClass\u003cmswr::RuntimeClassFlags\u003cmswr::ClassicCom\u003e, INotificationActivationCallback\u003e\"\n\nThis means we cannot use runtime-determined clsids that I added in google_chrome_install_modes.cc and chromium_install_modes.cc. \n\nI was thinking of creating 5 NotificationActivator(s), one for each channel (chromium/canary/etc). The code won\u0027t look pretty. We may also need to redefine these 5 clsid consts here. I discussed with Bruce and we couldn\u0027t come up with better solutions.\n\nAny better ideas please, Greg?",
+      "parentUuid": "1e8d42f0_fb04e9a2",
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
