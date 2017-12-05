@@ -601,7 +601,6 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       shutdown_controller_(std::make_unique<ShutdownController>()),
       system_tray_controller_(std::make_unique<SystemTrayController>()),
       system_tray_notifier_(std::make_unique<SystemTrayNotifier>()),
-      tray_action_(std::make_unique<TrayAction>()),
       vpn_list_(std::make_unique<VpnList>()),
       window_cycle_controller_(std::make_unique<WindowCycleController>()),
       window_selector_controller_(std::make_unique<WindowSelectorController>()),
@@ -1014,6 +1013,9 @@ void Shell::Init(const ShellInitParams& init_params) {
   screen_pinning_controller_ = std::make_unique<ScreenPinningController>();
 
   backlights_forced_off_setter_ = std::make_unique<BacklightsForcedOffSetter>();
+
+  tray_action_ =
+      std::make_unique<TrayAction>(backlights_forced_off_setter_.get());
 
   lock_state_controller_ =
       std::make_unique<LockStateController>(shutdown_controller_.get());
