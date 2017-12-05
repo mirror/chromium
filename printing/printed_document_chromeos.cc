@@ -14,29 +14,19 @@
 
 namespace printing {
 
-void PrintedDocument::RenderPrintedPage(const PrintedPage& page,
-                                        PrintingContext* context) const {
+void PrintedDocument::Render(PrintingContext* context) {
 #if defined(USE_CUPS)
-#if defined(NDEBUG)
-  {
-    // Make sure the page is from our list.
-    base::AutoLock lock(lock_);
-    DCHECK(&page == mutable_.pages_.find(page.page_number() - 1)->second.get());
-  }
-#endif  // defined(NDEBUG)
-
   DCHECK(context);
 
   {
     base::AutoLock lock(lock_);
-    if (page.page_number() - 1 == mutable_.first_page) {
-      std::vector<char> buffer;
-
-      if (page.metafile()->GetDataAsVector(&buffer)) {
-        static_cast<PrintingContextChromeos*>(context)->StreamData(buffer);
-      } else {
-        LOG(WARNING) << "Failed to read data from metafile";
-      }
+    std::vector<char> buffer;
+    const MetafilePlayer* metafile = GetMetafile();
+    DCHECK(metafile);
+    if (metafile->GetDataAsVector(&buffer)) {
+      static_cast<PrintingContextChromeos*>(context)->StreamData(buffer);
+    } else {
+      LOG(WARNING) << "Failed to read data from metafile";
     }
   }
 #else
