@@ -2,7 +2,6 @@
 <title>Test that the resource selection algorithm is restarted when load() is called, and that all "source" elements are reconsidered.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <video></video>
 <script>
 async_test(function(t) {
@@ -31,20 +30,20 @@ async_test(function(t) {
         errorCount++;
     }, true);
 
-    // Add an invalid url to the first source so we test getting
+    // Add an bogus url to the first source so we test getting
     // an error event each time resource selection runs.
-    addSource("video", "content/bogus");
-    addSource("video", "content/test");
-    addSource("audio", "content/test");
+    addSource("bogus.ogv", "video/ogg");
+    addSource("test-vp9-opus.webm", "video/webm");
+    addSource("silence-opus.webm", "audio/webm");
 
     // test networkState.
     assert_equals(video.networkState, HTMLMediaElement.NETWORK_NO_SOURCE);
 
-    function addSource(type, name) {
+    function addSource(name, mime) {
         var source = document.createElement("source");
-        source.src = findMediaFile(type, name);
+        source.src = "content/" + name;
         sourceUrls.push(source.src);
-        source.type = mimeTypeForExtension(source.src.split(".").pop());
+        source.type = mime;
         video.appendChild(source);
     }
 });

@@ -2,7 +2,6 @@
 <title>seekable() ranges contain zero when server doesn't support range requests.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <div id="log"></div>
 <audio controls></audio>
 <script>
@@ -24,8 +23,8 @@ async_test(function(t) {
     t.done();
   });
 
-  var mediaFile = findMediaFile('audio', '../../../../media/content/silence');
-  var type = mimeTypeForExtension(mediaFile.split('.').pop());
+  var mediaFile = '../../../../media/content/silence-opus.webm';
+  var type = 'audio/webm';
 
   audio.src = 'http://127.0.0.1:8000/media/resources/load-video.php' +
               '?norange=true&name=' + mediaFile + '&type=' + type;

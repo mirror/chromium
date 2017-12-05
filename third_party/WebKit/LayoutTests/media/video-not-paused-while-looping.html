@@ -14,7 +14,7 @@ async_test(function(test) {
     video.currentTime = video.duration - 0.4;
   });
 
-  video.src = getVideoURI("test");
+  video.src = getVideoURI();
 
   // Verify video is not paused.
   function seeking() {

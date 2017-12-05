@@ -1,10 +1,7 @@
 var consoleDiv = null;
-function getVideoURI(baseFileName)
+function getVideoURI()
 {
-    var fileExtension =
-        (document.createElement("video").
-            canPlayType('video/ogg; codecs="theora"') == "") ? "mp4" : "ogv";
-    return "./content/" + baseFileName + "." + fileExtension;
+    return "./content/test-vp9-opus.webm";
 }
 
 function consoleWrite(text)

@@ -4,7 +4,6 @@
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
 <script src="../../../media-resources/media-controls.js"></script>
-<script src="../../../media-resources/media-file.js"></script>
 <video controls width=400 preload=metadata></video>
 <script>
 async_test(t => {
@@ -15,8 +14,8 @@ async_test(t => {
     checkControlsClassName(video, "phase-ready state-buffering");
   });
 
-  const mediaFile = "../../../media/" + findMediaFile("video", "content/test");
-  const mimeType = mimeTypeForFile(mediaFile);
+  const mediaFile = "../../../media/content/test-vp9-opus.webm";
+  const mimeType = "video/webm";
   video.src = "http://127.0.0.1:8000/resources/load-and-stall.php?name="
     + mediaFile + "&mimeType=" + mimeType + "&stallAt=100000&stallFor=8";
   video.play();

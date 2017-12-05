@@ -2,7 +2,6 @@
 <title>Test to make sure a "source" moved after the media element begins processing is handled correctly.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <script>
 for(var i = 0; i < 7; i++) {
     async_test(function(t) {
@@ -56,8 +55,8 @@ for(var i = 0; i < 7; i++) {
 
         function addSource(index) {
             var source = document.createElement("source");
-            source.src = findMediaFile("video", index + "-" + Date.now());
-            source.type = mimeTypeForExtension(source.src.split(".").pop());
+            source.src = index + "-" + Date.now() + ".ogv";
+            source.type = "video/ogg"
             video.appendChild(source);
 
             source.onerror = t.step_func(function(event) {

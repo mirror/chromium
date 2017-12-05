@@ -4,14 +4,13 @@
         <title>AudioTrack properties read from input stream metadata</title>
         <script src="../../resources/testharness.js"></script>
         <script src="../../resources/testharnessreport.js"></script>
-        <script src="../media-file.js"></script>
-    </head>
+            </head>
     <body>
         <script>
             async_test(function(t)
             {
                 var audio = document.createElement("audio");
-                audio.src = "../content/test.webm";
+                audio.src = "../content/test-vp9-opus.webm";
 
                 audio.onloadedmetadata = t.step_func_done(function()
                 {
@@ -20,7 +19,7 @@
                     assert_equals(audio.audioTracks[0].id, "2", "audioTrack.id");
                     assert_equals(audio.audioTracks[0].kind, "main", "audioTrack.kind");
                     assert_equals(audio.audioTracks[0].label, "", "audioTrack.label");
-                    assert_equals(audio.audioTracks[0].language, "", "audioTrack.language");
+                    assert_equals(audio.audioTracks[0].language, "eng", "audioTrack.language");
                 });
             });
         </script>

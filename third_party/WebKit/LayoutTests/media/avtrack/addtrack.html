@@ -4,11 +4,10 @@
         <title>AudioTrackList &amp; VideoTrackList addtrack event</title>
         <script src="../../resources/testharness.js"></script>
         <script src="../../resources/testharnessreport.js"></script>
-        <script src="../media-file.js"></script>
-    </head>
+            </head>
     <body>
         <script>
-            function addtrack_test(tagName, src, label)
+            function addtrack_test(tagName, fileName, label)
             {
                 function onTrackListEvent(actualEventList, e)
                 {
@@ -29,7 +28,7 @@
                 async_test(function(t)
                 {
                     var media = document.createElement(tagName);
-                    media.src = src;
+                    media.src = "../content/" + fileName;
 
                     var expectedEvents = ["addtrack"];
                     var actualAudioEvents = [];
@@ -54,10 +53,10 @@
                 }, tagName + " : " + label);
             }
 
-            addtrack_test("audio", findMediaFile("audio", "../content/test"), "audio-only");
-            addtrack_test("audio", findMediaFile("video", "../content/test"), "audio-video");
-            addtrack_test("video", findMediaFile("audio", "../content/test"), "audio-only");
-            addtrack_test("video", findMediaFile("video", "../content/test"), "audio-video");
+            addtrack_test("audio", "silence-opus.webm", "audio-only", "../");
+            addtrack_test("audio", "test-vp9-opus.webm", "audio-video", "../");
+            addtrack_test("video", "silence-opus.webm", "audio-only", "../");
+            addtrack_test("video", "test-vp9-opus.webm", "audio-video", "../");
         </script>
     </body>
 </html>
