@@ -454,6 +454,16 @@ bool IsTabletDevice(std::string* reason, HWND hwnd) {
   if (IsWindows10TabletMode(hwnd))
     return true;
 
+  return IsDeviceUsedAsATablet(reason);
+}
+
+bool IsDeviceUsedAsATablet(std::string* reason) {
+  if (GetVersion() < VERSION_WIN8) {
+    if (reason)
+      *reason = "Tablet device detection not supported below Windows 8\n";
+    return false;
+  }
+
   if (GetSystemMetrics(SM_MAXIMUMTOUCHES) == 0) {
     if (reason) {
       *reason += "Device does not support touch.\n";
