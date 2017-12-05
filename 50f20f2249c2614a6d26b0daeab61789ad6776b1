@@ -52,6 +52,24 @@
       "revId": "50f20f2249c2614a6d26b0daeab61789ad6776b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db8e0048_1c1bbb1b",
+        "filename": "BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-05T21:46:14Z",
+      "side": 1,
+      "message": "Oh, is the second one just supposed to say \u0027ninja All\u0027? I see in the \"Lastly\" section it implies the opposite. I wasn\u0027t trying to be snarky, just probably better to have it be what\u0027s true today for people trying to figure  out what\u0027s up. We should keep the bit about what the end state we\u0027re hoping to get to though.\n\nI guess there\u0027s a lot of if (platform) {} guarding required for whole files to make the two the same at this point? I wonder if there\u0027s some high-level filter type thing we could do. Hmm...",
+      "parentUuid": "bca1c7b9_c30377f1",
+      "revId": "50f20f2249c2614a6d26b0daeab61789ad6776b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
