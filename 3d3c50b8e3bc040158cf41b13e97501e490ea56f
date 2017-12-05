@@ -16,6 +16,24 @@
       "revId": "3d3c50b8e3bc040158cf41b13e97501e490ea56f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06449e67_dcb2e2f6",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T09:04:51Z",
+      "side": 1,
+      "message": "Done in comment.",
+      "parentUuid": "3f2ea36f_12946cb0",
+      "revId": "3d3c50b8e3bc040158cf41b13e97501e490ea56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
