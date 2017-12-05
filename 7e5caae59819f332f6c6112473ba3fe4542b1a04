@@ -16,6 +16,24 @@
       "revId": "7e5caae59819f332f6c6112473ba3fe4542b1a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ecf8c2_916fd2c7",
+        "filename": "extensions/common/extension_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T23:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc299d4f_055c031d",
+      "revId": "7e5caae59819f332f6c6112473ba3fe4542b1a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
