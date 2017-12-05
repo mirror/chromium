@@ -21,6 +21,14 @@ cr.define('extensions', function() {
       this.profileStateChangedTarget = new FakeChromeEvent();
     }
 
+    /**
+     * Test only
+     * @param {!chrome.developerPrivate.LoadError} error
+     */
+    setRetryLoadUnpackedError(error) {
+      this.retryLoadUnpackedError = error;
+    }
+
     /** @override */
     getProfileConfiguration() {
       this.methodCalled('getProfileConfiguration');
@@ -63,6 +71,9 @@ cr.define('extensions', function() {
     /** @override */
     retryLoadUnpacked(guid) {
       this.methodCalled('retryLoadUnpacked', guid);
+      if (this.retryLoadUnpackedError !== undefined) {
+        return Promise.reject(this.retryLoadUnpackedError);
+      }
       return Promise.resolve();
     }
 
