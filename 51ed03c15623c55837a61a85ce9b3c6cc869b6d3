@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fda74871_cc1f3f9e",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3666ead0_71193e17",
+      "range": {
+        "startLine": 42,
+        "startChar": 59,
+        "endLine": 42,
+        "endChar": 73
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f3983f_ff597cb6",
         "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a20288ba_6875ddc6",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f3983f_ff597cb6",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0a70530_0868e14e",
         "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T22:27:38Z",
       "side": 1,
       "message": "why is this necessary? It seems like in most (all?) places we can go on using NDS::GetForProfile",
+      "range": {
+        "startLine": 103,
+        "startChar": 32,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9d5bdc_c2dcb77a",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "See additional documentation in the header file. In short, until we add the statics we discussed earlier it\u0027s the entry point to dispatching used by the notification platform bridges. The alternative would be to cast everywhere, but I consider this the better of two evils.",
+      "parentUuid": "d0a70530_0868e14e",
       "range": {
         "startLine": 103,
         "startChar": 32,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "627dd5a7_5f2c77c7",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb79d472_4922002e",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9109a61d_43662074",
         "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d2710b8f_60c0014f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "In the longer run, I imagine that we\u0027ll try to coalesce MessageCenterNotificationManager into NotificationPlatformBridgeMessageCenter. The MCNM only uses the profile for getting the Profile ID, it\u0027s address, so this string would do just fine, assuming we find some good place to store it.\n\nSo, in short, profile_ would be removed. It may make sense to unify |profile_id| and |incognito| into a single parameter to further simplify this, and give us more flexibility of updating the value if needed.",
+      "parentUuid": "9109a61d_43662074",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6726b29c_29b635f8",
         "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-04T22:27:38Z",
       "side": 1,
       "message": "nit: I don\u0027t understand the relevance of this comment. It seems to imply readiness is a conditional but the value of success is hardcoded to true.",
+      "range": {
+        "startLine": 163,
+        "startChar": 3,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7120d6_981a5357",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_message_center.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T19:59:47Z",
+      "side": 1,
+      "message": "I\u0027ve removed it. It\u0027s minor - we don\u0027t compile this file at all if the message center is not compiled in.",
+      "parentUuid": "6726b29c_29b635f8",
       "range": {
         "startLine": 163,
         "startChar": 3,
