@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74727ca5_ac92e1ed",
+        "filename": "ui/aura/mus/mus_context_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T23:18:52Z",
+      "side": 0,
+      "message": "I\u0027m not familiar with this code, and your change looks trivial. Are the two (old and new) equivalent? Same question in the two other changes in ui/compositor.",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "514d9f3232687f8eb35ffa74993d1b5ad2a0b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4109a561_f51086db",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T23:18:52Z",
+      "side": 1,
+      "message": "Use base::ContainsValue()? (in base/stl_util.h)",
+      "range": {
+        "startLine": 299,
+        "startChar": 12,
+        "endLine": 303,
+        "endChar": 49
+      },
+      "revId": "3009185dbe148d0b1fabe078e5d774eb01afa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ceb3b12_9cb39536",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T23:18:52Z",
+      "side": 1,
+      "message": "Similar comments about base::ContainsValue.",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 75
+      },
+      "revId": "3009185dbe148d0b1fabe078e5d774eb01afa05b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
