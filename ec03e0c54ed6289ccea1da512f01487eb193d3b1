@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6d52f1_5a9e1af0",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "Could we just inline these calls rather than having the switch()? Most of the usages of this function in tests just use a single hardcoded type. In 1 case the test loops through a list of types, but we could just make it a list of unique_ptr?",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fefcda_60f166ba",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "nit: this can just be MEDIASTREAM (it\u0027s for both camera and mic)",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a16c29_ec5dbd64",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "nit: I\u0027ve generally found that it\u0027s less risky to explicitly assign values to these enums such that people can remove them without messing up the order.",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c729f697_cf64bbdb",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "nit: it doesn\u0027t record the value, it records the type of bubble",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6f1c11_7700d2ca",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e699172_942d9c0a",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "nit: not sure if this comment is helpful",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4886a7aa_7e33ad56",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T02:46:30Z",
+      "side": 1,
+      "message": "Is this function used in this CL?",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
