@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8de83e_33db8a59",
+        "filename": "net/cert/cert_verify_proc_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T02:32:27Z",
+      "side": 1,
+      "message": "subject_cert",
+      "revId": "fcd8e23723076eeaf6d4859cc82e943c805771c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f01e700_46d60c4d",
+        "filename": "net/cert/crl_set_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T02:32:27Z",
+      "side": 1,
+      "message": "Just need to add this file to src/net/BUILD.gn on line 2411 (which is used to package the test data hermetically across platforms)",
+      "revId": "fcd8e23723076eeaf6d4859cc82e943c805771c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
