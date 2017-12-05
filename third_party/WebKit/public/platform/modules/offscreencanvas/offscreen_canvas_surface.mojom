@@ -16,7 +16,8 @@ interface OffscreenCanvasSurface {
 };
 
 interface OffscreenCanvasSurfaceClient {
-  OnFirstSurfaceActivation(viz.mojom.SurfaceInfo surface_info);
+  OnFirstSurfaceActivation(viz.mojom.SurfaceInfo surface_info,
+                           viz.mojom.SurfaceSequence sequence);
 };
 
 // Creates OffscreenCanvasSurface and CompositorFrameSink instances for use

@@ -114,6 +114,9 @@ void CompositorFrameSinkSupport::SetBeginFrameSource(
 }
 
 void CompositorFrameSinkSupport::EvictCurrentSurface() {
+  if (true)
+    return;
+
   if (!current_surface_id_.is_valid())
     return;
 
@@ -203,7 +206,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     // LocalSurfaceIds should be monotonically increasing. This ID is used
     // to determine the freshness of a surface at aggregation time.
     bool monotonically_increasing_id =
-        local_surface_id.parent_id() >
+        local_surface_id.parent_id() >=
         current_surface_id_.local_surface_id().parent_id();
 
     if (!surface_info.is_valid() || !monotonically_increasing_id) {
