@@ -16,6 +16,24 @@
       "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651a96b1_4deae0ec",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-05T14:15:52Z",
+      "side": 1,
+      "message": "Just changing ShouldClipOverflow at the LayoutObject level breaks hit testing and scroll-to-focus and other things because the overflow rect for the element itself needs to include the border and shadow and other things that get painted int he foreground phase for embedded objects, yet not include any of that stuff for the clipping mask.\n\nI think we always need the layers to match exactly in location and size. Unless it\u0027s been changed in one of these rebases, the clip is pulled from LayerClipRecorder::CollectRoundedRectClips and is in the space of the Parent() layer here. So we need the containment also in that space.\n\nRegardless, if seems we need more tests.",
+      "parentUuid": "ab845f75_4b86e6d0",
+      "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
