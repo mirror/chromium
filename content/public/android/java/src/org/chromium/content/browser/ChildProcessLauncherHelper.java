@@ -111,8 +111,10 @@ public class ChildProcessLauncherHelper {
                             ContentChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
                     connectionBundle.putLong(
                             ContentChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
-                    connectionBundle.putBundle(Linker.EXTRA_LINKER_SHARED_RELROS,
-                            Linker.getInstance().getSharedRelros());
+                    if (Linker.isUsed()) {
+                        connectionBundle.putBundle(Linker.EXTRA_LINKER_SHARED_RELROS,
+                                Linker.getInstance().getSharedRelros());
+                    }
                 }
 
                 @Override

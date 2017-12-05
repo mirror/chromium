@@ -481,7 +481,7 @@ public class LibraryLoader {
     // Record Chromium linker histogram state for the main browser process. Called from
     // onNativeInitializationComplete().
     private void recordBrowserProcessHistogram() {
-        if (Linker.getInstance().isUsed()) {
+        if (Linker.isUsed()) {
             nativeRecordChromiumAndroidLinkerBrowserHistogram(
                     mIsUsingBrowserSharedRelros,
                     mLoadAtFixedAddressFailed,
@@ -496,7 +496,7 @@ public class LibraryLoader {
     // Returns the device's status for loading a library directly from the APK file.
     // This method can only be called when the Chromium linker is used.
     private int getLibraryLoadFromApkStatus() {
-        assert Linker.getInstance().isUsed();
+        assert Linker.isUsed();
 
         if (mLibraryWasLoadedFromApk) {
             return LibraryLoadFromApkStatusCodes.SUCCESSFUL;
@@ -512,7 +512,7 @@ public class LibraryLoader {
     // RecordChromiumAndroidLinkerRendererHistogram() will record it correctly.
     public void registerRendererProcessHistogram(boolean requestedSharedRelro,
                                                  boolean loadAtFixedAddressFailed) {
-        if (Linker.getInstance().isUsed()) {
+        if (Linker.isUsed()) {
             nativeRegisterChromiumAndroidLinkerRendererHistogram(requestedSharedRelro,
                                                                  loadAtFixedAddressFailed,
                                                                  mLibraryLoadTimeMs);

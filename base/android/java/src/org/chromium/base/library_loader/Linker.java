@@ -225,15 +225,20 @@ public abstract class Linker {
     /**
      * Get singleton instance. Returns either a LegacyLinker or a ModernLinker.
      *
-     * Returns a ModernLinker if running on Android M or later, otherwise returns
-     * a LegacyLinker.
+     * On N+ Monochrome is selected by Play Store. With Monochrome this code is not used, instead
+     * Chrome asks the WebView to provide the library (and the shared RELRO). If the WebView fails
+     * to provide the library, the system linker is used as a fallback.
      *
-     * ModernLinker requires OS features from Android M and later: a system linker
-     * that handles packed relocations and load from APK, and android_dlopen_ext()
-     * for shared RELRO support. It cannot run on Android releases earlier than M.
+     * LegacyLinker runs on all Android releases, but is incompatible with GVR library on N+.
+     * LegacyLinker is preferred on M- because it does not write the shared RELRO to disk at
+     * almost every cold startup.
      *
-     * LegacyLinker runs on all Android releases but it is slower and more complex
-     * than ModernLinker, so ModernLinker is preferred for Android M and later.
+     * The ChromeModernPublic.apk can be built and installed manually on N+. In this case it needs
+     * to use the ModernLinker to load the native library from the APK.
+     *
+     * ModernLinker requires OS features from Android M and later: a system linker that handles
+     * packed relocations and load from APK, and android_dlopen_ext() for shared RELRO support. It
+     * cannot run on Android releases earlier than M.
      *
      * @return the Linker implementation instance.
      */
@@ -246,7 +251,7 @@ public abstract class Linker {
                         ContextUtils.getApplicationContext().getApplicationInfo().className;
                 boolean isIncrementalInstall =
                         appClass != null && appClass.contains("incrementalinstall");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isIncrementalInstall) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !isIncrementalInstall) {
                     sSingleton = ModernLinker.create();
                 } else {
                     sSingleton = LegacyLinker.create();
@@ -606,6 +611,11 @@ public abstract class Linker {
      * libraries instead.
      */
     public static boolean isUsed() {
+        // In the rare case when ChromePublic.apk is installed manually on N+, where the
+        // LegacyLinker is incompatible with the GVR library, use System.loadLibrary() to reduce the
+        // usage of the ModernLinker at the cost of no RELRO sharing.
+        if (!isInZipFile() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) return false;
+
         // The auto-generated NativeLibraries.sUseLinker variable will be true if the
         // build has not explicitly disabled Linker features.
         return NativeLibraries.sUseLinker;
