@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbccc2ed_1cbeaf42",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "Would it be easier to just use gmock to provide a mock implementation of WebScriptNotPausedCallback, and then do it like this:\n\nEXPECT_CALL(callback, Completed(WebScriptNotPausedCallback::READY));",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036ec2f6_f8c99d08",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "nit: avoid Isolate::GetCurrent. V8PerIsolateData::MainThreadIsolate is the right isolate here, or we could just use a ScriptState::Scope, which is more heavy-weight but implies a HandleScope.",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77ca220_17731e86",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "Do we need to use the ScriptState? Pausing should affect the entire Document, and the document should shut down (i.e. call ContextDestroyed) before disposing per-context data. You can use ExecutionContext::IsContextDestroyed to see if that has already happened.",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b73db8_5cc2735d",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "Could we just dispose before invoking the callback?",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a088ba8_8435a35b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "nit: std::unique_ptr\u003cWebScriptNotPausedCallback\u003e would seem to make it easier to reason about lifetime, and more analogous to base::Callback.",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee900038_9f1ca0e2",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "Do any callers care whether the context was already destroyed before they entered or whether it was destroyed while waiting for unpause? (For that matter, do any callers care at all if their callback does not run?)",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12131e5_c0bef118",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T18:04:13Z",
+      "side": 1,
+      "message": "nit: ...but it\u0027s not completed yet; we invoke the callback in order to complete it? \"Run\" seems more natural to me. Aside: As long as this isn\u0027t a callback, separate methods for the various results seems slightly more natural.",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
