@@ -9,6 +9,7 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
@@ -143,7 +144,8 @@ class GrContext* InProcessContextProvider::GrContext() {
     return gr_context_->get();
 
   gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(
-      ContextGL(), ContextCapabilities()));
+      ContextGL(), ContextCapabilities(),
+      base::SysInfo::AmountOfPhysicalMemory()));
   cache_controller_->SetGrContext(gr_context_->get());
 
   return gr_context_->get();

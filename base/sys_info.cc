@@ -21,7 +21,8 @@ static const int kLowMemoryDeviceThresholdMB = 512;
 
 // static
 int64_t SysInfo::AmountOfPhysicalMemory() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  if (base::CommandLine::InitializedForCurrentProcess() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableLowEndDeviceMode)) {
     return kLowMemoryDeviceThresholdMB * 1024 * 1024;
   }
@@ -31,7 +32,8 @@ int64_t SysInfo::AmountOfPhysicalMemory() {
 
 // static
 int64_t SysInfo::AmountOfAvailablePhysicalMemory() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  if (base::CommandLine::InitializedForCurrentProcess() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableLowEndDeviceMode)) {
     // Estimate the available memory by subtracting our memory used estimate
     // from the fake |kLowMemoryDeviceThresholdMB| limit.
@@ -49,10 +51,12 @@ int64_t SysInfo::AmountOfAvailablePhysicalMemory() {
 
 bool DetectLowEndDevice() {
   CommandLine* command_line = CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableLowEndDeviceMode))
-    return true;
-  if (command_line->HasSwitch(switches::kDisableLowEndDeviceMode))
-    return false;
+  if (base::CommandLine::InitializedForCurrentProcess()) {
+    if (command_line->HasSwitch(switches::kEnableLowEndDeviceMode))
+      return true;
+    if (command_line->HasSwitch(switches::kDisableLowEndDeviceMode))
+      return false;
+  }
 
   int ram_size_mb = SysInfo::AmountOfPhysicalMemoryMB();
   return (ram_size_mb > 0 && ram_size_mb <= kLowMemoryDeviceThresholdMB);

@@ -26,7 +26,8 @@ namespace skia_bindings {
 class GrContextForGLES2Interface {
  public:
   explicit GrContextForGLES2Interface(gpu::gles2::GLES2Interface* gl,
-                                      const gpu::Capabilities& capabilities);
+                                      const gpu::Capabilities& capabilities,
+                                      int64_t amount_of_physical_memory);
   virtual ~GrContextForGLES2Interface();
 
   GrContext* get() { return gr_context_.get(); }
