@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f71e46a_44ab8523",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-05T23:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480dd229_a74990df",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 60
+      },
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b1be1be_ed5de249",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100d4eab_2981902b",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-05T23:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1be1be_ed5de249",
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +113,24 @@
       "side": 1,
       "message": "If a test name appears in both \u0027SkipTestIdentifiers\u0027 and \u0027TestTargetName\u0027, will it not be run?\n\nIn the else branch (non-inverted case), test filter would only add to the tests in the shard, and cannot remove it. IMHO, it\u0027s more intuitive to take the intersection of test filter and the shard tests, so test filter constrains what\u0027s in the shard. WDYT?",
       "parentUuid": "31dcdfd0_7b93067b",
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7400ef55_80a52cd0",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-05T23:37:33Z",
+      "side": 1,
+      "message": "You\u0027re right.  I tried locally and if a test is both in \u0027SkipTestIdentifiers\u0027 and \u0027OnlyTestIdentifiers\u0027, it\u0027ll still run.\n\nActually the logic of invert for XCTest is not being used (Line 427).  It\u0027s actually do-able for XCTest now.  We can see if it\u0027s necessary to re-enable the revert feature for xctest.",
+      "parentUuid": "0cf682ea_e5df3354",
       "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
