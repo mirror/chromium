@@ -50,6 +50,9 @@ if (is_win) {
       "msi.lib",  # Used by browser/conflicts/msi_util_win.h
     ]
     ldflags = [
+      "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
       "/DELAYLOAD:ndfapi.dll",
       "/DELAYLOAD:pdh.dll",  # The task manager is rarely used.
     ]
@@ -2857,6 +2860,8 @@ split_static_library("browser") {
         "notifications/notification_platform_bridge_win.cc",
         "notifications/notification_platform_bridge_win.h",
       ]
+
+      libs += [ "runtimeobject.lib" ]
     }
 
     if (!is_chrome_branded) {
