@@ -284,7 +284,7 @@ TEST(DrawQuadTest, CopySurfaceDrawQuad) {
   CREATE_SHARED_STATE();
 
   CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, primary_surface_id,
-                  fallback_surface_id, SK_ColorWHITE, true);
+                  fallback_surface_id, SK_ColorWHITE, base::nullopt, true);
   EXPECT_EQ(DrawQuad::SURFACE_CONTENT, copy_quad->material);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
   EXPECT_EQ(primary_surface_id, copy_quad->primary_surface_id);
@@ -292,7 +292,7 @@ TEST(DrawQuadTest, CopySurfaceDrawQuad) {
   EXPECT_TRUE(copy_quad->stretch_content_to_fill_bounds);
 
   CREATE_QUAD_ALL(SurfaceDrawQuad, primary_surface_id, fallback_surface_id,
-                  SK_ColorWHITE, false);
+                  SK_ColorWHITE, base::nullopt, false);
   EXPECT_EQ(DrawQuad::SURFACE_CONTENT, copy_quad->material);
   EXPECT_EQ(primary_surface_id, copy_quad->primary_surface_id);
   EXPECT_EQ(fallback_surface_id, copy_quad->fallback_surface_id);
@@ -568,7 +568,7 @@ TEST_F(DrawQuadIteratorTest, SurfaceDrawQuad) {
 
   CREATE_SHARED_STATE();
   CREATE_QUAD_NEW(SurfaceDrawQuad, visible_rect, surface_id, base::nullopt,
-                  SK_ColorWHITE, false);
+                  SK_ColorWHITE, base::nullopt, false);
   EXPECT_EQ(0, IterateAndCount(quad_new));
 }
 
