@@ -94,6 +94,27 @@ std::string GetTemplateURLStringForExtension(const std::string& extension_id) {
 }  // namespace
 
 // static
+bool ExtensionOmniboxEventRouter::OnKeywordEntered(
+    Profile* profile,
+    const std::string& extension_id,
+    int suggest_id) {
+  EventRouter* event_router = EventRouter::Get(profile);
+  if (!event_router->ExtensionHasEventListener(
+          extension_id, omnibox::OnKeywordEntered::kEventName))
+    return false;
+
+  auto args = std::make_unique<base::ListValue>();
+  args->Set(0, std::make_unique<base::Value>(suggest_id));
+
+  auto event = std::make_unique<Event>(events::OMNIBOX_ON_KEYWORD_ENTERED,
+                                       omnibox::OnKeywordEntered::kEventName,
+                                       std::move(args), profile);
+  event_router->DispatchEventToExtension(extension_id, std::move(event));
+
+  return true;
+}
+
+// static
 void ExtensionOmniboxEventRouter::OnInputStarted(
     Profile* profile, const std::string& extension_id) {
   auto event = std::make_unique<Event>(

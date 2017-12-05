@@ -197,6 +197,28 @@
         ]
       },
       {
+        "name": "onKeywordEntered",
+        "type": "function",
+        "description": "User has entered keyword mode for an omnibox extension keyword.",
+        "parameters": [
+          {
+            "name": "suggest",
+            "type": "function",
+            "description": "A callback passed to the onKeywordEntered event used for sending suggestions back to the browser.",
+            "parameters": [
+              {
+                "name": "suggestResults",
+                "type": "array",
+                "description": "Array of suggest results",
+                "items": {
+                  "$ref": "SuggestResult"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "onInputCancelled",
         "type": "function",
         "description": "User has ended the keyword input session without accepting the input.",

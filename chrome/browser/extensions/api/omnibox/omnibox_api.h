@@ -40,14 +40,22 @@ class ExtensionRegistry;
 // Event router class for events related to the omnibox API.
 class ExtensionOmniboxEventRouter {
  public:
-  // The user has just typed the omnibox keyword. This is sent exactly once in
-  // a given input session, before any OnInputChanged events.
+  // The user has entered keyword mode for an omnibox extension keyword.
+  // Returns true if someone is listening to this event, and
+  // thus we have some degree of confidence that we'll get a response.
+  static bool OnKeywordEntered(Profile* profile,
+                               const std::string& extension_id,
+                               int suggest_id);
+
+  // The user has typed the first input after keyword mode has been entered.
+  // This is sent exactly once in a given input session, before any
+  // OnInputChanged events.
   static void OnInputStarted(
       Profile* profile, const std::string& extension_id);
 
   // The user has changed what is typed into the omnibox while in an extension
   // keyword session. Returns true if someone is listening to this event, and
-  // thus we have some degree of confidence we'll get a response.
+  // thus we have some degree of confidence that we'll get a response.
   static bool OnInputChanged(
       Profile* profile,
       const std::string& extension_id,
