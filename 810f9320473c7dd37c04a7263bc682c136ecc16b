@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8ad948_d7322d83",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-05T00:47:05Z",
+      "side": 0,
+      "message": "Can you remove anything from tabs/BUILD.gn because of this?",
+      "range": {
+        "startLine": 81,
+        "startChar": 40,
+        "endLine": 81,
+        "endChar": 67
+      },
+      "revId": "810f9320473c7dd37c04a7263bc682c136ecc16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
