@@ -21,6 +21,7 @@
 #include "services/viz/public/cpp/compositing/shared_quad_state_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_id_struct_traits.h"
 #include "services/viz/public/interfaces/compositing/quads.mojom-shared.h"
+#include "skia/public/interfaces/color_struct_traits.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 
@@ -251,10 +252,17 @@ struct StructTraits<viz::mojom::SurfaceQuadStateDataView, viz::DrawQuad> {
     return quad->fallback_surface_id;
   }
 
-  static uint32_t default_background_color(const viz::DrawQuad& input) {
+  static SkColor default_background_color(const viz::DrawQuad& input) {
     const viz::SurfaceDrawQuad* quad =
         viz::SurfaceDrawQuad::MaterialCast(&input);
     return quad->default_background_color;
+  }
+
+  static const base::Optional<SkColor>& gutter_color_override(
+      const viz::DrawQuad& input) {
+    const viz::SurfaceDrawQuad* quad =
+        viz::SurfaceDrawQuad::MaterialCast(&input);
+    return quad->gutter_color_override;
   }
 
   static bool stretch_content_to_fill_bounds(const viz::DrawQuad& input) {

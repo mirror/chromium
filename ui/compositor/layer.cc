@@ -805,6 +805,17 @@ void Layer::SetFallbackSurfaceId(const viz::SurfaceId& surface_id) {
     mirror->dest()->SetFallbackSurfaceId(surface_id);
 }
 
+void Layer::SetGutterColorOverride(
+    const base::Optional<SkColor>& gutter_color_override) {
+  DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
+  DCHECK(surface_layer_);
+
+  surface_layer_->SetGutterColorOverride(gutter_color_override);
+
+  for (const auto& mirror : mirrors_)
+    mirror->dest()->SetGutterColorOverride(gutter_color_override);
+}
+
 const viz::SurfaceId* Layer::GetPrimarySurfaceId() const {
   if (surface_layer_)
     return &surface_layer_->primary_surface_id();

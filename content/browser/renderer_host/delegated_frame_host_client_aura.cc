@@ -77,6 +77,11 @@ viz::LocalSurfaceId DelegatedFrameHostClientAura::GetLocalSurfaceId() const {
   return render_widget_host_view_->GetLocalSurfaceId();
 }
 
+bool DelegatedFrameHostClientAura::IsInFullscreenMode() const {
+  return render_widget_host_view_->host_->delegate() &&
+         render_widget_host_view_->host_->delegate();
+}
+
 void DelegatedFrameHostClientAura::OnBeginFrame() {
   render_widget_host_view_->OnBeginFrame();
 }

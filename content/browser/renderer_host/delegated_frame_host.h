@@ -70,6 +70,7 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   virtual std::unique_ptr<CompositorResizeLock>
   DelegatedFrameHostCreateResizeLock() = 0;
   virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
+  virtual bool IsInFullscreenMode() const = 0;
 
   virtual void OnBeginFrame() = 0;
   virtual bool IsAutoResizeEnabled() const = 0;

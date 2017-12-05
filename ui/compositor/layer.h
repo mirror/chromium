@@ -324,6 +324,11 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Returns the fallback SurfaceId set by SetFallbackSurfaceId.
   const viz::SurfaceId* GetFallbackSurfaceId() const;
 
+  // Overrides the child's gutter color with a parent specified gutter color
+  // in the event the primary surface is unavailable.
+  void SetGutterColorOverride(
+      const base::Optional<SkColor>& gutter_color_override);
+
   bool has_external_content() {
     return texture_layer_.get() || surface_layer_.get();
   }

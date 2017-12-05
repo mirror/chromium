@@ -297,6 +297,17 @@ void DelegatedFrameHost::WasResized() {
     viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_id, current_frame_size_in_dip_, GetSurfaceReferenceFactory());
+    // When making an element on the page fullscreen the element's background
+    // may not match the page's, so use black as the gutter color to avoid
+    // flashes of brighter colors during the transition.
+    if (client_->IsInFullscreenMode()) {
+      client_->DelegatedFrameHostGetLayer()->SetGutterColorOverride(
+          SK_ColorBLACK);
+    } else {
+      client_->DelegatedFrameHostGetLayer()->SetGutterColorOverride(
+          base::nullopt);
+    }
+
     has_primary_surface_ = true;
     frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
     if (compositor_)
