@@ -52,6 +52,24 @@
       "revId": "475233b455317415c5cba802f07af89f3a1b7323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cb7a6e_bce73083",
+        "filename": "net/cert/signed_tree_head.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T09:06:45Z",
+      "side": 1,
+      "message": "Having said that, the disadvantage of doing so is that it can no longer be used for logging outside of test code, which was what I found this useful for. Perhaps documenting this operator would be better, i.e. \"Outputs a string representation of the STH, approximating its JSON encoding. However, it is not guaranteed to be valid JSON and should only be used for logging or test purposes.\" What do you think?",
+      "parentUuid": "cd5108dd_030fec83",
+      "revId": "475233b455317415c5cba802f07af89f3a1b7323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
