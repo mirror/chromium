@@ -2,14 +2,13 @@
 <title>autoplay with preload set to none.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <script>
-function autoplay_test(tagName, src)
+function autoplay_test(tagName, fileName)
 {
     async_test(function(t)
     {
         var e = document.createElement(tagName);
-        e.src = src;
+        e.src = "content/" + fileName;
         e.preload = "none";
         e.autoplay = true;
         var actual_events = [];
@@ -30,6 +29,6 @@ function autoplay_test(tagName, src)
     }, tagName + '.autoplay with preload="none"');
 }
 
-autoplay_test('audio', findMediaFile('audio', 'content/test'));
-autoplay_test('video', findMediaFile('video', 'content/test'));
+autoplay_test('audio', 'silence-opus.webm');
+autoplay_test('video', 'test-vp9-opus.webm');
 </script>

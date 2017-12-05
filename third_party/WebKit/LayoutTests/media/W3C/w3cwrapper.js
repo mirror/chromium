@@ -1,10 +1,9 @@
-function getVideoURI(dummy) {
-  var bool=function(any){return!(any=="no"||!any)};
-  return "../../../content/test." + (bool(document.createElement("video").canPlayType('video/ogg; codecs="theora"')) ? "ogv" : "mp4");
+function getVideoURI() {
+  return "../../../content/test-vp9-opus.webm";
 }
 
-function getAudioURI(dummy) {
-  return "../../../content/test.wav";
+function getAudioURI() {
+  return "../../../content/silence-opus.webm";
 }
 
 function testStep(testFunction) {

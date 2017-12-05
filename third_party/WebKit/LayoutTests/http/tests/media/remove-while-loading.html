@@ -2,7 +2,6 @@
 <title>Test that removing a media element from the tree while loading does not crash.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <video></video>
 <script>
 async_test(function(t) {
@@ -13,8 +12,8 @@ async_test(function(t) {
         setTimeout(t.step_func_done(), 100);
     });
 
-    var mediaFile = findMediaFile("video", "content/test");
-    var mimeType = mimeTypeForFile(mediaFile);
-    video.src = "http://127.0.0.1:8000/resources/load-and-stall.php?name=../../../media/" + mediaFile + "&mimeType=" + mimeType + "&stallAt=100000";
+    var mediaFile = "../../../media/content/test-vp9-opus.webm";
+    var mimeType = "video/webm";
+    video.src = "http://127.0.0.1:8000/resources/load-and-stall.php?name=" + mediaFile + "&mimeType=" + mimeType + "&stallAt=100000";
 });
 </script>

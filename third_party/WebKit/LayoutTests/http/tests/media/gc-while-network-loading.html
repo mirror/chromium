@@ -2,14 +2,13 @@
 <title>GC while networkState is NETWORK_LOADING</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <script>
 async_test(function(t)
 {
     var v = document.createElement("video");
     v.foo = "bar";
-    var mediaFile = findMediaFile("video", "../../../media/content/test");
-    var type = mimeTypeForExtension(mediaFile.split(".").pop());
+    var mediaFile = "../../../media/content/test-vp9-opus.webm";
+    var type = "video/webm";
     v.src = "http://127.0.0.1:8000/media/video-throttled-load.cgi?name=" + mediaFile + "&throttle=50&type=" + type;
     v.onloadstart = t.step_func(function()
     {

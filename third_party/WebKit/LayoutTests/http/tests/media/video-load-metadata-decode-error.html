@@ -2,7 +2,6 @@
 <title>This test case simulates a decode error after loading meta data of a video.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <video></video>
 <script>
 async_test(function(t) {
@@ -12,8 +11,8 @@ async_test(function(t) {
     watcher.wait_for(["loadedmetadata", "error"]).then(t.step_func_done(function() {
         assert_equals(video.networkState, HTMLMediaElement.NETWORK_IDLE);
     }));
-    var movie = findMediaFile("video", "resources/test");
-    var type = mimeTypeForExtension(movie.split(".").pop());
+    var movie = "../../../media/content/test-vp9-opus.webm";
+    var type = "video/webm";
     video.src = "video-load-metadata-decode-error.cgi?name=" + movie + "&type=" + type;
     video.play();
 });

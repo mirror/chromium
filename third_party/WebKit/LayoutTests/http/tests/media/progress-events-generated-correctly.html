@@ -2,7 +2,6 @@
 <title>Test that progress events are generated during loading of media resource.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <video></video>
 <script>
 async_test(function(t) {
@@ -68,8 +67,8 @@ async_test(function(t) {
         setTimeout(t.step_func(checkProgressCount), maxProgressFiringIntervalInMS);
     });
 
-    var mediaFile = findMediaFile('video', 'resources/test');
-    var mimeType = mimeTypeForFile(mediaFile);
+    var mediaFile = '../../../../media/content/test-vp9-opus.webm';
+    var mimeType = 'video/webm; codecs="vp9,opus"';
     // Assumes minimum file size selected is > 100 kB.
     // At least 4*maxProgressFiringIntervalInMS is how long we want to stretch the full
     // loading, because we perform checks after 3 of these intervals while still

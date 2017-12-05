@@ -4,14 +4,13 @@
         <title>Media track switching during playback</title>
         <script src="../../resources/testharness.js"></script>
         <script src="../../resources/testharnessreport.js"></script>
-        <script src="../media-file.js"></script>
-    </head>
+            </head>
     <body>
         <script>
             async_test(function(t)
             {
                 var video = document.createElement("video");
-                video.src = "../content/multitrack-3video-2audio.webm";
+                video.src = "../content/multitrack-3video-vp9-2audio-opus.webm";
 
                 video.onloadedmetadata = t.step_func(function()
                 {

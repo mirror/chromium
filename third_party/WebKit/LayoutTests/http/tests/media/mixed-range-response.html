@@ -2,7 +2,6 @@
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
 <script src="../resources/get-host-info.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <body>
 <script>
 // This file tests the following behavior:
@@ -47,8 +46,9 @@ function create_success_audio_test(url, crossOrigin) {
 var HOST_INFO = get_host_info();
 var MIX_RESPONSE_PHP_PATH = '/media/resources/mixed-range-response.php';
 var REDIRECT_PHP_PATH = '/resources/redirect.php'
+// NOTE: mixed-range-response.php includes hard coded assumptions about the ogg file.
 var AUDIO_PATH = '/media/resources/load-video.php?' +
-                 'name=../../../../media/content/silence.oga&type=audio/ogg';
+                 'name=../../../../media/content/silence-opus.oga&type=audio/webm';
 
 promise_test(function(t) {
      return create_success_audio_test(
