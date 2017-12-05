@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1870ae6b_62ffbfb9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-cors-exposed-header-names.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-05T08:56:32Z",
+      "side": 1,
+      "message": "nit: resources/fetch-cors-exposed-header-names-worker.js",
+      "revId": "0a8e12eb49f82adfa492ee6fee41f2e6ac1d42e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
