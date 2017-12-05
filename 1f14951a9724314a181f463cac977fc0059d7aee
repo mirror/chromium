@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71c03ba7_3b2248be",
+        "filename": "components/cronet/url_request_context_config_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-05T21:23:05Z",
+      "side": 1,
+      "message": "This can check ENABLE_BUILT_IN_DNS instead",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 19
+      },
+      "revId": "1f14951a9724314a181f463cac977fc0059d7aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
