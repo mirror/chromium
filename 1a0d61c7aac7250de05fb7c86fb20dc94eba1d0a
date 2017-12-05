@@ -46,6 +46,30 @@
       "revId": "1a0d61c7aac7250de05fb7c86fb20dc94eba1d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86646ae4_c2f753d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ChromeContextMenuItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-12-05T01:26:05Z",
+      "side": 0,
+      "message": "I think so, because the exception reported is xml not found. Within a single app, AppCompactResource should be fine.\n\nI will add a TODO in ApiCompatibilityUtils.getDrawable to change it use AppCompactResources and fix it in a followup CL.",
+      "parentUuid": "7ce5ee4f_cbe97587",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "1a0d61c7aac7250de05fb7c86fb20dc94eba1d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
