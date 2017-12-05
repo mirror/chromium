@@ -49,6 +49,7 @@ PlatformCursor X11CursorFactoryOzone::CreateImageCursor(
   // resulting SkBitmap is empty and X crashes when creating a zero size cursor
   // image. Return invisible cursor here instead.
   if (bitmap.drawsNothing()) {
+    invisible_cursor_->AddRef();
     return ToPlatformCursor(invisible_cursor_.get());
   }
 
