@@ -34,6 +34,24 @@
       "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a11b8956_44a75f60",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T02:48:43Z",
+      "side": 1,
+      "message": "color_chooser_.reset();\ncolor_chooser_ \u003d std::make_unique\u003c...\n\nFrom http://en.cppreference.com/w/cpp/memory/unique_ptr/reset, the new value is assigned before the old value is destructed. Since the destructor calls ColorChooser::End(), which results in a call to DidEndColorChooser(), it would then reset the new ColorChooser immediately.",
+      "parentUuid": "5b9d2038_3ba7eb56",
+      "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
