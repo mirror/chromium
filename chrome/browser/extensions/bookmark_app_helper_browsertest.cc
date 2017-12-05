@@ -66,22 +66,6 @@ class WebAppReadyMsgWatcher : public content::BrowserMessageFilter {
     return browser_->tab_strip_model()->GetActiveWebContents();
   }
 
-  void OnDidGetWebApplicationInfo(const WebApplicationInfo& const_info) {
-    WebApplicationInfo info = const_info;
-    // Mimic extensions::TabHelper for fields missing from the manifest.
-    if (info.app_url.is_empty())
-      info.app_url = web_contents()->GetURL();
-    if (info.title.empty())
-      info.title = web_contents()->GetTitle();
-    if (info.title.empty())
-      info.title = base::UTF8ToUTF16(info.app_url.spec());
-
-    bookmark_app_helper_ = base::MakeUnique<TestBookmarkAppHelper>(
-        browser_->profile(), info, web_contents(), quit_closure_);
-    bookmark_app_helper_->Create(
-        base::Bind(&WebAppReadyMsgWatcher::FinishCreateBookmarkApp, this));
-  }
-
   void FinishCreateBookmarkApp(const Extension* extension,
                                const WebApplicationInfo& web_app_info) {
     // ~WebAppReadyMsgWatcher() is called on the IO thread, but
@@ -95,22 +79,7 @@ class WebAppReadyMsgWatcher : public content::BrowserMessageFilter {
     run_loop.Run();
   }
 
-  // BrowserMessageFilter:
-  void OverrideThreadForMessage(const IPC::Message& message,
-                                content::BrowserThread::ID* thread) override {
-    if (message.type() == ChromeFrameHostMsg_DidGetWebApplicationInfo::ID)
-      *thread = content::BrowserThread::UI;
-  }
-
-  bool OnMessageReceived(const IPC::Message& message) override {
-    bool handled = true;
-    IPC_BEGIN_MESSAGE_MAP(WebAppReadyMsgWatcher, message)
-      IPC_MESSAGE_HANDLER(ChromeFrameHostMsg_DidGetWebApplicationInfo,
-                          OnDidGetWebApplicationInfo)
-      IPC_MESSAGE_UNHANDLED(handled = false)
-    IPC_END_MESSAGE_MAP()
-    return handled;
-  }
+  bool OnMessageReceived(const IPC::Message& message) override { return false; }
 
  private:
   ~WebAppReadyMsgWatcher() override {}

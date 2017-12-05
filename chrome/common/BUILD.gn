@@ -675,6 +675,7 @@ mojom("mojo_bindings") {
     "prerender.mojom",
     "renderer_configuration.mojom",
     "resource_usage_reporter.mojom",
+    "web_application_info_provider.mojom",
   ]
 
   if (is_win) {

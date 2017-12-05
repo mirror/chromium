@@ -154,8 +154,7 @@ class TabHelper : public content::WebContentsObserver,
       DoInlineInstallCallback callback) override;
 
   // Message handlers.
-  void OnDidGetWebApplicationInfo(content::RenderFrameHost* sender,
-                                  const WebApplicationInfo& info);
+  void OnDidGetWebApplicationInfo(const WebApplicationInfo& info);
   void OnGetAppInstallState(content::RenderFrameHost* host,
                             const GURL& requestor_url,
                             int return_route_id,
