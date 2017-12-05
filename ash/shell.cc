@@ -159,6 +159,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/base/ui_base_switches.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/base/user_activity/user_activity_detector.h"
 #include "ui/chromeos/user_activity_power_manager_notifier.h"
 #include "ui/compositor/layer.h"
@@ -931,9 +932,10 @@ void Shell::Init(ui::ContextFactory* context_factory,
   if (!display_initialized)
     display_manager_->InitDefaultDisplay();
 
-  if (config == Config::CLASSIC) {
+  if (config == Config::CLASSIC)
     display_manager_->RefreshFontParams();
 
+  if (!::switches::IsMusHostingViz()) {
     aura::Env::GetInstance()->set_context_factory(context_factory);
     aura::Env::GetInstance()->set_context_factory_private(
         context_factory_private);
