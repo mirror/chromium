@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a3364cf_09df6135",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T21:25:36Z",
+      "side": 1,
+      "message": "I think you should call OnFocus first. It\u0027s possible that has side effects that we may want processed before scrolling.",
+      "range": {
+        "startLine": 1804,
+        "startChar": 2,
+        "endLine": 1804,
+        "endChar": 9
+      },
+      "revId": "bd345dd792396d6b2a7548b2546480ed93607ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
