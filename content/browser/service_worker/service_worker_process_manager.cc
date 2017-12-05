@@ -12,6 +12,7 @@
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/site_instance_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -51,6 +52,7 @@ ServiceWorkerProcessManager::ProcessInfo::~ProcessInfo() {
 ServiceWorkerProcessManager::ServiceWorkerProcessManager(
     BrowserContext* browser_context)
     : browser_context_(browser_context),
+      storage_partition_(nullptr),
       process_id_for_test_(ChildProcessHost::kInvalidUniqueID),
       new_process_id_for_test_(ChildProcessHost::kInvalidUniqueID),
       weak_this_factory_(this) {
@@ -202,12 +204,12 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   // ServiceWorkerProcessManager does not know of any renderer processes that
   // are available for |pattern|. Create a SiteInstance and ask for a renderer
   // process. Attempt to reuse an existing process if possible.
-  // TODO(clamy): Update the process reuse mechanism above following the
-  // implementation of
-  // SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE.
+  // TODO(clamy): Remove the process reuse mechanism above when
+  // the non-PlzNavigate code path is no longer needed (the feature flag is
+  // removed).
   scoped_refptr<SiteInstanceImpl> site_instance =
-      SiteInstanceImpl::CreateForURL(browser_context_, script_url);
-  site_instance->set_is_for_service_worker();
+      SiteInstanceImpl::CreateForServiceWorker(browser_context_, script_url,
+                                               storage_partition_);
   DCHECK(site_instance->process_reuse_policy() ==
              SiteInstanceImpl::ProcessReusePolicy::DEFAULT ||
          site_instance->process_reuse_policy() ==
@@ -218,6 +220,9 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   }
 
   RenderProcessHost* rph = site_instance->GetProcess();
+  DCHECK(!storage_partition_ ||
+         rph->InSameStoragePartition(storage_partition_));
+
   ServiceWorkerMetrics::StartSituation start_situation;
   if (!rph->HasConnection()) {
     // HasConnection() is false means that Init() has not been called or the
