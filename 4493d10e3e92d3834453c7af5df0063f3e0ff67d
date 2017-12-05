@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b86d13ea_8162df8e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-05T13:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a997a31b_dcf51587",
+      "range": {
+        "startLine": 770,
+        "startChar": 7,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65abf4bb_2f8e924d",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
         "patchSetId": 18
@@ -39,6 +63,24 @@
       "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cf8b7a_697426eb",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-05T13:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65abf4bb_2f8e924d",
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "67830eaf_5e5c1a9b",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-05T13:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b277a577_e9407c9c",
+      "range": {
+        "startLine": 281,
+        "startChar": 8,
+        "endLine": 281,
+        "endChar": 15
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399db916_567b5ef6",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
         "patchSetId": 18
@@ -85,6 +151,30 @@
       "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a19da5c_4ea9f792",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-05T13:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399db916_567b5ef6",
+      "range": {
+        "startLine": 487,
+        "startChar": 7,
+        "endLine": 487,
+        "endChar": 26
+      },
+      "revId": "4493d10e3e92d3834453c7af5df0063f3e0ff67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
