@@ -97,8 +97,7 @@ std::unique_ptr<UiElement> UiScene::RemoveUiElement(int element_id) {
 
 bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
                            const gfx::Vector3dF& look_at) {
-  bool scene_dirty = !initialized_scene_ || is_dirty_;
-  bool needs_redraw = false;
+  bool needs_redraw = !initialized_scene_ || is_dirty_;
   initialized_scene_ = true;
   is_dirty_ = false;
 
@@ -122,7 +121,7 @@ bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
       if ((element.DoBeginFrame(current_time, look_at) ||
            element.updated_bindings_this_frame()) &&
           (element.IsVisible() || element.updated_visiblity_this_frame())) {
-        scene_dirty = true;
+        needs_redraw = true;
       }
     }
   }
@@ -145,7 +144,7 @@ bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
     }
   }
 
-  if (!scene_dirty) {
+  if (!needs_redraw) {
     // Nothing to update, so set all elements to the final update phase and
     // return early.
     for (auto& element : *root_element_) {
@@ -175,7 +174,7 @@ bool UiScene::OnBeginFrame(const base::TimeTicks& current_time,
     root_element_->UpdateWorldSpaceTransformRecursive();
   }
 
-  return scene_dirty || needs_redraw;
+  return needs_redraw;
 }
 
 bool UiScene::UpdateTextures() {
