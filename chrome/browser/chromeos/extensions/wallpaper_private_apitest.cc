@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "net/dns/mock_host_resolver.h"
@@ -17,6 +18,9 @@ class WallPaperPrivateApiTest : public ExtensionApiTest {
 };
 
 IN_PROC_BROWSER_TEST_F(WallPaperPrivateApiTest, WallpaperPrivateApiTest) {
+  // TODO(wzang@):Fix wallperpar for mash, crbug.com/779221
+  if (chromeos::GetAshConfig() == ash::Config::MASH)
+    return;
   chromeos::SystemSaltGetter::Get()->SetRawSaltForTesting(
       chromeos::SystemSaltGetter::RawSalt({1, 2, 3, 4, 5, 6, 7, 8}));
   ASSERT_TRUE(StartEmbeddedTestServer());
