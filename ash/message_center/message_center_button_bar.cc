@@ -8,6 +8,8 @@
 #include "ash/message_center/message_center_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/tray/tray_constants.h"
+#include "ash/system/tray/tray_popup_utils.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -21,6 +23,10 @@
 #include "ui/message_center/notifier_id.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/resources/grit/ui_resources.h"
+#include "ui/views/animation/flood_fill_ink_drop_ripple.h"
+#include "ui/views/animation/ink_drop_highlight.h"
+#include "ui/views/animation/ink_drop_impl.h"
+#include "ui/views/animation/ink_drop_mask.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/image_button.h"
@@ -47,15 +53,56 @@ constexpr int kSeparatorHeight = 24;
 constexpr gfx::Insets kSeparatorPadding(12, 0, 12, 0);
 constexpr gfx::Insets kButtonBarBorder(4, 18, 4, 0);
 
-void SetDefaultButtonStyle(views::Button* button) {
-  button->SetFocusForPlatform();
-  button->SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
-  button->SetBorder(
-      views::CreateEmptyBorder(message_center_style::kActionIconPadding));
+class MessageCenterButton : public views::ToggleImageButton {
+ public:
+  MessageCenterButton(views::ButtonListener* listener, bool is_toggle_button)
+      : ToggleImageButton(listener), is_toggle_button_(is_toggle_button) {
+    SetFocusForPlatform();
+    SetFocusPainter(views::Painter::CreateSolidFocusPainter(
+        message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
+    SetBorder(
+        views::CreateEmptyBorder(message_center_style::kActionIconPadding));
 
-  // TODO(tetsui): Add ripple effect to the buttons.
-}
+    SetInkDropMode(views::ImageButton::InkDropMode::ON);
+    set_ink_drop_base_color(kTrayPopupInkDropBaseColor);
+    set_ink_drop_visible_opacity(kTrayPopupInkDropRippleOpacity);
+    set_has_ink_drop_action_on_click(true);
+
+    set_animate_on_state_change(true);
+  }
+
+  std::unique_ptr<views::InkDrop> CreateInkDrop() override {
+    return TrayPopupUtils::CreateInkDrop(TrayPopupInkDropStyle::HOST_CENTERED,
+                                         this);
+  }
+
+  std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override {
+    return TrayPopupUtils::CreateInkDropRipple(
+        TrayPopupInkDropStyle::HOST_CENTERED, this,
+        GetInkDropCenterBasedOnLastEvent());
+  }
+
+  std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
+      const override {
+    return TrayPopupUtils::CreateInkDropHighlight(
+        TrayPopupInkDropStyle::HOST_CENTERED, this);
+  }
+
+  std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override {
+    return TrayPopupUtils::CreateInkDropMask(
+        TrayPopupInkDropStyle::HOST_CENTERED, this);
+  }
+
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
+    if (is_toggle_button_)
+      views::ToggleImageButton::GetAccessibleNodeData(node_data);
+    else
+      views::ImageButton::GetAccessibleNodeData(node_data);
+  }
+
+ private:
+  bool is_toggle_button_;
+};
 
 views::Separator* CreateVerticalSeparator() {
   views::Separator* separator = new views::Separator;
@@ -102,7 +149,8 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
   button_container_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal));
-  close_all_button_ = new views::ImageButton(this);
+  close_all_button_ =
+      new MessageCenterButton(this, false /* is_toggle_button */);
   close_all_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kNotificationCenterClearAllIcon,
@@ -115,11 +163,11 @@ MessageCenterButtonBar::MessageCenterButtonBar(
                             message_center_style::kInactiveButtonColor));
   close_all_button_->SetTooltipText(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_CLEAR_ALL_BUTTON_TOOLTIP));
-  SetDefaultButtonStyle(close_all_button_);
   button_container_->AddChildView(close_all_button_);
   button_container_->AddChildView(CreateVerticalSeparator());
 
-  quiet_mode_button_ = new views::ToggleImageButton(this);
+  quiet_mode_button_ =
+      new MessageCenterButton(this, true /* is_toggle_button */);
   quiet_mode_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOffIcon,
@@ -134,11 +182,11 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   quiet_mode_button_->SetTooltipText(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_QUIET_MODE_BUTTON_TOOLTIP));
   SetQuietModeState(message_center->IsQuietMode());
-  SetDefaultButtonStyle(quiet_mode_button_);
   button_container_->AddChildView(quiet_mode_button_);
   button_container_->AddChildView(CreateVerticalSeparator());
 
-  collapse_button_ = new views::ImageButton(this);
+  collapse_button_ =
+      new MessageCenterButton(this, false /* is_toggle_button */);
   collapse_button_->SetBackground(
       views::CreateSolidBackground(message_center_style::kBackgroundColor));
   collapse_button_->SetPaintToLayer();
@@ -149,10 +197,10 @@ MessageCenterButtonBar::MessageCenterButtonBar(
                             message_center_style::kActiveButtonColor));
   collapse_button_->SetTooltipText(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_COLLAPSE_BUTTON_TOOLTIP));
-  SetDefaultButtonStyle(collapse_button_);
   AddChildView(collapse_button_);
 
-  settings_button_ = new views::ImageButton(this);
+  settings_button_ =
+      new MessageCenterButton(this, false /* is_toggle_button */);
   settings_button_->SetImage(
       views::Button::STATE_NORMAL,
       gfx::CreateVectorIcon(kNotificationCenterSettingsIcon,
@@ -160,7 +208,6 @@ MessageCenterButtonBar::MessageCenterButtonBar(
                             message_center_style::kActiveButtonColor));
   settings_button_->SetTooltipText(l10n_util::GetStringUTF16(
       IDS_ASH_MESSAGE_CENTER_SETTINGS_BUTTON_TOOLTIP));
-  SetDefaultButtonStyle(settings_button_);
   button_container_->AddChildView(settings_button_);
 
   AddChildView(button_container_);
@@ -293,8 +340,12 @@ void MessageCenterButtonBar::ButtonPressed(views::Button* sender,
   if (sender == close_all_button_) {
     message_center_view()->ClearAllClosableNotifications();
   } else if (sender == settings_button_) {
+    collapse_button_->AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED,
+                                     nullptr);
     message_center_view()->SetSettingsVisible(true);
   } else if (sender == collapse_button_) {
+    settings_button_->AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED,
+                                     nullptr);
     message_center_view()->SetSettingsVisible(false);
   } else if (sender == quiet_mode_button_) {
     if (message_center()->IsQuietMode())
