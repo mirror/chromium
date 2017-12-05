@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd3e2191_346006c6",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-05T01:13:19Z",
+      "side": 1,
+      "message": "(This class no longer has an unusual lifetime.)",
+      "parentUuid": "a340bba8_fcf5709a",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c65d44_ffb476d5",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 9
@@ -125,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "c7a1dded_239ae399",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-05T01:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbce0fc1_65d713e1",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d7b8bb_0ffb7176",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 9
@@ -172,6 +208,24 @@
       "side": 1,
       "message": "Hm...\n\nWould it make sense for MojoVideoDecoderService to just hold a WeakPtr to this, and have this class delete itself on connection error? I feel like maybe why I keep asking for comments is because we\u0027re manually emulating the role of WeakPtr.",
       "parentUuid": "bd46b9eb_8a84adda",
+      "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ba1404_23b5a79f",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-05T01:13:19Z",
+      "side": 1,
+      "message": "Sure, we can do that for now. I expect in the future that threading concerns will prevent us from using WeakPtr for this, but right now that\u0027s a reasonable way to define the lifetime.\n\nI ended up using a StrongBinding, since it already implements everything, but using it requires a static_cast\u003c\u003e. Let me know what you think of that.",
+      "parentUuid": "5fde80c3_26d5b522",
       "revId": "4b260cf5905febc10a87a8c2043185ee74e69b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
