@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c34c3ab7_02c90228",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-05T10:01:02Z",
+      "side": 1,
+      "message": "Filed crbug.com/791939 as an exercise for our team to ramp up.",
+      "parentUuid": "2d818b40_cd6421fa",
+      "range": {
+        "startLine": 918,
+        "startChar": 69,
+        "endLine": 918,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9875ced9_df004688",
         "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
         "patchSetId": 1
