@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773ef2e5_3f3cfee9",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T04:26:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer creating the QuotaDispatcherHost on the IO thread so it only lives on the IO thread. It might save someone having to worry about the constructor running on a different thread from every other method in the future.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624f48e_11113f59",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T04:26:45Z",
+      "side": 1,
+      "message": "Add this for workers too.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2452015_4f9a3416",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T04:26:45Z",
+      "side": 1,
+      "message": "This will drop any requests in flight on the floor. Only GetInterface() if !quota_host_.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad316378_ea390879",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T04:26:45Z",
+      "side": 1,
+      "message": "You need to change the ownership of QuotaDispatcher to be per-ExecutionContext. The current thread-local ownership won\u0027t work for frames that all run on the main thread.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
