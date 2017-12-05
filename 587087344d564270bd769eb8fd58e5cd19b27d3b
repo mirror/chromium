@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "1a08af67_e3f01da1",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T06:52:14Z",
+      "side": 1,
+      "message": "I\u0027m also not sure what you mean by \"make this function virtual\". It\u0027s already virtual. Do you mean something else?",
+      "parentUuid": "fd6f80ae_7ba3fd01",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ba5e3b_c32f694c",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTapHighlightColor.cpp",
         "patchSetId": 19
