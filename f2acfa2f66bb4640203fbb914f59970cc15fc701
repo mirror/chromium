@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f3aa899_dadb5517",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-truncate-long-messages.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-05T20:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b14c68_b55ab8bc",
+      "revId": "f2acfa2f66bb4640203fbb914f59970cc15fc701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02deac95_fecda4cd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-truncate-long-messages.js",
         "patchSetId": 10
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ae5b7c4c_0eb4cf51",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-truncate-long-messages.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-05T20:02:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02deac95_fecda4cd",
+      "range": {
+        "startLine": 24,
+        "startChar": 62,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "f2acfa2f66bb4640203fbb914f59970cc15fc701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8979e6ce_b73025b1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 10
@@ -62,6 +104,30 @@
       "revId": "f2acfa2f66bb4640203fbb914f59970cc15fc701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bc7643_6d71b436",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-05T20:02:28Z",
+      "side": 1,
+      "message": "Done, it\u0027s супер",
+      "parentUuid": "8979e6ce_b73025b1",
+      "range": {
+        "startLine": 1338,
+        "startChar": 23,
+        "endLine": 1338,
+        "endChar": 38
+      },
+      "revId": "f2acfa2f66bb4640203fbb914f59970cc15fc701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
