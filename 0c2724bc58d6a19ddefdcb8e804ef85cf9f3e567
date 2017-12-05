@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6858e968_b3d47239",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T17:35:09Z",
+      "side": 1,
+      "message": "Oh yes, this was from a version of this code when I was toying with also testing against a QUIC server. I decided that probably wasn\u0027t necessary though. Assuming you both agree, I\u0027ll remove these remnants.",
+      "parentUuid": "dc0728c5_e1bdf4b9",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5addf3_1528c934",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4797515d_3568ee53",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T17:35:09Z",
+      "side": 1,
+      "message": "Yes, there\u0027s a TODO one line down to override the built-in log list with one that will permanently contain Pilot and Aviator. That doesn\u0027t appear to be trivial so I was deferring that to a separate change.",
+      "parentUuid": "49dd4ec2_e8f808bf",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "694b575e_8acde96d",
         "filename": "components/certificate_transparency/tree_state_tracker.h",
         "patchSetId": 3
@@ -81,6 +117,24 @@
       "writtenOn": "2017-12-05T17:22:05Z",
       "side": 1,
       "message": "Couple things:\n\n1) We try to avoid checking in \u0027real\u0027 certs, as they expire - could you explain why this part is necessary?\n2) Adding a new file here involves updating //net/BUILD.gn (to make sure it\u0027s bundled as part of unittest dependencies) and updating the README.md",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c077704b_6400b8f9",
+        "filename": "net/data/ssl/certificates/comodo-chain.pem",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T17:35:09Z",
+      "side": 1,
+      "message": "The test required a cert with SCTs that comply with Chrome\u0027s policy, and the existing test certs don\u0027t. It doesn\u0027t matter whether the cert expires, because it isn\u0027t verified - it\u0027s swapped in post-cert-verification, but pre-CT-verification.",
+      "parentUuid": "65c035ec_f173b2a9",
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
