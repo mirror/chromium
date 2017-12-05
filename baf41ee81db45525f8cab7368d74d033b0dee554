@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "374ad239_c525f779",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-05T22:20:28Z",
+      "side": 1,
+      "message": "Actually, I was curious why this (anchor) used a different origin than |point| - reading the spec some more it seems this expression may have been correct (both relative to the same origin, so the additional offset cancels out.) In what coordinate space the |point| (offset-path) was defined wasn\u0027t entirely obvious though. (With the old formulation there\u0027s a lingering bounding_box.X()/Y() in there, suggesting |point| would be relative to a different origin.)",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 72
+      },
+      "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
