@@ -251,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "2035f3ec_7858d281",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:51:39Z",
+      "side": 1,
+      "message": "I changed it to always use 1 and to treat 0 as invalid.\n\nElsewhere, we use 0xdeadbeef to generate an invalid surface. We use this for parent_id and now child_sequence_number. Should they instead use 0, which will actually be invalid?",
+      "parentUuid": "90234fcd_3b94dcb9",
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1f2d800_9d1a0b3f",
         "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
         "patchSetId": 3
@@ -405,6 +423,30 @@
       "side": 1,
       "message": "Using the hash now.",
       "parentUuid": "235b1d1b_9d7edef1",
+      "range": {
+        "startLine": 2665,
+        "startChar": 2,
+        "endLine": 2666,
+        "endChar": 47
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88c25f1a_4f1d313e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:51:39Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "5c636797_587a1d30",
       "range": {
         "startLine": 2665,
         "startChar": 2,

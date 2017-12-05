@@ -116,6 +116,30 @@
       "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e022a427_70ccbbce",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:51:39Z",
+      "side": 1,
+      "message": "Hrmmm I can\u0027t mark \"Resolved\" on initial message.\nMarking resolved.",
+      "parentUuid": "c2669f5d_6ce9264d",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 3
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
