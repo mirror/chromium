@@ -111,6 +111,7 @@ import org.chromium.chrome.browser.tabmodel.ChromeTabCreator;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
+import org.chromium.chrome.browser.tabmodel.TabModelIncognitoObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorImpl;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
@@ -868,6 +869,10 @@ public class ChromeTabbedActivity
             }
 
             mScreenshotMonitor = ScreenshotMonitor.create(ChromeTabbedActivity.this);
+
+            TabModelIncognitoObserver incognitoObserver = new TabModelIncognitoObserver(this);
+            mLayoutManager.addOverviewModeObserver(incognitoObserver);
+            mTabModelSelectorImpl.addObserver(incognitoObserver);
 
             mUIInitialized = true;
         } finally {
