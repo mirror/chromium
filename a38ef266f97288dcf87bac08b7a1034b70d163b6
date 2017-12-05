@@ -16,6 +16,58 @@
       "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764e291f_fa8d463b",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T17:34:17Z",
+      "side": 1,
+      "message": "Any call to the client_ should have this, as you did here I think. The client can call back to anything that would ProcessScheduledActions. Should we DCHECK that inside_scheduled_action_ is false when we do this? It might be easy to end up resetting it to false early if we go through 2 autoresets in the same call stack.\n\nIf you feel adventurous we could make an RAII object that gives access to the client and does these things.\n\nClientAccessor access(client_holder_);\naccess-\u003eclient()-\u003eSchedu...();\n\nOr something? If we hid client_ then it becomes hard/impossible to do this wrong.",
+      "parentUuid": "660212e5_c8c42c31",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95986be5_fd6e780c",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T17:34:17Z",
+      "side": 1,
+      "message": "Could the begin_frame_source_ re-enter the scheduler too?",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52aa6890_80e878d2",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T17:34:17Z",
+      "side": 1,
+      "message": "Actually, hm so this method is called from ProcessScheduledActions. We could DCHECK inside_processed_scheduled_actions_ instead to show that the client_ call won\u0027t run the scheduler re-entrantly. I guess it\u0027s just the things that are post-tasked/given as callbacks that need to set this inside_scheduler bool of some sort.",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
