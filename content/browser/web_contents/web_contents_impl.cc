@@ -104,7 +104,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host_iterator.h"
-#include "content/public/browser/resource_request_details.h"
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/security_style_explanations.h"
 #include "content/public/browser/ssl_status.h"
@@ -3422,11 +3421,6 @@ void WebContentsImpl::LoadStateChanged(
   }
 }
 
-void WebContentsImpl::DidGetResourceResponseStart(
-    const ResourceRequestDetails& details) {
-  SetNotWaitingForResponse();
-}
-
 void WebContentsImpl::NotifyWebContentsFocused(
     RenderWidgetHost* render_widget_host) {
   for (auto& observer : observers_)
@@ -3702,24 +3696,27 @@ void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
   for (auto& observer : observers_)
     observer.DidFinishNavigation(navigation_handle);
 
-  if (navigation_handle->HasCommitted()) {
-    BrowserAccessibilityManager* manager =
-        static_cast<RenderFrameHostImpl*>(
-            navigation_handle->GetRenderFrameHost())
-            ->browser_accessibility_manager();
-    if (manager) {
-      if (navigation_handle->IsErrorPage()) {
-        manager->NavigationFailed();
-      } else {
-        manager->NavigationSucceeded();
-      }
-    }
+  if (!navigation_handle->HasCommitted())
+    return;
 
-    if (navigation_handle->IsInMainFrame() &&
-        !navigation_handle->IsSameDocument()) {
-      was_ever_audible_ = false;
+  BrowserAccessibilityManager* manager =
+      static_cast<RenderFrameHostImpl*>(navigation_handle->GetRenderFrameHost())
+          ->browser_accessibility_manager();
+  if (manager) {
+    if (navigation_handle->IsErrorPage()) {
+      manager->NavigationFailed();
+    } else {
+      manager->NavigationSucceeded();
     }
   }
+
+  if (navigation_handle->IsInMainFrame() &&
+      !navigation_handle->IsSameDocument()) {
+    was_ever_audible_ = false;
+  }
+
+  if (!navigation_handle->IsSameDocument())
+    SetNotWaitingForResponse();
 }
 
 void WebContentsImpl::DidFailLoadWithError(
@@ -4010,6 +4007,7 @@ void WebContentsImpl::SubresourceResponseStarted(const GURL& url,
   }
 
   controller_.ssl_manager()->DidStartResourceResponse(url, cert_status);
+  SetNotWaitingForResponse();
 }
 
 #if defined(OS_ANDROID)
