@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "3a7c6fa2_f52436bb",
+        "filename": "media/cdm/cdm_module.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-05T21:17:16Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll land this as is and remove the Initialize() call in a follow-up, just to make the history a bit easier to track.",
+      "parentUuid": "7ec7057d_55adc829",
+      "revId": "9d7d4828de56c4293ac6fa03f1bee0702549b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b761aee0_dffa35aa",
         "filename": "media/cdm/cdm_module.cc",
         "patchSetId": 3
