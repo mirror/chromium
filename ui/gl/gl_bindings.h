@@ -128,6 +128,14 @@
 #define GL_REQUESTABLE_EXTENSIONS_ANGLE 0x93A8
 #define GL_NUM_REQUESTABLE_EXTENSIONS_ANGLE 0x93A8
 
+// GL_ANGLE_error_callback
+typedef void(APIENTRY* GLERRORCALLBACKPROCANGLE)(GLenum error,
+                                                 GLsizei length,
+                                                 const GLchar* message,
+                                                 const void* userParam);
+#define GL_ERROR_CALLBACK_FUNCTION_ANGLE 0x345A
+#define GL_ERROR_CALLBACK_USER_PARAM_ANGLE 0x345B
+
 // GL_EXT_occlusion_query_boolean
 #define GL_ANY_SAMPLES_PASSED_EXT                        0x8C2F
 #define GL_ANY_SAMPLES_PASSED_CONSERVATIVE_EXT           0x8D6A

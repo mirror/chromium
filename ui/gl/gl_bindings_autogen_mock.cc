@@ -1114,6 +1114,13 @@ void GL_BINDING_CALL MockGLInterface::Mock_glEndTransformFeedbackEXT(void) {
   interface_->EndTransformFeedback();
 }
 
+void GL_BINDING_CALL
+MockGLInterface::Mock_glErrorCallbackANGLE(GLERRORCALLBACKPROCANGLE callback,
+                                           const void* userParam) {
+  MakeFunctionUnique("glErrorCallbackANGLE");
+  interface_->ErrorCallbackANGLE(callback, userParam);
+}
+
 GLsync GL_BINDING_CALL MockGLInterface::Mock_glFenceSync(GLenum condition,
                                                          GLbitfield flags) {
   MakeFunctionUnique("glFenceSync");
@@ -1779,6 +1786,12 @@ MockGLInterface::Mock_glGetObjectPtrLabelKHR(void* ptr,
 void GL_BINDING_CALL MockGLInterface::Mock_glGetPointerv(GLenum pname,
                                                          void** params) {
   MakeFunctionUnique("glGetPointerv");
+  interface_->GetPointerv(pname, params);
+}
+
+void GL_BINDING_CALL MockGLInterface::Mock_glGetPointervANGLE(GLenum pname,
+                                                              void** params) {
+  MakeFunctionUnique("glGetPointervANGLE");
   interface_->GetPointerv(pname, params);
 }
 
@@ -4351,6 +4364,8 @@ MockGLInterface::GetGLProcAddress(const char* name) {
   if (strcmp(name, "glEndTransformFeedbackEXT") == 0)
     return reinterpret_cast<GLFunctionPointerType>(
         Mock_glEndTransformFeedbackEXT);
+  if (strcmp(name, "glErrorCallbackANGLE") == 0)
+    return reinterpret_cast<GLFunctionPointerType>(Mock_glErrorCallbackANGLE);
   if (strcmp(name, "glFenceSync") == 0)
     return reinterpret_cast<GLFunctionPointerType>(Mock_glFenceSync);
   if (strcmp(name, "glFinish") == 0)
@@ -4549,6 +4564,8 @@ MockGLInterface::GetGLProcAddress(const char* name) {
     return reinterpret_cast<GLFunctionPointerType>(Mock_glGetObjectPtrLabelKHR);
   if (strcmp(name, "glGetPointerv") == 0)
     return reinterpret_cast<GLFunctionPointerType>(Mock_glGetPointerv);
+  if (strcmp(name, "glGetPointervANGLE") == 0)
+    return reinterpret_cast<GLFunctionPointerType>(Mock_glGetPointervANGLE);
   if (strcmp(name, "glGetPointervKHR") == 0)
     return reinterpret_cast<GLFunctionPointerType>(Mock_glGetPointervKHR);
   if (strcmp(name, "glGetPointervRobustANGLERobustANGLE") == 0)

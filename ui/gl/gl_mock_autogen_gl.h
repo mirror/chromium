@@ -300,6 +300,8 @@ MOCK_METHOD1(Enable, void(GLenum cap));
 MOCK_METHOD1(EnableVertexAttribArray, void(GLuint index));
 MOCK_METHOD1(EndQuery, void(GLenum target));
 MOCK_METHOD0(EndTransformFeedback, void());
+MOCK_METHOD2(ErrorCallbackANGLE,
+             void(GLERRORCALLBACKPROCANGLE callback, const void* userParam));
 MOCK_METHOD2(FenceSync, GLsync(GLenum condition, GLbitfield flags));
 MOCK_METHOD0(Finish, void());
 MOCK_METHOD1(FinishFenceAPPLE, void(GLuint fence));

@@ -279,6 +279,8 @@ void DriverGL::InitializeStaticBindings() {
 
 void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
                                          const ExtensionSet& extensions) {
+  ext.b_GL_ANGLE_error_callback =
+      HasExtension(extensions, "GL_ANGLE_error_callback");
   ext.b_GL_ANGLE_framebuffer_blit =
       HasExtension(extensions, "GL_ANGLE_framebuffer_blit");
   ext.b_GL_ANGLE_framebuffer_multisample =
@@ -870,6 +872,11 @@ void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
         GetGLProcAddress("glEndTransformFeedbackEXT"));
   }
 
+  if (ext.b_GL_ANGLE_error_callback) {
+    fn.glErrorCallbackANGLEFn = reinterpret_cast<glErrorCallbackANGLEProc>(
+        GetGLProcAddress("glErrorCallbackANGLE"));
+  }
+
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glFenceSyncFn =
@@ -1237,6 +1244,9 @@ void DriverGL::InitializeDynamicBindings(const GLVersionInfo* ver,
   } else if (ext.b_GL_KHR_debug) {
     fn.glGetPointervFn = reinterpret_cast<glGetPointervProc>(
         GetGLProcAddress("glGetPointervKHR"));
+  } else if (ext.b_GL_ANGLE_error_callback) {
+    fn.glGetPointervFn = reinterpret_cast<glGetPointervProc>(
+        GetGLProcAddress("glGetPointervANGLE"));
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
@@ -2908,6 +2918,11 @@ void GLApiBase::glEndQueryFn(GLenum target) {
 
 void GLApiBase::glEndTransformFeedbackFn(void) {
   driver_->fn.glEndTransformFeedbackFn();
+}
+
+void GLApiBase::glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                                       const void* userParam) {
+  driver_->fn.glErrorCallbackANGLEFn(callback, userParam);
 }
 
 GLsync GLApiBase::glFenceSyncFn(GLenum condition, GLbitfield flags) {
@@ -5634,6 +5649,12 @@ void TraceGLApi::glEndQueryFn(GLenum target) {
 void TraceGLApi::glEndTransformFeedbackFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glEndTransformFeedback")
   gl_api_->glEndTransformFeedbackFn();
+}
+
+void TraceGLApi::glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                                        const void* userParam) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::glErrorCallbackANGLE")
+  gl_api_->glErrorCallbackANGLEFn(callback, userParam);
 }
 
 GLsync TraceGLApi::glFenceSyncFn(GLenum condition, GLbitfield flags) {
@@ -8932,6 +8953,14 @@ void DebugGLApi::glEndTransformFeedbackFn(void) {
                  << "("
                  << ")");
   gl_api_->glEndTransformFeedbackFn();
+}
+
+void DebugGLApi::glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                                        const void* userParam) {
+  GL_SERVICE_LOG("glErrorCallbackANGLE"
+                 << "(" << callback << ", "
+                 << static_cast<const void*>(userParam) << ")");
+  gl_api_->glErrorCallbackANGLEFn(callback, userParam);
 }
 
 GLsync DebugGLApi::glFenceSyncFn(GLenum condition, GLbitfield flags) {
@@ -12651,6 +12680,11 @@ void NoContextGLApi::glEndQueryFn(GLenum target) {
 
 void NoContextGLApi::glEndTransformFeedbackFn(void) {
   NoContextHelper("glEndTransformFeedback");
+}
+
+void NoContextGLApi::glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                                            const void* userParam) {
+  NoContextHelper("glErrorCallbackANGLE");
 }
 
 GLsync NoContextGLApi::glFenceSyncFn(GLenum condition, GLbitfield flags) {

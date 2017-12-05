@@ -74,6 +74,16 @@ void RequestExtensions(gl::GLApi* api,
   }
 }
 
+void APIENTRY ErrorCallback(GLenum error,
+                            GLsizei length,
+                            const char* message,
+                            const void* user_param) {
+  DCHECK(user_param != nullptr);
+  GLES2DecoderPassthroughImpl* command_decoder =
+      static_cast<GLES2DecoderPassthroughImpl*>(const_cast<void*>(user_param));
+  command_decoder->OnErrorCallback(error, length, message);
+}
+
 }  // anonymous namespace
 
 PassthroughResources::PassthroughResources() {}
@@ -596,8 +606,11 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
         gl::GetRequestableGLExtensionsFromCurrentContext());
 
     static constexpr const char* kRequiredFunctionalityExtensions[] = {
-        "GL_CHROMIUM_bind_uniform_location", "GL_CHROMIUM_sync_query",
-        "GL_EXT_debug_marker", "GL_NV_fence",
+        "GL_ANGLE_error_callback",
+        "GL_CHROMIUM_bind_uniform_location",
+        "GL_CHROMIUM_sync_query",
+        "GL_EXT_debug_marker",
+        "GL_NV_fence",
     };
     RequestExtensions(api(), requestable_extensions,
                       kRequiredFunctionalityExtensions,
@@ -664,7 +677,8 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
       api()->glIsEnabledFn(GL_CLIENT_ARRAYS_ANGLE) != GL_FALSE ||
       feature_info_->feature_flags().angle_webgl_compatibility !=
           IsWebGLContextType(attrib_helper.context_type) ||
-      !feature_info_->feature_flags().angle_request_extension) {
+      !feature_info_->feature_flags().angle_request_extension ||
+      !feature_info_->feature_flags().angle_error_callback) {
     Destroy(true);
     LOG(ERROR) << "ContextResult::kFatalFailure: "
                   "missing required extension";
@@ -677,6 +691,10 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
                   "oop rasterization not supported";
     return gpu::ContextResult::kFatalFailure;
   }
+
+  // Set the error callback so that FlushErrors is not required to check if an
+  // error was just triggered.
+  glErrorCallbackANGLE(ErrorCallback, this);
 
   bind_generates_resource_ = group_->bind_generates_resource();
 
@@ -795,7 +813,7 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
       }
     }
 
-    FlushErrors();
+    CheckErrorCallbackState();
     emulated_back_buffer_ = std::make_unique<EmulatedDefaultFramebuffer>(
         api(), emulated_default_framebuffer_format_, feature_info_.get());
     if (!emulated_back_buffer_->Resize(attrib_helper.offscreen_framebuffer_size,
@@ -809,7 +827,7 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
                       : gpu::ContextResult::kFatalFailure;
     }
 
-    if (FlushErrors()) {
+    if (CheckErrorCallbackState()) {
       Destroy(true);
       // Errors are considered fatal, including OOM.
       LOG(ERROR)
@@ -1024,7 +1042,7 @@ bool GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer(
     return false;
   }
 
-  FlushErrors();
+  CheckErrorCallbackState();
 
   if (!emulated_back_buffer_->Resize(size, feature_info_.get())) {
     LOG(ERROR) << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer "
@@ -1032,7 +1050,7 @@ bool GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer(
     return false;
   }
 
-  if (FlushErrors()) {
+  if (CheckErrorCallbackState()) {
     LOG(ERROR) << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer "
                   "failed to resize the emulated framebuffer because errors "
                   "were generated.";
@@ -1427,6 +1445,12 @@ void GLES2DecoderPassthroughImpl::BindImage(uint32_t client_texture_id,
 
   // Reference the image even if it is not bound as a sampler.
   passthrough_texture->SetLevelImage(texture_target, 0, image);
+}
+
+void GLES2DecoderPassthroughImpl::OnErrorCallback(GLenum error,
+                                                  GLsizei length,
+                                                  const char* message) {
+  mHadErrorCallback = true;
 }
 
 const char* GLES2DecoderPassthroughImpl::GetCommandName(
@@ -2007,6 +2031,12 @@ bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
   }
 
   return false;
+}
+
+bool GLES2DecoderPassthroughImpl::CheckErrorCallbackState() {
+  bool hadError = mHadErrorCallback;
+  mHadErrorCallback = false;
+  return hadError;
 }
 
 #define GLES2_CMD_OP(name)                                               \

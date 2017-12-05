@@ -382,6 +382,9 @@ typedef void(GL_BINDING_CALL* glEnableProc)(GLenum cap);
 typedef void(GL_BINDING_CALL* glEnableVertexAttribArrayProc)(GLuint index);
 typedef void(GL_BINDING_CALL* glEndQueryProc)(GLenum target);
 typedef void(GL_BINDING_CALL* glEndTransformFeedbackProc)(void);
+typedef void(GL_BINDING_CALL* glErrorCallbackANGLEProc)(
+    GLERRORCALLBACKPROCANGLE callback,
+    const void* userParam);
 typedef GLsync(GL_BINDING_CALL* glFenceSyncProc)(GLenum condition,
                                                  GLbitfield flags);
 typedef void(GL_BINDING_CALL* glFinishProc)(void);
@@ -1508,6 +1511,7 @@ typedef void(GL_BINDING_CALL* glWindowRectanglesEXTProc)(GLenum mode,
                                                          const GLint* box);
 
 struct ExtensionsGL {
+  bool b_GL_ANGLE_error_callback;
   bool b_GL_ANGLE_framebuffer_blit;
   bool b_GL_ANGLE_framebuffer_multisample;
   bool b_GL_ANGLE_instanced_arrays;
@@ -1687,6 +1691,7 @@ struct ProcsGL {
   glEnableVertexAttribArrayProc glEnableVertexAttribArrayFn;
   glEndQueryProc glEndQueryFn;
   glEndTransformFeedbackProc glEndTransformFeedbackFn;
+  glErrorCallbackANGLEProc glErrorCallbackANGLEFn;
   glFenceSyncProc glFenceSyncFn;
   glFinishProc glFinishFn;
   glFinishFenceAPPLEProc glFinishFenceAPPLEFn;
@@ -2326,6 +2331,8 @@ class GL_EXPORT GLApi {
   virtual void glEnableVertexAttribArrayFn(GLuint index) = 0;
   virtual void glEndQueryFn(GLenum target) = 0;
   virtual void glEndTransformFeedbackFn(void) = 0;
+  virtual void glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                                      const void* userParam) = 0;
   virtual GLsync glFenceSyncFn(GLenum condition, GLbitfield flags) = 0;
   virtual void glFinishFn(void) = 0;
   virtual void glFinishFenceAPPLEFn(GLuint fence) = 0;
@@ -3468,6 +3475,7 @@ class GL_EXPORT GLApi {
 #define glEndQuery ::gl::g_current_gl_context->glEndQueryFn
 #define glEndTransformFeedback \
   ::gl::g_current_gl_context->glEndTransformFeedbackFn
+#define glErrorCallbackANGLE ::gl::g_current_gl_context->glErrorCallbackANGLEFn
 #define glFenceSync ::gl::g_current_gl_context->glFenceSyncFn
 #define glFinish ::gl::g_current_gl_context->glFinishFn
 #define glFinishFenceAPPLE ::gl::g_current_gl_context->glFinishFenceAPPLEFn

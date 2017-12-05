@@ -465,6 +465,9 @@ static void GL_BINDING_CALL Mock_glEndQueryARB(GLenum target);
 static void GL_BINDING_CALL Mock_glEndQueryEXT(GLenum target);
 static void GL_BINDING_CALL Mock_glEndTransformFeedback(void);
 static void GL_BINDING_CALL Mock_glEndTransformFeedbackEXT(void);
+static void GL_BINDING_CALL
+Mock_glErrorCallbackANGLE(GLERRORCALLBACKPROCANGLE callback,
+                          const void* userParam);
 static GLsync GL_BINDING_CALL Mock_glFenceSync(GLenum condition,
                                                GLbitfield flags);
 static void GL_BINDING_CALL Mock_glFinish(void);
@@ -740,6 +743,8 @@ static void GL_BINDING_CALL Mock_glGetObjectPtrLabelKHR(void* ptr,
                                                         GLsizei* length,
                                                         char* label);
 static void GL_BINDING_CALL Mock_glGetPointerv(GLenum pname, void** params);
+static void GL_BINDING_CALL Mock_glGetPointervANGLE(GLenum pname,
+                                                    void** params);
 static void GL_BINDING_CALL Mock_glGetPointervKHR(GLenum pname, void** params);
 static void GL_BINDING_CALL
 Mock_glGetPointervRobustANGLERobustANGLE(GLenum pname,
