@@ -179,6 +179,7 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // base::trace_event::MemoryDumpProvider
   bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                     base::trace_event::ProcessMemoryDump* pmd) override;
+  void OnMemoryDumpOnIOThread(uint64_t dump_guid);
 
   void OnDumpProcessesForTracingCallback(
       uint64_t guid,
@@ -263,6 +264,13 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Only used for testing. Must only ever be used from the UI thread. Will be
   // called after the profiling process dumps heaps into the trace log.
   base::OnceClosure dump_process_for_tracing_callback_;
+
+  // Whether the instance is attempting to take a trace to upload to the crash
+  // servers. Pruning of small allocations is always enabled for these traces.
+  bool requesting_process_report_ = false;
+
+  // Guards |requesting_process_report_|.
+  base::Lock requesting_process_report_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };
