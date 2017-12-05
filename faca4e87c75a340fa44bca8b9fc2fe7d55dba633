@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdba0caf_60774c86",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T06:16:37Z",
+      "side": 1,
+      "message": "can this pass |browser_|? I think the logic in UpdateCreateHostedAppLabel() can move to GetCreateHostedAppMenuItemName() then.\n\nI see that |zoom_label_| is closer to your approach, but it\u0027s more complex. Also it\u0027s creating repeated code - if that approach is needed we should add a `UpdateDynamicLabels()` method that ActiveTabChanged/TabReplacedAt/NOTIFICATION_NAV_ENTRY_COMMITTED invoke, and which will call both updaters. But I think it\u0027s safe to move the WebContents access to occur here (unless I\u0027ve missed something)",
+      "revId": "faca4e87c75a340fa44bca8b9fc2fe7d55dba633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
