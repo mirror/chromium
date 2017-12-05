@@ -315,13 +315,6 @@ bool Process::Terminate(int exit_code, bool wait) const {
   bool result = kill(process_, SIGTERM) == 0;
   if (result && wait) {
     int tries = 60;
-
-    if (RunningOnValgrind()) {
-      // Wait for some extra time when running under Valgrind since the child
-      // processes may take some time doing leak checking.
-      tries *= 2;
-    }
-
     unsigned sleep_ms = 4;
 
     // The process may not end immediately due to pending I/O
