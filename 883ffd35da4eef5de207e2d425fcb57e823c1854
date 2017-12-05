@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "59a9b7fa_ba86c489",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "+dschuyler\n\nThanks for clarifying. So is the change here affecting the issue at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d788926 at all?",
+      "parentUuid": "9c0d91e3_ee57e99f",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61f7857_b846e3bf",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6

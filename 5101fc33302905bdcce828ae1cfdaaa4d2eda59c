@@ -196,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "8f148b2b_1e0581e5",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "\u003e One question, though (out of curiosity) - why prefer a private member with a public setter, instead of just a public member?  I.e., why not just have this.forceReloadItemError?\n\nNot a strong preference. Explanation below:\n\nIf this code was  type checked, the public this.forceReloadItemError property would be just as fine. Since this is not type checked, it is easy to make a typo like\nthis.forceReloadItemEror \u003d true;\nand have the test fail \"unexpectedly\".\n\nWhereas making a typo when calling setForceReloadItemError() would result in a explicit error, helping the developer find the problem faster.",
+      "parentUuid": "6a3926b6_8cc21a71",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d77a3da6_b5a48c93",
         "filename": "chrome/test/data/webui/test_browser_proxy.js",
         "patchSetId": 8

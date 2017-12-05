@@ -209,6 +209,63 @@
     },
     {
       "key": {
+        "uuid": "fdba874b_076ed638",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "Promise.resolve()",
+      "range": {
+        "startLine": 171,
+        "startChar": 10,
+        "endLine": 171,
+        "endChar": 57
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91810dd_fc649bff",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "It seems a bit messy that we are swapping the delegate from a extension_test_util.MockItemDelegate() to a extensions.TestService() mid-way through the test. \n\nThe two options I see are:\n1) Migrate this entire file to use extensions.TestService, best done in a separate CL (follow up maybe)? Or\n2) Split this into two separate tests? So that at least we don\u0027t change mid-way?",
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad84eef4_ebf3fec5",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "Even though we don\u0027t compile test-related code yet, let\u0027s add type annotations.\n@private {boolean}",
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74febae6_115a78d8",
         "filename": "third_party/closure_compiler/externs/developer_private.js",
         "patchSetId": 9
@@ -220,6 +277,30 @@
       "writtenOn": "2017-12-05T00:23:25Z",
       "side": 1,
       "message": "For my own knowledge, what utility do these extern files provide? Why do we provide them for some extension APIs and not others?",
+      "range": {
+        "startLine": 647,
+        "startChar": 11,
+        "endLine": 647,
+        "endChar": 19
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a57b78_b901c28d",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T00:39:42Z",
+      "side": 1,
+      "message": "\u003e what utility do these extern files provide?\n\nType checking JS code with Closure compiler.\n\n\u003e Why do we provide them for some extension APIs and not others?\n\nMy guess is that, it depends on whether the code using them within Chromium is type-checked or not (not everything is type-checked).",
+      "parentUuid": "74febae6_115a78d8",
       "range": {
         "startLine": 647,
         "startChar": 11,
