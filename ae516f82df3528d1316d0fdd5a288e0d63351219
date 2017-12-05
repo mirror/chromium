@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e029d2_3542cef1",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-05T02:56:51Z",
+      "side": 1,
+      "message": "Dale - FYI on this workaround. \n\nThe follow up CL is here\nhttps://chromium-review.googlesource.com/c/chromium/src/+/807604",
+      "range": {
+        "startLine": 525,
+        "startChar": 5,
+        "endLine": 525,
+        "endChar": 24
+      },
+      "revId": "ae516f82df3528d1316d0fdd5a288e0d63351219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
