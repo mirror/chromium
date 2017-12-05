@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e1d4841_19252823",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-05T17:04:33Z",
+      "side": 1,
+      "message": "(1) Great idea. \n(2) Great idea. \n(3) I would prefer creating |address_validator_| in the constructor because there is the NormalizeAddressSync API, and I\u0027d like it to load rules for next time.",
+      "parentUuid": "507e3aae_a27db6fe",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 3
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6015c4_6c09393a",
         "filename": "components/autofill/core/browser/address_normalizer_impl.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "14cab2e7_1f638728",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-05T17:04:33Z",
+      "side": 1,
+      "message": "Wow that was dumb, Done.",
+      "parentUuid": "da6015c4_6c09393a",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c910023_b6c5b10a",
         "filename": "components/autofill/core/browser/address_normalizer_impl.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f3de32_e2eed06b",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-05T17:04:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c910023_b6c5b10a",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "7fd6b485689883057b2dbe9a78d8eed301696a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
