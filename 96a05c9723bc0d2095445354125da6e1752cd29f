@@ -16,6 +16,24 @@
       "revId": "96a05c9723bc0d2095445354125da6e1752cd29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07cb96e6_3b1f9ca2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 3
+      },
+      "lineNbr": 5474,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-05T19:33:19Z",
+      "side": 1,
+      "message": "We treat streams as files, i.e. as generic as possible, and I\u0027m not sure if we want to associate any metadata with them at this point. That said, this leaves us with the version compatibility issue -- you may request compression from an older back-end which will silently disregard it and return uncompressed stream. I guess we need to indicate whether we actually compressed trace in tracingComplete, along with the stream handle. \n\nI\u0027ll review the rest later today.",
+      "parentUuid": "0908d784_bc69ecdf",
+      "revId": "96a05c9723bc0d2095445354125da6e1752cd29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
