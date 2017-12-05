@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d74e06b3_076d4980",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb3486e_bedaaeb5",
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7720e10e_526e05b5",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1641b00c_169c740f",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7720e10e_526e05b5",
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "dc4f3c5d_05e814e2",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a17909_a51bf81d",
+      "range": {
+        "startLine": 67,
+        "startChar": 51,
+        "endLine": 67,
+        "endChar": 64
+      },
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b807eb_b18a154e",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-05T01:42:57Z",
       "side": 1,
       "message": "do we need the version compat here? can we just leave it out?",
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2e62d4_28c47644",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "I don\u0027t know. I just read some mojom versioning doc section that was talking about this. Not sure what we do in practice? Who\u0027d be a good person to ask?",
+      "parentUuid": "c7b807eb_b18a154e",
       "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "949f5db4_5b46a647",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 35894,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "That\u0027s created by the addition of the suffix label on the histogram_suffixes for Memory.Experimental.*",
+      "parentUuid": "1da0c6e1_2614f7ab",
+      "range": {
+        "startLine": 35894,
+        "startChar": 32,
+        "endLine": 35894,
+        "endChar": 52
+      },
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eda5633b_641843f8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ccd2bc_6191935b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 106748,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-05T22:26:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda5633b_641843f8",
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
