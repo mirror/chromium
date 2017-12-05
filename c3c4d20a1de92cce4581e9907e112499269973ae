@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e78675a6_4bdc3fa2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-05T18:12:48Z",
+      "side": 1,
+      "message": "add brackets: (finalPosition \u003d\u003d UIViewAnimatingPositionEnd)",
+      "range": {
+        "startLine": 148,
+        "startChar": 50,
+        "endLine": 148,
+        "endChar": 76
+      },
+      "revId": "c3c4d20a1de92cce4581e9907e112499269973ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111df7d0_66ffd3d5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-05T18:12:48Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure how the contract button is only added on iPhone, since this is outside the if() statement above. Given the comment above, I\u0027d expect this to be in \"else {}\".",
+      "revId": "c3c4d20a1de92cce4581e9907e112499269973ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
