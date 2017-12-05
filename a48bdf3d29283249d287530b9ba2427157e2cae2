@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a8fcdf3_3ebe82ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T00:22:43Z",
+      "side": 1,
+      "message": "bugs explain that but I also added some details to the description about the functionality this provides.",
+      "parentUuid": "b6d41d35_3191db54",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24c981d_c24a1b73",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "37ae4e3d_03e79e7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T00:22:43Z",
+      "side": 1,
+      "message": "I added unit test coverage for the set_parent API. the scale factor interface is all in wayland code so harder to unit test. that\u0027s why I added this info client, which is useful for other purposes too.",
+      "parentUuid": "a24c981d_c24a1b73",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9f83059_7a1cf766",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70da4ead_c47476c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T00:22:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f83059_7a1cf766",
+      "revId": "a48bdf3d29283249d287530b9ba2427157e2cae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
