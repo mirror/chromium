@@ -119,6 +119,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // Only one instance per the view tree is allowed.
   base::android::ScopedJavaLocalRef<jobject> GetEventForwarder();
 
+  EventForwarder* GetNativeEventForwarder();
+
   // Adds a child to this view.
   void AddChild(ViewAndroid* child);
 

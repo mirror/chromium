@@ -22,8 +22,7 @@ WebContentsEventForwarder::WebContentsEventForwarder(
 
 WebContentsEventForwarder::~WebContentsEventForwarder() = default;
 
-void WebContentsEventForwarder::ForwardEvent(
-    std::unique_ptr<WebInputEvent> event) {
+void WebContentsEventForwarder::ForwardEvent(blink::WebInputEvent* event) {
   if (!web_contents_->GetRenderWidgetHostView()) {
     return;
   }

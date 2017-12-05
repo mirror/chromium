@@ -25,19 +25,21 @@ AndroidUiGestureTarget::AndroidUiGestureTarget(JNIEnv* env,
 
 AndroidUiGestureTarget::~AndroidUiGestureTarget() = default;
 
-void AndroidUiGestureTarget::DispatchWebInputEvent(
-    std::unique_ptr<blink::WebInputEvent> event) {
+bool AndroidUiGestureTarget::DispatchWebInputEvent(
+    blink::WebInputEvent* event) {
   blink::WebMouseEvent* mouse;
   blink::WebGestureEvent* gesture;
   if (blink::WebInputEvent::IsMouseEventType(event->GetType())) {
-    mouse = static_cast<blink::WebMouseEvent*>(event.get());
+    mouse = static_cast<blink::WebMouseEvent*>(event);
   } else {
-    gesture = static_cast<blink::WebGestureEvent*>(event.get());
+    gesture = static_cast<blink::WebGestureEvent*>(event);
   }
 
+  handled_input_ = false;
   int64_t event_time_ms = event->TimeStampSeconds() * 1000;
   switch (event->GetType()) {
     case blink::WebGestureEvent::kGestureScrollBegin:
+      in_gesture_ = true;
       DCHECK(gesture->data.scroll_begin.delta_hint_units ==
              blink::WebGestureEvent::ScrollUnits::kPrecisePixels);
       scroll_x_ = (scroll_ratio_ * gesture->data.scroll_begin.delta_x_hint);
@@ -50,6 +52,7 @@ void AndroidUiGestureTarget::DispatchWebInputEvent(
       break;
     case blink::WebGestureEvent::kGestureScrollEnd:
       Inject(content::MOTION_EVENT_ACTION_END, event_time_ms);
+      in_gesture_ = false;
       break;
     case blink::WebGestureEvent::kGestureScrollUpdate:
       scroll_x_ += (scroll_ratio_ * gesture->data.scroll_update.delta_x);
@@ -81,6 +84,7 @@ void AndroidUiGestureTarget::DispatchWebInputEvent(
       Inject(content::MOTION_EVENT_ACTION_HOVER_EXIT, event_time_ms);
       break;
     case blink::WebMouseEvent::kMouseDown:
+      in_gesture_ = true;
       // Mouse down events are translated into touch events on Android anyways,
       // so we can just send touch events.
       // We intentionally don't support long press or drags/swipes with mouse
@@ -90,12 +94,16 @@ void AndroidUiGestureTarget::DispatchWebInputEvent(
       Inject(content::MOTION_EVENT_ACTION_END, event_time_ms);
       break;
     case blink::WebMouseEvent::kMouseUp:
+      if (in_gesture_)
+        handled_input_ = true;
+      in_gesture_ = false;
       // No need to do anything for mouseUp as mouseDown already handled up.
       break;
     default:
       NOTREACHED() << "Unsupported event type sent to Android UI.";
       break;
   }
+  return in_gesture_ || handled_input_;
 }
 
 void AndroidUiGestureTarget::Inject(MotionEventAction action, int64_t time_ms) {
@@ -104,7 +112,8 @@ void AndroidUiGestureTarget::Inject(MotionEventAction action, int64_t time_ms) {
   if (obj.is_null())
     return;
 
-  Java_AndroidUiGestureTarget_inject(env, obj, action, time_ms);
+  if (Java_AndroidUiGestureTarget_inject(env, obj, action, time_ms))
+    handled_input_ = true;
 }
 
 void AndroidUiGestureTarget::SetPointer(int x, int y) {

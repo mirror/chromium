@@ -28,7 +28,7 @@ class AndroidUiGestureTarget {
   static AndroidUiGestureTarget* FromJavaObject(
       const base::android::JavaRef<jobject>& obj);
 
-  void DispatchWebInputEvent(std::unique_ptr<blink::WebInputEvent> event);
+  bool DispatchWebInputEvent(blink::WebInputEvent* event);
 
  private:
   void Inject(content::MotionEventAction action, int64_t time_ms);
@@ -38,6 +38,8 @@ class AndroidUiGestureTarget {
   int scroll_y_ = 0;
   float scale_factor_;
   float scroll_ratio_;
+  bool in_gesture_ = false;
+  bool handled_input_ = false;
 
   JavaObjectWeakGlobalRef java_ref_;
 

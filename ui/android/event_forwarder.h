@@ -6,12 +6,13 @@
 #define UI_ANDROID_EVENT_FORWARDER_H_
 
 #include "base/android/scoped_java_ref.h"
+#include "ui/android/ui_android_export.h"
 
 namespace ui {
 
 class ViewAndroid;
 
-class EventForwarder {
+class UI_ANDROID_EXPORT EventForwarder {
  public:
   ~EventForwarder();
 
@@ -86,15 +87,19 @@ class EventForwarder {
                       jlong time_ms,
                       jfloat delta);
 
+  void SetDipScaleOverride(float dip_scale);
+
  private:
   friend class ViewAndroid;
 
   explicit EventForwarder(ViewAndroid* view);
+  float GetDipScale();
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject();
 
   ViewAndroid* const view_;
   base::android::ScopedJavaGlobalRef<jobject> java_obj_;
+  float overridden_dip_scale_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(EventForwarder);
 };
