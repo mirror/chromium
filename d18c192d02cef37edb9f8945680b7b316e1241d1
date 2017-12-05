@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22d86ec7_a83dce5c",
+        "filename": "cc/tiles/tile.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T00:59:01Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "b19f14ee_ae4e2f3c",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325505e3_df155e91",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T00:00:28Z",
       "side": 1,
       "message": "Are these extra decodes now go down the predecode path normally reserved for things far away?",
+      "range": {
+        "startLine": 1057,
+        "startChar": 6,
+        "endLine": 1057,
+        "endChar": 53
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac556d4b_9d776040",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T00:59:01Z",
+      "side": 1,
+      "message": "Not exactly. We are not locking them like the rest of predecodes are. They are being added to the task graph at the end so they have lowest priority.",
+      "parentUuid": "325505e3_df155e91",
       "range": {
         "startLine": 1057,
         "startChar": 6,
@@ -64,6 +112,29 @@
         "startChar": 6,
         "endLine": 1185,
         "endChar": 33
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14f2c2a_e6313d30",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T00:59:01Z",
+      "side": 1,
+      "message": "I feel like this is replicating what we do in OnRasterTaskCompleted, which is not great. Should we just call OnRasterTaskCompleted, similar to a cancelled task instead?\n\nYou\u0027ll need to move all code that affects TileManager state before this in that case. I think its only the checker image tracking below.",
+      "range": {
+        "startLine": 1186,
+        "startChar": 4,
+        "endLine": 1191,
+        "endChar": 45
       },
       "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
