@@ -34,6 +34,24 @@
       "revId": "3234c5393ea736ffa926bc5f15fcc0e858f76e44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9822792_8dea8be0",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-05T00:37:40Z",
+      "side": 1,
+      "message": "We refactored chrome app icon while ago and that is why this problem appears and appears only on Linux. Windows code (link above) and ChromeOS code requests required representation.\n1.0 is default representation and available always: \nhttps://cs.chromium.org/chromium/src/ui/gfx/image/image_skia.cc?l\u003d419\n\nIn case APP icon cannot be loaded then default app icon is loaded instead.  NullImageRep is only returned in case .isNull is true.",
+      "parentUuid": "f873b371_129bdee9",
+      "revId": "3234c5393ea736ffa926bc5f15fcc0e858f76e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
