@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c331492_c825494d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1184727
+      },
+      "writtenOn": "2017-12-05T19:51:13Z",
+      "side": 1,
+      "message": "BTW, you can also use hb_font_get_nominal_glyph(), which doesn\u0027t need that 0 passed into it.",
+      "revId": "7762eb503a2918f0539fe2eb3b76a82935fe2e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79d4f7f_70c74263",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1184727
+      },
+      "writtenOn": "2017-12-05T19:51:13Z",
+      "side": 1,
+      "message": "Clearing is not required.  We know we didn\u0027t find space so far; and that\u0027s the only thing we care about.",
+      "revId": "7762eb503a2918f0539fe2eb3b76a82935fe2e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
