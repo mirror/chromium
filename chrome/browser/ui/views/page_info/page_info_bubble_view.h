@@ -13,28 +13,26 @@
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
 #include "chrome/browser/ui/views/page_info/chosen_object_view_observer.h"
+#include "chrome/browser/ui/views/page_info/page_info_bubble_view_base.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row_observer.h"
-#include "content/public/browser/web_contents_observer.h"
-#include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/controls/styled_label_listener.h"
 
 class GURL;
-class Browser;
 class BubbleHeaderView;
 class HoverButton;
 class Profile;
 
 namespace content {
 class WebContents;
-}
+}  // namespace content
 
 namespace net {
 class X509Certificate;
-}
+}  // namespace net
 
 namespace security_state {
 struct SecurityInfo;
@@ -42,18 +40,46 @@ struct SecurityInfo;
 
 namespace test {
 class PageInfoBubbleViewTestApi;
-}
+}  // namespace test
 
 namespace views {
 class Link;
 class Widget;
 }  // namespace views
 
+// The regular PageInfoBubbleView is not supported for internal Chrome pages and
+// extension pages. Instead of the |PageInfoBubbleView|, the
+// |InternalPageInfoBubbleView| is displayed.
+class InternalPageInfoBubbleView : public PageInfoBubbleViewBase {
+ public:
+  ~InternalPageInfoBubbleView() override;
+
+  // PageInfoBubbleViewBase:
+  bool ShouldShowCloseButton() const override;
+  gfx::ImageSkia GetWindowIcon() override;
+  bool ShouldShowWindowIcon() const override;
+
+ protected:
+  friend PageInfoBubbleViewBase;
+
+  // If |anchor_view| is nullptr, or has no Widget, |parent_window| may be
+  // provided to ensure this bubble is closed when the parent closes.
+  InternalPageInfoBubbleView(views::View* anchor_view,
+                             const gfx::Rect& anchor_rect,
+                             gfx::NativeView parent_window,
+                             content::WebContents* web_contents,
+                             const GURL& url);
+
+ private:
+  gfx::ImageSkia* bubble_icon_;
+
+  DISALLOW_COPY_AND_ASSIGN(InternalPageInfoBubbleView);
+};
+
 // The views implementation of the page info UI.
-class PageInfoBubbleView : public content::WebContentsObserver,
+class PageInfoBubbleView : public PageInfoBubbleViewBase,
                            public PermissionSelectorRowObserver,
                            public ChosenObjectViewObserver,
-                           public views::BubbleDialogDelegateView,
                            public views::ButtonListener,
                            public views::LinkListener,
                            public views::StyledLabelListener,
@@ -65,15 +91,6 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   static constexpr int kPermissionColumnSetId = 0;
 
   ~PageInfoBubbleView() override;
-
-  // Type of the bubble being displayed.
-  enum BubbleType {
-    BUBBLE_NONE,
-    // Usual page info bubble for websites.
-    BUBBLE_PAGE_INFO,
-    // Custom bubble for internal pages like chrome:// and chrome-extensions://.
-    BUBBLE_INTERNAL_PAGE
-  };
 
   enum PageInfoBubbleViewID {
     VIEW_ID_NONE = 0,
@@ -87,22 +104,8 @@ class PageInfoBubbleView : public content::WebContentsObserver,
     VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_CERTIFICATE_VIEWER,
   };
 
-  // Creates the appropriate page info bubble for the given |url|.
-  static views::BubbleDialogDelegateView* CreatePageInfoBubble(
-      Browser* browser,
-      content::WebContents* web_contents,
-      const GURL& url,
-      const security_state::SecurityInfo& security_info);
-
-  // Returns the type of the bubble being shown.
-  static BubbleType GetShownBubbleType();
-
-  // Returns a weak reference to the page info bubble being shown.
-  static views::BubbleDialogDelegateView* GetPageInfoBubble();
-
- private:
-  friend class PageInfoBubbleViewBrowserTest;
-  friend class test::PageInfoBubbleViewTestApi;
+ protected:
+  friend PageInfoBubbleViewBase;
 
   PageInfoBubbleView(views::View* anchor_view,
                      const gfx::Rect& anchor_rect,
@@ -112,40 +115,34 @@ class PageInfoBubbleView : public content::WebContentsObserver,
                      const GURL& url,
                      const security_state::SecurityInfo& security_info);
 
-  // WebContentsObserver implementation.
-  void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
-  void WebContentsDestroyed() override;
-  void WasHidden() override;
-  void DidStartNavigation(content::NavigationHandle* handle) override;
+ private:
+  friend class PageInfoBubbleViewBrowserTest;
+  friend class test::PageInfoBubbleViewTestApi;
 
-  // PermissionSelectorRowObserver implementation.
+  // PageInfoBubbleViewBase:
+  gfx::Size CalculatePreferredSize() const override;
+  void OnWidgetDestroying(views::Widget* widget) override;
+  void WebContentsDestroyed() override;
+
+  // PermissionSelectorRowObserver:
   void OnPermissionChanged(
       const PageInfoUI::PermissionInfo& permission) override;
 
-  // ChosenObjectViewObserver implementation.
+  // ChosenObjectViewObserver:
   void OnChosenObjectDeleted(const PageInfoUI::ChosenObjectInfo& info) override;
 
-  // views::BubbleDialogDelegateView implementation.
-  base::string16 GetWindowTitle() const override;
-  bool ShouldShowCloseButton() const override;
-  void OnWidgetDestroying(views::Widget* widget) override;
-  int GetDialogButtons() const override;
-
-  // views::ButtonListener implementation.
+  // views::ButtonListener:
   void ButtonPressed(views::Button* button, const ui::Event& event) override;
 
-  // views::LinkListener implementation.
+  // views::LinkListener:
   void LinkClicked(views::Link* source, int event_flags) override;
 
-  // views::StyledLabelListener implementation.
+  // views::StyledLabelListener:
   void StyledLabelLinkClicked(views::StyledLabel* label,
                               const gfx::Range& range,
                               int event_flags) override;
 
-  // views::View implementation.
-  gfx::Size CalculatePreferredSize() const override;
-
-  // PageInfoUI implementations.
+  // PageInfoUI:
   void SetCookieInfo(const CookieInfoList& cookie_info_list) override;
   void SetPermissionInfo(const PermissionInfoList& permission_info_list,
                          ChosenObjectInfoList chosen_object_info_list) override;
