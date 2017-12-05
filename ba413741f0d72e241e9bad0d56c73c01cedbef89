@@ -72,6 +72,29 @@
     },
     {
       "key": {
+        "uuid": "7bac26d7_0f303f7a",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T19:34:55Z",
+      "side": 1,
+      "message": "suggestion:  Make Start() take this instead.  It looks like all consumers call start right after init, unless I\u0027m missing something.  Then you don\u0027t have to have anything hold onto the raw pointer.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4fee99d_cca3120e",
         "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.h",
         "patchSetId": 47
@@ -158,6 +181,52 @@
         "startChar": 13,
         "endLine": 138,
         "endChar": 75
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c7cf60_29576bee",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view_interactive_uitest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T19:34:55Z",
+      "side": 1,
+      "message": "This should be done before the test server is started.  It\u0027s not thread-safe otherwise.  Alternatively, HandleRequest could post a task to the UI thread to invoke the callback, and the test fixture could spin a run loop until the callback is invoked.",
+      "range": {
+        "startLine": 368,
+        "startChar": 21,
+        "endLine": 368,
+        "endChar": 38
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16df3d1_d539d795",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T19:34:55Z",
+      "side": 1,
+      "message": "See other comment on threadsafety.",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 23
       },
       "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
