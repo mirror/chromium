@@ -236,7 +236,19 @@ MetricsService::MetricsService(MetricsStateManager* state_manager,
 }
 
 MetricsService::~MetricsService() {
-  DisableRecording();
+  static const base::Feature kFinalCollect{"FinalCollectPendingMetrics",
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
+
+  // Only collect metrics if there is no on-disk persistent metrics file. This
+  // allows for a faster shutdown. Anything uncollected will be extracted and
+  // uploaded in a future run using the system profile embedded in the same
+  // file.
+  base::GlobalHistogramAllocator* allocator =
+      base::GlobalHistogramAllocator::Get();
+  bool collect_metrics = !allocator ||
+                         allocator->GetPersistentLocation().empty() ||
+                         base::FeatureList::IsEnabled(kFinalCollect);
+  DisableRecording(collect_metrics);
 }
 
 void MetricsService::InitializeMetricsRecordingState() {
@@ -324,7 +336,7 @@ void MetricsService::EnableRecording() {
   base::AddActionCallback(action_callback_);
 }
 
-void MetricsService::DisableRecording() {
+void MetricsService::DisableRecording(bool collect_metrics) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (recording_state_ == INACTIVE)
@@ -335,7 +347,7 @@ void MetricsService::DisableRecording() {
 
   delegating_provider_.OnRecordingDisabled();
 
-  PushPendingLogsToPersistentStorage();
+  PushPendingLogsToPersistentStorage(collect_metrics);
 }
 
 bool MetricsService::recording_active() const {
@@ -612,7 +624,7 @@ void MetricsService::StartInitTask() {
                                             self_ptr_factory_.GetWeakPtr()));
 }
 
-void MetricsService::CloseCurrentLog() {
+void MetricsService::CloseCurrentLog(bool collect_metrics) {
   if (!log_manager_.current_log())
     return;
 
@@ -635,17 +647,18 @@ void MetricsService::CloseCurrentLog() {
   GetUptimes(local_state_, &incremental_uptime, &uptime);
   current_log->RecordCurrentSessionData(&delegating_provider_,
                                         incremental_uptime, uptime);
-  RecordCurrentHistograms();
+  if (collect_metrics)
+    RecordCurrentHistograms();
   current_log->TruncateEvents();
   DVLOG(1) << "Generated an ongoing log.";
   log_manager_.FinishCurrentLog(log_store());
 }
 
-void MetricsService::PushPendingLogsToPersistentStorage() {
+void MetricsService::PushPendingLogsToPersistentStorage(bool collect_metrics) {
   if (state_ < SENDING_LOGS)
     return;  // We didn't and still don't have time to get plugin list etc.
 
-  CloseCurrentLog();
+  CloseCurrentLog(collect_metrics);
   log_store()->PersistUnsentLogs();
 }
 
