@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40629c87_a4e8bbd9",
+        "filename": "device/bluetooth/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-05T18:11:04Z",
+      "side": 1,
+      "message": "why is this needed in this CL?",
+      "revId": "1aa1b4831bfefb2614ebbe1a3414e6c0c9952bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1621627_67132fe8",
+        "filename": "remoting/base/buffered_socket_writer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-05T18:11:04Z",
+      "side": 1,
+      "message": "nit. The format should be TODO(rhalavati): .... https://crbug.com/656607\n\n(here and everywhere)",
+      "revId": "1aa1b4831bfefb2614ebbe1a3414e6c0c9952bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
