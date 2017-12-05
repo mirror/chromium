@@ -228,15 +228,32 @@ static inline void CheckThatVectorIsDOMOrdered(
 #endif  // NDEBUG
 }
 
-void LayoutTableSection::AddCell(LayoutTableCell* cell, LayoutTableRow* row) {
+bool LayoutTableSection::AddCell(LayoutTableCell* cell,
+                                 LayoutTableRow* row,
+                                 bool expanded_grid) {
   // We don't insert the cell if we need cell recalc as our internal columns'
   // representation will have drifted from the table's representation. Also
   // recalcCells will call addCell at a later time after sync'ing our columns'
   // with the table's.
   if (NeedsCellRecalc())
-    return;
+    return expanded_grid;
 
   DCHECK(cell);
+
+  unsigned insertion_row = row->RowIndex();
+  // For rowspan, "the value zero means that the cell is to span all the
+  // remaining rows in the row group." Calculate the size of the full
+  // row grid now so that we can use it to count the remaining rows in
+  // RowSpan().
+  if (!cell->ParsedRowSpan() && !expanded_grid) {
+    unsigned c_row = insertion_row + 1;
+    for (LayoutTableRow* remaining_row = row; remaining_row;
+         remaining_row = row->NextRow())
+      c_row++;
+    EnsureRows(c_row);
+    expanded_grid = true;
+  }
+
   unsigned r_span = cell->RowSpan();
   unsigned c_span = cell->ColSpan();
   if (r_span > 1 || c_span > 1)
@@ -244,7 +261,6 @@ void LayoutTableSection::AddCell(LayoutTableCell* cell, LayoutTableRow* row) {
 
   const Vector<LayoutTable::ColumnStruct>& columns =
       Table()->EffectiveColumns();
-  unsigned insertion_row = row->RowIndex();
 
   // ### mozilla still seems to do the old HTML way, even for strict DTD
   // (see the annotation on table cell layouting in the CSS specs and the
@@ -294,6 +310,7 @@ void LayoutTableSection::AddCell(LayoutTableCell* cell, LayoutTableRow* row) {
     in_col_span = true;
   }
   cell->SetAbsoluteColumnIndex(Table()->EffectiveColumnToAbsoluteColumn(col));
+  return expanded_grid;
 }
 
 bool LayoutTableSection::RowHasOnlySpanningCells(unsigned row) {
@@ -1646,6 +1663,7 @@ void LayoutTableSection::RecalcCells() {
   c_row_ = 0;
   grid_.clear();
 
+  bool expanded_grid = false;
   for (LayoutTableRow* row = FirstRow(); row; row = row->NextRow()) {
     unsigned insertion_row = c_row_;
     ++c_row_;
@@ -1658,7 +1676,7 @@ void LayoutTableSection::RecalcCells() {
 
     for (LayoutTableCell* cell = row->FirstCell(); cell;
          cell = cell->NextCell())
-      AddCell(cell, row);
+      expanded_grid |= AddCell(cell, row, expanded_grid);
   }
 
   grid_.ShrinkToFit();

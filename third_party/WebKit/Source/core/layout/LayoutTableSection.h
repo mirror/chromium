@@ -114,7 +114,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
 
   LayoutUnit FirstLineBoxBaseline() const override;
 
-  void AddCell(LayoutTableCell*, LayoutTableRow*);
+  bool AddCell(LayoutTableCell*, LayoutTableRow*, bool);
 
   int VBorderSpacingBeforeFirstRow() const;
   int CalcRowLogicalHeight();
