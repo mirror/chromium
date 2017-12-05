@@ -52,6 +52,41 @@ OSStatus CreatePolicy(const CSSM_OID* policy_oid,
   return noErr;
 }
 
+OSStatus AppendCRLPolicy(uint32 flags, CFMutableArrayRef policies) {
+  CSSM_APPLE_TP_CRL_OPTIONS tp_crl_options;
+  memset(&tp_crl_options, 0, sizeof(tp_crl_options));
+  tp_crl_options.Version = CSSM_APPLE_TP_CRL_OPTS_VERSION;
+  tp_crl_options.CrlFlags = flags;
+
+  SecPolicyRef crl_policy;
+  OSStatus status =
+      CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_CRL, &tp_crl_options,
+                   sizeof(tp_crl_options), &crl_policy);
+  if (status)
+    return status;
+  CFArrayAppendValue(policies, crl_policy);
+  CFRelease(crl_policy);
+
+  return noErr;
+}
+
+OSStatus AppendOCSPPolicy(uint32 flags, CFMutableArrayRef policies) {
+  CSSM_APPLE_TP_OCSP_OPTIONS tp_ocsp_options;
+  memset(&tp_ocsp_options, 0, sizeof(tp_ocsp_options));
+  tp_ocsp_options.Version = CSSM_APPLE_TP_OCSP_OPTS_VERSION;
+  tp_ocsp_options.Flags = flags;
+  SecPolicyRef ocsp_policy;
+  OSStatus status =
+      CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_OCSP, &tp_ocsp_options,
+                   sizeof(tp_ocsp_options), &ocsp_policy);
+  if (status)
+    return status;
+  CFArrayAppendValue(policies, ocsp_policy);
+  CFRelease(ocsp_policy);
+
+  return noErr;
+}
+
 }  // namespace
 
 bool IsValidSecCertificate(SecCertificateRef cert_handle) {
@@ -210,21 +245,23 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
       return noErr;
 
     // If revocation checking is requested, enable checking and require positive
-    // results. Note that this will fail if there are certs with no
-    // CRLDistributionPoints or OCSP AIA urls, which differs from the behavior
-    // of |enable_revocation_checking| on pre-10.12. There does not appear to be
-    // a way around this, but it shouldn't matter much in practice since
-    // revocation checking is generally used with EV certs, where it is expected
-    // that all certs include revocation mechanisms.
+    // results for all certificates that have CRLDistributionPoints or OCSP AIA.
+
     SecPolicyRef revocation_policy =
-        SecPolicyCreateRevocation(kSecRevocationUseAnyAvailableMethod |
-                                  kSecRevocationRequirePositiveResponse);
+        SecPolicyCreateRevocation(kSecRevocationUseAnyAvailableMethod);
 
     if (!revocation_policy)
       return errSecNoPolicyModule;
     CFArrayAppendValue(policies, revocation_policy);
     CFRelease(revocation_policy);
-    return noErr;
+
+    OSStatus status = noErr;
+
+    status = AppendCRLPolicy(CSSM_TP_ACTION_REQUIRE_CRL_IF_PRESENT, policies);
+    if (status)
+      return status;
+    return AppendOCSPPolicy(CSSM_TP_ACTION_OCSP_REQUIRE_IF_RESP_PRESENT,
+                            policies);
   }
   OSStatus status = noErr;
 
@@ -238,24 +275,19 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
   // that the leaf is EV, then the default CRL policy will effectively no-op.
   // This behaviour is used to implement EV-only revocation checking.
   if (enable_revocation_checking) {
-    CSSM_APPLE_TP_CRL_OPTIONS tp_crl_options;
-    memset(&tp_crl_options, 0, sizeof(tp_crl_options));
-    tp_crl_options.Version = CSSM_APPLE_TP_CRL_OPTS_VERSION;
     // Only allow network CRL fetches if the caller explicitly requests
     // online revocation checking. Note that, as of OS X 10.7.2, the system
     // will set force this flag on according to system policies, so
     // online revocation checks cannot be completely disabled.
     // Starting with OS X 10.12, if a CRL policy is added without the
     // FETCH_CRL_FROM_NET flag, AIA fetching is disabled.
-    tp_crl_options.CrlFlags = CSSM_TP_ACTION_FETCH_CRL_FROM_NET;
-
-    SecPolicyRef crl_policy;
-    status = CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_CRL, &tp_crl_options,
-                          sizeof(tp_crl_options), &crl_policy);
+    uint32 crl_flags = CSSM_TP_ACTION_FETCH_CRL_FROM_NET;
+    // Require a positive result from CRL for every certificate in the chain
+    // having CrlDistributionPoints.
+    crl_flags |= CSSM_TP_ACTION_REQUIRE_CRL_IF_PRESENT;
+    status = AppendCRLPolicy(crl_flags, policies);
     if (status)
       return status;
-    CFArrayAppendValue(policies, crl_policy);
-    CFRelease(crl_policy);
   }
 
   // If revocation checking is explicitly enabled, then add an OCSP policy
@@ -263,9 +295,7 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
   // disabled, then the added OCSP policy will be prevented from
   // accessing the network. This is done because the TP will force an OCSP
   // policy to be present when it believes the certificate is EV.
-  CSSM_APPLE_TP_OCSP_OPTIONS tp_ocsp_options;
-  memset(&tp_ocsp_options, 0, sizeof(tp_ocsp_options));
-  tp_ocsp_options.Version = CSSM_APPLE_TP_OCSP_OPTS_VERSION;
+  uint32 ocsp_flags = 0;
 
   if (enable_revocation_checking) {
     // The default for the OCSP policy is to fetch responses via the network,
@@ -273,26 +303,21 @@ OSStatus CreateRevocationPolicies(bool enable_revocation_checking,
     // prefer OCSP over CRLs, if both are specified on the certificate. This
     // is because an OCSP response is both sufficient and typically
     // significantly smaller than the CRL counterpart.
-    tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_SUFFICIENT;
+    ocsp_flags = CSSM_TP_ACTION_OCSP_SUFFICIENT;
+    // Require a positive result from an OCSP responder for every certificate in
+    // the chain having AuthorityInfoAccess extension with an id-ad-ocsp URI.
+    ocsp_flags |= CSSM_TP_ACTION_OCSP_REQUIRE_IF_RESP_PRESENT;
   } else {
     // Effectively disable OCSP checking by making it impossible to get an
     // OCSP response. Even if the Apple TP forces OCSP, no checking will
     // be able to succeed. If this happens, the Apple TP will report an error
     // that OCSP was unavailable, but this will be handled and suppressed in
     // X509Certificate::Verify().
-    tp_ocsp_options.Flags = CSSM_TP_ACTION_OCSP_DISABLE_NET |
-                            CSSM_TP_ACTION_OCSP_CACHE_READ_DISABLE;
+    ocsp_flags = CSSM_TP_ACTION_OCSP_DISABLE_NET |
+                 CSSM_TP_ACTION_OCSP_CACHE_READ_DISABLE;
   }
 
-  SecPolicyRef ocsp_policy;
-  status = CreatePolicy(&CSSMOID_APPLE_TP_REVOCATION_OCSP, &tp_ocsp_options,
-                        sizeof(tp_ocsp_options), &ocsp_policy);
-  if (status)
-    return status;
-  CFArrayAppendValue(policies, ocsp_policy);
-  CFRelease(ocsp_policy);
-
-  return status;
+  return AppendOCSPPolicy(ocsp_flags, policies);
 }
 
 CSSMFieldValue::CSSMFieldValue()
