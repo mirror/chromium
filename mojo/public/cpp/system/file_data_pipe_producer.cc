@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -62,12 +63,14 @@ class FileDataPipeProducer::FileSequenceState
       ScopedDataPipeProducerHandle producer_handle,
       scoped_refptr<base::SequencedTaskRunner> file_task_runner,
       CompletionCallback callback,
-      scoped_refptr<base::SequencedTaskRunner> callback_task_runner)
+      scoped_refptr<base::SequencedTaskRunner> callback_task_runner,
+      DataPipeProducerObserver* observer)
       : base::RefCountedDeleteOnSequence<FileSequenceState>(file_task_runner),
         file_task_runner_(std::move(file_task_runner)),
         callback_task_runner_(std::move(callback_task_runner)),
         producer_handle_(std::move(producer_handle)),
-        callback_(std::move(callback)) {}
+        callback_(std::move(callback)),
+        observer_(std::move(observer)) {}
 
   void Cancel() {
     base::AutoLock lock(lock_);
@@ -167,8 +170,14 @@ class FileDataPipeProducer::FileSequenceState
       if (read_size < 0) {
         read_error = base::File::GetLastFileError();
         DCHECK_NE(base::File::FILE_OK, read_error);
+        if (observer_)
+          observer_->OnBytesRead(0u, pipe_buffer, read_error);
       } else {
         read_error = base::File::FILE_OK;
+        if (observer_) {
+          observer_->OnBytesRead(static_cast<size_t>(read_size), pipe_buffer,
+                                 base::File::FILE_OK);
+        }
       }
       producer_handle_->EndWriteData(
           read_size >= 0 ? static_cast<uint32_t>(read_size) : 0);
@@ -197,6 +206,10 @@ class FileDataPipeProducer::FileSequenceState
   }
 
   void Finish(MojoResult result) {
+    if (observer_) {
+      observer_->OnDoneReading();
+      observer_ = nullptr;
+    }
     watcher_.reset();
     callback_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback_),
@@ -217,13 +230,17 @@ class FileDataPipeProducer::FileSequenceState
   // Guards |is_cancelled_|.
   base::Lock lock_;
   bool is_cancelled_ = false;
+  DataPipeProducerObserver* observer_;
 
   DISALLOW_COPY_AND_ASSIGN(FileSequenceState);
 };
 
 FileDataPipeProducer::FileDataPipeProducer(
-    ScopedDataPipeProducerHandle producer)
-    : producer_(std::move(producer)), weak_factory_(this) {}
+    ScopedDataPipeProducerHandle producer,
+    std::unique_ptr<DataPipeProducerObserver> observer)
+    : producer_(std::move(producer)),
+      observer_(std::move(observer)),
+      weak_factory_(this) {}
 
 FileDataPipeProducer::~FileDataPipeProducer() {
   if (file_sequence_state_)
@@ -257,7 +274,7 @@ void FileDataPipeProducer::InitializeNewRequest(CompletionCallback callback) {
       std::move(producer_), file_task_runner,
       base::BindOnce(&FileDataPipeProducer::OnWriteComplete,
                      weak_factory_.GetWeakPtr(), std::move(callback)),
-      base::SequencedTaskRunnerHandle::Get());
+      base::SequencedTaskRunnerHandle::Get(), observer_.get());
 }
 
 void FileDataPipeProducer::OnWriteComplete(
