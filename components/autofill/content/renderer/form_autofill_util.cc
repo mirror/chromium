@@ -745,6 +745,21 @@ void GetOptionStringsFromElement(const WebSelectElement& select_element,
   }
 }
 
+base::string16 SanitizeFieldValue(const base::string16& value) {
+  base::string16 sanitized;
+  // We remove whitespace as well as some invisible unicode characters.
+  base::TrimWhitespace(value, base::TRIM_ALL, &sanitized);
+  base::TrimString(sanitized,
+                   base::string16({base::i18n::kRightToLeftMark,
+                                   base::i18n::kLeftToRightMark}),
+                   &sanitized);
+  // Some sites have placeholders in their fields, such as (___)-___-____
+  // for phone fields.
+  base::ReplaceChars(sanitized, base::ASCIIToUTF16("-_() "),
+                     base::ASCIIToUTF16(""), &sanitized);
+  return sanitized;
+}
+
 // The callback type used by |ForEachMatchingFormField()|.
 typedef void (*Callback)(const FormFieldData&,
                          bool, /* is_initiating_element */
@@ -791,6 +806,14 @@ void ForEachMatchingFormFieldCommon(
     const WebInputElement* input_element = ToWebInputElement(element);
     CR_DEFINE_STATIC_LOCAL(WebString, kValue, ("value"));
     CR_DEFINE_STATIC_LOCAL(WebString, kPlaceholder, ("placeholder"));
+
+    const base::string16 sanitized =
+        SanitizeFieldValue(element->Value().Utf16());
+    // If the sanitized value is empty, it means that the placeholder was taken
+    // as value.
+    if (sanitized.empty())
+      element->SetValue(WebString::FromUTF16(sanitized));
+
     if (!force_override && !is_initiating_element &&
         // A text field, with a non-empty value that is NOT the value of the
         // input field's "value" or "placeholder" attribute, is skipped.
