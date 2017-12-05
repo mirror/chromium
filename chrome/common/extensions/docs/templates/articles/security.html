@@ -1,0 +1,174 @@
+<h1>Write Secure Extensions</h1>
+<p>
+Writing unsecure extensions can allow attackers to exploit vulnerabilities
+and compromise users.
+While every extension author is not expected to be a security expert,
+any developer can include the following precautions to protect an extension.
+</p>
+
+<h2 id="permissions">Request Minimal Permissions</h2>
+<p>
+  The Chrome browser limits an extension access to privileges
+  explicitly requested in the <a href="/manifest">manifest</a>.
+  Extensions should minimize their permissions
+  by only requesting access to APIs and websites they depend on.
+  Arbitrary code should be kept to a minimum.
+</p>
+<p>
+  Limiting an extensions privileges limits what a potential attacker can exploit.
+</p>
+<h3 id="xhr">Cross-Origin XMLHttpRequest</h3>
+<p>
+  An extension can only use <a href="/xhr">XMLHttpRequest</a>
+  to get resources from iteself and
+  from domains specified in the permissions.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    "version": "1.0",
+    "description": "Example of a Secure Extension",
+    <b>"permissions": [
+      "http://*google.com/",
+      "https://*google.com/"
+    ],</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  This extension requests access to subdomains of Google by
+  listing "http://*google.com/" and "https://*google.com/"
+  in the permissions.
+  If the extension was compromised,
+  it would still only have permission to interact with
+  websites that meet the <a href="/match_patterns">match pattern</a>.
+  The attacker would not be able to access "https://user_bank_info.com" or
+  interact with "https://malicious_website.com".
+</p>
+<h3 id="activeTab">activeTab</h3>
+<p>
+  Using <a href="/activeTab">activeTab</a> permission will grant an
+  extension temporary access to the currently active tab,
+  only when the user <i>invokes</i> the extension,
+  and serves as an alternative for many uses of
+  <code>&lt;all_urls&gt;</code>.
+  Access is cut off when the user navigates away from or closes the current tab.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    "version": "1.0",
+    "description": "Example of a Secure Extension",
+    <b>"permissions": ["activeTab"],</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  The activeTab permission displays no warning messages durring installation.
+</p>
+
+<h2 id="content_security_policy">
+  Include an Explicit Content Security Policy
+</h2>
+<p>
+  Include a <a href="/contentSecurityPolicy">content security policy</a>
+  for the extension in the manifest to prevent cross-site scripting attacks.
+  If the extension only loads resources from itself register the following:
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    "version": "1.0",
+    "description": "Example of a Secure Extension",
+    <b>"content_security_policy": "default-src 'self'"</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+	If the extension needs to include scripts from specific hosts,
+  they can be included:
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    "version": "1.0",
+    "description": "Example of a Secure Extension",
+    "content_security_policy": "default-src 'self' <b>https://extension.resource.com</b>"
+    "manifest_version": 2
+  }
+</pre>
+<h2 id="avoid">Avoid Executable APIs</h2>
+<p>
+  Cirtian APIs may increase an extensions vulnerability
+  by executing attackers scripts.
+</p>
+<h3 id="eval">eval()</h3>
+<p>
+  Avoid using <code>eval()</code> whenever possible to prevent attacks,
+  as <code>eval()</code> will execute any code passed into it,
+  which may be malicious.
+</p>
+<pre data-filename="background.js">
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://api.example.com/data.json", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      // WARNING! Might be evaluating an evil script!
+      var resp = eval("(" + xhr.responseText + ")");
+      ...
+    }
+  }
+  xhr.send();
+</pre>
+<p>
+  Instead, prefer safer, and faster, alternatives such as
+  <code>JSON.parse()</code>
+</p>
+<pre data-filename="background.js">
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "http://api.example.com/data.json", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      // JSON.parse does not evaluate the attacker's scripts.
+      var resp = JSON.parse(xhr.responseText);
+    }
+  }
+  xhr.send();
+</pre>
+<h3 id="document_write">document.write() and innerHTML</h3>
+<p>
+  While simpler to dynamically create HTML elements with
+  <code>document.write()</code> and <code>innerHTML</code>,
+  it leaves the extension open to attackers inserting malicious scripts.
+</p>
+<!-- TODO example of attack!!!!!! -->
+<pre data-filename="tbd">
+  awesome example here
+</pre>
+<p>
+  An attackers script would be run on the extension's page useing either
+  of these methods.
+  Instead, manually create DOM nodes
+  and use <code>innerText</code> to insert dynamic content.
+</p>
+
+<h2 id="bundle">Package Resources</h2>
+<p>
+  Include as many resources as possible in the extension bundle,
+  such as the min file of a library.
+
+</p>
+<pre data-file="popup.html">
+  &lt;script src="resouces/materialize.min.js"&gt;&lt;script&gt;
+</pre>
+<p>
+    This will eliminate the need to make requests outside the extension.
+</p>
+<pre data-filename="popup.html">
+  &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"&gt;&lt;/script&gt;
+</pre>
+<p>
+  If an extension must fetch a remote script,
+  always use HTTPS over HTTP and
+  include the appropriate permissions.
+</p>
