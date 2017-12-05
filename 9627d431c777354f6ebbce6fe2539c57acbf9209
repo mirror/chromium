@@ -22,6 +22,30 @@
       "revId": "9627d431c777354f6ebbce6fe2539c57acbf9209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dc2e04_79dbe532",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69506,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-05T23:30:53Z",
+      "side": 1,
+      "message": "Ack\n\nThanks for the suggestion, I think the original description matches more about what we want from this histogram.",
+      "parentUuid": "6fe1a238_608ddaac",
+      "range": {
+        "startLine": 69505,
+        "startChar": 4,
+        "endLine": 69506,
+        "endChar": 66
+      },
+      "revId": "9627d431c777354f6ebbce6fe2539c57acbf9209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
