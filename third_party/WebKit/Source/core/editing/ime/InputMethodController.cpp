@@ -37,6 +37,7 @@
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/commands/TypingCommand.h"
+#include "core/editing/commands/UndoStack.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/markers/SuggestionMarkerProperties.h"
 #include "core/editing/spellcheck/SpellChecker.h"
@@ -732,15 +733,17 @@ void InputMethodController::SetComposition(
   // needs to be audited. see http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
+  const UndoStep* undo_step = *GetEditor().GetUndoStack().UndoSteps().begin();
+  const SelectionInDOMTree& selection =
+      undo_step->EndingSelection().AsSelection();
+
   // Find out what node has the composition now.
-  Position base = MostForwardCaretPosition(
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Base());
+  Position base = MostForwardCaretPosition(selection.Base());
   Node* base_node = base.AnchorNode();
   if (!base_node || !base_node->IsTextNode())
     return;
 
-  Position extent =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Extent();
+  Position extent = selection.Extent();
   Node* extent_node = extent.AnchorNode();
 
   unsigned extent_offset = extent.ComputeOffsetInContainerNode();

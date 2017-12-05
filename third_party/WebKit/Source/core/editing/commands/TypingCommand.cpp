@@ -345,7 +345,6 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
     return;
 
   SetEndingSelection(SelectionForUndoStep::From(selection));
-  frame->Selection().SetSelection(selection);
 }
 
 // FIXME: We shouldn't need to take selectionForInsertion. It should be
