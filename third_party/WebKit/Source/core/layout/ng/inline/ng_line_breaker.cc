@@ -515,7 +515,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleFloat(
       !line_.CanFit(inline_margin_size) ||
       exclusion_space_->LastFloatBlockStart() > bfc_block_offset_ ||
       exclusion_space_->ClearanceOffset(float_style.Clear()) >
-          bfc_block_offset_;
+          bfc_block_offset_ ||
+      constraint_space_.AvailableSize().inline_size == LayoutUnit::Max();
 
   // Check if we already have a pending float. That's because a float cannot be
   // higher than any block or floated box generated before.

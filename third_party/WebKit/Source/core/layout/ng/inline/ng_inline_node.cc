@@ -678,6 +678,9 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGExclusionSpace empty_exclusion_space;
   LayoutUnit result;
   while (!break_token || !break_token->IsFinished()) {
+    positioned_floats.clear();
+    unpositioned_floats.clear();
+
     NGLineBreaker line_breaker(node, *space, &positioned_floats,
                                &unpositioned_floats, &empty_exclusion_space, 0u,
                                break_token.get());
@@ -692,6 +695,46 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
     LayoutUnit inline_size = line_info.TextIndent();
     for (const NGInlineItemResult item_result : line_info.Results())
       inline_size += item_result.inline_size;
+
+    // We should only have a single positioned float if we are computing the
+    // min-content.
+    DCHECK_LE(positioned_floats.size(), 1u);
+    for (const auto& positioned_float : positioned_floats) {
+      inline_size +=
+          NGFragment(writing_mode,
+                     *positioned_float.layout_result->PhysicalFragment())
+              .InlineSize();
+    }
+
+    EFloat previous_float_type = EFloat::kNone;
+    for (const auto& unpositioned_float : unpositioned_floats) {
+      NGBlockNode float_node = unpositioned_float->node;
+      const ComputedStyle& float_style = float_node.Style();
+      const EClear float_clear = float_style.Clear();
+
+      // If this float clears the previous float we start a new "line".
+      // This is subtly different to block layout which will only reset either
+      // the left or the right float size trackers.
+      if ((previous_float_type == EFloat::kLeft &&
+           (float_clear == EClear::kBoth || float_clear == EClear::kLeft)) ||
+          (previous_float_type == EFloat::kRight &&
+           (float_clear == EClear::kBoth || float_clear == EClear::kRight))) {
+        result = std::max(inline_size, result);
+        inline_size = LayoutUnit();
+      }
+
+      Optional<MinMaxSize> child_minmax;
+      if (NeedMinMaxSizeForContentContribution(float_style)) {
+        child_minmax = float_node.ComputeMinMaxSize();
+      }
+
+      inline_size +=
+          ComputeMinAndMaxContentContribution(float_style, child_minmax)
+              .max_size +
+          ComputeMinMaxMargins(style, float_node).InlineSum();
+      previous_float_type = float_style.Floating();
+    }
+
     result = std::max(inline_size, result);
   }
 
