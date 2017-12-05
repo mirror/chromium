@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "8123a147_ebe3bd16",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SnippetsPlugin.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-05T01:37:45Z",
+      "side": 1,
+      "message": "That is a bit difficult to do in this patch. JavaScriptSourceFrame wants to add a toolbar item to the left side. But there will be a separator from UISourceCodeFrame in the way. once JavaScriptSourceFrame becomes debugger plugin it will be easy.",
+      "parentUuid": "abe4f280_0abd68ac",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "2b9937cae526b4e0445c2df1e21efa1a3d72f5c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d261ba9_6a6726b0",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/UISourceCodeFrame.js",
         "patchSetId": 3
