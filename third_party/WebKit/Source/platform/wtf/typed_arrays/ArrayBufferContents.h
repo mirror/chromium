@@ -27,6 +27,7 @@
 #ifndef ArrayBufferContents_h
 #define ArrayBufferContents_h
 
+#include <stdio.h>
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Noncopyable.h"
@@ -172,7 +173,10 @@ class WTF_EXPORT ArrayBufferContents {
   }
   void* DataMaybeShared() const { return holder_ ? holder_->Data() : nullptr; }
   unsigned SizeInBytes() const { return holder_ ? holder_->SizeInBytes() : 0; }
-  bool IsShared() const { return holder_ ? holder_->IsShared() : false; }
+  bool IsShared() const {
+    printf("ArrayBufferContents::IsShared. holder: %p\n", holder_.get());
+    return holder_ ? holder_->IsShared() : false;
+  }
 
   void Transfer(ArrayBufferContents& other);
   void ShareWith(ArrayBufferContents& other);

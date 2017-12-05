@@ -31,6 +31,7 @@
 #ifndef SerializedScriptValue_h
 #define SerializedScriptValue_h
 
+#include <stdio.h>
 #include <memory>
 
 #include "bindings/core/v8/NativeValueTraits.h"
@@ -63,6 +64,7 @@ class CORE_EXPORT SerializedScriptValue
     : public ThreadSafeRefCounted<SerializedScriptValue> {
  public:
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
+  using SharedArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
   using ImageBitmapContentsArray = Vector<scoped_refptr<StaticBitmapImage>, 1>;
   using TransferredWasmModulesArray =
       WTF::Vector<v8::WasmCompiledModule::TransferrableModule>;
@@ -123,6 +125,7 @@ class CORE_EXPORT SerializedScriptValue
 
     Transferables* transferables = nullptr;
     WebBlobInfoArray* blob_info = nullptr;
+    //    ArrayBufferArray* shared_array_buffers = nullptr;
     WasmSerializationPolicy wasm_policy = kTransfer;
     StoragePolicy for_storage = kNotForStorage;
   };
@@ -192,6 +195,10 @@ class CORE_EXPORT SerializedScriptValue
 
   static ArrayBufferArray ExtractNonSharedArrayBuffers(Transferables&);
 
+  //  static ArrayBufferArray ExtractSharedArrayBuffers(v8::Isolate*,
+  //                                   v8::Local<v8::Value>,
+  //                                   ExceptionState&);
+
   // Helper function which pulls ArrayBufferContents out of an ArrayBufferArray
   // and neuters the ArrayBufferArray.  Returns nullptr if there is an
   // exception.
@@ -225,7 +232,22 @@ class CORE_EXPORT SerializedScriptValue
 
   TransferredWasmModulesArray& WasmModules() { return wasm_modules_; }
   BlobDataHandleMap& BlobDataHandles() { return blob_data_handles_; }
+  SharedArrayBufferContentsArray* SharedArrayBuffers() {
+    //      printf("getting shared_arrau_buffer_contents. back shared?, contents
+    //      %u, %p, %p\n",
+    //      shared_array_buffer_contents_array_.back().IsShared(),
+    //      shared_array_buffer_contents_array_.back(),
+    //      &shared_array_buffer_contents_array_);
+    return shared_array_buffer_contents_array_;
+  }
 
+  //  void AddSharedArrayBufferContents(WTF::ArrayBufferContents& contents) {
+  //      shared_array_buffer_contents_array_->push_back(contents);
+  //    shared_array_buffer_array_->push_back(&shared_array_buffer_array_);
+  //    buffer.ShareWith(shared_array_buffer_array_.back());
+  //    printf("pushed back contents. holder, isShared: %p, %u.\n", &contents,
+  //    contents.IsShared());
+  //  }
  private:
   friend class ScriptValueSerializer;
   friend class V8ScriptValueSerializer;
@@ -255,7 +277,9 @@ class CORE_EXPORT SerializedScriptValue
   void TransferOffscreenCanvas(v8::Isolate*,
                                const OffscreenCanvasArray&,
                                ExceptionState&);
-
+  void CloneSharedArrayBuffers(v8::Isolate*,
+                               SharedArrayBufferArray&,
+                               ExceptionState&);
   DataBufferPtr data_buffer_;
   size_t data_buffer_size_ = 0;
 
@@ -263,6 +287,8 @@ class CORE_EXPORT SerializedScriptValue
   // UnpackedSerializedScriptValue thereafter.
   ArrayBufferContentsArray array_buffer_contents_array_;
   ImageBitmapContentsArray image_bitmap_contents_array_;
+  SharedArrayBufferContentsArray* shared_array_buffer_contents_array_ =
+      new SharedArrayBufferContentsArray();
 
   // These do not have one-use transferred contents, like the above.
   TransferredWasmModulesArray wasm_modules_;

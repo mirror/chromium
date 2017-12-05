@@ -4,6 +4,7 @@
 
 #include "third_party/WebKit/common/message_port/cloneable_message.h"
 
+#include <stdio.h>
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom.h"
 
@@ -15,6 +16,7 @@ CloneableMessage& CloneableMessage::operator=(CloneableMessage&&) = default;
 CloneableMessage::~CloneableMessage() = default;
 
 CloneableMessage CloneableMessage::ShallowClone() const {
+  printf("creating shallow clone\n");
   CloneableMessage clone;
   clone.encoded_message = encoded_message;
   for (const auto& blob : blobs) {

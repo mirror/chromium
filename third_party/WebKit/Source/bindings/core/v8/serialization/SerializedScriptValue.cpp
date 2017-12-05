@@ -30,6 +30,7 @@
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 
+#include <stdio.h>
 #include <algorithm>
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
@@ -384,6 +385,25 @@ void SerializedScriptValue::TransferArrayBuffers(
       TransferArrayBufferContents(isolate, array_buffers, exception_state);
 }
 
+void SerializedScriptValue::CloneSharedArrayBuffers(
+    v8::Isolate* isolate,
+    SharedArrayBufferArray& array_buffers,
+    ExceptionState& exception_state) {
+  if (!array_buffers.size())
+    return;
+
+  HeapHashSet<Member<DOMArrayBufferBase>> visited;
+  for (auto it = array_buffers.begin(); it != array_buffers.end(); ++it) {
+    DOMSharedArrayBuffer* shared_array_buffer = *it;
+    if (visited.Contains(shared_array_buffer))
+      continue;
+    visited.insert(shared_array_buffer);
+    WTF::ArrayBufferContents newContents;
+    shared_array_buffer->ShareContentsWith(newContents);
+    shared_array_buffer_contents_array_->push_back(std::move(newContents));
+  }
+}
+
 v8::Local<v8::Value> SerializedScriptValue::Deserialize(
     v8::Isolate* isolate,
     const DeserializeOptions& options) {
@@ -405,6 +425,7 @@ UnpackedSerializedScriptValue* SerializedScriptValue::Unpack(
 
 bool SerializedScriptValue::HasPackedContents() const {
   return !array_buffer_contents_array_.IsEmpty() ||
+         !shared_array_buffer_contents_array_->IsEmpty() ||
          !image_bitmap_contents_array_.IsEmpty();
 }
 
@@ -517,6 +538,52 @@ ArrayBufferArray SerializedScriptValue::ExtractNonSharedArrayBuffers(
   return result;
 }
 
+// ArrayBufferArray SerializedScriptValue::ExtractSharedArrayBuffers(
+//    v8::Isolate* isolate,
+//    v8::Local<v8::Value> value,
+//    ExceptionState& exception_state) {
+//  printf("ExtractSharedArrayBuffers\n");
+//  ArrayBufferArray result;
+//  if (value.IsEmpty() || value->IsUndefined())
+//    return result;
+
+////  Vector<v8::Local<v8::Value>> possible_sabs =
+////      NativeValueTraits<IDLSequence<v8::Local<v8::Value>>>::NativeValue(
+////          isolate, value, exception_state);
+//  if (exception_state.HadException()) {
+//  printf("ExtractSharedArrayBuffers had exception\n");
+//    return result;
+//  }
+
+//  // Validate the passed array of transferables.
+//  uint32_t i = 0;
+////  for (const auto& possible_sab : possible_sabs) {
+////    if (IsUndefinedOrNull(possible_sab)) {
+////      continue;
+////    }
+//    // Validation of Objects implementing an interface, per WebIDL spec
+//    4.1.15. if (value->IsSharedArrayBuffer()) {
+//      printf("ExtractSharedArrayBuffers value is sab\n");
+//      DOMSharedArrayBuffer* shared_array_buffer = V8SharedArrayBuffer::ToImpl(
+//          v8::Local<v8::Object>::Cast(value));
+
+//      if (result.Contains(shared_array_buffer)) {
+//        exception_state.ThrowDOMException(
+//            kDataCloneError,
+//            "SharedArrayBuffer at index " + String::Number(i) +
+//                " is a duplicate of an earlier SharedArrayBuffer.");
+//        return result;
+//      }
+//      result.push_back(shared_array_buffer);
+//    } else {
+
+//      printf("ExtractSharedArrayBuffers value is not sab\n");
+//    }
+//    i++;
+////  }
+//  return result;
+//}
+
 SerializedScriptValue::ArrayBufferContentsArray
 SerializedScriptValue::TransferArrayBufferContents(
     v8::Isolate* isolate,
@@ -572,6 +639,62 @@ SerializedScriptValue::TransferArrayBufferContents(
   return contents;
 }
 
+// bool SerializedScriptValue::CloneSharedArrayBufferContents(
+//    v8::Isolate* isolate,
+//    v8::Local<v8::Value> value,
+//    ExceptionState& exception_state) {
+//
+//  Vector<v8::Local<v8::Value>> possible_sabs =
+//      NativeValueTraits<IDLSequence<v8::Local<v8::Value>>>::NativeValue(
+//          isolate, value, exception_state);
+//  if (exception_state.HadException())
+//    return false;
+//
+//  for (auto it = array_buffers.begin(); it != array_buffers.end(); ++it) {
+//    DOMArrayBufferBase* array_buffer = *it;
+//    if (array_buffer->IsNeutered()) {
+//      size_t index = std::distance(array_buffers.begin(), it);
+//      exception_state.ThrowDOMException(
+//          kDataCloneError, "ArrayBuffer at index " + String::Number(index) +
+//                               " is already neutered.");
+//      return ArrayBufferContentsArray();
+//    }
+//  }
+//
+//  contents.Grow(array_buffers.size());
+//  HeapHashSet<Member<DOMArrayBufferBase>> visited;
+//  for (auto it = array_buffers.begin(); it != array_buffers.end(); ++it) {
+//    DOMArrayBufferBase* array_buffer_base = *it;
+//    if (visited.Contains(array_buffer_base))
+//      continue;
+//    visited.insert(array_buffer_base);
+//
+//    size_t index = std::distance(array_buffers.begin(), it);
+//    if (array_buffer_base->IsShared()) {
+//      DOMSharedArrayBuffer* shared_array_buffer =
+//          static_cast<DOMSharedArrayBuffer*>(array_buffer_base);
+//      if (!shared_array_buffer->ShareContentsWith(contents.at(index))) {
+//        exception_state.ThrowDOMException(kDataCloneError,
+//                                          "SharedArrayBuffer at index " +
+//                                              String::Number(index) +
+//                                              " could not be transferred.");
+//        return ArrayBufferContentsArray();
+//      }
+//    } else {
+//      DOMArrayBuffer* array_buffer =
+//          static_cast<DOMArrayBuffer*>(array_buffer_base);
+//
+//      if (!array_buffer->Transfer(isolate, contents.at(index))) {
+//        exception_state.ThrowDOMException(
+//            kDataCloneError, "ArrayBuffer at index " + String::Number(index) +
+//                                 " could not be transferred.");
+//        return ArrayBufferContentsArray();
+//      }
+//    }
+//  }
+//  return contents;
+//}
+
 void SerializedScriptValue::
     UnregisterMemoryAllocatedWithCurrentScriptContext() {
   if (has_registered_external_allocation_) {
@@ -585,6 +708,8 @@ void SerializedScriptValue::
   if (!transferables_need_external_allocation_registration_) {
     for (auto& buffer : array_buffer_contents_array_)
       buffer.UnregisterExternalAllocationWithCurrentContext();
+    //    for (auto& buffer : *shared_array_buffer_contents_array_)
+    //      buffer->UnregisterExternalAllocationWithCurrentContext();
     transferables_need_external_allocation_registration_ = true;
   }
 }
@@ -603,6 +728,8 @@ void SerializedScriptValue::RegisterMemoryAllocatedWithCurrentScriptContext() {
   if (transferables_need_external_allocation_registration_) {
     for (auto& buffer : array_buffer_contents_array_)
       buffer.RegisterExternalAllocationWithCurrentContext();
+    //    for (auto& buffer : *shared_array_buffer_contents_array_)
+    //      buffer->RegisterExternalAllocationWithCurrentContext();
   }
 }
 
