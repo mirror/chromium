@@ -3252,6 +3252,9 @@ void Document::ImplicitClose() {
         (!GetLayoutViewItem().FirstChild() ||
          GetLayoutViewItem().NeedsLayout()))
       View()->UpdateLayout();
+
+    if (View() && goto_anchor_needed_after_stylesheets_load_)
+      View()->ProcessUrlFragment(url_);
   }
 
   load_event_progress_ = kLoadEventCompleted;
