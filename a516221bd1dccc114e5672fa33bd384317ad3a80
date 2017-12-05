@@ -107,6 +107,24 @@
       "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6805ddc8_4db5333b",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-05T09:29:25Z",
+      "side": 1,
+      "message": "The usual pattern is:\n-\u003e Do you support timestamps? Delete based on the [delete_begin_, delete_end) timestamps.\n-\u003e Otherwise, do you contain URLs? Delete everything regardless of time range.\n-\u003e Otherwise, do you contain data derived from history, but no URLs? Only delete data on complete deletion.",
+      "parentUuid": "da9792dc_a33557b5",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
