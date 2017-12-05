@@ -34,6 +34,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77eab6ad_647ab911",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T09:08:53Z",
+      "side": 1,
+      "message": "I just thought that would always return a non-null Document* unless the owner node of the root stylesheet had been cleared.",
+      "parentUuid": "c4f81932_412a2b37",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
