@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "480dd229_a74990df",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "nit: multi-line help string can also be formatted as:\n\nhelp\u003d(\u0027first line \u0027\n      \u0027second line\u0027),\n\nto be consistent with other instances in this file.",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 60
+      },
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1be1be_ed5de249",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "nit: I\u0027d also add \"None or [] to include all tests.\"",
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31dcdfd0_7b93067b",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 2
@@ -13,6 +53,24 @@
       "writtenOn": "2017-12-05T00:10:25Z",
       "side": 1,
       "message": "Test_filter is used for retries, so can overwrite the test_shards",
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf682ea_e5df3354",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "If a test name appears in both \u0027SkipTestIdentifiers\u0027 and \u0027TestTargetName\u0027, will it not be run?\n\nIn the else branch (non-inverted case), test filter would only add to the tests in the shard, and cannot remove it. IMHO, it\u0027s more intuitive to take the intersection of test filter and the shard tests, so test filter constrains what\u0027s in the shard. WDYT?",
+      "parentUuid": "31dcdfd0_7b93067b",
       "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
