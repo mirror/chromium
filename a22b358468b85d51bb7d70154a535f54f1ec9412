@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f1c168_1c819cb3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-12-05T01:08:51Z",
+      "side": 0,
+      "message": "Why did this line change?",
+      "revId": "a22b358468b85d51bb7d70154a535f54f1ec9412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

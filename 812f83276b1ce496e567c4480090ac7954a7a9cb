@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76f2e779_bb79231f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/CustomPreviewComponent.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-12-05T01:08:51Z",
+      "side": 1,
+      "message": "perhaps {!boolean} although I\u0027m no expert of the closure type system so perhaps boolean is non-nullable by default.",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "812f83276b1ce496e567c4480090ac7954a7a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0042068_519b1fad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-12-05T01:08:51Z",
+      "side": 1,
+      "message": "nice!",
+      "range": {
+        "startLine": 973,
+        "startChar": 20,
+        "endLine": 973,
+        "endChar": 39
+      },
+      "revId": "812f83276b1ce496e567c4480090ac7954a7a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
