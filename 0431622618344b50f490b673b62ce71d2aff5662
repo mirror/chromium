@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf56f4a_37e1460b",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "I think we should hide how display manager stores `stored_mirror_modes`.\n\nAlso make a single function ResetPreviousMirrorModesForTests() that resets the enum and clears the `stored_mirror_modes`.",
+      "range": {
+        "startLine": 2330,
+        "startChar": 21,
+        "endLine": 2330,
+        "endChar": 71
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab65adb_c2fbdad2",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "Add a function in the display manager that you call here (or maybe from somewhere else inside the display manager itself) to update the `stored_mirror_modes`. The display manager has all the info, no need to get anything from here.",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 727,
+        "endChar": 66
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d9e76f_fc9c58ae",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "How about DisplayManager::(Load/Store)DisplayMirrorModes(base::DictionaryValue*)?\n\n\nKeep what\u0027s internal to display manager internal.",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 68
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515627fd_9217da75",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "Why is it plural? Is there a better name?",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 37
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4e10c1_7546a80b",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "one of the external displays.",
+      "range": {
+        "startLine": 162,
+        "startChar": 35,
+        "endLine": 162,
+        "endChar": 66
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a49c0d_772ee03c",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "You can also replace this by a call into the display manager, say WasDisplayMirrored(id) or something like that.",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 17
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e71d98c_5a9ce89b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "should_mirror?",
+      "range": {
+        "startLine": 726,
+        "startChar": 11,
+        "endLine": 726,
+        "endChar": 17
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd84ccaa_e8abc945",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "Using a set will make this entire thing simply `stored_mirror_modes_.count(id)`.",
+      "range": {
+        "startLine": 728,
+        "startChar": 8,
+        "endLine": 729,
+        "endChar": 64
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367a2ab5_dc351829",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be better if you invert this condition?\n\nif (stored_mirror_modes_count(id)) {\n  SetMultiDisplayMode(MIRRORING);\n  return;\n}\n\nThen you can remove the local.",
+      "range": {
+        "startLine": 731,
+        "startChar": 0,
+        "endLine": 732,
+        "endChar": 14
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c07b795_cffe170d",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "A few comments:\n1- The new style of enums is kEnumItem.\n2- If you\u0027ll not use an `enum class` then your enum item will be kEnumNameEnumItem \n   (e.g. kPreviousMirrorModeNotSet).\n   - The reason is non-class enums can be accessed as DisplayManager::NOT_SET!! You can see why this is not very informative (What is not set?).\n\n3- I strongly recommend using enum classes.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 4
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5631fdd5_ba686f7d",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "Is it display mode, or mirror mode?",
+      "range": {
+        "startLine": 607,
+        "startChar": 9,
+        "endLine": 607,
+        "endChar": 21
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87085f8c_a5f63266",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-05T22:41:39Z",
+      "side": 1,
+      "message": "std::map\u003cint64_t, bool\u003e is basically a set. Use std::set\u003c\u003e instead. If ID is not in set, then its display wasn\u0027t mirrored.",
+      "range": {
+        "startLine": 642,
+        "startChar": 2,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
