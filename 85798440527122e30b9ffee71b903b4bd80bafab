@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3b8d7daa_81cbfead",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T01:50:55Z",
+      "side": 1,
+      "message": "MailtoURLManager?",
+      "parentUuid": "74e61185_9e394f7c",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "982a5995_2499ded5",
         "filename": "ios/chrome/browser/web/mailto_url_rewriter.mm",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It is used by the unit tests to restore pristine state for testing. If I remove this class method, then the constant will need to be duplicated in the unit tests.",
       "parentUuid": "982a5995_2499ded5",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c796c4f_d2b4efcd",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T01:50:55Z",
+      "side": 1,
+      "message": "Per Unit testing best practices, the recommended approach is to expose constant, not method:\nhttp://go/unit-test-practices#public-apis",
+      "parentUuid": "673162b2_5f68c274",
       "range": {
         "startLine": 42,
         "startChar": 11,
