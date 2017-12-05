@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08eec599_039d1b91",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-05T21:38:51Z",
+      "side": 1,
+      "message": "I think we don\u0027t need both sets, and should only store uncommitted ones.",
+      "revId": "758785d416820314ad1c742ec2ec82aef2fd0e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee62feb7_69580289",
+        "filename": "headless/lib/virtual_time_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-05T21:38:51Z",
+      "side": 1,
+      "message": "Can you add a test to devtools_protocol_browsertest instead? You are changing how protocol works, so it would be better to have a protocol test.",
+      "revId": "758785d416820314ad1c742ec2ec82aef2fd0e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
