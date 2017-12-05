@@ -16,6 +16,7 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/settings/cros_settings_provider.h"
 #include "components/policy/policy_constants.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace policy {
 
@@ -47,6 +48,9 @@ DeviceNetworkConfigurationUpdater::DeviceNetworkConfigurationUpdater(
                                   network_config_handler),
       network_device_handler_(network_device_handler),
       cros_settings_(cros_settings),
+      untrusted_authorities_cache_(std::make_unique<UntrustedAuthoritiesCache>(
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO))),
       weak_factory_(this) {
   DCHECK(network_device_handler_);
   data_roaming_setting_subscription_ = cros_settings->AddSettingsObserver(
@@ -81,9 +85,38 @@ void DeviceNetworkConfigurationUpdater::Init() {
 
 void DeviceNetworkConfigurationUpdater::ImportCertificates(
     const base::ListValue& certificates_onc) {
-  // Importing CA and server certs from device policy is not  allowed, while
-  // importing client is not yet supported (as a system-wide PKCS#11 token to
-  // which they should be imported does not exists at the time).
+  // Importing client certificates from device policy is not implemented.
+  // Permanently importing CA and server certs from device policy or giving such
+  // certificates trust is not allowed. However, we pass all CA certificates to
+  // |untrusted_authorities_cache_| which parses them and keeps them in memory
+  // so they are available for client certificate discovery on the sign-in
+  // screen.
+  if (!chromeos::switches::IsSigninFrameClientCertsEnabled())
+    return;
+
+  std::vector<std::string> x509_authority_certs;
+  for (size_t i = 0; i < certificates_onc.GetSize(); ++i) {
+    const base::DictionaryValue* certificate = NULL;
+    certificates_onc.GetDictionary(i, &certificate);
+    DCHECK(certificate != NULL);
+
+    std::string cert_type;
+    certificate->GetStringWithoutPathExpansion(::onc::certificate::kType,
+                                               &cert_type);
+    if (cert_type == ::onc::certificate::kAuthority) {
+      std::string x509_data;
+      if (!certificate->GetStringWithoutPathExpansion(::onc::certificate::kX509,
+                                                      &x509_data) ||
+          x509_data.empty()) {
+        LOG(ERROR) << "Certificate missing X509 data.";
+        continue;
+      }
+      x509_authority_certs.push_back(x509_data);
+    }
+  }
+
+  untrusted_authorities_cache_->UpdateUntrustedAuthoritiesFromPolicy(
+      x509_authority_certs);
 }
 
 void DeviceNetworkConfigurationUpdater::ApplyNetworkPolicy(

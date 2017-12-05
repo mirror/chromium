@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/policy/network_configuration_updater.h"
+#include "chrome/browser/chromeos/policy/untrusted_authorities_cache.h"
 #include "components/onc/onc_constants.h"
 
 namespace base {
@@ -64,6 +65,9 @@ class DeviceNetworkConfigurationUpdater : public NetworkConfigurationUpdater {
   chromeos::CrosSettings* cros_settings_;
   std::unique_ptr<base::CallbackList<void(void)>::Subscription>
       data_roaming_setting_subscription_;
+  // Makes untrusted authority certificates available for client certificate
+  // discovery by holding them in memory.
+  std::unique_ptr<UntrustedAuthoritiesCache> untrusted_authorities_cache_;
 
   base::WeakPtrFactory<DeviceNetworkConfigurationUpdater> weak_factory_;
 
