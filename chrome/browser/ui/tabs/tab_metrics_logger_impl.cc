@@ -4,23 +4,40 @@
 
 #include "chrome/browser/ui/tabs/tab_metrics_logger_impl.h"
 
+#include <algorithm>
+#include <array>
+#include <string>
+#include <vector>
+
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/custom_handlers/protocol_handler_registry.h"
+#include "chrome/browser/custom_handlers/protocol_handler_registry_factory.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/custom_handlers/protocol_handler.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/page_importance_signals.h"
 #include "net/base/mime_util.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
+#include "url/gurl.h"
 
 using metrics::TabMetricsEvent;
 
 namespace {
+
+// Order must match the metrics.TabMetricsEvent.Scheme enum.
+const std::array<std::string, 21> kWhitelistedSchemes{
+    "",  // Placeholder for SCHEME_OTHER.
+    "bitcoin", "geo",  "im",   "irc",         "ircs", "magnet", "mailto",
+    "mms",     "news", "nntp", "openpgp4fpr", "sip",  "sms",    "smsto",
+    "ssh",     "tel",  "urn",  "webcal",      "wtai", "xmpp",
+};
 
 // Returns the ContentType that matches |mime_type|.
 TabMetricsEvent::ContentType GetContentTypeFromMimeType(
@@ -43,6 +60,16 @@ TabMetricsEvent::ContentType GetContentTypeFromMimeType(
   return TabMetricsEvent::CONTENT_TYPE_OTHER;
 }
 
+// Returns the Scheme enumerator matching the string, or SCHEME_OTHER.
+TabMetricsEvent::Scheme GetSchemeValueFromString(const std::string& scheme) {
+  const auto* it =
+      std::find(kWhitelistedSchemes.begin(), kWhitelistedSchemes.end(), scheme);
+  if (it == kWhitelistedSchemes.end())
+    return TabMetricsEvent::SCHEME_OTHER;
+  size_t index = it - kWhitelistedSchemes.begin();
+  return static_cast<TabMetricsEvent::Scheme>(index);
+}
+
 // Returns the site engagement score for the WebContents, rounded down to 10s
 // to limit granularity.
 int GetSiteEngagementScore(const content::WebContents* web_contents) {
@@ -57,6 +84,50 @@ int GetSiteEngagementScore(const content::WebContents* web_contents) {
   DCHECK_LE(0, rounded_score);
   DCHECK_GE(100, rounded_score);
   return rounded_score;
+}
+
+// Adds the handler's scheme to the entry if the handler is the default for its
+// scheme.
+void PopulateSchemeForHandler(ProtocolHandlerRegistry* registry,
+                              const ProtocolHandler& handler,
+                              ukm::builders::TabManager_TabMetrics* entry) {
+  if (registry->IsDefault(handler)) {
+    entry->SetDefaultProtocolHandler(
+        GetSchemeValueFromString(handler.protocol()));
+  }
+}
+
+// Populates the protocol handler fields based on the WebContents' origin.
+// We match the origin instead of the full page URL because:
+// - a handler relevant for one page is probably relevant for the whole site
+// - a handler maps to a template string, so matching on a full URL is hard
+// - even if this page was opened from a protocol handler, a redirect may have
+//   changed the URL anyway.
+void PopulateProtocolHandlers(content::WebContents* web_contents,
+                              ukm::builders::TabManager_TabMetrics* entry) {
+  ProtocolHandlerRegistry* registry =
+      ProtocolHandlerRegistryFactory::GetForBrowserContext(
+          web_contents->GetBrowserContext());
+  // May be null in tests.
+  if (!registry)
+    return;
+
+  const GURL origin = web_contents->GetLastCommittedURL().GetOrigin();
+  if (origin.is_empty())
+    return;
+
+  // Fetch all schemes that have been registered (accepted or denied).
+  std::vector<std::string> registered_schemes;
+  registry->GetRegisteredProtocols(&registered_schemes);
+
+  // Protocol handlers are stored by scheme, not URL. For each scheme, find the
+  // URLs of the handlers registered for it.
+  for (const std::string& scheme : registered_schemes) {
+    for (const ProtocolHandler& handler : registry->GetHandlersFor(scheme)) {
+      if (handler.url().GetOrigin() == origin)
+        PopulateSchemeForHandler(registry, handler, entry);
+    }
+  }
 }
 
 }  // namespace
@@ -90,6 +161,8 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
   entry.SetKeyEventCount(tab_metrics.page_metrics.key_event_count)
       .SetMouseEventCount(tab_metrics.page_metrics.mouse_event_count)
       .SetTouchEventCount(tab_metrics.page_metrics.touch_event_count);
+
+  PopulateProtocolHandlers(web_contents, &entry);
 
   if (SiteEngagementService::IsEnabled())
     entry.SetSiteEngagementScore(GetSiteEngagementScore(web_contents));
