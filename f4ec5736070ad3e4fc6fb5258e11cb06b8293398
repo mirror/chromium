@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4f31137_4bf340ed",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T16:24:08Z",
+      "side": 1,
+      "message": "ContentVerification actually does a lot of work (e.g., even just checking if the path exists can be expensive).  Can we move this relative_path_ check significantly higher in the execution flow to save a bunch of unnecessary cost?",
+      "revId": "f4ec5736070ad3e4fc6fb5258e11cb06b8293398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
