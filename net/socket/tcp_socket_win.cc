@@ -1016,4 +1016,10 @@ bool TCPSocketWin::GetEstimatedRoundTripTime(base::TimeDelta* out_rtt) const {
   return false;
 }
 
+void TCPSocketWin::Tag(const SocketTag& tag) {
+  // Windows does not support any specific SocketTags, so TCPClientSocket should
+  // never call down to this method to set a specific SocketTag.
+  CHECK(false);
+}
+
 }  // namespace net

@@ -1215,4 +1215,10 @@ void UDPSocketWin::UseNonBlockingIO() {
   use_non_blocking_io_ = true;
 }
 
+void UDPSocketWin::Tag(const SocketTag& tag) {
+  // Windows does not support any specific SocketTags, so UDPClientSocket should
+  // never call down to this method to set a specific SocketTag.
+  CHECK(false);
+}
+
 }  // namespace net
