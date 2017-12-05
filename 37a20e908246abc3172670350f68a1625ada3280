@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea91f6c_bd599462",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T06:42:58Z",
+      "side": 1,
+      "message": "reorder back to line 458?",
+      "revId": "37a20e908246abc3172670350f68a1625ada3280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2b6f74_41db061b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T06:42:58Z",
+      "side": 1,
+      "message": "can the |summary_text_| data member be removed? (maybe it is already..)",
+      "revId": "37a20e908246abc3172670350f68a1625ada3280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
