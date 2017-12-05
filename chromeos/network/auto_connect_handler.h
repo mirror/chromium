@@ -87,11 +87,18 @@ class CHROMEOS_EXPORT AutoConnectHandler : public LoginState::Observer,
   NetworkStateHandler* network_state_handler_;
   ManagedNetworkConfigurationHandler* managed_configuration_handler_;
 
-  // Whether a request to connect to the best network is pending. If true, once
-  // all requirements are met (like policy loaded, certificate patterns being
-  // resolved), a scan will be requested and ConnectToBestServices will be
+  // Whether a request to connect to the best network is pending. If true (and
+  // if a user-initiated connection has not been requested), once all
+  // requirements are met (like policy loaded, certificate patterns being
+  // resolved), a scan can be requested and ConnectToBestServices will be
   // triggered once it completes.
   bool request_best_connection_pending_;
+
+  // Whether the user has explicitly initiated a connection to a network. If the
+  // user explicitly chooses to connect to a network before auto-connect can
+  // occur, we should continue using the network requested by the user instead
+  // of performing an auto-connect.
+  bool has_user_initiated_connection_;
 
   // Whether the device policy, which might be empty, is already applied.
   bool device_policy_applied_;

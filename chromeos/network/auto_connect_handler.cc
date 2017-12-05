@@ -49,13 +49,13 @@ void DisconnectErrorCallback(
 AutoConnectHandler::AutoConnectHandler()
     : client_cert_resolver_(nullptr),
       request_best_connection_pending_(false),
+      has_user_initiated_connection_(false),
       device_policy_applied_(false),
       user_policy_applied_(false),
       client_certs_resolved_(false),
       applied_autoconnect_policy_(false),
       connect_to_best_services_after_scan_(false),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 AutoConnectHandler::~AutoConnectHandler() {
   if (LoginState::IsInitialized())
@@ -110,9 +110,8 @@ void AutoConnectHandler::LoggedInStateChanged() {
 }
 
 void AutoConnectHandler::ConnectToNetworkRequested(
-    const std::string& /*service_path*/) {
-  // Stop any pending request to connect to the best newtork.
-  request_best_connection_pending_ = false;
+    const std::string& /* service_path */) {
+  has_user_initiated_connection_ = true;
 }
 
 void AutoConnectHandler::PoliciesChanged(const std::string& userhash) {
@@ -176,9 +175,10 @@ void AutoConnectHandler::RequestBestConnection() {
 }
 
 void AutoConnectHandler::CheckBestConnection() {
-  // Return immediately if there is currently no request pending to change to
-  // the best network.
-  if (!request_best_connection_pending_)
+  // If there is no auto-connect request, do not attempt one. Likewise, if the
+  // user has explicitly requested a connection to a particular network, respect
+  // that decision by not attempting to switch to another network.
+  if (!request_best_connection_pending_ || has_user_initiated_connection_)
     return;
 
   bool policy_application_running =

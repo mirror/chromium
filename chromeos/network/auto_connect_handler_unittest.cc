@@ -500,7 +500,7 @@ TEST_F(AutoConnectHandlerTest, ManualConnectAbortsReconnectAfterLogin) {
 
   // Applying the user policy after login would usually trigger connecting to
   // the 'best' network. But the manual connect prevents this.
-  SetupPolicy(std::string(),            // no network configs
+  SetupPolicy(kPolicy,
               base::DictionaryValue(),  // no global config
               true);                    // load as user policy
   EXPECT_EQ(shill::kStateOnline, GetServiceState("wifi0"));
