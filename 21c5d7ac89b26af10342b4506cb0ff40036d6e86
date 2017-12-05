@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e82627e_96b7f29e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa6effe9_7fab38cd",
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c5db153_03cd19a2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6eda313_1ba96eca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5db153_03cd19a2",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4be9fab6_a0cb8d74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba5f4a1e_fbf4524d",
+      "range": {
+        "startLine": 15,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48d8d8a4_0dc5dabf",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8cf023_eb197b25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d8d8a4_0dc5dabf",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "fd35f429_665523fa",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7416ba_4e12403d",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68dcbad2_4522aba1",
         "filename": "chromecast/net/fake_stream_socket.h",
         "patchSetId": 2
@@ -122,6 +236,24 @@
       "writtenOn": "2017-12-04T20:35:46Z",
       "side": 1,
       "message": "It is too bad the default needs to be re-defined for a number of the subclasses (I was hoping defining it on the base-class would be sufficient, but looks like that only works if caller\u0027s pointer is to the base class).\n\nThis approach seems fine as there aren\u0027t too many derived classes that need this.\n\nBecause can\u0027t do overloading of virtual functions, the only other alternative that comes to mind is to introduce a new function name like \"WriteWithAnnotation()\". But then once done would need to do a bulk-rename back to Write(), so I prefer your current approach in this CL.",
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeb0e106_191d7850",
+        "filename": "chromecast/net/fake_stream_socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68dcbad2_4522aba1",
       "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "f02c37f9_dee1794c",
+        "filename": "jingle/glue/proxy_resolving_client_socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e378c3f9_c94cc98c",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 20
+      },
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75fd0f3c_3109c464",
         "filename": "net/socket/socket.h",
         "patchSetId": 2
@@ -162,6 +318,24 @@
       "writtenOn": "2017-12-04T20:35:46Z",
       "side": 1,
       "message": "Please add a comment on what traffic_annotation means in the Write() call.\n\nMy preference for the comment would be to just link to a more detailed document, say net/docs/network_traffic_annotations.md.\n\nThis document can explain the coding patterns around how to use network traffic annotations.\n\nNote that we already have a docs/network_traffic_annotations.md, however it would be best if //net code didn\u0027t reference files outside of src/net.",
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb8d025a_0dfadd19",
+        "filename": "net/socket/socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-05T11:54:41Z",
+      "side": 1,
+      "message": "Comment added.\nThe document includes Chrome specific items.\nDo you suggest that I copy a version of it (without the Chrome specific parts) to //net/docs or just move the complete one to //net/docs?",
+      "parentUuid": "75fd0f3c_3109c464",
       "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
