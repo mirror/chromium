@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
@@ -22,7 +21,6 @@ import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FieldTrialList;
 import org.chromium.base.Log;
-import org.chromium.base.StrictModeContext;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -54,8 +52,6 @@ public class FeatureUtilities {
     private static final String SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME = "SyntheticChromeHome";
     private static final String ENABLED_EXPERIMENT_GROUP = "Enabled";
     private static final String DISABLED_EXPERIMENT_GROUP = "Disabled";
-
-    private static final long CHROME_HOME_MAX_ENABLED_TIME_MS = 60000; // 60 seconds.
 
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
@@ -394,20 +390,9 @@ public class FeatureUtilities {
         if (isChromeHomePrefSet) return false;
 
         if (isChromeHomeEnabled()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) {
-            long chromeHomeEnabledDate = System.currentTimeMillis();
-
-            try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-                chromeHomeEnabledDate = sharedPreferences.getLong(
-                        ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY,
-                        chromeHomeEnabledDate);
-            }
-
-            long timeDeadlineForPromo = chromeHomeEnabledDate + CHROME_HOME_MAX_ENABLED_TIME_MS;
-
-            // If Chrome Home has been enabled for < 60 seconds, show the info dialog.
-            return System.currentTimeMillis() < timeDeadlineForPromo;
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)
+                && !ChromePreferenceManager.getInstance().hasChromeHomeInfoPromoShown()) {
+            return true;
         } else if (!isChromeHomeEnabled()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_ON_STARTUP)) {
