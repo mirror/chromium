@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "952532d9_4420530c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T16:10:14Z",
+      "side": 1,
+      "message": "This comment to very generic. Can you describe the helper you are adding in this CL?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59743503_91eb9de5",
         "filename": "components/signin/ios/browser/wait_for_network_callback_helper.cc",
         "patchSetId": 2
@@ -31,6 +54,75 @@
       "side": 1,
       "message": "This makes sense to me, but I do not really know. So let\u0027s use this new implementation.",
       "parentUuid": "59743503_91eb9de5",
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6017444_67d24f30",
+        "filename": "components/signin/ios/browser/wait_for_network_callback_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T16:10:14Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this comment is necessary, the logic already seems clear from the if statement and the class comments.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 68
+      },
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ed3a7b_040db80b",
+        "filename": "components/signin/ios/browser/wait_for_network_callback_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T16:10:14Z",
+      "side": 1,
+      "message": "s/network/the network connection?\n\nI don\u0027t know the best wording to improve this but \"network returns\" doesn\u0027t mean the same thing to me as the network being offline/online as in the implementation checks.",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd728892_637c4db1",
+        "filename": "components/signin/ios/browser/wait_for_network_callback_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T16:10:14Z",
+      "side": 1,
+      "message": "Update class name and import to reflect rename of helper class.",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 45
+      },
       "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
