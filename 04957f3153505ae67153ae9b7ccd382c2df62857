@@ -22,6 +22,30 @@
       "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e89f949_cf47d436",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T15:48:59Z",
+      "side": 1,
+      "message": "Can we instead make TestContextProvider stop reading the command line?",
+      "parentUuid": "76cf2f26_7dd80401",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
