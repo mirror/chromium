@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b49582e4_95543446",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T16:29:41Z",
+      "side": 1,
+      "message": "It isn\u0027t anything special, just a standard enum histogram. I just tend to name them \"Action\" or something like that due to the grab-bag nature.\n\nOne you can look at is the recent tab-under code:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h?rcl\u003df153d7a537920dbcea5ea006005499d2eb87cbf1\u0026l\u003d41",
+      "parentUuid": "a4fe9f21_002f3ad6",
+      "revId": "dec8107d9ef01c935f0fbfd604f8c3d3cabf0484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec295e1_3aab75ca",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
