@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5906ff44_1438e660",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T21:47:10Z",
+      "side": 1,
+      "message": "Are any of these calls necessary? initParametrizedTest() is called by setup() which is called before every test, which already resets the DOM and updates loadTimeData.",
+      "revId": "0647eb10284ae33f493ad83f43dd7ed95b9ab6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
