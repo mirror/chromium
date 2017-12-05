@@ -26,7 +26,11 @@ namespace blink {
 
 namespace {
 
-class TestModuleTreeClient final : public ModuleTreeClient {
+class TestModuleTreeClient final
+    : public GarbageCollected<TestModuleTreeClient>,
+      public ModuleTreeClient {
+  USING_GARBAGE_COLLECTED_MIXIN(TestModuleTreeClient);
+
  public:
   TestModuleTreeClient() = default;
 

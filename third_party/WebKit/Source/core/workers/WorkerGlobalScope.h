@@ -32,6 +32,7 @@
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/Modulator.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/DOMWindowBase64.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -63,7 +64,8 @@ class CORE_EXPORT WorkerGlobalScope
       public ActiveScriptWrappable<WorkerGlobalScope>,
       public SecurityContext,
       public Supplementable<WorkerGlobalScope>,
-      public DOMWindowBase64 {
+      public DOMWindowBase64,
+      public ModuleTreeClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(WorkerGlobalScope);
 
@@ -129,6 +131,12 @@ class CORE_EXPORT WorkerGlobalScope
 
   // EventTarget
   ExecutionContext* GetExecutionContext() const final;
+
+  // ModuleTreeClient
+  void NotifyModuleTreeLoadFinished(ModuleScript*);
+
+  void ImportModuleScript(const KURL& module_url_record,
+                          network::mojom::FetchCredentialsMode);
 
   double TimeOrigin() const { return time_origin_; }
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }

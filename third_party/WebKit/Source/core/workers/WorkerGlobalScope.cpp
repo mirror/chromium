@@ -36,6 +36,7 @@
 #include "core/css/OffscreenFontSelector.h"
 #include "core/dom/ContextLifecycleNotifier.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ModuleScript.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/Event.h"
 #include "core/events/ErrorEvent.h"
@@ -311,6 +312,27 @@ ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
   return const_cast<WorkerGlobalScope*>(this);
 }
 
+void WorkerGlobalScope::NotifyModuleTreeLoadFinished(
+    ModuleScript* module_script) {
+  if (!module_script) {
+    // TODO(nhiroki): Fail.
+    return;
+  }
+
+  // TODO(nhiroki): Call WorkerReportingProxy::WillEvaluateWorkerScript() or
+  // something like that (e.g., WillEvaluateModuleScript()).
+  Modulator* modulator = Modulator::From(ScriptController()->GetScriptState());
+  modulator->ExecuteModule(module_script,
+                           Modulator::CaptureEvalErrorFlag::kReport);
+  ReportingProxy().DidEvaluateModuleScript(!module_script->IsErrored());
+}
+
+void WorkerGlobalScope::ImportModuleScript(
+    const KURL& module_url_record,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  FetchModuleScript(module_url_record, credentials_mode, this);
+}
+
 WorkerGlobalScope::WorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     WorkerThread* thread,
@@ -405,6 +427,7 @@ void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
   WorkerOrWorkletGlobalScope::Trace(visitor);
   SecurityContext::Trace(visitor);
   Supplementable<WorkerGlobalScope>::Trace(visitor);
+  ModuleTreeClient::Trace(visitor);
 }
 
 void WorkerGlobalScope::TraceWrappers(

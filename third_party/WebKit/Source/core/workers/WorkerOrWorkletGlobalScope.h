@@ -16,6 +16,7 @@
 namespace blink {
 
 class Modulator;
+class ModuleTreeClient;
 class ResourceFetcher;
 class V8AbstractEventListener;
 class WorkerOrWorkletScriptController;
@@ -99,6 +100,11 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public EventTargetWithInlineData,
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
 
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
+
+ protected:
+  void FetchModuleScript(const KURL& module_url_record,
+                         network::mojom::FetchCredentialsMode,
+                         ModuleTreeClient*);
 
  private:
   CrossThreadPersistent<WorkerClients> worker_clients_;
