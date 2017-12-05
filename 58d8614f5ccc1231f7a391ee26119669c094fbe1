@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "edef1d38_b32298bc",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-05T21:37:21Z",
+      "side": 1,
+      "message": "Hmm.. Maybe --filter-include and --filter-exclude? It\u0027s long, but more or less self-descriptive and consistent",
+      "parentUuid": "cda45c1e_74cd5663",
+      "revId": "58d8614f5ccc1231f7a391ee26119669c094fbe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61fdac91_8da041fb",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 1
