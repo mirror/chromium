@@ -338,6 +338,26 @@ void LoadDisplayTouchAssociations() {
       touch_associations);
 }
 
+// Loads previous mirror mode for each external display, the info will later be
+// used to restore mirror mode.
+void LoadDisplayMirrorModes() {
+  PrefService* local_state = g_browser_process->local_state();
+  const base::DictionaryValue* pref_data =
+      local_state->GetDictionary(prefs::kDisplayMirrorModes);
+  std::map<int64_t, bool> stored_mirror_modes;
+  for (base::DictionaryValue::Iterator it(*pref_data); !it.IsAtEnd();
+       it.Advance()) {
+    bool mirror;
+    int64_t display_id;
+    if (!base::StringToInt64(it.key(), &display_id) ||
+        !it.value().GetAsBoolean(&mirror)) {
+      continue;
+    }
+    stored_mirror_modes[display_id] = mirror;
+  }
+  GetDisplayManager()->set_stored_mirror_modes(stored_mirror_modes);
+}
+
 void StoreDisplayLayoutPref(const display::DisplayIdList& list,
                             const display::DisplayLayout& display_layout) {
   DCHECK(display::DisplayLayout::Validate(list, display_layout));
@@ -534,6 +554,17 @@ void StoreDisplayTouchAssociations() {
   }
 }
 
+// Stores previous mirror mode for each external display.
+void StoreDisplayMirrorModes() {
+  PrefService* local_state = g_browser_process->local_state();
+  DictionaryPrefUpdate update(local_state, prefs::kDisplayMirrorModes);
+  base::DictionaryValue* pref_data = update.Get();
+  const std::map<int64_t, bool>& stored_mirror_modes =
+      GetDisplayManager()->stored_mirror_modes();
+  for (const auto& modes : stored_mirror_modes)
+    pref_data->SetBoolean(base::Int64ToString(modes.first), modes.second);
+}
+
 }  // namespace
 
 void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
@@ -545,6 +576,7 @@ void RegisterDisplayLocalStatePrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kDisplayPowerState, iter->second);
   registry->RegisterDictionaryPref(prefs::kDisplayRotationLock);
   registry->RegisterDictionaryPref(prefs::kDisplayTouchAssociations);
+  registry->RegisterDictionaryPref(prefs::kDisplayMirrorModes);
 }
 
 void StoreDisplayPrefs() {
@@ -563,6 +595,7 @@ void StoreDisplayPrefs() {
   StoreCurrentDisplayLayoutPrefs();
   StoreCurrentDisplayProperties();
   StoreDisplayTouchAssociations();
+  StoreDisplayMirrorModes();
 }
 
 void StoreDisplayRotationPrefs(bool rotation_lock) {
@@ -585,6 +618,7 @@ void LoadDisplayPreferences(bool first_run_after_boot) {
   LoadDisplayProperties();
   LoadDisplayRotationState();
   LoadDisplayTouchAssociations();
+  LoadDisplayMirrorModes();
   if (!first_run_after_boot) {
     PrefService* local_state = g_browser_process->local_state();
     // Restore DisplayPowerState:

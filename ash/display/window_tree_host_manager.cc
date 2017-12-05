@@ -709,13 +709,22 @@ void WindowTreeHostManager::PostDisplayConfigurationChange() {
     display::DisplayIdList list = display_manager->GetCurrentDisplayIdList();
     const display::DisplayLayout& layout =
         layout_store->GetRegisteredDisplayLayout(list);
-    layout_store->UpdateMultiDisplayState(
-        list, display_manager->IsInMirrorMode(), layout.default_unified);
+    bool mirror = display_manager->IsInMirrorMode();
+    layout_store->UpdateMultiDisplayState(list, mirror, layout.default_unified);
     if (display::Screen::GetScreen()->GetNumDisplays() > 1) {
       SetPrimaryDisplayId(layout.primary_id == display::kInvalidDisplayId
                               ? list[0]
                               : layout.primary_id);
     }
+
+    // Update the stored mirror mode for each external display.
+    std::map<int64_t, bool> stored_mirror_modes =
+        display_manager->stored_mirror_modes();
+    for (const auto& id : list) {
+      if (!display::Display::IsInternalDisplayId(id))
+        stored_mirror_modes[id] = mirror;
+    }
+    display_manager->set_stored_mirror_modes(stored_mirror_modes);
   }
 
   for (const display::Display& display :

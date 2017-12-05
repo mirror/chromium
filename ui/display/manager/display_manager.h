@@ -98,6 +98,17 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     UNIFIED,
   };
 
+  // The display mode in the previous configuration.
+  // 1) NOT_SET: no mirror mode was set before (e.g. single display or just boot
+  //    up).
+  // 2) MIRROR_ON: previous mirror mode is on.
+  // 3) MIRROR_OFF: previous mirror mode is off.
+  enum PreviousMirrorMode {
+    NOT_SET = 0,
+    MIRROR_ON,
+    MIRROR_OFF,
+  };
+
   explicit DisplayManager(std::unique_ptr<Screen> screen);
 #if defined(OS_CHROMEOS)
   ~DisplayManager() override;
@@ -319,6 +330,24 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   const Displays& software_mirroring_display_list() const {
     return software_mirroring_display_list_;
+  }
+
+  // Used in test to prevent previous mirror mode affecting current mode.
+  void reset_previous_mirror_mode_for_test() {
+    previous_mirror_mode_ = NOT_SET;
+  }
+
+  PreviousMirrorMode previous_mirror_mode() const {
+    return previous_mirror_mode_;
+  }
+
+  const std::map<int64_t, bool>& stored_mirror_modes() const {
+    return stored_mirror_modes_;
+  }
+
+  void set_stored_mirror_modes(
+      const std::map<int64_t, bool>& stored_mirror_modes) {
+    stored_mirror_modes_ = stored_mirror_modes;
   }
 
   // Remove mirroring source and destination displays, so that they will be
@@ -574,6 +603,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // destination and store their ids in this list.
   DisplayIdList hardware_mirroring_display_id_list_;
 
+  // The display mode in the previous configuration. This is used to determine
+  // the display mode for current configuration.
+  PreviousMirrorMode previous_mirror_mode_ = NOT_SET;
+
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
 
@@ -604,6 +637,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Whether mirroring across multiple displays is enabled.
   bool is_multi_mirroring_enabled_;
+
+  // Stores previous mirror mode for each external display.
+  std::map<int64_t, bool> stored_mirror_modes_;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 
