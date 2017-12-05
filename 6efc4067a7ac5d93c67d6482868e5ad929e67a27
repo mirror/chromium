@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "628b6707_fbf10768",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T22:02:25Z",
+      "side": 1,
+      "message": "We should verify that the name and address are present/valid.",
+      "range": {
+        "startLine": 188,
+        "startChar": 42,
+        "endLine": 188,
+        "endChar": 52
+      },
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b348ee4a_28d5e232",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 2
