@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6eeaa3c_86e1d09a",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a23ec7f7_8022bf4d",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32711342_74c6c5c9",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "75991da3_99535358",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32711342_74c6c5c9",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e545a7_f04d3720",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-05T07:05:17Z",
       "side": 1,
       "message": "please add a comment explaining this, as it seems a bit confusing: the member says that note launch is delayed until the screen is off, so why is the launch happening now that chrome is no longer forcing the backlights off?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f9e466_0fdd9f1e",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "yeah, I don\u0027t think this is really needed.",
+      "parentUuid": "81e545a7_f04d3720",
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "683d5fd8_7c62c3d6",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "It\u0027s not used explicitly, but it is needed to distinguish AutoOff from Off",
+      "parentUuid": "58d499a8_d6841085",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05241b16_92667aa7",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6102acc6_597cc307",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05241b16_92667aa7",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "b1ea7435_c3e6b88c",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ba544b_0ac1981c",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "824123d5_bf3fd4f8",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "d543cefb_bbd443e5",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "824123d5_bf3fd4f8",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06b7f36d_b3f45a69",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -138,6 +270,24 @@
       "writtenOn": "2017-12-05T07:05:17Z",
       "side": 1,
       "message": "why wouldn\u0027t a user-initiated backlights-off state also count here? if this method is supposed to return something more subtle than \"are the backlights currently off?\", please document what it is and update the method name to be more precise.",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ea71b1_6f040373",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "the difference is that for user initiated backlights off, the screen brightness will not be turned on when we stop forcing backlights off (so there\u0027s no really a need to force display off in that case).",
+      "parentUuid": "06b7f36d_b3f45a69",
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "66ace3a1_ef7ed18a",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562e6603_3e541157",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60071632_47eeb92f",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
         "patchSetId": 3
@@ -172,6 +340,24 @@
       "writtenOn": "2017-12-05T18:22:24Z",
       "side": 1,
       "message": "nit: move this to cc since BacklightsForcedOffSetter is forward declared",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93e8646_e8bd51e2",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "I\u0027ll do it other way around - this is needed for BacklightsForcedOffSetter::Observer",
+      "parentUuid": "60071632_47eeb92f",
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "41c40b4b_b49b1c4d",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb27fd5_0bc18f9e",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd2f188_43ec9aea",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
         "patchSetId": 3
@@ -209,6 +413,24 @@
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5908dfbf_afdaf13f",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd2f188_43ec9aea",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "5c2288a7_b547372b",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79775847_535f5e9d",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f05c7e_bc0b2700",
         "filename": "ash/tray_action/tray_action.h",
         "patchSetId": 3
@@ -243,6 +483,24 @@
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e763bbe_b0b30f02",
+        "filename": "ash/tray_action/tray_action.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T20:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f05c7e_bc0b2700",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
