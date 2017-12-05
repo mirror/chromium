@@ -22,6 +22,30 @@
       "revId": "47017d9e5ec989929ec3a1a1131fb6af633236d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb983187_e1f831b9",
+        "filename": "chromeos/components/tether/ble_scanner_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-05T23:04:36Z",
+      "side": 1,
+      "message": "If I only wanted to remove from the vector, I could use something like this:\n\nregistered_remote_device_ids_.erase(\n    std::remove_if(registered_remote_device_ids_.begin(), \n                   registered_remote_device_ids_.end(),\n                   [device_id](const std::string\u0026 id){return id \u003d\u003d device_id;}),\n    registered_remote_device_ids_.end());\n\nHowever, that wouldn\u0027t allow me to return a bool of whether the device was unregistered or allow me to call UpdateDiscoveryStatus() in the success case. I\u0027m not sure if there\u0027s a better way to do this, so I\u0027m going to keep it as-is.",
+      "parentUuid": "e92cf2ab_88cfe169",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "47017d9e5ec989929ec3a1a1131fb6af633236d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
