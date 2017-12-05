@@ -62,6 +62,23 @@
       "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0957c145_d5f11ec7",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T21:48:50Z",
+      "side": 1,
+      "message": "Can you explain why this is needed? I don\u0027t think the plugin process needs to know about mus, it shouldn\u0027t be interacting with it in any way.",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
