@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f05eea9a_d2b5c776",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "Do you care about apps or devtools?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6c325c_b609f6d7",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "What about the case of the window being on another workspace such that the window isn\u0027t visible?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8384633b_1041f332",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
         "patchSetId": 2
@@ -19,6 +65,93 @@
     },
     {
       "key": {
+        "uuid": "dc1e7529_455225e6",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "I\u0027m having a hard time seeing what that would be. That said, can you use browser-\u003esession_id().id()?",
+      "parentUuid": "8384633b_1041f332",
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8ea985_1ff5df6f",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "DCHECK that window isn\u0027t incognito?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bc1b9c_4519680c",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "Based on the name I would expect this to be a BrowserMetrics, but it\u0027s not, it\u0027s an iterator. Please name iter (or something that indicates its an iterator).",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10116f54_12747b7e",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "If you don\u0027t log something here, how does the server know the window isn\u0027t around anymore?",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23d647a1_bee74b28",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
         "patchSetId": 2
@@ -30,6 +163,98 @@
       "writtenOn": "2017-12-05T02:55:35Z",
       "side": 1,
       "message": "This could be placed in in chrome/browser/ui, but it exists only for the purposes of chrome/browser/ui/tabs/tab_activity_watcher.cc.\n\nWorth noting also that most of this stuff will probably end up moving into chrome/browser/resource_coordinator as the GRC matures.",
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9ed275_91e1c6d0",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "As this structure isn\u0027t exposed in any public api move it to the private section.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba581f1_f3cac4a2",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "As there typically aren\u0027t that many browsers I would be inclined to use base::flat_map here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eac7a8_cfbf5701",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "Please add a comment as to why this is necessary.",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc43c45_0af13fab",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:02:54Z",
+      "side": 1,
+      "message": "Why do you call CreateOrUpdateBrowserMetrics from here? BrowserActivityWatcher logs window states that don\u0027t necessarily call into this function. Shouldn\u0027t BrowserActivityWatcher be responsible for logging at the appropriate times rather than being called from here?",
+      "range": {
+        "startLine": 93,
+        "startChar": 45,
+        "endLine": 93,
+        "endChar": 73
+      },
       "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
