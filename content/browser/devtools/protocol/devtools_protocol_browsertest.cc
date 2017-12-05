@@ -722,6 +722,9 @@ class CaptureScreenshotTest : public DevToolsProtocolTest {
     if (encoding == ENCODING_PNG) {
       result_bitmap.reset(new SkBitmap());
       EXPECT_TRUE(DecodePNG(base64, result_bitmap.get()));
+      SkColorSpace* color_space = result_bitmap->colorSpace();
+      LOG(INFO) << "decode png color_space* " << color_space;
+      LOG(INFO) << "data:image/png;base64," << base64;
     } else {
       result_bitmap = DecodeJPEG(base64);
     }
@@ -817,17 +820,30 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshot) {
   // TODO(eseckler): Reenable with error limit if necessary.
   if (base::SysInfo::IsLowEndDevice()) return;
 
-  shell()->LoadURL(
-      GURL("data:text/html,<body style='background:#123456'></body>"));
-  WaitForLoadStop(shell()->web_contents());
+  EXPECT_TRUE(NavigateToURL(shell(), GURL("about:blank")));
+
+  ASSERT_TRUE(content::ExecuteScript(
+      shell()->web_contents(),
+      "document.body.style.backgroundColor = '#123456';"));
   Attach();
-  SkBitmap expected_bitmap;
+
+  std::string background_color;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+      shell()->web_contents(),
+      "domAutomationController.send(document.body.style.backgroundColor)",
+      &background_color));
+  EXPECT_EQ("rgb(18, 52, 86)", background_color);
+
   // We compare against the actual physical backing size rather than the
   // view size, because the view size is stored adjusted for DPI and only in
   // integer precision.
   gfx::Size view_size = static_cast<RenderWidgetHostViewBase*>(
                             shell()->web_contents()->GetRenderWidgetHostView())
                             ->GetPhysicalBackingSize();
+  LOG(INFO) << "View backing size " << view_size.width() << " x "
+            << view_size.height();
+
+  SkBitmap expected_bitmap;
   expected_bitmap.allocN32Pixels(view_size.width(), view_size.height());
   expected_bitmap.eraseColor(SkColorSetRGB(0x12, 0x34, 0x56));
   CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, false);
