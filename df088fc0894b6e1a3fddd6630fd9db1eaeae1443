@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7036a7dd_282402da",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "Actually it was was an extra word.",
+      "parentUuid": "1b1072a9_b079c894",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e95ab1b_7c0510e9",
         "filename": "chrome/browser/resources/local_ntp/README.md",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea131073_f5a2d34f",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "Corrected.",
+      "parentUuid": "0e95ab1b_7c0510e9",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b38417a3_1aee1241",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b25a0cb_f1104133",
+      "range": {
+        "startLine": 93,
+        "startChar": 43,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf2175fa_4145f66f",
         "filename": "chrome/browser/resources/local_ntp/README.md",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40e2ee5_231e6ceb",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "Apparently yes!",
+      "parentUuid": "cf2175fa_4145f66f",
+      "range": {
+        "startLine": 98,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dd01b71a_cc93f9a4",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "It also moves text, doesn\u0027t it? e.g. if you right-click and paste into the fakebox.",
+      "parentUuid": "7c649a25_b449aa63",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf9dc6c_a0e77b98",
         "filename": "chrome/browser/resources/local_ntp/README.md",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d102226_ca26c2de",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-05T18:40:13Z",
+      "side": 1,
+      "message": "Crisis response is listed prominently on http://go/hpp, so I think it\u0027s fair to list it here, at least.",
+      "parentUuid": "1bf9dc6c_a0e77b98",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 54
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
