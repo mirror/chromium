@@ -6,9 +6,21 @@
 
 namespace gfx {
 
+bool VSyncProvider::GetVSyncParametersSync(base::TimeTicks* timebase,
+                                           base::TimeDelta* interval) {
+  return false;
+}
+
 void FixedVSyncProvider::GetVSyncParameters(
     const UpdateVSyncCallback& callback) {
   callback.Run(timebase_, interval_);
+}
+
+bool FixedVSyncProvider::GetVSyncParametersSync(base::TimeTicks* timebase,
+                                                base::TimeDelta* interval) {
+  *timebase = timebase_;
+  *interval = interval_;
+  return true;
 }
 
 }  // namespace gfx
