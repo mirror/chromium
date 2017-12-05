@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ed15fa_efdac3d9",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:40:01Z",
+      "side": 1,
+      "message": "Nit: Can we leave this for a separate CL that migrates this entire file to let/const instead (which can be automated too). In general, it seems cleaner to not mix var with let/const on the same file.",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "77bbe9f06f58cccd89da5879bf1b0135ced55d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e915f7_0a9e64dc",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:40:01Z",
+      "side": 1,
+      "message": "There is already a helper for this at https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/extension_test_util.js?l\u003d134.",
+      "revId": "77bbe9f06f58cccd89da5879bf1b0135ced55d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec3a749_7bb6a7ef",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:40:01Z",
+      "side": 1,
+      "message": "Should this test be renamed to RetryError instead? Isn\u0027t it basically testing the error case, were the dialog remains open after clicking retry?",
+      "revId": "77bbe9f06f58cccd89da5879bf1b0135ced55d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cad7971_9adeecb3",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:40:01Z",
+      "side": 1,
+      "message": "TestService is used in tests only, so I don\u0027t think this comment is adding much value.",
+      "revId": "77bbe9f06f58cccd89da5879bf1b0135ced55d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08ff685_8550cbd9",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:40:01Z",
+      "side": 1,
+      "message": "Can we declare this in the constructor and give it a default value of false, instead of augmenting JS objects after construction.\n\nThis would not pass type-checks, if we were applying them to test code, but more importantly is explicitly called out in the styleguide see [1], specifically the part that says\n\n\"Properties should never be added to or removed from an instance after the constructor is finished\"\n\n[1] https://google.github.io/styleguide/jsguide.html#features-classes-fields",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "77bbe9f06f58cccd89da5879bf1b0135ced55d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
