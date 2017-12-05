@@ -108,6 +108,10 @@ class SiteIsolationStatsGathererBrowserTest
         expected_metrics[base + ".NotBlocked.MaybeJS"] = 1;
       }
     }
+    // This NotBlocked metric from the browser also appears, since blocking is
+    // disabled in the browser process when CrossSiteDocumentBlockingForMimeType
+    // runs.
+    expected_metrics["SiteIsolation.XSD.Browser.NotBlocked"] = 1;
 
     // Make sure that the expected metrics, and only those metrics, were
     // incremented.
