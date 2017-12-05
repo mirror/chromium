@@ -14,21 +14,21 @@ module Cronet;
  */
 struct Buffer {
   /**
-   * Size of |data| buffer in bytes. Limited to int32 for Java compatibility.
+   * Size of |data| buffer in bytes.
    */
-  int32 size = 0;
+  uint64 size = 0;
 
   /**
    * Maximum |position| in |data| for reading or writing of data. Cannot exceed
    * |size|.
    */
-  int32 limit = 0;
+  uint64 limit = 0;
 
   /**
    * Current position in |data| for reading or writing of data. Cannot exceed
    * |size|.
    */
-  int32 position = 0;
+  uint64 position = 0;
 
   /**
    * App-provided buffer of |size| bytes. Allocated by the app, and owned by
