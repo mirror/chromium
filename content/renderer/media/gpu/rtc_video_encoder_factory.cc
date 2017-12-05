@@ -4,6 +4,8 @@
 
 #include "content/renderer/media/gpu/rtc_video_encoder_factory.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
@@ -115,7 +117,7 @@ RTCVideoEncoderFactory::CreateVideoEncoder(
       // There should be a 1:1 mapping between media::VideoCodecProfile and
       // webrtc::SdpVideoFormat.
       CHECK_EQ(profiles_.size(), supported_formats_.size());
-      return base::MakeUnique<RTCVideoEncoder>(profiles_[i], gpu_factories_);
+      return std::make_unique<RTCVideoEncoder>(profiles_[i], gpu_factories_);
     }
   }
   return nullptr;
