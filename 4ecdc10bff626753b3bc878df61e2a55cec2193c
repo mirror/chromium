@@ -2,6 +2,299 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b16d509_8acf6144",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "I would make it the task of this function to reveal the password instead of returning a boolean and delegating it to the caller. Otherwise, the password is revealed in case of a reauth but not if a reauth is not needed.",
+      "range": {
+        "startLine": 565,
+        "startChar": 9,
+        "endLine": 565,
+        "endChar": 38
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832bf772_96e2eb8c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "inconsistent naming \"*View*Passwords\" vs \"Is*Revealed*\". Note that a user can \"view\" a password but the bubble can only \"display\" it.\n\nMy proposal:\n\n// Reveals passwords unless the access is locked. In that case, the method\n// triggers a re-authentication and re-opens the bubble. For this re-opened\n// bubble, the password will be revealed if the re-auth was successful.\n// Returns whether the passwords can be revealed.\nbool RevealPasswords();",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af33e968_5653e663",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "I wonder whether this should be really const.",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a7ace9_439a6ba9",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 147,
+        "startChar": 36,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae55b192_9771a9d9",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "Word order: IsPasswordRevealedByDefault()\n\nbetter: IsPasswordRevealedWhenOpened()",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 34
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2979f6b5_18f3e367",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "password_revealing_requires_reauth_ ?",
+      "range": {
+        "startLine": 184,
+        "startChar": 25,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51394c51_c5fcd378",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "// Authentication only needs to be refreshed after 90 seconds.",
+      "range": {
+        "startLine": 500,
+        "startChar": 5,
+        "endLine": 500,
+        "endChar": 57
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8097264_4606b8c2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "I think that lines 512, 514, 515 should go into a callback function or into the caller if you call this function \"AuthenticateUser\".\n\nMaybe the caller should check whether the bubble is hidden and then show it again.",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888cedbb_1d2d4e23",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "This function name indicates that it does not have side effects. --\u003e Probably should be named \"GetAndReset...\"",
+      "range": {
+        "startLine": 520,
+        "startChar": 34,
+        "endLine": 520,
+        "endChar": 61
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ac8730_480c8e98",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "TODO",
+      "range": {
+        "startLine": 217,
+        "startChar": 5,
+        "endLine": 217,
+        "endChar": 9
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa6e66f_5b51f3e8",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "this is not initialized.",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b31e8f_9ed51725",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "I think this is not true. Even if the reauth is not needed (for being in the 90 seconds time window), this is called.\n\nCalled from the model to ensure that the user has permission to view password. Returns whether password viewing is allowed (after a potential re-auth).",
+      "range": {
+        "startLine": 116,
+        "startChar": 32,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4647b896_39fada69",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "is this true?",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df09526_6cb0bd1d",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
         "patchSetId": 18
@@ -13,6 +306,30 @@
       "writtenOn": "2017-12-05T09:52:44Z",
       "side": 1,
       "message": "Dominic: reopening bubble after re-auth breaks this DCHECK. What is the proper way to fix that?",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 64
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d86de47_fd448a05",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T12:58:01Z",
+      "side": 1,
+      "message": "Vasilii, what do you think of extending UIDisplayDisposition to have an entry \"REOPEN_AFTER_REAUTH\"?",
+      "parentUuid": "1df09526_6cb0bd1d",
       "range": {
         "startLine": 313,
         "startChar": 2,
