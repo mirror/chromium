@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd323647_25f55ad6",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/v0-added-after-v1-and-slotted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T10:12:25Z",
+      "side": 1,
+      "message": "I general, the rAF callback is called while generating a frame before computing style for that frame, but we\u0027re UpdateLayoutTree at end of parsing and implicitClose as long as we don\u0027t have a blocking stylesheet, so that\u0027s why it works.",
+      "parentUuid": "a6e9a15d_db32569f",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d71f3eff_30344538",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 2
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "I misremembered https://bugs.chromium.org/p/chromium/issues/detail?id\u003d703984,\nthat we should support slot fallback contents in a document tree, but it is not.\nRemoving these 2 lines.",
       "parentUuid": "d71f3eff_30344538",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130eccce_d905910a",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T10:12:25Z",
+      "side": 1,
+      "message": "Ah, you\u0027re saying ::slotted(span) in document scope style \u003cslot\u003e\u003cspan\u003e\u003c/span\u003e\u003c/slot\u003e in document scope?\n\nIf that\u0027s the case you\u0027d need this for the document scope, otherwise not.",
+      "parentUuid": "348f91f6_fa87f01a",
       "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
