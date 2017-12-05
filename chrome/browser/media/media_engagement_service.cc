@@ -136,10 +136,16 @@ MediaEngagementService::MediaEngagementService(
   }
 
   // Record the stored scores to a histogram.
-  RecordStoredScoresToHistogram();
+  task_tracker_.PostTask(
+      base::ThreadTaskRunnerHandle::Get().get(), FROM_HERE,
+      base::BindOnce(&MediaEngagementService::RecordStoredScoresToHistogram,
+                     base::Unretained(this)));
 }
 
-MediaEngagementService::~MediaEngagementService() = default;
+MediaEngagementService::~MediaEngagementService() {
+  // Cancel any tasks that depend on |this|.
+  task_tracker_.TryCancelAll();
+}
 
 int MediaEngagementService::GetSchemaVersion() const {
   return profile_->GetPrefs()->GetInteger(prefs::kMediaEngagementSchemaVersion);
