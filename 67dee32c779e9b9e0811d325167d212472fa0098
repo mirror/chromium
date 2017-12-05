@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729783b7_678e720d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-05T02:29:46Z",
+      "side": 0,
+      "message": "Note: This is redundant call of FS::SetSelection(). FS::Selection() is set\nby SetEditableSelectionOffsets() call in SetComposition().",
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
