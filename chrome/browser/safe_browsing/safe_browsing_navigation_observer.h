@@ -9,6 +9,7 @@
 #include "base/supports_user_data.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/common/content_settings.h"
+#include "components/safe_browsing/proto/csd.pb.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "url/gurl.h"
 
@@ -50,7 +51,7 @@ struct NavigationEvent {
   int frame_id;  // Frame tree node ID of the frame where this navigation takes
                  // place.
   base::Time last_updated;  // When this NavigationEvent was last updated.
-  bool is_user_initiated;  // browser_initiated || has_user_gesture.
+  ReferrerChainEntry::NavigationInitiation navigation_initiation;
   bool has_committed;
 
   const GURL& GetDestinationUrl() const {
@@ -58,6 +59,12 @@ struct NavigationEvent {
       return server_redirect_urls.back();
     else
       return original_request_url;
+  }
+
+  bool IsUserInitiated() const {
+    return navigation_initiation == ReferrerChainEntry::BROWSER_INITIATED ||
+           navigation_initiation ==
+               ReferrerChainEntry::RENDERER_INITIATED_WITH_USER_GESTURE;
   }
 };
 
