@@ -132,12 +132,12 @@ suite('route', function() {
     assertEquals(params.toString(), settings.getQueryParameters().toString());
 
     settings.navigateTo(
-        settings.routes.SITE_SETTINGS, null,
+        settings.routes.SITE_SETTINGS, undefined,
         /* removeSearch */ false);
     assertEquals(params.toString(), settings.getQueryParameters().toString());
 
     settings.navigateTo(
-        settings.routes.SEARCH_ENGINES, null,
+        settings.routes.SEARCH_ENGINES, undefined,
         /* removeSearch */ true);
     assertEquals('', settings.getQueryParameters().toString());
   });

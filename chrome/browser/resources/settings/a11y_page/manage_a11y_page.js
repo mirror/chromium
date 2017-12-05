@@ -84,27 +84,27 @@ Polymer({
   onDisplayTap_: function() {
     settings.navigateTo(
         settings.routes.DISPLAY,
-        /* dynamicParams */ null, /* removeSearch */ true);
+        /* dynamicParams */ undefined, /* removeSearch */ true);
   },
 
   /** @private */
   onAppearanceTap_: function() {
     settings.navigateTo(
         settings.routes.APPEARANCE,
-        /* dynamicParams */ null, /* removeSearch */ true);
+        /* dynamicParams */ undefined, /* removeSearch */ true);
   },
 
   /** @private */
   onKeyboardTap_: function() {
     settings.navigateTo(
         settings.routes.KEYBOARD,
-        /* dynamicParams */ null, /* removeSearch */ true);
+        /* dynamicParams */ undefined, /* removeSearch */ true);
   },
 
   /** @private */
   onMouseTap_: function() {
     settings.navigateTo(
         settings.routes.POINTERS,
-        /* dynamicParams */ null, /* removeSearch */ true);
+        /* dynamicParams */ undefined, /* removeSearch */ true);
   },
 });

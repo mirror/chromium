@@ -496,34 +496,33 @@ cr.define('settings', function() {
     /**
      * Navigates to a canonical route and pushes a new history entry.
      * @param {!settings.Route} route
-     * @param {URLSearchParams=} opt_dynamicParameters Navigations to the same
+     * @param {URLSearchParams=} dynamicParameters Navigations to the same
      *     URL parameters in a different order will still push to history.
-     * @param {boolean=} opt_removeSearch Whether to strip the 'search' URL
+     * @param {boolean=} removeSearch Whether to strip the 'search' URL
      *     parameter during navigation. Defaults to false.
      */
-    navigateTo(route, opt_dynamicParameters, opt_removeSearch) {
+    navigateTo(
+        route, dynamicParameters = new URLSearchParams(),
+        removeSearch = false) {
       // The ADVANCED route only serves as a parent of subpages, and should not
       // be possible to navigate to it directly.
       if (route == this.routes_.ADVANCED)
         route = /** @type {!settings.Route} */ (this.routes_.BASIC);
 
-      var params = opt_dynamicParameters || new URLSearchParams();
-      var removeSearch = !!opt_removeSearch;
-
       var oldSearchParam = this.getQueryParameters().get('search') || '';
-      var newSearchParam = params.get('search') || '';
+      var newSearchParam = dynamicParameters.get('search') || '';
 
       if (!removeSearch && oldSearchParam && !newSearchParam)
-        params.append('search', oldSearchParam);
+        dynamicParameters.append('search', oldSearchParam);
 
       var url = route.path;
-      var queryString = params.toString();
+      var queryString = dynamicParameters.toString();
       if (queryString)
         url += '?' + queryString;
 
       // History serializes the state, so we don't push the actual route object.
       window.history.pushState(this.currentRoute.path, '', url);
-      this.setCurrentRoute(route, params, false);
+      this.setCurrentRoute(route, dynamicParameters, false);
     }
 
     /**
