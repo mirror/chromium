@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e001dca7_a4c07a74",
+        "filename": "cc/tiles/tile.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-05T23:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a28012_7b9e8109",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcfaa061_dc609aeb",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T23:17:31Z",
       "side": 1,
       "message": "nit: Not really required. We don\u0027t clear other vectors in this struct once we\u0027re done using them here.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 1,
+        "endLine": 1058,
+        "endChar": 49
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd92d39_14b21caf",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-05T23:20:37Z",
+      "side": 1,
+      "message": "Agree, but I thought this would increase clarity to readers of the code.",
+      "parentUuid": "fcfaa061_dc609aeb",
       "range": {
         "startLine": 1058,
         "startChar": 1,
@@ -68,6 +116,30 @@
       "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e6a122_390b7b3a",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-05T23:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633268a1_3f2142d3",
+      "range": {
+        "startLine": 1194,
+        "startChar": 2,
+        "endLine": 1197,
+        "endChar": 40
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
