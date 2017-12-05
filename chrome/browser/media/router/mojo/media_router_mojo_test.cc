@@ -151,8 +151,9 @@ void MockMediaController::CloseBinding() {
 
 MockMediaRouteController::MockMediaRouteController(
     const MediaRoute::Id& route_id,
-    content::BrowserContext* context)
-    : MediaRouteController(route_id, context) {}
+    content::BrowserContext* context,
+    MediaRouter* router)
+    : MediaRouteController(route_id, context, router) {}
 
 MockMediaRouteController::~MockMediaRouteController() {}
 
@@ -187,7 +188,7 @@ void MediaRouterMojoTest::RegisterWiredDisplayProvider() {
 }
 
 void MediaRouterMojoTest::SetUp() {
-  media_router_ = SetTestingFactoryAndUse();
+  media_router_ = CreateMediaRouter();
   media_router_->set_instance_id_for_test(kInstanceId);
   RegisterExtensionProvider();
   media_router_->Initialize();
@@ -196,7 +197,10 @@ void MediaRouterMojoTest::SetUp() {
 }
 
 void MediaRouterMojoTest::TearDown() {
+  routes_observer_.reset();
+  sinks_observer_.reset();
   media_router_->Shutdown();
+  media_router_.reset();
 }
 
 void MediaRouterMojoTest::ProvideTestRoute(

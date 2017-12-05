@@ -174,8 +174,8 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
   // controller. Returns a reference to the mock controller.
   scoped_refptr<MockMediaRouteController> OpenUIDetailsView(
       const MediaRoute::Id& route_id) {
-    auto controller =
-        base::MakeRefCounted<MockMediaRouteController>(route_id, profile());
+    auto controller = base::MakeRefCounted<MockMediaRouteController>(
+        route_id, profile(), mock_router_);
     MediaSource media_source("mediaSource");
     MediaRoute route(route_id, media_source, "sinkId", "", true, "", true);
 
@@ -727,8 +727,8 @@ TEST_F(MediaRouterUITest, SendInitialMediaStatusUpdate) {
   MediaStatus status;
   status.title = "test title";
   std::string route_id = "routeId";
-  auto controller =
-      base::MakeRefCounted<MockMediaRouteController>(route_id, profile());
+  auto controller = base::MakeRefCounted<MockMediaRouteController>(
+      route_id, profile(), mock_router_);
   controller->OnMediaStatusUpdated(status);
 
   CreateMediaRouterUI(profile());
