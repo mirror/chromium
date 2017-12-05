@@ -141,6 +141,10 @@
 #include "components/signin/core/browser/signin_status_metrics_provider.h"
 #endif  // !defined(OS_CHROMEOS)
 
+#if !defined(OS_ANDROID)
+#include "components/zoom/metrics/zoom_metrics_provider.h"
+#endif  // !defined(OS_ANDROID)
+
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
 #include "chrome/browser/metrics/upgrade_metrics_provider.h"
 #endif  //  !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
@@ -706,6 +710,11 @@ void ChromeMetricsServiceClient::RegisterMetricsServiceProviders() {
   metrics_service_->RegisterMetricsProvider(
       base::MakeUnique<UpgradeMetricsProvider>());
 #endif  //! defined(OS_ANDROID) && !defined(OS_CHROMEOS)
+
+#if !defined(OS_ANDROID)
+  metrics_service_->RegisterMetricsProvider(
+      base::MakeUnique<zoom::metrics::ZoomMetricsProvider>());
+#endif  // !defined(OS_ANDROID)
 }
 
 void ChromeMetricsServiceClient::RegisterUKMProviders() {

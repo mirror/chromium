@@ -26,6 +26,9 @@ proto_library("metrics_proto") {
     "ukm/report.proto",
     "ukm/source.proto",
     "user_action_event.proto",
+
+    # DO NOT COMMIT Modify internal copy
+    "zoom_event.proto",
   ]
   proto_in_dir = "."
 }
