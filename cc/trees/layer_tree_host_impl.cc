@@ -1752,9 +1752,11 @@ viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata()
         IsActivelyScrolling() || mutator_host_->NeedsTickAnimations();
   }
 
-  for (auto& surface_id : active_tree_->SurfaceLayerIds()) {
+  for (auto& surface_id : active_tree_->ReferencedSurfaceIds())
     metadata.referenced_surfaces.push_back(surface_id);
-  }
+
+  for (auto& surface_id : active_tree_->UnusedSurfaceIds())
+    metadata.unused_surfaces.push_back(surface_id);
 
   const auto* inner_viewport_scroll_node = InnerViewportScrollNode();
   if (!inner_viewport_scroll_node)

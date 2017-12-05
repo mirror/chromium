@@ -367,7 +367,6 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   void AddSurfaceLayerId(const viz::SurfaceId& surface_id);
   void RemoveSurfaceLayerId(const viz::SurfaceId& surface_id);
-  base::flat_set<viz::SurfaceId> SurfaceLayerIds() const;
 
   void AddLayerShouldPushProperties(Layer* layer);
   void RemoveLayerShouldPushProperties(Layer* layer);
@@ -542,10 +541,18 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
  private:
   friend class LayerTreeHostSerializationTest;
+  friend class SurfaceLayerTest;
 
   // This is the number of consecutive frames in which we want the content to be
   // free of slow-paths before toggling the flag.
   enum { kNumFramesToConsiderBeforeRemovingSlowPathFlag = 60 };
+
+  struct SurfaceLayerInfo {
+    // The number of layers with the SurfaceId.
+    int layers = 0;
+    // Tracks if a surface layer with the SurfaceId has been committed.
+    bool has_been_committed = false;
+  };
 
   void ApplyViewportDeltas(ScrollAndScaleSet* info);
   void RecordWheelAndTouchScrollingCount(ScrollAndScaleSet* info);
@@ -649,8 +656,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   scoped_refptr<HeadsUpDisplayLayer> hud_layer_;
 
-  // The number of SurfaceLayers that have fallback set to viz::SurfaceId.
-  base::flat_map<viz::SurfaceId, int> surface_layer_ids_;
+  // Tracks surface layers associated with a SurfaceId.
+  base::flat_map<viz::SurfaceId, SurfaceLayerInfo> surface_layer_ids_;
 
   // Set of layers that need to push properties.
   std::unordered_set<Layer*> layers_that_should_push_properties_;
