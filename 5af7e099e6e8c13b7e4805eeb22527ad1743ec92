@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23356f8b_26a852eb",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef7ee19_36df3aae",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47d5b59_d496ceb1",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 39
@@ -33,6 +51,24 @@
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef3f909_fcbd386c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47d5b59_d496ceb1",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0147ad51_1e58f369",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Or not set yet.\nMoved to a DCHECK at the start.",
+      "parentUuid": "36e73475_f639e3dc",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37abe54f_f495215c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 39
@@ -67,6 +121,24 @@
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91be2854_717af4ce",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "We want to predict it as well as possible.  Any decisions or optimizations that are forward looking are more likely to be right this way.",
+      "parentUuid": "37abe54f_f495215c",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "81e86b1d_10170b69",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdd47cee_1bf1bdfd",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1e74e9b_feca8a6b",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 39
@@ -101,6 +191,24 @@
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca26ab4_f610f3de",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1e74e9b_feca8a6b",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "232561f0_bd8cbeaf",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "112f79a9_d6e81270",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f49bd0b8_704b98a2",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
         "patchSetId": 39
@@ -135,6 +261,24 @@
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77251410_f5a720aa",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f49bd0b8_704b98a2",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d391f86d_1d689473",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "You mean this global scope.  So yes, CompositorMutatorImpl has a Persistent global scope pointer, and this class only has a persistent reference during methods.",
+      "parentUuid": "0398296f_19c52612",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d153c7fb_7b2ce900",
         "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 39
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-01T20:24:52Z",
       "side": 1,
       "message": "I\u0027m confused by this, how can this work? If the global scope isn\u0027t on this thread and it\u0027s a weak pointer it could presumably be being collected but not having invalidated this weak pointer yet right?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d89b11_f45a88dc",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-05T15:18:00Z",
+      "side": 1,
+      "message": "My understanding of cross thread weak was that this would either succeed and have a valid object or fail and get a null.  If the other references to the object go away this new persistent keeps it until it goes away.",
+      "parentUuid": "d153c7fb_7b2ce900",
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
