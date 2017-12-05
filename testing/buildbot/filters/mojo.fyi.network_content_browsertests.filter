@@ -123,3 +123,7 @@
 -ResourceDispatcherHostBrowserTest.RespectNoSniffDirective
 -ResourceDispatcherHostBrowserTest.SniffHTMLWithNoContentType
 -ResourceDispatcherHostBrowserTest.SniffNoContentTypeNoData
+
+# https://crbug.com/790933
+-ServiceWorkerNavigationPreloadTest.RespondWithNavigationPreload
+-ServiceWorkerNavigationPreloadTest.RedirectAndRespondWithNavigationPreload
