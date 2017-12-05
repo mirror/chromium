@@ -1507,6 +1507,9 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, ResumeMainJobLaterCanceled) {
 
   EXPECT_TRUE(job_controller_->main_job());
   request_.reset();
+  // Reset task environment back to the default type.
+  NetTestSuite::SetScopedTaskEnvironment(
+      base::test::ScopedTaskEnvironment::MainThreadType::IO);
 }
 
 // Test that main job is blocked for kMaxDelayTimeForMainJob(3s) if
