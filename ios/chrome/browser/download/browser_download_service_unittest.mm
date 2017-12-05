@@ -9,6 +9,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
+#import "ios/chrome/test/fakes/fake_pass_kit_tab_helper_delegate.h"
 #import "ios/web/public/download/download_controller.h"
 #import "ios/web/public/download/download_task.h"
 #include "ios/web/public/features.h"
@@ -30,8 +31,10 @@ char kMimeType[] = "application/vnd.apple.pkpass";
 class StubPassKitTabHelper : public PassKitTabHelper {
  public:
   static void CreateForWebState(web::WebState* web_state) {
-    web_state->SetUserData(
-        UserDataKey(), base::WrapUnique(new StubPassKitTabHelper(web_state)));
+    web_state->SetUserData(UserDataKey(),
+                           base::WrapUnique(new StubPassKitTabHelper(
+                               web_state, [[FakePassKitTabHelperDelegate alloc]
+                                              initWithWebState:web_state])));
   }
 
   // Adds the given task to tasks() lists.
@@ -44,8 +47,9 @@ class StubPassKitTabHelper : public PassKitTabHelper {
   const DownloadTasks& tasks() const { return tasks_; }
 
  private:
-  StubPassKitTabHelper(web::WebState* web_state)
-      : PassKitTabHelper(web_state, /*delegate=*/nil) {}
+  StubPassKitTabHelper(web::WebState* web_state,
+                       id<PassKitTabHelperDelegate> delegate)
+      : PassKitTabHelper(web_state, delegate) {}
 
   DownloadTasks tasks_;
 };

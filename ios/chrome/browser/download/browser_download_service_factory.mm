@@ -39,7 +39,3 @@ BrowserDownloadServiceFactory::BuildServiceInstanceFor(
       web::DownloadController::FromBrowserState(browser_state);
   return std::make_unique<BrowserDownloadService>(download_controller);
 }
-
-bool BrowserDownloadServiceFactory::ServiceIsCreatedWithBrowserState() const {
-  return true;
-}

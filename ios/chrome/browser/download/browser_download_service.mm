@@ -34,10 +34,7 @@ void BrowserDownloadService::OnDownloadCreated(
     std::unique_ptr<web::DownloadTask> task) {
   if (task->GetMimeType() == "application/vnd.apple.pkpass") {
     if (base::FeatureList::IsEnabled(web::features::kNewPassKitDownload)) {
-      PassKitTabHelper* tab_helper = PassKitTabHelper::FromWebState(web_state);
-      if (tab_helper) {
-        tab_helper->Download(std::move(task));
-      }
+      PassKitTabHelper::FromWebState(web_state)->Download(std::move(task));
     }
   }
 }

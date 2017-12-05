@@ -36,7 +36,6 @@ class BrowserDownloadServiceFactory : public BrowserStateKeyedServiceFactory {
   // BrowserStateKeyedServiceFactory overrides:
   std::unique_ptr<KeyedService> BuildServiceInstanceFor(
       web::BrowserState* context) const override;
-  bool ServiceIsCreatedWithBrowserState() const override;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserDownloadServiceFactory);
 };
