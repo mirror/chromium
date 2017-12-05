@@ -16,6 +16,24 @@
       "revId": "75c1de43ab3237facf5b11bda8607fe4ab6d1278",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35383fcb_e936e190",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-05T16:53:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cf6f7f3_a8da2366",
+      "revId": "75c1de43ab3237facf5b11bda8607fe4ab6d1278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
