@@ -715,8 +715,10 @@ scoped_refptr<ComputedStyle> StyleResolver::StyleForElement(
     StyleAdjuster::AdjustComputedStyle(state, element);
   }
 
-  if (IsHTMLBodyElement(*element))
-    GetDocument().GetTextLinkColors().SetTextColor(state.Style()->GetColor());
+  if (IsHTMLBodyElement(*element)) {
+    GetDocument().GetTextLinkColors().SetTextColor(
+        state.Style()->ColorIgnoringVisited());
+  }
 
   SetAnimationUpdateIfNeeded(state, *element);
 
@@ -1909,8 +1911,9 @@ bool StyleResolver::HasAuthorBackground(const StyleResolverState& state) {
   new_fill.SetRepeatX(kNoRepeatFill);
   new_fill.SetRepeatY(kNoRepeatFill);
 
-  return (old_fill != new_fill || cached_ua_style->background_color !=
-                                      state.Style()->BackgroundColor());
+  return (old_fill != new_fill ||
+          cached_ua_style->background_color !=
+              state.Style()->BackgroundColorIgnoringVisited());
 }
 
 bool StyleResolver::HasAuthorBorder(const StyleResolverState& state) {

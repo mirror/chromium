@@ -106,7 +106,7 @@ Color StyleBuilderConverter::ConvertColor(StyleResolverState& state,
                                           const CSSValue& value,
                                           bool for_visited_link) {
   return state.GetDocument().GetTextLinkColors().ColorFromCSSValue(
-      value, state.Style()->GetColor(), for_visited_link);
+      value, state.Style()->ColorIgnoringVisited(), for_visited_link);
 }
 
 AtomicString StyleBuilderConverter::ConvertFragmentIdentifier(

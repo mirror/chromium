@@ -553,12 +553,12 @@ void EditingStyle::RemoveInheritedColorsIfNeeded(
   // their font-color as their text fill color (they don't
   // inherit it).  Likewise for stroke color.
   // Similar thing happens for caret-color if it's auto or currentColor.
-  if (computed_style->TextFillColor().IsCurrentColor())
+  if (computed_style->TextFillColorIgnoringVisited().IsCurrentColor())
     mutable_style_->RemoveProperty(CSSPropertyWebkitTextFillColor);
-  if (computed_style->TextStrokeColor().IsCurrentColor())
+  if (computed_style->TextStrokeColorIgnoringVisited().IsCurrentColor())
     mutable_style_->RemoveProperty(CSSPropertyWebkitTextStrokeColor);
-  if (computed_style->CaretColor().IsAutoColor() ||
-      computed_style->CaretColor().IsCurrentColor())
+  if (computed_style->CaretColorIgnoringVisited().IsAutoColor() ||
+      computed_style->CaretColorIgnoringVisited().IsCurrentColor())
     mutable_style_->RemoveProperty(CSSPropertyCaretColor);
 }
 
