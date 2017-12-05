@@ -34,6 +34,24 @@
       "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d16ab4e_2f41c3b9",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-05T00:42:22Z",
+      "side": 1,
+      "message": "This code runs on the main thread of the renderer process, right?\n\nI\u0027m worried about a scenario where the main thread cannot handle more high priority tasks (e.g., user input handling) while waiting on it. In general, it\u0027s not a good idea to synchronously block the main thread.",
+      "parentUuid": "9779c0a5_b34370de",
+      "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
