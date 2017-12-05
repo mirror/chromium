@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33be7c8_decde1f2",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T23:55:12Z",
+      "side": 1,
+      "message": "This seems a bit fragile. The ID is not defined anywhere in this element. It just happens that the parent of this element at [1] assigns an ID.\n\nI suggest either changing this to \nthis.fire(\u0027dropdown-opened\u0027, \u0027bookmarks\u0027);\nOR\nthis.fire(\u0027dropdown-opened\u0027, this.tagName.toLowerCase());\ngiven that there is only one instance of viewer-toolbar-dropdown anyway.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/pdf/elements/viewer-pdf-toolbar/viewer-pdf-toolbar.html?l\u003d149",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 42
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afafed3c_a17bac14",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T23:55:12Z",
+      "side": 1,
+      "message": "@param missing for the new parameter.",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2711da45_84efd797",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T23:55:12Z",
+      "side": 1,
+      "message": "Can this be\nwindow.PDFMetrics \u003d function() {..}\n\nand avoid the declaration at line 5?",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dd6454_f1bf6a77",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T23:55:12Z",
+      "side": 1,
+      "message": "Instead of repeating this check in multiple places in this file, how about using polymorphism?\n\n1) Within this file, define an PDFMetrics interafce\n2) Rename PDFMetrics to PDFMetricsImpl and make it implement the interface\n3) Define a new PDFMetricsDummy that implements the interface but does nothing.\n4) Changed pdf.js to perform the if (chrome.metricsPrivate) {...} check once and instantiate the respective class.\n\nThoughts?",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99281a_f53fc57f",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T23:55:12Z",
+      "side": 1,
+      "message": "Can you use an ES6 class definition instead? It is allowed by the Es6 stylguide, see https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Classes.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
