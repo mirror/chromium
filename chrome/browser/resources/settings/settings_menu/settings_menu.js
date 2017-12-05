@@ -76,7 +76,7 @@ Polymer({
     var route = settings.getRouteForPath(path);
     assert(route, 'settings-menu has an entry with an invalid route.');
     settings.navigateTo(
-        route, /* dynamicParams */ null, /* removeSearch */ true);
+        route, /* dynamicParams */ undefined, /* removeSearch */ true);
   },
 
   /**
