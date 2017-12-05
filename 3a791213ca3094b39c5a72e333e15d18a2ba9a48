@@ -52,6 +52,24 @@
       "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d89f6f_76c71cee",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T14:55:05Z",
+      "side": 1,
+      "message": "\u003e That\u0027s fair, but you\u0027re changing the race from something that almost never happens (GPU process dies during context creation) into something that should be expected to happen a lot more often (creating a context when the GPU process has just died).\n\n\u003e That\u0027s not what this CL does. When AllowGpuLaunchRetryOnIOThread is false, it makes all transient failures (races on restart, which the renderer never sees for channel creation) into fatal ones (Renderer treats EstablishGpuChannel failures as authoritative).\n\nActually this race I\u0027m not really clear. What\u0027s the race here exactly? Is it only racy if GPU crashes unexpectedly, so if crash happens at around the same time as EstablishChannel, then that comes up as a EstablishChannel failure after this CL. Or this is something other race I\u0027m not understanding that does not involve unexpected GPU crashes?",
+      "parentUuid": "9ed4ce7e_5f62ee31",
+      "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
