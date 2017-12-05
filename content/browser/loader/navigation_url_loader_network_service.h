@@ -74,6 +74,8 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
 
   bool allow_download_;
 
+  GURL url_;
+
   // Factories to handle navigation requests for non-network resources.
   ContentBrowserClient::NonNetworkURLLoaderFactoryMap
       non_network_url_loader_factories_;
