@@ -33,6 +33,29 @@
       "revId": "361aa92734200232b3f7382c371ea12a824f89f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48dfab11_4f8bf5d7",
+        "filename": "skia/public/interfaces/color.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-05T19:27:10Z",
+      "side": 1,
+      "message": "Isn\u0027t there already some other \"color\" in mojom we can use without inventing a new one?\n\nnit: comment about what this means?  RGBA? something else?",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "361aa92734200232b3f7382c371ea12a824f89f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
