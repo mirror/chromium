@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e8eea077_3156f517",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T02:09:10Z",
+      "side": 1,
+      "message": "Unfortunately doesn\u0027t work when the constructor is private.",
+      "parentUuid": "496149ec_e8143e49",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8afff68c_d1066f04",
         "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.cc",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-05T01:19:02Z",
       "side": 1,
       "message": "make_unique?",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288fa900_a4d193da",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T02:09:10Z",
+      "side": 1,
+      "message": "Same as before. Private constructor.",
+      "parentUuid": "8afff68c_d1066f04",
       "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "2f3f3433_38027a8f",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T02:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5991afb8_95c875af",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78bc914e_228d398e",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
         "patchSetId": 3
@@ -81,6 +135,24 @@
       "writtenOn": "2017-12-04T19:33:33Z",
       "side": 1,
       "message": "So all Smb file systems would have the same provider_id and capabilities?",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd90e5e_a9516617",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T02:09:10Z",
+      "side": 1,
+      "message": "Yes. Capabilities are properties of a provider and shared across all file systems mounted by that provider. However if it doesn\u0027t work for you, you can always have multiple providers in samba service with different capabilities.",
+      "parentUuid": "78bc914e_228d398e",
       "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
