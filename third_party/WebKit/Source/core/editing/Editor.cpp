@@ -812,6 +812,13 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
 }
 
 Element* Editor::FindEventTargetFromSelection() const {
+  // https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event says:
+  //  "Set target to be the element that contains the start of the selection in
+  //   document order, or the body element if there is no selection or cursor."
+  // We treat hidden selections as "no selection or cursor".
+  if (GetFrameSelection().IsHidden())
+    return GetFrameSelection().GetDocument().body();
+
   return FindEventTargetFrom(
       GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
