@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3425044a_380d93bd",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-05T20:19:32Z",
+      "side": 1,
+      "message": "Changed this to just set last_committed_source_id here, since it probably doesn\u0027t make sense for it to become invalid if we add an early return.",
+      "parentUuid": "551f8314_4880d08a",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0548c459_3fab2526",
         "filename": "components/ukm/content/source_url_recorder.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2521bb1fa475df15a32766700c258343f44b136b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e7325b_b8827e1d",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-05T20:19:32Z",
+      "side": 1,
+      "message": "This is now reverted, and last_committed_source_id_ is update above.",
+      "parentUuid": "0548c459_3fab2526",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d43f1b80_c2740630",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-05T20:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6642f641_d92a23df",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "587c5f86_43ac01e7",
         "filename": "components/ukm/content/source_url_recorder.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2521bb1fa475df15a32766700c258343f44b136b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e08d4af_9e75f7ff",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-05T20:19:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587c5f86_43ac01e7",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
