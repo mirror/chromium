@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9fcc751_b19f6522",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-05T17:02:10Z",
+      "side": 1,
+      "message": "How about a map check if we have already output this quantity so that we preserve the input order?",
+      "revId": "f51f6eed8b7c0ecec27bb07bcb8f6b16c011fa5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
