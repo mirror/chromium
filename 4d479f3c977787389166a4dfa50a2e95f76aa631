@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "1e95b591_4960b7f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T01:10:37Z",
+      "side": 1,
+      "message": "\u003e Do I understand correctly, that errors 1, 2 and 4 are still guaranteed to be the same by HTML?\n\nThe situation was more complicated than I thought.\n\n- According to the spec: Yes they will be the same in this case, however:\n  - It looks like somehow being the same accidentially, because Instantiate() is called three time and one error object returned by one Instantiate() invocation is reported to all three \u003cscript\u003es.\n  - Error object identity can be nondeterministic (e.g. affected by the network fetch order) in general, and I feel developers can\u0027t rely on error object identity.\n  So if we want to check the error object identity (1\u003d\u003d2\u003d\u003d4 and 3\u003d\u003d5), I think we\u0027ll have to make the spec more deterministic as for error object identity.\n- According to the Blink impl, No, they are all distinct.\n  This is because, in the spec, Step 8 of\n  https://html.spec.whatwg.org/#fetch-the-descendants-of-and-instantiate-a-module-script\n  is asynchronous, while in Blink it completes synchronously.\n\nInstantiation is executed once for each \u003cscript\u003e element, and thus the error object created for each \u003cscript\u003e element is distinct (if ECMAScript-side spec makes instantiation return distinct error objects for each invocation for the same module script).\n\nBut the error objects are put to the same place, i.e. the \u003cscript\u003e element\u0027s error-to-rethrow, and thus in some cases, some of error objects reported to the \u003cscript\u003e elements can be the same, because error-to-rethrow can overwritten before execution.",
+      "parentUuid": "f848792c_c9287e21",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
