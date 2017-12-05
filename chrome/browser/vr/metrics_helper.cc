@@ -22,8 +22,8 @@ constexpr char kLatencyVrBrowsing[] =
     "VR.Component.Assets.DurationUntilReady.OnEnter.VRBrowsing";
 constexpr char kLatencyWebVr[] =
     "VR.Component.Assets.DurationUntilReady.OnEnter.WebVRPresentation";
-constexpr char kLatencyLaunchBrowser[] =
-    "VR.Component.Assets.DurationUntilReady.OnChromeStart";
+constexpr char kReadyDurationOnRegisterComponent[] =
+    "VR.Component.Assets.DurationUntilReady.OnRegisterComponent";
 // TODO(tiborg): Rename VRAssetsComponentStatus and VRAssetsLoadStatus in
 // enums.xml and consider merging them.
 constexpr char kComponentUpdateStatus[] =
@@ -142,14 +142,14 @@ void MetricsHelper::OnComponentReady(const base::Version& version) {
   LogLatencyIfWaited(Mode::kWebVr, now);
   OnComponentUpdated(AssetsComponentUpdateStatus::kSuccess, version);
 
-  if (logged_ready_duration_on_chrome_start_) {
+  if (logged_ready_duration_on_component_register_) {
     return;
   }
-  DCHECK(chrome_start_time_);
-  auto ready_duration = now - *chrome_start_time_;
-  UMA_HISTOGRAM_CUSTOM_TIMES(kLatencyLaunchBrowser, ready_duration, kMinLatency,
-                             kMaxLatency, kLatencyBucketCount);
-  logged_ready_duration_on_chrome_start_ = true;
+  DCHECK(component_register_time_);
+  auto ready_duration = now - *component_register_time_;
+  UMA_HISTOGRAM_CUSTOM_TIMES(kReadyDurationOnRegisterComponent, ready_duration,
+                             kMinLatency, kMaxLatency, kLatencyBucketCount);
+  logged_ready_duration_on_component_register_ = true;
 }
 
 void MetricsHelper::OnEnter(Mode mode) {
@@ -170,10 +170,13 @@ void MetricsHelper::OnEnter(Mode mode) {
 }
 
 void MetricsHelper::OnRegisteredComponent() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   UMA_HISTOGRAM_ENUMERATION(
       kNetworkConnectionTypeRegisterComponent,
       net::NetworkChangeNotifier::GetConnectionType(),
       net::NetworkChangeNotifier::ConnectionType::CONNECTION_LAST + 1);
+  DCHECK(!component_register_time_);
+  component_register_time_ = base::Time::Now();
 }
 
 void MetricsHelper::OnComponentUpdated(
@@ -191,12 +194,6 @@ void MetricsHelper::OnAssetsLoaded(AssetsLoadStatus status,
   UMA_HISTOGRAM_SPARSE_SLOWLY(
       kAssetsLoadStatus,
       EncodeVersionStatus(component_version, static_cast<int>(status)));
-}
-
-void MetricsHelper::OnChromeStarted() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(!chrome_start_time_);
-  chrome_start_time_ = base::Time::Now();
 }
 
 base::Optional<base::Time>& MetricsHelper::GetEnterTime(Mode mode) {
