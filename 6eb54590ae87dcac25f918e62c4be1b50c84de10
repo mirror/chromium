@@ -145,6 +145,24 @@
       "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c90cf6_345f1bc0",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-05T02:42:08Z",
+      "side": 1,
+      "message": "\u003e I think AppMenuModel is cached on each browser window\n\nThis doesn\u0027t match my experience testing this out manually (the menu is updated if I load a different site in an existing or new tab).  It also looks from the code like a new AppMenuModel is created each time the menu button is clicked:  see\n\n  https://cs.chromium.org/chromium/src/chrome/browser/ui/views/toolbar/app_menu_button.cc?rcl\u003d35dc4286e0ae33eb52d15c6fcffc4980140ec3c0\u0026l\u003d107\n\ncalled from\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/toolbar/toolbar_view.cc?rcl\u003d35dc4286e0ae33eb52d15c6fcffc4980140ec3c0\u0026l\u003d369\n\nMaking it dynamic therefore seems to be unnecessary; would you still prefer that I do it?",
+      "parentUuid": "4f48bb3d_d1d64b94",
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
