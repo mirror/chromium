@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42dd64af_fa4d6292",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-05T09:50:53Z",
+      "side": 1,
+      "message": "Instead of using the \u0027friend class\u0027 technique to get this dependency in, I think we can use the ServiceManager::Connector instance passed into StartUp. This would have the advantage of also testing full class i.e. including StartUp and BindIpGeolocationService etc.\n\nIdea would be.\n1. Make a fake impl of Geolocation. You did it already.\n2. Make a fake impl of PublicIpAddressGeolocationProvider. It will just bind to the thing from (1.).\n3. Make a fake impl of ServiceManager::Connector that will provide the thing from (2.).\n\nFor 1., you already did it.\nFor 2., it should be easy I think.\nFor 3., I have a strong feeling this is already supported somehow, like there is a library to take care of this faking for you. In fact it might be supported in conjunction with doing (2.) at the same time. PTAL at uses of DEviceServiceTestBase which might be the thing I am thinking of. Failing that I would ask reillyg, blundell, rockot, or sammc.",
+      "revId": "e8074fbd338d0c024faa2a19aa86090eed745669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608f4e81_95e2bdc9",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-05T09:50:53Z",
+      "side": 1,
+      "message": "How about also making the next day change the result?",
+      "revId": "e8074fbd338d0c024faa2a19aa86090eed745669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
