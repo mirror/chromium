@@ -136,10 +136,17 @@ MediaEngagementService::MediaEngagementService(
   }
 
   // Record the stored scores to a histogram.
-  RecordStoredScoresToHistogram();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&MediaEngagementService::RecordStoredScoresToHistogram,
+                     base::Unretained(this)));
 }
 
-MediaEngagementService::~MediaEngagementService() = default;
+MediaEngagementService::~MediaEngagementService() {
+  // Do not store the scores in the histogram as |profile_| would have gone
+  // away.
+  stored_scores_to_histogram_.Set();
+}
 
 int MediaEngagementService::GetSchemaVersion() const {
   return profile_->GetPrefs()->GetInteger(prefs::kMediaEngagementSchemaVersion);
@@ -168,6 +175,10 @@ void MediaEngagementService::Shutdown() {
 }
 
 void MediaEngagementService::RecordStoredScoresToHistogram() {
+  if (stored_scores_to_histogram_.IsSet())
+    return;
+  stored_scores_to_histogram_.Set();
+
   for (const GURL& url : GetEngagementOriginsFromContentSettings(profile_)) {
     if (!url.is_valid())
       continue;

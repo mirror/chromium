@@ -112,12 +112,14 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
 
     test_clock_ = new base::SimpleTestClock();
     test_clock_->SetNow(GetReferenceTime());
-    service_ = base::WrapUnique(
-        new MediaEngagementService(profile(), base::WrapUnique(test_clock_)));
+    service_ = base::WrapUnique(StartNewMediaEngagementService());
   }
 
   MediaEngagementService* StartNewMediaEngagementService() {
-    return MediaEngagementService::Get(profile());
+    MediaEngagementService* service =
+        new MediaEngagementService(profile(), base::WrapUnique(test_clock_));
+    base::RunLoop().RunUntilIdle();
+    return service;
   }
 
   void RecordVisitAndPlaybackAndAdvanceClock(GURL url) {
