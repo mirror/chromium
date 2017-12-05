@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03452452_dc78e80b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-05T14:50:38Z",
+      "side": 1,
+      "message": "Code moved from CanvasResourceProvider.",
+      "range": {
+        "startLine": 81,
+        "startChar": 21,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "201d0d3c989c52f3e0ff0124ca8276d27e866217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
