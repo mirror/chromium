@@ -34,6 +34,24 @@
       "revId": "50f20f2249c2614a6d26b0daeab61789ad6776b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca1c7b9_c30377f1",
+        "filename": "BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-05T21:17:50Z",
+      "side": 1,
+      "message": "Yeah, I think the wording here implies that the equivalence currently exists, where it really doesn\u0027t - I can certainly update the wording to be clearer.",
+      "parentUuid": "dace3e5d_abc81ab3",
+      "revId": "50f20f2249c2614a6d26b0daeab61789ad6776b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
