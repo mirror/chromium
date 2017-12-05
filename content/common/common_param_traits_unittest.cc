@@ -85,6 +85,40 @@ TEST(IPCMessageTest, Bitmap) {
   SkBitmap bad_output;
   iter = base::PickleIterator(bad_msg);
   EXPECT_FALSE(IPC::ParamTraits<SkBitmap>::Read(&bad_msg, &iter, &bad_output));
+
+  // crbug.com/779428
+  iter = base::PickleIterator(msg);
+  const char* original_data;
+  int original_data_size;
+  EXPECT_TRUE(iter.ReadData(&original_data, &original_data_size));
+  const char* original_pixels;
+  int original_pixels_size;
+  EXPECT_TRUE(iter.ReadData(&original_pixels, &original_pixels_size));
+
+  std::unique_ptr<char[]> bogus_color_type_data(new char[original_data_size]);
+  std::unique_ptr<char[]> bogus_alpha_type_data(new char[original_data_size]);
+  memcpy(bogus_color_type_data.get(), original_data, original_data_size);
+  memcpy(bogus_alpha_type_data.get(), original_data, original_data_size);
+
+  // Corrupt the color and alpha type respectively
+  memset(bogus_color_type_data.get(), 0x41, 4);
+  memset(bogus_alpha_type_data.get() + 4, 0x41, 4);
+
+  IPC::Message bad_color_type_msg(1, 2, IPC::Message::PRIORITY_NORMAL);
+  bad_color_type_msg.WriteData(bogus_color_type_data.get(), original_data_size);
+  bad_color_type_msg.WriteData(original_pixels, original_pixels_size);
+
+  IPC::Message bad_alpha_type_msg(1, 2, IPC::Message::PRIORITY_NORMAL);
+  bad_alpha_type_msg.WriteData(bogus_alpha_type_data.get(), original_data_size);
+  bad_alpha_type_msg.WriteData(original_pixels, original_pixels_size);
+
+  iter = base::PickleIterator(bad_color_type_msg);
+  EXPECT_FALSE(IPC::ParamTraits<SkBitmap>::Read(&bad_color_type_msg, &iter,
+                                                &bad_output));
+
+  iter = base::PickleIterator(bad_alpha_type_msg);
+  EXPECT_FALSE(IPC::ParamTraits<SkBitmap>::Read(&bad_alpha_type_msg, &iter,
+                                                &bad_output));
 }
 
 TEST(IPCMessageTest, ListValue) {
