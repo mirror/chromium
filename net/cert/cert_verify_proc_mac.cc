@@ -540,31 +540,6 @@ int BuildAndEvaluateSecTrustRef(CFArrayRef cert_array,
   tp_action_data.ActionFlags = CSSM_TP_ACTION_FETCH_CERT_FROM_NET |
                                CSSM_TP_ACTION_TRUST_SETTINGS;
 
-  // Note: For EV certificates, the Apple TP will handle setting these flags
-  // as part of EV evaluation.
-  if (flags & CertVerifier::VERIFY_REV_CHECKING_ENABLED) {
-    // Require a positive result from an OCSP responder or a CRL (or both)
-    // for every certificate in the chain. The Apple TP automatically
-    // excludes the self-signed root from this requirement. If a certificate
-    // is missing both a crlDistributionPoints extension and an
-    // authorityInfoAccess extension with an OCSP responder URL, then we
-    // will get a kSecTrustResultRecoverableTrustFailure back from
-    // SecTrustEvaluate(), with a
-    // CSSMERR_APPLETP_INCOMPLETE_REVOCATION_CHECK error code. In that case,
-    // we'll set our own result to include
-    // CERT_STATUS_NO_REVOCATION_MECHANISM. If one or both extensions are
-    // present, and a check fails (server unavailable, OCSP retry later,
-    // signature mismatch), then we'll set our own result to include
-    // CERT_STATUS_UNABLE_TO_CHECK_REVOCATION.
-    tp_action_data.ActionFlags |= CSSM_TP_ACTION_REQUIRE_REV_PER_CERT;
-
-    // Note, even if revocation checking is disabled, SecTrustEvaluate() will
-    // modify the OCSP options so as to attempt OCSP checking if it believes a
-    // certificate may chain to an EV root. However, because network fetches
-    // are disabled in CreateTrustPolicies() when revocation checking is
-    // disabled, these will only go against the local cache.
-  }
-
   CFDataRef action_data_ref =
       CFDataCreateWithBytesNoCopy(kCFAllocatorDefault,
                                   reinterpret_cast<UInt8*>(&tp_action_data),
