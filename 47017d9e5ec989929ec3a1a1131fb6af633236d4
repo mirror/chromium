@@ -70,6 +70,30 @@
       "revId": "47017d9e5ec989929ec3a1a1131fb6af633236d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ca47bc6_d6526665",
+        "filename": "chromeos/components/tether/ble_scanner_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-05T23:11:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a42a7333_b040d025",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "47017d9e5ec989929ec3a1a1131fb6af633236d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
