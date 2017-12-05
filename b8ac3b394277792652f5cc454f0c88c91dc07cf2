@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "387a1be7_f8325ec8",
+        "filename": "components/autofill/core/browser/autofill_type.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T19:31:31Z",
+      "side": 1,
+      "message": "is this the same as putting \u003d default instead of a method body?\n\nSimilarly for the copy constructor?",
+      "revId": "b8ac3b394277792652f5cc454f0c88c91dc07cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7ebeff_73c2c7db",
+        "filename": "components/autofill/core/browser/autofill_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T19:31:31Z",
+      "side": 1,
+      "message": "plz add a short comment above these.",
+      "revId": "b8ac3b394277792652f5cc454f0c88c91dc07cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d2efc7_9f922035",
+        "filename": "components/autofill/core/browser/autofill_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T19:31:31Z",
+      "side": 1,
+      "message": "I think for the copy constructor and operator (and maybe add move version) you can just use \u003d default here.\n\ni.e.,\n\nAutofillType(const AutofillType\u0026) \u003d default;\nAutofillType(AutofillType\u0026\u0026) \u003d default;\nAutofillType\u0026 operator\u003d(const AutofillType\u0026) \u003d default;\nAutofillType\u0026 operator\u003d(AutofillType\u0026\u0026) \u003d default;",
+      "revId": "b8ac3b394277792652f5cc454f0c88c91dc07cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
