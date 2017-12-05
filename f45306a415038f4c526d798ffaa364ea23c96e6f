@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58cd2e66_8e52c5a4",
+        "filename": "content/renderer/media/rtc_certificate_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-05T09:54:55Z",
+      "side": 1,
+      "message": "As we discussed offline, this doesn\u0027t pass ownerships, so I keep this without std::move.",
+      "parentUuid": "7475dc41_3c39d75d",
+      "revId": "f45306a415038f4c526d798ffaa364ea23c96e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08301050_288fe7eb",
         "filename": "content/renderer/media/rtc_certificate_generator.cc",
         "patchSetId": 1
@@ -67,6 +85,24 @@
       "revId": "f45306a415038f4c526d798ffaa364ea23c96e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ca031c_83d109df",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-05T09:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b274ee6_9a8471d5",
+      "revId": "f45306a415038f4c526d798ffaa364ea23c96e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
