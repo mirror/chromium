@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d8cf2d_50fe4d11",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "Add some comments what is stored in these items? hostnames? patterns (*.google.com)? origins? The difference between a Blacklist and a DeclinedHostList is also not clear to me from the variable names.",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45710497_e662f7f4",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "nit:\nfor (const auto\u0026 value : prefs_-\u003eGetList(list_name)-\u003eGetList()) {\n  if (value.GetString() \u003d\u003d host)\n    return true;\n}",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba4913a_78d48767",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "make this private/protected?",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a556c9_721c9d87",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "declared",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8cd86a_5f8ce48d",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "nit: does not need to be a unique_ptr but can be a direct member.",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9792dc_a33557b5",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T08:47:57Z",
+      "side": 1,
+      "message": "+msramek to say whether this is the desired pattern or whether we should be more aggressive and always wipe everything.",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
