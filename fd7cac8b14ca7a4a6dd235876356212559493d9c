@@ -34,6 +34,24 @@
       "revId": "fd7cac8b14ca7a4a6dd235876356212559493d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe2fd53_223fc01a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-05T00:14:19Z",
+      "side": 1,
+      "message": "This is an optimization that allows an MRP to tell the MR that it no sinks at all.\n\nIf all MRPs show as \"UNAVAILABLE\" we shortcut sink queries at the MR.\n\nSimilarly if there is an MRP that is \"AVAILABLE\" (accepts all sources) then we can shortcut queries.\n\nWhen we ship Cast discovery we can think about removing this API because it only makes sense for MRPs that have background discovery (cloud does not for the time being).",
+      "parentUuid": "976b661f_22e43912",
+      "revId": "fd7cac8b14ca7a4a6dd235876356212559493d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
