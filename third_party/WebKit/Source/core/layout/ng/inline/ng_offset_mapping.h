@@ -185,6 +185,9 @@ class CORE_EXPORT NGOffsetMapping {
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMapping);
 };
 
+bool CORE_EXPORT IsInNGInlineLayout(const Position&);
+bool IsInNGInlineLayout(const PositionInFlatTree&);
+
 }  // namespace blink
 
 #endif  // NGOffsetMapping_h

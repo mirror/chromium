@@ -121,6 +121,35 @@ TEST_P(ParameterizedNGOffsetMappingTest, StoredResult) {
   EXPECT_TRUE(IsOffsetMappingStored());
 }
 
+TEST_P(ParameterizedNGOffsetMappingTest, IsInNGInlineLayout) {
+  SetBodyInnerHTML(
+      "<div id=container>"
+      "  foo"
+      "  <span id=inline-block><img style='display:block'></span>"
+      "  <span id=inline-span>bar</span>"
+      "</div>");
+
+  const Element* container = GetElementById("container");
+  const Element* inline_block = GetElementById("inline-block");
+  const Element* inline_span = GetElementById("inline-span");
+  const Node* block_image = inline_block->firstChild();
+  const Node* foo = inline_block->previousSibling();
+  const Node* bar = inline_span->firstChild();
+
+  EXPECT_FALSE(IsInNGInlineLayout(Position::BeforeNode(*container)));
+  EXPECT_FALSE(IsInNGInlineLayout(Position::AfterNode(*container)));
+
+  EXPECT_TRUE(IsInNGInlineLayout(Position(foo, 0)));
+  EXPECT_TRUE(IsInNGInlineLayout(Position(bar, 0)));
+  EXPECT_TRUE(IsInNGInlineLayout(Position::BeforeNode(*inline_block)));
+  EXPECT_TRUE(IsInNGInlineLayout(Position::AfterNode(*inline_block)));
+  EXPECT_TRUE(IsInNGInlineLayout(Position::BeforeNode(*inline_span)));
+  EXPECT_TRUE(IsInNGInlineLayout(Position::AfterNode(*inline_span)));
+
+  EXPECT_FALSE(IsInNGInlineLayout(Position::BeforeNode(*block_image)));
+  EXPECT_FALSE(IsInNGInlineLayout(Position::AfterNode(*block_image)));
+}
+
 TEST_P(ParameterizedNGOffsetMappingTest, OneTextNode) {
   SetupHtml("t", "<div id=t>foo</div>");
   const Node* foo_node = layout_object_->GetNode();

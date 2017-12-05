@@ -39,7 +39,6 @@ std::pair<const Node&, unsigned> ToNodeOffsetPair(const Position& position) {
   return {*position.AnchorNode(), 1};
 }
 
-// TODO(xiaochengh): Expose it properly as a utility function.
 const LayoutObject* NGInlineFormattingContextOf(const Position& position) {
   if (!NGOffsetMapping::AcceptsPosition(position))
     return nullptr;
@@ -61,6 +60,18 @@ const LayoutObject* NGInlineFormattingContextOf(const Position& position) {
 // predicates below.
 
 }  // namespace
+
+bool IsInNGInlineLayout(const Position& position) {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+  return NGInlineFormattingContextOf(position);
+}
+
+bool IsInNGInlineLayout(const PositionInFlatTree& position) {
+  if (!RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+  return NGInlineFormattingContextOf(ToPositionInDOMTree(position));
+}
 
 NGOffsetMappingUnit::NGOffsetMappingUnit(NGOffsetMappingUnitType type,
                                          const Node& node,
