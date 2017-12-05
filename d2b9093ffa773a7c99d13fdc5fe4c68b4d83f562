@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "935bfb83_559f57fa",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/v0-added-after-v1-and-slotted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-05T09:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee0c994d_3c45d046",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9071fb8_7c11cce5",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/v0-added-after-v1-and-slotted.html",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "a6e9a15d_db32569f",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/v0-added-after-v1-and-slotted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-05T09:27:29Z",
+      "side": 1,
+      "message": "Initially I thought that would do but it didn\u0027t work for me, but I tried again to\nfind I mistakenly used \"document.offsetTop\" instead of element.offsetTop :-(\n\nGood to know there\u0027s no guarantee rAF would wait for a rendering.",
+      "parentUuid": "b9071fb8_7c11cce5",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d71f3eff_30344538",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-05T09:03:27Z",
       "side": 1,
       "message": "No ::slotted rules in the document scope will ever match anything? Do we add ::slotted rules to slotted_rule_set_ or the tree_boundary_crossing_rule_set_ for the document scope?",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348f91f6_fa87f01a",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-05T09:27:29Z",
+      "side": 1,
+      "message": "I misremembered https://bugs.chromium.org/p/chromium/issues/detail?id\u003d703984,\nthat we should support slot fallback contents in a document tree, but it is not.\nRemoving these 2 lines.",
+      "parentUuid": "d71f3eff_30344538",
       "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
