@@ -68,6 +68,11 @@ void DownloadControllerImpl::SetDelegate(DownloadControllerDelegate* delegate) {
   delegate_ = delegate;
 }
 
+DownloadControllerDelegate* DownloadControllerImpl::GetDelegate() const {
+  DCHECK_CURRENTLY_ON(web::WebThread::UI);
+  return delegate_;
+}
+
 void DownloadControllerImpl::OnTaskDestroyed(DownloadTaskImpl* task) {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   auto it = alive_tasks_.find(task);

@@ -34,6 +34,7 @@ class DownloadControllerImpl : public DownloadController,
                           int64_t total_bytes,
                           const std::string& mime_type) override;
   void SetDelegate(DownloadControllerDelegate* delegate) override;
+  DownloadControllerDelegate* GetDelegate() const override;
 
   // DownloadTaskImpl::Delegate overrides:
   void OnTaskDestroyed(DownloadTaskImpl* task) override;
