@@ -1898,6 +1898,13 @@ void LayoutBox::SizeChanged() {
     Element& element = ToElement(*GetNode());
     element.SetNeedsResizeObserverUpdate();
   }
+
+  // The filter generated for reflection depends on box size.
+  if (HasReflection()) {
+    if (HasLayer())
+      Layer()->SetFilterOnEffectNodeDirty();
+    SetNeedsPaintPropertyUpdate();
+  }
 }
 
 bool LayoutBox::IntersectsVisibleViewport() const {
