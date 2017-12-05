@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "139c8019_cf2d0d0c",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T15:22:12Z",
+      "side": 1,
+      "message": "I\u0027m suggesting inlining result.get(), which is a ReadLOgSourceResult*, not a std::unique_ptr\u003c\u003e.  |result| (the std::unique_ptr\u003c\u003e) would not be inlined, since it\u0027s used multiple places.\n\nOtherwise, like any other stack-allocated object, a unique_ptr would be destroyed when it goes out of scope.",
+      "parentUuid": "44d40a7c_86f582ae",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7690a0bc_22d580de",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 10
