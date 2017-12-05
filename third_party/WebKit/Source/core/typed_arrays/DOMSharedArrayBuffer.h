@@ -37,6 +37,9 @@ class CORE_EXPORT DOMSharedArrayBuffer final : public DOMArrayBufferBase {
     return Buffer()->ShareContentsWith(result);
   }
 
+  const void* DataShared() const { return Buffer()->DataShared(); }
+  void* DataShared() { return Buffer()->DataShared(); }
+
   v8::Local<v8::Object> Wrap(v8::Isolate*,
                              v8::Local<v8::Object> creation_context) override;
 

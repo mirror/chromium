@@ -4,6 +4,7 @@
 
 #include "bindings/core/v8/serialization/V8ScriptValueSerializer.h"
 
+#include <stdio.h>
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8Blob.h"
 #include "bindings/core/v8/V8DOMMatrix.h"
@@ -63,6 +64,7 @@ V8ScriptValueSerializer::V8ScriptValueSerializer(
       serializer_(script_state_->GetIsolate(), this),
       transferables_(options.transferables),
       blob_info_array_(options.blob_info),
+      //      shared_array_buffers_(options.shared_array_buffers),
       wasm_policy_(options.wasm_policy),
       for_storage_(options.for_storage == SerializedScriptValue::kForStorage) {}
 
@@ -86,6 +88,11 @@ scoped_refptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
   WriteUint32(SerializedScriptValue::kWireFormatVersion);
   serializer_.WriteHeader();
 
+  // FIXME: I should be able to remove this function because the serializer_
+  // will push sabs back
+  // FIXME: here via GetSharedArrayBufferId
+  //  PrepareClone(exception_state);
+
   // Serialize the value and handle errors.
   v8::TryCatch try_catch(script_state_->GetIsolate());
   bool wrote_value;
@@ -102,10 +109,16 @@ scoped_refptr<SerializedScriptValue> V8ScriptValueSerializer::Serialize(
   if (exception_state.HadException())
     return nullptr;
 
+  if (shared_array_buffers_) {
+    serialized_script_value_->CloneSharedArrayBuffers(
+        script_state_->GetIsolate(), *shared_array_buffers_, exception_state);
+  }
+
   // Finalize the results.
   std::pair<uint8_t*, size_t> buffer = serializer_.Release();
   serialized_script_value_->SetData(
       SerializedScriptValue::DataBufferPtr(buffer.first), buffer.second);
+  printf("V8ScriptValueSerializer returning\n");
   return std::move(serialized_script_value_);
 }
 
@@ -128,6 +141,26 @@ void V8ScriptValueSerializer::PrepareTransfer(ExceptionState& exception_state) {
   }
 }
 
+// void V8ScriptValueSerializer::PrepareClone(ExceptionState& exception_state) {
+//  if (!shared_array_buffers_)
+//    return;
+
+//  // Clone array buffers.
+//  for (uint32_t i = 0; i < shared_array_buffers_->size(); i++) {
+//    DOMArrayBufferBase* array_buffer = shared_array_buffers_->at(i).Get();
+//    if (array_buffer->IsShared()) {
+//      v8::Local<v8::Value> wrapper = ToV8(array_buffer, script_state_.get());
+//      serializer_.CloneSharedArrayBuffer(
+//          i, v8::Local<v8::SharedArrayBuffer>::Cast(wrapper));
+//    } else {
+//     // FIXME: improve this error message
+//      exception_state.ThrowDOMException(
+//          kDataCloneError, "Non SharedArrayBuffer can not be cloned here.");
+//      return;
+//    }
+//  }
+//}
+
 void V8ScriptValueSerializer::FinalizeTransfer(
     ExceptionState& exception_state) {
   // TODO(jbroman): Strictly speaking, this is not correct; transfer should
@@ -141,7 +174,7 @@ void V8ScriptValueSerializer::FinalizeTransfer(
   ArrayBufferArray array_buffers;
   if (transferables_)
     array_buffers.AppendVector(transferables_->array_buffers);
-  array_buffers.AppendVector(shared_array_buffers_);
+  //  array_buffers.AppendVector(shared_array_buffers_);
 
   if (!array_buffers.IsEmpty()) {
     serialized_script_value_->TransferArrayBuffers(isolate, array_buffers,
@@ -511,6 +544,7 @@ v8::Maybe<bool> V8ScriptValueSerializer::WriteHostObject(
 v8::Maybe<uint32_t> V8ScriptValueSerializer::GetSharedArrayBufferId(
     v8::Isolate* isolate,
     v8::Local<v8::SharedArrayBuffer> v8_shared_array_buffer) {
+  printf("Getting shared array buffer id\n");
   if (for_storage_) {
     DCHECK(exception_state_);
     DCHECK_EQ(isolate, script_state_->GetIsolate());
@@ -523,6 +557,7 @@ v8::Maybe<uint32_t> V8ScriptValueSerializer::GetSharedArrayBufferId(
     return v8::Nothing<uint32_t>();
   }
 
+  //  v8_shared_array_buffer->
   DOMSharedArrayBuffer* shared_array_buffer =
       V8SharedArrayBuffer::ToImpl(v8_shared_array_buffer);
 
@@ -537,14 +572,18 @@ v8::Maybe<uint32_t> V8ScriptValueSerializer::GetSharedArrayBufferId(
   //
   // So we offset all SharedArrayBuffer indexes by the number of transferred
   // ArrayBuffers.
-  size_t index = shared_array_buffers_.Find(shared_array_buffer);
+  if (!shared_array_buffers_) {
+    shared_array_buffers_ = new SharedArrayBufferArray();
+  }
+  size_t index = shared_array_buffers_->Find(shared_array_buffer);
   if (index == kNotFound) {
-    shared_array_buffers_.push_back(shared_array_buffer);
-    index = shared_array_buffers_.size() - 1;
+    shared_array_buffers_->push_back(shared_array_buffer);
+    index = shared_array_buffers_->size() - 1;
   }
-  if (transferables_) {
-    index += transferables_->array_buffers.size();
-  }
+  //  if (transferables_) {
+  //    index += transferables_->array_buffers.size();
+  //  }
+  printf("Getting shared array buffer id\n");
   return v8::Just<uint32_t>(index);
 }
 
