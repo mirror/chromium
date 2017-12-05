@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e68a47e1_b642605a",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-05T22:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4299de7a_68f30ac4",
+      "range": {
+        "startLine": 707,
+        "startChar": 7,
+        "endLine": 707,
+        "endChar": 34
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a066e31_5da4bea2",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "0baf1098240db47d7a696c39c5041794b696e573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03b6648_20d4e849",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-05T22:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a066e31_5da4bea2",
+      "range": {
+        "startLine": 914,
+        "startChar": 2,
+        "endLine": 914,
+        "endChar": 17
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fbd98386_72d3f147",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-05T22:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16997df7_97e8454f",
+      "range": {
+        "startLine": 1139,
+        "startChar": 2,
+        "endLine": 1139,
+        "endChar": 21
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58bfb1ca_6154c75d",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "0baf1098240db47d7a696c39c5041794b696e573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8ed25f_ba981a8c",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-05T22:09:33Z",
+      "side": 1,
+      "message": "I think the \"surface queues\" refers to one of |pending_output_cbs_|\nor |output_buffers_|, but I get your point, corrected.",
+      "parentUuid": "58bfb1ca_6154c75d",
+      "range": {
+        "startLine": 206,
+        "startChar": 5,
+        "endLine": 206,
+        "endChar": 56
+      },
+      "revId": "0baf1098240db47d7a696c39c5041794b696e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
