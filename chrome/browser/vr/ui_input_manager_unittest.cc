@@ -80,7 +80,6 @@ class UiInputManagerTest : public testing::Test {
     auto element = base::MakeUnique<StrictMock<MockRect>>();
     StrictMock<MockRect>* p_element = element.get();
     element->SetTranslate(0, 0, z_position);
-    element->SetVisible(true);
     scene_->AddUiElement(kRoot, std::move(element));
     scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
     return p_element;
@@ -90,7 +89,6 @@ class UiInputManagerTest : public testing::Test {
     auto element = base::MakeUnique<StrictMock<MockTextInput>>();
     StrictMock<MockTextInput>* p_element = element.get();
     element->SetTranslate(0, 0, z_position);
-    element->SetVisible(true);
     scene_->AddUiElement(kRoot, std::move(element));
     scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
     return p_element;
@@ -160,7 +158,6 @@ TEST_F(UiInputManagerTest, ReticleRenderTarget) {
   auto element = base::MakeUnique<Rect>();
   UiElement* p_element = element.get();
   element->SetTranslate(0, 0, -1.f);
-  element->SetVisible(true);
   scene_->AddUiElement(kRoot, std::move(element));
   scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
 
@@ -297,7 +294,6 @@ TEST_F(UiInputManagerTest, HitTestStrategy) {
   auto element = base::MakeUnique<Rect>();
   auto* p_element = element.get();
   element->SetTranslate(0, 0, -2.5);
-  element->SetVisible(true);
   element->SetSize(1000.0f, 1000.0f);
   scene_->AddUiElement(kRoot, std::move(element));
   scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
