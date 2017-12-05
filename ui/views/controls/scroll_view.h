@@ -12,6 +12,8 @@
 #include "base/macros.h"
 #include "ui/native_theme/native_theme.h"
 #include "ui/views/controls/scrollbar/scroll_bar.h"
+#include "ui/views/focus/focus_manager.h"
+#include "ui/views/widget/widget_observer.h"
 
 namespace gfx {
 class ScrollOffset;
@@ -38,7 +40,10 @@ class Separator;
 //
 /////////////////////////////////////////////////////////////////////////////
 
-class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
+class VIEWS_EXPORT ScrollView : public View,
+                                public ScrollBarController,
+                                public FocusChangeListener,
+                                public WidgetObserver {
  public:
   static const char kViewClassName[];
 
@@ -124,6 +129,13 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
                          bool is_page,
                          bool is_positive) override;
 
+ protected:
+  // View overrides:
+  void AddedToWidget() override;
+  void RemovedFromWidget() override;
+  void ViewHierarchyChanged(
+      const ViewHierarchyChangedDetails& details) override;
+
  private:
   friend class test::ScrollViewTestApi;
 
@@ -133,6 +145,16 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
     SkColor color;
     ui::NativeTheme::ColorId color_id;
   };
+
+  // FocusChangeListener overrides:
+  void OnWillChangeFocus(View* focused_before, View* focused_now) override;
+  void OnDidChangeFocus(View* focused_before, View* focused_now) override;
+
+  // WidgetObserver overrides:
+  void OnWidgetDestroying(Widget* widget) override;
+
+  void AddListeners();
+  void RemoveListeners();
 
   // Forces |contents_viewport_| to have a Layer (assuming it doesn't already).
   void EnableViewPortLayer();
@@ -251,6 +273,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Set to true if the scroll with layers feature is enabled.
   const bool scroll_with_layers_enabled_;
+
+  // Keep track of whether WidgetObserver or FocusChangeListeners are installed.
+  bool widget_observer_installed_ = false;
+  bool focus_change_listener_installed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScrollView);
 };

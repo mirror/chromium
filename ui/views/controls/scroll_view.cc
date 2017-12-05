@@ -224,6 +224,7 @@ ScrollView::ScrollView()
 }
 
 ScrollView::~ScrollView() {
+  RemoveListeners();
   // The scrollbars may not have been added, delete them to ensure they get
   // deleted.
   delete horiz_sb_;
@@ -814,6 +815,63 @@ bool ScrollView::ScrollsWithLayers() const {
   // Just check for the presence of a layer since it's cheaper than querying the
   // Feature flag each time.
   return contents_viewport_->layer() != nullptr;
+}
+
+void ScrollView::AddedToWidget() {
+  AddListeners();
+}
+
+void ScrollView::RemovedFromWidget() {
+  RemoveListeners();
+}
+
+void ScrollView::ViewHierarchyChanged(
+    const ViewHierarchyChangedDetails& details) {
+  if (contents_ && contents_->Contains(details.child)) {
+    if (details.is_add)
+      AddListeners();
+    else
+      RemoveListeners();
+  }
+}
+
+void ScrollView::OnWillChangeFocus(View* focused_before, View* focused_now) {}
+
+void ScrollView::OnDidChangeFocus(View* focused_before, View* focused_now) {
+  if (focused_now && contents_ && focused_now != contents_ &&
+      contents_->Contains(focused_now)) {
+    focused_now->ScrollRectToVisible(focused_now->GetLocalBounds());
+  }
+}
+
+void ScrollView::OnWidgetDestroying(Widget* widget) {
+  RemoveListeners();
+}
+
+void ScrollView::AddListeners() {
+  FocusManager* focus_manager = GetFocusManager();
+  if (focus_manager && !focus_change_listener_installed_) {
+    focus_manager->AddFocusChangeListener(this);
+    focus_change_listener_installed_ = true;
+  }
+  Widget* widget = GetWidget();
+  if (widget && !widget_observer_installed_) {
+    widget->AddObserver(this);
+    widget_observer_installed_ = true;
+  }
+}
+
+void ScrollView::RemoveListeners() {
+  FocusManager* focus_manager = GetFocusManager();
+  if (focus_manager) {
+    focus_manager->RemoveFocusChangeListener(this);
+    focus_change_listener_installed_ = false;
+  }
+  Widget* widget = GetWidget();
+  if (widget) {
+    widget->RemoveObserver(this);
+    widget_observer_installed_ = false;
+  }
 }
 
 void ScrollView::EnableViewPortLayer() {
