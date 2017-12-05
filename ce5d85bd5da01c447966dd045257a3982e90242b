@@ -337,6 +337,30 @@
     },
     {
       "key": {
+        "uuid": "11047ba1_9fb687c2",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T01:10:35Z",
+      "side": 1,
+      "message": "FetchHistogramsFromChildProcesses() might solve that problem (https://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.h?l\u003d400\u0026rcl\u003d2dc65f0d49b20c16af3d00eb1585d0ebf8b14d96). I\u0027ve created the integration test as a separate change: https://crrev.com/c/806536",
+      "parentUuid": "5f690b13_6ce67847",
+      "range": {
+        "startLine": 826,
+        "startChar": 15,
+        "endLine": 826,
+        "endChar": 26
+      },
+      "revId": "ce5d85bd5da01c447966dd045257a3982e90242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4d682bc_ffe36154",
         "filename": "components/certificate_transparency/single_tree_tracker.cc",
         "patchSetId": 5

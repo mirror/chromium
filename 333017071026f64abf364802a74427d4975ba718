@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0bec2e1_c2f56baa",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T01:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7d8e85_fbe552ff",
+      "range": {
+        "startLine": 567,
+        "startChar": 27,
+        "endLine": 567,
+        "endChar": 35
+      },
+      "revId": "333017071026f64abf364802a74427d4975ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10199149_0a1b4935",
         "filename": "net/dns/host_cache.h",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "333017071026f64abf364802a74427d4975ba718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4809f474_51e4c831",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-12-05T01:10:35Z",
+      "side": 1,
+      "message": "It unfortunately can\u0027t be a const method, because HostCache\u0027s LookupStale method is non-const. I can move it into the class though.",
+      "parentUuid": "10199149_0a1b4935",
+      "revId": "333017071026f64abf364802a74427d4975ba718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
