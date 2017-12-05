@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed6a04f9_c2a490e3",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T05:37:38Z",
+      "side": 1,
+      "message": "The file? It\u0027s been there for years.",
+      "parentUuid": "bec61634_140ac97f",
+      "revId": "ad676ce418d3a71d82c2b5b5e76195ca07139b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937ab150_a26fbf89",
         "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T19:52:41Z",
       "side": 1,
       "message": "Should this return value be changed?",
+      "revId": "ad676ce418d3a71d82c2b5b5e76195ca07139b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30fa5f1_16c09437",
+        "filename": "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-05T05:37:38Z",
+      "side": 1,
+      "message": "Yes! Done.",
+      "parentUuid": "937ab150_a26fbf89",
       "revId": "ad676ce418d3a71d82c2b5b5e76195ca07139b73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
