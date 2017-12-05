@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "40dfb937_3babf26e",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-05T19:35:27Z",
+      "side": 1,
+      "message": "I guess because the only way to reset `initialized_callback_` is to call `Initialize()` which will be a no-op for the callback if the `device_` is set, it\u0027s probably not a real problem in practice. So feel free to ignore my comment :)",
+      "parentUuid": "852481b7_25977f65",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58167ef6_53e21eae",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 10
