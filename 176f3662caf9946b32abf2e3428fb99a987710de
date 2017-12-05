@@ -63,6 +63,30 @@
       "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb7e94e_bd985ce4",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T03:52:10Z",
+      "side": 1,
+      "message": "thanks for the link, but I still don\u0027t see where this is being used. It looks like you\u0027re adding dead code. I don\u0027t understand why we need this extra pass through interface instead of calling into MessageCenter directly. The fact that we already have so many direct pass throughs for no reason I can discern (although I\u0027m open to hearing a reasonable explanation for them) is not enough to make me want to continue adding more.",
+      "parentUuid": "bad72032_973930c1",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
