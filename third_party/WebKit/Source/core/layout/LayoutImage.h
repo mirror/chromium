@@ -85,6 +85,13 @@ class CORE_EXPORT LayoutImage : public LayoutReplaced {
       ImageChanged(image_resource_->ImagePtr(), CanDeferInvalidation::kNo);
   }
 
+  void UpdateLayout() override;
+
+  // Whether or not this image has text overlaying it. Used for high
+  // contrast mode as a heuristic to determine whether an image should
+  // be inverted or not.
+  bool HasOverlayingText() const;
+
   const char* GetName() const override { return "LayoutImage"; }
 
  protected:
@@ -146,6 +153,16 @@ class CORE_EXPORT LayoutImage : public LayoutReplaced {
   // This field stores whether this image is generated with 'content'.
   bool is_generated_content_;
   float image_device_pixel_ratio_;
+
+  // Whether or not this image has text overlaying it. Used for high
+  // contrast mode as a heuristic to determine whether an image should
+  // be inverted or not.
+  enum HasOverlayingTextType {
+    kUnknown,
+    kNoOverlayingText,
+    kHasOverlayingText,
+  };
+  mutable HasOverlayingTextType has_overlaying_text_;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutImage, IsLayoutImage());

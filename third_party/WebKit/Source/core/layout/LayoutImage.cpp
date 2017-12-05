@@ -39,6 +39,7 @@
 #include "core/layout/LayoutView.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/paint/ImagePainter.h"
+#include "core/paint/PaintLayer.h"
 #include "core/svg/graphics/SVGImage.h"
 
 namespace blink {
@@ -289,6 +290,46 @@ bool LayoutImage::NodeAtPoint(HitTestResult& result,
   if (inside)
     result = temp_result;
   return inside;
+}
+
+void LayoutImage::UpdateLayout() {
+  LayoutReplaced::UpdateLayout();
+  has_overlaying_text_ = kUnknown;
+}
+
+bool LayoutImage::HasOverlayingText() const {
+  DCHECK(!NeedsLayout());
+
+  if (has_overlaying_text_ == kUnknown) {
+    IntRect bounds = AbsoluteBoundingBoxRect();
+    Document& document = GetDocument();
+    LayoutView* view = document.GetLayoutView();
+    PaintLayer* layer = view->Layer();
+    HitTestRequest request(HitTestRequest::kReadOnly | HitTestRequest::kActive);
+
+    // Test 9 points positioned evenly throughout the image. If any of
+    // them hits text, it has overlaying text.
+    bool found = false;
+    for (int i = 0; i < 4 && !found; i++) {
+      for (int j = 0; j < 4 && !found; j++) {
+        IntPoint point(bounds.X() + bounds.Width() * i / 4,
+                       bounds.Y() + bounds.Height() * j / 4);
+        HitTestResult hit_test_result = HitTestResult(request, point);
+        layer->HitTest(hit_test_result);
+        if (hit_test_result.GetLayoutObject() &&
+            hit_test_result.GetLayoutObject()->IsText())
+          found = true;
+      }
+    }
+
+    if (found) {
+      has_overlaying_text_ = kHasOverlayingText;
+    } else {
+      has_overlaying_text_ = kNoOverlayingText;
+    }
+  }
+
+  return (has_overlaying_text_ == kHasOverlayingText ? true : false);
 }
 
 void LayoutImage::ComputeIntrinsicSizingInfo(
