@@ -15,6 +15,8 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
@@ -138,6 +140,11 @@ class LayerTreeHostImplClient {
 
   virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
 
+  virtual void DidPresentCompositorFrame(const base::flat_set<uint32_t>& tokens,
+                                         base::TimeTicks time,
+                                         base::TimeDelta refresh,
+                                         uint32_t flags) = 0;
+
  protected:
   virtual ~LayerTreeHostImplClient() {}
 };
@@ -164,6 +171,10 @@ class CC_EXPORT LayerTreeHostImpl
       int id,
       scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner);
   ~LayerTreeHostImpl() override;
+
+  // Requests DidPresentCompositorFrame() to be called the next time a CF makes
+  // it to screen. |token| is supplied to DidPresentCompositorFrame().
+  void RequestPresentationTimeForNextFrame(uint32_t token);
 
   // InputHandler implementation
   void BindToClient(InputHandlerClient* client,
@@ -563,7 +574,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   void ScheduleMicroBenchmark(std::unique_ptr<MicroBenchmarkImpl> benchmark);
 
-  viz::CompositorFrameMetadata MakeCompositorFrameMetadata() const;
+  viz::CompositorFrameMetadata MakeCompositorFrameMetadata();
 
   // Viewport rectangle and clip in device space.  These rects are used to
   // prioritize raster and determine what is submitted in a CompositorFrame.
@@ -942,6 +953,18 @@ class CC_EXPORT LayerTreeHostImpl
   base::Optional<ImageAnimationController> image_animation_controller_;
 
   std::unique_ptr<UkmManager> ukm_manager_;
+
+  // Calls to RequestPresentationTimeForNextFrame() are initially added to
+  // |pending_request_presentation_time_tokens_|. When the next CF is generated
+  // a presentation-token is added to the CF. All items in
+  // |pending_request_presentation_time_tokens_| are added to
+  // |in_flight_presentation_time_tokens_| associated with the
+  // presentation-token.
+  base::flat_set<uint32_t> pending_request_presentation_time_tokens_;
+  // If non-zero identifies the presentation-token added to the last CF.
+  uint32_t last_presentation_token_ = 0u;
+  base::flat_map<uint32_t, base::flat_set<uint32_t>>
+      in_flight_presentation_time_tokens_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHostImpl);
 };
