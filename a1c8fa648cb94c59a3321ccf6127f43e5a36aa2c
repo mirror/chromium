@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca0011c_39934147",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-05T01:59:48Z",
+      "side": 1,
+      "message": "Thanks for fixing up my unstructured assignment. This was the first time I used it.",
+      "revId": "a1c8fa648cb94c59a3321ccf6127f43e5a36aa2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb36032f_c8ebb152",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-05T01:59:48Z",
+      "side": 1,
+      "message": "I am a little concerned about removal of \u0027/\u0027, but it looks like you\u0027ve tried to cover all the cases.",
+      "revId": "a1c8fa648cb94c59a3321ccf6127f43e5a36aa2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d98f87_dd8f130b",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-05T01:59:48Z",
+      "side": 1,
+      "message": "I like how you reclassified \"Unexpected failure\" as regressions. It is a better name for this filter, and makes cases like \"MISSING\" easier to classify.",
+      "revId": "a1c8fa648cb94c59a3321ccf6127f43e5a36aa2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
