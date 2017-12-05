@@ -264,6 +264,13 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // called after the profiling process dumps heaps into the trace log.
   base::OnceClosure dump_process_for_tracing_callback_;
 
+  // Whether the instance is attempting to take a trace to upload to the crash
+  // servers. Pruning of small allocations is always enabled for these traces.
+  bool requesting_process_report_ = false;
+
+  // Guards |requesting_process_report_|.
+  base::Lock requesting_process_report_lock_;
+
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };
 
