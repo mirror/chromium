@@ -327,6 +327,9 @@ void MetricsService::EnableRecording() {
 void MetricsService::DisableRecording() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  static const base::Feature kFinalPush{"FinalPushPendingLogs",
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
+
   if (recording_state_ == INACTIVE)
     return;
   recording_state_ = INACTIVE;
@@ -335,7 +338,16 @@ void MetricsService::DisableRecording() {
 
   delegating_provider_.OnRecordingDisabled();
 
-  PushPendingLogsToPersistentStorage();
+  // Capture the unreported metrics only if there is no on-disk persistent
+  // allocation holding the data. This allows for a faster shutdown. Anything
+  // uncollected will be extracted and uploaded in a future run using the
+  // system profile embedded in the same file.
+  base::GlobalHistogramAllocator* allocator =
+      base::GlobalHistogramAllocator::Get();
+  if (base::FeatureList::IsEnabled(kFinalPush) || !allocator ||
+      allocator->GetPersistentLocation().empty()) {
+    PushPendingLogsToPersistentStorage();
+  }
 }
 
 bool MetricsService::recording_active() const {
