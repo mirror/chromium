@@ -11,6 +11,7 @@
 #include "base/i18n/rtl.h"
 #include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
+#include "base/mac/mac_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #import "chrome/browser/certificate_viewer.h"
@@ -141,6 +142,11 @@ NSPoint AnchorPointForWindow(NSWindow* parent) {
   Browser* browser = chrome::FindBrowserWithWindow(parent);
   DCHECK(browser);
   return GetPageInfoAnchorPointForBrowser(browser);
+}
+
+NSImage* GetNSImageFromImageSkia(const gfx::ImageSkia& image) {
+  return NSImageFromImageSkiaWithColorSpace(image,
+                                            base::mac::GetSRGBColorSpace());
 }
 
 }  // namespace
@@ -446,7 +452,8 @@ bool IsInternalURL(const GURL& url) {
   info.setting = CONTENT_SETTING_ALLOW;
   cookiesView_ = [self
       addInspectLinkToView:siteSettingsSectionView
-               sectionIcon:PageInfoUI::GetPermissionIcon(info).ToNSImage()
+               sectionIcon:GetNSImageFromImageSkia(
+                               PageInfoUI::GetPermissionIcon(info))
               sectionTitle:l10n_util::GetStringUTF16(IDS_PAGE_INFO_COOKIES)
                   linkText:l10n_util::GetPluralNSStringF(
                                IDS_PAGE_INFO_NUM_COOKIES, 0)];
@@ -1084,8 +1091,8 @@ bool IsInternalURL(const GURL& url) {
   base::string16 labelText =
       PageInfoUI::PermissionTypeToUIString(permissionInfo.type);
   bool isRTL = base::i18n::IsRTL();
-  base::scoped_nsobject<NSImage> image(
-      [PageInfoUI::GetPermissionIcon(permissionInfo).ToNSImage() retain]);
+  base::scoped_nsobject<NSImage> image([GetNSImageFromImageSkia(
+      PageInfoUI::GetPermissionIcon(permissionInfo)) retain]);
 
   NSPoint position;
   NSImageView* imageView;
@@ -1231,7 +1238,8 @@ bool IsInternalURL(const GURL& url) {
       PageInfoUI::ChosenObjectToUIString(*objectInfo));
   bool isRTL = base::i18n::IsRTL();
   base::scoped_nsobject<NSImage> image(
-      [PageInfoUI::GetChosenObjectIcon(*objectInfo, false).ToNSImage() retain]);
+      [gfx::Image(PageInfoUI::GetChosenObjectIcon(*objectInfo, false))
+              .ToNSImage() retain]);
 
   NSPoint position;
   NSImageView* imageView;
