@@ -52,6 +52,24 @@
       "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230342c3_af9df55f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-05T22:43:59Z",
+      "side": 1,
+      "message": "To be clearer: the \"ENABLE_PRINTING\" part on lines 100 and 196 comes from printing/features/features.h, that\u0027s why we need to include it here instead of just build/buildflag.h.",
+      "parentUuid": "bb9b2250_ea7bfe0f",
+      "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
