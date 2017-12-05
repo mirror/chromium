@@ -598,7 +598,7 @@ bool CanvasRenderingContext2D::OriginClean() const {
 }
 
 void CanvasRenderingContext2D::SetOriginTainted() {
-  return Host()->SetOriginTainted();
+  Host()->SetOriginTainted();
 }
 
 int CanvasRenderingContext2D::Width() const {
