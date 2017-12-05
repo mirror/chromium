@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be202117_692f5325",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "Typically layout_weight is used when layout_width or layout_height \u003d 0; it signals that the view should take up whatever space is remaining after the other child views are laid out. I suspect you can remove this.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2799798d_a402789a",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "Same comment about layout_weight here.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206b70bf_b560aee6",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "Are we just using this for the positive and negative buttons? If so, it may be better to we use \ncreate our own simple ButtonBar layout with positive and negative buttons to avoid our code breaking if a future support library update removes this layout or changes the id\u0027s.",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0335db_0690085e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/AppModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: You should be able to drop the org.chromium.chrome bit of this since it\u0027s imported above.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d554019d_9b5879b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: s/dialogs/dialog",
+      "range": {
+        "startLine": 103,
+        "startChar": 66,
+        "endLine": 103,
+        "endChar": 73
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d3064f_bf9dae50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: ...is an instance of...",
+      "range": {
+        "startLine": 28,
+        "startChar": 22,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548a7532_031a6cb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: ...when the dialog...",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa77385_8be5d37e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: capitalize \"The\" for consistency (here and on the JavaDoc for \u0027message\u0027)",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4953d9b_19694fb3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: If these views are initialized in the constructor then all of the variables can be final",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b44c23e_6bc22d1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T02:10:20Z",
+      "side": 1,
+      "message": "nit: s/dialog/dialogs",
+      "range": {
+        "startLine": 98,
+        "startChar": 76,
+        "endLine": 98,
+        "endChar": 82
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
