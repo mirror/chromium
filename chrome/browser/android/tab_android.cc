@@ -892,6 +892,12 @@ void TabAndroid::NavigationEntryChanged(
   Java_Tab_onNavEntryChanged(env, weak_java_tab_.get(env));
 }
 
+void TabAndroid::NavigationListPruned(
+    const content::PrunedDetails& pruned_details) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_Tab_onNavigationListPruned(env, weak_java_tab_.get(env));
+}
+
 void TabAndroid::ShowMediaDownloadInProductHelp(
     const gfx::Rect& rect_in_frame) {
   DCHECK(web_contents_);

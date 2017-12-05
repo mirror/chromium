@@ -403,6 +403,17 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest,
   ASSERT_EQ(ExternalProtocolHandler::UNKNOWN, block_state);
 }
 
+IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, HistoryDeletion) {
+  std::string type = "History";
+  GURL url = embedded_test_server()->GetURL("/browsing_data/site_data.html");
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_FALSE(HasDataForType(type));
+  SetDataForType(type);
+  EXPECT_TRUE(HasDataForType(type));
+  RemoveAndWait(ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY);
+  EXPECT_FALSE(HasDataForType(type));
+}
+
 IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, CookieDeletion) {
   TestSiteData("Cookie");
 }
