@@ -70,6 +70,24 @@
       "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2d3e78_e24db9e7",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T23:40:14Z",
+      "side": 0,
+      "message": "Hmm, good point. Unfortunately we don\u0027t appear to log this state change? We really need to improve the logging, e.g. we should have a log entry in StartDetection().\n\nWe may be able to reproduce this with a device policy for an open network.\n\nSee my speculation in comment #103.",
+      "parentUuid": "f40bb7f6_e59bf158",
+      "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
