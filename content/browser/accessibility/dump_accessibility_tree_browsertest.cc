@@ -320,6 +320,10 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest, AccessibilityAOnclick) {
   RunHtmlTest(FILE_PATH_LITERAL("a-onclick.html"));
 }
 
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
+                       AccessibilityClickableAncestor) {
+  RunHtmlTest(FILE_PATH_LITERAL("clickable-ancestor.html"));
+}
 
 #if defined(THREAD_SANITIZER)
 // See (crbug.com/708759).
