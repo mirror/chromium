@@ -25,7 +25,7 @@ ScriptSourceCode::ScriptSourceCode(
 
 ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
                                    ScriptResource* resource)
-    : source_(resource->SourceText()),
+    : source_(resource->DecodedText()),
       resource_(resource),
       streamer_(streamer),
       start_position_(TextPosition::MinimumPosition()),
