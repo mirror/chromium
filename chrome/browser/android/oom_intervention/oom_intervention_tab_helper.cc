@@ -6,6 +6,7 @@
 
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/android/oom_intervention/oom_intervention_decider.h"
 #include "chrome/browser/ui/android/infobars/near_oom_infobar.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/browser/navigation_handle.h"
@@ -69,7 +70,10 @@ bool OomInterventionTabHelper::IsEnabled() {
 
 OomInterventionTabHelper::OomInterventionTabHelper(
     content::WebContents* web_contents)
-    : content::WebContentsObserver(web_contents) {
+    : content::WebContentsObserver(web_contents),
+      decider_(OomInterventionDecider::GetForBrowserContext(
+          web_contents->GetBrowserContext())) {
+  DCHECK(decider_);
   OutOfMemoryReporter::FromWebContents(web_contents)->AddObserver(this);
 }
 
@@ -84,6 +88,9 @@ void OomInterventionTabHelper::DeclineIntervention() {
   RecordInterventionUserDecision(false);
   intervention_.reset();
   intervention_state_ = InterventionState::DECLINED;
+
+  const std::string& host = web_contents()->GetVisibleURL().host();
+  decider_->OnInterventionDeclined(host);
 }
 
 void OomInterventionTabHelper::WebContentsDestroyed() {
@@ -195,6 +202,8 @@ void OomInterventionTabHelper::OnForegroundOOMDetected(
     RecordNearOomDetectionEndReason(
         NearOomDetectionEndReason::OOM_PROTECTED_CRASH);
   }
+  const std::string& host = web_contents()->GetVisibleURL().host();
+  decider_->OnOomDetected(host);
 }
 
 void OomInterventionTabHelper::StartMonitoringIfNeeded() {
@@ -218,7 +227,8 @@ void OomInterventionTabHelper::OnNearOomDetected() {
   near_oom_detected_time_ = base::TimeTicks::Now();
   subscription_.reset();
 
-  if (RendererPauseIsEnabled()) {
+  const std::string& host = web_contents()->GetVisibleURL().host();
+  if (RendererPauseIsEnabled() && decider_->CanTriggerIntervention(host)) {
     content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
     DCHECK(main_frame);
     content::RenderProcessHost* render_process_host = main_frame->GetProcess();
