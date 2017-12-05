@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfbd4717_11dc2cde",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-05T12:02:52Z",
+      "side": 1,
+      "message": "Could you please add comments for these?",
+      "range": {
+        "startLine": 35,
+        "startChar": 42,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "f1e392d36771b2a3924e01595e81f7db9c6058fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faaa179_d3a64f22",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-05T12:02:52Z",
+      "side": 1,
+      "message": "This is way too much of constraints code and is very hard to read. Could you simplify? If not, can you add comments to big blocks of constraints in pseudo visual language, such as // [left stack][omnibox][right stack] or something?",
+      "range": {
+        "startLine": 279,
+        "startChar": 8,
+        "endLine": 279,
+        "endChar": 33
+      },
+      "revId": "f1e392d36771b2a3924e01595e81f7db9c6058fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b98313_2951c471",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-05T12:02:52Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this (but then I\u0027m not a fan of the code before, too). Could you add an array of all buttons? Or maybe a property that looks like an array of all buttons but really returns all buttons from arranged subviews of stacks, but at least mask this behind a property? :)",
+      "range": {
+        "startLine": 642,
+        "startChar": 28,
+        "endLine": 642,
+        "endChar": 0
+      },
+      "revId": "f1e392d36771b2a3924e01595e81f7db9c6058fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
