@@ -16,6 +16,24 @@
       "revId": "6c5d303bd2b558b0dbdef47451d09cd779e54902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c469f80_762c11f9",
+        "filename": "testing/buildbot/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-12-05T22:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25061c12_279d08e0",
+      "revId": "6c5d303bd2b558b0dbdef47451d09cd779e54902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
