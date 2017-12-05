@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "bc8f3663_8a30e985",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd2de9c_cd694f9e",
+      "range": {
+        "startLine": 767,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 6
+      },
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e41f43_2dc8406f",
         "filename": "content/browser/download/resource_downloader.cc",
         "patchSetId": 43
@@ -59,6 +83,24 @@
       "writtenOn": "2017-12-05T09:11:36Z",
       "side": 1,
       "message": "Is it necessary to new this? Or can we just have use mojo::Binding directly?",
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ae8267_582b1457",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Using a unique_ptr for the |url_loader_client_bindings_| and the |url_loader_client_| was introduced recently (1 week ago) in https://chromium-review.googlesource.com/c/chromium/src/+/773483.\nI had to fix conflict with this patch when I tried to rebase.\n\nIf I want to undo this part of this change. It means I need to initialize mojo::Binding in the constructor. It takes a pointer to a URLLoaderClient implementation. So I need to construct the URLLoaderClient (i.e. DownloadResponseHandler) in the constructor too.\n\nAFAIU, I think you are right that using a unique_ptr here is not strictly necessary. I think I can do what you want but that\u0027s outside of the scope of this CL and I would be happy not to have to do it. Let me know what do you want me to do.\n\nNote: Ideally, I think we should move the mojo::Binding inside the DownloadResponseHandler.",
+      "parentUuid": "66e41f43_2dc8406f",
       "revId": "368f9978133102a4dae7e48dfe11828616e34931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0d6faf94_a58e1174",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a10d3d5_ce1ba73b",
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca56aa0_23aad4b9",
         "filename": "content/test/test_render_frame.cc",
         "patchSetId": 43
@@ -93,6 +153,30 @@
       "writtenOn": "2017-12-05T09:11:36Z",
       "side": 1,
       "message": "Note that nullptr is an acceptable way to write this as well.",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063e53f7_f5577dcf",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d noticed. I used this constructor consciously in order to make it clear what argument it represents.",
+      "parentUuid": "dca56aa0_23aad4b9",
       "range": {
         "startLine": 85,
         "startChar": 37,

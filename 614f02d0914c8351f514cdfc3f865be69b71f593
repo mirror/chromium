@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24d95b1c_fde2da4f",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d53da5_9fc553bc",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6664d47b_32b09ebf",
         "filename": "content/browser/download/resource_downloader.cc",
         "patchSetId": 40
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-01T18:46:46Z",
       "side": 1,
       "message": "I think you can remove this function now, this is introduced to catch the URLLoaderCompletionStatus change when checking the storage permission on UI thread after interception.",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207383d0_e77a3d92",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "You are right. Thanks!",
+      "parentUuid": "6664d47b_32b09ebf",
       "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e5acafc9_156ec453",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567d09a0_52cac73d",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae1212c1_b8c8546c",
         "filename": "content/renderer/loader/url_loader_client_impl.h",
         "patchSetId": 40
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-04T09:12:16Z",
       "side": 1,
       "message": "Could you add a brief comment to this method about the usage of this class? (Something like \"Binds this instance to the given URLLoaderClient endpoints so that it can start getting the mojo calls from the given loader. This is used only for the main resource loading when NavigationMojoResponse and/or NetworkService is enabled. Otherwise (in regular subresource loading cases) |this| is not bound to a client request, but used via ThrottlingURLLoader to get client upcalls from the loader.\")",
+      "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103b92ee_80715481",
+        "filename": "content/renderer/loader/url_loader_client_impl.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T10:45:26Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "ae1212c1_b8c8546c",
       "revId": "614f02d0914c8351f514cdfc3f865be69b71f593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
