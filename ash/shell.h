@@ -95,6 +95,7 @@ class CastConfigController;
 class DisplayColorManager;
 class DisplayConfigurationController;
 class DisplayErrorObserver;
+class BacklightsForcedOffSetter;
 class DragDropController;
 class EventClientImpl;
 class EventTransformationHandler;
@@ -740,6 +741,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<display::DisplayConfigurator> display_configurator_;
   std::unique_ptr<DisplayColorManager> display_color_manager_;
   std::unique_ptr<DisplayErrorObserver> display_error_observer_;
+  std::unique_ptr<BacklightsForcedOffSetter> backlights_forced_off_setter_;
   std::unique_ptr<ProjectingObserver> projecting_observer_;
 
   // Listens for output changes and updates the display manager.
