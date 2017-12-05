@@ -312,6 +312,10 @@ bool BrowserAccessibilityAndroid::IsInterestingOnAndroid() const {
   if (ui::IsControl(GetRole()))
     return true;
 
+  // A non focusable child of a control is not interesting
+  if (ui::IsControl(PlatformGetParent()->GetRole()))
+    return false;
+
   // Otherwise, the interesting nodes are leaf nodes with non-whitespace text.
   return PlatformIsLeaf() &&
       !base::ContainsOnlyChars(GetText(), base::kWhitespaceUTF16);
