@@ -34,6 +34,24 @@
       "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673ee72d_3b9e605c",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-05T22:51:16Z",
+      "side": 1,
+      "message": "It is okay to match the parent layer\u0027s geometry (although I still think it is more optimal to just use the padding box rect.), in that case, we still need to copy OffsetFromLayoutObject from the parent. i.e.\nchild_containment_layer_-\u003eSetOffsetFromLayoutObject(child_containment_layer_-\u003eParent()-\u003eOffsetFromLayoutObject());\n\nAs for testing, I think we can make a iframe with negative visual overflow using box shadow. Here\u0027s an example: http://jsbin.com/keyocayesa/\n\nFurther explanation: Most of the time, the main graphics layer will match the owning layout object\u0027s snapped border box space, but in the presence of negative visual overflow, the layer can be shifted. The difference between a layer\u0027s space and the snapped border box space is saved as OffsetFromLayoutObject(), and the translation is applied at the beginning of CLM::DoPaintTask() so the rest of the code don\u0027t need to ever deal with that.",
+      "parentUuid": "651a96b1_4deae0ec",
+      "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
