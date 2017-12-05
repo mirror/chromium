@@ -3258,6 +3258,8 @@ split_static_library("browser") {
         "printing/pwg_raster_converter.h",
       ]
 
+      deps += [ "//chrome/services/printing/public/interfaces" ]
+
       if (!is_chromeos) {
         sources += [
           "printing/cloud_print/cloud_print_proxy_service.cc",

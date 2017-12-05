@@ -18,7 +18,6 @@
 #include "chrome/common/features.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #include "chrome/profiling/profiling_service.h"
-#include "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h"
 #include "chrome/utility/utility_message_handler.h"
 #include "components/patch_service/patch_service.h"
 #include "components/patch_service/public/interfaces/constants.mojom.h"
