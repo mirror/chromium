@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "efa51400_195eb414",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T09:38:07Z",
+      "side": 1,
+      "message": "Sorry, failed to realize that you were comparing pointers.",
+      "parentUuid": "4cc5e4e6_73cfa70d",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609f805d_44fb30e0",
         "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
         "patchSetId": 2
