@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bd7a7dd_e4b131b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-05T23:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8418e259_9b502c40",
+      "revId": "4dc616ba30727051585440aa1d4bf8461c2a7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aef838c7_953be3ce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c3401a5c_31204f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-05T23:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef838c7_953be3ce",
+      "range": {
+        "startLine": 397,
+        "startChar": 20,
+        "endLine": 397,
+        "endChar": 86
+      },
+      "revId": "4dc616ba30727051585440aa1d4bf8461c2a7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330d3697_f9ada555",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-05T18:22:41Z",
       "side": 1,
       "message": "Should we log this on show instead of on dismiss? Or is onDimiss() guaranteed to get called e.g. if the user swipes away Chrome from Android recents while the dialog is showing?",
+      "range": {
+        "startLine": 200,
+        "startChar": 12,
+        "endLine": 200,
+        "endChar": 80
+      },
+      "revId": "4dc616ba30727051585440aa1d4bf8461c2a7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dfbf0c_4a36408b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-05T23:46:31Z",
+      "side": 1,
+      "message": "I believe that dismiss is called whenever the dialog is closed. I\u0027ll move this anyway since it makes more sense to record it when the promo is shown/created.",
+      "parentUuid": "330d3697_f9ada555",
       "range": {
         "startLine": 200,
         "startChar": 12,
