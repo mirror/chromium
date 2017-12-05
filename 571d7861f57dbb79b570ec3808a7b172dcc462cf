@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b5c97ab_fdee75e8",
+        "filename": "components/signin/ios/browser/delay_callback_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T01:19:55Z",
+      "side": 1,
+      "message": "Can we use the same check here as in HandleCallback below? That way if the implementation of |net::NetworkChangeNotifier::IsOffline()| is changed at some point, we ensure we always will call every callback when expected.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "571d7861f57dbb79b570ec3808a7b172dcc462cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427c3b8a_04617010",
+        "filename": "components/signin/ios/browser/delay_callback_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-05T01:19:55Z",
+      "side": 1,
+      "message": "Should the name be more specific? It sounds very generic, but it\u0027s actually only used in a very specific way. WDYT about DelayedNetworkChangedCallbackHelper?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "571d7861f57dbb79b570ec3808a7b172dcc462cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
