@@ -1835,6 +1835,42 @@ TEST_F(DiskCacheEntryTest, MemoryOnlyGetAvailableRange) {
   GetAvailableRange();
 }
 
+TEST_F(DiskCacheEntryTest, GetAvailableRangeBlockFileDiscontinuous) {
+  // crbug.com/791056 --- blockfile problem when there is a sub-KiB write before
+  // a bunch of full 1KiB blocks, and a GetAvailableRange is issued to which
+  // both are a potentially relevant.
+  InitCache();
+
+  std::string key("the first key");
+  disk_cache::Entry* entry;
+  ASSERT_THAT(CreateEntry(key, &entry), IsOk());
+
+  scoped_refptr<net::IOBuffer> buf_2k(new net::IOBuffer(2 * 1024));
+  CacheTestFillBuffer(buf_2k->data(), 2 * 1024, false);
+
+  const int kSmallSize = 612;  // sub-1k
+  scoped_refptr<net::IOBuffer> buf_small(new net::IOBuffer(kSmallSize));
+  CacheTestFillBuffer(buf_small->data(), kSmallSize, false);
+
+  // Sets some bits for blocks representing 1K ranges including [1024, 2048),
+  // whic will be relevant for the GetAvailableRange call.
+  EXPECT_EQ(2 * 1024, WriteSparseData(entry, /* offset = */ 1024, buf_2k.get(),
+                                      /* size = */ 2 * 1024));
+
+  // Now record a partial write from start of the first kb.
+  EXPECT_EQ(kSmallSize, WriteSparseData(entry, /* offset = */ 0,
+                                        buf_small.get(), kSmallSize));
+
+  // Try to query a range starting from that block 0. Even a 0 won't be
+  // bad here, but a negative number is right out...
+  int64_t start;
+  net::TestCompletionCallback cb;
+  int rv = entry->GetAvailableRange(812, 1247, &start, cb.callback());
+  EXPECT_GE(cb.GetResult(rv), 0);
+
+  entry->Close();
+}
+
 // Tests that non-sequential writes that are not aligned with the minimum sparse
 // data granularity (1024 bytes) do in fact result in dropped data.
 TEST_F(DiskCacheEntryTest, SparseWriteDropped) {
