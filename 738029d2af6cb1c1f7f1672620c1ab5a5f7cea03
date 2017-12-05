@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65216103_428525b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c40ed79_ca538704",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba6104d0_3b030e24",
         "filename": "ios/web/BUILD.gn",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f578425d_dc704454",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "After offline discussions, renamed to all_frames_web_bundle,",
+      "parentUuid": "ba6104d0_3b030e24",
+      "range": {
+        "startLine": 599,
+        "startChar": 19,
+        "endLine": 599,
+        "endChar": 35
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf5d094a_598a9abf",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189f75c6_9aa60160",
+      "range": {
+        "startLine": 601,
+        "startChar": 33,
+        "endLine": 601,
+        "endChar": 42
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f67d023e_5dc9cac6",
         "filename": "ios/web/web_state/js/page_script_util.mm",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fa35c74c_932715c2",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "Thanks for spotting it. We don\u0027t need this script for frames, that\u0027s actually unused variable.",
+      "parentUuid": "f67d023e_5dc9cac6",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a38a093_a18888fc",
         "filename": "ios/web/web_state/js/page_script_util.mm",
         "patchSetId": 7
@@ -105,6 +201,24 @@
       "writtenOn": "2017-12-04T21:35:08Z",
       "side": 1,
       "message": "Can we avoid code duplication? Maybe by changing GetEarlyPageScript to take the second argument (ALL_FRAMES, MAIN_FRAME_ONLY)?",
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc297ab_f0f4ad48",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "Yeah, it makes sense to decrease code reuse.\nI\u0027ve extracted making script injectable once to function MakeScriptInjectableOnce, that\u0027s the only common part of both functions.",
+      "parentUuid": "1a38a093_a18888fc",
       "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "82bb2f96_70a1707a",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "goog.require is removed. It would cause any closure compilation errors, since all calls to __gCrWeb is done with window.top.",
+      "parentUuid": "3f8a9a5c_d6c5148f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8763eb0f_bcd6e291",
         "filename": "ios/web/web_state/js/resources/form.js",
         "patchSetId": 7
@@ -178,6 +316,30 @@
       "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3a4447_fe939f12",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-05T23:08:31Z",
+      "side": 1,
+      "message": "In offline discussion, it\u0027s figured out that access to window.top is required anyway, since windowID is only in the main frame.",
+      "parentUuid": "8763eb0f_bcd6e291",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "738029d2af6cb1c1f7f1672620c1ab5a5f7cea03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
