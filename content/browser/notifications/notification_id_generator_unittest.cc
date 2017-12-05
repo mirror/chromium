@@ -11,7 +11,7 @@
 #include "url/gurl.h"
 
 namespace content {
-namespace {
+namespace notification_id_generator_unittest {
 
 const int kRenderProcessId = 42;
 const int64_t kPersistentNotificationId = 430;
@@ -240,5 +240,5 @@ TEST_F(NotificationIdGeneratorTest, NonPersistentRenderProcessIdAmbiguity) {
           51 /* render_process_id */));
 }
 
-}  // namespace
+}  // namespace notification_id_generator_unittest
 }  // namespace content

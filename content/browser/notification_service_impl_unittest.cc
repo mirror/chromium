@@ -10,8 +10,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-
-namespace {
+namespace notification_service_impl_unittest {
 
 // Bogus class to act as a NotificationSource for the messages.
 class TestSource {};
@@ -34,9 +33,6 @@ class TestObserver : public NotificationObserver {
 
 const int kNotification1 = 1;
 const int kNotification2 = 2;
-
-}  // namespace
-
 
 class NotificationServiceImplTest : public testing::Test {
  protected:
@@ -170,4 +166,5 @@ TEST_F(NotificationServiceImplTest, MultipleRegistration) {
   EXPECT_EQ(3, idle_test_source.notification_count());
 }
 
+}  // namespace notification_service_impl_unittest
 }  // namespace content

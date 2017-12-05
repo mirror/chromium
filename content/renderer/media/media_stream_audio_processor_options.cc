@@ -23,7 +23,6 @@
 #include "content/renderer/media/media_stream_source.h"
 #include "media/base/audio_parameters.h"
 #include "third_party/webrtc/modules/audio_processing/aec_dump/aec_dump_factory.h"
-#include "third_party/webrtc/modules/audio_processing/include/audio_processing.h"
 #include "third_party/webrtc/modules/audio_processing/typing_detection.h"
 
 namespace content {
