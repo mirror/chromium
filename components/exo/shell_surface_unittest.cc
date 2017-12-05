@@ -6,9 +6,22 @@
 
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/public/cpp/shell_window_ids.h"
+
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/shell_test_api.h"
+
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/screen_util.h"
+#include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/shell_test_api.h"
+#include "ash/system/tray/system_tray.h"
+#include "ash/wm/client_controlled_state.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
@@ -19,6 +32,7 @@
 #include "components/exo/buffer.h"
 #include "components/exo/client_controlled_shell_surface.h"
 #include "components/exo/display.h"
+#include "components/exo/shell_surface_widget_wrapper.h"
 #include "components/exo/sub_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
@@ -41,7 +55,64 @@
 namespace exo {
 namespace {
 
-using ShellSurfaceTest = test::ExoTestBase;
+class TestClientControlledStateDelegate
+    : public ash::wm::ClientControlledState::Delegate {
+ public:
+  TestClientControlledStateDelegate() = default;
+  ~TestClientControlledStateDelegate() override = default;
+
+  // ash::wm::ClientControlledState::Delegate:
+  void HandleWindowStateRequest(
+      ash::wm::WindowState* window_state,
+      ash::mojom::WindowStateType next_state) override {
+    ash::wm::ClientControlledState* state_impl =
+        static_cast<ash::wm::ClientControlledState*>(
+            ash::wm::WindowState::TestApi().GetStateImpl(window_state));
+    state_impl->EnterNextState(window_state, next_state);
+  }
+
+  void HandleBoundsRequest(ash::wm::WindowState* window_state,
+                           const gfx::Rect& bounds) override {
+    ash::wm::ClientControlledState* state_impl =
+        static_cast<ash::wm::ClientControlledState*>(
+            ash::wm::WindowState::TestApi().GetStateImpl(window_state));
+    state_impl->set_bounds_locally(true);
+    window_state->window()->SetBounds(bounds);
+    state_impl->set_bounds_locally(false);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestClientControlledStateDelegate);
+};
+
+ash::wm::ClientControlledState::Delegate* CreateDelegate() {
+  return new TestClientControlledStateDelegate();
+}
+
+class ShellSurfaceTest : public test::ExoTestBase {
+ public:
+  ShellSurfaceTest() = default;
+  ~ShellSurfaceTest() override = default;
+
+  void SetUp() override {
+    test::ExoTestBase::SetUp();
+    ClientControlledShellSurface::
+        SetClientControlledStateDelegateFactoryForTest(
+            base::BindRepeating(&CreateDelegate));
+  }
+
+  void TearDown() override {
+    ClientControlledShellSurface::
+        SetClientControlledStateDelegateFactoryForTest(
+            base::RepeatingCallback<ash::wm::ClientControlledState::Delegate*(
+                void)>());
+
+    test::ExoTestBase::TearDown();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ShellSurfaceTest);
+};
 
 uint32_t ConfigureFullscreen(uint32_t serial,
                              const gfx::Size& size,
@@ -553,6 +624,7 @@ TEST_P(ShellSurfaceBoundsModeTest, ToggleFullscreen) {
                                           .size()
                                           .ToString());
   }
+
   shell_surface->Maximize();
   EXPECT_EQ(IsClientBoundsMode(), HasBackdrop());
   if (!IsClientBoundsMode()) {
