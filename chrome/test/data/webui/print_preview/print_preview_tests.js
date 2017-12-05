@@ -644,24 +644,22 @@ cr.define('print_preview_test', function() {
                 'ID1', printPreview.destinationStore_.selectedDestination.id);
 
             // Validate the parameters for getPreview match the app state.
-            expectEquals('CUSTOM_SQUARE',
-                         args[1].printTicketStore.mediaSize.getValue().name);
-            expectEquals('90', args[1].printTicketStore.scaling.getValue());
-            expectEquals(
-                100, args[1].printTicketStore.dpi.getValue().horizontal_dpi);
-            expectTrue(args[1].printTicketStore.headerFooter.getValue());
-            expectTrue(args[1].printTicketStore.cssBackground.getValue());
-            expectTrue(args[1].printTicketStore.fitToPage.getValue());
-            expectTrue(args[1].printTicketStore.collate.getValue());
-            expectTrue(args[1].printTicketStore.duplex.getValue());
-            expectTrue(args[1].printTicketStore.landscape.getValue());
-            expectTrue(args[1].printTicketStore.color.getValue());
+            const ticket = JSON.parse(args[1].printTicket);
+            expectEquals('CUSTOM_SQUARE', ticket.mediaSize.name);
+            expectEquals(90, ticket.scaleFactor);
+            expectEquals(100, ticket.dpiHorizontal);
+            expectTrue(ticket.headerFooterEnabled);
+            expectTrue(ticket.shouldPrintBackgrounds);
+            expectTrue(ticket.fitToPageEnabled);
+            expectTrue(ticket.collate);
+            expectEquals(ticket.duplex,
+                         print_preview.PreviewGenerator.DuplexMode.LONG_EDGE);
+            expectTrue(ticket.landscape);
+            expectEquals(ticket.color,
+                         print_preview.PreviewGenerator.ColorMode.COLOR);
             expectEquals(print_preview.ticket_items.MarginsTypeValue.CUSTOM,
-                         args[1].printTicketStore.marginsType.getValue());
-            expectEquals(
-                74,
-                args[1].printTicketStore.customMargins.getValue().get(
-                    print_preview.ticket_items.CustomMarginsOrientation.TOP));
+                         ticket.marginsType);
+            expectEquals(74, ticket.marginsCustom.marginTop);
 
             // Change scaling (a persisted ticket item value)
             expandMoreSettings();
@@ -842,12 +840,14 @@ cr.define('print_preview_test', function() {
           const fitToPageContainer =
               scalingSettings.querySelector('#fit-to-page-container');
           checkElementDisplayed(fitToPageContainer, true);
-          expectTrue(args[1].printTicketStore.fitToPage.getValue());
-          expectEquals('100', args[1].printTicketStore.scaling.getValue());
+          const ticket = JSON.parse(args[1].printTicket);
+          expectTrue(ticket.fitToPageEnabled);
+          expectEquals(100, ticket.scaleFactor);
           expectTrue(fitToPageContainer.querySelector('.checkbox').checked);
           expandMoreSettings();
           checkSectionVisible($('media-size-settings'), true);
           checkSectionVisible(scalingSettings, true);
+
           nativeLayer.resetResolver('getPreview');
 
           // Change scaling input
@@ -863,10 +863,12 @@ cr.define('print_preview_test', function() {
           scalingInput.dispatchEvent(enterEvent);
 
           // Wait for the preview to refresh and verify print ticket and
-          // display.
+          // display. There will be 2 preview requests. Since we only catch
+          // the first one, only verify fit to page in print ticket.
           return nativeLayer.whenCalled('getPreview').then(function(args) {
-            expectFalse(args.printTicketStore.fitToPage.getValue());
-            expectEquals('105', args.printTicketStore.scaling.getValue());
+            console.log('args.printticket ' + args.printTicket);
+            const updatedTicket = JSON.parse(args.printTicket);
+            expectFalse(updatedTicket.fitToPageEnabled);
             expectFalse(fitToPageContainer.querySelector('.checkbox').checked);
             return whenAnimationDone('more-settings');
           });
@@ -1256,8 +1258,9 @@ cr.define('print_preview_test', function() {
           setupSettingsAndDestinationsWithCapabilities(),
           nativeLayer.whenCalled('getPreview'),
       ]).then(function(args) {
-        expectEquals(0, args[1].requestId);
-        expectEquals('FooDevice', args[1].destination.id);
+        const ticket = JSON.parse(args[1].printTicket);
+        expectEquals(0, ticket.requestID);
+        expectEquals('FooDevice', ticket.deviceName);
         nativeLayer.reset();
 
         // Setup capabilities for BarDevice.
@@ -1275,8 +1278,9 @@ cr.define('print_preview_test', function() {
         printPreview.destinationStore_.selectDestination(barDestination);
         return waitForPrinterToUpdatePreview();
       }).then(function(args) {
-        expectEquals(1, args[1].requestId);
-        expectEquals('BarDevice', args[1].destination.id);
+        const ticket = JSON.parse(args[1].printTicket);
+        expectEquals(1, ticket.requestID);
+        expectEquals('BarDevice', ticket.deviceName);
       });
     });
 
@@ -1434,8 +1438,9 @@ cr.define('print_preview_test', function() {
         expectEquals('ID1', id);
         return nativeLayer.whenCalled('getPreview');
       }).then(function(previewArgs) {
-        expectEquals(0, previewArgs.requestId);
-        expectEquals('ID1', previewArgs.destination.id);
+        const ticket = JSON.parse(previewArgs.printTicket);
+        expectEquals(0, ticket.requestID);
+        expectEquals('ID1', ticket.deviceName);
       });
     });
 
@@ -1500,19 +1505,17 @@ cr.define('print_preview_test', function() {
            */
           function(args) {
             // Sanity check some printing argument values.
-            const printTicketStore = args.printTicketStore;
-            expectEquals(barDevice.printer.deviceName, args.destination.id);
+            const ticket = JSON.parse(args.printTicket);
+            expectEquals(barDevice.printer.deviceName, ticket.deviceName);
             expectEquals(
                 getDefaultOrientation(barDevice) == 'LANDSCAPE',
-                printTicketStore.landscape.getValue());
-            expectEquals(1, printTicketStore.copies.getValueAsNumber());
+                ticket.landscape);
+            expectEquals(1, ticket.copies);
             const mediaDefault = getDefaultMediaSize(barDevice);
             expectEquals(
-                mediaDefault.width_microns,
-                printTicketStore.mediaSize.getValue().width_microns);
+                mediaDefault.width_microns, ticket.mediaSize.width_microns);
             expectEquals(
-                mediaDefault.height_microns,
-                printTicketStore.mediaSize.getValue().height_microns);
+                mediaDefault.height_microns, ticket.mediaSize.height_microns);
             return nativeLayer.whenCalled('hidePreview');
           });
     });
@@ -1526,16 +1529,18 @@ cr.define('print_preview_test', function() {
       ]).then(function(args) {
         // The first request should generate draft because there was no
         // previous print preview draft.
-        expectTrue(args[1].generateDraft);
-        expectEquals(0, args[1].requestId);
+        const ticket = JSON.parse(args[1].printTicket);
+        expectTrue(ticket.generateDraft);
+        expectEquals(0, ticket.requestID);
         nativeLayer.resetResolver('getPreview');
 
         // Change the page range - no new draft needed.
         printPreview.printTicketStore_.pageRange.updateValue('2');
         return nativeLayer.whenCalled('getPreview');
       }).then(function(args) {
-        expectFalse(args.generateDraft);
-        expectEquals(1, args.requestId);
+        const ticket = JSON.parse(args.printTicket);
+        expectFalse(ticket.generateDraft);
+        expectEquals(1, ticket.requestID);
         nativeLayer.resetResolver('getPreview');
 
         // Change the margin type - need to regenerate again.
@@ -1543,8 +1548,9 @@ cr.define('print_preview_test', function() {
             print_preview.ticket_items.MarginsTypeValue.NO_MARGINS);
         return nativeLayer.whenCalled('getPreview');
       }).then(function(args) {
-        expectTrue(args.generateDraft);
-        expectEquals(2, args.requestId);
+        const ticket = JSON.parse(args.printTicket);
+        expectTrue(ticket.generateDraft);
+        expectEquals(2, ticket.requestID);
       });
     });
 
@@ -1614,7 +1620,7 @@ cr.define('print_preview_test', function() {
                  *      The arguments that print() was called with.
                  */
                 function(args) {
-                  expectTrue(args.openPdfInPreview);
+                  expectTrue(JSON.parse(args.printTicket).OpenPDFInPreview);
                   return nativeLayer.whenCalled('hidePreview');
                 });
       });
@@ -1682,7 +1688,7 @@ cr.define('print_preview_test', function() {
                  *      The arguments that print() was called with.
                  */
                 function(args) {
-                  expectTrue(args.showSystemDialog);
+                  expectTrue(JSON.parse(args.printTicket).showSystemDialog);
                   return nativeLayer.whenCalled('hidePreview');
                 });
       });
