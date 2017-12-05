@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05fac5f8_e8bcece1",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-05T18:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9877279b_e17d886d",
+      "range": {
+        "startLine": 221,
+        "startChar": 56,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d818b40_cd6421fa",
         "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "44401dfc_e374e936",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-05T18:29:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c34c3ab7_02c90228",
+      "range": {
+        "startLine": 918,
+        "startChar": 69,
+        "endLine": 918,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9875ced9_df004688",
         "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
         "patchSetId": 1
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3983a7c4_2df0a346",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-05T18:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9875ced9_df004688",
+      "range": {
+        "startLine": 938,
+        "startChar": 59,
+        "endLine": 938,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e8df24_49980a9c",
         "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
         "patchSetId": 1
@@ -115,6 +187,30 @@
       "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b343755f_75900a33",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-05T18:29:23Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right. Looks like there\u0027s a lot of ASSERT in this file that should be EXPECT, especailly all the EXPECT_EQ(0U... Tried to clean up all the obvious ones.",
+      "parentUuid": "f0e8df24_49980a9c",
+      "range": {
+        "startLine": 940,
+        "startChar": 54,
+        "endLine": 940,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
