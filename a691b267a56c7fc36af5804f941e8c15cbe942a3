@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24cbac64_2f836927",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T19:14:35Z",
+      "side": 1,
+      "message": "I don\u0027t think the swtich(target) is needed at all at this point. You\u0027re covering all the targets here.\nSwitching on the target was kinda an ugly way of checking which platform we\u0027re on. If we can get it to work the same for every target, we can get rid of the ugly switch case.",
+      "revId": "a691b267a56c7fc36af5804f941e8c15cbe942a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27c66e7_1a6d14a7",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T19:14:35Z",
+      "side": 1,
+      "message": "Another regression we got with this patch was crbug.com/786057.\nI\u0027m afraid NV12 might fail on some intel boards.\nMy hunch would be we don\u0027t have R8 and RG88 on those boards and eglCreateImageKHR fails.\nAdditionally, this regressed video playback for CrOS on ozone X11.",
+      "revId": "a691b267a56c7fc36af5804f941e8c15cbe942a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dc9c7e_219e1ecc",
+        "filename": "media/video/gpu_memory_buffer_video_frame_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T19:14:35Z",
+      "side": 1,
+      "message": "nit: NOTREACHED() before returning?",
+      "revId": "a691b267a56c7fc36af5804f941e8c15cbe942a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
