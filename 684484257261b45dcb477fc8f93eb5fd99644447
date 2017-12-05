@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b45ebf0_2351beb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-05T05:49:31Z",
+      "side": 1,
+      "message": "Can you elaborate some more on what infrastructure you mean specifically? I\u0027m surprised to hear this.",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e47fc5_bdf81b57",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-05T05:49:31Z",
+      "side": 1,
+      "message": "nit: no content::, also everywhere else in this change in src/content",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25291f10_f8f4976b",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-05T05:49:31Z",
+      "side": 1,
+      "message": "why do we need a separate interface for this, as opposed to this being a method on FrameHost?",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
