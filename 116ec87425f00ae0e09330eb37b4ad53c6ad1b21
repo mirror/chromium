@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0015b1f1_f3abbe00",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-12-05T11:58:11Z",
+      "side": 1,
+      "message": "Did you double-check that this works with UTF-8 encodings? output_data might contain UTF-8 characters since it\u0027s from translated policy_templates.json files.\n\nI think it works fine, though. All bytes in multi-byte UTF characters are \u003e\u003d 128.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "116ec87425f00ae0e09330eb37b4ad53c6ad1b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
