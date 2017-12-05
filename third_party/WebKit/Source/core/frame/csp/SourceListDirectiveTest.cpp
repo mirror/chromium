@@ -30,7 +30,7 @@ class SourceListDirectiveTest : public ::testing::Test {
 
   virtual void SetUp() {
     KURL secure_url("https://example.test/image.png");
-    scoped_refptr<SecurityOrigin> secure_origin(
+    scoped_refptr<const SecurityOrigin> secure_origin(
         SecurityOrigin::Create(secure_url));
     document = Document::CreateForTest();
     document->SetSecurityOrigin(secure_origin);
@@ -39,7 +39,7 @@ class SourceListDirectiveTest : public ::testing::Test {
 
   ContentSecurityPolicy* SetUpWithOrigin(const String& origin) {
     KURL secure_url(origin);
-    scoped_refptr<SecurityOrigin> secure_origin(
+    scoped_refptr<const SecurityOrigin> secure_origin(
         SecurityOrigin::Create(secure_url));
     Document* document = Document::CreateForTest();
     document->SetSecurityOrigin(secure_origin);
@@ -107,7 +107,8 @@ TEST_F(SourceListDirectiveTest, StarallowsSelf) {
   SourceListDirective source_list("script-src", sources, csp.Get());
 
   // With a protocol of 'file', '*' allows 'file:':
-  scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create("file", "", 0);
+  scoped_refptr<const SecurityOrigin> origin =
+      SecurityOrigin::Create("file", "", 0);
   csp->SetupSelf(*origin);
   EXPECT_TRUE(source_list.Allows(KURL(base, "file:///etc/hosts")));
 

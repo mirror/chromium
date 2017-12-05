@@ -1137,7 +1137,7 @@ protocol::Response InspectorPageAgent::createIsolatedWorld(
     return Response::Error("Could not create isolated world");
 
   if (grant_universal_access.fromMaybe(false)) {
-    scoped_refptr<SecurityOrigin> security_origin =
+    scoped_refptr<const SecurityOrigin> security_origin =
         frame->GetSecurityContext()->GetSecurityOrigin()->IsolatedCopy();
     security_origin->GrantUniversalAccess();
     DOMWrapperWorld::SetIsolatedWorldSecurityOrigin(world->GetWorldId(),
