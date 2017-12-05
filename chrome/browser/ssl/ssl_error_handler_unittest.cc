@@ -235,6 +235,11 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
 
   void ShowSSLInterstitial() override { ssl_interstitial_shown_ = true; }
 
+  void ShowUrgentSSLInterstitial(const GURL& support_url,
+                                 int cert_error) override {
+    ssl_interstitial_shown_ = true;
+  }
+
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override {
     bad_clock_interstitial_shown_ = true;
