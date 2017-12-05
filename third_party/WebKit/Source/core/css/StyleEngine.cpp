@@ -1134,6 +1134,16 @@ void StyleEngine::HtmlImportAddedOrRemoved() {
   }
 }
 
+void StyleEngine::V0ShadowAddedOnV1Document() {
+  if (GetDocument().GetScopedStyleResolver())
+    GetDocument().GetScopedStyleResolver()->V0ShadowAddedOnV1Document();
+  for (TreeScope* tree_scope : active_tree_scopes_) {
+    if (ScopedStyleResolver* resolver = tree_scope->GetScopedStyleResolver()) {
+      resolver->V0ShadowAddedOnV1Document();
+    }
+  }
+}
+
 namespace {
 
 enum RuleSetFlags {
