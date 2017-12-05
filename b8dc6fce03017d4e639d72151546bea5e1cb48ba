@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6aa87cd3_51e34811",
+        "filename": "components/viz/common/resources/buffer_to_texture_target_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T17:33:10Z",
+      "side": 1,
+      "message": "If we use a flat_set we end up having to serialize things manually for mojo.\n\nIf the purpose of having a flat_set is to avoid the find(begin, end) !\u003d end to check if an element is in there, we could just add a small utility function here, something like IsUsageAndFormatPresent.",
+      "parentUuid": "3934b20a_7f047a06",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "b8dc6fce03017d4e639d72151546bea5e1cb48ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "719eca0a_ef45e8e8",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b8dc6fce03017d4e639d72151546bea5e1cb48ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd267519_d62b8b6b",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T17:33:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719eca0a_ef45e8e8",
+      "range": {
+        "startLine": 172,
+        "startChar": 25,
+        "endLine": 174,
+        "endChar": 6
+      },
+      "revId": "b8dc6fce03017d4e639d72151546bea5e1cb48ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
