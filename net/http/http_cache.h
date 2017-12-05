@@ -109,6 +109,40 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
     int max_bytes_;
   };
 
+  // Whether a transaction can join parallel writing or not is a function of the
+  // transaction as well as the current writers (if present). This enum
+  // captures that decision as well as when a writers is first created. This is
+  // also used to log metrics so should be consistent with the values in
+  // enums.xml.
+  enum ParallelWritingPattern {
+    // Used as the default value till the transaction reaches the response body
+    // phase.
+    PARALLEL_WRITING_NONE,
+    // The transaction creates a writers object. This is only logged for
+    // transactions that did not fail to join existing writers earlier.
+    PARALLEL_WRITING_CREATE,
+    // The transaction joins existing writers.
+    PARALLEL_WRITING_JOIN,
+    // The transaction cannot join existing writers since either itself or
+    // existing writers instance is serving a range request.
+    PARALLEL_WRITING_NOT_JOIN_RANGE,
+    // The transaction cannot join existing writers since either itself or
+    // existing writers instance is serving a non GET request.
+    PARALLEL_WRITING_NOT_JOIN_METHOD_NOT_GET,
+    // The transaction cannot join existing writers since it does not have cache
+    // write privileges.
+    PARALLEL_WRITING_NOT_JOIN_READ_ONLY,
+    // The transaction cannot join existing writers since there was a cache
+    // write failure.
+    PARALLEL_WRITING_NOT_JOIN_CACHE_WRITE_FAIL,
+    // The transaction cannot join existing writers as writers stopped caching.
+    PARALLEL_WRITING_NOT_JOIN_STOP_CACHING,
+    // The transaction cannot join existing writers yet. This value is not
+    // logged in histograms since it is not a final outcome.
+    PARALLEL_WRITING_WAIT_FOR_CLEANUP,
+    PARALLEL_WRITING_MAX
+  };
+
   // The number of minutes after a resource is prefetched that it can be used
   // again without validation.
   static const int kPrefetchReuseMins = 5;
@@ -477,10 +511,11 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // already.
   void ProcessAddToEntryQueue(ActiveEntry* entry);
 
-  // Returns true if the transaction can join other transactions for writing to
-  // the cache simultaneously. It is only supported for GET requests and
-  // non-range requests.
-  bool CanTransactionJoinExistingWriters(Transaction* transaction);
+  // Returns if the transaction can join other transactions for writing to
+  // the cache simultaneously. It is only supported for non-Read only,
+  // GET requests which are not range requests.
+  ParallelWritingPattern CanTransactionJoinExistingWriters(
+      Transaction* transaction);
 
   // Invoked when a transaction that has already completed the response headers
   // phase can resume reading/writing the response body. It will invoke the IO
@@ -489,7 +524,10 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
   // Adds a transaction to writers.
-  void AddTransactionToWriters(ActiveEntry* entry, Transaction* transaction);
+  void AddTransactionToWriters(
+      ActiveEntry* entry,
+      Transaction* transaction,
+      ParallelWritingPattern parallel_writing_pattern = PARALLEL_WRITING_NONE);
 
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,

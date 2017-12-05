@@ -1058,19 +1058,29 @@ void HttpCache::ProcessAddToEntryQueue(ActiveEntry* entry) {
   transaction->io_callback().Run(OK);
 }
 
-bool HttpCache::CanTransactionJoinExistingWriters(Transaction* transaction) {
-  return (transaction->method() == "GET" && !transaction->partial());
+HttpCache::ParallelWritingPattern HttpCache::CanTransactionJoinExistingWriters(
+    Transaction* transaction) {
+  if (transaction->method() != "GET")
+    return PARALLEL_WRITING_NOT_JOIN_METHOD_NOT_GET;
+  if (transaction->partial())
+    return PARALLEL_WRITING_NOT_JOIN_RANGE;
+  if (transaction->mode() == Transaction::READ)
+    return PARALLEL_WRITING_NOT_JOIN_READ_ONLY;
+  return PARALLEL_WRITING_JOIN;
 }
 
 void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
-  DCHECK(!entry->writers || entry->writers->CanAddWriters());
+  ParallelWritingPattern writers_pattern;
+  DCHECK(!entry->writers || entry->writers->CanAddWriters(&writers_pattern));
   DCHECK(!entry->done_headers_queue.empty());
 
   Transaction* transaction = entry->done_headers_queue.front();
 
   if (IsWritingInProgress(entry)) {
-    if (!CanTransactionJoinExistingWriters(transaction) ||
-        transaction->mode() == Transaction::READ) {
+    ParallelWritingPattern parallel_writing_pattern =
+        CanTransactionJoinExistingWriters(transaction);
+    transaction->SetParallelWritingPatternForMetrics(parallel_writing_pattern);
+    if (parallel_writing_pattern != PARALLEL_WRITING_JOIN) {
       // TODO(shivanisha): Returning from here instead of checking the next
       // transaction in the queue because the FIFO order is maintained
       // throughout, until it becomes a reader or writer. May be at this point
@@ -1079,7 +1089,7 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
       // transactions.
       return;
     }
-    AddTransactionToWriters(entry, transaction);
+    AddTransactionToWriters(entry, transaction, parallel_writing_pattern);
   } else {  // no writing in progress
     if (transaction->mode() & Transaction::WRITE) {
       if (transaction->partial()) {
@@ -1108,20 +1118,27 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
   transaction->io_callback().Run(OK);
 }
 
-void HttpCache::AddTransactionToWriters(ActiveEntry* entry,
-                                        Transaction* transaction) {
+void HttpCache::AddTransactionToWriters(
+    ActiveEntry* entry,
+    Transaction* transaction,
+    ParallelWritingPattern parallel_writing_pattern) {
   if (!entry->writers) {
     entry->writers = std::make_unique<Writers>(this, entry);
+    transaction->SetParallelWritingPatternForMetrics(PARALLEL_WRITING_CREATE);
   }
 
-  DCHECK(entry->writers->CanAddWriters());
+  ParallelWritingPattern writers_pattern;
+  DCHECK(entry->writers->CanAddWriters(&writers_pattern));
 
   Writers::TransactionInfo info(transaction->partial(),
                                 transaction->is_truncated(),
                                 *(transaction->GetResponseInfo()));
+
   entry->writers->AddTransaction(
       transaction,
-      !CanTransactionJoinExistingWriters(transaction) /* is_exclusive */,
+      parallel_writing_pattern == PARALLEL_WRITING_NONE
+          ? CanTransactionJoinExistingWriters(transaction)
+          : parallel_writing_pattern,
       transaction->priority(), info);
 }
 
@@ -1255,10 +1272,18 @@ void HttpCache::OnProcessQueuedTransactions(ActiveEntry* entry) {
   // If another transaction is writing the response, let validated transactions
   // wait till the response is complete. If the response is not yet started, the
   // done_headers_queue transaction should start writing it.
-  if ((!entry->writers || entry->writers->CanAddWriters()) &&
-      !entry->done_headers_queue.empty()) {
-    ProcessDoneHeadersQueue(entry);
-    return;
+  if (!entry->done_headers_queue.empty()) {
+    ParallelWritingPattern reason = PARALLEL_WRITING_NONE;
+    if (entry->writers && !entry->writers->CanAddWriters(&reason)) {
+      if (reason != PARALLEL_WRITING_WAIT_FOR_CLEANUP) {
+        for (auto* done_headers_transaction : entry->done_headers_queue) {
+          done_headers_transaction->SetParallelWritingPatternForMetrics(reason);
+        }
+      }
+    } else {
+      ProcessDoneHeadersQueue(entry);
+      return;
+    }
   }
 
   if (!entry->add_to_entry_queue.empty())
