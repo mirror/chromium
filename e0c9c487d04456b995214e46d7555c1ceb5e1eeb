@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc16bd34_50a4ce7d",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-05T21:36:54Z",
+      "side": 1,
+      "message": "Add \\\\",
+      "revId": "e0c9c487d04456b995214e46d7555c1ceb5e1eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3ff4b3_403efa74",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-05T21:36:54Z",
+      "side": 1,
+      "message": "crypto/ directories",
+      "revId": "e0c9c487d04456b995214e46d7555c1ceb5e1eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
