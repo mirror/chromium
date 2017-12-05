@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9877279b_e17d886d",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-05T09:17:22Z",
+      "side": 1,
+      "message": "Optional: this function name seems somewhat misleading now. I would suggest renaming it (infix \u0027Maybe\u0027 append \u0027IfReady\u0027) or alternatively revert the changes here and move the condition to the caller\u0027s side.",
+      "range": {
+        "startLine": 221,
+        "startChar": 56,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d818b40_cd6421fa",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-05T09:17:22Z",
+      "side": 1,
+      "message": "Outside the scope of your patch so no action needed, but in the spirit of rethinking a codebase during project handover: I have the feeling these tests could be simpler (or more gmock-idiomatic) if the test fake (MockModelTypeProcessor) would expose the whole map, then replace the two statements above with:\nEXPECT_THAT(processor()-\u003eGetUpdateResponseMap(), ElementsAre(HasEncryptionKeyName(...)));\n\nAnother option would be to use actual mocks (although I have mixed feelings due to the non-trivial logic in MockModelTypeProcessor), which could look like this:\nEXPECT_CALL(processor(), OnUpdateReceived(_, ElementsAre(HasEncryptionKeyName(...))));\n\nwhich is, I believe, what the test is actually verifying.",
+      "range": {
+        "startLine": 918,
+        "startChar": 69,
+        "endLine": 918,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9875ced9_df004688",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-05T09:17:22Z",
+      "side": 1,
+      "message": "s/now/know/?",
+      "range": {
+        "startLine": 938,
+        "startChar": 59,
+        "endLine": 938,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e8df24_49980a9c",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-05T09:17:22Z",
+      "side": 1,
+      "message": "Is there a reason for not using EXPECT_EQ here? Looks like it\u0027s a expectation of the test rather than a test fixture, and nothing below would crash if the condition is not met.",
+      "range": {
+        "startLine": 940,
+        "startChar": 54,
+        "endLine": 940,
+        "endChar": 0
+      },
+      "revId": "8980ea7d080dcf2d86597fa9619de45f1f384351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
