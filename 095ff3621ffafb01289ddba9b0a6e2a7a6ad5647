@@ -22,6 +22,30 @@
       "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2cdf69_0bc9e71a",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T23:48:51Z",
+      "side": 1,
+      "message": "I prefer not to if that\u0027s alright. IMO the extra verbosity is not too bad, and my tolerance for optional args is quite low :)",
+      "parentUuid": "c9c62c8d_1aacd8de",
+      "range": {
+        "startLine": 1408,
+        "startChar": 11,
+        "endLine": 1408,
+        "endChar": 51
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
