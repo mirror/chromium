@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c126927c_d9a550ba",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-05T03:11:31Z",
+      "side": 1,
+      "message": "so this is for sure not reachable if you manage to get to version 4 of the runtime librayr?",
+      "range": {
+        "startLine": 72,
+        "startChar": 13,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "c9062d3c5079bf9042777498fcfbd8d1994e585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531d20dd_d492e2e0",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-05T03:11:31Z",
+      "side": 1,
+      "message": "do you need to worry about the case where the channel isn\u0027t set and webapk is version O (since you\u0027re not creating the channel in the wrapper). I think no because then you wouldn\u0027t call notifyNotificationWithChannel, right?",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "c9062d3c5079bf9042777498fcfbd8d1994e585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
