@@ -87,6 +87,24 @@
       "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c337d2ac_c1512890",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-05T06:17:44Z",
+      "side": 1,
+      "message": "The InterceptNavigationThrottle will run *before* the check against the blocklist.\n\nPrior to this change, the aw_network_delegate.cc (~55) would OnBeforeURLRequest would handle the block listing.  We\u0027ve moved this to the policy_blacklist_navigation_throttle.cc (~130) WillStartRequest(). In the following run, we block before OnBeforeURLRequest() is called.\n\nFor example:\n\nW/chromium( 2165): [WARNING:intercept_navigation_throttle.cc(25)] WillStartRequest called\nW/chromium( 2165): [WARNING:policy_blacklist_navigation_throttle.cc(130)] WillStartRequest called\nW/chromium( 2165): [WARNING:aw_network_delegate.cc(55)] OnBeforeURLRequest called\nW/chromium( 2165): [WARNING:aw_network_delegate.cc(65)] OnBeforeStartTransaction called\nW/chromium( 2165): [WARNING:aw_network_delegate.cc(76)] OnStartTransaction called\n\nNote that these things are running on different threads, so timing will have an impact on ordering.\n\n\nAlso, yes blacklisting is main frame only.",
+      "parentUuid": "fb67932e_6c72c4d4",
+      "revId": "a11dc3295512f76792a62b05d63b76c0e35bdd4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

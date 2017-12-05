@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1eeba978_b1a2005b",
+        "filename": "components/policy/throttle/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-05T06:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a787d2_605ab08e",
+      "revId": "8be61bbc801da95ef6259c5caa30c28e1d55632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff7607d7_f0d63976",
         "filename": "components/policy/throttle/policy_blacklist_navigation_throttle.cc",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T20:56:06Z",
       "side": 1,
       "message": "did you consider passing in this method to the constructor of PolicyBlacklistNavigationThrottle? That way this src/chrome/ specific behavior can remain in src/chrome as before in policy_helpers.cc?",
+      "revId": "8be61bbc801da95ef6259c5caa30c28e1d55632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746ff3e1_7317e897",
+        "filename": "components/policy/throttle/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-05T06:17:44Z",
+      "side": 1,
+      "message": "The reason I didn\u0027t do this is because the blocklist is essentially a self contained keyed service.  If others wanted to access it, they don\u0027t need to provide an override or worry about if the throttle ran first.  wdyt?",
+      "parentUuid": "ff7607d7_f0d63976",
       "revId": "8be61bbc801da95ef6259c5caa30c28e1d55632f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
