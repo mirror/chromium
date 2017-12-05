@@ -108,6 +108,14 @@ base::string16 GetUpgradeDialogMenuItemName() {
   }
 }
 
+// Returns the appropriate menu label for the IDC_CREATE_HOSTED_APP command,
+// given the |installable| status.
+base::string16 GetCreateHostedAppMenuItemName(bool installable) {
+  return l10n_util::GetStringUTF16(installable
+                                       ? IDS_INSTALL_TO_OS_LAUNCH_SURFACE
+                                       : IDS_ADD_TO_OS_LAUNCH_SURFACE);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -216,6 +224,7 @@ void ToolsMenuModel::Build(Browser* browser) {
 AppMenuModel::AppMenuModel(ui::AcceleratorProvider* provider, Browser* browser)
     : ui::SimpleMenuModel(this),
       uma_action_recorded_(false),
+      installable_app_(false),
       provider_(provider),
       browser_(browser) {}
 
@@ -227,6 +236,7 @@ AppMenuModel::~AppMenuModel() {
 void AppMenuModel::Init() {
   Build();
   UpdateZoomControls();
+  UpdateCreateHostedAppLabel();
 
   browser_zoom_subscription_ =
       zoom::ZoomEventManager::GetForBrowserContext(browser_->profile())
@@ -250,6 +260,7 @@ bool AppMenuModel::IsItemForCommandIdDynamic(int command_id) const {
 #elif defined(OS_WIN)
          command_id == IDC_PIN_TO_START_SCREEN ||
 #endif
+         command_id == IDC_CREATE_HOSTED_APP ||
          command_id == IDC_UPGRADE_DIALOG;
 }
 
@@ -272,6 +283,8 @@ base::string16 AppMenuModel::GetLabelForCommandId(int command_id) const {
       return l10n_util::GetStringUTF16(string_id);
     }
 #endif
+    case IDC_CREATE_HOSTED_APP:
+      return GetCreateHostedAppMenuItemName(installable_app_);
     case IDC_UPGRADE_DIALOG:
       return GetUpgradeDialogMenuItemName();
     default:
@@ -648,6 +661,8 @@ void AppMenuModel::ActiveTabChanged(WebContents* old_contents,
   // The user has switched between tabs and the new tab may have a different
   // zoom setting.
   UpdateZoomControls();
+
+  UpdateCreateHostedAppLabel();
 }
 
 void AppMenuModel::TabReplacedAt(TabStripModel* tab_strip_model,
@@ -655,6 +670,7 @@ void AppMenuModel::TabReplacedAt(TabStripModel* tab_strip_model,
                                  WebContents* new_contents,
                                  int index) {
   UpdateZoomControls();
+  UpdateCreateHostedAppLabel();
 }
 
 void AppMenuModel::Observe(int type,
@@ -662,6 +678,7 @@ void AppMenuModel::Observe(int type,
                            const content::NotificationDetails& details) {
   DCHECK_EQ(content::NOTIFICATION_NAV_ENTRY_COMMITTED, type);
   UpdateZoomControls();
+  UpdateCreateHostedAppLabel();
 }
 
 // Note: When adding new menu items please place under an appropriate section.
@@ -716,7 +733,8 @@ void AppMenuModel::Build() {
   AddItemWithStringId(IDC_FIND, IDS_FIND);
   if (extensions::util::IsNewBookmarkAppsEnabled() &&
       banners::AppBannerManager::IsExperimentalAppBannersEnabled()) {
-    AddItemWithStringId(IDC_CREATE_HOSTED_APP, IDS_ADD_TO_OS_LAUNCH_SURFACE);
+    AddItem(IDC_CREATE_HOSTED_APP,
+            GetCreateHostedAppMenuItemName(installable_app_));
   }
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -818,6 +836,20 @@ void AppMenuModel::UpdateZoomControls() {
                        ->GetZoomPercent();
   }
   zoom_label_ = base::FormatPercent(zoom_percent);
+}
+
+void AppMenuModel::UpdateCreateHostedAppLabel() {
+  installable_app_ = false;
+
+  if (browser_->tab_strip_model() &&
+      browser_->tab_strip_model()->GetActiveWebContents()) {
+    const banners::AppBannerManager::Installable installable =
+        banners::AppBannerManager::GetInstallable(
+            browser_->tab_strip_model()->GetActiveWebContents());
+    if (installable == banners::AppBannerManager::Installable::YES) {
+      installable_app_ = true;
+    }
+  }
 }
 
 bool AppMenuModel::ShouldShowNewIncognitoWindowMenuItem() {

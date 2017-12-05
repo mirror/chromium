@@ -192,6 +192,9 @@ class AppMenuModel : public ui::SimpleMenuModel,
   // Helper function to record the menu action in a UMA histogram.
   void LogMenuAction(AppMenuAction action_id);
 
+  // Updates the installable_app_ state, based on the current WebContents.
+  void UpdateCreateHostedAppLabel();
+
   // Time menu has been open. Used by LogMenuMetrics() to record the time
   // to action when the user selects a menu item.
   base::ElapsedTimer timer_;
@@ -207,6 +210,9 @@ class AppMenuModel : public ui::SimpleMenuModel,
 
   // Label of the zoom label in the zoom menu item.
   base::string16 zoom_label_;
+
+  // State used to compute the label for the IDC_CREATE_HOSTED_APP command.
+  bool installable_app_;
 
 #if defined(GOOGLE_CHROME_BUILD)
   // Help menu.
