@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a19efedd_fd5e2124",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T17:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a18b701_d55c0614",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aebd37b_dc257d8a",
         "filename": "media/audio/mac/audio_device_listener_mac.h",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "38291a21_9e15ba18",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T17:25:46Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4aebd37b_dc257d8a",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc457aad_2c395d25",
         "filename": "media/audio/mac/audio_device_listener_mac.h",
         "patchSetId": 4
@@ -67,6 +103,24 @@
       "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7cd2b3_17e07ca1",
+        "filename": "media/audio/mac/audio_device_listener_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T17:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc457aad_2c395d25",
+      "revId": "a4325aa59bf24ce73368be5b9b04b6f2831dbb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
