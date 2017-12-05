@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0009e5bc_e636dee2",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-05T19:06:34Z",
+      "side": 1,
+      "message": "When ResourceClient and ResourceOwner merge in https://chromium-review.googlesource.com/c/chromium/src/+/794370, the new strong reference in this CL won\u0027t be the only potential Resource leak. I think this is the most reliable way to ensure they\u0027re released.",
+      "revId": "5031bf857bf78604ce5571bab7226051789241b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
