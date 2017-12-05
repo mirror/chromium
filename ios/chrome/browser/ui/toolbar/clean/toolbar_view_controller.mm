@@ -32,7 +32,8 @@
 @property(nonatomic, strong) ToolbarButtonFactory* buttonFactory;
 @property(nonatomic, strong) ToolbarButtonUpdater* buttonUpdater;
 @property(nonatomic, strong) UIView* locationBarContainer;
-@property(nonatomic, strong) UIStackView* stackView;
+@property(nonatomic, strong) UIStackView* leadingStackView;
+@property(nonatomic, strong) UIStackView* trailingStackView;
 @property(nonatomic, strong) ToolbarButton* backButton;
 @property(nonatomic, strong) ToolbarButton* forwardButton;
 @property(nonatomic, strong) ToolbarButton* tabSwitchStripButton;
@@ -46,6 +47,7 @@
 @property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
 @property(nonatomic, strong) UIStackView* locationBarContainerStackView;
+
 // Background view, used to display the incognito NTP background color on the
 // toolbar.
 @property(nonatomic, strong) UIView* backgroundView;
@@ -71,7 +73,8 @@
 @synthesize dispatcher = _dispatcher;
 @synthesize expanded = _expanded;
 @synthesize locationBarView = _locationBarView;
-@synthesize stackView = _stackView;
+@synthesize leadingStackView = _leadingStackView;
+@synthesize trailingStackView = _trailingStackView;
 @synthesize loading = _loading;
 @synthesize locationBarContainer = _locationBarContainer;
 @synthesize backButton = _backButton;
@@ -191,7 +194,9 @@
 
   [self setUpToolbarStackView];
   [self setUpLocationBarContainerView];
-  [self.view addSubview:self.stackView];
+  [self.view addSubview:self.leadingStackView];
+  [self.view addSubview:self.locationBarContainer];
+  [self.view addSubview:self.trailingStackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
 }
@@ -205,14 +210,19 @@
 
 // Sets up the StackView that contains toolbar navigation items.
 - (void)setUpToolbarStackView {
-  self.stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
-    self.backButton, self.forwardButton, self.reloadButton, self.stopButton,
-    self.locationBarContainer, self.shareButton, self.tabSwitchStripButton,
-    self.toolsMenuButton
+  self.leadingStackView = [[UIStackView alloc] initWithArrangedSubviews:@[
+    self.backButton, self.forwardButton, self.reloadButton, self.stopButton
   ]];
-  self.stackView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.stackView.spacing = kStackViewSpacing;
-  self.stackView.distribution = UIStackViewDistributionFill;
+  self.leadingStackView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.leadingStackView.spacing = kStackViewSpacing;
+  self.leadingStackView.distribution = UIStackViewDistributionFill;
+
+  self.trailingStackView = [[UIStackView alloc] initWithArrangedSubviews:@[
+    self.shareButton, self.tabSwitchStripButton, self.toolsMenuButton
+  ]];
+  self.trailingStackView.translatesAutoresizingMaskIntoConstraints = NO;
+  self.trailingStackView.spacing = kStackViewSpacing;
+  self.trailingStackView.distribution = UIStackViewDistributionFill;
 }
 
 // Sets up the LocationContainerView. Which contains a StackView containing the
@@ -245,7 +255,7 @@
       .active = YES;
 
   // ProgressBar constraints.
-  NSArray* progressBarConstraints = @[
+  [NSLayoutConstraint activateConstraints:@[
     [self.progressBar.leadingAnchor
         constraintEqualToAnchor:self.view.leadingAnchor],
     [self.progressBar.trailingAnchor
@@ -254,42 +264,70 @@
         constraintEqualToAnchor:self.view.bottomAnchor],
     [self.progressBar.heightAnchor
         constraintEqualToConstant:kProgressBarHeight],
-  ];
-  [NSLayoutConstraint activateConstraints:progressBarConstraints];
+  ]];
 
-  // StackView constraints. The main Toolbar StackView.
-  NSArray* stackViewConstraints = @[
-    [self.stackView.heightAnchor
-        constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
-    [self.stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
-                                                constant:-kVerticalMargin],
-    [self.stackView.leadingAnchor
-        constraintEqualToAnchor:self.view.leadingAnchor
+  // Stack views directly in view constraints. Main StackViews.
+  UILayoutGuide* viewSafeAreaGuide = SafeAreaLayoutGuideForView(self.view);
+  NSArray* stackViewRegularConstraints = @[
+    [self.leadingStackView.leadingAnchor
+        constraintEqualToAnchor:viewSafeAreaGuide.leadingAnchor
                        constant:kHorizontalMargin],
-    [self.stackView.trailingAnchor
-        constraintEqualToAnchor:self.view.trailingAnchor
-                       constant:-kHorizontalMargin],
+    [self.trailingStackView.trailingAnchor
+        constraintEqualToAnchor:viewSafeAreaGuide.trailingAnchor
+                       constant:-kHorizontalMargin]
   ];
-  [self.regularToolbarConstraints addObjectsFromArray:stackViewConstraints];
-  [NSLayoutConstraint activateConstraints:stackViewConstraints];
+  [self.regularToolbarConstraints
+      addObjectsFromArray:stackViewRegularConstraints];
+  [NSLayoutConstraint activateConstraints:stackViewRegularConstraints];
+  [NSLayoutConstraint activateConstraints:@[
+    [self.leadingStackView.heightAnchor
+        constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
+    [self.trailingStackView.heightAnchor
+        constraintEqualToAnchor:self.leadingStackView.heightAnchor],
+    [self.leadingStackView.bottomAnchor
+        constraintEqualToAnchor:self.view.bottomAnchor
+                       constant:-kVerticalMargin],
+    [self.trailingStackView.bottomAnchor
+        constraintEqualToAnchor:self.leadingStackView.bottomAnchor],
+    [self.locationBarContainer.leadingAnchor
+        constraintEqualToAnchor:self.leadingStackView.trailingAnchor
+                       constant:kStackViewSpacing],
+    [self.trailingStackView.leadingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor
+                       constant:kStackViewSpacing],
+  ]];
+
+  // LocationBarContainer constraints.
+  NSArray* locationBarRegularConstraints = @[
+    [self.locationBarContainer.bottomAnchor
+        constraintEqualToAnchor:self.leadingStackView.bottomAnchor],
+    [self.locationBarContainer.topAnchor
+        constraintEqualToAnchor:self.leadingStackView.topAnchor]
+  ];
+  [self.regularToolbarConstraints
+      addObjectsFromArray:locationBarRegularConstraints];
+  [NSLayoutConstraint activateConstraints:locationBarRegularConstraints];
 
   // LocationBarStackView constraints. The StackView inside the
   // LocationBarContainer View.
+  UILayoutGuide* locationBarContainerSafeAreaGuide =
+      SafeAreaLayoutGuideForView(self.locationBarContainer);
   NSLayoutConstraint* locationBarContainerStackViewTopConstraint =
       [self.locationBarContainerStackView.topAnchor
           constraintEqualToAnchor:self.locationBarContainer.topAnchor];
-  NSArray* locationBarViewStackViewConstraints = @[
+  [NSLayoutConstraint activateConstraints:@[
     [self.locationBarContainerStackView.bottomAnchor
         constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
     [self.locationBarContainerStackView.leadingAnchor
-        constraintEqualToAnchor:self.locationBarContainer.leadingAnchor],
+        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
+                                    .leadingAnchor],
     [self.locationBarContainerStackView.trailingAnchor
-        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
+                                    .trailingAnchor],
     locationBarContainerStackViewTopConstraint,
-  ];
+  ]];
   [self.regularToolbarConstraints
       addObject:locationBarContainerStackViewTopConstraint];
-  [NSLayoutConstraint activateConstraints:locationBarViewStackViewConstraints];
 }
 
 #pragma mark - Components Setup
@@ -601,12 +639,16 @@
 
 // Updates all Buttons visibility to match any recent WebState change.
 - (void)updateAllButtonsVisibility {
-  for (UIView* view in self.stackView.arrangedSubviews) {
-    if ([view isKindOfClass:[ToolbarButton class]]) {
-      ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
-      [button updateHiddenInCurrentSizeClass];
+  for (UIStackView* stack in
+       @[ self.leadingStackView, self.trailingStackView ]) {
+    for (UIView* view in stack.arrangedSubviews) {
+      if ([view isKindOfClass:[ToolbarButton class]]) {
+        ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
+        [button updateHiddenInCurrentSizeClass];
+      }
     }
   }
+
   [self.bookmarkButton updateHiddenInCurrentSizeClass];
   [self.voiceSearchButton updateHiddenInCurrentSizeClass];
 }
