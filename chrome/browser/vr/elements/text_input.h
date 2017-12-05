@@ -50,7 +50,12 @@ class TextInput : public UiElement {
   void OnSetSize(gfx::SizeF size) final;
   void OnSetName() final;
 
+  Text* get_hint_element() { return hint_element_; }
+  Text* get_text_element() { return text_element_; }
+  Rect* get_cursor_element() { return cursor_element_; }
+
  private:
+  bool PrepareToDraw() final;
   void LayOutChildren() final;
   bool SetCursorBlinkState(const base::TimeTicks& time);
 
@@ -60,6 +65,7 @@ class TextInput : public UiElement {
   TextInputInfo text_info_;
   bool focused_ = false;
   bool cursor_visible_ = false;
+  gfx::Rect raw_cursor_bounds_;
 
   Text* hint_element_ = nullptr;
   Text* text_element_ = nullptr;

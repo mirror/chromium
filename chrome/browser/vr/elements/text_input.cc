@@ -48,6 +48,7 @@ TextInput::TextInput(int maximum_width_pixels,
   this->AddChild(std::move(text));
 
   auto cursor = base::MakeUnique<Rect>();
+  cursor->SetVisible(false);
   cursor->set_type(kTypeTextInputCursor);
   cursor->set_draw_phase(kPhaseForeground);
   cursor->set_hit_testable(false);
@@ -81,7 +82,8 @@ void TextInput::OnFocusChanged(bool focused) {
   if (delegate_ && focused)
     delegate_->UpdateInput(text_info_);
 
-  focus_changed_callback_.Run(focused);
+  if (focus_changed_callback_)
+    focus_changed_callback_.Run(focused);
 }
 
 void TextInput::RequestFocus() {
@@ -136,6 +138,17 @@ void TextInput::OnSetName() {
   hint_element_->set_owner_name_for_test(name());
   text_element_->set_owner_name_for_test(name());
   cursor_element_->set_owner_name_for_test(name());
+}
+
+bool TextInput::PrepareToDraw() {
+  // Here, we poll to see if the cursor moved, so that we can determine whether
+  // the layout step must run or not.  This is a workaround for the fact that
+  // layout is not considered when computing scene dirtiness.
+  gfx::Rect raw_bounds = text_element_->GetRawCursorBounds();
+  if (raw_cursor_bounds_ == raw_bounds)
+    return false;
+  raw_cursor_bounds_ = raw_bounds;
+  return true;
 }
 
 void TextInput::LayOutChildren() {
