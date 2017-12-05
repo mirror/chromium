@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660212e5_c8c42c31",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T14:45:33Z",
+      "side": 1,
+      "message": "I think only do this if the end of the method calls ProcessScheduledActions, right? applies to a lot of methods..",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
