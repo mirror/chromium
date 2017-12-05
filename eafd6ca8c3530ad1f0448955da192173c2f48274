@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10570cb3_59f5efd1",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "mind using ScopedObserver instead?",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3ab5ca_6fa66f09",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem necessary; you\u0027re already invalidating the weak pointers",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dea668_8daec0be",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "please make method order match between .h and .cc",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ae8d2f_d6a1ae0a",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "remove unnecessary comment",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28543b8_6dc99dd4",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "i\u0027m not sure that it makes sense to treat a missing value as false instead of just returning early",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef2d289_1f0b021f",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "please change this comment to something like:\n\n  DisplayForcedOffSetter manages multiple requests to force the display off\n  and coalesces them into SetBacklightsForcedOff D-Bus calls to powerd.",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e45c5d2_45e5a4db",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "update this too; please also be consistent about using \"backlights\" vs. \"displays\" within this code. (i\u0027d recommend sticking to \"backlights\" since this also controls the keyboard backlight.)",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21378a4f_d7a5fa6c",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "\"... until all requests have been destroyed.\"",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46459a20_6e82acaf",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "you can just keep a count here instead, right? i don\u0027t see what keeping track of pointers gets you.",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd097a5f_9dae96cb",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "this touchscreen stuff should probably live in the setter instead of here, since i believe that the touchscreen state should always match the forced-off state.",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fb623e_85b9b8fa",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "nit: document that this isn\u0027t owned",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63070a7_9998e472",
+        "filename": "ash/system/power/scoped_display_forced_off.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "why is this needed? shouldn\u0027t callers just destroy the object when they\u0027re done with it?",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1adc058a_c54bd9c6",
+        "filename": "ash/system/power/scoped_display_forced_off.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T00:07:22Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem necessary either",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
