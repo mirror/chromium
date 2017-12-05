@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3457b12c_e7f69944",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:08:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be using system tray constants in the message center. We should copy these to message_center_style.h or to this file or move them to ash_constants.h.",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338291e3_a8f21fe1",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:08:35Z",
+      "side": 1,
+      "message": "Similar concern here, we should really move this someplace common. Or maybe move message_center to system/tray? (Not in this CL of course).\n\nestade@, jamescook@ - any thoughts / suggestions?",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2a5f61_d4a4beb9",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:08:35Z",
+      "side": 1,
+      "message": "This seems close enough to TrayPopupUtils::ConfigureTrayPopupButton() that we should use that, maybe add a param for the focus painter or set it after the fact?",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
