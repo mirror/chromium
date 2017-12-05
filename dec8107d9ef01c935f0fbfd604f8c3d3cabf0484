@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4fe9f21_002f3ad6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T16:27:17Z",
+      "side": 1,
+      "message": "\u003e I think it might be more helpful to change this to an enum \"action\" style histogram which counts more general things about this class. Here are a few buckets that might make sense:\n\u003e \n\u003e  - Request started\n\u003e  - Blocked\n\u003e  - Not blocked\n\u003e  - Needed sniffing\n\u003e \n\u003e These sorts of histograms are generally useful and easy to expand when a new edge case comes up.\n\nI haven\u0027t seen those before, and don\u0027t see them in histogram_macros.h.  Do you have an example of one I could take a look at?",
+      "parentUuid": "ed6b7625_2224cab4",
+      "revId": "dec8107d9ef01c935f0fbfd604f8c3d3cabf0484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec295e1_3aab75ca",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
