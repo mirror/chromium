@@ -39,6 +39,30 @@
       "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad72032_973930c1",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-05T02:22:01Z",
+      "side": 1,
+      "message": "The goal of this CL is to support Android like inline settings in NotificationViewMD (mock: http://shortn/_b7INL5GhBg ). In order to do that, we need DisableNotification available from MessageView in a way similar to ClickOnNotification. Sorry for ambiguous explanation.",
+      "parentUuid": "9447cdb4_e171d955",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
