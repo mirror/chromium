@@ -7,6 +7,7 @@
 
 #include "base/memory/ptr_util.h"
 #import "ios/chrome/app/main_controller.h"
+#include "ios/chrome/browser/download/pass_kit_mime_type.h"
 #include "ios/chrome/browser/download/pass_kit_test_util.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
