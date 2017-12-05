@@ -793,14 +793,6 @@ void LoginDisplayHostWebUI::OnPreferencesChanged() {
     login_display_->OnPreferencesChanged();
 }
 
-void LoginDisplayHostWebUI::StartDemoAppLaunch() {
-  VLOG(1) << "Login WebUI >> starting demo app.";
-  SetStatusAreaVisible(false);
-
-  demo_app_launcher_.reset(new DemoAppLauncher());
-  demo_app_launcher_->StartDemoAppLaunch();
-}
-
 void LoginDisplayHostWebUI::StartAppLaunch(const std::string& app_id,
                                            bool diagnostic_mode,
                                            bool auto_launch) {
