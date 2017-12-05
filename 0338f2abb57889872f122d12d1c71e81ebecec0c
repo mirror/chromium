@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "528d09b2_b0ea9711",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:19:33Z",
+      "side": 1,
+      "message": "Since this is exposed in another function as \"ThreadSpecificInstance()\", let\u0027s re-use that word:\n\"ResetThreadSpecificInstanceForTesting()\"\n\n\"Clear\" or \"Reset\" sound a bit better than \"Remove\" here for me.",
+      "revId": "0338f2abb57889872f122d12d1c71e81ebecec0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55b2ee1_217851c9",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:19:33Z",
+      "side": 1,
+      "message": "There are blank lines between some of these functions and not others. I think we don\u0027t need a blank line for all these that are just NOTREACHED().",
+      "revId": "0338f2abb57889872f122d12d1c71e81ebecec0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a67541_13502bf1",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:19:33Z",
+      "side": 1,
+      "message": "I think we can remove \"immediately\": otherwise it sounds like it should do it synchronously which isn\u0027t necessarily what we\u0027re trying to test.",
+      "revId": "0338f2abb57889872f122d12d1c71e81ebecec0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b10ea6_09183dcd",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:19:33Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "0338f2abb57889872f122d12d1c71e81ebecec0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
