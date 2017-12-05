@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6e5a6a_48fe2a98",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-05T23:31:11Z",
+      "side": 1,
+      "message": "Who keeps the Frame object alive while the worklet is running?\n\ni.e., is it sufficient to block out the null frame case only when the worklet starts?",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
