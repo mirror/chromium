@@ -16,6 +16,24 @@
       "revId": "3234c5393ea736ffa926bc5f15fcc0e858f76e44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f873b371_129bdee9",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-12-05T00:25:05Z",
+      "side": 1,
+      "message": "What happens when there\u0027s only a 2.0f representation here? It seems that would pass a NullImageRep to SerializeImageRepresentation().\n\nThis seems to be a behaviour change.",
+      "parentUuid": "d8137511_5c185d63",
+      "revId": "3234c5393ea736ffa926bc5f15fcc0e858f76e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
