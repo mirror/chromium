@@ -452,8 +452,10 @@ AtomicString SecurityOrigin::ToAtomicString() const {
   if (SerializesAsNull())
     return AtomicString("null");
 
-  if (protocol_ == "file")
+  if (protocol_ == "file") {
+    DCHECK(!block_local_access_from_local_origin_);
     return AtomicString("file://");
+  }
 
   StringBuilder result;
   BuildRawString(result, true);
@@ -467,8 +469,10 @@ String SecurityOrigin::ToPhysicalOriginString() const {
 }
 
 String SecurityOrigin::ToRawString() const {
-  if (protocol_ == "file")
-    return "file://";
+  if (protocol_ == "file") {
+    DCHECK(!block_local_access_from_local_origin_);
+    return AtomicString("file://");
+  }
 
   StringBuilder result;
   BuildRawString(result, true);
@@ -476,8 +480,10 @@ String SecurityOrigin::ToRawString() const {
 }
 
 String SecurityOrigin::ToRawStringIgnoreSuborigin() const {
-  if (protocol_ == "file")
+  if (protocol_ == "file") {
+    DCHECK(!block_local_access_from_local_origin_);
     return "file://";
+  }
 
   StringBuilder result;
   BuildRawString(result, false);

@@ -61,7 +61,7 @@ bool IsValidOriginIdentifier(const std::string& identifier) {
 }
 
 static bool SchemeIsUnique(const std::string& scheme) {
-  return scheme == "about" || scheme == "data" || scheme == "javascript";
+  return scheme == "about" || scheme == "data" || scheme == "javascript" || scheme == "file";
 }
 
 // static
