@@ -19,6 +19,236 @@
     },
     {
       "key": {
+        "uuid": "7b1fbc04_660efc51",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "Should have a comment.",
+      "range": {
+        "startLine": 2217,
+        "startChar": 21,
+        "endLine": 2217,
+        "endChar": 28
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940a046b_ad4b47eb",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "Should be in an anonymous namespace up top.",
+      "range": {
+        "startLine": 2217,
+        "startChar": 0,
+        "endLine": 2217,
+        "endChar": 6
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ad8dd2_0162ff0e",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "If we were to keep this argument, this should have explicit.  But since we don\u0027t need to keep it, explicit shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 2221,
+        "startChar": 21,
+        "endLine": 2221,
+        "endChar": 33
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db88a2af_3cf6ac63",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "set priority to IDLE?",
+      "range": {
+        "startLine": 2222,
+        "startChar": 10,
+        "endLine": 2222,
+        "endChar": 35
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862c8109_13b27913",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "Google style guide prohibits uncommon abbreviations.  Can just call this refresher, or dns_refresher.",
+      "range": {
+        "startLine": 2227,
+        "startChar": 18,
+        "endLine": 2227,
+        "endChar": 30
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e709773_440c7295",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "info_ isn\u0027t necessary.  Whenever anything is passed in by const ref, can assume the method copies it if it needs to hold on to a copy.  So can just create a copy of info on the stack, modify it, and pass it in, getting rid of the class variable.",
+      "range": {
+        "startLine": 2229,
+        "startChar": 26,
+        "endLine": 2229,
+        "endChar": 31
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64363e63_7685a52a",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "Reference counting is widely viewed by the network stack team as an anti-pattern, unless really needed.  Here, we can just use base::Passed(std::move(dr)) and a unique_ptr.  We do have to grab pointers before the Resolve call, but it\u0027s still clearer than using reference counting.\n\n\n\nIf I were writing this code, I might ever just make this a HostResolverImpl member function instead of a class - the only thing arguing against that is that out_req makes the call a little ugly.  It would look something like:\n\nauto request \u003d std::make_unique\u003cunique_ptr\u003cHostResolver::Request\u003e\u003e;\nunique_ptr\u003cHostResolver::Request\u003e request_ptr \u003d request.get();\nauto addresses \u003d std::make_unique\u003cAddressList\u003e;\nAddressList addresses_ptr \u003d addresses.get();\n\nresolver-\u003eResolve(...address_ptr,\n                  [](ReallyUglyTypeList) {} (std::move(request), std::move(addresses),\n                  request_ptr, ...);\n\nThe advantage of making it a method instead of a class is that its behavior is a bit more function-like than class-like.\n\nOr could even make HostResolverImpl have a private pre-resolve method that more naturally supports prefetching (No callback needed, no address list needed, no unique_ptr\u003cRequest\u003e needed to cancel)",
+      "range": {
+        "startLine": 2230,
+        "startChar": 34,
+        "endLine": 2230,
+        "endChar": 46
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a09372_8be86d59",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2237,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "nit:  Blank line between methods and member variables.",
+      "range": {
+        "startLine": 2237,
+        "startChar": 11,
+        "endLine": 2237,
+        "endChar": 23
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8e2166_4a033967",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 2240,
+        "startChar": 32,
+        "endLine": 2240,
+        "endChar": 39
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d891c9_f1cce553",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:44:34Z",
+      "side": 1,
+      "message": "One concern here is this potentially queues up a lot of DNS activity that is basically impossible to cancel.  If the network is hosed, normally cancelling the page load would cancel all associated network activity, and allow new activity to be started with a clean slate.  If we have 6 hung pre-resolves, however, those can\u0027t be canceled.  May want a timer to protect against that.\n\nAdmittedly, that\u0027s not perfect (Since timers are canceled in order, things could actually go very badly, actually).  We could give the HostResolver itself a list of them all, and cancel them all at once or something.\n\nOr we only prefetch of there are less than X outstanding requests (Either without a timer, or with a request timers instead).",
+      "range": {
+        "startLine": 2277,
+        "startChar": 32,
+        "endLine": 2277,
+        "endChar": 34
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90a6c74e_d1f2b734",
         "filename": "net/dns/host_resolver_impl_unittest.cc",
         "patchSetId": 9
