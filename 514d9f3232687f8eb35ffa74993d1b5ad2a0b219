@@ -22,6 +22,30 @@
       "revId": "514d9f3232687f8eb35ffa74993d1b5ad2a0b219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152c27ab_f8375a94",
+        "filename": "ui/aura/mus/mus_context_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T23:41:21Z",
+      "side": 0,
+      "message": "The old code was building a map where the key is format/usage, and the value was the texture target.\nHere they were populating the map with TEXTURE_2D for every possible key. That is wrong, http://crbug.com/675431 to track it.\n\nWith this change the list will contain only the format/usage pairs that should not use TEXTURE_2D, so this map becomes an empty list.\n\nSo, to answer directly to your question, yes, they should be equivalent.",
+      "parentUuid": "74727ca5_ac92e1ed",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 1
+      },
+      "revId": "514d9f3232687f8eb35ffa74993d1b5ad2a0b219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
