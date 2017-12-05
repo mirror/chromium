@@ -328,6 +328,8 @@ void glEnableFn(GLenum cap) override;
 void glEnableVertexAttribArrayFn(GLuint index) override;
 void glEndQueryFn(GLenum target) override;
 void glEndTransformFeedbackFn(void) override;
+void glErrorCallbackANGLEFn(GLERRORCALLBACKPROCANGLE callback,
+                            const void* userParam) override;
 GLsync glFenceSyncFn(GLenum condition, GLbitfield flags) override;
 void glFinishFn(void) override;
 void glFinishFenceAPPLEFn(GLuint fence) override;

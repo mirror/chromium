@@ -1424,6 +1424,8 @@ void FeatureInfo::InitializeFeatures() {
   feature_flags_.angle_robust_resource_initialization =
       gl::HasExtension(extensions, "GL_ANGLE_robust_resource_initialization");
   feature_flags_.nv_fence = gl::HasExtension(extensions, "GL_NV_fence");
+  feature_flags_.angle_error_callback =
+      gl::HasExtension(extensions, "GL_ANGLE_error_callback");
 }
 
 void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
