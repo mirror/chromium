@@ -767,12 +767,11 @@ TEST_F(UDPSocketTest, TestBindToNetwork) {
         socket.BindToNetwork(NetworkChangeNotifier::kInvalidNetworkHandle));
 
     // Test successful binding, if possible.
-    if (NetworkChangeNotifier::AreNetworkHandlesSupported()) {
-      NetworkChangeNotifier::NetworkHandle network_handle =
-          NetworkChangeNotifier::GetDefaultNetwork();
-      if (network_handle != NetworkChangeNotifier::kInvalidNetworkHandle) {
-        EXPECT_EQ(OK, socket.BindToNetwork(network_handle));
-      }
+    EXPECT_TRUE(NetworkChangeNotifier::AreNetworkHandlesSupported());
+    NetworkChangeNotifier::NetworkHandle network_handle =
+        NetworkChangeNotifier::GetDefaultNetwork();
+    if (network_handle != NetworkChangeNotifier::kInvalidNetworkHandle) {
+      EXPECT_EQ(OK, socket.BindToNetwork(network_handle));
     }
   }
 #endif
