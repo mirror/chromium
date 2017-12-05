@@ -272,6 +272,10 @@ void SingleThreadProxy::SetDeferCommits(bool defer_commits) {
   scheduler_on_impl_thread_->SetDeferCommits(defer_commits);
 }
 
+void SingleThreadProxy::RequestPresentationTimeForNextFrame(uint32_t token) {
+  host_impl_->RequestPresentationTimeForNextFrame(token);
+}
+
 bool SingleThreadProxy::CommitRequested() const {
   DCHECK(task_runner_provider_->IsMainThread());
   return commit_requested_;
@@ -460,6 +464,14 @@ void SingleThreadProxy::NotifyImageDecodeRequestFinished() {
     return;
   }
   SetNeedsCommitOnImplThread();
+}
+
+void SingleThreadProxy::DidPresentCompositorFrame(
+    const base::flat_set<uint32_t>& tokens,
+    base::TimeTicks time,
+    base::TimeDelta refresh,
+    uint32_t flags) {
+  layer_tree_host_->DidPresentCompositorFrame(tokens, time, refresh, flags);
 }
 
 void SingleThreadProxy::RequestBeginMainFrameNotExpected(bool new_state) {

@@ -49,6 +49,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void SetNeedsRedraw(const gfx::Rect& damage_rect) override;
   void SetNextCommitWaitsForActivation() override;
   void NotifyInputThrottledUntilCommit() override {}
+  void RequestPresentationTimeForNextFrame(uint32_t token) override;
   void SetDeferCommits(bool defer_commits) override;
   bool CommitRequested() const override;
   void MainThreadHasStoppedFlinging() override {}
@@ -116,6 +117,10 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void NeedsImplSideInvalidation(bool needs_first_draw_on_activation) override;
   void RequestBeginMainFrameNotExpected(bool new_state) override;
   void NotifyImageDecodeRequestFinished() override;
+  void DidPresentCompositorFrame(const base::flat_set<uint32_t>& tokens,
+                                 base::TimeTicks time,
+                                 base::TimeDelta refresh,
+                                 uint32_t flags) override;
 
   void RequestNewLayerTreeFrameSink();
 

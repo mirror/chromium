@@ -51,6 +51,8 @@ class CC_EXPORT Proxy {
 
   virtual void NotifyInputThrottledUntilCommit() = 0;
 
+  virtual void RequestPresentationTimeForNextFrame(uint32_t token) = 0;
+
   // Defers commits until it is reset. It is only supported when using a
   // scheduler.
   virtual void SetDeferCommits(bool defer_commits) = 0;
