@@ -39,6 +39,8 @@
 #include "net/test/embedded_test_server/request_handler_util.h"
 #include "net/test/test_data_directory.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace net {
 namespace test_server {
 
@@ -51,6 +53,9 @@ EmbeddedTestServer::EmbeddedTestServer(Type type)
       cert_(CERT_OK),
       weak_factory_(this) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  LOG(ERROR) << "@@@ EmbeddedTestServer ctor";
+  base::debug::StackTrace st;
+  st.Print();
 
   if (!is_using_ssl_)
     return;
@@ -73,9 +78,13 @@ EmbeddedTestServer::~EmbeddedTestServer() {
 }
 
 void EmbeddedTestServer::RegisterTestCerts() {
+  LOG(ERROR) << "@@@ RegisterTestCerts 1";
   base::ThreadRestrictions::ScopedAllowIO allow_io_for_importing_test_cert;
+  LOG(ERROR) << "@@@ 2";
   TestRootCerts* root_certs = TestRootCerts::GetInstance();
+  LOG(ERROR) << "@@@ 3";
   bool added_root_certs = root_certs->AddFromFile(GetRootCertPemPath());
+  LOG(ERROR) << "@@@ 4";
   DCHECK(added_root_certs)
       << "Failed to install root cert from EmbeddedTestServer";
 }

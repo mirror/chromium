@@ -5,6 +5,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
+#include "base/files/file_path.h"
 #include "content/public/browser/url_data_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -17,6 +18,12 @@
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/shell/browser/shell.h"
+
+
+#if defined(OS_ANDROID)
+#include "base/test/test_support_android.h"
+#endif
+
 
 namespace content {
 
@@ -91,6 +98,10 @@ class NetworkServiceBrowserTest : public ContentBrowserTest {
  public:
   NetworkServiceBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
+
+#if defined(OS_ANDROID)
+    // base::InitAndroidTestPaths(base::FilePath::FromUTF8Unsafe("/storage/emulated/0/chromium_tests_root"));
+#endif
     EXPECT_TRUE(embedded_test_server()->Start());
 
     WebUIControllerFactory::RegisterFactory(&factory_);
@@ -116,6 +127,8 @@ class NetworkServiceBrowserTest : public ContentBrowserTest {
     // The JS call will fail if disallowed because the process will be killed.
     bool execute_result =
         ExecuteScriptAndExtractBool(shell(), script, &xhr_result);
+    LOG(ERROR) << "@@@ xhr_result = " << xhr_result;
+    LOG(ERROR) << "@@@ execute_result = " << execute_result;
     return xhr_result && execute_result;
   }
 

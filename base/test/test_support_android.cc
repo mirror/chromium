@@ -142,8 +142,10 @@ bool GetTestProviderPath(int key, base::FilePath* result) {
     case base::DIR_SOURCE_ROOT:
       CHECK(g_test_data_dir != nullptr);
       *result = *g_test_data_dir;
+      LOG(ERROR) << __func__ << " @@@ key = " << key << ", result = " << *result;
       return true;
     default:
+      LOG(ERROR) << __func__ << " @@@ false";
       return false;
   }
 }
@@ -151,8 +153,10 @@ bool GetTestProviderPath(int key, base::FilePath* result) {
 void InitPathProvider(int key) {
   base::FilePath path;
   // If failed to override the key, that means the way has not been registered.
-  if (GetTestProviderPath(key, &path) && !PathService::Override(key, path))
+  if (GetTestProviderPath(key, &path) && !PathService::Override(key, path)) {
+    LOG(ERROR) << "@@@, InitPathProvider !";
     PathService::RegisterProvider(&GetTestProviderPath, key, key + 1);
+  }
 }
 
 }  // namespace
@@ -175,6 +179,7 @@ void InitAndroidTestPaths(const FilePath& test_data_dir) {
     CHECK(test_data_dir == *g_test_data_dir);
     return;
   }
+  LOG(ERROR) << "@@@ " << __func__ << " , dir = " << test_data_dir;
   g_test_data_dir = new FilePath(test_data_dir);
   InitPathProvider(DIR_SOURCE_ROOT);
   InitPathProvider(DIR_ANDROID_APP_DATA);

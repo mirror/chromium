@@ -232,6 +232,7 @@ bool PathService::Get(int key, FilePath* result) {
 bool PathService::Override(int key, const FilePath& path) {
   // Just call the full function with true for the value of |create|, and
   // assume that |path| may not be absolute yet.
+  LOG(ERROR) << __func__ << "@@@ key = " << key << " , path = " << path;
   return OverrideAndCreateIfNeeded(key, path, false, true);
 }
 
@@ -252,15 +253,19 @@ bool PathService::OverrideAndCreateIfNeeded(int key,
     // Make sure the directory exists. We need to do this before we translate
     // this to the absolute path because on POSIX, MakeAbsoluteFilePath fails
     // if called on a non-existent path.
-    if (!PathExists(file_path) && !CreateDirectory(file_path))
+    if (!PathExists(file_path) && !CreateDirectory(file_path)) {
+      LOG(ERROR) << "@@@ " << __func__ << " , file path = " << file_path;
       return false;
+    }
   }
 
   // We need to have an absolute path.
   if (!is_absolute) {
     file_path = MakeAbsoluteFilePath(file_path);
-    if (file_path.empty())
+    if (file_path.empty()) {
+      LOG(ERROR) << "@@@ " << __func__ << "file_path.empty()";
       return false;
+    }
   }
   DCHECK(file_path.IsAbsolute());
 

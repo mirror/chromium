@@ -97,6 +97,7 @@ class ScopedCERTValOutParam {
 int MapSecurityError(int err) {
   switch (err) {
     case PR_DIRECTORY_LOOKUP_ERROR:  // DNS lookup error.
+      LOG(ERROR) << "@@@ PR_DIRECTORY_LOOKUP_ERROR";
       return ERR_NAME_NOT_RESOLVED;
     case SEC_ERROR_INVALID_ARGS:
       return ERR_INVALID_ARGUMENT;

@@ -704,6 +704,7 @@ class HostResolverImpl::ProcTask
   }
 
   void Start() {
+    LOG(ERROR) << "@@@ " << __func__;
     DCHECK(network_task_runner_->BelongsToCurrentThread());
     net_log_.BeginEvent(NetLogEventType::HOST_RESOLVER_IMPL_PROC_TASK);
     StartLookupAttempt();
@@ -768,6 +769,7 @@ class HostResolverImpl::ProcTask
                 const uint32_t attempt_number) {
     TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION scoped_heap_context(
         "net/dns/proctask");
+    LOG(ERROR) << "@@@ " << __func__ << " ,host name = " << key_.hostname;
     AddressList results;
     int os_error = 0;
     int error = params_.resolver_proc->Resolve(key_.hostname,
@@ -775,6 +777,9 @@ class HostResolverImpl::ProcTask
                                                key_.host_resolver_flags,
                                                &results,
                                                &os_error);
+
+    LOG(ERROR) << "@@@ " << __func__ << " , error = " << error;
+    LOG(ERROR) << "@@@ " << __func__ << " , os_error= " << os_error;
 
     network_task_runner_->PostTask(
         FROM_HERE, base::Bind(&ProcTask::OnLookupComplete, this, results,
@@ -799,11 +804,14 @@ class HostResolverImpl::ProcTask
                         int error,
                         const int os_error) {
     TRACE_EVENT0(kNetTracingCategory, "ProcTask::OnLookupComplete");
+    LOG(ERROR) << "@@@ " << __func__;
     DCHECK(network_task_runner_->BelongsToCurrentThread());
     // If results are empty, we should return an error.
     bool empty_list_on_ok = (error == OK && results.empty());
-    if (empty_list_on_ok)
+    if (empty_list_on_ok) {
+      LOG(ERROR) << "@@@ empty_list_on_ok";
       error = ERR_NAME_NOT_RESOLVED;
+    }
 
     bool was_retry_attempt = attempt_number > 1;
 

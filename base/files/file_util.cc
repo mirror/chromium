@@ -127,12 +127,14 @@ bool TextContentsEqual(const FilePath& filename1, const FilePath& filename2) {
 bool ReadFileToStringWithMaxSize(const FilePath& path,
                                  std::string* contents,
                                  size_t max_size) {
+  // LOG(ERROR) << "@@@ " << __func__ << " , path = " <<path;
   if (contents)
     contents->clear();
   if (path.ReferencesParent())
     return false;
   FILE* file = OpenFile(path, "rb");
   if (!file) {
+    // LOG(ERROR) <<"@@@ can't open file.";
     return false;
   }
 
@@ -149,6 +151,8 @@ bool ReadFileToStringWithMaxSize(const FilePath& path,
       contents->append(buf.get(), std::min(len, max_size - size));
 
     if ((max_size - size) < len) {
+      // LOG(ERROR) <<"@@@ read_status set to false.";
+
       read_status = false;
       break;
     }
@@ -156,6 +160,9 @@ bool ReadFileToStringWithMaxSize(const FilePath& path,
     size += len;
   }
   read_status = read_status && !ferror(file);
+  // LOG(ERROR) <<"@@@ read_status = ." << read_status;
+  // LOG(ERROR) <<"@@@ ferror(file) = ." << ferror(file);
+
   CloseFile(file);
 
   return read_status;

@@ -52,6 +52,8 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace content {
 
 namespace {
@@ -459,6 +461,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         return;
     }
     status_ = status;
+    LOG(ERROR) << "@@@ URLLoaderRequestController.OnComplete!";
+    // base::debug::StackTrace st;
+    // st.Print();
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnComplete, owner_,
@@ -727,6 +732,9 @@ void NavigationURLLoaderNetworkService::OnComplete(
   // TODO(https://crbug.com/757633): Pass real values in the case of cert
   // errors.
   bool should_ssl_errors_be_fatal = true;
+  LOG(ERROR) << "@@@ should_ssl_errors_be_fatal = true";
+  base::debug::StackTrace st;
+  st.Print();
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              status.ssl_info, should_ssl_errors_be_fatal);
 }

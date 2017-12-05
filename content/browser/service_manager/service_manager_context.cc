@@ -108,6 +108,7 @@ void StartServiceInUtilityProcess(
     service_manager::mojom::ServiceRequest request,
     service_manager::mojom::ConnectResult query_result,
     const std::string& sandbox_string) {
+  LOG(ERROR) << "@@@ " << __func__ << " , sandbox_string = " << sandbox_string;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   service_manager::SandboxType sandbox_type =
       service_manager::UtilitySandboxTypeFromString(sandbox_string);

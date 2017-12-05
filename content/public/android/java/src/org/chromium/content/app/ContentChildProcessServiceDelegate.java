@@ -61,17 +61,21 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public void onServiceCreated() {
+        Log.d("@@@ ", "onServiceCreated");
         ContentProcessInfo.setInChildProcess(true);
     }
 
     @Override
     public void onServiceBound(Intent intent) {
+        Log.d("@@@ ", "onServiceBound");
         mLinkerParams = ChromiumLinkerParams.create(intent.getExtras());
         mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent.getExtras());
     }
 
     @Override
     public void onConnectionSetup(Bundle connectionBundle, List<IBinder> clientInterfaces) {
+        Log.d("@@@ ", "onConnectionSetup");
+        
         mGpuCallback = clientInterfaces != null && !clientInterfaces.isEmpty()
                 ? IGpuProcessCallback.Stub.asInterface(clientInterfaces.get(0))
                 : null;
@@ -89,6 +93,8 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public void preloadNativeLibrary(Context hostContext) {
+        Log.d("@@@ ", "preloadNativeLibrary");
+        
         // This function can be called before command line is set. That is fine because
         // preloading explicitly doesn't run any Chromium code, see NativeLibraryPreloader
         // for more info.
@@ -102,6 +108,8 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public boolean loadNativeLibrary(Context hostContext) {
+        Log.d("@@@ ", "loadNativeLibrary");
+        
         String processType =
                 CommandLine.getInstance().getSwitchValue(ContentSwitches.SWITCH_PROCESS_TYPE);
         // Enable selective JNI registration when the process is not the browser process.
@@ -175,11 +183,15 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public void onBeforeMain() {
+        Log.d("@@@ ", "onBeforeMain");
+        
         nativeInitChildProcess(mCpuCount, mCpuFeatures);
     }
 
     @Override
     public void onDestroy() {
+        Log.d("@@@ ", "onDestroy");
+        
         // Try to shutdown the MainThread gracefully, but it might not have a
         // chance to exit normally.
         nativeShutdownMainThread();
@@ -187,6 +199,8 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public void runMain() {
+        Log.d("@@@ ", "runMain");
+        
         ContentMain.start();
     }
 

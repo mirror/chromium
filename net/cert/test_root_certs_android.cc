@@ -12,10 +12,15 @@
 namespace net {
 
 bool TestRootCerts::Add(X509Certificate* certificate) {
+  LOG(ERROR) << "@@@ " << __func__;
   std::string cert_bytes;
   if (!X509Certificate::GetDEREncoded(certificate->os_cert_handle(),
-                                      &cert_bytes))
-      return false;
+                                      &cert_bytes)) {
+    LOG(ERROR) << "@@@ " << __func__ << " X509Certificate::GetDEREncoded fail!";
+    return false;
+  }
+
+
   android::AddTestRootCertificate(
       reinterpret_cast<const uint8_t*>(cert_bytes.data()), cert_bytes.size());
   empty_ = false;

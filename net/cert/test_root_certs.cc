@@ -12,6 +12,8 @@
 #include "base/threading/thread_restrictions.h"
 #include "net/cert/x509_certificate.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace net {
 
 namespace {
@@ -22,6 +24,7 @@ base::LazyInstance<TestRootCerts>::Leaky
     g_test_root_certs = LAZY_INSTANCE_INITIALIZER;
 
 CertificateList LoadCertificates(const base::FilePath& filename) {
+  LOG(ERROR) << "@@@ " << __func__ << " , filename = " << filename;
   std::string raw_cert;
   if (!base::ReadFileToString(filename, &raw_cert)) {
     LOG(ERROR) << "Can't load certificate " << filename.value();
@@ -44,10 +47,18 @@ bool TestRootCerts::HasInstance() {
 }
 
 bool TestRootCerts::AddFromFile(const base::FilePath& file) {
+  LOG(ERROR) << "@@@ " << __func__ << " , file = " << file;
+  // base::debug::StackTrace st;
+  // st.Print();
   base::ThreadRestrictions::ScopedAllowIO allow_io_for_loading_test_certs;
+  // base::FilePath hack_file = base::FilePath::FromUTF8Unsafe("/storage/emulated/0/chromium_tests_root/net/data/ssl/certificates/root_ca_cert.pem");
+
   CertificateList root_certs = LoadCertificates(file);
-  if (root_certs.empty() || root_certs.size() > 1)
+  if (root_certs.empty() || root_certs.size() > 1) {
+    LOG(ERROR) << "@@@ " << __func__ << " bail out.";
+    LOG(ERROR) << "@@@ " << __func__ << " root_certs.empty() ? " << root_certs.empty();
     return false;
+  }
 
   return Add(root_certs.front().get());
 }

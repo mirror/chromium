@@ -75,11 +75,13 @@ void NetworkServiceTestHelper::RegisterNetworkBinders(
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   service_manager::SandboxType sandbox_type =
       service_manager::SandboxTypeFromCommandLine(*command_line);
+
   if (IsUnsandboxedSandboxType(sandbox_type) ||
       sandbox_type == service_manager::SANDBOX_TYPE_NETWORK) {
+    LOG(ERROR) << "@@@ sandbox type = " << sandbox_type;
     // Register the EmbeddedTestServer's certs, so that any SSL connections to
     // it succeed. Only do this when file I/O is allowed in the current process.
-    net::EmbeddedTestServer::RegisterTestCerts();
+    // net::EmbeddedTestServer::RegisterTestCerts();
   }
 }
 
