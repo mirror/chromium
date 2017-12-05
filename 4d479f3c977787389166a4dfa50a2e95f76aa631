@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab552510_6ae7e2ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-12-05T22:20:17Z",
+      "side": 1,
+      "message": "So the general principle in the current spec is that error identity is not important to preserve. But, the spec still preserves it some times, in determistic ways.\n\nSo we should write tests for what the spec says, since it\u0027s implementable unambiguously, even if we\u0027re not testing a property that\u0027s useful for developers.\n\nIn particular, we should add tests that 1 \u003d\u003d\u003d 2 and 2 \u003d\u003d\u003d 4, but that others are distinct. Just because that\u0027s what the spec says, and we want interoperable implementations there.\n\nThis is somewhat similar to how we write tests for silly things like `imgEl.decode.length \u003d\u003d\u003d 0`, even though it\u0027s not a useful property for developers. It\u0027s still specified, and we want even these things to be interoperable and tested.\n\nDoes that make sense?",
+      "parentUuid": "1e95b591_4960b7f3",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
