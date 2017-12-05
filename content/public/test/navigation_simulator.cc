@@ -72,6 +72,11 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
   base::Closure on_will_process_response_;
 };
 
+int64_t GenerateSequenceNumber() {
+  static int64_t counter = 1;
+  return counter++;
+}
+
 }  // namespace
 
 // static
@@ -440,8 +445,8 @@ void NavigationSimulator::Commit() {
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
-  params.document_sequence_number = params.item_sequence_number + 1;
+  params.item_sequence_number = GenerateSequenceNumber();
+  params.document_sequence_number = GenerateSequenceNumber();
 
   params.page_state = PageState::CreateForTestingWithSequenceNumbers(
       navigation_url_, params.item_sequence_number,
@@ -555,8 +560,8 @@ void NavigationSimulator::CommitErrorPage() {
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
-  params.document_sequence_number = params.item_sequence_number + 1;
+  params.item_sequence_number = GenerateSequenceNumber();
+  params.document_sequence_number = GenerateSequenceNumber();
 
   params.page_state = PageState::CreateForTestingWithSequenceNumbers(
       navigation_url_, params.item_sequence_number,
