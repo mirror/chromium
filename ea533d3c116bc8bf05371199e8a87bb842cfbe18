@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae943b2b_bc2a94af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T00:36:40Z",
+      "side": 1,
+      "message": "nit: the transfer data did not include a text/html string. Per the above paragraph, this only happens on Mac.",
+      "revId": "ea533d3c116bc8bf05371199e8a87bb842cfbe18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79cbdd5_f16b9484",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T00:36:40Z",
+      "side": 1,
+      "message": "nit: And -\u003e Any? (or better yet remove the word?)\n\nsavvy -\u003e careful / well-tested? Better yet, say \"Some Web applications (including Gmail)....\" similarly to the code comment?",
+      "revId": "ea533d3c116bc8bf05371199e8a87bb842cfbe18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee81c9d_4080d833",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T00:36:40Z",
+      "side": 1,
+      "message": "nit: \"Result: On Mac, copying and pasting an image with an ALT tag produces an URL, instead of the copied image.\"?",
+      "revId": "ea533d3c116bc8bf05371199e8a87bb842cfbe18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01da031_946b1b64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T00:36:40Z",
+      "side": 1,
+      "message": "nit: While reading the CL description, I had a bit of trouble separating the \"before\" from the \"after\". \"This CL mitigates the problem described above by...\" is verbose, but can be a clear separation mark between the \"before\" and the \"after\".",
+      "revId": "ea533d3c116bc8bf05371199e8a87bb842cfbe18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c107581_9bb99de2",
+        "filename": "content/renderer/webclipboard_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T00:36:40Z",
+      "side": 1,
+      "message": "nit: \"And\" seems odd here.",
+      "revId": "ea533d3c116bc8bf05371199e8a87bb842cfbe18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
