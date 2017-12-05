@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "base/time/time.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/resource_request_details.h"
 #include "content/public/browser/resource_request_info.h"
@@ -44,12 +43,6 @@ class CONTENT_EXPORT LoaderDelegate {
   virtual void DidGetResourceResponseStart(
       const ResourceRequestInfo::WebContentsGetter& web_contents_getter,
       std::unique_ptr<ResourceRequestDetails> details) = 0;
-
-  // Called when the network stack started handling the navigation request.
-  virtual void LogResourceRequestTime(base::TimeTicks timestamp,
-                                      int render_process_id,
-                                      int render_frame_id,
-                                      const GURL& url) = 0;
 };
 
 }  // namespace content
