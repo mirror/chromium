@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b8ced04_35bea8e9",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T01:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99c77b20_8138e605",
+      "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b6ee69_0aa62586",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 30
@@ -51,6 +69,24 @@
       "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110c5574_562abe73",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T01:53:13Z",
+      "side": 1,
+      "message": "Thanks.  Sounds like we should be ok with expecting Resume() (or cancel), and perhaps the ResourceController::Resume() comment is a bit confusing.",
+      "parentUuid": "5748eca7_ef3e5468",
+      "revId": "d3be6e4d85c951da0e2e1323ea2233562c13cb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

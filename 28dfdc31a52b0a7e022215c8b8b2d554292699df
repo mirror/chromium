@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b4ae209b_c5bce0c9",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T01:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdff7785_5284a8f2",
+      "revId": "28dfdc31a52b0a7e022215c8b8b2d554292699df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3833742_01ac76ea",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 14
