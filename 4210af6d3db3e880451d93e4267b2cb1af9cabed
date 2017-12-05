@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c00c514_a15dbcb8",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-05T16:16:53Z",
+      "side": 1,
+      "message": "explanation is non-nullable.",
+      "range": {
+        "startLine": 520,
+        "startChar": 59,
+        "endLine": 520,
+        "endChar": 0
+      },
+      "revId": "4210af6d3db3e880451d93e4267b2cb1af9cabed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a998f6e1_49dff705",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-05T16:16:53Z",
+      "side": 1,
+      "message": "I think the second sentence is a bit unclear. Maybe something like:\n...Help center article, as all settings page sections contain a help link by default.",
+      "range": {
+        "startLine": 679,
+        "startChar": 44,
+        "endLine": 679,
+        "endChar": 52
+      },
+      "revId": "4210af6d3db3e880451d93e4267b2cb1af9cabed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230edde2_1ff9b40c",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-05T16:16:53Z",
+      "side": 1,
+      "message": "nit: s/Parametrized/Parameterized everywhere in this file.",
+      "revId": "4210af6d3db3e880451d93e4267b2cb1af9cabed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
