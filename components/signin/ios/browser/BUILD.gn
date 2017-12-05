@@ -7,6 +7,8 @@ source_set("browser") {
   sources = [
     "account_consistency_service.h",
     "account_consistency_service.mm",
+    "wait_for_network_callback_helper.cc",
+    "wait_for_network_callback_helper.h",
     "ios_signin_client.cc",
     "ios_signin_client.h",
     "manage_accounts_delegate.h",
@@ -71,6 +73,7 @@ source_set("unit_tests") {
     "account_consistency_service_unittest.mm",
     "active_state_manager_impl_unittest.mm",
     "profile_oauth2_token_service_ios_delegate_unittest.mm",
+    "wait_for_network_callback_helper_unittest.cc",
   ]
 
   deps = [
