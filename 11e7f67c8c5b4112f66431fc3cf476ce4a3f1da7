@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87c56e7_ff04bc16",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T19:49:40Z",
+      "side": 1,
+      "message": "Need to return here, since receiving bad message will terminate the renderer and we should abort processing the message any further.",
+      "revId": "11e7f67c8c5b4112f66431fc3cf476ce4a3f1da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fa53a9_42476a66",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T19:49:40Z",
+      "side": 1,
+      "message": "Similar to above, return.",
+      "revId": "11e7f67c8c5b4112f66431fc3cf476ce4a3f1da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
