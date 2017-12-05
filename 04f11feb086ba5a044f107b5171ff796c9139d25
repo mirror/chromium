@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5fe95bd_7c7cb503",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Since this is a global structure with no locking, please add a comment about concurrency requirements for users accessing it (and preferably add some assertions of the same in the implementation).",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91744bc8_a5c8278e",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Did you mean to leave this?",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca4e4bf_0f49d9b4",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Consider factorying 81-87 out to a function and using it here and at line 94?",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba107b31_005d5425",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Nit:  This terminology is discouraged now because of possible implications of racism.  badlist/goodlist maybe?  If you need to match existing code, then leave it though.",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf582c5_7aaa65a6",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "This gives me some heeby-jeebies.  \n\nIt looks to me like this is not really an \"Observer\" in the way that term is commonly used in the codebase -- rather, it\u0027s a quasi-independent module that updates |printers| in response to pref_change_registrar_ events, but we have a serious spooky-action-at-a-distance structure here that makes me uncomfortable.  \n\nAlso, there\u0027s no mechanism I can see for synchronizing access to the passed ExternalPrinters that this Observer updates, but is presumably used elsewhere.\n\nPossibilities that I think would make this better:\n\n1)  Let this class own the ExternalPrinters and provide access to it as needed.  then all concurrency complexity would be contained in this class.\n\n2)  Turn this into a more traditional pass-through observer that listens to the pref source and invokes some API functions that are actually then implemented in SyncedPrintersManager.",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07f41db_768c21b2",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Needs comment about what this does.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 25
+      },
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7775605_7c622a31",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-05T19:19:01Z",
+      "side": 1,
+      "message": "Polcy?",
+      "range": {
+        "startLine": 239,
+        "startChar": 11,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
