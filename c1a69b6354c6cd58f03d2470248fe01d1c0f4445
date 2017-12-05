@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57f46f3_7df371ce",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-05T01:21:07Z",
+      "side": 1,
+      "message": "Maybe just remove this bit since we only have one and it\u0027s a bit confusing to say above 2015 when we only care about 2017 and above now.",
+      "range": {
+        "startLine": 197,
+        "startChar": 31,
+        "endLine": 197,
+        "endChar": 52
+      },
+      "revId": "c1a69b6354c6cd58f03d2470248fe01d1c0f4445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
