@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80559afc_212160dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T02:44:06Z",
+      "side": 1,
+      "message": "Thanks; done.",
+      "parentUuid": "ee209bcc_591c35f2",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9243630a_8207075a",
         "filename": "content/browser/quota_dispatcher_host.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "90ed8169_00dffaf6",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T02:44:06Z",
+      "side": 1,
+      "message": "Good find. Added todo:\n  // TODO(sashab): net::GetHostOrSpecFromURL(origin.GetURL()) potentially does\n  // wasted work, e.g. if the origin has a host it can return that early. Maybe\n  // rewrite to just convert the host to a string directly.",
+      "parentUuid": "9243630a_8207075a",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350443af_4538d188",
         "filename": "content/common/quota_dispatcher_host.mojom",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "e87729d58e070ed032246e410f9b161382653cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3fb468_5eae980f",
+        "filename": "content/common/quota_dispatcher_host.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T02:44:06Z",
+      "side": 1,
+      "message": "Haha good find, thanks, done.",
+      "parentUuid": "350443af_4538d188",
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "30a36067_798efa33",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4902,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T02:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c688fa_841e7b0e",
+      "range": {
+        "startLine": 4902,
+        "startChar": 19,
+        "endLine": 4902,
+        "endChar": 38
+      },
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e38a0e7f_814156ae",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 1
@@ -96,6 +174,30 @@
       "revId": "e87729d58e070ed032246e410f9b161382653cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b516ae01_f683d305",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T02:44:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e38a0e7f_814156ae",
+      "range": {
+        "startLine": 692,
+        "startChar": 47,
+        "endLine": 692,
+        "endChar": 58
+      },
+      "revId": "e87729d58e070ed032246e410f9b161382653cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
