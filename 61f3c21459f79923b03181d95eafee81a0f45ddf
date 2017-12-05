@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f19c363_52fc0241",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T17:59:42Z",
+      "side": 1,
+      "message": "... for performance wins by saving on costly IO operations and calculations.",
+      "revId": "61f3c21459f79923b03181d95eafee81a0f45ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d76ae1_5b2c5057",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T17:59:42Z",
+      "side": 1,
+      "message": "nit: I think \"non-existent resource with an empty path\" is a bit misleading.  Maybe instead something like:\n// Ask for the root path of the extension (i.e., chrome-extension://\u003cid\u003e/).\n// Verification should skip this request as if the resource were non-existent.\n// See https://crbug.com/791929.",
+      "revId": "61f3c21459f79923b03181d95eafee81a0f45ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffc7474_dddcd1ce",
+        "filename": "extensions/browser/content_verify_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T17:59:42Z",
+      "side": 1,
+      "message": "nit: just inline kEmptyPathResource?\n\nbase::FilePath root_resource_path(FILE_PATH_LITERAL(\"\"));",
+      "revId": "61f3c21459f79923b03181d95eafee81a0f45ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
