@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57b8e3f_f1dcba95",
+        "filename": "ui/events/event_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-05T23:53:21Z",
+      "side": 1,
+      "message": "Just put all of the code in:\n\n  void ValidateEventTimeClock(base::TimeTicks* timestamp) {\n    #if defined(USE_X11) \u0026\u0026 DCHECK_IS_ON()\n      ...\n    #endif  // defined(USE_X11) \u0026\u0026 DCHECK_IS_ON()\n  }",
+      "revId": "6f61301d427f4368f13db45d7803cad6fb0db054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
