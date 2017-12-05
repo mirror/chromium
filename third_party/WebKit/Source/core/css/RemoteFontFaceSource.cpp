@@ -215,9 +215,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
   DCHECK(font_);
 
   if (font_->StillNeedsLoad()) {
-    if (!font_->Url().ProtocolIsData() && !font_->IsLoaded() &&
-        display_ == kFontDisplayAuto &&
-        font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
+    if (is_intervention_triggered_) {
       // Set the loading priority to VeryLow since this font is not required
       // for painting the text.
       font_->DidChangePriority(ResourceLoadPriority::kVeryLow, 0);
@@ -234,10 +232,12 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
     }
     if (is_intervention_triggered_) {
       font_selector_->GetExecutionContext()->AddConsoleMessage(
-          ConsoleMessage::Create(kOtherMessageSource, kInfoMessageLevel,
-                                 "Slow network is detected. Fallback font will "
-                                 "be used while loading: " +
-                                     font_->Url().ElidedString()));
+          ConsoleMessage::Create(
+              kOtherMessageSource, kInfoMessageLevel,
+              "Slow network is detected. See "
+              "https://www.chromestatus.com/feature/5636954674692096 for more "
+              "details. Fallback font will be used while loading: " +
+                  font_->Url().ElidedString()));
     }
   }
 
