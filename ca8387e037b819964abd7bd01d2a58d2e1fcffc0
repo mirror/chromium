@@ -16,6 +16,24 @@
       "revId": "ca8387e037b819964abd7bd01d2a58d2e1fcffc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34158e81_cd7f3863",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22372,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-05T05:01:55Z",
+      "side": 1,
+      "message": "You\u0027re right. I added more context to the histogram summary.",
+      "parentUuid": "b8d8124d_e9846029",
+      "revId": "ca8387e037b819964abd7bd01d2a58d2e1fcffc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
