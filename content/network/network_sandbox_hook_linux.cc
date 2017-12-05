@@ -21,14 +21,14 @@ bool NetworkPreSandboxHook(service_manager::BPFBasePolicy* policy,
   command_set.set(sandbox::syscall_broker::COMMAND_RENAME);
   command_set.set(sandbox::syscall_broker::COMMAND_STAT);
 
-  // TODO(tsepez): FIX THIS.
-  std::vector<BrokerFilePermission> file_permissions = {
-      BrokerFilePermission::ReadWriteCreateRecursive("/")};
-
-  service_manager::SandboxLinux::GetInstance()->StartBrokerProcess(
-      policy, command_set, std::move(file_permissions),
+  // TODO(tsepez): remove universal file permissions.
+  auto* instance = service_manager::SandboxLinux::GetInstance();
+  instance->StartBrokerProcess(
+      policy, command_set,
+      {BrokerFilePermission::ReadWriteCreateRecursive("/")},
       service_manager::SandboxLinux::PreSandboxHook(), options);
 
+  instance->EngageNamespaceSandbox(false /* from_zygote */);
   return true;
 }
 
