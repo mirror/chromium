@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff3dc6d0_5bc9ff6b",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "Nit: no {} needed in C++ when there\u0027s only 1 line in the block below.",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ba8df3_4297a1b0",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "By convention I\u0027d name this SetFocusRingObserverForTesting, but\nsince the implementation is just setting a variable, you could\ninline it:\n\nvoid set_focus_ring_observer_for_testing(...) {\n  focus_ring_observer_for_testing_ \u003d ...\n}",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d471df_834ed5cf",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "This might not be needed if it\u0027s only for tests?\nThe callback can be made safe, e.g. using a weak reference.",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9639a03a_d45c10df",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "I believe the type of this can just be:\n\nbase::RepeatingCallback\u003cvoid()\u003e observer_;\n\nCallbacks can be moved between variables efficiently, you\ndon\u0027t need to use a pointer.",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc1202c_edb4ddfc",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "Normally the loop runner would be constructed earlier.\nThat way this code still succeeds if OnFocusRingChanged\ngets called *before* WaitForFocusRingChanged gets called,\nwhich is theoretically possible, I believe.\n\nIn particular, LoopRunner is designed so that if you call\nQuitClosure() before you call Run(), Run() will exit\nimmediately.",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d271545_b0e4bb6e",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "Instead of base::Unretained(), add a weak pointer factory to\nSelectToSpeakTest and then you won\u0027t have to worry about\nresetting the observer.\n\nKeep in mind that if an assertion in the test fails it can\nreturn early, which could then lead to a crash.",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ac850e_a92c9936",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "Make this more readable by putting focus_rings-\u003eat(0)-\u003elayer()-\u003eGetTargetBounds() in a temporary variable",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bc75d2_90934432",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:46:36Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
