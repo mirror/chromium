@@ -16,10 +16,13 @@ component("x11") {
     "//ui/base",
     "//ui/events",
     "//ui/events/devices",
-    "//ui/events/devices/x11",
     "//ui/events/platform",
-    "//ui/events/platform/x11",
     "//ui/gfx/x",
+  ]
+
+  public_deps = [
+    "//ui/events/devices/x11",
+    "//ui/events/platform/x11",
     "//ui/platform_window",
   ]
 
@@ -50,6 +53,24 @@ component("x11") {
     sources += [
       "x11_window.cc",
       "x11_window.h",
+    ]
+  }
+}
+
+source_set("x11_ozone_unittests") {
+  testonly = true
+
+  if (ozone_platform_x11) {
+    sources = [
+      "x11_window_ozone_unittest.cc",
+    ]
+
+    deps = [
+      ":x11",
+      "//base/test:test_support",
+      "//testing/gmock",
+      "//testing/gtest",
+      "//ui/events:test_support",
     ]
   }
 }
