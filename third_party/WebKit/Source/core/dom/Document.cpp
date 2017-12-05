@@ -3245,13 +3245,7 @@ void Document::ImplicitClose() {
   // (if your platform is syncing flushes and limiting them to 60fps).
   if (!LocalOwner() || (LocalOwner()->GetLayoutObject() &&
                         !LocalOwner()->GetLayoutObject()->NeedsLayout())) {
-    UpdateStyleAndLayoutTree();
-
-    // Always do a layout after loading if needed.
-    if (View() && !GetLayoutViewItem().IsNull() &&
-        (!GetLayoutViewItem().FirstChild() ||
-         GetLayoutViewItem().NeedsLayout()))
-      View()->UpdateLayout();
+    UpdateStyleAndLayout();
   }
 
   load_event_progress_ = kLoadEventCompleted;

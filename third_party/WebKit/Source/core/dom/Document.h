@@ -479,9 +479,6 @@ class CORE_EXPORT Document : public ContainerNode,
     return *style_engine_.Get();
   }
 
-  bool GotoAnchorNeededAfterStylesheetsLoad() {
-    return goto_anchor_needed_after_stylesheets_load_;
-  }
   void SetGotoAnchorNeededAfterStylesheetsLoad(bool b) {
     goto_anchor_needed_after_stylesheets_load_ = b;
   }

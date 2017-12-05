@@ -1324,8 +1324,7 @@ void LocalFrameView::UpdateLayout() {
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
 
-  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
-                                           DocumentLifecycle::kLayoutClean);
+  Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
   frame_timing_requests_dirty_ = true;
 
