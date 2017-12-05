@@ -215,29 +215,32 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
   DCHECK(font_);
 
   if (font_->StillNeedsLoad()) {
-    if (!font_->Url().ProtocolIsData() && !font_->IsLoaded() &&
-        display_ == kFontDisplayAuto &&
-        font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
+    if (is_intervention_triggered_) {
+      font_selector_->GetExecutionContext()->AddConsoleMessage(
+          ConsoleMessage::Create(
+              kOtherMessageSource, kInfoMessageLevel,
+              "Slow network is detected. See "
+              "https://www.chromestatus.com/feature/5636954674692096 for more "
+              "details. Fallback font will be used while loading: " +
+                  font_->Url().ElidedString()));
+    }
+    if (font_->IsLowPriorityLoadingAllowedForRemoteFont()) {
       // Set the loading priority to VeryLow since this font is not required
-      // for painting the text.
+      // for painting the text by all clients including |this|.
       font_->DidChangePriority(ResourceLoadPriority::kVeryLow, 0);
     }
     if (font_selector_->GetExecutionContext()->Fetcher()->StartLoad(font_)) {
       // Start timers only when load is actually started asynchronously.
-      if (!font_->IsLoaded()) {
+      // Note that StartLoad() may clear |font_| internally if the request
+      // finishes synchronously.
+      if (!IsLoaded()) {
+        DCHECK(font_);
         font_->StartLoadLimitTimers(
             font_selector_->GetExecutionContext()
                 ->GetTaskRunner(TaskType::kUnspecedLoading)
                 .get());
       }
       histograms_.LoadStarted();
-    }
-    if (is_intervention_triggered_) {
-      font_selector_->GetExecutionContext()->AddConsoleMessage(
-          ConsoleMessage::Create(kOtherMessageSource, kInfoMessageLevel,
-                                 "Slow network is detected. Fallback font will "
-                                 "be used while loading: " +
-                                     font_->Url().ElidedString()));
     }
   }
 
