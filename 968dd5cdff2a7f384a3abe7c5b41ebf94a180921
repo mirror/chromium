@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49bffa7d_d4e6d7a1",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 147,
+        "startChar": 51,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb0f3d9_111bd751",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "do you actually need this enum? you\u0027re observing BacklightsForcedOffSetter, which has its own similar enum (which it notifies observers about).",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce39b7b6_a985c87f",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "please avoid inheritance when possible. if you need FakePowerManagerClient to do additional things that aren\u0027t currently possible, please add them to the existing class instead.",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24faad32_04b4aec8",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "nit: move getters/setters below d\u0027tor",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5378e417_153b5f70",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "const",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b051ae_95cdd642",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "document what this does",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c781396_66310e90",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "make this member protected instead?",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d32944_36a64dbf",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "how could the timer ever be null?",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efb144d_1af5635c",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "how could the timer ever be null?",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bed8b4e_b2691ef3",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "protected?",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b83f43_753d7cbd",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "nit: deferred",
+      "range": {
+        "startLine": 181,
+        "startChar": 50,
+        "endLine": 181,
+        "endChar": 58
+      },
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a6fe20_278a5714",
+        "filename": "ash/tray_action/tray_action.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "document the interface that this comes from",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc60eb4_efc7caf7",
+        "filename": "ash/tray_action/tray_action.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T21:36:52Z",
+      "side": 1,
+      "message": "move accessor after d\u0027tor",
+      "revId": "968dd5cdff2a7f384a3abe7c5b41ebf94a180921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
