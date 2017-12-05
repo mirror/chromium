@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d2e9e7_b26a6b1a",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-05T18:18:44Z",
+      "side": 1,
+      "message": "You should be able to directly initialize the vector with the data of the vector using another constructor. Even if not, you should use memcpy here instead char by char assignment.",
+      "revId": "821702f7ef94648e24086cf6223cff42085bcd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9d2f66_13a1afca",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-05T18:18:44Z",
+      "side": 1,
+      "message": "Must user hacker_style() for inline methods.",
+      "revId": "821702f7ef94648e24086cf6223cff42085bcd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
