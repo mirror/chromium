@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3bab2b9c_2acbaf00",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/resources/authenticator-helpers.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T18:12:20Z",
+      "side": 1,
+      "message": "Actually, let me rename this now.",
+      "parentUuid": "9f79f5c4_40604f8e",
+      "revId": "c1b63f7117d1c8d6fd4770447f2b5203522d3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c19a7eb4_df59af8a",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/Credential.h",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "c1b63f7117d1c8d6fd4770447f2b5203522d3729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a696b6d4_f7a2b6c7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/Credential.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T18:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19a7eb4_df59af8a",
+      "revId": "c1b63f7117d1c8d6fd4770447f2b5203522d3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
