@@ -12,6 +12,7 @@
 #include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "third_party/zlib/google/zip_internal.h"
@@ -82,6 +83,12 @@ class DirectFileAccessor : public FileAccessor {
 
   DISALLOW_COPY_AND_ASSIGN(DirectFileAccessor);
 };
+
+std::unique_ptr<WriterDelegate> CreateFilePathWriterDelegate(
+    const base::FilePath& dest_dir,
+    const base::FilePath& entry_path) {
+  return base::MakeUnique<FilePathWriterDelegate>(dest_dir.Append(entry_path));
+}
 
 }  // namespace
 
@@ -166,9 +173,19 @@ bool UnzipWithFilterCallback(const base::FilePath& src_file,
                              const base::FilePath& dest_dir,
                              const FilterCallback& filter_cb,
                              bool log_skipped_files) {
+  base::File file(src_file, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  return UnzipWithFilterAndWriters(
+      file, base::BindRepeating(&CreateFilePathWriterDelegate, dest_dir),
+      filter_cb, log_skipped_files);
+}
+
+bool UnzipWithFilterAndWriters(const base::File& src_file,
+                               const WriterFactory& writer_factory,
+                               const FilterCallback& filter_cb,
+                               bool log_skipped_files) {
   ZipReader reader;
-  if (!reader.Open(src_file)) {
-    DLOG(WARNING) << "Failed to open " << src_file.value();
+  if (!reader.OpenFromPlatformFile(src_file.GetPlatformFile())) {
+    DLOG(WARNING) << "Failed to open src_file";
     return false;
   }
   while (reader.HasMore()) {
@@ -176,20 +193,24 @@ bool UnzipWithFilterCallback(const base::FilePath& src_file,
       DLOG(WARNING) << "Failed to open the current file in zip";
       return false;
     }
+    const base::FilePath& entry_path = reader.current_entry_info()->file_path();
     if (reader.current_entry_info()->is_unsafe()) {
-      DLOG(WARNING) << "Found an unsafe file in zip "
-                    << reader.current_entry_info()->file_path().value();
+      DLOG(WARNING) << "Found an unsafe file in zip " << entry_path;
       return false;
     }
-    if (filter_cb.Run(reader.current_entry_info()->file_path())) {
-      if (!reader.ExtractCurrentEntryIntoDirectory(dest_dir)) {
-        DLOG(WARNING) << "Failed to extract "
-                      << reader.current_entry_info()->file_path().value();
+    if (filter_cb.Run(entry_path)) {
+      std::unique_ptr<WriterDelegate> writer = writer_factory.Run(entry_path);
+      // TODO: create directory if item is a directory - provide this as arg to
+      // WriterDelegate, or expand it somehow?
+      if (!reader.ExtractCurrentEntry(writer.get(),
+                                      std::numeric_limits<uint64_t>::max())) {
+        DLOG(WARNING) << "Failed to extract " << entry_path;
         return false;
       }
+      // TODO: touch file to update timestamps - add a PostProcess func to
+      // WriterDelegate?
     } else if (log_skipped_files) {
-      DLOG(WARNING) << "Skipped file "
-                    << reader.current_entry_info()->file_path().value();
+      DLOG(WARNING) << "Skipped file " << entry_path;
     }
 
     if (!reader.AdvanceToNextEntry()) {

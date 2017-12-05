@@ -19,6 +19,8 @@ class File;
 
 namespace zip {
 
+class WriterDelegate;
+
 // Abstraction for file access operation required by Zip().
 // Can be passed to the ZipParams for providing custom access to the files,
 // for example over IPC.
@@ -155,6 +157,19 @@ bool UnzipWithFilterCallback(const base::FilePath& zip_file,
                              const base::FilePath& dest_dir,
                              const FilterCallback& filter_cb,
                              bool log_skipped_files);
+
+// Unzip the contents of zip_file, using the writers provided by writer_factory.
+// For each file in zip_file, include it only if the callback |filter_cb|
+// returns true. Otherwise omit it.
+// If |log_skipped_files| is true, files skipped during extraction are printed
+// to debug log.
+typedef base::RepeatingCallback<std::unique_ptr<WriterDelegate>(
+    const base::FilePath&)>
+    WriterFactory;
+bool UnzipWithFilterAndWriters(const base::File& zip_file,
+                               const WriterFactory& writer_factory,
+                               const FilterCallback& filter_cb,
+                               bool log_skipped_files);
 
 // Unzip the contents of zip_file into dest_dir.
 bool Unzip(const base::FilePath& zip_file, const base::FilePath& dest_dir);

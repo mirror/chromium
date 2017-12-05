@@ -69,12 +69,12 @@ static_library("update_client") {
     "//components/data_use_measurement/core",
     "//components/patch_service/public/cpp",
     "//components/prefs",
+    "//components/unzip_service/public/cpp",
     "//components/version_info:version_info",
     "//courgette:courgette_lib",
     "//crypto",
     "//net",
     "//third_party/libxml",
-    "//third_party/zlib/google:zip",
     "//url",
   ]
   libs = []
