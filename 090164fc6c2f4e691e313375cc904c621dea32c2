@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca50e3f_4d0bbbbc",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-05T18:09:59Z",
+      "side": 1,
+      "message": "lgtm, but you could also just add kNoClockless here.",
+      "revId": "090164fc6c2f4e691e313375cc904c621dea32c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
