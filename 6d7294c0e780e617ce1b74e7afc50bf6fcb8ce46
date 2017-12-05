@@ -104,6 +104,24 @@
       "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd34c1b_28745752",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-05T07:12:51Z",
+      "side": 1,
+      "message": "Thanks! Maybe worth putting the second paragraph into the comment?",
+      "parentUuid": "e2d7e461_4c65765c",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

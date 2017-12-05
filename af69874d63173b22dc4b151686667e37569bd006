@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e366c6db_f0d3265c",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-05T07:12:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure it works now: real_default_entry-\u003edevice_name/real_communications_entry-\u003edevice_name may be moved here before they are used, right?",
+      "revId": "af69874d63173b22dc4b151686667e37569bd006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fac41d_4d4efce4",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-05T07:12:51Z",
+      "side": 1,
+      "message": "Are these special device entries explained anywhere?",
+      "revId": "af69874d63173b22dc4b151686667e37569bd006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
