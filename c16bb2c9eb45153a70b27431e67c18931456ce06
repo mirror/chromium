@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2198e7c_fcac5781",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-05T21:38:20Z",
+      "side": 1,
+      "message": "Nit: Because we end up checking this basically every time we change it, we could just forego the variable and use explicit checks:\n\n  if (!transaction.Begin())\n    return false;\n\n  ...\n\n    if (!update_statement.Run())\n      return false;\n\netc.  This would let us convert the end of the function to simply unconditionally return transaction.Commit().\n\nThe other route would be to never bail out anywhere in the function, and use the variable like you\u0027re doing now, but I think checking along the way is clearer (and faster).",
+      "revId": "c16bb2c9eb45153a70b27431e67c18931456ce06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a834a5c_095867ed",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-05T21:38:20Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "c16bb2c9eb45153a70b27431e67c18931456ce06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991cbb75_7eed024b",
+        "filename": "components/search_engines/keyword_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-05T21:38:20Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t check the return value of this",
+      "revId": "c16bb2c9eb45153a70b27431e67c18931456ce06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef06da7c_b4e58679",
+        "filename": "components/webdata/common/web_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-05T21:38:20Z",
+      "side": 1,
+      "message": "This needs to be updated; v77 databases will be read incorrectly by a copy of Chrome that parses them like a v72 database.",
+      "revId": "c16bb2c9eb45153a70b27431e67c18931456ce06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad04bdc9_5bd32b5f",
+        "filename": "components/webdata/common/web_database_migration_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-05T21:38:20Z",
+      "side": 1,
+      "message": "Nit: You could optionally break these numbers down as\n11644473600000000 + 123 * 1000000 (etc.), and then pull out the initial 123/456/789 values to some tuple that you used to compute the values here, just so these wouldn\u0027t seem magic... but there\u0027s not a whole ton of win in doing something like that, so feel free to ignore me.",
+      "revId": "c16bb2c9eb45153a70b27431e67c18931456ce06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
