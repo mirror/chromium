@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "02ec8cfe_35923439",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-05T21:26:30Z",
+      "side": 1,
+      "message": "Yes --filter sounds better",
+      "parentUuid": "d5780b84_4bb3bd58",
+      "revId": "58d8614f5ccc1231f7a391ee26119669c094fbe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61fdac91_8da041fb",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 1
