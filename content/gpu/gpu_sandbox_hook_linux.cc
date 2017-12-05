@@ -347,7 +347,7 @@ bool BrokerProcessPreSandboxHook(
 bool GpuProcessPreSandboxHook(service_manager::BPFBasePolicy* policy,
                               service_manager::SandboxLinux::Options options) {
   service_manager::SandboxLinux::GetInstance()->StartBrokerProcess(
-      policy, CommandSetForGPU(options), FilePermissionsForGpu(options),
+      CommandSetForGPU(options), FilePermissionsForGpu(options),
       base::BindOnce(BrokerProcessPreSandboxHook), options);
 
   if (!LoadLibrariesForGpu(options))
