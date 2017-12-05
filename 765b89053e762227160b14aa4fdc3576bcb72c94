@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0f2fa19_3ebac34f",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-05T15:41:57Z",
+      "side": 1,
+      "message": "I thought I had to remove this... and obviously I should not.\ndone",
+      "parentUuid": "460ef949_07b1a8f0",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 16
+      },
+      "revId": "765b89053e762227160b14aa4fdc3576bcb72c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2511193a_4a222597",
         "filename": "ios/chrome/browser/ui/reading_list/reading_list_egtest.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T15:24:39Z",
       "side": 1,
       "message": "Remove this?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 71
+      },
+      "revId": "765b89053e762227160b14aa4fdc3576bcb72c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96eb3709_8faee144",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-05T15:41:57Z",
+      "side": 1,
+      "message": "Grmf, did not send the last patchset. Thanks",
+      "parentUuid": "2511193a_4a222597",
       "range": {
         "startLine": 225,
         "startChar": 0,
