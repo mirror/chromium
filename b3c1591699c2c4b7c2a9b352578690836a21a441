@@ -34,6 +34,24 @@
       "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76c4bbf_9a97101c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T20:12:33Z",
+      "side": 1,
+      "message": "Or:\n\n  if (!context_document || !context_document-\u003eGetFrame()) {\n    pending_script-\u003eDispose();\n    return;\n  }\n  LocalFrame* frame \u003d context_document-\u003eGetFrame();\n  DCHECK(frame);\n\nThis still has code dups, so I slightly prefer the current one.",
+      "parentUuid": "4248c5f7_10561a35",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
