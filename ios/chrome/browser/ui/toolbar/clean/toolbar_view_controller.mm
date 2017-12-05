@@ -211,7 +211,6 @@
     self.backButton, self.forwardButton, self.reloadButton, self.stopButton
   ]];
   self.leadingStackView.translatesAutoresizingMaskIntoConstraints = NO;
-  self.leadingStackView.spacing = kStackViewSpacing;
   self.leadingStackView.distribution = UIStackViewDistributionFill;
 
   self.trailingStackView = [[UIStackView alloc] initWithArrangedSubviews:@[
@@ -277,15 +276,15 @@
   ]];
 
   // Stack views directly in view constraints. Main StackViews.
-  // Layout: |-[leadingStackView]-[locationBarContainer]-[trailingStackView]-|.
+  // Layout: |[leadingStackView]-[locationBarContainer]-[trailingStackView]|.
+  CGFloat leadingMargin = IsIPadIdiom() ? kLeadingMarginIPad : 0;
   UILayoutGuide* viewSafeAreaGuide = SafeAreaLayoutGuideForView(self.view);
   NSArray* stackViewRegularConstraints = @[
     [self.leadingStackView.leadingAnchor
         constraintEqualToAnchor:viewSafeAreaGuide.leadingAnchor
-                       constant:kHorizontalMargin],
+                       constant:leadingMargin],
     [self.trailingStackView.trailingAnchor
-        constraintEqualToAnchor:viewSafeAreaGuide.trailingAnchor
-                       constant:-kHorizontalMargin]
+        constraintEqualToAnchor:viewSafeAreaGuide.trailingAnchor]
   ];
   [self.regularToolbarConstraints
       addObjectsFromArray:stackViewRegularConstraints];
@@ -302,9 +301,9 @@
         @"trailingStack" : self.trailingStackView
       },
       @{
-        @"height" : @(kToolbarHeight - 2 * kVerticalMargin),
-        @"margin" : @(kVerticalMargin),
-        @"spacing" : @(kStackViewSpacing)
+        @"height" : @(kToolbarHeight - 2 * kButtonVerticalMargin),
+        @"margin" : @(kButtonVerticalMargin),
+        @"spacing" : @(kHorizontalMargin)
       });
 
   // LocationBarContainer constraints.
@@ -314,8 +313,9 @@
   UILayoutGuide* locationBarContainerSafeAreaGuide =
       SafeAreaLayoutGuideForView(self.locationBarContainer);
   NSArray* locationBarRegularConstraints = @[
-    [self.locationBarContainer.bottomAnchor
-        constraintEqualToAnchor:self.leadingStackView.bottomAnchor],
+    [self.view.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
+                       constant:kLocationBarVerticalMargin],
     [self.locationBarContainer.topAnchor
         constraintEqualToAnchor:self.leadingStackView.topAnchor],
     [self.locationBarView.bottomAnchor
@@ -336,7 +336,8 @@
     [self.contractButton.leadingAnchor
         constraintEqualToAnchor:self.locationBarView.trailingAnchor],
     [self.locationBarView.heightAnchor
-        constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
+        constraintEqualToConstant:kToolbarHeight -
+                                  2 * kLocationBarVerticalMargin],
     [self.contractButton.bottomAnchor
         constraintEqualToAnchor:self.locationBarView.bottomAnchor],
     [self.contractButton.heightAnchor
@@ -356,6 +357,10 @@
   [buttonConstraints
       addObject:[self.backButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
+  if (!IsIPadIdiom()) {
+    self.backButton.imageEdgeInsets =
+        UIEdgeInsetsMakeDirected(0, 0, 0, kBackButtonImageInset);
+  }
   [self.backButton addTarget:self.dispatcher
                       action:@selector(goBack)
             forControlEvents:UIControlEventTouchUpInside];
@@ -373,6 +378,10 @@
   [buttonConstraints
       addObject:[self.forwardButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
+  if (!IsIPadIdiom()) {
+    self.forwardButton.imageEdgeInsets =
+        UIEdgeInsetsMakeDirected(0, kForwardButtonImageInset, 0, 0);
+  }
   [self.forwardButton addTarget:self.dispatcher
                          action:@selector(goForward)
                forControlEvents:UIControlEventTouchUpInside];
@@ -401,7 +410,7 @@
                                         ToolbarComponentVisibilityRegularWidth;
   [buttonConstraints
       addObject:[self.toolsMenuButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
+                    constraintEqualToConstant:kToolsMenuButtonWidth]];
   [self.toolsMenuButton addTarget:self.dispatcher
                            action:@selector(showToolsMenu)
                  forControlEvents:UIControlEventTouchUpInside];
@@ -717,7 +726,7 @@
           constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
       [self.locationBarView.bottomAnchor
           constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
-                         constant:-kVerticalMargin],
+                         constant:-kLocationBarVerticalMargin],
     ];
   }
   return _expandedToolbarConstraints;
