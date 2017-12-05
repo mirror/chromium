@@ -72,6 +72,7 @@ test("device_unittests") {
     "sensors/sensor_manager_chromeos_unittest.cc",
     "test/run_all_unittests.cc",
     "u2f/u2f_apdu_unittest.cc",
+    "u2f/u2f_ble_connection_unittest.cc",
     "u2f/u2f_ble_frames_unittest.cc",
     "u2f/u2f_discovery_unittest.cc",
     "u2f/u2f_message_unittest.cc",
@@ -85,6 +86,7 @@ test("device_unittests") {
     "//base/third_party/dynamic_annotations:dynamic_annotations",
     "//device/base/synchronization",
     "//device/bluetooth",
+    "//device/bluetooth:fake_bluetooth",
     "//device/bluetooth:mocks",
     "//device/bluetooth:mojo",
     "//device/bluetooth/uribeacon",
@@ -129,12 +131,8 @@ test("device_unittests") {
 
     # Serial is supported in below platforms. See //device/servial/BUILD.gn
     if (is_win || is_linux || is_mac) {
-      sources += [
-        "serial/serial_io_handler_posix_unittest.cc",
-      ]
-      deps += [
-        "//device/serial",
-      ]
+      sources += [ "serial/serial_io_handler_posix_unittest.cc" ]
+      deps += [ "//device/serial" ]
     }
   }
 
@@ -284,7 +282,9 @@ source_set("usb_test_gadget") {
 }
 
 if (is_android) {
-  bluetooth_java_sources_needing_jni = [ "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java" ]
+  bluetooth_java_sources_needing_jni = [
+    "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java",
+  ]
 
   generate_jni("bluetooth_test_jni_headers") {
     sources = bluetooth_java_sources_needing_jni
