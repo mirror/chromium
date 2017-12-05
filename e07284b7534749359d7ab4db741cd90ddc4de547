@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e60a82c_d7890e10",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "Off-topic: We can introduce some static functions for already built SetSelectionOptions to reduce code verbosity. For example: SetSelectionOptions::IsDirectionalOption().\n\nTextIteratorBehavior gives examples to follow.",
+      "range": {
+        "startLine": 294,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c851cf4c_bfb89f02",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "I may have missed some earlier discussion. Which three?\n\nCould you also put them in the comment?",
+      "range": {
+        "startLine": 278,
+        "startChar": 5,
+        "endLine": 278,
+        "endChar": 42
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8d08f8_f87542ae",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "This is an unrelated refactoring. I\u0027m not a fan of having this change in this CL.\n\nCould you just add the |bool selection_is_directional| parameter?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be070ff_933f36a9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "nit: |selection_is_directional_| looks better.",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d75ba85_ab51f07f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "Should be const function.",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cf9389_af8d98f1",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "Ah, we have a typo lying here for years.",
+      "range": {
+        "startLine": 1244,
+        "startChar": 5,
+        "endLine": 1244,
+        "endChar": 21
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d156be8_f110763f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "This part is being removed in crrev.com/c/807151. Please watch the change there.",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 31
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958c1bf8_b7a99b9a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/UndoStep.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T19:51:04Z",
+      "side": 1,
+      "message": "Should be const function.",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
