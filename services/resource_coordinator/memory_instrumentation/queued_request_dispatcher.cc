@@ -130,6 +130,12 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 
   for (const auto& client_info : clients) {
     mojom::ClientProcess* client = client_info.client;
+
+    // If we're only looking for a single pid process, then ignore clients
+    // with different pid.
+    if (request->pid && client_info.pid != request->pid.value())
+      continue;
+
     request->responses[client].process_id = client_info.pid;
     request->responses[client].process_type = client_info.process_type;
 
@@ -148,6 +154,18 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
     client->RequestOSMemoryDump(request->wants_mmaps(), {base::kNullProcessId},
                                 base::Bind(os_callback, client));
 #endif  // !defined(OS_LINUX)
+
+    // If we are in the single pid case, then we've already found the only
+    // process we're looking for.
+    if (request->pid)
+      break;
+  }
+
+  // In this case, we have not found the pid we are looking for so increment
+  // the failed dump count and exit.
+  if (request->pid && request->pending_responses.empty()) {
+    request->failed_memory_dump_count++;
+    return;
   }
 
 // In some cases, OS stats can only be dumped from a privileged process to
@@ -155,13 +173,19 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 #if defined(OS_LINUX)
   std::vector<base::ProcessId> pids;
   mojom::ClientProcess* browser_client = nullptr;
-  pids.reserve(clients.size());
+  pids.reserve(request->pid ? 1 : clients.size());
   for (const auto& client_info : clients) {
-    pids.push_back(client_info.pid);
+    if (!request->pid || client_info.pid == request->pid.value()) {
+      pids.push_back(client_info.pid);
+    }
     if (client_info.process_type == mojom::ProcessType::BROWSER) {
       browser_client = client_info.client;
     }
   }
+
+  // In the single pid case, we should have exactly one pid we are requesting
+  // data for.
+  DCHECK(!request->pid || pids.size() == 1);
 
   if (clients.size() > 0) {
     DCHECK(browser_client);
@@ -292,9 +316,10 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
     global_dump->process_dumps.push_back(std::move(pmd));
   }
 
-  const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;
-  callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
+  std::move(request->callback)
+      .Run(global_success, request->args.dump_guid,
+           !global_success && request->pid ? nullptr : std::move(global_dump));
   UMA_HISTOGRAM_MEDIUM_TIMES("Memory.Experimental.Debug.GlobalDumpDuration",
                              base::Time::Now() - request->start_time);
   UMA_HISTOGRAM_COUNTS_1000(
