@@ -33,6 +33,41 @@
       "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d40a7c_86f582ae",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-05T15:19:56Z",
+      "side": 1,
+      "message": "What happens to the std::unique_ptr that gets created but not bound to a variable name? Does it get destroyed?",
+      "parentUuid": "99e5ee24_b466b59e",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7690a0bc_22d580de",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-05T15:19:56Z",
+      "side": 1,
+      "message": "Extra line.",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
