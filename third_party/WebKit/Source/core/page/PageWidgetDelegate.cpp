@@ -61,6 +61,11 @@ void PageWidgetDelegate::UpdateAllLifecyclePhases(Page& page,
   page.Animator().UpdateAllLifecyclePhases(root);
 }
 
+void PageWidgetDelegate::UpdateLifecycleToLayoutClean(Page& page,
+                                                      LocalFrame& root) {
+  page.Animator().UpdateLifecycleToLayoutClean(root);
+}
+
 static void PaintInternal(Page& page,
                           WebCanvas* canvas,
                           const WebRect& rect,

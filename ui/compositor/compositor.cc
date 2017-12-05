@@ -544,8 +544,8 @@ static void SendDamagedRectsRecursive(ui::Layer* layer) {
     SendDamagedRectsRecursive(child);
 }
 
-void Compositor::UpdateLayerTreeHost() {
-  if (!root_layer())
+void Compositor::UpdateLayerTreeHost(MainFrameLifecyclePhase target_phase) {
+  if (!root_layer() || target_phase == MainFrameLifecyclePhase::kLayoutClean)
     return;
   SendDamagedRectsRecursive(root_layer());
 }

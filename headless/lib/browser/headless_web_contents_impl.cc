@@ -602,8 +602,9 @@ void HeadlessWebContentsImpl::DidReceiveCompositorFrame() {
   // completed yet. Pending frames that it did complete won't incorporate this
   // CompositorFrame. In practice, this should only be a single PendingFrame.
   for (const std::unique_ptr<PendingFrame>& pending_frame : pending_frames_) {
-    if (!pending_frame->display_did_finish_frame)
+    if (!pending_frame->display_did_finish_frame) {
       pending_frame->main_frame_content_updated = true;
+    }
   }
 }
 
@@ -635,6 +636,7 @@ void HeadlessWebContentsImpl::BeginFrame(
     const base::TimeTicks& frame_timeticks,
     const base::TimeTicks& deadline,
     const base::TimeDelta& interval,
+    bool update_display,
     bool capture_screenshot,
     const FrameFinishedCallback& frame_finished_callback) {
   DCHECK(begin_frame_control_enabled_);
@@ -666,9 +668,12 @@ void HeadlessWebContentsImpl::BeginFrame(
   ui::Compositor* compositor = browser()->PlatformGetCompositor(this);
   DCHECK(compositor);
 
-  compositor->IssueExternalBeginFrame(viz::BeginFrameArgs::Create(
+  auto args = viz::BeginFrameArgs::Create(
       BEGINFRAME_FROM_HERE, begin_frame_source_id_, sequence_number,
-      frame_timeticks, deadline, interval, viz::BeginFrameArgs::NORMAL));
+      frame_timeticks, deadline, interval, viz::BeginFrameArgs::NORMAL);
+  args.skip_compositor_frame = !update_display;
+
+  compositor->IssueExternalBeginFrame(args);
 }
 
 HeadlessWebContents::Builder::Builder(

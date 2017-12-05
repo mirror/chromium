@@ -1907,6 +1907,18 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
   }
 }
 
+void WebViewImpl::UpdateLifecycleToLayoutClean() {
+  TRACE_EVENT0("blink", "WebViewImpl::UpdateLifecycleToLayoutClean");
+  if (!MainFrameImpl())
+    return;
+
+  DocumentLifecycle::AllowThrottlingScope throttling_scope(
+      MainFrameImpl()->GetFrame()->GetDocument()->Lifecycle());
+
+  PageWidgetDelegate::UpdateLifecycleToLayoutClean(
+      *page_, *MainFrameImpl()->GetFrame());
+}
+
 void WebViewImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
   // This should only be used when compositing is not being used for this
   // WebView, and it is painting into the recording of its parent.

@@ -91,6 +91,10 @@ class WebWidget {
   // and it may result in calls to WebWidgetClient::didInvalidateRect.
   virtual void UpdateAllLifecyclePhases() {}
 
+  // Only runs lifecycle phases up to LayoutClean. Can be used to trigger side
+  // effects of layout if painting is not required.
+  virtual void UpdateLifecycleToLayoutClean() {}
+
   // Called to paint the rectangular region within the WebWidget
   // onto the specified canvas at (viewPort.x,viewPort.y). You MUST call
   // Layout before calling this method. It is okay to call paint
