@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f3017b2_18ea1acb",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:50:31Z",
+      "side": 1,
+      "message": "Nit: Indentation off.",
+      "revId": "da97d4ed4e9984a3d25613e8d6a5de0c56a8caa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c16753c_aaafb5aa",
+        "filename": "chrome/browser/resources/print_preview/preview_generator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:50:31Z",
+      "side": 1,
+      "message": "!Promise",
+      "range": {
+        "startLine": 197,
+        "startChar": 16,
+        "endLine": 197,
+        "endChar": 23
+      },
+      "revId": "da97d4ed4e9984a3d25613e8d6a5de0c56a8caa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732da749_b2cc2dd5",
+        "filename": "chrome/browser/resources/print_preview/preview_generator.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:50:31Z",
+      "side": 1,
+      "message": "Nit: Can we remove the quotes around the keys? They are not necessary.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 19
+      },
+      "revId": "da97d4ed4e9984a3d25613e8d6a5de0c56a8caa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ba937d_0507d45b",
+        "filename": "chrome/test/data/webui/print_preview/native_layer_stub.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:50:31Z",
+      "side": 1,
+      "message": "This can now be simplified as \nthis.methodCalled(\u0027print\u0027, printTicket);",
+      "revId": "da97d4ed4e9984a3d25613e8d6a5de0c56a8caa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
