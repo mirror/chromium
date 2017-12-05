@@ -67,8 +67,8 @@ TEST_F(ContentSettingImageModelTest, UpdateFromWebContents) {
   TabSpecificContentSettings* content_settings =
       TabSpecificContentSettings::FromWebContents(web_contents());
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model =
-      ContentSettingSimpleImageModel::CreateForContentTypeForTesting(
-          CONTENT_SETTINGS_TYPE_IMAGES);
+      ContentSettingImageModel::CreateForContentType(
+          ContentSettingImageModel::TYPE_IMAGES);
   EXPECT_FALSE(content_setting_image_model->is_visible());
   EXPECT_TRUE(content_setting_image_model->get_tooltip().empty());
 
@@ -83,8 +83,8 @@ TEST_F(ContentSettingImageModelTest, UpdateFromWebContents) {
 TEST_F(ContentSettingImageModelTest, RPHUpdateFromWebContents) {
   TabSpecificContentSettings::CreateForWebContents(web_contents());
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model =
-      ContentSettingSimpleImageModel::CreateForContentTypeForTesting(
-          CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS);
+      ContentSettingImageModel::CreateForContentType(
+          ContentSettingImageModel::TYPE_PROTOCOL_HANDLERS);
   content_setting_image_model->UpdateFromWebContents(web_contents());
   EXPECT_FALSE(content_setting_image_model->is_visible());
 
@@ -105,8 +105,8 @@ TEST_F(ContentSettingImageModelTest, CookieAccessed) {
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_COOKIES,
                                  CONTENT_SETTING_BLOCK);
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model(
-      ContentSettingSimpleImageModel::CreateForContentTypeForTesting(
-          CONTENT_SETTINGS_TYPE_COOKIES));
+      ContentSettingImageModel::CreateForContentType(
+          ContentSettingImageModel::TYPE_COOKIES));
   EXPECT_FALSE(content_setting_image_model->is_visible());
   EXPECT_TRUE(content_setting_image_model->get_tooltip().empty());
 
@@ -125,8 +125,8 @@ TEST_F(ContentSettingImageModelTest, CookieAccessed) {
 // Regression test for http://crbug.com/161854.
 TEST_F(ContentSettingImageModelTest, NULLTabSpecificContentSettings) {
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model =
-      ContentSettingSimpleImageModel::CreateForContentTypeForTesting(
-          CONTENT_SETTINGS_TYPE_IMAGES);
+      ContentSettingImageModel::CreateForContentType(
+          ContentSettingImageModel::TYPE_IMAGES);
   NotificationForwarder forwarder(content_setting_image_model.get());
   // Should not crash.
   TabSpecificContentSettings::CreateForWebContents(web_contents());
