@@ -119,6 +119,9 @@ gfx::ColorSpace Display::GetForcedColorProfile() {
   } else if (value == "generic-rgb") {
     return gfx::ColorSpace(gfx::ColorSpace::PrimaryID::APPLE_GENERIC_RGB,
                            gfx::ColorSpace::TransferID::GAMMA18);
+  } else if (value == "pseudo-hdr-p3") {
+    return gfx::ColorSpace(gfx::ColorSpace::PrimaryID::SMPTEST432_1,
+                           gfx::ColorSpace::TransferID::PSEUDO_HDR);
   } else if (value == "color-spin-gamma24") {
     // Run this color profile through an ICC profile. The resulting color space
     // is slightly different from the input color space, and removing the ICC
