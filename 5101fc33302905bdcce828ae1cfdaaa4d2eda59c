@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b8b61f5_edcf72f6",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57effd9_47a515aa",
+      "range": {
+        "startLine": 203,
+        "startChar": 7,
+        "endLine": 203,
+        "endChar": 59
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2715ca_9da803dc",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 8
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "869ceb6a_f5443233",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e3a63a_b05bdd53",
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37614a81_a903f70b",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 8
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "44474ef2_337f2c52",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37614a81_a903f70b",
+      "range": {
+        "startLine": 205,
+        "startChar": 54,
+        "endLine": 205,
+        "endChar": 73
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047412da_0d695abc",
         "filename": "chrome/test/data/webui/extensions/test_service.js",
         "patchSetId": 8
@@ -94,6 +160,30 @@
       "writtenOn": "2017-12-04T20:15:53Z",
       "side": 1,
       "message": "Can we slightly modify this approach of customizing the proxy\u0027s behavior?\n\nInstead of assigning this private variable from the outside, how about the following (which is more consistent with how we configure proxies in other WebUI tests, similar example at [1]).\n\nclass TestService extends TestBrowserProxy {\n  constructor() {\n    ...\n    this.forceReloadItemError_ \u003d false;\n  }\n  ...\n\n  setForceReloadItemError(force) {\n    this.forceReloadItemError_ \u003d force;\n  }\n\n  /** @override */\n  reloadItem(id) {\n    this.methodCalled(\u0027reloadItem\u0027, id);\n    return this.forceReloadItemError_ ? Promise.reject() : Promise.resolve();\n  }\n}\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/test_search_engines_browser_proxy.js?l\u003d26,71,57",
+      "range": {
+        "startLine": 67,
+        "startChar": 13,
+        "endLine": 67,
+        "endChar": 35
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3926b6_8cc21a71",
+        "filename": "chrome/test/data/webui/extensions/test_service.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "Done.  FWIW, the trailing underscore was a mistake - should have been reloadItemResult.  That said, I can appreciate adding a bit more structure.\n\nOne question, though (out of curiosity) - why prefer a private member with a public setter, instead of just a public member?  I.e., why not just have this.forceReloadItemError?",
+      "parentUuid": "047412da_0d695abc",
       "range": {
         "startLine": 67,
         "startChar": 13,
@@ -126,6 +216,30 @@
       "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b42520_d963a7fe",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "D\u0027oh, could have sworn I took this out.  Removed.",
+      "parentUuid": "d77a3da6_b5a48c93",
+      "range": {
+        "startLine": 64,
+        "startChar": 1,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "5101fc33302905bdcce828ae1cfdaaa4d2eda59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

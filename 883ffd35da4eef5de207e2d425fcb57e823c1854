@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9c0d91e3_ee57e99f",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T00:07:01Z",
+      "side": 1,
+      "message": "Oh, I see, sorry, misunderstood.  You are correct that this would whether we display a noisy error (i.e., modal dialog).  We will no longer show it.\n\nI think this is okay, given the rarity of this instance (it *shouldn\u0027t* happen), and that the old page also suppressed noisy errors.",
+      "parentUuid": "30dfe347_618b3c56",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61f7857_b846e3bf",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
