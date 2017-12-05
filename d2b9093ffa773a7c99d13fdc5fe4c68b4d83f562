@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0bcfc761_d96573a6",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/v0/v0-added-after-v1-and-slotted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-05T10:43:05Z",
+      "side": 1,
+      "message": "Thanks for the explanation!  It should make sense for the explicit \u0027offsetTop\u0027 then.",
+      "parentUuid": "fd323647_25f55ad6",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d71f3eff_30344538",
         "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
         "patchSetId": 2
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "Ah, you\u0027re saying ::slotted(span) in document scope style \u003cslot\u003e\u003cspan\u003e\u003c/span\u003e\u003c/slot\u003e in document scope?\n\nIf that\u0027s the case you\u0027d need this for the document scope, otherwise not.",
       "parentUuid": "348f91f6_fa87f01a",
+      "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b38953_214a8356",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-05T10:43:05Z",
+      "side": 1,
+      "message": "crbug 703984 says it\u0027s not the case.\ni.e. slot.assignedNodes({flatten: true}) returns an empty array if the slot\nis in document scope, even if the slot has any fallback contents, ::slotted()\nin document scope never matches anything.",
+      "parentUuid": "130eccce_d905910a",
       "revId": "d2b9093ffa773a7c99d13fdc5fe4c68b4d83f562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
