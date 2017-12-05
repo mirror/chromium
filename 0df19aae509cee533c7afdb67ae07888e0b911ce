@@ -16,6 +16,24 @@
       "revId": "0df19aae509cee533c7afdb67ae07888e0b911ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80aecb8_0b19670d",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T01:25:37Z",
+      "side": 1,
+      "message": "Done. As you suggest, the following would be sufficient in this case.\n.shortcut-card:last-of-type { ... }\n\nI initially added \"div\" and \"#container\" in an effort to make the subtleties of :last-of-type less subtle.\n\nAt first glance one would expect that \n.foo:last-of-type {...}\n\nwould match an element when\n1) Has the class \"foo\"\n2) Among children that have the class \"foo\", it\u0027s the last one.\n\nIn reality it matches when (example https://jsfiddle.net/r6j2h3ns/2/)\n1) Has the class \"foo\"\n2) Is the last child, among all children who have the same type, including the ones that don\u0027t have class \"foo\".\n\nI was hoping that \"#container \u003e div.shortcut-card:last-of-type {...}\"\nconveys this message a bit better, but maybe it caused more confusion, so removed.",
+      "parentUuid": "4a5a6243_b9fe92da",
+      "revId": "0df19aae509cee533c7afdb67ae07888e0b911ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
