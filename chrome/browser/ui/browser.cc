@@ -1404,7 +1404,8 @@ void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
   TabSpecificContentSettings* content_settings =
       TabSpecificContentSettings::FromWebContents(web_contents);
   DCHECK(content_settings);
-  content_settings->OnFramebustBlocked(url);
+  content_settings->OnFramebustBlocked(
+      url, FramebustBlockTabHelper::ClickCallback());
 }
 
 bool Browser::IsMouseLocked() const {
