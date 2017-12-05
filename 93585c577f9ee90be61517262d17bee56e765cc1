@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35cab126_1e8bacb1",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-05T21:17:24Z",
+      "side": 1,
+      "message": "fix",
+      "range": {
+        "startLine": 1780,
+        "startChar": 20,
+        "endLine": 1780,
+        "endChar": 23
+      },
+      "revId": "93585c577f9ee90be61517262d17bee56e765cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
