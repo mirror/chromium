@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9b3cf79_d2801ef6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-12-05T23:57:53Z",
+      "side": 1,
+      "message": "Eventually the execution context is kept by LifecycleObserver, but it is \u003cWeakMember\u003e:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/LifecycleObserver.h?sq\u003dpackage:chromium\u0026l\u003d56\n\nIs a valid Frame a prerequisite for Worklet? Not sure if the behavior is well-defined in the spec as well. This might lead to a spec issue.",
+      "parentUuid": "f4cbb2df_64af3d8a",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec4847e_9879b5ca",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
