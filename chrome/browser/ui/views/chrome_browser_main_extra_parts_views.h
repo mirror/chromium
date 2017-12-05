@@ -42,6 +42,7 @@ class ChromeBrowserMainExtraPartsViews : public ChromeBrowserMainExtraParts {
   void PreProfileInit() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void PostMainMessageLoopRun() override;
 
  private:
   std::unique_ptr<views::ViewsDelegate> views_delegate_;
