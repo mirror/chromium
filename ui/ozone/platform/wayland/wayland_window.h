@@ -69,13 +69,22 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   bool CanDispatchEvent(const PlatformEvent& event) override;
   uint32_t DispatchEvent(const PlatformEvent& event) override;
 
-  void HandleSurfaceConfigure(int32_t widht, int32_t height);
+  void HandleSurfaceConfigure(int32_t widht,
+                              int32_t height,
+                              bool is_maximized,
+                              bool is_fullscreen);
 
   void OnCloseRequest();
 
  private:
+  bool IsMinimized() const;
+  bool IsMaximized() const;
+  bool IsFullscreen() const;
+
   // Creates a surface window, which is visible as a main window.
   void CreateXdgSurface();
+
+  void ResetWindowStates();
 
   PlatformWindowDelegate* delegate_;
   WaylandConnection* connection_;
@@ -96,6 +105,10 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   gfx::Rect pending_bounds_;
   bool has_pointer_focus_ = false;
   bool has_keyboard_focus_ = false;
+
+  bool is_minimized_ = false;
+  bool is_maximized_ = false;
+  bool is_fullscreen_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandWindow);
 };
