@@ -22,6 +22,30 @@
       "revId": "71c74265c31325bdbcecefb9b4e4ae088c3fb382",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ca27ac_76ef1ffa",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-05T14:49:32Z",
+      "side": 0,
+      "message": "The addition of .focus() was for walmart.com. When I changed it to .notifyElementValueChanged(), walmart.com is still working. So, I guess .focus() is probably doing a bunch of stuff including what walmart.com needs.\n\nI assume that there\u0027s a cost to sending all the events.",
+      "parentUuid": "b37e8684_5e19df1b",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 21
+      },
+      "revId": "71c74265c31325bdbcecefb9b4e4ae088c3fb382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
