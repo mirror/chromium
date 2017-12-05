@@ -16,6 +16,24 @@
       "revId": "e87baa6b6e572ea751115a8624b4ff9277f7b132",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d40f7e9_e7d24a35",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1252032
+      },
+      "writtenOn": "2017-12-05T00:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff61dc3e_3175324a",
+      "revId": "e87baa6b6e572ea751115a8624b4ff9277f7b132",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
