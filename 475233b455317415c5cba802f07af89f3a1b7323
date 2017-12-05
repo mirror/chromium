@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66616cc9_98e54419",
+        "filename": "net/cert/signed_tree_head.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-05T02:00:14Z",
+      "side": 1,
+      "message": "What is the consumer of this?\n\nI tried compiling all of net_unittests, components_unittests, browser_tests without PrintTo() and it seemed to work fine. Which makes me wonder what is using this.\n\nSince no consumers have been updated in this CL to reference operator\u003c\u003c rather than PrintTo(), it makes me think either the function is unused, or it is only being used by way of gtest (which does hacky lookups for PrintTo() specifically).\n\nIf indeed this is only test-code, how about moving this to a test-only support file.\n\nIf it is NOT test-only code, then I would like to see documentation explaining the format, whether it is a proper serialization format or just a tool used by logging.\n\nThanks!",
+      "revId": "475233b455317415c5cba802f07af89f3a1b7323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
