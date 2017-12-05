@@ -15,6 +15,7 @@ class NavigationHandle;
 namespace internal {
 
 // Exposed for tests.
+extern const char kHistogramMultiTabLoadingLoadingTabCount[];
 extern const char kHistogramMultiTabLoadingFirstContentfulPaint[];
 extern const char kHistogramMultiTabLoadingForegroundToFirstContentfulPaint[];
 extern const char kHistogramMultiTabLoadingFirstMeaningfulPaint[];
@@ -54,7 +55,7 @@ class MultiTabLoadingPageLoadMetricsObserver
 
  protected:
   // Overridden in testing.
-  virtual bool IsAnyTabLoading(content::NavigationHandle* navigation_handle);
+  virtual int NumberOfLoadingTabs(content::NavigationHandle* navigation_handle);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MultiTabLoadingPageLoadMetricsObserver);

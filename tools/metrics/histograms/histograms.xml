@@ -56862,6 +56862,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PageLoad.Clients.MultiTabLoading.LoadingTabCount"
+    units="count">
+  <owner>ksakamoto@chromium.org</owner>
+  <summary>
+    Records the number of tabs that are already loading when a new page load
+    started.
+  </summary>
+</histogram>
+
 <histogram name="PageLoad.Clients.SubresourceFilter.ActivationDecision"
     enum="SubresourceFilterActivationDecision">
   <owner>bmcquade@chromium.org</owner>
