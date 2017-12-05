@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05adffce_d4c02af8",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T16:18:01Z",
+      "side": 1,
+      "message": "I think you also need to do \"on_click_url \u003d full_page_url\", otherwise it\u0027ll just link to a SRP. See the similar hack in ConvertLogoMetadataToDict in local_ntp_source.cc.\nThis might also be worth a comment.",
+      "revId": "614efb0ce0673a9a89409fb4ea26438ca8fc2de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
