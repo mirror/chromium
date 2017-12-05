@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc0728c5_e1bdf4b9",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T17:22:05Z",
+      "side": 1,
+      "message": "The param interface isn\u0027t used - I\u0027m guessing to gather feedback on the approach before going too far?",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5addf3_1528c934",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T17:22:05Z",
+      "side": 1,
+      "message": "I think http://go/unit-test-practices#dos-and-donts-7 (internal only link) feels like advice against this pattern.\n\nIn particular, Line 100-107 directly influence the test results and set expectations, so it feels a bit weird to set it so far apart.",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dd4ec2_e8f808bf",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T17:22:05Z",
+      "side": 1,
+      "message": "The assumption baked into this test is that pilot and aviator remain trusted, right?",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694b575e_8acde96d",
+        "filename": "components/certificate_transparency/tree_state_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T17:22:05Z",
+      "side": 1,
+      "message": "The recommended approach here is to have a features.h (e.g. //components/certificate_transparency/features.h) with this feature, along with a features.cc with it",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c035ec_f173b2a9",
+        "filename": "net/data/ssl/certificates/comodo-chain.pem",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T17:22:05Z",
+      "side": 1,
+      "message": "Couple things:\n\n1) We try to avoid checking in \u0027real\u0027 certs, as they expire - could you explain why this part is necessary?\n2) Adding a new file here involves updating //net/BUILD.gn (to make sure it\u0027s bundled as part of unittest dependencies) and updating the README.md",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
