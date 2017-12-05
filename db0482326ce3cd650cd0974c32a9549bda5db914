@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aec49316_eccfc1f0",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDeviceInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T13:11:06Z",
+      "side": 1,
+      "message": "What about a Create/Constructor that takes a MediaDeviceInfoPtr instead?",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41fda98_f31d4fef",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T13:11:06Z",
+      "side": 1,
+      "message": "You can change this code to use push_back (or emplace_back).\nThe original was written like this because WebVector does not allow appending elements.",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf07894c_0299161f",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T13:11:06Z",
+      "side": 1,
+      "message": "It would be good to have this in a method GetDispatcherHost() method.",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77aafec_10c217a1",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T13:11:06Z",
+      "side": 1,
+      "message": "What if there\u0027s a connection error and |dispatcher_host_| is null here?\nShould we check that and return rejected promise?",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 18
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a78eb23_5dccccd7",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T13:11:06Z",
+      "side": 1,
+      "message": "You should assign the promise to a variable before passing it to EnumerateDevices and then return it here. Otherwise, the resolver might have already accepted/rejected the promise and this might return the wrong result.",
+      "range": {
+        "startLine": 160,
+        "startChar": 19,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
