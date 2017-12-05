@@ -22,6 +22,30 @@
       "revId": "138945bb9627f88807a44f59711243b1024dd221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be311c2a_71ea3e2f",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T21:54:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf40a17_a79f0457",
+      "range": {
+        "startLine": 412,
+        "startChar": 29,
+        "endLine": 412,
+        "endChar": 50
+      },
+      "revId": "138945bb9627f88807a44f59711243b1024dd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
