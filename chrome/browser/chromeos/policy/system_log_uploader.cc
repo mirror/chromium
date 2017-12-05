@@ -91,7 +91,7 @@ class SystemLogDelegate : public SystemLogUploader::Delegate {
   ~SystemLogDelegate() override;
 
   // SystemLogUploader::Delegate:
-  void LoadSystemLogs(const LogUploadCallback& upload_callback) override;
+  void LoadSystemLogs(LogUploadCallback upload_callback) override;
 
   std::unique_ptr<UploadJob> CreateUploadJob(
       const GURL& upload_url,
@@ -110,13 +110,12 @@ SystemLogDelegate::SystemLogDelegate(
 
 SystemLogDelegate::~SystemLogDelegate() {}
 
-void SystemLogDelegate::LoadSystemLogs(
-    const LogUploadCallback& upload_callback) {
+void SystemLogDelegate::LoadSystemLogs(LogUploadCallback upload_callback) {
   // Run ReadFiles() in the thread that interacts with the file system and
   // return system logs to |upload_callback| on the current thread.
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&ReadFiles), upload_callback);
+      base::BindOnce(&ReadFiles), std::move(upload_callback));
 }
 
 std::unique_ptr<UploadJob> SystemLogDelegate::CreateUploadJob(
