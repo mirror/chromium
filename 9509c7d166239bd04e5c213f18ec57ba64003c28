@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf311a1_1ab4442b",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 3006,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-05T18:58:34Z",
+      "side": 1,
+      "message": "nit: is this line necessary?",
+      "range": {
+        "startLine": 3006,
+        "startChar": 10,
+        "endLine": 3006,
+        "endChar": 30
+      },
+      "revId": "9509c7d166239bd04e5c213f18ec57ba64003c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
