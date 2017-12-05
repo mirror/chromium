@@ -610,7 +610,8 @@ class CONTENT_EXPORT RenderFrameImpl
                               blink::WebHistoryCommitType commit_type) override;
   void DidCommitProvisionalLoad(
       const blink::WebHistoryItem& item,
-      blink::WebHistoryCommitType commit_type) override;
+      blink::WebHistoryCommitType commit_type,
+      blink::WebGlobalObjectReusePolicy global_object_reuse_policy) override;
   void DidCreateNewDocument() override;
   void DidClearWindowObject() override;
   void DidCreateDocumentElement() override;
@@ -942,8 +943,11 @@ class CONTENT_EXPORT RenderFrameImpl
   const RenderFrameImpl* GetLocalRoot() const;
 
   // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(blink::WebLocalFrame* frame,
-                                    blink::WebHistoryCommitType commit_type);
+  void SendDidCommitProvisionalLoad(
+      blink::WebLocalFrame* frame,
+      blink::WebHistoryCommitType commit_type,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interface_provider_request);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether

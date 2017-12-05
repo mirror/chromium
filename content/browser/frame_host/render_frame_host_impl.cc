@@ -503,7 +503,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
       active_sandbox_flags_(blink::WebSandboxFlags::kNone),
-      interface_provider_binding_(this),
+      document_scoped_interface_provider_binding_(this),
       keep_alive_timeout_(base::TimeDelta::FromSeconds(30)),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
@@ -1522,7 +1522,9 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 // notification containing parameters identifying the navigation.
 void RenderFrameHostImpl::DidCommitProvisionalLoad(
     std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-        validated_params) {
+        validated_params,
+    service_manager::mojom::InterfaceProviderRequest
+        interface_provider_request) {
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
@@ -1546,6 +1548,46 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
       !GetParent()) {
     base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
     OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
+  }
+
+  // Retroactive sanity check:
+  // - If this is the first real load committing in this frame, then by this
+  //   time the RenderFrameHost's InterfaceProvider implementation should have
+  //   already been bound to a pipe to service interface requests coming from
+  //   the initial empty document.
+  // - Otherwise, the InterfaceProvider implementation should at this point be
+  //   bound to an interface connection servicing interface requests coming from
+  //   the document of the previously committed navigation.
+  DCHECK(document_scoped_interface_provider_binding_.is_bound());
+
+  if (validated_params->was_within_same_document) {
+    // The security origin never changes for same-document navigations, we must
+    // keep using the existing InterfaceProvider interface connection.
+    if (interface_provider_request.is_pending()) {
+      bad_message::ReceivedBadMessage(
+          process, bad_message::RFH_INTERFACE_PROVIDER_SUPERFLUOUS);
+    }
+  } else if (interface_provider_request.is_pending()) {
+    // Otherwise, as a general rule, expect the RenderFrame to have supplied the
+    // request end of a new InterfaceProvider connection that will be used by
+    // the newly active document to issue interface requests to access
+    // RenderFrameHost services.
+    document_scoped_interface_provider_binding_.Close();
+    BindInterfaceProviderRequest(std::move(interface_provider_request));
+  } else if (frame_tree_node_->has_committed_real_load()) {
+    // If there has been a real load in the frame, the InterfaceProvider must
+    // have been re-bound to a new pipe. Close the old binding to ensure that
+    // any pending interface requests originating from the previous document,
+    // hence possibly from a different security origin, will no longer
+    // dispatched; and kill the renderer.
+    document_scoped_interface_provider_binding_.Close();
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_INTERFACE_PROVIDER_MISSING);
+  } else {
+    // For the first real load commited, however, the RenderFrame will re-use
+    // the existing InterfaceProvider connection if the new document is
+    // same-origin with the initial empty document. Allow that, so this is a
+    // no-op.
   }
 
   // If we're waiting for an unload ack from this renderer and we receive a
@@ -1883,7 +1925,7 @@ void RenderFrameHostImpl::OnRenderProcessGone(int status, int exit_code) {
   // reset.
   SetRenderFrameCreated(false);
   InvalidateMojoConnection();
-  interface_provider_binding_.Close();
+  document_scoped_interface_provider_binding_.Close();
 
   // Execute any pending AX tree snapshot callbacks with an empty response,
   // since we're never going to get a response from this renderer.
@@ -2768,11 +2810,12 @@ void RenderFrameHostImpl::OnRequestOverlayRoutingToken() {
 void RenderFrameHostImpl::BindInterfaceProviderRequest(
     service_manager::mojom::InterfaceProviderRequest
         interface_provider_request) {
-  DCHECK(!interface_provider_binding_.is_bound());
+  DCHECK(!document_scoped_interface_provider_binding_.is_bound());
   DCHECK(interface_provider_request.is_pending());
-  interface_provider_binding_.Bind(FilterRendererExposedInterfaces(
-      mojom::kNavigation_FrameSpec, GetProcess()->GetID(),
-      std::move(interface_provider_request)));
+  document_scoped_interface_provider_binding_.Bind(
+      FilterRendererExposedInterfaces(mojom::kNavigation_FrameSpec,
+                                      GetProcess()->GetID(),
+                                      std::move(interface_provider_request)));
 }
 
 void RenderFrameHostImpl::SetKeepAliveTimeoutForTesting(
@@ -4314,6 +4357,9 @@ void RenderFrameHostImpl::BindAuthenticatorRequest(
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  // Requests are serviced on |document_scoped_interface_provider_binding_|. It
+  // is therefore safe to assume that every incoming interface request is coming
+  // from the currently active document in the corresponding RenderFrame.
   if (!registry_ ||
       !registry_->TryBindInterface(interface_name, &interface_pipe)) {
     delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
