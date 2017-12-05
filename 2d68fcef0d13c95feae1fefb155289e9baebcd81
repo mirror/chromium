@@ -16,6 +16,24 @@
       "revId": "2d68fcef0d13c95feae1fefb155289e9baebcd81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9083038f_de9280c3",
+        "filename": "base/files/file_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-05T20:14:02Z",
+      "side": 1,
+      "message": "ah i missed it, the temp_long_path should be used in line 297 to replace temp_path.\nAnd I think we should still return true here since it didn\u0027t fail to fetch temp dir (it returns the temp_path).\nAnd from my understanding, ::GetLongPathName will just return 0 when |temp_path| is not a short file name.",
+      "parentUuid": "0c70809e_7007eae6",
+      "revId": "2d68fcef0d13c95feae1fefb155289e9baebcd81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
