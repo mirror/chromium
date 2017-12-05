@@ -123,6 +123,12 @@ void RootCompositorFrameSinkImpl::DisplayWillDrawAndSwap(
   hit_test_aggregator_.Aggregate(display_->CurrentSurfaceId());
 }
 
+void RootCompositorFrameSinkImpl::DisplayDidReceiveCALayerParams(
+    const gfx::CALayerParams& ca_layer_params) {
+  // TODO(ccameron): Continue plumbing |ca_layer_params| through to
+  // ui::Compositor.
+}
+
 void RootCompositorFrameSinkImpl::DisplayDidDrawAndSwap() {}
 
 void RootCompositorFrameSinkImpl::OnClientConnectionLost() {
