@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/renderer_context_menu/render_view_context_menu_views.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/command_line.h"
@@ -11,6 +12,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string16.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/common/chrome_switches.h"
@@ -37,8 +39,7 @@ RenderViewContextMenuViews::RenderViewContextMenuViews(
     const content::ContextMenuParams& params)
     : RenderViewContextMenu(render_frame_host, params),
       bidi_submenu_model_(this) {
-  std::unique_ptr<ToolkitDelegate> delegate(new ToolkitDelegateViews);
-  set_toolkit_delegate(std::move(delegate));
+  set_toolkit_delegate(std::make_unique<ToolkitDelegateViews>());
 }
 
 RenderViewContextMenuViews::~RenderViewContextMenuViews() {
@@ -90,10 +91,17 @@ bool RenderViewContextMenuViews::GetAcceleratorForCommandId(
       *accel = ui::Accelerator(ui::VKEY_C, ui::EF_CONTROL_DOWN);
       return true;
 
-    case IDC_CONTENT_CONTEXT_INSPECTELEMENT:
+    case IDC_CONTENT_CONTEXT_INSPECTELEMENT: {
+      auto* controller = printing::PrintPreviewDialogController::GetInstance();
+      if (controller && controller->GetPrintPreviewForContents(
+                            source_web_contents_) == source_web_contents_) {
+        return false;
+      }
+
       *accel = ui::Accelerator(ui::VKEY_I,
                                ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN);
       return true;
+    }
 
     case IDC_CONTENT_CONTEXT_PASTE:
       *accel = ui::Accelerator(ui::VKEY_V, ui::EF_CONTROL_DOWN);
@@ -229,10 +237,7 @@ bool RenderViewContextMenuViews::IsCommandIdEnabled(int command_id) const {
 ui::AcceleratorProvider*
 RenderViewContextMenuViews::GetBrowserAcceleratorProvider() const {
   Browser* browser = GetBrowser();
-  if (!browser)
-    return nullptr;
-
-  return BrowserView::GetBrowserViewForBrowser(browser);
+  return browser ? BrowserView::GetBrowserViewForBrowser(browser) : nullptr;
 }
 
 void RenderViewContextMenuViews::AppendPlatformEditableItems() {
@@ -272,9 +277,9 @@ void RenderViewContextMenuViews::Show() {
   aura::Window* root_window = target_window->GetRootWindow();
   aura::client::ScreenPositionClient* screen_position_client =
       aura::client::GetScreenPositionClient(root_window);
-  if (screen_position_client) {
+  if (screen_position_client)
     screen_position_client->ConvertPointToScreen(target_window, &screen_point);
-  }
+
   // Enable recursive tasks on the message loop so we can get updates while
   // the context menu is being displayed.
   base::MessageLoop::ScopedNestableTaskAllower allow(
@@ -291,10 +296,8 @@ aura::Window* RenderViewContextMenuViews::GetActiveNativeView() {
       WebContents::FromRenderFrameHost(GetRenderFrameHost());
   if (!web_contents) {
     LOG(ERROR) << "RenderViewContextMenuViews::Show, couldn't find WebContents";
-    return NULL;
+    return nullptr;
   }
-  return web_contents->GetFullscreenRenderWidgetHostView()
-             ? web_contents->GetFullscreenRenderWidgetHostView()
-                   ->GetNativeView()
-             : web_contents->GetNativeView();
+  auto* host_view = web_contents->GetFullscreenRenderWidgetHostView();
+  return host_view ? host_view->GetNativeView() : web_contents->GetNativeView();
 }

@@ -64,6 +64,7 @@ class RenderViewContextMenuViews : public RenderViewContextMenu {
 
   // Model for the BiDi input submenu.
   ui::SimpleMenuModel bidi_submenu_model_;
+
   DISALLOW_COPY_AND_ASSIGN(RenderViewContextMenuViews);
 };
 
