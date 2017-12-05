@@ -47,7 +47,9 @@ var Audits2Service = class {
       this.statusUpdate(message[1]);
     });
 
-    return Promise.resolve()
+    return Promise
+        .resolve()
+        // .then(() => { throw new Error('Tracing already started')})
         .then(_ => self.runLighthouseInWorker(this, params.url, {}, params.categoryIDs))
         .then(/** @type {!ReportRenderer.ReportJSON} */ result => {
           // Filter out artifacts except for screenshots in traces to minimize report size.
