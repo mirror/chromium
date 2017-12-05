@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de048a5_78b2bbe5",
+        "filename": "chrome/browser/vr/metrics_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-05T23:52:15Z",
+      "side": 1,
+      "message": "I\u0027m noticing that you\u0027re using 100 buckets here.  Is that level of detail necessary, or would 50 suffice?  (50 tends to be a pretty reasonable default for most use cases, which is why I\u0027m asking.)\n\nNote that if you do change this new histogram to use 50 buckets, you likely will want to use a separate constant for it, as it\u0027s important not to change the bucket layout for existing histograms that are also using this same constant.",
+      "range": {
+        "startLine": 151,
+        "startChar": 55,
+        "endLine": 151,
+        "endChar": 74
+      },
+      "revId": "1c45722d5ad22dd3197a53192ef89015c380535a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
