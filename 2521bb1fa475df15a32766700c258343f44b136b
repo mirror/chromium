@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "551f8314_4880d08a",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-05T20:00:16Z",
+      "side": 1,
+      "message": "let\u0027d add:\n\nDCHECK(navigation_handle-\u003eIsInMainFrame());\nDCHECK(!navigation_handle-\u003eIsSameDocument());\n\nif (navigation_handle-\u003eHasCommitted())\n  last_committed_source_id_ \u003d ukm::kInvalidSourceId;\n\nThis guarantees that if we add early return logic later in the function, we\u0027ll always be sure that last_committed_source_id_ is not carried forward to the next committed navigation.",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0548c459_3fab2526",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-05T20:00:16Z",
+      "side": 1,
+      "message": "MaybeRecordUrl is also called for failed navigations (those that don\u0027t commit). This enables us to understand the % of page loads that succeed vs fail etc.\n\nSo we need to wrap this in:\n\nif (navigation_handle-\u003eHasCommitted())\n\nsomething like:\nconst ukm::SourceId source_id \u003d ukm::ConvertToSourceId(...);\nif (navigation_handle-\u003eHasCommitted())\n  last_committed_source_id_ \u003d source_id;",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6642f641_d92a23df",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-05T20:00:16Z",
+      "side": 1,
+      "message": "given the above, we should not use last_committed_source_id_ here. we should keep using source_id",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587c5f86_43ac01e7",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-05T20:00:16Z",
+      "side": 1,
+      "message": "same",
+      "revId": "2521bb1fa475df15a32766700c258343f44b136b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
