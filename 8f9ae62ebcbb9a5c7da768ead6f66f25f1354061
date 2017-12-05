@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e0c51d_010eefd8",
+        "filename": "third_party/WebKit/LayoutTests/fast/reflections/reflection-masks-outset.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-05T16:53:37Z",
+      "side": 1,
+      "message": "This is changed to solid background because the new result with the image had several invisible pixel differences in the masked image result which were like (85,100,158) vs (85,100,159). Changed to solid background to avoid another potential source of flakiness.",
+      "revId": "8f9ae62ebcbb9a5c7da768ead6f66f25f1354061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f2347f_8994bd85",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/reflection/reflection-resize.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-05T16:53:37Z",
+      "side": 1,
+      "message": "This tests the reason of the flakiness/failure.",
+      "revId": "8f9ae62ebcbb9a5c7da768ead6f66f25f1354061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

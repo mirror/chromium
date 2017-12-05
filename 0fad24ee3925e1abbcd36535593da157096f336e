@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0de64ff8_22deb010",
+        "filename": "third_party/WebKit/LayoutTests/fast/reflections/reflection-masks-outset.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-05T16:53:37Z",
+      "side": 0,
+      "message": "Image loading turned out not being the reason of flaky. Unupdated image filter was.",
+      "revId": "0fad24ee3925e1abbcd36535593da157096f336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
