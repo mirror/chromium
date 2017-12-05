@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfd5b96a_7f713252",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/root-layer-scrolls",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-12-05T23:55:28Z",
+      "side": 0,
+      "message": "Can you help me understand the diff for this one? The test is basically a wide page with a wide input box, and the page is scrolled as far right as possible.\n\nOld: layer at (0,0) size 800x77\nNew: layer at (-9215,0) size 800x77 backgroundClip at (0,0) size 800x585 clip at (0,0) size 800x585\n\nIs the backgroundClip in the non-scrolled space?",
+      "revId": "66aaf201efada2d0a2d1f3c090ef4858dd41c392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
