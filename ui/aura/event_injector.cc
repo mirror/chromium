@@ -51,9 +51,8 @@ ui::EventDispatchDetails EventInjector::Inject(WindowTreeHost* host,
     env->window_tree_client_->connector()->BindInterface(
         ui::mojom::kServiceName, &window_server_ptr_);
   }
-  display::Screen* screen = display::Screen::GetScreen();
   window_server_ptr_->DispatchEvent(
-      screen->GetDisplayNearestWindow(host->window()).id(), MapEvent(*event),
+      host->GetDisplayId(), MapEvent(*event),
       base::Bind([](bool result) { DCHECK(result); }));
   return ui::EventDispatchDetails();
 }
