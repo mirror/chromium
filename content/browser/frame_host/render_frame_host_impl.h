@@ -30,6 +30,8 @@
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/loader/global_routing_id.h"
+#include "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h"
+#include "content/browser/renderer_host/media/render_frame_audio_output_stream_factory.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/webui/web_ui_impl.h"
 #include "content/common/ax_content_node_data.h"
@@ -974,6 +976,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DeleteWebBluetoothService(
       WebBluetoothServiceImpl* web_bluetooth_service);
 
+  void CreateAudioInputStreamFactory(
+      mojom::RendererAudioInputStreamFactoryRequest request);
+
   void CreateAudioOutputStreamFactory(
       mojom::RendererAudioOutputStreamFactoryRequest request);
 
@@ -1329,6 +1334,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // |FrameHostMsg_TextSurroundingSelectionResponse| message comes.
   TextSurroundingSelectionCallback text_surrounding_selection_callback_;
 
+  UniqueAudioInputStreamFactoryPtr audio_input_stream_factory_;
   UniqueAudioOutputStreamFactoryPtr audio_output_stream_factory_;
 
   // Hosts media::mojom::InterfaceFactory for the RenderFrame and forwards
