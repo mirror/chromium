@@ -402,6 +402,7 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
 
   void ClearCanvas();
   bool RectContainsTransformedRect(const FloatRect&, const SkIRect&) const;
+  void ClearResolvedFilters();
 
   ImageDataColorSettings GetColorSettingsAsImageDataColorSettings() const;
 };
