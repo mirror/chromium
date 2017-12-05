@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "net/cert/cert_verifier.h"
 #include "net/http/http_network_session.h"
 #include "net/log/net_log.h"
@@ -100,8 +101,10 @@ TEST(URLRequestContextConfigTest, TestExperimentalOptionParsing) {
   // Check race_cert_verification.
   EXPECT_TRUE(params->quic_race_cert_verification);
 
-  // Check AsyncDNS resolver is enabled.
+#if !defined(OS_IOS)
+  // Check AsyncDNS resolver is enabled (not supported on iOS).
   EXPECT_TRUE(context->host_resolver()->GetDnsConfigAsValue());
+#endif  // !defined(OS_IOS)
 
   // Check IPv6 is disabled when on wifi.
   EXPECT_TRUE(context->host_resolver()->GetNoIPv6OnWifi());
