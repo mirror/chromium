@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "fde6ba6b_4b3adeeb",
+        "filename": "ui/ozone/platform/wayland/wayland_window_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-05T15:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668b28f3_c91245cc",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b51d0e3e_406b2e40",
         "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v5.cc",
         "patchSetId": 12
@@ -70,6 +88,24 @@
       "writtenOn": "2017-11-30T18:40:30Z",
       "side": 1,
       "message": "Maybe say \"that compilers like g++/arm64 does not support\" , if the problem does not affect clang/x86_64?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968139de_b0bc7918",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v5.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-05T15:13:15Z",
+      "side": 1,
+      "message": "The macro looks like this:\n\n#define wl_array_for_each(pos, array)\t\t\t\t\t\\\n\tfor (pos \u003d (array)-\u003edata;\t\t\t\t\t\\\n\t     (const char *) pos \u003c ((const char *) (array)-\u003edata + (array)-\u003esize); \\\n\t     (pos)++)\n\npos \u003d (array)-\u003edata is not allowed in C++. It does affect both architectures and compilers.\n\nThe error is:\n\nassigning to \u0027uint32_t *\u0027 (aka \u0027unsigned int *\u0027) from incompatible type \u0027void *\u0027",
+      "parentUuid": "b51d0e3e_406b2e40",
       "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +129,24 @@
     },
     {
       "key": {
+        "uuid": "d74fb1f0_67027b6a",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v6.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-05T15:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9225116_38a5cbc2",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d849ce_7393d999",
         "filename": "ui/platform_window/platform_window.h",
         "patchSetId": 12
@@ -104,6 +158,24 @@
       "writtenOn": "2017-11-30T18:40:30Z",
       "side": 1,
       "message": "minor if we are really keeping these methods: \"Tells\" does not read well here. Maybe leave these declarations without comment and group them together with \"ToogleFullscreen, Maximize, Minimize amd Restore\" above?",
+      "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc36903_8c59d183",
+        "filename": "ui/platform_window/platform_window.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-05T15:13:15Z",
+      "side": 1,
+      "message": "Maybe it\u0027s better to remove them from this interface and have them to be non-virtual methods.",
+      "parentUuid": "a5d849ce_7393d999",
       "revId": "19aaa4ef26d4060ab53eb6675b19c114dc9eab89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
