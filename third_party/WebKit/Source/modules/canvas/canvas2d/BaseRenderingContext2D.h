@@ -224,8 +224,11 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   virtual int Width() const = 0;
   virtual int Height() const = 0;
 
-  virtual bool HasImageBuffer() const = 0;
-  virtual ImageBuffer* GetImageBuffer() const = 0;
+  virtual bool HasImageBuffer() const { return false; }
+  virtual ImageBuffer* GetImageBuffer() const {
+    NOTREACHED();
+    return nullptr;
+  };
 
   virtual bool ParseColorOrCurrentColor(Color&,
                                         const String& color_string) const = 0;
@@ -314,6 +317,9 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
 
   const UsageCounters& GetUsage();
 
+  enum RenderingContext2DType { Canvas2D, Offscreen2D, Paint2D };
+  virtual RenderingContext2DType GetRenderingContext2DType() const = 0;
+
  protected:
   BaseRenderingContext2D();
 
@@ -369,6 +375,9 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   virtual void DidInvokeGPUReadbackInCurrentFrame() {}
 
   virtual bool IsPaint2D() const { return false; }
+  virtual void WillOverwriteCanvas() {
+    GetImageBuffer()->WillOverwriteCanvas();
+  }
 
  private:
   void RealizeSaves();
