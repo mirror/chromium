@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b7d2c77e_2ac588fd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-05T17:11:47Z",
+      "side": 1,
+      "message": "You can add a (maybe default?) move constructor to media::BitstreamBuffer. That way you can define this as\n\n ScopedBitstreamBuffer(media::BitstreamBuffer bitstream_buffer)\n   : bitstream_buffer_(std::move(bitstream_buffer)) {}\n\nThat would create zero copies :D (although the move constructor will be called twice: the price of flexibility). The compiler should be able to optimize most of that away, though.",
+      "parentUuid": "75f29f85_8f0b7dca",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd6072c_b265921d",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
