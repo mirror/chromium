@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "303029d1_eb6dbb20",
+        "filename": "ash/shell.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: keep this alphabetized",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c148975b_85ea0642",
+        "filename": "ash/system/power/backlights_forced_off_setter.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "can you just destroy this object and create a new one instead, or does that not work for some reason?",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2576762c_ff412039",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "pass the new state here?",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfabbf8a_a2228e9b",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: move accessors below d\u0027tor",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b564230_b64cdb94",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: delete everything starting with \"Note:\", since the first part is already documented at the Invalidate method, and the second part is just a restatement of the second sentence here",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c173f2ba_9dba4042",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "make this public and drop the \u0027friend class\u0027? the ForTest is a clear sign that this shouldn\u0027t be called from non-test code, and i think there\u0027s a pre-upload hook that checks this too.",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375c6d83_6a84946b",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: \"Callback for GetInitialBacklightsForcedOff().\"",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a504da0a_16ee19f0",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: OnScopedBacklightsForcedOffDestroyed?",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ab49b8_9cdf14e4",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: move accessor after d\u0027tor",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74defb2_6390a094",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "i don\u0027t think you need this",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f938f979_2e41e0cc",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "why not just make all of these protected so you don\u0027t need accessors for all of them?",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b35c12_21b609bc",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "why not just reset the observer first and then initialize a new one afterward?",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ee75fa_acdce735",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: this is a bit hard to read; mind changing to:\n\n  if ((backlights_forced_off_ !\u003d nullptr) \u003d\u003d forced_off)\n\n? (might need .get())\n\nor just adding:\n\n  bool already_forced_off \u003d backlights_forced_off_ !\u003d nullptr;\n  if (already_forced_off \u003d\u003d forced_off)",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e01f5ad_d1641f20",
+        "filename": "ash/system/power/scoped_backlights_forced_off.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: RAII-style class used to force the backlights off.",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756d449a_08dc874f",
+        "filename": "ash/system/power/scoped_backlights_forced_off.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T05:18:53Z",
+      "side": 1,
+      "message": "nit: Returned by BacklightsForcedOffSetter::ForceBacklightsOff.\n\n(i think the rest is implied by saying it\u0027s RAII)",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
