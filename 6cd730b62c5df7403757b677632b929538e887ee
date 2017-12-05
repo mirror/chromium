@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05fa3029_f442c59f",
+        "filename": "chrome/browser/autofill/risk_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Oh boy.  Gave it my best shot!",
+      "parentUuid": "aa34c7bb_ae0fe8fe",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcf33479_b88cbe72",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f06af5ef_f52f9925",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_view_ids.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Anything\u0027s possible.  Renamed to autofill/dialog_view_ids.h for now.  The view IDs and the comment at the top mention that this is specifically for save card, but that\u0027s also currently true.  We can change that if we ever expand this file.",
+      "parentUuid": "bcf33479_b88cbe72",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c461193_d1a976ba",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6a218b_ad5a0f11",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c461193_d1a976ba",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d7da74a2_0d2286ed",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done.  I wasn\u0027t sure how subset-tests worked in Chrome since \"if Payments declines\" and \"if Payments errors\" were different possibilities.",
+      "parentUuid": "5d45a20c_3056f443",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48576b4a_b7d2856d",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63f1c2b_d4d9ebd7",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "I couldn\u0027t find the [X] button in the save_card_bubble_views-\u003eGetDialogClientView().  I did print these:\n\n**** Examining child 0, x\u003d16, y\u003d8, height\u003d58, width\u003d416\n**** Examining child 0, x\u003d0, y\u003d0, height\u003d58, width\u003d416\n**** Examining child 0, x\u003d0, y\u003d0, height\u003d20, width\u003d416\n**** Examining child 1, x\u003d0, y\u003d36, height\u003d22, width\u003d416\n**** Examining child 0, x\u003d0, y\u003d0, height\u003d22, width\u003d34\n**** Examining child 1, x\u003d42, y\u003d0, height\u003d22, width\u003d143\n**** Examining child 2, x\u003d193, y\u003d0, height\u003d22, width\u003d67\n**** Examining child 1, x\u003d0, y\u003d82, height\u003d44, width\u003d448\n**** Examining child 0, x\u003d368, y\u003d0, height\u003d28, width\u003d64\n**** Examining child 0, x\u003d0, y\u003d0, height\u003d28, width\u003d64\n**** Examining child 1, x\u003d17, y\u003d13, height\u003d0, width\u003d0\n**** Examining child 2, x\u003d17, y\u003d0, height\u003d28, width\u003d29\n\nI figured the last one was my best shot since it was nearly square, but clicking it didn\u0027t appear to do anything.  Will file a bug as mentioned below; I\u0027d like to know how to do this, too.",
+      "parentUuid": "48576b4a_b7d2856d",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "6941761e_a694f7eb",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "That worked, thanks!",
+      "parentUuid": "1e673d5c_38c9d7ba",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 151,
+        "endChar": 49
+      },
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7507ba9f_22e6d4db",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "d85be118_7904e1c1",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Ah...I didn\u0027t know you changed it in Chromium CL 786122.  I, uh, really hope material design is turned on by default for M64 then, because with the NewUi experiment logic gone on those buttons, what we show for users won\u0027t be what was approved. :|  Well it\u0027d have the new messages and layout but the buttons would be back again, whereas they\u0027re not right now.\n\nAnyway yes!  Changed the tests!  Thanks.",
+      "parentUuid": "7507ba9f_22e6d4db",
+      "range": {
+        "startLine": 181,
+        "startChar": 41,
+        "endLine": 181,
+        "endChar": 46
+      },
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a93a7f99_e2de4769",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -153,6 +297,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc9474e_df91fed2",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Created crbug.com/791861 and updated the TODO.  I agree; there should be a way to do this, I just don\u0027t yet know what it is...",
+      "parentUuid": "a93a7f99_e2de4769",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "06a02775_b2ef8cb4",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61e6a69_5aa9c932",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0281870a_ae276299",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -187,6 +367,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732e8a7f_e14b3d97",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Not that I can tell without inner knowledge of the link itself, unfortunately (see TODO).  Whereas PaymentRequest outright says \"The link was clicked so the only thing that could have happened was XYZ\" [1], SaveCardBubbleViews has to explicitly look for what portion of the link was clicked because there\u0027s always 2+ legal messages, and without knowing what gfx::Range to supply it ends up hitting a NOTREACHED() [2].  Suggestions welcome though.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/payments/payment_sheet_view_controller.cc?l\u003d545\u0026rcl\u003de700ab58ce3ce745c39dbf5893a3b6576aec53a2\n[2] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/autofill/save_card_bubble_views.cc?l\u003d262\u0026rcl\u003de700ab58ce3ce745c39dbf5893a3b6576aec53a2",
+      "parentUuid": "0281870a_ae276299",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "db272df5_1e50c993",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Correct; done.",
+      "parentUuid": "0f7da122_25407b6b",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7cf409b_c167f191",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
         "patchSetId": 9
@@ -221,6 +437,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee126f13_db908009",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Great idea, thanks!",
+      "parentUuid": "d7cf409b_c167f191",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "f7d9c226_39df5933",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done.  Added a single invalid length test (4-digit CVC for non-AmEx card).  I assume other invalid lengths (2, 5, etc.) are covered by the unit test:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc?l\u003d887\u0026rcl\u003de2620c99e69f29346cb2aeb173d558492f3bbf22",
+      "parentUuid": "d29a60d3_c93ba60c",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e350482_3aa7567a",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
         "patchSetId": 9
@@ -255,6 +507,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcc3daa_49b6ec65",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done; seems to work fine!",
+      "parentUuid": "2e350482_3aa7567a",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +551,30 @@
     },
     {
       "key": {
+        "uuid": "a3080c2f_8de8ad72",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50121ce4_d70f9fa2",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b8e263_bd1e7ab6",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
         "patchSetId": 9
@@ -295,6 +589,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4b19fa_9515c974",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b8e263_bd1e7ab6",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +627,24 @@
     },
     {
       "key": {
+        "uuid": "50908cc2_5f661506",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Moved the implementation, including the empty functions.\n\nLooks like commenting out each function produces a different compile error, so I\u0027ve got to keep them both.",
+      "parentUuid": "607dce83_820458d9",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca67cc7_971f8350",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
         "patchSetId": 9
@@ -329,6 +659,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427a2f79_46938ec3",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Yep, that works!  Followup question: Should I then move all the implementation *back* into the class definition (as in the example) since the definition is now in the .cc file, or keep it outside as SaveCardBubbleViewsBrowserTestBase::FakeGeolocation::MethodName()?",
+      "parentUuid": "7ca67cc7_971f8350",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +697,24 @@
     },
     {
       "key": {
+        "uuid": "f384cc4d_708c626e",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5495242_07f69595",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2096fb36_8037b44c",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 9
@@ -366,6 +732,24 @@
     },
     {
       "key": {
+        "uuid": "5bfd9731_29fdfa2b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done.  Also added the same thing to save_card_bubble_controller.h\u0027s new ObserverForTest.",
+      "parentUuid": "2096fb36_8037b44c",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9506b9ed_73af0aff",
         "filename": "components/autofill/core/browser/form_data_importer.h",
         "patchSetId": 9
@@ -380,6 +764,24 @@
       "revId": "6cd730b62c5df7403757b677632b929538e887ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e798fbfb_c512a9e8",
+        "filename": "components/autofill/core/browser/form_data_importer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-05T03:53:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9506b9ed_73af0aff",
+      "revId": "6cd730b62c5df7403757b677632b929538e887ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
