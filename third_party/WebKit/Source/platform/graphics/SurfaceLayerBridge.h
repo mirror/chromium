@@ -40,7 +40,8 @@ class PLATFORM_EXPORT SurfaceLayerBridge
   void CreateSolidColorLayer();
 
   // Implementation of blink::mojom::blink::OffscreenCanvasSurfaceClient
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo&) override;
+  void OnFirstSurfaceActivation(const viz::SurfaceInfo&,
+                                const viz::SurfaceSequence&) override;
   void SatisfyCallback(const viz::SurfaceSequence&);
   void RequireCallback(const viz::SurfaceId&, const viz::SurfaceSequence&);
 

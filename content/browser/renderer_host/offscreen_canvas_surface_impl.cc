@@ -28,6 +28,7 @@ OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
       destroy_callback_(std::move(destroy_callback)),
       frame_sink_id_(frame_sink_id),
       parent_frame_sink_id_(parent_frame_sink_id) {
+  surface_sequence_generator_.set_frame_sink_id(frame_sink_id_);
   binding_.set_connection_error_handler(
       base::BindOnce(&OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed,
                      base::Unretained(this)));
@@ -67,8 +68,12 @@ void OffscreenCanvasSurfaceImpl::OnFirstSurfaceActivation(
   DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
 
   local_surface_id_ = surface_info.id().local_surface_id();
-  if (client_)
-    client_->OnFirstSurfaceActivation(surface_info);
+  if (client_) {
+    viz::SurfaceSequence seq =
+        surface_sequence_generator_.CreateSurfaceSequence();
+    Require(surface_info.id(), seq);
+    client_->OnFirstSurfaceActivation(surface_info, seq);
+  }
 }
 
 void OffscreenCanvasSurfaceImpl::OnFrameTokenChanged(uint32_t frame_token) {
