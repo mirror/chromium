@@ -125,6 +125,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02ba304_da6b6b1f",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-05T23:46:31Z",
+      "side": 1,
+      "message": "An alternative is to use GLImage::GetType in the decoder or a helper function (and implement it properly in all subclasses).\n\nI also realized that we need to fix BackTexture to set the cleared rect the same way.",
+      "parentUuid": "480eedf0_9801e854",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
