@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1d90056_d76b1a0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-05T00:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0daf281f_52a4bc9e",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78058c5_f335d30f",
         "filename": "third_party/WebKit/LayoutTests/css-parser/color3-expected.txt",
         "patchSetId": 9
@@ -139,6 +157,24 @@
       "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b88fb3a_0797b831",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-05T00:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4cbb2df_f7520f62",
+      "revId": "9f8a86cb0b329996f0278821a10ed1a62fffef44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
