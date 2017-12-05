@@ -86,6 +86,17 @@ base::TimeTicks TestCompositorTimingHistory::Now() const {
   return test_->Now();
 }
 
+TEST_F(CompositorTimingHistoryTest, BeginMainFrameSentToReadyToCommit) {
+  timing_history_.WillBeginMainFrame(true, Now());
+  AdvanceNowBy(base::TimeDelta::FromMilliseconds(1));
+  timing_history_.BeginMainFrameStarted(Now());
+  AdvanceNowBy(base::TimeDelta::FromMilliseconds(1));
+  timing_history_.NotifyReadyToCommit();
+  EXPECT_EQ(
+      base::TimeDelta::FromMilliseconds(2),
+      timing_history_.BeginMainFrameSentToReadyToCommitDurationEstimate());
+}
+
 TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   base::TimeDelta one_second = base::TimeDelta::FromSeconds(1);
 

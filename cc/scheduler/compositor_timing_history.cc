@@ -71,6 +71,7 @@ const size_t kDurationHistorySize = 60;
 const double kBeginMainFrameQueueDurationEstimationPercentile = 90.0;
 const double kBeginMainFrameQueueDurationCriticalEstimationPercentile = 90.0;
 const double kBeginMainFrameQueueDurationNotCriticalEstimationPercentile = 90.0;
+const double kBeginMainFrameSentToReadyToCommitEstimationPercentile = 90.0;
 const double kBeginMainFrameStartToCommitEstimationPercentile = 90.0;
 const double kCommitToReadyToActivateEstimationPercentile = 90.0;
 const double kPrepareTilesEstimationPercentile = 90.0;
@@ -469,6 +470,8 @@ CompositorTimingHistory::CompositorTimingHistory(
       begin_main_frame_queue_duration_critical_history_(kDurationHistorySize),
       begin_main_frame_queue_duration_not_critical_history_(
           kDurationHistorySize),
+      begin_main_frame_sent_to_ready_to_commit_duration_history_(
+          kDurationHistorySize),
       begin_main_frame_start_to_commit_duration_history_(kDurationHistorySize),
       commit_to_ready_to_activate_duration_history_(kDurationHistorySize),
       prepare_tiles_duration_history_(kDurationHistorySize),
@@ -582,6 +585,13 @@ CompositorTimingHistory::BeginMainFrameStartToCommitDurationEstimate() const {
 }
 
 base::TimeDelta
+CompositorTimingHistory::BeginMainFrameSentToReadyToCommitDurationEstimate()
+    const {
+  return begin_main_frame_sent_to_ready_to_commit_duration_history_.Percentile(
+      kBeginMainFrameSentToReadyToCommitEstimationPercentile);
+}
+
+base::TimeDelta
 CompositorTimingHistory::CommitToReadyToActivateDurationEstimate() const {
   return commit_to_ready_to_activate_duration_history_.Percentile(
       kCommitToReadyToActivateEstimationPercentile);
@@ -675,6 +685,12 @@ void CompositorTimingHistory::BeginMainFrameAborted() {
   base::TimeTicks begin_main_frame_end_time = Now();
   DidBeginMainFrame(begin_main_frame_end_time);
   begin_main_frame_frame_time_ = base::TimeTicks();
+}
+
+void CompositorTimingHistory::NotifyReadyToCommit() {
+  DCHECK_NE(begin_main_frame_sent_time_, base::TimeTicks());
+  begin_main_frame_sent_to_ready_to_commit_duration_history_.InsertSample(
+      Now() - begin_main_frame_sent_time_);
 }
 
 void CompositorTimingHistory::DidCommit() {

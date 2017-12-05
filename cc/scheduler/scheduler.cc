@@ -156,6 +156,7 @@ void Scheduler::SetTreePrioritiesAndScrollState(
 
 void Scheduler::NotifyReadyToCommit() {
   TRACE_EVENT0("cc", "Scheduler::NotifyReadyToCommit");
+  compositor_timing_history_->NotifyReadyToCommit();
   state_machine_.NotifyReadyToCommit();
   ProcessScheduledActions();
 }
@@ -403,6 +404,27 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
 
   state_machine_.SetCriticalBeginMainFrameToActivateIsFast(
       bmf_to_activate_estimate_critical < bmf_to_activate_threshold);
+
+  // If we expect the main thread to respond within this frame, defer the
+  // invalidation to merge it with the incoming main frame. Even if the response
+  // is delayed such that the raster can not be completed within this frame's
+  // draw, its better to delay the invalidation than blocking the pipeline with
+  // an extra pending tree update to be flushed.
+  base::TimeDelta time_since_main_frame_sent;
+  if (compositor_timing_history_->begin_main_frame_sent_time() !=
+      base::TimeTicks()) {
+    time_since_main_frame_sent =
+        now - compositor_timing_history_->begin_main_frame_sent_time();
+  }
+  bool main_thread_response_expected_before_deadline =
+      compositor_timing_history_
+              ->BeginMainFrameSentToReadyToCommitDurationEstimate() -
+          time_since_main_frame_sent <
+      bmf_to_activate_threshold;
+  state_machine_.set_should_defer_invalidation_for_main_frame(
+      main_thread_response_expected_before_deadline);
+  if (impl_side_invalidation_forced_for_testing_)
+    state_machine_.set_should_defer_invalidation_for_main_frame(false);
 
   // Update the BeginMainFrame args now that we know whether the main
   // thread will be on the critical path or not.

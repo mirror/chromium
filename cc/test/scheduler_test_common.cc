@@ -82,6 +82,17 @@ void FakeCompositorTimingHistory::SetDrawDurationEstimate(
   draw_duration_ = duration;
 }
 
+void FakeCompositorTimingHistory::SetBeginMainSentToReadyToCommitEstimate(
+    base::TimeDelta duration) {
+  begin_main_frame_sent_to_ready_to_commit_duration_ = duration;
+}
+
+base::TimeDelta
+FakeCompositorTimingHistory::BeginMainFrameSentToReadyToCommitDurationEstimate()
+    const {
+  return begin_main_frame_sent_to_ready_to_commit_duration_;
+}
+
 base::TimeDelta
 FakeCompositorTimingHistory::BeginMainFrameQueueDurationCriticalEstimate()
     const {

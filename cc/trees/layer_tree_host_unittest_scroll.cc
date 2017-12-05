@@ -2188,6 +2188,12 @@ class LayerTreeHostScrollTestImplSideInvalidation
   }
 
   void DidSendBeginMainFrameOnThread(LayerTreeHostImpl* host_impl) override {
+    // The main thread will block the commit until an invalidation is
+    // performed. We need to ensure that the invalidation is not blocked on a
+    // commit to avoid a deadlock.
+    host_impl->client_for_testing()->SetImplSideInvalidationForcedForTesting(
+        true);
+
     switch (++num_of_main_frames_) {
       case 1:
         // Do nothing for the first BeginMainFrame.
