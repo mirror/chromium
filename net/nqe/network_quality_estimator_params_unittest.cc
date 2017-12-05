@@ -7,6 +7,7 @@
 #include <map>
 #include <string>
 
+#include "net/base/network_change_notifier.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -136,6 +137,58 @@ TEST(NetworkQualityEstimatorParamsTest, ObtainAlgorithmToUseFromParams) {
     EXPECT_EQ(test.expected_algorithm,
               params.GetEffectiveConnectionTypeAlgorithm())
         << test.algorithm;
+  }
+}
+
+// Verify that for a given connection type, the default network quality values
+// lie in the same range of ECT as the value returned by GetDefaultECT().
+TEST(NetworkQualityEstimatorParamsTest, GetDefaultECT) {
+  std::map<std::string, std::string> variation_params;
+  NetworkQualityEstimatorParams params(variation_params);
+
+  for (size_t i = 0; i < NetworkChangeNotifier::ConnectionType::CONNECTION_LAST;
+       ++i) {
+    NetworkChangeNotifier::ConnectionType connection_type =
+        static_cast<NetworkChangeNotifier::ConnectionType>(i);
+    EffectiveConnectionType ect = params.GetDefaultECT(connection_type);
+    EXPECT_LE(EFFECTIVE_CONNECTION_TYPE_2G, ect);
+
+    const nqe::internal::NetworkQuality& default_nq =
+        params.DefaultObservation(connection_type);
+
+    if (ect == EFFECTIVE_CONNECTION_TYPE_4G) {
+      // If the expected effective connection type is 4G, then RTT values in
+      // |default_nq| should be lower than the threshold for ECT of 3G.
+      const nqe::internal::NetworkQuality& threshold =
+          params.ConnectionThreshold(EFFECTIVE_CONNECTION_TYPE_3G);
+
+      EXPECT_LT(default_nq.http_rtt(), threshold.http_rtt());
+      EXPECT_LT(default_nq.transport_rtt(), threshold.transport_rtt());
+      EXPECT_TRUE(default_nq.downstream_throughput_kbps() >
+                      threshold.downstream_throughput_kbps() ||
+                  threshold.downstream_throughput_kbps() < 0);
+    } else {
+      // If the expected effective connection type is |ect|, then RTT values in
+      // |default_nq| should be higher than the threshold for ECT of |ect|.
+      const nqe::internal::NetworkQuality& threshold =
+          params.ConnectionThreshold(ect);
+      EffectiveConnectionType slower_ect =
+          static_cast<EffectiveConnectionType>(static_cast<int>(ect) - 1);
+      const nqe::internal::NetworkQuality& threshold_slower =
+          params.ConnectionThreshold(slower_ect);
+
+      EXPECT_GT(default_nq.http_rtt(), threshold.http_rtt());
+      EXPECT_GT(default_nq.transport_rtt(), threshold.transport_rtt());
+      EXPECT_TRUE(default_nq.downstream_throughput_kbps() <
+                      threshold.downstream_throughput_kbps() ||
+                  threshold.downstream_throughput_kbps() < 0);
+
+      EXPECT_LT(default_nq.http_rtt(), threshold_slower.http_rtt());
+      EXPECT_LT(default_nq.transport_rtt(), threshold_slower.transport_rtt());
+      EXPECT_TRUE(default_nq.downstream_throughput_kbps() >
+                      threshold_slower.downstream_throughput_kbps() ||
+                  threshold.downstream_throughput_kbps() < 0);
+    }
   }
 }
 
