@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/base/region.h"
 #include "cc/layers/recording_source.h"
@@ -199,8 +200,8 @@ class OopPixelTest : public testing::Test {
     }
     gpu::Capabilities capabilities;
     gpu::gles2::GLES2Interface* gl = context_->GetImplementation();
-    skia_bindings::GrContextForGLES2Interface scoped_grcontext(gl,
-                                                               capabilities);
+    skia_bindings::GrContextForGLES2Interface scoped_grcontext(
+        gl, capabilities, base::SysInfo::AmountOfPhysicalMemory());
     SkImageInfo image_info = SkImageInfo::MakeN32Premul(
         options.bitmap_rect.width(), options.bitmap_rect.height());
     auto surface = SkSurface::MakeRenderTarget(scoped_grcontext.get(),

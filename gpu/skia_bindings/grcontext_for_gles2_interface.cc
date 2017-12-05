@@ -10,7 +10,6 @@
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "base/sys_info.h"
 #include "base/trace_event/trace_event.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -23,7 +22,8 @@ namespace skia_bindings {
 
 GrContextForGLES2Interface::GrContextForGLES2Interface(
     gpu::gles2::GLES2Interface* gl,
-    const gpu::Capabilities& capabilities) {
+    const gpu::Capabilities& capabilities,
+    int64_t amount_of_physical_memory) {
   // Calculate limits to pass during initialization:
   // The limit of the number of GPU resources we hold in the GrContext's
   // GPU cache.
@@ -42,11 +42,10 @@ GrContextForGLES2Interface::GrContextForGLES2Interface(
 
   size_t max_ganesh_resource_cache_bytes = kMaxGaneshResourceCacheBytes;
   int max_glyph_cache_texture_bytes = kMaxDefaultGlyphCacheTextureBytes;
-  if (base::SysInfo::AmountOfPhysicalMemory() <= kLowEndMemoryThreshold) {
+  if (amount_of_physical_memory <= kLowEndMemoryThreshold) {
     max_ganesh_resource_cache_bytes = kMaxLowEndGaneshResourceCacheBytes;
     max_glyph_cache_texture_bytes = kMaxLowEndGlyphCacheTextureBytes;
-  } else if (base::SysInfo::AmountOfPhysicalMemory() >=
-             kHighEndMemoryThreshold) {
+  } else if (amount_of_physical_memory >= kHighEndMemoryThreshold) {
     max_ganesh_resource_cache_bytes = kMaxHighEndGaneshResourceCacheBytes;
   }
 
