@@ -93,6 +93,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   virtual void Detach(FrameDetachType);
   void DisconnectOwnerElement();
   virtual bool ShouldClose() = 0;
+  virtual void DidFreeze() = 0;
 
   FrameClient* Client() const;
 
