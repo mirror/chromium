@@ -52,6 +52,24 @@
       "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c13e83_99e8a35c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-05T02:49:04Z",
+      "side": 1,
+      "message": "After reading about reset, I think not.  It looks like we need to destroy old object before registering binding for new object.",
+      "parentUuid": "5b9d2038_3ba7eb56",
+      "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
