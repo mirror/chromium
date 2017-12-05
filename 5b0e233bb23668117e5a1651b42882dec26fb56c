@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a21e6f9_bb78267e",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T05:48:15Z",
+      "side": 1,
+      "message": "This comment no longer makes sense. I suspect the first |render_process_id| should have been changed to |embedder_render_process_id| during an earlier rename.",
+      "revId": "5b0e233bb23668117e5a1651b42882dec26fb56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1c3357_9919e6f0",
+        "filename": "content/renderer/speech_recognition_dispatcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T05:48:15Z",
+      "side": 1,
+      "message": "There should be an overload that takes an InterfacePtr*.",
+      "revId": "5b0e233bb23668117e5a1651b42882dec26fb56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a842b01_8c5edce7",
+        "filename": "content/renderer/speech_recognition_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T05:48:15Z",
+      "side": 1,
+      "message": "GetSpeechRecognitionHost()\n\nAlso consider returning a reference.",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "5b0e233bb23668117e5a1651b42882dec26fb56c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
