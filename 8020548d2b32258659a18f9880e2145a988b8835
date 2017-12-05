@@ -16,6 +16,24 @@
       "revId": "8020548d2b32258659a18f9880e2145a988b8835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29cda43_cfdeb112",
+        "filename": "components/viz/test/compositor_frame_helpers.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-05T15:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998bd793_eb91e5e6",
+      "revId": "8020548d2b32258659a18f9880e2145a988b8835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
