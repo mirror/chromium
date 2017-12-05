@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c966f1f7_63373cab",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T06:26:20Z",
+      "side": 1,
+      "message": "Will NoteLaunchDone announce a11y alert? please help test a11y alert after the new change",
+      "revId": "290755cfa86cd8bad03b9f497ac7b49f4953cd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

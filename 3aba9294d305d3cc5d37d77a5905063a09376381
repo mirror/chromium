@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "31e74a93_83d6aebf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T06:26:20Z",
+      "side": 1,
+      "message": "nit: TEST label",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "303029d1_eb6dbb20",
         "filename": "ash/shell.h",
         "patchSetId": 24
@@ -66,6 +83,23 @@
       "side": 1,
       "message": "It could work, but it would require recreating all objects that depend/observe this object (including the ones the test does not care about).",
       "parentUuid": "c148975b_85ea0642",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4198e8_5ed39f8c",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T06:26:20Z",
+      "side": 1,
+      "message": "nit: \u003cset\u003e not used?",
       "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -419,6 +453,23 @@
       "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a335baff_d5cd8199",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T06:26:20Z",
+      "side": 1,
+      "message": "maybe we should document the ownership for this raw pointer",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

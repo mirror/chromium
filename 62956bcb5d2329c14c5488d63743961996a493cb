@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4358c37e_2f1df07f",
+        "filename": "ash/system/power/backlights_forced_off_setter.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T06:26:20Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "62956bcb5d2329c14c5488d63743961996a493cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
