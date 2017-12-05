@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "67f9ea92_5f88acf3",
+        "filename": "ash/system/power/backlights_forced_off_setter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T19:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4198e8_5ed39f8c",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2576762c_ff412039",
         "filename": "ash/system/power/backlights_forced_off_setter.h",
         "patchSetId": 24
@@ -470,6 +488,24 @@
       "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5f71d3_ce1bd719",
+        "filename": "ash/system/power/backlights_forced_off_setter_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T19:33:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a335baff_d5cd8199",
+      "revId": "3aba9294d305d3cc5d37d77a5905063a09376381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

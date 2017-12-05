@@ -16,6 +16,24 @@
       "revId": "290755cfa86cd8bad03b9f497ac7b49f4953cd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d9f94c_29011cd6",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T19:33:00Z",
+      "side": 1,
+      "message": "it won\u0027t, but this one will, though it might be a good idea to announce this when the backlights forced off state actually changes (rather than when the power button is clicked).",
+      "parentUuid": "c966f1f7_63373cab",
+      "revId": "290755cfa86cd8bad03b9f497ac7b49f4953cd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
