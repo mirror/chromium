@@ -10,27 +10,23 @@
 
 namespace blink {
 
-NGInlineFragmentIterator::NGInlineFragmentIterator(
-    const NGPhysicalBoxFragment& box,
-    const LayoutObject* filter) {
-  DCHECK(filter);
+namespace {
 
-  CollectInlineFragments(box, {}, filter, &results_);
-}
+using Result = NGPhysicalFragmentWithOffset;
 
 // Create a map from a LayoutObject to a vector of PhysicalFragment and its
 // offset to the container box. This is done by collecting inline child
 // fragments of the container fragment, while accumulating the offset to the
 // container box.
-void NGInlineFragmentIterator::CollectInlineFragments(
-    const NGPhysicalContainerFragment& container,
-    NGPhysicalOffset offset_to_container_box,
-    const LayoutObject* filter,
-    Results* results) {
+template <typename Filter, size_t inline_capacity>
+void CollectInlineFragments(const NGPhysicalContainerFragment& container,
+                            NGPhysicalOffset offset_to_container_box,
+                            Filter& filter,
+                            Vector<Result, inline_capacity>* results) {
   for (const auto& child : container.Children()) {
     NGPhysicalOffset child_offset = child->Offset() + offset_to_container_box;
 
-    if (filter == child->GetLayoutObject()) {
+    if (filter.AddOnEnter(child.get())) {
       results->push_back(
           NGPhysicalFragmentWithOffset{child.get(), child_offset});
     }
@@ -41,7 +37,128 @@ void NGInlineFragmentIterator::CollectInlineFragments(
       CollectInlineFragments(ToNGPhysicalContainerFragment(*child),
                              child_offset, filter, results);
     }
+
+    if (filter.RemoveOnExit(child.get())) {
+      DCHECK(results->size());
+      DCHECK_EQ(results->back().fragment, child.get());
+      results->pop_back();
+    }
   }
+}
+
+class AddAllFilter {
+ public:
+  bool AddOnEnter(const NGPhysicalFragment*) const { return true; }
+  bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+};
+
+class LayoutObjectFilter {
+ public:
+  explicit LayoutObjectFilter(const LayoutObject* layout_object)
+      : layout_object_(layout_object) {
+    DCHECK(layout_object);
+  }
+
+  bool AddOnEnter(const NGPhysicalFragment* fragment) const {
+    return fragment->GetLayoutObject() == layout_object_;
+  }
+  bool RemoveOnExit(const NGPhysicalFragment*) const { return false; }
+
+ private:
+  const LayoutObject* layout_object_;
+};
+
+// A |fragment| is an ancestor of |target| if and only if both are true:
+// - |fragment| precedes |target| in preorder traversal
+// - |fragment| succeeds |target| in postorder traversal
+class InclusiveAncestorFilter {
+ public:
+  explicit InclusiveAncestorFilter(const NGPhysicalFragment& target)
+      : target_(&target) {}
+
+  bool AddOnEnter(const NGPhysicalFragment* fragment) {
+    if (fragment == target_)
+      preorder_reached_ = true;
+    current_fragments.push_back(preorder_reached_);
+    return true;
+  }
+
+  bool RemoveOnExit(const NGPhysicalFragment* fragment) {
+    if (fragment != target_) {
+      const bool preorder = current_fragments.back();
+      current_fragments.pop_back();
+      return preorder || !postorder_reached_;
+    }
+    postorder_reached_ = true;
+    current_fragments.pop_back();
+    return false;
+  }
+
+ private:
+  const NGPhysicalFragment* target_;
+
+  bool preorder_reached_ = false;
+  bool postorder_reached_ = false;
+  Vector<bool> current_fragments;
+};
+
+}  // namespace
+
+NGInlineFragmentIterator::NGInlineFragmentIterator(
+    const NGPhysicalBoxFragment& box,
+    const LayoutObject* layout_object) {
+  results_ = NGInlineFragmentTraversal::SelfFragmentsOf(box, layout_object);
+}
+
+// static
+Vector<Result, 1> NGInlineFragmentTraversal::SelfFragmentsOf(
+    const NGPhysicalContainerFragment& container,
+    const LayoutObject* layout_object) {
+  LayoutObjectFilter filter(layout_object);
+  Vector<Result, 1> results;
+  CollectInlineFragments(container, {}, filter, &results);
+  return results;
+}
+
+// static
+Vector<Result> NGInlineFragmentTraversal::DescendantsOf(
+    const NGPhysicalContainerFragment& container) {
+  AddAllFilter add_all;
+  Vector<Result> results;
+  CollectInlineFragments(container, {}, add_all, &results);
+  return results;
+}
+
+// static
+Vector<Result> NGInlineFragmentTraversal::InclusiveDescendantsOf(
+    const NGPhysicalFragment& root) {
+  Vector<Result> results =
+      root.IsContainer() ? DescendantsOf(ToNGPhysicalContainerFragment(root))
+                         : Vector<Result>();
+  results.push_front(Result{&root, {}});
+  return results;
+}
+
+// static
+Vector<Result> NGInlineFragmentTraversal::InclusiveAncestorsOf(
+    const NGPhysicalContainerFragment& container,
+    const NGPhysicalFragment& target) {
+  InclusiveAncestorFilter inclusive_ancestors_of(target);
+  Vector<Result> results;
+  CollectInlineFragments(container, {}, inclusive_ancestors_of, &results);
+  std::reverse(results.begin(), results.end());
+  return results;
+}
+
+// static
+Vector<Result> NGInlineFragmentTraversal::AncestorsOf(
+    const NGPhysicalContainerFragment& container,
+    const NGPhysicalFragment& target) {
+  Vector<Result> results = InclusiveAncestorsOf(container, target);
+  DCHECK(results.size());
+  DCHECK_EQ(results.front().fragment, &target);
+  results.erase(results.begin());
+  return results;
 }
 
 }  // namespace blink
