@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61038493_ee8a4ba3",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-12-05T21:55:43Z",
+      "side": 1,
+      "message": "This macro is deprecated, please use UMA_HISTOGRAM_COUNTS_1M instead (it\u0027s the same).\n\nAlso, to make sure you\u0027re aware, this gives a range up to 1s in microseconds.",
+      "revId": "5a5fb62fee4ab99e4faf5caf7cff59a7fc917a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
