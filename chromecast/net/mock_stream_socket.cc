@@ -18,7 +18,7 @@ namespace chromecast {
 MockStreamSocket::MockStreamSocket() {
   // Set default return values.
   ON_CALL(*this, Read(_, _, _)).WillByDefault(Return(net::ERR_IO_PENDING));
-  ON_CALL(*this, Write(_, _, _))
+  ON_CALL(*this, Write(_, _, _, _))
       .WillByDefault(Invoke(
           [](net::IOBuffer* buf, int buf_len,
              const net::CompletionCallback& callback) { return buf_len; }));
