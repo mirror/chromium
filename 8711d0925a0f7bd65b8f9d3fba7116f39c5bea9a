@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b29b5af3_fb55be75",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "Add comment saying RPHs have been searched on UI, while other processes types have to be searched on IO.",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1869627_6fba1e8d",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "Rename to StartProfilingPidOnIOThread().\n\nGeez that\u0027s long.... the problem with StartProfilingOnIOThread is it sounds like it\u0027s the main body of \"StartProfiling()\" when really, it\u0027s just attempting to profile a given Pid.",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ec48c2_f62535fa",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "Should we consider base::flat_set?",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a833310_6c967595",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "For things that are singly-assigned, can we use const w/o blowing up style checks etc?",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173fe712_0c7cd357",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "slight perf OCDness here..\n\nstd::sort(profiled_pids.begin(), profiled_pids.end()); before the loop and then use std::binary_search() instead of std::find()?",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c9b3ed_85924dd3",
+        "filename": "chrome/common/profiling/profiling_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-05T19:51:07Z",
+      "side": 1,
+      "message": "Initialize in constructor to make uniform with other fields?",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
