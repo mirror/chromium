@@ -73,6 +73,24 @@
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad5409c_aa8e0345",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-05T23:53:34Z",
+      "side": 1,
+      "message": "\u003e So according to this: https://stackoverflow.com/questions/4409100/how-to-make-a-java-generic-method-static It is possible to make static method generic, it just doesn\u0027t necessarily match the generic type of the class.\n\nThanks for helping out! In fact I faced another issue even if generic static methods worked - how to create an instance of a class type T - which is what |CreateForWebContents| should do. Assuming its constructor always has one parameter |webContents|, I need to do something like below:\n\n        try {\n            Class[] args \u003d new Class[1];\n            args[0] \u003d WebContents.class;\n            T data \u003d clazz.getDeclaredConstructor(args).newInstance(webContents);\n            ((WebContentsImpl) webContents).setUserData(clazz, data);\n        } catch (Exception  e) { \n             // InvocationTargetException, NoSuchMethodException, InstantiationException, \n             // IllegalAccessException,\n            ...\n        }\n\nFor this to work, we need to pass |Class\u003cT\u003e clazz| to |createForWebContents| as well.\n\nI see a few cases in Clank code doing this. So far I\u0027ve tried to avoid creating this situation, not sure if this looks okay. But I doubt there\u0027s any other way.",
+      "parentUuid": "939778ba_26166c8b",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
