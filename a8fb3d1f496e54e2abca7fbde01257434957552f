@@ -16,6 +16,24 @@
       "revId": "a8fb3d1f496e54e2abca7fbde01257434957552f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c016cd3_eea4940f",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:33:57Z",
+      "side": 0,
+      "message": "Huh, you\u0027re right. Dunno, but yes, duplication is bad.",
+      "parentUuid": "53c59153_4a42a2fc",
+      "revId": "a8fb3d1f496e54e2abca7fbde01257434957552f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,58 @@
       "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0947c2_0938a70b",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:33:57Z",
+      "side": 1,
+      "message": "wrt \"at the moment\" - ShillProfileClient mirrors the DBus API, so we wouldn\u0027t want to add a method to ShillProfileClient itself.\n\nAdding it to FakeShillProfileClient::TestInterface makes sense to me.\n\n(The reason to put it in TestInterface instead of FakeShillProfileClient directly is so that we can use DBusThreadManager::Get()-\u003eGetShillProfileClient()-\u003eGetTestInterface() without needing to do a static cast like we do at line 272 and 267; I should have pushed back on those at the time but was a bit swamped and let it slide).",
+      "parentUuid": "3f453b42_2dd29342",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b55a13_4641c55e",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:33:57Z",
+      "side": 1,
+      "message": "Use the same style at line 824.",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe678341_b2b81837",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-05T19:33:57Z",
+      "side": 1,
+      "message": "Even though this is similar to the previous test, the initial conditions are a bit different so we should add the EXPECT_FALSE from line 828 here also.",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
