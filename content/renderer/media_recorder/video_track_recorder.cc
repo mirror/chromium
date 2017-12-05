@@ -112,11 +112,6 @@ CodecEnumerator* GetCodecEnumerator() {
 }
 
 CodecEnumerator::CodecEnumerator() {
-#if defined(OS_CHROMEOS)
-  // See https://crbug.com/616659.
-  return;
-#endif
-
   content::RenderThreadImpl* const render_thread_impl =
       content::RenderThreadImpl::current();
   if (!render_thread_impl) {
