@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24b2474_53f276f4",
+        "filename": "build/win/message_compiler.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-05T01:10:14Z",
+      "side": 1,
+      "message": "Are we planning todone this eventually or not really?",
+      "revId": "35afe2fed8cd2c02aa47f1e9b2c047192b87fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
