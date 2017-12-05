@@ -16,6 +16,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f81932_412a2b37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-05T04:30:17Z",
+      "side": 1,
+      "message": "when we call AbstractPropertySetCSSStyleDeclaration::setCSSText from AbstractPropertySetCSSStyleDeclaration::setCSSText we are passing in the CSSStyleSheet::OwnerDocument() which really is a best effort attempt at getting a Document.",
+      "parentUuid": "069e91d9_a3cf7555",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
