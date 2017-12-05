@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79823455_82af979c",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-05T22:28:14Z",
+      "side": 1,
+      "message": "Oops, I had meant to add a comment here saying that maybe this value should even be passed into CreateAudioDevice() from AudioDestination since it could be kFIFOSize - kRenderQuantumFrames. I took 8192 pretty arbitrarily since it\u0027s less than that value (right now) and \u003e\u003d the largest platform-specific audio buffer size. Otherwise I can just add a comment for now, WDYT?",
+      "parentUuid": "62b56930_e43e0df1",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ab8ed50_fdcbae86",
         "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T17:28:57Z",
       "side": 1,
       "message": "Although the original version did rounding, I wonder if ceiling might be more appropriate?  With rounding, you might end up with a latency less than specified. It seems to me that a lower latency than asked for is not a good idea.\n\nWDYT?",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e954e7_ad1bbb3b",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-05T22:28:14Z",
+      "side": 1,
+      "message": "The buffer size should be clamped to the output_buffer_size on the line below in any case but I\u0027m fine with using ceiling if you think that makes more sense here.",
+      "parentUuid": "0ab8ed50_fdcbae86",
       "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
