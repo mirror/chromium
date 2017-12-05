@@ -76,8 +76,7 @@ void VideoFrameCompositor::EnableSubmission(const viz::FrameSinkId& id) {
 
 bool VideoFrameCompositor::IsClientSinkAvailable() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  return !surface_layer_for_video_enabled_ ? client_ != nullptr
-      : submitter_.get() != nullptr;
+  return !submitter_ ? client_ != nullptr : submitter_.get() != nullptr;
 }
 
 void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
@@ -111,7 +110,7 @@ void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
   if (!IsClientSinkAvailable())
     return;
 
-  if (surface_layer_for_video_enabled_) {
+  if (submitter_) {
     if (rendering_)
       submitter_->StartRendering();
     else
@@ -204,10 +203,11 @@ void VideoFrameCompositor::PaintSingleFrame(
   }
   if (ProcessNewFrame(frame, repaint_duplicate_frame) &&
       IsClientSinkAvailable()) {
-    if (!surface_layer_for_video_enabled_)
+    if (!submitter_) {
       client_->DidReceiveFrame();
-    else
+    } else {
       submitter_->DidReceiveFrame();
+    }
   }
 }
 
@@ -266,7 +266,7 @@ void VideoFrameCompositor::BackgroundRender() {
   last_background_render_ = now;
   bool new_frame = CallRender(now, now + last_interval_, true);
   if (new_frame && IsClientSinkAvailable()) {
-    if (!surface_layer_for_video_enabled_)
+    if (!submitter_)
       client_->DidReceiveFrame();
     else
       submitter_->DidReceiveFrame();
