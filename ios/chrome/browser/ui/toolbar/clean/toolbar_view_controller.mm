@@ -258,16 +258,17 @@
   [NSLayoutConstraint activateConstraints:progressBarConstraints];
 
   // StackView constraints. The main Toolbar StackView.
+  UILayoutGuide* viewSafeAreaGuide = SafeAreaLayoutGuideForView(self.view);
   NSArray* stackViewConstraints = @[
     [self.stackView.heightAnchor
         constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
     [self.stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
                                                 constant:-kVerticalMargin],
     [self.stackView.leadingAnchor
-        constraintEqualToAnchor:self.view.leadingAnchor
+        constraintEqualToAnchor:viewSafeAreaGuide.leadingAnchor
                        constant:kHorizontalMargin],
     [self.stackView.trailingAnchor
-        constraintEqualToAnchor:self.view.trailingAnchor
+        constraintEqualToAnchor:viewSafeAreaGuide.trailingAnchor
                        constant:-kHorizontalMargin],
   ];
   [self.regularToolbarConstraints addObjectsFromArray:stackViewConstraints];
@@ -275,6 +276,8 @@
 
   // LocationBarStackView constraints. The StackView inside the
   // LocationBarContainer View.
+  UILayoutGuide* locationBarContainerSafeAreaGuide =
+      SafeAreaLayoutGuideForView(self.locationBarContainer);
   NSLayoutConstraint* locationBarContainerStackViewTopConstraint =
       [self.locationBarContainerStackView.topAnchor
           constraintEqualToAnchor:self.locationBarContainer.topAnchor];
@@ -282,9 +285,11 @@
     [self.locationBarContainerStackView.bottomAnchor
         constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
     [self.locationBarContainerStackView.leadingAnchor
-        constraintEqualToAnchor:self.locationBarContainer.leadingAnchor],
+        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
+                                    .leadingAnchor],
     [self.locationBarContainerStackView.trailingAnchor
-        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
+                                    .trailingAnchor],
     locationBarContainerStackViewTopConstraint,
   ];
   [self.regularToolbarConstraints
