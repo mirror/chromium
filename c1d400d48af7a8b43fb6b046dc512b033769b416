@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a88642e_bbc9e0af",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-05T18:41:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "329d4d87_f727ddd5",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86834297_ad4063df",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "94e5735d_e9108ef6",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-05T18:41:00Z",
+      "side": 1,
+      "message": "That must be a typo of some sort, I just cant figure out what it should have been. I removed it.",
+      "parentUuid": "86834297_ad4063df",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43ff70e7_e7365e08",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c062ec5_d3292520",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-05T18:41:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ff70e7_e7365e08",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
