@@ -107,6 +107,7 @@ source_set("unit_tests") {
     "//base",
     "//base/test:test_support",
     "//gpu:test_support",
+    "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/command_buffer/common",
     "//media:test_support",

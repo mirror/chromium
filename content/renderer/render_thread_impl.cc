@@ -137,6 +137,8 @@
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gin/public/debug.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/config/gpu_switches.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
@@ -374,6 +376,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
     const gpu::SharedMemoryLimits& limits,
     bool support_locking,
     bool support_oop_rasterization,
+    bool support_raster_interface,
     ui::command_buffer_metrics::ContextType type,
     int32_t stream_id,
     gpu::SchedulingPriority stream_priority) {
@@ -392,6 +395,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   attributes.enable_oop_rasterization = support_oop_rasterization;
+  attributes.enable_raster_interface = support_raster_interface;
 
   const bool automatic_flushes = false;
   return base::MakeRefCounted<ui::ContextProviderCommandBuffer>(
@@ -1484,11 +1488,12 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   gpu::SharedMemoryLimits limits = gpu::SharedMemoryLimits::ForMailboxContext();
   bool support_locking = true;
   bool support_oop_rasterization = false;
+  bool support_raster_interface = true;
   scoped_refptr<ui::ContextProviderCommandBuffer> media_context_provider =
-      CreateOffscreenContext(gpu_channel_host, limits, support_locking,
-                             support_oop_rasterization,
-                             ui::command_buffer_metrics::MEDIA_CONTEXT,
-                             kGpuStreamIdDefault, kGpuStreamPriorityDefault);
+      CreateOffscreenContext(
+          gpu_channel_host, limits, support_locking, support_oop_rasterization,
+          support_raster_interface, ui::command_buffer_metrics::MEDIA_CONTEXT,
+          kGpuStreamIdDefault, kGpuStreamPriorityDefault);
   auto result = media_context_provider->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess)
     return nullptr;
@@ -1537,9 +1542,10 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
 
   bool support_locking = false;
   bool support_oop_rasterization = false;
+  bool support_raster_interface = false;
   shared_main_thread_contexts_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_oop_rasterization,
+      support_oop_rasterization, support_raster_interface,
       ui::command_buffer_metrics::RENDERER_MAINTHREAD_CONTEXT,
       kGpuStreamIdDefault, kGpuStreamPriorityDefault);
   auto result = shared_main_thread_contexts_->BindToCurrentThread();
@@ -2114,6 +2120,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
+  attributes.enable_oop_rasterization = false;
+  attributes.enable_raster_interface = true;
 
   constexpr bool automatic_flushes = false;
   constexpr bool support_locking = false;
@@ -2422,7 +2430,7 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     // Note: If context is lost, delete reference after releasing the lock.
     viz::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->ContextGL()
+    if (shared_worker_context_provider_->RasterContext()
             ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
   }
@@ -2445,9 +2453,10 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   bool support_oop_rasterization =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableOOPRasterization);
+  bool support_raster_interface = true;
   shared_worker_context_provider_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_oop_rasterization,
+      support_oop_rasterization, support_raster_interface,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);
   auto result = shared_worker_context_provider_->BindToCurrentThread();
