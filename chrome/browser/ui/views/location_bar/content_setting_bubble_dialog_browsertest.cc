@@ -17,6 +17,8 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/content_setting_bubble_contents.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/content_settings/core/common/content_settings_types.h"
@@ -31,7 +33,9 @@ class ContentSettingBubbleDialogTest : public DialogBrowserTest {
  public:
   ContentSettingBubbleDialogTest() {}
 
-  void ShowDialogBubble(ContentSettingsType content_type);
+  void ShowDialogBubble(
+      ContentSettingsType content_type,
+      ContentSettingImageModel::ContentSettingImageType image_type);
 
   void ShowDialog(const std::string& name) override;
 
@@ -40,7 +44,8 @@ class ContentSettingBubbleDialogTest : public DialogBrowserTest {
 };
 
 void ContentSettingBubbleDialogTest::ShowDialogBubble(
-    ContentSettingsType content_type) {
+    ContentSettingsType content_type,
+    ContentSettingImageModel::ContentSettingImageType image_type) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   TabSpecificContentSettings* content_settings =
@@ -92,33 +97,50 @@ void ContentSettingBubbleDialogTest::ShowDialogBubble(
   browser()->window()->UpdateToolbar(web_contents);
   LocationBarTesting* location_bar_testing =
       browser()->window()->GetLocationBar()->GetLocationBarForTesting();
+
   EXPECT_TRUE(location_bar_testing->TestContentSettingImagePressed(
       ContentSettingImageModel::GetContentSettingImageModelIndexForTesting(
-          content_type)));
+          image_type)));
 }
 
 void ContentSettingBubbleDialogTest::ShowDialog(const std::string& name) {
   constexpr struct {
     const char* name;
     ContentSettingsType content_type;
+    ContentSettingImageModel::ContentSettingImageType image_type;
   } content_settings_values[] = {
-      {"cookies", CONTENT_SETTINGS_TYPE_COOKIES},
-      {"images", CONTENT_SETTINGS_TYPE_IMAGES},
-      {"javascript", CONTENT_SETTINGS_TYPE_JAVASCRIPT},
-      {"plugins", CONTENT_SETTINGS_TYPE_PLUGINS},
-      {"popups", CONTENT_SETTINGS_TYPE_POPUPS},
-      {"geolocation", CONTENT_SETTINGS_TYPE_GEOLOCATION},
-      {"ppapi_broker", CONTENT_SETTINGS_TYPE_PPAPI_BROKER},
-      {"mixed_script", CONTENT_SETTINGS_TYPE_MIXEDSCRIPT},
-      {"mediastream_mic", CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC},
-      {"mediastream_camera", CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA},
-      {"protocol_handlers", CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS},
-      {"automatic_downloads", CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS},
-      {"midi_sysex", CONTENT_SETTINGS_TYPE_MIDI_SYSEX},
-      {"ads", CONTENT_SETTINGS_TYPE_ADS}};
+      {"cookies", CONTENT_SETTINGS_TYPE_COOKIES,
+       ContentSettingImageModel::TYPE_COOKIES},
+      {"images", CONTENT_SETTINGS_TYPE_IMAGES,
+       ContentSettingImageModel::TYPE_IMAGES},
+      {"javascript", CONTENT_SETTINGS_TYPE_JAVASCRIPT,
+       ContentSettingImageModel::TYPE_JAVASCRIPT},
+      {"plugins", CONTENT_SETTINGS_TYPE_PLUGINS,
+       ContentSettingImageModel::TYPE_PLUGINS},
+      {"popups", CONTENT_SETTINGS_TYPE_POPUPS,
+       ContentSettingImageModel::TYPE_POPUPS},
+      {"geolocation", CONTENT_SETTINGS_TYPE_GEOLOCATION,
+       ContentSettingImageModel::TYPE_GEOLOCATION},
+      {"ppapi_broker", CONTENT_SETTINGS_TYPE_PPAPI_BROKER,
+       ContentSettingImageModel::TYPE_PPAPI_BROKER},
+      {"mixed_script", CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
+       ContentSettingImageModel::TYPE_MIXEDSCRIPT},
+      {"mediastream_mic", CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC,
+       ContentSettingImageModel::TYPE_MEDIASTREAM},
+      {"mediastream_camera", CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,
+       ContentSettingImageModel::TYPE_MEDIASTREAM},
+      {"protocol_handlers", CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS,
+       ContentSettingImageModel::TYPE_PROTOCOL_HANDLERS},
+      {"automatic_downloads", CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
+       ContentSettingImageModel::TYPE_AUTOMATIC_DOWNLOADS},
+      {"midi_sysex", CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
+       ContentSettingImageModel::TYPE_MIDI_SYSEX},
+      {"ads", CONTENT_SETTINGS_TYPE_ADS, ContentSettingImageModel::TYPE_ADS},
+  };
   for (auto content_settings : content_settings_values) {
     if (name == content_settings.name) {
-      ShowDialogBubble(content_settings.content_type);
+      ShowDialogBubble(content_settings.content_type,
+                       content_settings.image_type);
       return;
     }
   }
