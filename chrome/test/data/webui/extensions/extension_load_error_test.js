@@ -7,6 +7,7 @@ cr.define('extension_load_error_tests', function() {
   /** @enum {string} */
   var TestNames = {
     Interaction: 'Interaction',
+    RetrySuccess: 'RetrySuccess',
     CodeSection: 'Code Section',
   };
 
@@ -19,13 +20,22 @@ cr.define('extension_load_error_tests', function() {
     /** @type {MockDelegate} */
     var mockDelegate;
 
-    var fakeGuid = 'uniqueId';
+    const fakeGuid = 'uniqueId';
 
-    var stubLoadError = {
+    const stubLoadError = {
       error: 'error',
       path: 'some/path/',
       retryGuid: fakeGuid,
     };
+
+    /**
+     * @param {!HTMLElement} dialogElement
+     * @return {boolean}
+     */
+    function isDialogVisible(dialogElement) {
+      var rect = dialogElement.getBoundingClientRect();
+      return rect.width * rect.height > 0;
+    }
 
     setup(function() {
       PolymerTest.clearBody();
@@ -38,23 +48,30 @@ cr.define('extension_load_error_tests', function() {
 
     test(assert(TestNames.Interaction), function() {
       var dialogElement = loadError.$$('dialog');
-      var isDialogVisible = function() {
-        var rect = dialogElement.getBoundingClientRect();
-        return rect.width * rect.height > 0;
-      };
-
-      expectFalse(isDialogVisible());
+      expectFalse(isDialogVisible(dialogElement));
       loadError.show();
-      expectTrue(isDialogVisible());
+      expectTrue(isDialogVisible(dialogElement));
+
+      mockDelegate.setRetryLoadUnpackedError(stubLoadError);
+      MockInteractions.tap(loadError.$$('.action-button'));
+      return mockDelegate.whenCalled('retryLoadUnpacked').then(arg => {
+        expectEquals(fakeGuid, arg);
+        expectTrue(isDialogVisible(dialogElement));
+        MockInteractions.tap(loadError.$$('.cancel-button'));
+        expectFalse(isDialogVisible(dialogElement));
+      });
+    });
+
+    test(assert(TestNames.RetrySuccess), function() {
+      var dialogElement = loadError.$$('dialog');
+      expectFalse(isDialogVisible(dialogElement));
+      loadError.show();
+      expectTrue(isDialogVisible(dialogElement));
 
       MockInteractions.tap(loadError.$$('.action-button'));
       return mockDelegate.whenCalled('retryLoadUnpacked').then(arg => {
         expectEquals(fakeGuid, arg);
-        expectFalse(isDialogVisible());
-
-        loadError.show();
-        MockInteractions.tap(loadError.$$('.cancel-button'));
-        expectFalse(isDialogVisible());
+        expectFalse(isDialogVisible(dialogElement));
       });
     });
 

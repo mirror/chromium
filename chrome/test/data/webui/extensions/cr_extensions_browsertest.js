@@ -288,6 +288,10 @@ TEST_F('CrExtensionsLoadErrorTest', 'Interaction', function() {
   this.runMochaTest(extension_load_error_tests.TestNames.Interaction);
 });
 
+TEST_F('CrExtensionsLoadErrorTest', 'RetrySuccess', function() {
+  this.runMochaTest(extension_load_error_tests.TestNames.RetrySuccess);
+});
+
 TEST_F('CrExtensionsLoadErrorTest', 'CodeSection', function() {
   this.runMochaTest(extension_load_error_tests.TestNames.CodeSection);
 });
