@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a28012_7b9e8109",
+        "filename": "cc/tiles/tile.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T23:17:31Z",
+      "side": 1,
+      "message": "nit: const please.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfaa061_dc609aeb",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T23:17:31Z",
+      "side": 1,
+      "message": "nit: Not really required. We don\u0027t clear other vectors in this struct once we\u0027re done using them here.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 1,
+        "endLine": 1058,
+        "endChar": 49
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633268a1_3f2142d3",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T23:17:31Z",
+      "side": 1,
+      "message": "Now this needs to be up, because OnRasterTaskCompleted is updating |num_of_tiles_with_checker_images_| here https://cs.chromium.org/chromium/src/cc/tiles/tile_manager.cc?dr\u0026l\u003d1227.",
+      "range": {
+        "startLine": 1194,
+        "startChar": 2,
+        "endLine": 1197,
+        "endChar": 40
+      },
+      "revId": "678b47c14334a001999ecb768065686b6ab9a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
