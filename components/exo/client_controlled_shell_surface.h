@@ -9,6 +9,8 @@
 #include <string>
 
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/wm/client_controlled_state.h"
+#include "base/callback.h"
 #include "base/macros.h"
 #include "components/exo/shell_surface.h"
 #include "ui/base/hit_test.h"
@@ -18,7 +20,7 @@
 namespace ash {
 namespace mojom {
 enum class WindowPinType;
-}
+}  // namespace mojom
 }  // namespace ash
 
 namespace exo {
@@ -44,6 +46,16 @@ class ClientControlledShellSurface
   void InitializeWindowState(ash::wm::WindowState* window_state) override;
   void AttemptToStartDrag(int component) override;
   void UpdateBackdrop() override;
+
+  // State change methods.
+  void Restore() override;
+  void Minimize() override;
+  void Maximize() override;
+  void SetFullscreen(bool fullscreen) override;
+
+  // Bounds change methods.
+  void SetBounds(const gfx::Rect& bounds) override;
+  void SetBoundsInParent(const gfx::Rect& bounds) override;
 
   // Pin/unpin the surface. Pinned surface cannot be switched to
   // other windows unless its explicitly unpinned.
@@ -75,6 +87,8 @@ class ClientControlledShellSurface
   void OnSurfaceCommit() override;
 
   // Overridden from views::WidgetDelegate:
+  views::NonClientFrameView* CreateNonClientFrameView(
+      views::Widget* widget) override;
   void SaveWindowPlacement(const gfx::Rect& bounds,
                            ui::WindowShowState show_state) override;
   bool GetSavedWindowPlacement(const views::Widget* widget,
@@ -97,12 +111,22 @@ class ClientControlledShellSurface
   // Overridden from ui::CompositorLockClient:
   void CompositorLockTimedOut() override;
 
+  // A factory class to create ClientControlledState::Delegate.
+  using DelegateFactoryCallback =
+      base::RepeatingCallback<ash::wm::ClientControlledState::Delegate*(void)>;
+
+  // Set the ClientControlledStateDelegateFactory for unit test.
+  static void SetClientControlledStateDelegateFactoryForTest(
+      const DelegateFactoryCallback& callback);
+
  private:
   // Lock the compositor if it's not already locked, or extends the
   // lock timeout if it's already locked.
   // TODO(reveman): Remove this when using configure callbacks for orientation.
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
+
+  ash::wm::WindowState* GetWindowState();
 
   int64_t primary_display_id_;
 
@@ -118,6 +142,8 @@ class ClientControlledShellSurface
   Orientation expected_orientation_ = Orientation::LANDSCAPE;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
+
+  ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ClientControlledShellSurface);
 };
