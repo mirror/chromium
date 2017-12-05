@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c7d7861_4583bafd",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-05T16:49:10Z",
+      "side": 1,
+      "message": "Did you mean Closest?",
+      "range": {
+        "startLine": 1912,
+        "startChar": 60,
+        "endLine": 1912,
+        "endChar": 66
+      },
+      "revId": "13cf1fbdabf1735bfc7e247e02d6f1f3d7d64714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
