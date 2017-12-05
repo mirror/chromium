@@ -104,7 +104,8 @@ void SurfaceLayerBridge::CreateSolidColorLayer() {
 }
 
 void SurfaceLayerBridge::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {
+    const viz::SurfaceInfo& surface_info,
+    const viz::SurfaceSequence& seq) {
   if (!current_surface_id_.is_valid() && surface_info.is_valid()) {
     // First time a SurfaceId is received
     current_surface_id_ = surface_info.id();
@@ -136,6 +137,8 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     surface_layer->SetPrimarySurfaceId(surface_info.id());
     surface_layer->SetFallbackSurfaceId(surface_info.id());
   }
+
+  SatisfyCallback(seq);
 
   if (observer_)
     observer_->OnWebLayerUpdated();
