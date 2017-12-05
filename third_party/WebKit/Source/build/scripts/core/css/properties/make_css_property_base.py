@@ -60,22 +60,16 @@ class CSSPropertyWriter(json5_generator.Writer):
         """Gets the classname for a given property.
 
         If the property has property_class set to True, returns an automatically
-        generated class name. If it is set to a string, returns that. If it is
-        set to None, returns the Longhand base class.
+        generated class name. If it is set to False, returns the Longhand base class.
 
         Args:
             property_: A single property from CSSProperties.properties()
         Returns:
             The name to use for the property class, or None.
         """
-        assert property_['property_class'] is True or \
-            property_['property_class'] is None or \
-            isinstance(property_['property_class'], str), \
-            "property_class value for {} should be None, True or a string".format(
-                property_['name'])
         classname = property_['property_class']
         superclass = 'Shorthand' if property_['longhands'] else 'Longhand'
-        if property_['property_class'] is None:
+        if property_['property_class'] is False:
             classname = 'Longhand'
             superclass = None
         if property_['property_class'] is True:
