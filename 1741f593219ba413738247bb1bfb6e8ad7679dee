@@ -279,6 +279,24 @@
       "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e07e2e1_95b76c1a",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-05T00:37:45Z",
+      "side": 1,
+      "message": "I actually understood that this is not behavioral change, as for existing User objects it is handled in if(user) clause.",
+      "parentUuid": "3462ec95_d10b451f",
+      "revId": "1741f593219ba413738247bb1bfb6e8ad7679dee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
