@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60e8d6fb_3da496e2",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "I slightly prefer this, because it makes it more obvious (to me) when we\u0027re asserting that something did *not* run (as we do on line 626 of this patch set).  I understand that a strict mock will fail if it receives an unexpected call, but I think that\u0027s much more subtle and not as readable in a test (and also a bit more fragile, since I think it\u0027s more likely someone would change the mock without seeing the consequences).  Additionally, we\u0027ll need a subclass anyway for CallingNotifyWhenNotPausedAndDestroyingTheContext (where we set a specific callback to be run).\n\nWDYT?  If you feel strongly, I can update to use a mock.\n\n(Note: this would also be made more complicated now that we use a unique_ptr for the callback, since the helper will be destroyed by this point.)",
+      "parentUuid": "cbccc2ed_1cbeaf42",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "036ec2f6_f8c99d08",
         "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "930ac7fa_5a46ef57",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "Done, but related to the other comment, is context destruction the only time ScriptState::ContextIsValid() would return false?",
+      "parentUuid": "b77ca220_17731e86",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63b73db8_5cc2735d",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a07e65f_e7877e5b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "It appears so!  Done.",
+      "parentUuid": "63b73db8_5cc2735d",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "d78c1fe1_75a24e53",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "I had chosen this to be more analogous to the other somewhat-similar methods (that take a WebScriptExecutionCallback, which manages its own lifetime), but I don\u0027t feel strongly.  Updated.",
+      "parentUuid": "6a088ba8_8435a35b",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee900038_9f1ca0e2",
         "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
         "patchSetId": 1
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "61e29eef_e8827fc8",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "\u003e Do any callers care whether the context was already destroyed before they entered or whether it was destroyed while waiting for unpause?\n\nGood question.  Part of this might depend on whether there\u0027s any way the context would be invalid other than it being destroyed?  I could see some instances when a caller might want to DCHECK_NE(CONTEXT_INVALID), but it\u0027s probably less important.\n\n\u003e (For that matter, do any callers care at all if their callback does not run?)\n\nFor deterministic reasons, I\u0027d prefer the callback to always be invoked.  If desired, handlers can just if (result !\u003d ready) return;, which is much easier than the alternative of monitoring the context lifecycle.",
+      "parentUuid": "ee900038_9f1ca0e2",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f12131e5_c0bef118",
         "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
         "patchSetId": 1
@@ -115,6 +205,24 @@
       "writtenOn": "2017-12-05T18:04:13Z",
       "side": 1,
       "message": "nit: ...but it\u0027s not completed yet; we invoke the callback in order to complete it? \"Run\" seems more natural to me. Aside: As long as this isn\u0027t a callback, separate methods for the various results seems slightly more natural.",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b99705_36413c1d",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T22:13:49Z",
+      "side": 1,
+      "message": "\u003e nit: ...but it\u0027s not completed yet; we invoke the callback in order to complete it? \"Run\" seems more natural to me.\n\nThe pause was completed? ;)  Perhaps not.  Run() seems appropriate; changed.\n\n\u003e Aside: As long as this isn\u0027t a callback, separate methods for the various results seems slightly more natural.\n\nIn order to make this easier to wrap in a base::Callback and eventually convert to a base::Callback, I\u0027d prefer to keep it like this, unless you feel strongly.",
+      "parentUuid": "f12131e5_c0bef118",
       "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
