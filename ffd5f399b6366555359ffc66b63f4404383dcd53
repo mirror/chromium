@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ee10285_11d280f7",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-05T22:01:54Z",
+      "side": 1,
+      "message": "It is fine. Anyway, I modify the code to make it better.",
+      "parentUuid": "c497c681_7d8b0aaa",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "201f19c6_6786dc93",
         "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bc3fad_d1951a46",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-05T22:01:54Z",
+      "side": 1,
+      "message": "Yes. The Manager can be bind by multiple renderers and plugins. So we need check it, and only add observer for the first time.",
+      "parentUuid": "201f19c6_6786dc93",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 32
+      },
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "28468e1d_c464421f",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-05T22:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fe6167_8d9221d5",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 38
+      },
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0957c145_d5f11ec7",
         "filename": "content/browser/ppapi_plugin_process_host.cc",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-12-05T21:48:50Z",
       "side": 1,
       "message": "Can you explain why this is needed? I don\u0027t think the plugin process needs to know about mus, it shouldn\u0027t be interacting with it in any way.",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e767bb4d_e8132548",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-05T22:01:54Z",
+      "side": 1,
+      "message": "with --mus, the mojom::DiscardableSharedMemoryManager(DSMM) is exposed by ui::Service. Without --mus DSMM is exposed by browser. The plugin need to know it, so it can request the interface with correct service name. See [1]\n\n[1] https://cs.chromium.org/chromium/src/content/ppapi_plugin/ppapi_thread.cc?type\u003dcs\u0026q\u003dIsRunningWithMus\u0026l\u003d133",
+      "parentUuid": "0957c145_d5f11ec7",
       "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
