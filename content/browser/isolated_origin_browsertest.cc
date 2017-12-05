@@ -9,6 +9,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
@@ -795,10 +796,12 @@ IN_PROC_BROWSER_TEST_F(
 
   // A SiteInstance created for an isolated origin ServiceWorker should
   // not reuse the unsuitable first process.
+  BrowserContext* browser_context = web_contents()->GetBrowserContext();
   scoped_refptr<SiteInstanceImpl> sw_site_instance =
-      SiteInstanceImpl::CreateForURL(web_contents()->GetBrowserContext(),
-                                     hung_isolated_url);
-  sw_site_instance->set_is_for_service_worker();
+      SiteInstanceImpl::CreateForURL(browser_context, hung_isolated_url);
+  sw_site_instance->set_is_for_service_worker(
+      static_cast<StoragePartitionImpl*>(
+          BrowserContext::GetDefaultStoragePartition(browser_context)));
   sw_site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   RenderProcessHost* sw_host = sw_site_instance->GetProcess();

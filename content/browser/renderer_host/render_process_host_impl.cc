@@ -3540,7 +3540,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
       if (render_process_host)
         is_unmatched_service_worker = false;
       break;
-    default:
+    case SiteInstanceImpl::ProcessReusePolicy::DEFAULT:
       break;
   }
 
@@ -3583,6 +3583,9 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
     // RenderProcessHostFactory may not instantiate a StoragePartition, and
     // creating one here with GetStoragePartition() can run into cross-thread
     // issues as TestBrowserContext initialization is done on the main thread.
+    // (Note that |site_instance| might already be associated with a
+    // StoragePartition, in the case of service worker, in which case we'll use
+    // that one.)
     render_process_host = CreateOrUseSpareRenderProcessHost(
         browser_context, nullptr, site_instance, is_for_guests_only);
   }

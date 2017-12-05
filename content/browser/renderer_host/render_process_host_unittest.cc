@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
 #include "content/public/browser/browser_context.h"
@@ -181,7 +182,10 @@ TEST_F(RenderProcessHostUnitTest, ReuseUnmatchedServiceWorkerProcess) {
   // Gets a RenderProcessHost for an unmatched service worker.
   scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance1->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance1.get()));
+  sw_site_instance1->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
 
   // Getting a RenderProcessHost for a service worker with DEFAULT reuse policy
@@ -189,7 +193,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseUnmatchedServiceWorkerProcess) {
   // second service worker to test the "find the newest process" logic later.
   scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance2->set_is_for_service_worker();
+  sw_site_instance2->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
   EXPECT_NE(sw_host1, sw_host2);
 
@@ -236,7 +240,10 @@ TEST_F(RenderProcessHostUnitTest,
   // Gets a RenderProcessHost for an unmatched service worker.
   scoped_refptr<SiteInstanceImpl> sw_site_instance =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance.get()));
+  sw_site_instance->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host = sw_site_instance->GetProcess();
 
   // Simulate a situation where |sw_host| won't be considered suitable for
@@ -265,7 +272,10 @@ TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerProcessForServiceWorker) {
   // Gets a RenderProcessHost for a service worker.
   scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance1->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance1.get()));
+  sw_site_instance1->set_is_for_service_worker(storage_partition);
   sw_site_instance1->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
@@ -277,7 +287,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerProcessForServiceWorker) {
   // second service worker to test the "find the newest process" logic later.
   scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance2->set_is_for_service_worker();
+  sw_site_instance2->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
   EXPECT_NE(sw_host1, sw_host2);
 
@@ -286,7 +296,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerProcessForServiceWorker) {
   // unmatched service worker's process (i.e., sw_host2).
   scoped_refptr<SiteInstanceImpl> sw_site_instance3 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance3->set_is_for_service_worker();
+  sw_site_instance3->set_is_for_service_worker(storage_partition);
   sw_site_instance3->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   RenderProcessHost* sw_host3 = sw_site_instance3->GetProcess();
@@ -299,7 +309,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseServiceWorkerProcessForServiceWorker) {
   // workers in that process.
   scoped_refptr<SiteInstanceImpl> sw_site_instance4 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance4->set_is_for_service_worker();
+  sw_site_instance4->set_is_for_service_worker(storage_partition);
   sw_site_instance4->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   RenderProcessHost* sw_host4 = sw_site_instance4->GetProcess();
@@ -329,14 +339,17 @@ TEST_F(RenderProcessHostUnitTest,
   // Gets a RenderProcessHost for a service worker with process-per-site flag.
   scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance1->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance1.get()));
+  sw_site_instance1->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
 
   // Getting a RenderProcessHost for a service worker of the same site with
   // process-per-site flag should reuse the unmatched service worker's process.
   scoped_refptr<SiteInstanceImpl> sw_site_instance2 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance2->set_is_for_service_worker();
+  sw_site_instance2->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host2 = sw_site_instance2->GetProcess();
   EXPECT_EQ(sw_host1, sw_host2);
 
@@ -362,7 +375,10 @@ TEST_F(RenderProcessHostUnitTest, DoNotReuseOtherSiteServiceWorkerProcess) {
   // Gets a RenderProcessHost for a service worker.
   scoped_refptr<SiteInstanceImpl> sw_site_instance1 =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl1);
-  sw_site_instance1->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance1.get()));
+  sw_site_instance1->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_host1 = sw_site_instance1->GetProcess();
 
   // Getting a RenderProcessHost for a service worker of a different site should
@@ -865,6 +881,31 @@ TEST_F(RenderProcessHostUnitTest,
   SetBrowserClientForTesting(regular_client);
 }
 
+TEST_F(RenderProcessHostUnitTest, UseStoragePartitionForServiceWorker) {
+  const GURL kUrl("https://foo.com");
+
+  // Create a SiteInstance bound to a StoragePartition.
+  scoped_refptr<SiteInstanceImpl> site_instance =
+      SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), site_instance.get()));
+  site_instance->set_is_for_service_worker(storage_partition);
+
+  // Change foo.com to use a different StoragePartition.
+  StoragePartitionContentBrowserClient modified_client(kUrl, "foo_domain",
+                                                       "foo_name");
+  ContentBrowserClient* regular_client =
+      SetBrowserClientForTesting(&modified_client);
+
+  // Get the renderer process. It should still be using |storage_partition|
+  // since the site instance is still bound to that.
+  RenderProcessHost* host = site_instance->GetProcess();
+  EXPECT_TRUE(host->InSameStoragePartition(storage_partition));
+
+  SetBrowserClientForTesting(regular_client);
+}
+
 // Check that a SiteInstance cannot reuse a ServiceWorker process in a
 // different StoragePartition.
 TEST_F(RenderProcessHostUnitTest,
@@ -874,7 +915,10 @@ TEST_F(RenderProcessHostUnitTest,
   // Create a RenderProcessHost for a service worker.
   scoped_refptr<SiteInstanceImpl> sw_site_instance =
       SiteInstanceImpl::CreateForURL(browser_context(), kUrl);
-  sw_site_instance->set_is_for_service_worker();
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(browser_context()->GetStoragePartition(
+          browser_context(), sw_site_instance.get()));
+  sw_site_instance->set_is_for_service_worker(storage_partition);
   RenderProcessHost* sw_process = sw_site_instance->GetProcess();
 
   // Change foo.com SiteInstances to use a different StoragePartition.

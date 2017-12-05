@@ -326,6 +326,7 @@ ServiceWorkerContextCore::~ServiceWorkerContextCore() {
 void ServiceWorkerContextCore::AddDispatcherHost(
     int process_id,
     content::ServiceWorkerDispatcherHost* dispatcher_host) {
+  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   DCHECK(dispatcher_hosts_.find(process_id) == dispatcher_hosts_.end());
   dispatcher_hosts_[process_id] = dispatcher_host;
 }
