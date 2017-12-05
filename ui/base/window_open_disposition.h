@@ -13,6 +13,8 @@
 enum class WindowOpenDisposition {
   UNKNOWN,
   CURRENT_TAB,
+  // Indicates that the URL may exist and, if so, switch to it and clean up.
+  SWITCH_TO_TAB,
   // Indicates that only one tab with the url should exist in the same window.
   SINGLETON_TAB,
   NEW_FOREGROUND_TAB,
