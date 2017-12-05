@@ -165,7 +165,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
       SurfaceHandle child_window) override;
 #endif
   void DidSwapBuffersComplete(SwapBuffersCompleteParams params) override;
-  const gles2::FeatureInfo* GetFeatureInfo() const override;
   const GpuPreferences& GetGpuPreferences() const override;
 
   void SetSnapshotRequestedCallback(const base::Closure& callback) override;

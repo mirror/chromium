@@ -1052,10 +1052,6 @@ void InProcessCommandBuffer::DidSwapBuffersComplete(
                  client_thread_weak_ptr_, base::Passed(&params)));
 }
 
-const gles2::FeatureInfo* InProcessCommandBuffer::GetFeatureInfo() const {
-  return context_group_->feature_info();
-}
-
 const GpuPreferences& InProcessCommandBuffer::GetGpuPreferences() const {
   return context_group_->gpu_preferences();
 }

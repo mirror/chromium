@@ -13,7 +13,6 @@
 #include "base/win/scoped_hdc.h"
 #include "base/win/scoped_select_object.h"
 #include "gpu/command_buffer/common/swap_buffers_complete_params.h"
-#include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/win/hidden_window.h"
@@ -48,8 +47,7 @@ class TestImageTransportSurfaceDelegate
     : public ImageTransportSurfaceDelegate,
       public base::SupportsWeakPtr<TestImageTransportSurfaceDelegate> {
  public:
-  TestImageTransportSurfaceDelegate()
-      : feature_info_(new gpu::gles2::FeatureInfo()) {}
+  TestImageTransportSurfaceDelegate() {}
 
   ~TestImageTransportSurfaceDelegate() override {}
 
@@ -61,9 +59,6 @@ class TestImageTransportSurfaceDelegate
       ::SetParent(child_window, parent_window);
   }
   void DidSwapBuffersComplete(SwapBuffersCompleteParams params) override {}
-  const gles2::FeatureInfo* GetFeatureInfo() const override {
-    return feature_info_.get();
-  }
   const GpuPreferences& GetGpuPreferences() const override {
     return gpu_preferences_;
   }
@@ -76,7 +71,6 @@ class TestImageTransportSurfaceDelegate
   int32_t GetRouteID() const override { return 0; }
 
  private:
-  scoped_refptr<gpu::gles2::FeatureInfo> feature_info_;
   GpuPreferences gpu_preferences_;
 };
 

@@ -113,7 +113,6 @@ class FakeDelegate : public ImageTransportSurfaceDelegate,
       SurfaceHandle parent_window,
       SurfaceHandle child_window) override {}
   void DidSwapBuffersComplete(SwapBuffersCompleteParams params) override {}
-  const gles2::FeatureInfo* GetFeatureInfo() const override { return nullptr; }
   const GpuPreferences& GetGpuPreferences() const override {
     return gpu_preferences_;
   }
