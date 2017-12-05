@@ -130,8 +130,8 @@ void PrintJob::StartPrinting() {
   is_job_pending_ = true;
 
   // Tell everyone!
-  scoped_refptr<JobEventDetails> details(new JobEventDetails(
-      JobEventDetails::NEW_DOC, 0, document_.get(), nullptr));
+  scoped_refptr<JobEventDetails> details(
+      new JobEventDetails(JobEventDetails::NEW_DOC, 0, document_.get()));
   content::NotificationService::current()->Notify(
       chrome::NOTIFICATION_PRINT_JOB_EVENT,
       content::Source<PrintJob>(this),
@@ -176,7 +176,7 @@ void PrintJob::Cancel() {
   }
   // Make sure a Cancel() is broadcast.
   scoped_refptr<JobEventDetails> details(
-      new JobEventDetails(JobEventDetails::FAILED, 0, nullptr, nullptr));
+      new JobEventDetails(JobEventDetails::FAILED, 0, nullptr));
   content::NotificationService::current()->Notify(
       chrome::NOTIFICATION_PRINT_JOB_EVENT,
       content::Source<PrintJob>(this),
@@ -407,8 +407,8 @@ void PrintJob::OnDocumentDone() {
   // Stop the worker thread.
   Stop();
 
-  scoped_refptr<JobEventDetails> details(new JobEventDetails(
-      JobEventDetails::JOB_DONE, 0, document_.get(), nullptr));
+  scoped_refptr<JobEventDetails> details(
+      new JobEventDetails(JobEventDetails::JOB_DONE, 0, document_.get()));
   content::NotificationService::current()->Notify(
       chrome::NOTIFICATION_PRINT_JOB_EVENT,
       content::Source<PrintJob>(this),
@@ -464,18 +464,27 @@ void PrintJob::Quit() {
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
+#if defined(OS_WIN)
 // Takes settings_ ownership and will be deleted in the receiving thread.
 JobEventDetails::JobEventDetails(Type type,
                                  int job_id,
                                  PrintedDocument* document,
                                  PrintedPage* page)
     : document_(document), page_(page), type_(type), job_id_(job_id) {}
+#endif
+
+// Takes settings_ ownership and will be deleted in the receiving thread.
+JobEventDetails::JobEventDetails(Type type,
+                                 int job_id,
+                                 PrintedDocument* document)
+    : document_(document), type_(type), job_id_(job_id) {}
 
 JobEventDetails::~JobEventDetails() {
 }
 
 PrintedDocument* JobEventDetails::document() const { return document_.get(); }
 
+#if defined(OS_WIN)
 PrintedPage* JobEventDetails::page() const { return page_.get(); }
-
+#endif
 }  // namespace printing
