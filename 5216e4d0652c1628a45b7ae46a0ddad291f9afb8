@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11df0af8_0aaa9ca1",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T18:10:46Z",
+      "side": 1,
+      "message": "I don\u0027t see any real explanation there - am I missing it?",
+      "parentUuid": "9ae626e6_116432fd",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99e5ee24_b466b59e",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 10
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "No, unfortunately that\u0027s not the case. \n\nhttp://en.cppreference.com/w/cpp/language/eval_order:\nOrder of evaluation of the operands of almost all C++ operators (including the order of evaluation of function arguments in a function-call expression and the order of evaluation of the subexpressions within any expression) is unspecified. The compiler can evaluate operands in any order, and may choose another order when the same expression is evaluated again.",
       "parentUuid": "d36a0d13_c2e36164",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12938aaa_b423f191",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T18:10:46Z",
+      "side": 1,
+      "message": "My mind is blown.  I had no idea.  Thanks for the pointer!\n\nLet\u0027s still go ahead and instantiate result_ptr closer to its use, though (just above the PostTaskAndReply() call).",
+      "parentUuid": "acf03af6_af4d8e18",
       "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
