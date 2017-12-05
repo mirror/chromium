@@ -65,6 +65,7 @@ class MockSSLClientSocket : public net::SSLClientSocket {
   MOCK_METHOD0(ClearConnectionAttempts, void());
   MOCK_METHOD1(AddConnectionAttempts, void(const net::ConnectionAttempts&));
   MOCK_CONST_METHOD0(GetTotalReceivedBytes, int64_t());
+  MOCK_METHOD1(Tag, void(const net::SocketTag&));
   MOCK_METHOD5(ExportKeyingMaterial,
                int(const StringPiece&,
                    bool,
