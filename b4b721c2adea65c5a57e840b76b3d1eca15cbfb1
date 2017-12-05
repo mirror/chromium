@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a2ffcf73_4769f1cd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Maybe a note would be good. I realize now that I have problems coming up with a cleaner solution that what you already have. :)",
+      "parentUuid": "fa7ab006_ca26f565",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37f8bed_2b5c6445",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "efe8dc13_6d0be7d7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Why should min-size be 50px? The negative margin should affect both min and max size.",
+      "parentUuid": "9dc5989e_10d4aa88",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed9b4ab_f85d67a4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
         "patchSetId": 7
@@ -352,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "52beeb5e_a7763960",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Sorry, yes, I saw that from your implementation, but I thought it was wrong. But I forgot that in-flow new-FCs only require that the *border* box do not overlap with the floats. I was so sure it was the *margin* box. Ignore me. :)",
+      "parentUuid": "c594d2b6_ce612a9e",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f817ea93_f82dede1",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 7
@@ -381,6 +435,24 @@
       "side": 1,
       "message": "This is just as the as we double up on inline nodes. E.g. a\n\u003cdiv style\u003d\"margin-left: 10px\"\u003eText\u003c/div\u003e is represented as two NGLayoutInputNodes:\n\nNGBlockNode\n  NGInlineNode\n\nThe NGInineNode shares the same LayoutObject as the NGBlockNode, but we don\u0027t want to double count the margins.",
       "parentUuid": "f817ea93_f82dede1",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ada9b0_2a470fbc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Right, I eventually kind of suspected that. Could you add a note? If you call this function with an actual inline-level CSS box (non-replaced display:inline for instance), you certainly want the margins. I think that deserves a comment.",
+      "parentUuid": "34a5f7ab_7bcd1a06",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -422,6 +494,24 @@
     },
     {
       "key": {
+        "uuid": "99492611_82504ec8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Got it!",
+      "parentUuid": "2c46aad5_764c0f86",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d20f7f_2e310a36",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 7
@@ -451,6 +541,24 @@
       "side": 1,
       "message": "Done, yeah not sure if it\u0027ll be web compatible to do this, as all/most of the other engines have this behaviour.",
       "parentUuid": "11d20f7f_2e310a36",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86fa9e6b_9b6a944d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T22:01:11Z",
+      "side": 1,
+      "message": "Not sure if the spec has anything to say about this? In my mind, even percentage widths could be treated more optimally than just resolving them to 0px. But yeah, not web compatible. :)",
+      "parentUuid": "c2ef344b_8b2429b4",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
