@@ -47,6 +47,9 @@ class MockRect : public Rect {
   MOCK_METHOD1(OnMove, void(const gfx::PointF& position));
   MOCK_METHOD1(OnButtonDown, void(const gfx::PointF& position));
   MOCK_METHOD1(OnButtonUp, void(const gfx::PointF& position));
+  MOCK_METHOD1(OnFocusChanged, void(bool));
+  MOCK_METHOD1(OnInputEdited, void(const TextInputInfo&));
+  MOCK_METHOD1(OnInputCommitted, void(const TextInputInfo&));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRect);
@@ -154,6 +157,52 @@ TEST_F(UiInputManagerTest, FocusedElement) {
   EXPECT_CALL(*p_element1, OnFocusChanged(false)).InSequence(s);
   EXPECT_CALL(*p_element2, OnFocusChanged(true)).InSequence(s);
   input_manager_->RequestFocus(p_element2->id());
+}
+
+// Verify that a focusable child clears focus off its parent.
+TEST_F(UiInputManagerTest, ChildStealsFocus) {
+  StrictMock<MockRect>* p_element = CreateMockElement(-5.f);
+
+  auto child = base::MakeUnique<StrictMock<MockRect>>();
+  auto* p_child = child.get();
+  child->set_hit_testable(true);
+  child->set_focusable(true);
+  p_element->AddChild(std::move(child));
+  scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
+
+  // Focus element.
+  testing::Sequence s;
+  EXPECT_CALL(*p_element, OnFocusChanged(true)).InSequence(s);
+  input_manager_->RequestFocus(p_element->id());
+
+  // Focus child.
+  EXPECT_CALL(*p_child, OnHoverEnter(_)).InSequence(s);
+  EXPECT_CALL(*p_child, OnButtonDown(_)).InSequence(s);
+  EXPECT_CALL(*p_element, OnFocusChanged(false)).InSequence(s);
+  HandleInput(kForwardVector, kDown);
+}
+
+// Verify that a non-focusable child does not clear focus off its parent.
+TEST_F(UiInputManagerTest, ChildDoesNotStealsFocus) {
+  StrictMock<MockRect>* p_element = CreateMockElement(-5.f);
+
+  auto child = base::MakeUnique<StrictMock<MockRect>>();
+  auto* p_child = child.get();
+  child->set_hit_testable(true);
+  child->set_focusable(false);
+  p_element->AddChild(std::move(child));
+  scene_->OnBeginFrame(base::TimeTicks(), kForwardVector);
+
+  // Focus element.
+  testing::Sequence s;
+  EXPECT_CALL(*p_element, OnFocusChanged(true)).InSequence(s);
+  input_manager_->RequestFocus(p_element->id());
+
+  // Focus child.
+  EXPECT_CALL(*p_child, OnHoverEnter(_)).InSequence(s);
+  EXPECT_CALL(*p_child, OnButtonDown(_)).InSequence(s);
+  EXPECT_CALL(*p_element, OnFocusChanged(false)).Times(0).InSequence(s);
+  HandleInput(kForwardVector, kDown);
 }
 
 TEST_F(UiInputManagerTest, ReticleRenderTarget) {

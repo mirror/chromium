@@ -190,8 +190,8 @@ bool UiElement::IsHitTestable() const {
   return IsVisible() && hit_testable_;
 }
 
-bool UiElement::IsEditable() {
-  return false;
+bool UiElement::IsFocusable() {
+  return IsHitTestable() && focusable_;
 }
 
 void UiElement::SetSize(float width, float height) {
