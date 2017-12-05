@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff547ad1_10da1745",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4a3f7d_74a9d637",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 13
+      },
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd681b58_3eb80dac",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e6fa10f7_cd21b9d6",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd681b58_3eb80dac",
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fc7586_f8d09462",
         "filename": "chrome/browser/chromeos/printing/external_printers.h",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1188f7_ba2d9d9a",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fc7586_f8d09462",
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2405b0ac_9b81a0f2",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T20:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88367415_872d1e37",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "40c71406224bf53a3ec42f1168b1248446c8ab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
