@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7f95a6e2_a96a05ce",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-05T14:35:27Z",
+      "side": 1,
+      "message": "I understand your point. However, we need two callbacks in total in the current design (one to trigger the progress bar after the user selects a file and one on completion). If I\u0027m reading https://cs.chromium.org/chromium/src/extensions/browser/extension_function.h?rcl\u003d5e84f2f57f92d07f35a27eaccd25c5ef00bf9826\u0026l\u003d412 correctly, two callbacks per call isn\u0027t allowed. Do I understand correctly? What other option would you recommend?",
+      "parentUuid": "34e63d01_f030dc87",
+      "revId": "b246ff90d5869bb1277d1b27787894ab32f23407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c81b17d_2cce14fa",
         "filename": "components/password_manager/core/browser/export/password_manager_exporter.cc",
         "patchSetId": 15
