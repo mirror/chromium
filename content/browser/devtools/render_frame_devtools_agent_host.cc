@@ -443,10 +443,20 @@ RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
        protocol::NetworkHandler::ForAgentHost(agent_host)) {
     std::unique_ptr<NavigationThrottle> throttle =
         network_handler->CreateThrottleForNavigation(navigation_handle);
-    if (throttle)
+    if (throttle) {
+      agent_host->OnInterceptorNavigationThrottlePending();
       return throttle;
+    }
   }
   return nullptr;
+}
+
+void RenderFrameDevToolsAgentHost::InterceptorNavigationThrottleDone(
+    NavigationHandle* navigation_handle) {
+  RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(
+      static_cast<NavigationHandleImpl*>(navigation_handle)->frame_tree_node());
+  if (agent_host)
+    agent_host->OnInterceptorNavigationThrottleDone();
 }
 
 // static
@@ -647,7 +657,14 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (!navigation_handles_.empty()) {
+    // Buffer messages for later delivery if the render frame isn't alive or
+    // there's a pending uncommitted navigation.  With uncommitted navigations
+    // the renderer is liable to go away at any moment unless there is an
+    // outstanding navigation throttle in play (in which case we know the
+    // navigation won't occur till the throttle has been resolved).
+    if (!render_frame_alive_ ||
+        (!uncomitted_navigations_.empty() &&
+         pending_interceptor_navigation_throttles_ == 0)) {
       suspended_messages_by_session_id_[session_id].push_back(
           {call_id, method, message});
       return true;
@@ -661,6 +678,16 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
       pending_->DispatchProtocolMessage(session_id, call_id, method, message);
   }
   return true;
+}
+
+void RenderFrameDevToolsAgentHost::OnInterceptorNavigationThrottlePending() {
+  pending_interceptor_navigation_throttles_++;
+  // TODO(alexclarke): Verify this works with OOPIF.
+  UnsuspendMessages();
+}
+
+void RenderFrameDevToolsAgentHost::OnInterceptorNavigationThrottleDone() {
+  pending_interceptor_navigation_throttles_--;
 }
 
 void RenderFrameDevToolsAgentHost::InspectElement(
@@ -716,6 +743,9 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(handle->GetRenderFrameHost());
   DCHECK(CheckConsistency());
+
+  uncomitted_navigations_.erase(navigation_handle);
+  UnsuspendMessages();
 }
 
 void RenderFrameDevToolsAgentHost::DidFinishNavigation(
@@ -745,13 +775,22 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
   navigation_handles_.erase(handle);
+  uncomitted_navigations_.erase(navigation_handle);
+  UnsuspendMessages();
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(frame_tree_node_->current_frame_host());
   DCHECK(CheckConsistency());
 
-  if (navigation_handles_.empty()) {
+  if (handle->HasCommitted()) {
+    for (auto* target : protocol::TargetHandler::ForAgentHost(this))
+      target->DidCommitNavigation();
+  }
+}
+
+void RenderFrameDevToolsAgentHost::UnsuspendMessages() {
+  if (uncomitted_navigations_.empty()) {
     for (auto& pair : suspended_messages_by_session_id_) {
       int session_id = pair.first;
       DevToolsSession* session = SessionById(session_id);
@@ -763,10 +802,6 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
       }
     }
     suspended_messages_by_session_id_.clear();
-  }
-  if (handle->HasCommitted()) {
-    for (auto* target : protocol::TargetHandler::ForAgentHost(this))
-      target->DidCommitNavigation();
   }
 }
 
@@ -895,7 +930,9 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
+
   navigation_handles_.insert(handle);
+  uncomitted_navigations_.insert(handle);
   DCHECK(CheckConsistency());
 }
 
