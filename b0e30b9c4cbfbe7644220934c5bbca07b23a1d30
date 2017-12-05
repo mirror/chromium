@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "184374cf_03ddd7b9",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T03:19:46Z",
+      "side": 1,
+      "message": "Oh, sorry about that; thanks.",
+      "parentUuid": "2fd1194a_21e483c3",
+      "revId": "b0e30b9c4cbfbe7644220934c5bbca07b23a1d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b6cfcbc_2e73efc5",
         "filename": "styleguide/c++/c++-dos-and-donts.md",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b0e30b9c4cbfbe7644220934c5bbca07b23a1d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b701386_ce4c477c",
+        "filename": "styleguide/c++/c++-dos-and-donts.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T03:19:46Z",
+      "side": 1,
+      "message": "Good catch, thanks; done.",
+      "parentUuid": "2b6cfcbc_2e73efc5",
+      "revId": "b0e30b9c4cbfbe7644220934c5bbca07b23a1d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
