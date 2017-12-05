@@ -687,8 +687,6 @@ static_library("test_support_engine") {
   sources = [
     "engine/fake_model_type_connector.cc",
     "engine/fake_model_type_connector.h",
-    "engine/fake_model_type_processor.cc",
-    "engine/fake_model_type_processor.h",
     "engine/fake_sync_manager.cc",
     "engine/fake_sync_manager.h",
     "engine/sync_engine_host_stub.cc",

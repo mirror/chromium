@@ -103,8 +103,8 @@ TEST_F(ModelTypeSyncBridgeTest, OnSyncStarting) {
   EXPECT_FALSE(start_callback_called());
   OnSyncStarting();
 
-  // FakeModelTypeProcessor is the one that calls the callback, so if it was
-  // called then we know the call on the processor was made.
+  // FakeModelTypeChangeProcessor is the one that calls the callback, so if it
+  // was called then we know the call on the processor was made.
   EXPECT_TRUE(start_callback_called());
 }
 

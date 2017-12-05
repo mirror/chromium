@@ -19,7 +19,6 @@
 #include "components/sync/driver/fake_sync_client.h"
 #include "components/sync/engine/activation_context.h"
 #include "components/sync/engine/commit_queue.h"
-#include "components/sync/engine/fake_model_type_processor.h"
 #include "components/sync/engine/model_type_configurer.h"
 #include "components/sync/engine/model_type_processor_proxy.h"
 #include "components/sync/model/fake_model_type_change_processor.h"
@@ -40,7 +39,7 @@ void SetBool(bool* called, bool* out, bool in) {
 // A change processor for testing that connects using a thread-jumping proxy,
 // tracks connected state, and counts DisableSync calls.
 class TestModelTypeProcessor : public FakeModelTypeChangeProcessor,
-                               public FakeModelTypeProcessor {
+                               public ModelTypeProcessor {
  public:
   explicit TestModelTypeProcessor(int* disable_sync_call_count)
       : disable_sync_call_count_(disable_sync_call_count),

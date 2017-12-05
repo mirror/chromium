@@ -11,13 +11,13 @@
 #include "base/test/gtest_util.h"
 #include "components/sync/base/cancelation_signal.h"
 #include "components/sync/engine/activation_context.h"
-#include "components/sync/engine/fake_model_type_processor.h"
 #include "components/sync/protocol/model_type_state.pb.h"
 #include "components/sync/syncable/directory.h"
 #include "components/sync/syncable/model_neutral_mutable_entry.h"
 #include "components/sync/syncable/syncable_model_neutral_write_transaction.h"
 #include "components/sync/syncable/test_user_share.h"
 #include "components/sync/test/engine/fake_model_worker.h"
+#include "components/sync/test/engine/mock_model_type_processor.h"
 #include "components/sync/test/engine/mock_nudge_handler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -61,7 +61,7 @@ class ModelTypeRegistryTest : public ::testing::Test {
       const sync_pb::ModelTypeState& model_type_state) {
     auto context = std::make_unique<ActivationContext>();
     context->model_type_state = model_type_state;
-    context->type_processor = std::make_unique<FakeModelTypeProcessor>();
+    context->type_processor = std::make_unique<MockModelTypeProcessor>();
     return context;
   }
 
