@@ -52,7 +52,7 @@ void ShowSingletonTabOverwritingNTP(Browser* browser,
     if ((contents_url == chrome::kChromeUINewTabURL ||
          search::IsInstantNTP(contents) ||
          contents_url == url::kAboutBlankURL) &&
-        GetIndexOfSingletonTab(&local_params) < 0) {
+        GetIndexOfSingletonTab(local_params.browser, &local_params) < 0) {
       local_params.disposition = WindowOpenDisposition::CURRENT_TAB;
     }
   }
@@ -72,8 +72,9 @@ NavigateParams GetSingletonTabNavigateParams(Browser* browser,
 
 // Returns the index of an existing singleton tab in |params->browser| matching
 // the URL specified in |params|.
-int GetIndexOfSingletonTab(NavigateParams* params) {
-  if (params->disposition != WindowOpenDisposition::SINGLETON_TAB)
+int GetIndexOfSingletonTab(Browser* browser, NavigateParams* params) {
+  if (params->disposition != WindowOpenDisposition::SINGLETON_TAB &&
+      params->disposition != WindowOpenDisposition::SWITCH_TO_TAB)
     return -1;
 
   // In case the URL was rewritten by the BrowserURLHandler we need to ensure
@@ -82,18 +83,20 @@ int GetIndexOfSingletonTab(NavigateParams* params) {
   GURL rewritten_url(params->url);
   bool reverse_on_redirect = false;
   content::BrowserURLHandler::GetInstance()->RewriteURLIfNecessary(
-      &rewritten_url,
-      params->browser->profile(),
-      &reverse_on_redirect);
+      &rewritten_url, browser->profile(), &reverse_on_redirect);
 
   // If there are several matches: prefer the active tab by starting there.
-  int start_index =
-      std::max(0, params->browser->tab_strip_model()->active_index());
-  int tab_count = params->browser->tab_strip_model()->count();
+  int start_index;
+  if (params->disposition == WindowOpenDisposition::SINGLETON_TAB) {
+    start_index = std::max(0, browser->tab_strip_model()->active_index());
+  } else {
+    start_index = std::max(0, params->tab_switch_hint);
+  }
+  int tab_count = browser->tab_strip_model()->count();
   for (int i = 0; i < tab_count; ++i) {
     int tab_index = (start_index + i) % tab_count;
     content::WebContents* tab =
-        params->browser->tab_strip_model()->GetWebContentsAt(tab_index);
+        browser->tab_strip_model()->GetWebContentsAt(tab_index);
 
     GURL tab_url = tab->GetURL();
 
@@ -104,9 +107,7 @@ int GetIndexOfSingletonTab(NavigateParams* params) {
 
     GURL rewritten_tab_url = tab_url;
     content::BrowserURLHandler::GetInstance()->RewriteURLIfNecessary(
-      &rewritten_tab_url,
-      params->browser->profile(),
-      &reverse_on_redirect);
+        &rewritten_tab_url, browser->profile(), &reverse_on_redirect);
 
     url::Replacements<char> replacements;
     if (params->ref_behavior == NavigateParams::IGNORE_REF)
