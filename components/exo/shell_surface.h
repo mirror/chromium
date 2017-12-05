@@ -120,16 +120,19 @@ class ShellSurface : public SurfaceTreeHost,
   void Activate();
 
   // Maximizes the shell surface.
-  void Maximize();
+  virtual void Maximize();
 
   // Minimize the shell surface.
-  void Minimize();
+  virtual void Minimize();
 
   // Restore the shell surface.
-  void Restore();
+  virtual void Restore();
 
   // Set fullscreen state for shell surface.
-  void SetFullscreen(bool fullscreen);
+  virtual void SetFullscreen(bool fullscreen);
+
+  virtual void SetBounds(const gfx::Rect& bounds);
+  virtual void SetBoundsInParent(const gfx::Rect& bounds);
 
   // Start an interactive move of surface.
   virtual void Move();
@@ -180,6 +183,10 @@ class ShellSurface : public SurfaceTreeHost,
   void SetMinimumSize(const gfx::Size& size);
 
   void SetCanMinimize(bool can_minimize);
+
+  // Sends the window state change event to client.
+  void SendWindowStateChangeEvent(ash::mojom::WindowStateType old_state,
+                                  ash::mojom::WindowStateType next_state);
 
   // Sets the main surface for the window.
   static void SetMainSurface(aura::Window* window, Surface* surface);
