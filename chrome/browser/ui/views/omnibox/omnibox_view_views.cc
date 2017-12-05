@@ -482,8 +482,12 @@ void OmniboxViewViews::OnTemporaryTextMaybeChanged(
   if (save_original_selection)
     saved_temporary_selection_ = GetSelectedRange();
 
+  // Get friendly accessibility label.
+  base::string16 description =
+      match.answer ? match.answer->second_line().AccessibleText()
+                   : match.description;
   friendly_suggestion_text_ = AutocompleteMatchType::ToAccessibilityLabel(
-      match.type, display_text, match.description,
+      match.type, display_text, description,
       &friendly_suggestion_text_prefix_length_);
 
   SetWindowTextAndCaretPos(display_text, display_text.length(), false,
