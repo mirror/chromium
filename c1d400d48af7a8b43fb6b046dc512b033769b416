@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329d4d87_f727ddd5",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "nit: I think it would be a bit easier to follow if you moved 681-690 to appear right before 706. Right now it\u0027s building up link_command, then doing some other stuff, then comes back to building up the link command.",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86834297_ad4063df",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any point in passing verbose (-v) since we hide all output?",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ff70e7_e7365e08",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T14:50:27Z",
+      "side": 1,
+      "message": "nit: outputing -\u003e outputting",
+      "revId": "c1d400d48af7a8b43fb6b046dc512b033769b416",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
