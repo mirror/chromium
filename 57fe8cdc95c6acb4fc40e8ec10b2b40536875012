@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e461cdd8_6e6ea800",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/PermissionFeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T22:57:51Z",
+      "side": 1,
+      "message": "Optional: I know we always request permissions in our manifest, but... It always feel weird to not null-check when the API says it can return null. \"Array of all \u003cuses-permission\u003e tags included under \u003cmanifest\u003e, or null if there were none.\" Do you want to null-check? Or catch NullPointerException? ;-p",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "57fe8cdc95c6acb4fc40e8ec10b2b40536875012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055960b8_8df59ae3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/PermissionFeedbackSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T22:57:51Z",
+      "side": 1,
+      "message": "We discussed this offline and thought that for now we\u0027ll add another list of non-granted permissions, since we can\u0027t easily know whether the permission was blocked by the end user or Chrome never asked for it.",
+      "revId": "57fe8cdc95c6acb4fc40e8ec10b2b40536875012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
