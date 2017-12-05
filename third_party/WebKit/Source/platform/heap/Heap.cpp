@@ -152,10 +152,11 @@ ThreadHeap::ThreadHeap(ThreadState* thread_state)
       heap_does_not_contain_cache_(
           WTF::WrapUnique(new HeapDoesNotContainCache)),
       free_page_pool_(WTF::WrapUnique(new PagePool)),
-      marking_stack_(CallbackStack::Create()),
-      post_marking_callback_stack_(CallbackStack::Create()),
-      weak_callback_stack_(CallbackStack::Create()),
-      ephemeron_stack_(CallbackStack::Create()),
+      marking_stack_(base::MakeUnique<NewCallbackStack>()),
+      post_marking_callback_stack_(base::MakeUnique<NewCallbackStack>()),
+      weak_callback_stack_(base::MakeUnique<NewCallbackStack>()),
+      ephemeron_stack_(base::MakeUnique<NewCallbackStack>()),
+      ephemeron_done_stack_(base::MakeUnique<NewCallbackStack>()),
       vector_backing_arena_index_(BlinkGC::kVector1ArenaIndex),
       current_arena_ages_(0),
       should_flush_heap_does_not_contain_cache_(false) {
@@ -231,46 +232,46 @@ Address ThreadHeap::CheckAndMarkPointer(
 void ThreadHeap::PushTraceCallback(void* object, TraceCallback callback) {
   DCHECK(thread_state_->IsInGC() || thread_state_->IsIncrementalMarking());
 
-  CallbackStack::Item* slot = marking_stack_->AllocateEntry();
-  *slot = CallbackStack::Item(object, callback);
+  LOG(ERROR) << "ThreadHeap::PushTraceCallback " << static_cast<void*>(this) << " object " << object;
+  marking_stack_->Register(object, callback);
 }
 
 bool ThreadHeap::PopAndInvokeTraceCallback(Visitor* visitor) {
-  CallbackStack::Item* item = marking_stack_->Pop();
-  if (!item)
-    return false;
-  item->Call(visitor);
-  return true;
+  return marking_stack_->PopAndInvoke(visitor);
 }
 
 void ThreadHeap::PushPostMarkingCallback(void* object, TraceCallback callback) {
   DCHECK(thread_state_->IsInGC());
 
-  CallbackStack::Item* slot = post_marking_callback_stack_->AllocateEntry();
-  *slot = CallbackStack::Item(object, callback);
+  LOG(ERROR) << "ThreadHeap::PushPostMarkingCallback " << static_cast<void*>(this) << " object " << object;
+  post_marking_callback_stack_->Register(object, callback);
 }
 
 bool ThreadHeap::PopAndInvokePostMarkingCallback(Visitor* visitor) {
-  if (CallbackStack::Item* item = post_marking_callback_stack_->Pop()) {
-    item->Call(visitor);
-    return true;
+  return post_marking_callback_stack_->PopAndInvoke(visitor);
+}
+
+void ThreadHeap::InvokeEphemeronDoneCallback(Visitor* visitor) {
+  while (ephemeron_done_stack_->PopAndInvoke(visitor)) {
   }
-  return false;
 }
 
 void ThreadHeap::PushWeakCallback(void* closure, WeakCallback callback) {
   DCHECK(thread_state_->IsInGC());
 
-  CallbackStack::Item* slot = weak_callback_stack_->AllocateEntry();
-  *slot = CallbackStack::Item(closure, callback);
+  LOG(ERROR) << "ThreadHeap::PushWeakCallback " << static_cast<void*>(this) << " closure " << closure;
+  weak_callback_stack_->Register(closure, callback);
+}
+
+void ThreadHeap::UnregisterWeakCallbackForObject(void* closure) {
+  //LOG(ERROR) << "ThreadHeap::UnregisterWeakCallbackForObject " << static_cast<void*>(this) << " closure " << closure;
+  //DCHECK(thread_state_->IsInGC());
+
+  weak_callback_stack_->UnregisterForObject(closure);
 }
 
 bool ThreadHeap::PopAndInvokeWeakCallback(Visitor* visitor) {
-  if (CallbackStack::Item* item = weak_callback_stack_->Pop()) {
-    item->Call(visitor);
-    return true;
-  }
-  return false;
+  return weak_callback_stack_->PopAndInvoke(visitor);
 }
 
 void ThreadHeap::RegisterWeakTable(void* table,
@@ -278,26 +279,30 @@ void ThreadHeap::RegisterWeakTable(void* table,
                                    EphemeronCallback iteration_done_callback) {
   DCHECK(thread_state_->IsInGC());
 
-  CallbackStack::Item* slot = ephemeron_stack_->AllocateEntry();
-  *slot = CallbackStack::Item(table, iteration_callback);
+  LOG(ERROR) << "ThreadHeap::RegisterWeakTable " << static_cast<void*>(this) << " table " << table;
+  ephemeron_stack_->Register(table, iteration_callback);
 
   // Register a post-marking callback to tell the tables that
   // ephemeron iteration is complete.
-  PushPostMarkingCallback(table, iteration_done_callback);
+  ephemeron_done_stack_->Register(table, iteration_done_callback);
+  CHECK(WeakTableRegistered(table));
 }
 
 #if DCHECK_IS_ON()
 bool ThreadHeap::WeakTableRegistered(const void* table) {
+  //LOG(ERROR) << "ThreadHeap::WeakTableRegistered " << static_cast<void*>(this) << " table " << table;
   DCHECK(ephemeron_stack_);
   return ephemeron_stack_->HasCallbackForObject(table);
 }
 #endif
 
 void ThreadHeap::CommitCallbackStacks() {
+  LOG(ERROR) << "ThreadHeap::CommitCallbackStacks " << static_cast<void*>(this);
   marking_stack_->Commit();
   post_marking_callback_stack_->Commit();
   weak_callback_stack_->Commit();
   ephemeron_stack_->Commit();
+  ephemeron_done_stack_->Commit();
 }
 
 HeapCompact* ThreadHeap::Compaction() {
@@ -321,10 +326,12 @@ void ThreadHeap::RegisterMovingObjectCallback(MovableReference reference,
 }
 
 void ThreadHeap::DecommitCallbackStacks() {
+  LOG(ERROR) << "ThreadHeap::DecommitCallbackStacks " << static_cast<void*>(this);
   marking_stack_->Decommit();
   post_marking_callback_stack_->Decommit();
   weak_callback_stack_->Decommit();
   ephemeron_stack_->Decommit();
+  ephemeron_done_stack_->Decommit();
 }
 
 void ThreadHeap::ProcessMarkingStack(Visitor* visitor) {
@@ -357,6 +364,7 @@ bool ThreadHeap::AdvanceMarkingStackProcessing(Visitor* visitor,
       // Mark any strong pointers that have now become reachable in
       // ephemeron maps.
       TRACE_EVENT0("blink_gc", "ThreadHeap::processEphemeronStack");
+      //LOG(ERROR) << "ThreadHeap::AdvanceMarkingStackProcessing InvokeEphemeronCallbacks " << static_cast<void*>(this);
       ephemeron_stack_->InvokeEphemeronCallbacks(visitor);
     }
 
@@ -372,6 +380,8 @@ void ThreadHeap::PostMarkingProcessing(Visitor* visitor) {
   //    (specifically to clear the queued bits for weak hash tables), and
   // 2. the markNoTracing callbacks on collection backings to mark them
   //    if they are only reachable from their front objects.
+  DCHECK(marking_stack_->IsEmpty()) << "early";
+  InvokeEphemeronDoneCallback(visitor);
   while (PopAndInvokePostMarkingCallback(visitor)) {
   }
 
@@ -541,7 +551,7 @@ void ThreadHeap::VisitStackRoots(Visitor* visitor) {
 }
 
 BasePage* ThreadHeap::LookupPageForAddress(Address address) {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
   if (PageMemoryRegion* region = region_tree_->Lookup(address)) {
     return region->PageFromAddress(address);
   }
@@ -567,9 +577,15 @@ void ThreadHeap::MakeConsistentForGC() {
 }
 
 void ThreadHeap::MakeConsistentForMutator() {
-  DCHECK(thread_state_->IsInGC());
+  //DCHECK(thread_state_->IsInGC());
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->MakeConsistentForMutator();
+}
+
+void ThreadHeap::UnmarkAll() {
+  //DCHECK(thread_state_->IsInGC());
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->UnmarkAll();
 }
 
 void ThreadHeap::Compact() {
@@ -798,15 +814,24 @@ bool ThreadHeap::AdvanceLazySweep(double deadline_seconds) {
 }
 
 void ThreadHeap::EnableIncrementalMarkingBarrier() {
+  LOG(ERROR) << "ThreadHeap::EnableIncrementalMarkingBarrier";
+  CHECK(!thread_state_->IsIncrementalMarking());
   thread_state_->SetIncrementalMarking(true);
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->EnableIncrementalMarkingBarrier();
 }
 
 void ThreadHeap::DisableIncrementalMarkingBarrier() {
+  LOG(ERROR) << "ThreadHeap::DisableIncrementalMarkingBarrier";
+  CHECK(thread_state_->IsIncrementalMarking());
   thread_state_->SetIncrementalMarking(false);
   for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
     arenas_[i]->DisableIncrementalMarkingBarrier();
+}
+
+void ThreadHeap::CheckIntegrity() {
+  for (int i = 0; i < BlinkGC::kNumberOfArenas; ++i)
+    arenas_[i]->CheckIntegrity();
 }
 
 ThreadHeap* ThreadHeap::main_thread_heap_ = nullptr;

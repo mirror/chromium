@@ -371,6 +371,8 @@ class BasePage {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
+  static inline BasePage* FromHeader(Address header_address);
+
   BasePage(PageMemory*, BaseArena*);
   virtual ~BasePage() {}
 
@@ -392,6 +394,8 @@ class BasePage {
   virtual void RemoveFromHeap() = 0;
   virtual void Sweep() = 0;
   virtual void MakeConsistentForMutator() = 0;
+  virtual void UnmarkAll() = 0;
+  virtual void CheckIntegrity() = 0;
 
 #if defined(ADDRESS_SANITIZER)
   virtual void PoisonUnmarkedObjects() = 0;
@@ -426,7 +430,7 @@ class BasePage {
   virtual bool Contains(Address) = 0;
 #endif
   virtual size_t size() = 0;
-  virtual bool IsLargeObjectPage() { return false; }
+  virtual bool IsLargeObjectPage() const { return false; }
 
   Address GetAddress() { return reinterpret_cast<Address>(this); }
   PageMemory* Storage() const { return storage_; }
@@ -436,12 +440,12 @@ class BasePage {
   bool HasBeenSwept() const { return swept_; }
 
   void MarkAsSwept() {
-    DCHECK(!swept_);
+    //DCHECK(!swept_);
     swept_ = true;
   }
 
   void MarkAsUnswept() {
-    DCHECK(swept_);
+    //DCHECK(swept_);
     swept_ = false;
   }
 
@@ -545,6 +549,7 @@ class PLATFORM_EXPORT NormalPage final : public BasePage {
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
+  void UnmarkAll() override;
 #if defined(ADDRESS_SANITIZER)
   void PoisonUnmarkedObjects() override;
 #endif
@@ -603,6 +608,7 @@ class PLATFORM_EXPORT NormalPage final : public BasePage {
   // Verifies that the object start bitmap only contains a bit iff the object
   // is also reachable through iteration on the page.
   void VerifyObjectStartBitmapIsConsistentWithPayload();
+  void CheckIntegrity() override;
 
   // Uses the object_start_bit_map_ to find an object for a given address. The
   // returned header is either nullptr, indicating that no object could be
@@ -637,10 +643,12 @@ class LargeObjectPage final : public BasePage {
   }
 
   size_t ObjectPayloadSizeForTesting() override;
+  void CheckIntegrity() override;
   bool IsEmpty() override;
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
+  void UnmarkAll() override;
 #if defined(ADDRESS_SANITIZER)
   void PoisonUnmarkedObjects() override;
 #endif
@@ -672,7 +680,7 @@ class LargeObjectPage final : public BasePage {
         kAllocationGranularity;
     return sizeof(LargeObjectPage) + padding_size;
   }
-  bool IsLargeObjectPage() override { return true; }
+  bool IsLargeObjectPage() const override { return true; }
 
   HeapObjectHeader* GetHeapObjectHeader() {
     Address header_address = GetAddress() + PageHeaderSize();
@@ -795,8 +803,10 @@ class PLATFORM_EXPORT BaseArena {
 #endif
   virtual void TakeFreelistSnapshot(const String& dump_base_name) {}
   virtual void ClearFreeLists() {}
+  void CheckIntegrity();
   void MakeConsistentForGC();
   void MakeConsistentForMutator();
+  void UnmarkAll();
 #if DCHECK_IS_ON()
   virtual bool IsConsistentForGC() = 0;
 #endif
@@ -862,6 +872,7 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   Address AllocateObject(size_t allocation_size, size_t gc_info_index);
 
   void FreePage(NormalPage*);
+  void SetAllocationPoint(Address, size_t);
 
   bool Coalesce();
   void PromptlyFreeObject(HeapObjectHeader*);
@@ -880,10 +891,10 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   size_t FreeListSize();
 
   void SweepAndCompact();
+  Address CurrentAllocationPoint() const { return current_allocation_point_; }
+  size_t RemainingAllocationSize() const { return remaining_allocation_size_; }
 
   void Verify() override;
-
-  Address CurrentAllocationPoint() const { return current_allocation_point_; }
 
   bool IsInCurrentAllocationPointRegion(Address address) const {
     return HasCurrentAllocationArea() &&
@@ -902,9 +913,7 @@ class PLATFORM_EXPORT NormalPageArena final : public BaseArena {
   bool HasCurrentAllocationArea() const {
     return CurrentAllocationPoint() && RemainingAllocationSize();
   }
-  void SetAllocationPoint(Address, size_t);
 
-  size_t RemainingAllocationSize() const { return remaining_allocation_size_; }
   void SetRemainingAllocationSize(size_t);
   void UpdateRemainingAllocationSize();
 
@@ -979,6 +988,12 @@ NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValidOrZapped() const {
 
 NO_SANITIZE_ADDRESS inline void HeapObjectHeader::CheckHeader() const {
 #if defined(ARCH_CPU_64_BITS)
+  if (!IsValid()) {
+    //LOG(ERROR) << "HeapObjectHeader::CheckHeader FAILED " << static_cast<const void*>(this);
+    //LOG(ERROR) << "  magic_ 0x" << std::hex << magic_;
+    //LOG(ERROR) << "  IsValid " << IsValid();
+    //LOG(ERROR) << "  IsZapped " << (kZappedMagic == magic_);
+  }
   DCHECK(IsValid());
 #endif
 }

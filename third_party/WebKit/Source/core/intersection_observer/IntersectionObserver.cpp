@@ -186,6 +186,7 @@ IntersectionObserver::IntersectionObserver(
       bottom_margin_(kFixed),
       left_margin_(kFixed),
       root_is_implicit_(root ? 0 : 1) {
+  LOG(ERROR) << "IntersectionObserver::IntersectionObserver " << static_cast<void*>(this);
   switch (root_margin.size()) {
     case 0:
       break;
@@ -219,6 +220,7 @@ IntersectionObserver::IntersectionObserver(
 }
 
 void IntersectionObserver::ClearWeakMembers(Visitor* visitor) {
+  LOG(ERROR) << "IntersectionObserver::ClearWeakMembers " << static_cast<void*>(this);
   if (RootIsImplicit() || (root() && ThreadHeap::IsHeapObjectAlive(root())))
     return;
   DummyExceptionStateForTesting exception_state;
@@ -354,6 +356,7 @@ void IntersectionObserver::Deliver() {
 }
 
 void IntersectionObserver::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "IntersectionObserver::Trace " << static_cast<void*>(this);
   visitor->template RegisterWeakMembers<
       IntersectionObserver, &IntersectionObserver::ClearWeakMembers>(this);
   visitor->Trace(delegate_);

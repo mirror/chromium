@@ -77,6 +77,7 @@ DOMWindowEventQueue::DOMWindowEventQueue(ExecutionContext* context)
 DOMWindowEventQueue::~DOMWindowEventQueue() {}
 
 void DOMWindowEventQueue::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "DOMWindowEventQueue::Trace";
   visitor->Trace(pending_event_timer_);
   visitor->Trace(queued_events_);
   EventQueue::Trace(visitor);
@@ -113,6 +114,7 @@ bool DOMWindowEventQueue::CancelEvent(Event* event) {
 }
 
 void DOMWindowEventQueue::Close() {
+  LOG(ERROR) << "DOMWindowEventQueue::Close";
   is_closed_ = true;
   pending_event_timer_->Stop();
   for (const auto& queued_event : queued_events_) {
@@ -121,6 +123,7 @@ void DOMWindowEventQueue::Close() {
                                queued_event);
     }
   }
+  LOG(ERROR) << "DOMWindowEventQueue::Close will clear";
   queued_events_.clear();
 }
 

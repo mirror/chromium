@@ -660,6 +660,7 @@ Document::Document(const DocumentInit& initializer,
       logged_field_edit_(false),
       engagement_level_(mojom::blink::EngagementLevel::NONE),
       secure_context_state_(SecureContextState::kUnknown) {
+  LOG(ERROR) << "Document::Document " << static_cast<void*>(this);
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -722,6 +723,7 @@ Document::Document(const DocumentInit& initializer,
 }
 
 Document::~Document() {
+  LOG(ERROR) << "Document::~Document " << static_cast<void*>(this);
   DCHECK(GetLayoutViewItem().IsNull());
   DCHECK(!ParentTreeScope());
   // If a top document with a cache, verify that it was comprehensively
@@ -2647,6 +2649,7 @@ void Document::Initialize() {
 }
 
 void Document::Shutdown() {
+  LOG(ERROR) << "Document::Shutdown " << static_cast<void*>(this);
   TRACE_EVENT0("blink", "Document::shutdown");
   CHECK(!frame_ || frame_->Tree().ChildCount() == 0);
   if (!IsActive())
@@ -2823,6 +2826,7 @@ Document& Document::AXObjectCacheOwner() const {
 }
 
 void Document::ClearAXObjectCache() {
+  LOG(ERROR) << "Document::ClearAXObjectCache " << static_cast<void*>(this);
   DCHECK_EQ(&AXObjectCacheOwner(), this);
   // Clear the cache member variable before calling delete because attempts
   // are made to access it during destruction.
@@ -2859,8 +2863,10 @@ AXObjectCache* Document::GetOrCreateAXObjectCache() const {
     return nullptr;
 
   DCHECK(&cache_owner == this || !ax_object_cache_);
-  if (!cache_owner.ax_object_cache_)
+  if (!cache_owner.ax_object_cache_) {
+    LOG(ERROR) << "Document::GetOrCreateAXObjectCache AXObjectCache::Create";
     cache_owner.ax_object_cache_ = AXObjectCache::Create(cache_owner);
+  }
   return cache_owner.ax_object_cache_.Get();
 }
 
@@ -7202,6 +7208,7 @@ Policy* Document::policy() {
 }
 
 void Document::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "Document::Trace " << static_cast<void*>(this);
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
   visitor->Trace(implementation_);

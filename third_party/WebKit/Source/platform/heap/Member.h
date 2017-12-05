@@ -9,6 +9,8 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
+#include "platform/heap/TraceTraits.h"
+#include <base/debug/stack_trace.h>
 
 namespace blink {
 
@@ -242,28 +244,42 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
     return *this;
   }
 
- protected:
+ private:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
 #if HEAP_INCREMENTAL_MARKING
     if (value) {
+      if (reinterpret_cast<intptr_t>(value) % kAllocationGranularity != 0) {
+        //LOG(ERROR) << "WriteBarrier invalid value " << static_cast<const void*>(value);
+        base::debug::StackTrace().Print();
+        return;
+      }
+
+      ThreadState* thread_state = ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
+      DCHECK(thread_state);
+      DCHECK(thread_state == ThreadState::Current());
+
       // The following method for retrieving a page works as allocation of
       // mixins on large object pages is prohibited.
       BasePage* const page = PageFromObject(value);
+      CHECK(page->IsIncrementalMarking() == thread_state->IsIncrementalMarking());
       if (page->IsIncrementalMarking()) {
         DCHECK(ThreadState::Current()->IsIncrementalMarking());
         HeapObjectHeader* const header =
             page->IsLargeObjectPage()
                 ? static_cast<LargeObjectPage*>(page)->GetHeapObjectHeader()
                 : static_cast<NormalPage*>(page)->FindHeaderFromAddress(
-                      reinterpret_cast<Address>(const_cast<T*>(value)));
+                  reinterpret_cast<Address>(reinterpret_cast<intptr_t>(value)));
         if (header->IsMarked())
           return;
-
+        //LOG(ERROR) << "WriteBarrier " << static_cast<const void*>(value);
         // Mark and push trace callback.
         header->Mark();
+        const GCInfo* gc_info = ThreadHeap::GcInfo(header->GcInfoIndex());
+        CHECK(gc_info->trace_);
+        LOG(ERROR) << "MemberBase::WriteBarrier PushTraceCallback ThreadState" << ThreadState::Current();
         ThreadState::Current()->Heap().PushTraceCallback(
             header->Payload(),
-            ThreadHeap::GcInfo(header->GcInfoIndex())->trace_);
+            gc_info->trace_);
       }
     }
 #endif  // HEAP_INCREMENTAL_MARKING

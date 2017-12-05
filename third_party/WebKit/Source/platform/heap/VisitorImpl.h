@@ -21,7 +21,7 @@ inline void Visitor::MarkHeader(HeapObjectHeader* header,
   if (header->IsMarked())
     return;
 
-  DCHECK(ThreadState::Current()->IsInGC());
+  //DCHECK(ThreadState::Current()->IsInGC());
   DCHECK(GetMarkingMode() != kWeakProcessing);
 
   // A GC should only mark the objects that belong in its heap.
@@ -30,8 +30,10 @@ inline void Visitor::MarkHeader(HeapObjectHeader* header,
 
   header->Mark();
 
-  if (callback)
+  if (callback) {
+    LOG(ERROR) << "Visitor::MarkHeader PushTraceCallback";
     Heap().PushTraceCallback(const_cast<void*>(object_pointer), callback);
+  }
 }
 
 inline void Visitor::MarkHeader(HeapObjectHeader* header,
