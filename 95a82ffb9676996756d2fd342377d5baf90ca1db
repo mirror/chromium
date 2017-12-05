@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51038c76_cf93dd13",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-05T09:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "521c3ed3_9f8999bd",
+      "range": {
+        "startLine": 154,
+        "startChar": 5,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8894eb14_c2f835ae",
         "filename": "device/u2f/u2f_hid_device.cc",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a3bbdb_ef073da9",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-05T09:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7d564d_8d069a82",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 50
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +188,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56e48817_578779c2",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-05T09:28:24Z",
+      "side": 1,
+      "message": "Apologies for the late response. \n\nFixed comments / Added re-arming for timeout callback. \n\nI\u0027m not sure wrapping for(;state_ !\u003d IDLE;) {} around U2fHIDDevice::Transition() would behave in an expected manner. Correct me if I\u0027m wrong, but this would cause device transaction to hang without callback whenever U2fHIDDevice::Transition() is called after setting |state_| to IDLE, which occurs after successful channel allocation.\n\nPerhaps a simpler approach might be adding a static variable that represents counter for channel allocation retries?",
+      "parentUuid": "4aabd107_101c7770",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
