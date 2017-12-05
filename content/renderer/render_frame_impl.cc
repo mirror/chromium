@@ -119,7 +119,7 @@
 #include "content/renderer/manifest/manifest_change_notifier.h"
 #include "content/renderer/manifest/manifest_manager.h"
 #include "content/renderer/media/audio_device_factory.h"
-#include "content/renderer/media/audio_ipc_factory.h"
+#include "content/renderer/media/audio_output_ipc_factory.h"
 #include "content/renderer/media/media_devices_listener_impl.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
 #include "content/renderer/media/media_stream_device_observer.h"
@@ -1394,7 +1394,7 @@ RenderFrameImpl::~RenderFrameImpl() {
   if (input_handler_manager)
     input_handler_manager->UnregisterRoutingID(GetRoutingID());
 
-  if (auto* factory = AudioIPCFactory::get())
+  if (auto* factory = AudioOutputIPCFactory::get())
     factory->MaybeDeregisterRemoteFactory(GetRoutingID());
 
   if (is_main_frame_) {
@@ -1462,8 +1462,8 @@ void RenderFrameImpl::Initialize() {
         GetRoutingID(), render_view_->GetRoutingID());
   }
 
-  // AudioIPCFactory may be null in tests.
-  if (auto* factory = AudioIPCFactory::get())
+  // AudioOutputIPCFactory may be null in tests.
+  if (auto* factory = AudioOutputIPCFactory::get())
     factory->MaybeRegisterRemoteFactory(GetRoutingID(), GetRemoteInterfaces());
 
   const base::CommandLine& command_line =
@@ -4982,6 +4982,13 @@ blink::WebString RenderFrameImpl::DoNotTrackValue() {
   if (render_view_->renderer_preferences_.enable_do_not_track)
     return WebString::FromUTF8("1");
   return WebString();
+}
+
+mojom::RendererAudioInputStreamFactory*
+RenderFrameImpl::GetAudioInputStreamFactory() {
+  if (!audio_input_stream_factory_)
+    GetRemoteInterfaces()->GetInterface(&audio_input_stream_factory_);
+  return audio_input_stream_factory_.get();
 }
 
 bool RenderFrameImpl::ShouldBlockWebGL() {

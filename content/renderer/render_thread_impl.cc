@@ -780,14 +780,16 @@ void RenderThreadImpl::Init(
   if (!base::FeatureList::IsEnabled(
           features::kUseMojoAudioOutputStreamFactory)) {
     // In case we shouldn't use mojo factories, we need to create an
-    // AudioMessageFilter which |audio_ipc_factory_| can use for IPC.
+    // AudioMessageFilter which |audio_output_ipc_factory_| can use for IPC.
     audio_message_filter =
         base::MakeRefCounted<AudioMessageFilter>(GetIOTaskRunner());
     AddFilter(audio_message_filter.get());
   }
 
-  audio_ipc_factory_.emplace(std::move(audio_message_filter),
-                             GetIOTaskRunner());
+  audio_output_ipc_factory_.emplace(std::move(audio_message_filter),
+                                    GetIOTaskRunner());
+  audio_input_ipc_factory_.emplace(message_loop()->task_runner(),
+                                   GetIOTaskRunner());
 
   midi_message_filter_ = new MidiMessageFilter(GetIOTaskRunner());
   AddFilter(midi_message_filter_.get());
