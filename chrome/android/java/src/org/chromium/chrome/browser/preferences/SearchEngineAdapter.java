@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.preferences;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -29,16 +28,16 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.ContentSettingsType;
 import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.preferences.website.ContentSetting;
 import org.chromium.chrome.browser.preferences.website.GeolocationInfo;
+import org.chromium.chrome.browser.preferences.website.NotificationInfo;
 import org.chromium.chrome.browser.preferences.website.SingleWebsitePreferences;
+import org.chromium.chrome.browser.preferences.website.WebsitePreferenceBridge;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrl;
 import org.chromium.components.location.LocationUtils;
-import org.chromium.ui.text.SpanApplier;
-import org.chromium.ui.text.SpanApplier.SpanInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -336,36 +335,13 @@ public class SearchEngineAdapter extends BaseAdapter
         });
 
         TextView link = (TextView) view.findViewById(R.id.location_permission);
-        link.setVisibility(selected ? View.VISIBLE : View.GONE);
+        link.setVisibility(View.GONE);
         if (TemplateUrlService.getInstance().getSearchEngineUrlFromTemplateUrl(
                 templateUrl.getKeyword()) == null) {
             Log.e(TAG, "Invalid template URL found: %s", templateUrl);
             assert false;
-            link.setVisibility(View.GONE);
         } else if (selected) {
-            if (!locationShouldBeShown(templateUrl)) {
-                link.setVisibility(View.GONE);
-            } else {
-                ForegroundColorSpan linkSpan = new ForegroundColorSpan(
-                        ApiCompatibilityUtils.getColor(resources, R.color.google_blue_700));
-                // If location is allowed but system location is off, show a message explaining how
-                // to turn location on.
-                if (locationEnabled(templateUrl)
-                        && !LocationUtils.getInstance().isSystemLocationSettingEnabled()) {
-                    link.setText(SpanApplier.applySpans(
-                            mContext.getString(R.string.android_location_off),
-                            new SpanInfo("<link>", "</link>", linkSpan)));
-                } else {
-                    String message = mContext.getString(locationEnabled(templateUrl)
-                                    ? R.string.search_engine_location_allowed
-                                    : R.string.search_engine_location_blocked);
-                    SpannableString messageWithLink = new SpannableString(message);
-                    messageWithLink.setSpan(linkSpan, 0, messageWithLink.length(), 0);
-                    link.setText(messageWithLink);
-                }
-
-                link.setOnClickListener(this);
-            }
+            setupPermissionsLink(templateUrl, link);
         }
 
         return view;
@@ -415,17 +391,13 @@ public class SearchEngineAdapter extends BaseAdapter
 
     private void onLocationLinkClicked() {
         mIsLocationPermissionChanged = true;
-        if (!LocationUtils.getInstance().isSystemLocationSettingEnabled()) {
-            mContext.startActivity(LocationUtils.getInstance().getSystemLocationSettingsIntent());
-        } else {
-            Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
-                    mContext, SingleWebsitePreferences.class.getName());
-            String url = TemplateUrlService.getInstance().getSearchEngineUrlFromTemplateUrl(
-                    toKeyword(mSelectedSearchEnginePosition));
-            Bundle fragmentArgs = SingleWebsitePreferences.createFragmentArgsForSite(url);
-            settingsIntent.putExtra(Preferences.EXTRA_SHOW_FRAGMENT_ARGUMENTS, fragmentArgs);
-            mContext.startActivity(settingsIntent);
-        }
+        Intent settingsIntent = PreferencesLauncher.createIntentForSettingsPage(
+                mContext, SingleWebsitePreferences.class.getName());
+        String url = TemplateUrlService.getInstance().getSearchEngineUrlFromTemplateUrl(
+                toKeyword(mSelectedSearchEnginePosition));
+        Bundle fragmentArgs = SingleWebsitePreferences.createFragmentArgsForSite(url);
+        settingsIntent.putExtra(Preferences.EXTRA_SHOW_FRAGMENT_ARGUMENTS, fragmentArgs);
+        mContext.startActivity(settingsIntent);
     }
 
     private String getSearchEngineUrl(TemplateUrl templateUrl) {
@@ -446,18 +418,62 @@ public class SearchEngineAdapter extends BaseAdapter
         return url;
     }
 
-    private boolean locationShouldBeShown(TemplateUrl templateUrl) {
+    private String getPermissionsString(
+            boolean notificationsAllowed, boolean locationAllowed, boolean systemLocationAllowed) {
+        // Cases where location is fully enabled.
+        if (locationAllowed && systemLocationAllowed) {
+            if (notificationsAllowed)
+                return mContext.getString(
+                        R.string.search_engine_location_and_notifications_allowed);
+            else
+                return mContext.getString(R.string.search_engine_location_allowed);
+        }
+
+        // Cases where the user has allowed location for the site but it's disabled at the system
+        // level.
+        if (locationAllowed) {
+            if (notificationsAllowed)
+                return mContext.getString(
+                        R.string.search_engine_notifications_allowed_system_location_disabled);
+            else
+                return mContext.getString(R.string.search_engine_system_location_disabled);
+        }
+
+        // Cases where the user has not allowed location.
+        if (notificationsAllowed)
+            return mContext.getString(R.string.search_engine_notifications_allowed);
+
+        return "";
+    }
+
+    private void setupPermissionsLink(TemplateUrl templateUrl, TextView link) {
         String url = getSearchEngineUrl(templateUrl);
-        if (url.isEmpty()) return false;
 
-        // Do not show location if the scheme isn't HTTPS.
-        Uri uri = Uri.parse(url);
-        if (!UrlConstants.HTTPS_SCHEME.equals(uri.getScheme())) return false;
+        NotificationInfo notificationSettings = new NotificationInfo(url, null, false);
+        boolean notificationsAllowed =
+                notificationSettings.getContentSetting() == ContentSetting.ALLOW
+                && WebsitePreferenceBridge.isPermissionControlledByDSE(
+                           ContentSettingsType.CONTENT_SETTINGS_TYPE_NOTIFICATIONS, url, false);
 
-        // Only show the location setting if it is explicitly enabled or disabled.
         GeolocationInfo locationSettings = new GeolocationInfo(url, null, false);
-        ContentSetting locationPermission = locationSettings.getContentSetting();
-        return locationPermission != ContentSetting.ASK;
+        boolean locationAllowed = locationSettings.getContentSetting() == ContentSetting.ALLOW
+                && WebsitePreferenceBridge.isPermissionControlledByDSE(
+                           ContentSettingsType.CONTENT_SETTINGS_TYPE_GEOLOCATION, url, false);
+
+        boolean systemLocationAllowed =
+                LocationUtils.getInstance().isSystemLocationSettingEnabled();
+
+        String message =
+                getPermissionsString(notificationsAllowed, locationAllowed, systemLocationAllowed);
+        if (!message.isEmpty()) {
+            link.setVisibility(View.VISIBLE);
+            SpannableString messageWithLink = new SpannableString(message);
+            ForegroundColorSpan linkSpan = new ForegroundColorSpan(ApiCompatibilityUtils.getColor(
+                    mContext.getResources(), R.color.google_blue_700));
+            messageWithLink.setSpan(linkSpan, 0, messageWithLink.length(), 0);
+            link.setText(messageWithLink);
+            link.setOnClickListener(this);
+        }
     }
 
     private boolean locationEnabled(TemplateUrl templateUrl) {
