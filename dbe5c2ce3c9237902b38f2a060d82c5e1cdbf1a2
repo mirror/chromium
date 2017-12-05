@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4296d3aa_6fe0dce8",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-05T20:03:32Z",
+      "side": 1,
+      "message": "Given what GetIsolatedOrigins returns now, I wonder if this should also return true if the embedder\u0027s isolated origin list is nonempty.  Fine to try it in a separate CL if you agree, to keep this one from changing any behavior.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "dbe5c2ce3c9237902b38f2a060d82c5e1cdbf1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5e0248_c192b722",
+        "filename": "content/browser/site_isolation_policy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-05T20:03:32Z",
+      "side": 1,
+      "message": "nit: Let\u0027s update this comment, as this is done now.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "dbe5c2ce3c9237902b38f2a060d82c5e1cdbf1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
