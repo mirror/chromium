@@ -70,6 +70,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98502f8e_067b0223",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T18:57:04Z",
+      "side": 1,
+      "message": "Ok, I just thought it was more likely that this was due to a ClearOwnerNode than the sheet not having an owner node yet.",
+      "parentUuid": "077ce96a_97594817",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
