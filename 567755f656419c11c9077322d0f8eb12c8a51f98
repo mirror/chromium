@@ -34,6 +34,24 @@
       "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d421a0c_5b788fdd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T21:19:05Z",
+      "side": 1,
+      "message": "Tables in a regular *block* formatting context are special, in that they use the min/max preferred widths of the table to calculate the table width, even if table width is fixed, percentage, auto, or anything at all, really. This must not happen if the table is a flex (or grid) item. Then the flex/grid algorithm gets to decide. As far as I know (but my memory is rusty and I also don\u0027t know everything), the min/max width of such a table should never affect the flex/grid item size, unless the flex/grid container itself is intrinsically sized (e.g. floated with auto width, or width:fit-content, etc.).\n\nOr?",
+      "parentUuid": "3f6b4020_d5490443",
+      "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
