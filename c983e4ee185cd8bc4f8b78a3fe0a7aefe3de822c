@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54696b91_39fffb07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/module.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-05T23:46:53Z",
+      "side": 1,
+      "message": "We don\u0027t need the setting, just enable it at all times.",
+      "revId": "c983e4ee185cd8bc4f8b78a3fe0a7aefe3de822c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
