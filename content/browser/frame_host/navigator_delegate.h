@@ -108,7 +108,7 @@ class CONTENT_EXPORT NavigatorDelegate {
 
   // A document stopped loading. This corresponds to Blink's notion of the
   // throbber stopping.
-  virtual void DidStopLoading() {}
+  virtual void DidStopLoading(FrameTreeNode* frame_tree_node) {}
 
   // The load progress was changed.
   virtual void DidChangeLoadProgress() {}

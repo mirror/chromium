@@ -4997,7 +4997,7 @@ void WebContentsImpl::DidStartLoading(FrameTreeNode* frame_tree_node,
     manager->UserIsNavigatingAway();
 }
 
-void WebContentsImpl::DidStopLoading() {
+void WebContentsImpl::DidStopLoading(FrameTreeNode* frame_tree_node) {
   std::unique_ptr<LoadNotificationDetails> details;
 
   // Use the last committed entry rather than the active one, in case a
@@ -5019,6 +5019,13 @@ void WebContentsImpl::DidStopLoading() {
   }
 
   LoadingStateChanged(true, false, details.get());
+
+  // Notify accessibility that the user is no longer trying to load or
+  // reload a page.
+  BrowserAccessibilityManager* manager =
+      frame_tree_node->current_frame_host()->browser_accessibility_manager();
+  if (manager)
+    manager->DidStopLoading();
 }
 
 void WebContentsImpl::DidChangeLoadProgress() {
