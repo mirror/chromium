@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fd6f80ae_7ba3fd01",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-05T06:07:36Z",
+      "side": 1,
+      "message": "Ah, I see what you mean. Nah, it\u0027s convenient to not have to cast to another class type at the caller.",
+      "parentUuid": "8ebc6ab7_168d78b5",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ba5e3b_c32f694c",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTapHighlightColor.cpp",
         "patchSetId": 19
