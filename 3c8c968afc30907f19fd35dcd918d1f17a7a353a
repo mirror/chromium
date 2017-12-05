@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96b47e6_395094a7",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:27:50Z",
+      "side": 1,
+      "message": "I\u0027m still confused by the need for this. Does set_title_margins(empty-rect) do what you need?\nMy worry with code like you have here is you\u0027re assuming a particular calculation in the superclass is happening. It\u0027s easy to change the superclass without realizing a subclass like this needs to be updated.",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 55
+      },
+      "revId": "3c8c968afc30907f19fd35dcd918d1f17a7a353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
