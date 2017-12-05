@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62b44624_9277d5e7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-05T14:53:22Z",
+      "side": 1,
+      "message": "The code works as intended I think. next_it is never dereferenced anywhere and current_it is checked to not be owners.end() in the outer loop so will not be dereferenced in that case.",
+      "parentUuid": "ad95a271_ca3a5f9b",
+      "range": {
+        "startLine": 667,
+        "startChar": 9,
+        "endLine": 667,
+        "endChar": 16
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d0c994_455dfc45",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0a2a3108_ac7c4d56",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-05T14:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d0c994_455dfc45",
+      "range": {
+        "startLine": 678,
+        "startChar": 13,
+        "endLine": 678,
+        "endChar": 43
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75503c6b_576a31ab",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e061d86_59d42ffa",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-05T14:53:22Z",
+      "side": 1,
+      "message": "Changed to ASSERT_DOUBLE_EQ which I think is what we want.",
+      "parentUuid": "75503c6b_576a31ab",
+      "range": {
+        "startLine": 640,
+        "startChar": 2,
+        "endLine": 640,
+        "endChar": 11
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
