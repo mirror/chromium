@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86c27789_2ec25090",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:31:03Z",
+      "side": 1,
+      "message": "nit: and \"thus notify ServerWindow and aura::Window\"",
+      "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d666bfed_ebb58ce1",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:31:03Z",
+      "side": 1,
+      "message": "one might argue that it is a bug in Chrome that it would attempt to maximize if the window is already maximized (or minimize respectively) should be considered a UI bug. Does Chrome still work if you insert DCHECKs?\n\nNo need to change the CL here -- just reply if you know the answer to question.",
+      "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333f2cdc_0c508683",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:31:03Z",
+      "side": 1,
+      "message": "Is it possible for these to vary independently?\n\nRegardless: I\u0027d prefer that you used an enum to record window states?",
+      "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
