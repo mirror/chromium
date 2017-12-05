@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20addd7d_45d68c56",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-05T18:53:44Z",
+      "side": 1,
+      "message": "No need for unique_ptr anymore.\n\nTouchEvent event(type, location, time_stamp, pointer_details);\ntouch-\u003ecallback_.Run(\u0026event);",
+      "range": {
+        "startLine": 134,
+        "startChar": 30,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "537cf907472dee2fc26b085f2f44a2295cb13a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cb9531_67f2f6b6",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-05T18:53:44Z",
+      "side": 1,
+      "message": "Please initialize: \u003d nullptr;\n\nWhat prevents wl_surface the from being destroyed prior to TouchPoint?\n\nI am concerned about the lifetime here. It think we likely need to make a call on WaylandTouch whenever a surface is destroyed to clean up touch points for that surface. Otherwise we\u0027ll have a dangling pointer here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "537cf907472dee2fc26b085f2f44a2295cb13a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
