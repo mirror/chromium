@@ -7,12 +7,12 @@
 #include <memory>
 #include "bindings/core/v8/ScriptStreamerThread.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
-#include "core/dom/ClassicPendingScript.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/frame/Settings.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/loader/resource/ScriptResource.h"
+#include "core/script/ClassicPendingScript.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
