@@ -163,6 +163,24 @@
       "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff4c6fc_99455859",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:36:51Z",
+      "side": 1,
+      "message": "I see. This strong coupling seems very undesirable, really ppapi shouldn\u0027t need to care how the UI runs, it should just ask its host (the browser) for the interface, and the host can decide how to get to it.\n\nI guess that\u0027s a bit orthogonal to this, but I would like some follow-up here.",
+      "parentUuid": "e767bb4d_e8132548",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
