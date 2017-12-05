@@ -34,6 +34,24 @@
       "revId": "cf64490a6db992d37f48f4c84871edd93514e3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472c8f50_4dac53cc",
+        "filename": "ui/aura/mus/window_tree_host_mus_init_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-05T19:20:03Z",
+      "side": 1,
+      "message": "I think something like https://paste.googleplex.com/5932238130642944 will fix this particular crash.\n\nI think we need both changes (i.e. this CL, and the pastebin). They are separate issues though.",
+      "parentUuid": "5de669cf_eb7b8ec8",
+      "revId": "cf64490a6db992d37f48f4c84871edd93514e3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
