@@ -16,6 +16,115 @@
       "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415b19ad_387a3851",
+        "filename": "components/viz/service/display_embedder/software_output_device_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c0f4152_eb66eaf1",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8acd80dd_95bbbbf8",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fa588e_53e92917",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "is there anything still calling this? (remove?)",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c0634e_b78c71a0",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "heirarchy -\u003e hierarchy  (I always do this... the correct spelling is clearly wrong)",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 37
+      },
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469a0e21_cc909474",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "this feels like more than a setter.. maybe \u0027ProcessCALayerParams\u0027 or \u0027ConsumeCALayerParams\u0027?",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56119ed6_e5c79b3d",
+        "filename": "ui/accelerated_widget_mac/ca_layer_embedder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:40:47Z",
+      "side": 1,
+      "message": "is this implemented? (maybe the one in accelerated_widget_mac.mm can be renamed\n\nAcceleratedWidgetMac* AcceleratedWidgetMac::Get(gfx::AcceleratedWidget widget) {\n\nto\n\nAcceleratedWidgetMac* CALayerEmbedder::Get(gfx::AcceleratedWidget widget) {",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
