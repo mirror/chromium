@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c7f89b_6026f8a7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2501,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:32:08Z",
+      "side": 1,
+      "message": "This mean that the tab helper will be null for pre-rendering tab. So every use of PassKitTabHelper::FromWebState() should check for null return value.",
+      "range": {
+        "startLine": 2501,
+        "startChar": 2,
+        "endLine": 2501,
+        "endChar": 72
+      },
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011229f8_b1f1076e",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:32:08Z",
+      "side": 1,
+      "message": "InfoBarManagerImpl::CreateForWebState() is invoked in AttachTabHelpers(), so it cannot be null for any WebState that is used for a tab (pre-rendered or not). I think we can remove the TODO here and instead use a DCHECK as it is not possible to have a null value here if PassKitTabHelper::FromWebState() returns non-null value (which is the condition for this code to be invoked).",
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
