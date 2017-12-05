@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6aa3f48_66da6d18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T10:56:41Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be 1024?",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "f2b5545becb8a156cb437f6bfb66352dc8c64bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
