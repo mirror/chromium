@@ -161,7 +161,9 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && InnerEditorValue().IsEmpty() &&
+  return SupportsPlaceholder() &&
+         (InnerEditorValue().IsEmpty() ||
+          InnerEditorElement()->FastHasAttribute(HTMLNames::hiddenAttr)) &&
          !IsPlaceholderEmpty() && SuggestedValue().IsEmpty();
 }
 
@@ -980,13 +982,18 @@ void TextControlElement::SetSuggestedValue(const String& value) {
     // Save the value that is in the editor and set the editor value to an empty
     // string. This will allow the suggestion placeholder to be shown to the
     // user.
-    value_before_set_suggested_value_ = InnerEditorValue();
-    SetInnerEditorValue("");
-  } else if (suggested_value_.IsEmpty() &&
-             !value_before_set_suggested_value_.IsEmpty()) {
-    // Reset the value that was in the editor before showing the suggestion.
-    SetInnerEditorValue(value_before_set_suggested_value_);
-    value_before_set_suggested_value_ = "";
+    // value_before_set_suggested_value_ = InnerEditorValue();
+    // SetInnerEditorValue("");
+    InnerEditorElement()->SetBooleanAttribute(HTMLNames::hiddenAttr,
+                                              true);  // Doesnt work.
+  } else if (suggested_value_.IsEmpty() && InnerEditorElement()) {
+    // Reset the value that was in the editor before showing the suggestion plus
+    // whatever the user typed to remove the suggestion, if applicable.
+    // SetInnerEditorValue(value_before_set_suggested_value_ +
+    // InnerEditorValue());  SetSelectionRange(InnerEditorValue().length(),
+    // InnerEditorValue().length());  value_before_set_suggested_value_ = "";
+    InnerEditorElement()->SetBooleanAttribute(HTMLNames::hiddenAttr,
+                                              false);  // Doesnt work
   }
 
   UpdatePlaceholderText();
