@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad95a271_ca3a5f9b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-05T13:33:28Z",
+      "side": 1,
+      "message": "what happens if next_it \u003d\u003d owners.end()?",
+      "range": {
+        "startLine": 667,
+        "startChar": 9,
+        "endLine": 667,
+        "endChar": 16
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d0c994_455dfc45",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-05T13:33:28Z",
+      "side": 1,
+      "message": "shoudln\u0027t this be a double as well because of the \"/ difference\" division below?",
+      "range": {
+        "startLine": 678,
+        "startChar": 13,
+        "endLine": 678,
+        "endChar": 43
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75503c6b_576a31ab",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-05T13:33:28Z",
+      "side": 1,
+      "message": "I think for floating points you want ASSERT_NEAR rather than ASSERT_EQ",
+      "range": {
+        "startLine": 640,
+        "startChar": 2,
+        "endLine": 640,
+        "endChar": 11
+      },
+      "revId": "fae7bc01f57a8e2a615a0eef0059b761552efd84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
