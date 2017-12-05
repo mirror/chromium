@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f3ee38_01016de9",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/stylevalue-subclasses/cssVariableReferenceValue.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:04:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these descriptions say CSSVariableReferenceValue, not CSSUnparsedValue?",
+      "revId": "92cc60e0f3f9b0aa287bb6da0c2b985418617c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
