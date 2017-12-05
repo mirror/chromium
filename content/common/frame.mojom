@@ -186,5 +186,10 @@ interface FrameHost {
       ResourceType resource_type,
       string ip,
       uint32 cert_status);
+
+  // Sent by the renderer to indicate that a same document navigation
+  // started in the renderer process.
+  DidCommitSameDocumentNavigation(
+      DidCommitProvisionalLoadParams params);
 };
 
