@@ -181,7 +181,7 @@ bool SetPrefetchQuotaSync(int64_t available_quota,
 }  // namespace
 
 PrefetchStoreTestUtil::PrefetchStoreTestUtil(
-    scoped_refptr<base::TestSimpleTaskRunner> task_runner)
+    scoped_refptr<base::TestMockTimeTaskRunner> task_runner)
     : task_runner_(task_runner) {}
 
 PrefetchStoreTestUtil::~PrefetchStoreTestUtil() = default;
