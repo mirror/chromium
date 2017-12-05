@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af5341fd_db005d3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": ":) Done",
+      "parentUuid": "d2fc6b81_7bc96aca",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a98b03_4b463947",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T11:21:12Z",
       "side": 1,
       "message": "What about clearance on blocks that don\u0027t establish a new formatting context? Need to reset float_foo_inline_size then, too. And probably commit whatever we have to sizes.max_size as well.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7ab006_ca26f565",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "So this happens at the very bottom with:\n\n    // Anything that isn\u0027t a float will create a new \"line\" resetting the float\n    // size trackers.\n    if (!child.IsFloating()) {\n      float_left_inline_size \u003d LayoutUnit();\n      float_right_inline_size \u003d LayoutUnit();\n    }\n\nI could move it up here, but would still need something at the bottom, as the float_foo_inline_size is used for the max_inline_contribution case.\n\nI could at a note here explaining that the float size trackers get reset later for anything !float?",
+      "parentUuid": "64a98b03_4b463947",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8e55c97_d2b967a4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37f8bed_2b5c6445",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c82a074_fbf24623",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-05T11:21:12Z",
       "side": 1,
       "message": "Is this covered by any of the layout tests that now pass? I don\u0027t really understand what this is about. Why don\u0027t we use the *sum* of float_left_inline_size and margin_line_left (even if the margin is positive), for instance?",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a76db7_cae5be3a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Added a test for this, they are:\nComputeMinMaxContentNewFormattingContext* tests.",
+      "parentUuid": "8c82a074_fbf24623",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ec84897e_24cc620d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2285a7dc_2d297c7e",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc22898e_7a3b7083",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1bb5c0_6d490d2e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc22898e_7a3b7083",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "934434d9_d22eafb8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f054853_a7b5ac61",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "636a7d04_b0c1d4c2",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-05T11:21:12Z",
       "side": 1,
       "message": "How could they ever become negative?",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39572b8_653aa660",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done, changed to DCHECKs.",
+      "parentUuid": "636a7d04_b0c1d4c2",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9dc5989e_10d4aa88",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "I think the only case where this triggers is a -ve margin with a new-FC. E.g.\n\n\u003c!DOCTYPE html\u003e\n\u003cstyle\u003e\n#float { float: left; border: solid hotpink; }\n#fc { margin-left: -55px; width: 50px; height: 10px; background: red; display: flex; }\n\u003c/style\u003e\n\u003cdiv id\u003dfloat\u003e\n\u003cdiv id\u003dfc\u003e\u003c/div\u003e\n\u003c/div\u003e\n\nHere is sizes.min_size would be 50px, sizes.max_size would be 0px.\n\nAdded unit test \u0026 comment.",
+      "parentUuid": "17fc9864_6e8ae9ea",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed9b4ab_f85d67a4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
         "patchSetId": 7
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-05T11:21:12Z",
       "side": 1,
       "message": "Why shouldn\u0027t the floats fit beside the flexbox? I expected 100+20+30 here.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c594d2b6_ce612a9e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "As the margin on the fc \u003e 0, it takes the:\nmax(float_left_inline_size, flex_inline_size + flex_left_margin).",
+      "parentUuid": "fed9b4ab_f85d67a4",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "34a5f7ab_7bcd1a06",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "This is just as the as we double up on inline nodes. E.g. a\n\u003cdiv style\u003d\"margin-left: 10px\"\u003eText\u003c/div\u003e is represented as two NGLayoutInputNodes:\n\nNGBlockNode\n  NGInlineNode\n\nThe NGInineNode shares the same LayoutObject as the NGBlockNode, but we don\u0027t want to double count the margins.",
+      "parentUuid": "f817ea93_f82dede1",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d783f9c_0a151287",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 7
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-05T11:21:12Z",
       "side": 1,
       "message": "Using the style of the parent here seems weird. There\u0027s obviously something I\u0027m missing.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c46aad5_764c0f86",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "The Margin*Using take a style object to determine the correct writing-mode \u0026 direction to use, in order to get the correct margin-inline-end/start.",
+      "parentUuid": "8d783f9c_0a151287",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +436,24 @@
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ef344b_8b2429b4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T19:03:44Z",
+      "side": 1,
+      "message": "Done, yeah not sure if it\u0027ll be web compatible to do this, as all/most of the other engines have this behaviour.",
+      "parentUuid": "11d20f7f_2e310a36",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
