@@ -123,6 +123,30 @@
       "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f40a0c_7bb08981",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:49:48Z",
+      "side": 1,
+      "message": "Definitely agreed on the tradeoffs.  My own personal preference would be to label this here (because I think we\u0027re targeting *this* span, rather than a generic span in inspect-views), but I don\u0027t feel strongly.  Updated.",
+      "parentUuid": "333bfb16_ac6f8234",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 26
+      },
+      "revId": "15b834762851bc7a6a98bc97b79e6d696618f9cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
