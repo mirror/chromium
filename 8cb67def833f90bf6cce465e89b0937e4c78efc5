@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f843901_26a15d52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/any-link-pseudo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-05T06:03:57Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "8cb67def833f90bf6cce465e89b0937e4c78efc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766712a9_a5a044cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/selectors/invalidation/any-link-pseudo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-05T06:03:57Z",
+      "side": 1,
+      "message": "We don\u0027t want vendor-specific terminology in the test. Instead of \"descendant invalidation set\",\nsimply say affected descendants have their styles updated.",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "8cb67def833f90bf6cce465e89b0937e4c78efc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ceff3a_3b1fe9c1",
+        "filename": "third_party/WebKit/Source/core/css/RuleSet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-05T06:03:57Z",
+      "side": 1,
+      "message": "If the runtime feature is not enabled, we will unintentionally fall through.\n\nBetter to start the case with\nif (!RuntimeEnabledFeatures::PseudoAnyLinkEnabled()) return false;",
+      "revId": "8cb67def833f90bf6cce465e89b0937e4c78efc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487423d6_ff7c95a2",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-05T06:03:57Z",
+      "side": 1,
+      "message": "kCSSSelectorPseudoAnyLink \u003d 2264,",
+      "range": {
+        "startLine": 1785,
+        "startChar": 2,
+        "endLine": 1785,
+        "endChar": 33
+      },
+      "revId": "8cb67def833f90bf6cce465e89b0937e4c78efc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
