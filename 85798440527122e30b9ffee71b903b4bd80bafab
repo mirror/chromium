@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d6b75d_2be18139",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T01:22:18Z",
+      "side": 1,
+      "message": "Can we rename this class in a separate CL? URLRewriter has a special meaning in ios/web (to rewrite URLs like about:newtab to chrome://newtab).",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982a5995_2499ded5",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T01:22:18Z",
+      "side": 1,
+      "message": "Do we need a method? Can this be a simple constant?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
