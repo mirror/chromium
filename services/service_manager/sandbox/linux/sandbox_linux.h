@@ -209,7 +209,6 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxLinux {
   // This should never be destroyed, as after the sandbox is started it is
   // vital to the process.
   void StartBrokerProcess(
-      BPFBasePolicy* client_sandbox_policy,
       const sandbox::syscall_broker::BrokerCommandSet& allowed_command_set,
       std::vector<sandbox::syscall_broker::BrokerFilePermission> permissions,
       PreSandboxHook broker_side_hook,

@@ -12,7 +12,9 @@ using sandbox::bpf_dsl::ResultExpr;
 
 namespace service_manager {
 
-BrokerProcessPolicy::BrokerProcessPolicy() {}
+BrokerProcessPolicy::BrokerProcessPolicy(
+    const sandbox::syscall_broker::BrokerCommandSet& allowed_command_set)
+    : allowed_command_set_(allowed_command_set) {}
 
 BrokerProcessPolicy::~BrokerProcessPolicy() {}
 

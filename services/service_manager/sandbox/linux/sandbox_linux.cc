@@ -40,6 +40,7 @@
 #include "sandbox/linux/services/thread_helpers.h"
 #include "sandbox/linux/services/yama.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_client.h"
+#include "sandbox/linux/syscall_broker/broker_command.h"
 #include "sandbox/linux/syscall_broker/broker_process.h"
 #include "sandbox/sandbox_features.h"
 #include "services/service_manager/sandbox/linux/bpf_broker_policy_linux.h"
@@ -96,9 +97,9 @@ base::ScopedFD OpenProc(int proc_fd) {
 }
 
 bool UpdateProcessTypeAndEnableSandbox(
-    BPFBasePolicy* client_sandbox_policy,
     SandboxLinux::PreSandboxHook broker_side_hook,
-    SandboxLinux::Options options) {
+    SandboxLinux::Options options,
+    sandbox::syscall_broker::BrokerCommandSet allowed_command_set) {
   base::CommandLine::StringVector exec =
       base::CommandLine::ForCurrentProcess()->GetArgs();
   base::CommandLine::Reset();
@@ -111,7 +112,8 @@ bool UpdateProcessTypeAndEnableSandbox(
       command_line->GetSwitchValueASCII(switches::kProcessType)
           .append("-broker"));
 
-  auto broker_side_policy = std::make_unique<BrokerProcessPolicy>();
+  auto broker_side_policy =
+      std::make_unique<BrokerProcessPolicy>(allowed_command_set);
   if (broker_side_hook)
     CHECK(std::move(broker_side_hook).Run(broker_side_policy.get(), options));
 
@@ -479,7 +481,6 @@ bool SandboxLinux::LimitAddressSpace(const std::string& process_type,
 }
 
 void SandboxLinux::StartBrokerProcess(
-    BPFBasePolicy* client_sandbox_policy,
     const sandbox::syscall_broker::BrokerCommandSet& allowed_command_set,
     std::vector<sandbox::syscall_broker::BrokerFilePermission> permissions,
     PreSandboxHook broker_side_hook,
@@ -492,8 +493,8 @@ void SandboxLinux::StartBrokerProcess(
   // call broker_sandboxer_callback.
   CHECK(broker_process_->Init(
       base::Bind(&UpdateProcessTypeAndEnableSandbox,
-                 base::Unretained(client_sandbox_policy),
-                 base::Passed(std::move(broker_side_hook)), options)));
+                 base::Passed(std::move(broker_side_hook)), options,
+                 allowed_command_set)));
 }
 
 bool SandboxLinux::HasOpenDirectories() const {
