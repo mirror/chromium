@@ -163,6 +163,24 @@
       "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fba0e79_fc685a91",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T03:17:07Z",
+      "side": 1,
+      "message": "On mac, it\u0027s created during browser window creation. E.g. a NOTREACHED() here will crash on startup, before a WebContents is added.\n\n[1407:775:1205/141144.141357:FATAL:app_menu_model.cc(678)] Check failed: false.5   libchrome_dll.dylib                 0x0000000112964d80 AppMenuModel::Build() + 144\n6   libchrome_dll.dylib                 0x00000001129608db AppMenuModel::Init() + 75\n7   libchrome_dll.dylib                 0x0000000112c9aa75 -[AppMenuController createModel] + 933\n8   libchrome_dll.dylib                 0x0000000112c971f6 -[AppMenuController initWithBrowser:] + 374\n9   libchrome_dll.dylib                 0x0000000112f8e90b -[ToolbarController installAppMenu] + 123\n10  libchrome_dll.dylib                 0x0000000112f8c6cb -[ToolbarController viewDidLoadImpl] + 8443\n11  libchrome_dll.dylib                 0x0000000112f8a57b -[ToolbarController awakeFromNib] + 43\n12  AppKit                              0x00007fffb44758ef -[NSIBObjectData nibInstantiateWithOwner:options:topLevelObjects:] + 1494\n13  AppKit                              0x00007fffb457e3ca -[NSNib _instantiateNibWithExternalNameTable:options:] + 696\n14  AppKit                              0x00007fffb457dffe -[NSNib _instantiateWithOwner:options:topLevelObjects:] + 143\n15  AppKit                              0x00007fffb457d1f6 -[NSViewController loadView] + 272\n16  AppKit                              0x00007fffb44edae6 -[NSViewController _loadViewIfRequired] + 75\n17  AppKit                              0x00007fffb44eda51 -[NSViewController view] + 30\n18  libchrome_dll.dylib                 0x0000000112f8d6db -[ToolbarController toolbarView] + 43\n19  libchrome_dll.dylib                 0x0000000112d3cf9f -[BrowserWindowController initWithBrowser:takeOwnership:] + 3327\n20  libchrome_dll.dylib                 0x0000000112d3c293 -[BrowserWindowController initWithBrowser:] + 67\n21  libchrome_dll.dylib                 0x0000000112d5c07a BrowserWindow::CreateBrowserWindow(Browser*, bool) + 58\n22  libchrome_dll.dylib                 0x00000001128443e5 (anonymous namespace)::CreateBrowserWindow(Browser*, bool) + 37\n23  libchrome_dll.dylib                 0x0000000112843947 Browser::Browser(Browser::CreateParams const\u0026) + 7927\n24  libchrome_dll.dylib                 0x000000011284440d Browser::Browser(Browser::CreateParams const\u0026) + 29\n25  libchrome_dll.dylib                 0x0000000112916d23 StartupBrowserCreatorImpl::OpenTabsInBrowser(Browser*, bool, std::__1::vector\u003cStartupTab, std::__1::allocator\u003cStartupTab\u003e \u003e const\u0026) + 387\n\nIt\u0027s.. probably a bug that it\u0027s being reset every time it\u0027s shown :/.\n\nOr maybe it\u0027s a bug that Mac builds it on browser window creation.\n\nBut either way, we shouldn\u0027t add a new dependency on GetActiveWebContents() here. Perhaps check git blame for the logic around\n\nvoid AppMenuModel::ActiveTabChanged(WebContents* old_contents,\n                                    WebContents* new_contents,\n                                    int index,\n                                    int reason) {\n  // The user has switched between tabs and the new tab may have a different\n  // zoom setting.\n  UpdateZoomControls();\n}\n\n\nit seems there is a lot of logic in AppMenuModel for dealing with the menu being cached, or web contents changing whilst the menu is visible.\n\n\nMaybe it\u0027s due to a navigation that may occur while the menu is showing? That\u0027s probably an easy situation to get into.",
+      "parentUuid": "76c90cf6_345f1bc0",
+      "revId": "6eb54590ae87dcac25f918e62c4be1b50c84de10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
