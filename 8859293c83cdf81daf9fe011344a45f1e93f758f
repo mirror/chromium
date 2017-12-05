@@ -46,6 +46,30 @@
       "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7305b5b_6263c268",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T16:43:38Z",
+      "side": 1,
+      "message": "OK, thanks for the explanation.\n\nWhat happens when the last file of a directory is processed? What if we don\u0027t get ACCESS_RESULT_SUCCESS for it? Does the next call when there are no files left return ACCESS_RESULT_SUCCESS then?\n\nIf so, then I agree that this should be fine. But please add some comments around this.\n\nOr better yet, can this be structured in a way that\u0027s easier to follow - e.g. with a standard loop that iterates the files in the directory?",
+      "parentUuid": "63f35d31_2d8f15bf",
+      "range": {
+        "startLine": 416,
+        "startChar": 47,
+        "endLine": 416,
+        "endChar": 48
+      },
+      "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
