@@ -39,6 +39,47 @@
       "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be3dc85_b2aac891",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T22:05:46Z",
+      "side": 1,
+      "message": "The style guide seems to be silent on the matter. https://google.github.io/styleguide/jsguide.html But It could be more readable if you broke up the classes and gave them names.",
+      "parentUuid": "b348ee4a_28d5e232",
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eee7fd_39743ae8",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-05T22:05:46Z",
+      "side": 1,
+      "message": "Should we accept upper case characters here as well?",
+      "range": {
+        "startLine": 212,
+        "startChar": 14,
+        "endLine": 212,
+        "endChar": 20
+      },
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
