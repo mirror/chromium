@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "64a3094d_0b973c48",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_unload5.js",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-05T09:53:01Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood the comment at https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/webrequest/framework.js?q\u003dBROWSER_INITIATED\u0026dr\u003dCSs\n\nAnyway, my comment was for using getServerDomain to generate the string. Still using getServerDomain(initiators.WEB_INITIATED, chrome.runtime.id, \u0027extension\u0027) could be a choice?",
+      "parentUuid": "97df1916_7d1603aa",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "f5a93d5f7af56920f5280fc908e20b1438a2676d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a76716a_96bdca64",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 25
