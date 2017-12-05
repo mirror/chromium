@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "cad0eca8_a306879f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-05T18:41:47Z",
+      "side": 1,
+      "message": "Should we not initialize these to null as well and return null when pages try to read the eye parameters on a device that can\u0027t present, rather than returning a default-initialized struct?\n\nWould also mean adding null checks to the places that use these.",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7608ffc4_8e7986f6",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 2
@@ -53,6 +76,29 @@
         "startChar": 15,
         "endLine": 132,
         "endChar": 48
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f156c9_e9b12c20",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-05T18:41:47Z",
+      "side": 1,
+      "message": "Actually, we should probably clear these in case we switch from being able to present, to not being able to present. We don\u0027t want to keep stale eye parameters around.",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 24
       },
       "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
