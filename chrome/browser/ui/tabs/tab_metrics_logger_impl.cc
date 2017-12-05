@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/tabs/browser_activity_watcher.h"
 #include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/web_contents.h"
@@ -87,6 +88,11 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
   DCHECK_NE(index, TabStripModel::kNoTab);
 
   ukm::builders::TabManager_TabMetrics entry(ukm_source_id);
+
+  entry.SetBrowserId(
+      BrowserActivityWatcher::GetInstance()->CreateOrUpdateBrowserMetrics(
+          browser));
+
   entry.SetKeyEventCount(tab_metrics.page_metrics.key_event_count)
       .SetMouseEventCount(tab_metrics.page_metrics.mouse_event_count)
       .SetTouchEventCount(tab_metrics.page_metrics.touch_event_count);
