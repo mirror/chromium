@@ -1506,16 +1506,26 @@ void CompositedLayerMapping::UpdateChildContainmentLayerGeometry() {
     return;
   DCHECK(GetLayoutObject().IsBox());
 
-  IntRect clipping_box = PixelSnappedIntRect(
-      ToLayoutBox(GetLayoutObject())
-          .ClippingRect(LayoutPoint(SubpixelAccumulation())));
-  child_containment_layer_->SetSize(FloatSize(clipping_box.Size()));
-  child_containment_layer_->SetOffsetFromLayoutObject(
-      ToIntSize(clipping_box.Location()));
-  IntPoint parent_location(
-      child_containment_layer_->Parent()->OffsetFromLayoutObject());
-  child_containment_layer_->SetPosition(
-      IntPoint(clipping_box.Location() - parent_location));
+  if (GetLayoutObject().IsLayoutEmbeddedContent()) {
+    // Embedded content layers do not have a clipping rect defined,
+    // so match their chld containment geometry to the embedded content's
+    // geometry.
+    child_containment_layer_->SetSize(
+        child_containment_layer_->Parent()->Size());
+    child_containment_layer_->SetOffsetFromLayoutObject(IntSize());
+    child_containment_layer_->SetPosition(IntPoint());
+  } else {
+    IntRect clipping_box = PixelSnappedIntRect(
+        ToLayoutBox(GetLayoutObject())
+            .ClippingRect(LayoutPoint(SubpixelAccumulation())));
+    child_containment_layer_->SetSize(FloatSize(clipping_box.Size()));
+    child_containment_layer_->SetOffsetFromLayoutObject(
+        ToIntSize(clipping_box.Location()));
+    IntPoint parent_location(
+        child_containment_layer_->Parent()->OffsetFromLayoutObject());
+    child_containment_layer_->SetPosition(
+        IntPoint(clipping_box.Location() - parent_location));
+  }
 
   if (child_clipping_mask_layer_ && !scrolling_layer_ &&
       !GetLayoutObject().Style()->ClipPath()) {
