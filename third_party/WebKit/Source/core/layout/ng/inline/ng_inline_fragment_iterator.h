@@ -22,6 +22,9 @@ class CORE_EXPORT NGInlineFragmentIterator {
   STACK_ALLOCATED();
 
  public:
+  // Create an iterator that returns all inline descendants of a box fragment.
+  explicit NGInlineFragmentIterator(const NGPhysicalBoxFragment&);
+
   // Create an iterator that returns inline fragments produced from the
   // specified LayoutObject.
   NGInlineFragmentIterator(const NGPhysicalBoxFragment&,
@@ -35,7 +38,7 @@ class CORE_EXPORT NGInlineFragmentIterator {
  private:
   static void CollectInlineFragments(const NGPhysicalContainerFragment&,
                                      NGPhysicalOffset offset_to_container_box,
-                                     const LayoutObject* filter,
+                                     const LayoutObject* optional_filter,
                                      Results*);
 
   Results results_;
