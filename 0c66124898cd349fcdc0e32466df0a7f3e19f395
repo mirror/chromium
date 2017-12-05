@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b6ef33f_6cb862dc",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/geo/GeolocationHeaderUnitTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T05:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ea3fbb9_e8dd9038",
+      "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de73b829_45f50cc6",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f597b7d_61b89400",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T05:05:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de73b829_45f50cc6",
+      "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
