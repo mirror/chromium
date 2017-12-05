@@ -140,8 +140,7 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
 #if defined(SAFE_BROWSING_CSD)
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch(switches::kDisableClientSidePhishingDetection))
-    SetClientSidePhishingDetection(true);
+  SetClientSidePhishingDetection(true);
 #endif
   translate_helper_ = new translate::TranslateHelper(
       render_frame, ISOLATED_WORLD_ID_TRANSLATE, extensions::kExtensionScheme);

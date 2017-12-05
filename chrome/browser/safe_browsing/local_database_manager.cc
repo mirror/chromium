@@ -270,7 +270,7 @@ LocalSafeBrowsingDatabaseManager::LocalSafeBrowsingDatabaseManager(
     : sb_service_(service),
       database_(NULL),
       enable_download_protection_(false),
-      enable_csd_whitelist_(false),
+      enable_csd_whitelist_(true),
       enable_download_whitelist_(false),
       enable_extension_blacklist_(false),
       enable_ip_blacklist_(false),
@@ -285,11 +285,6 @@ LocalSafeBrowsingDatabaseManager::LocalSafeBrowsingDatabaseManager(
   base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
   enable_download_protection_ = !cmdline->HasSwitch(
       safe_browsing::switches::kSbDisableDownloadProtection);
-
-  // We only download the csd-whitelist if client-side phishing detection is
-  // enabled.
-  enable_csd_whitelist_ =
-      !cmdline->HasSwitch(::switches::kDisableClientSidePhishingDetection);
 
   // We download the download-whitelist if download protection is enabled.
   enable_download_whitelist_ = enable_download_protection_;
