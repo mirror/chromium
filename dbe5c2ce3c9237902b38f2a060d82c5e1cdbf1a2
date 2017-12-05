@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b50dab18_6f5c19ff",
+        "filename": "content/browser/site_isolation_policy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-05T20:23:58Z",
+      "side": 1,
+      "message": "I am not sure about this.  There are 2 callers.  Caller #1 is a hacky callsite tracked by https://crbug.com/787866.  Caller #2 is used in crash breadcrumbs.  I feel that the utility of caller #2 would be reduced if AreIsolatedOriginsEnabled would *always* return true.  It would also mean that caller #1 never does its thing.  (when I say \"always\" I mean - always in Chrome which isolates accounts.google.com / not necessarily always in other //content embedders)",
+      "parentUuid": "4296d3aa_6fe0dce8",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "dbe5c2ce3c9237902b38f2a060d82c5e1cdbf1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5e0248_c192b722",
         "filename": "content/browser/site_isolation_policy.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "dbe5c2ce3c9237902b38f2a060d82c5e1cdbf1a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b8f96d_2d332840",
+        "filename": "content/browser/site_isolation_policy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-05T20:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5e0248_c192b722",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "dbe5c2ce3c9237902b38f2a060d82c5e1cdbf1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
