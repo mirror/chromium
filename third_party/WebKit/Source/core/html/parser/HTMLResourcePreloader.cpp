@@ -79,11 +79,14 @@ void HTMLResourcePreloader::Preload(
   Resource* resource = preload->Start(document_);
 
   if (resource && !resource->IsLoaded() &&
+      !css_preloaders_.Contains(resource) &&
       preload->ResourceType() == Resource::kCSSStyleSheet) {
     Settings* settings = document_->GetSettings();
     if (settings && (settings->GetCSSExternalScannerNoPreload() ||
-                     settings->GetCSSExternalScannerPreload()))
-      css_preloaders_.insert(new CSSPreloaderResourceClient(resource, this));
+                     settings->GetCSSExternalScannerPreload())) {
+      css_preloaders_.insert(resource,
+                             new CSSPreloaderResourceClient(resource, this));
+    }
   }
 }
 
