@@ -52,6 +52,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077ce96a_97594817",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-05T17:16:07Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to repro locally - The root cause is within an Undo here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/inspector/InspectorStyleSheet.cpp?type\u003dcs\u0026q\u003dinspectorstylesheet+ownerdocument\u0026sq\u003dpackage:chromium\u0026l\u003d1041\n\nNot no idea when/how this occurs during the inspector lifecycle. :/",
+      "parentUuid": "77eab6ad_647ab911",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
