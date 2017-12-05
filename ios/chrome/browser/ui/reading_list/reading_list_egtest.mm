@@ -14,6 +14,7 @@
 #include "components/reading_list/core/reading_list_model.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #import "ios/chrome/browser/ui/commands/reading_list_add_command.h"
+#import "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_collection_view_item.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_empty_collection_background.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -128,15 +129,20 @@ void TapButtonWithID(int button_id) {
                                    button_id)] performAction:grey_tap()];
 }
 
-// Performs |action| on the entry with the title |entryTitle|.
+// Performs |action| on the entry with the title |entryTitle|. The view can be
+// scrolled down to find the entry.
 void performActionOnEntry(const std::string& entryTitle,
                           id<GREYAction> action) {
-  [[EarlGrey
-      selectElementWithMatcher:
-          grey_allOf(chrome_test_util::StaticTextWithAccessibilityLabel(
-                         base::SysUTF8ToNSString(entryTitle)),
-                     grey_ancestor(grey_kindOfClass([ReadingListCell class])),
-                     grey_sufficientlyVisible(), nil)] performAction:action];
+  id<GREYMatcher> matcher =
+      grey_allOf(chrome_test_util::StaticTextWithAccessibilityLabel(
+                     base::SysUTF8ToNSString(entryTitle)),
+                 grey_ancestor(grey_kindOfClass([ReadingListCell class])), nil);
+  [[[EarlGrey selectElementWithMatcher:matcher]
+         usingSearchAction:grey_scrollInDirection(kGREYDirectionDown, 100)
+      onElementWithMatcher:grey_accessibilityID(
+                               [ReadingListCollectionViewController
+                                   accessibilityIdentifier])]
+      performAction:action];
 }
 
 // Taps the entry with the title |entryTitle|.
@@ -150,22 +156,41 @@ void LongPressEntry(const std::string& entryTitle) {
                        grey_longPressWithDuration(kLongPressDuration));
 }
 
+// Scroll to the top of the Reading List.
+void ScrollToTop() {
+  NSError* error = nil;
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          [ReadingListCollectionViewController
+                                              accessibilityIdentifier])]
+      performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)
+              error:&error];
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+}
+
 // Asserts that the entry with the title |entryTitle| is visible.
 void AssertEntryVisible(const std::string& entryTitle) {
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
-  [[EarlGrey
+  [[[EarlGrey
       selectElementWithMatcher:
           grey_allOf(chrome_test_util::StaticTextWithAccessibilityLabel(
                          base::SysUTF8ToNSString(entryTitle)),
                      grey_ancestor(grey_kindOfClass([ReadingListCell class])),
-                     nil)] assertWithMatcher:grey_sufficientlyVisible()];
+                     grey_sufficientlyVisible(), nil)]
+         usingSearchAction:grey_scrollInDirection(kGREYDirectionDown, 100)
+      onElementWithMatcher:grey_accessibilityID(
+                               [ReadingListCollectionViewController
+                                   accessibilityIdentifier])]
+      assertWithMatcher:grey_notNil()];
 }
 
 // Asserts that all the entries are visible.
 void AssertAllEntriesVisible() {
+  ScrollToTop();
   AssertEntryVisible(kReadTitle);
+  ScrollToTop();
   AssertEntryVisible(kReadTitle2);
+  ScrollToTop();
   AssertEntryVisible(kUnreadTitle);
+  ScrollToTop();
   AssertEntryVisible(kUnreadTitle2);
 
   // If the number of entries changes, make sure this assert gets updated.
