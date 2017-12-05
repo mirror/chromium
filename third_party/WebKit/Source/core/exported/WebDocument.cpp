@@ -259,16 +259,6 @@ WebURL WebDocument::ManifestURL() const {
   return link_element->Href();
 }
 
-bool WebDocument::ManifestUseCredentials() const {
-  const Document* document = ConstUnwrap<Document>();
-  HTMLLinkElement* link_element = document->LinkManifest();
-  if (!link_element)
-    return false;
-  return EqualIgnoringASCIICase(
-      link_element->FastGetAttribute(HTMLNames::crossoriginAttr),
-      "use-credentials");
-}
-
 WebURL WebDocument::CanonicalUrlForSharing() const {
   const Document* document = ConstUnwrap<Document>();
   HTMLLinkElement* link_element = document->LinkCanonical();
