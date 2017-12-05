@@ -63,6 +63,12 @@ class AnnotationInstance : public InstanceBase {
   // type.
   bool IsCompletableWith(const AnnotationInstance& other) const;
 
+  // Tells if anntoation requires an extra id.
+  bool NeedsExtraID() const {
+    return type == Type::ANNOTATION_PARTIAL ||
+           type == Type::ANNOTATION_BRANCHED_COMPLETING;
+  }
+
   // Combines |*this| partial annotation with a completing/branched_completing
   // annotation and returns the combined complete annotation.
   AuditorResult CreateCompleteAnnotation(
