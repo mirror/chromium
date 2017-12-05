@@ -44,6 +44,8 @@ class API_AVAILABLE(ios(11.0)) WKHTTPSystemCookieStore
 
   NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() override;
 
+  const char* GetClassName() const override;
+
  private:
   // Run |callback| on |cookies| after sorting them  as per RFC6265.
   void RunSystemCookieCallbackForCookies(
