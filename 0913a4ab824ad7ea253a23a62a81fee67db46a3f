@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "b7bb4904_4a1fa6fa",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Remove comment (Could switch to using ui_test_utils, or even TestNavigationObserver, but it\u0027s not necessary, and one test still needs to wait for multiple navigations, anyways)",
+      "range": {
+        "startLine": 2208,
+        "startChar": 48,
+        "endLine": 2208,
+        "endChar": 52
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952671fc_d9e5938a",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2215,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Comment not accurate - can just removed it.",
+      "range": {
+        "startLine": 2215,
+        "startChar": 18,
+        "endLine": 2215,
+        "endChar": 19
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334821c8_01424c6e",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2275,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Remove comment",
+      "range": {
+        "startLine": 2275,
+        "startChar": 33,
+        "endLine": 2275,
+        "endChar": 43
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96010525_0b3ed273",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2283,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Remove comment.",
+      "range": {
+        "startLine": 2283,
+        "startChar": 34,
+        "endLine": 2283,
+        "endChar": 45
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1dc0aa_81b2e366",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2335,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Comment needs to be updated.",
+      "range": {
+        "startLine": 2335,
+        "startChar": 5,
+        "endLine": 2335,
+        "endChar": 9
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27239c19_6ce6fab7",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "Both callers of this method are now passing false as the last parameter, so it can now be removed.",
+      "range": {
+        "startLine": 2380,
+        "startChar": 31,
+        "endLine": 2380,
+        "endChar": 38
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6965e984_15453f92",
+        "filename": "chrome/browser/captive_portal/captive_portal_tab_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T16:29:15Z",
+      "side": 1,
+      "message": "So is this test going to remain disabled indefinitely, unless I work on it?  I haven\u0027t touched this code in years.  :(\n\nI\u0027m a bit concerned that there\u0027s no integration test for this, so we\u0027re losing coverage here.",
+      "range": {
+        "startLine": 344,
+        "startChar": 20,
+        "endLine": 344,
+        "endChar": 27
+      },
+      "revId": "0913a4ab824ad7ea253a23a62a81fee67db46a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67c1bef0_5ec89cc5",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api_unittest.cc",
         "patchSetId": 3
