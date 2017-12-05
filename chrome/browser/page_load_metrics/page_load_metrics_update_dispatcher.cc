@@ -163,12 +163,10 @@ internal::PageLoadTimingStatus IsValidPageLoadTiming(
 
   if (!EventsInOrder(timing.document_timing->first_layout,
                      timing.paint_timing->first_paint)) {
-    // This can happen when we process an XHTML document that doesn't contain
-    // well formed XML. See crbug.com/627607.
-    DLOG(ERROR) << "Invalid first_layout "
-                << timing.document_timing->first_layout << " for first_paint "
-                << timing.paint_timing->first_paint;
-    return internal::INVALID_ORDER_FIRST_LAYOUT_FIRST_PAINT;
+    // This can happen for svg files.
+    DLOG(WARNING) << "first_layout " << timing.document_timing->first_layout
+                  << "is set after first_paint "
+                  << timing.paint_timing->first_paint;
   }
 
   if (!EventsInOrder(timing.paint_timing->first_paint,
