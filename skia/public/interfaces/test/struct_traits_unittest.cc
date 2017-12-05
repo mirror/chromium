@@ -4,6 +4,8 @@
 
 #include "base/message_loop/message_loop.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "skia/public/interfaces/color.mojom.h"
+#include "skia/public/interfaces/color_struct_traits.h"
 #include "skia/public/interfaces/test/traits_test_service.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
@@ -17,6 +19,15 @@
 namespace skia {
 
 namespace {
+
+// Test StructTrait serialization and deserialization for copyable type. |input|
+// will be serialized and then deserialized into |output|.
+template <class MojomType, class Type>
+void SerializeAndDeserialize(const Type& input, Type* output) {
+  MojomType::DeserializeFromMessage(
+      mojo::Message(MojomType::SerializeAsMessage(&input).TakeMojoMessage()),
+      output);
+}
 
 class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  public:
@@ -138,6 +149,13 @@ TEST_F(StructTraitsTest, BlurImageFilterTileMode) {
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   SkBlurImageFilter::TileMode output;
   proxy->EchoBlurImageFilterTileMode(input, &output);
+  EXPECT_EQ(input, output);
+}
+
+TEST_F(StructTraitsTest, Color) {
+  SkColor input = SK_ColorRED;
+  SkColor output;
+  SerializeAndDeserialize<mojom::Color>(input, &output);
   EXPECT_EQ(input, output);
 }
 

@@ -171,6 +171,7 @@ TEST_F(SurfaceLayerTest, PushProperties) {
   layer->SetPrimarySurfaceId(primary_id);
   layer->SetFallbackSurfaceId(primary_id);
   layer->SetDefaultBackgroundColor(SK_ColorBLUE);
+  layer->SetGutterColorOverride(SK_ColorGREEN);
   layer->SetStretchContentToFillBounds(true);
 
   EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
@@ -196,6 +197,7 @@ TEST_F(SurfaceLayerTest, PushProperties) {
   EXPECT_EQ(primary_id, layer_impl->primary_surface_id());
   EXPECT_EQ(primary_id, layer_impl->fallback_surface_id());
   EXPECT_EQ(SK_ColorBLUE, layer_impl->default_background_color());
+  EXPECT_EQ(SK_ColorGREEN, layer_impl->gutter_color_override());
   EXPECT_TRUE(layer_impl->stretch_content_to_fill_bounds());
 
   viz::SurfaceId fallback_id(
