@@ -96,7 +96,9 @@ class PermissionBubbleControllerTest : public CocoaProfileTest,
     return requests_;
   }
 
-  base::string16 GetDisplayOrigin() override { return base::string16(); }
+  PermissionPrompt::DisplayOrigin GetDisplayOrigin() override {
+    return {base::string16(), false};
+  }
 
   void AddRequest(const std::string& title) {
     std::unique_ptr<MockPermissionRequest> request =

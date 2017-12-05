@@ -22,7 +22,6 @@
 #include "chrome/browser/ui/views/page_info/permission_selector_row_observer.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
-#include "components/url_formatter/elide_url.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
@@ -69,7 +68,7 @@ class PermissionsBubbleDialogDelegateView
   PermissionsBubbleDialogDelegateView(
       PermissionPromptImpl* owner,
       const std::vector<PermissionRequest*>& requests,
-      const base::string16& display_origin);
+      const PermissionPrompt::DisplayOrigin& display_origin);
   ~PermissionsBubbleDialogDelegateView() override;
 
   void CloseBubble();
@@ -96,6 +95,7 @@ class PermissionsBubbleDialogDelegateView
  private:
   PermissionPromptImpl* owner_;
   base::string16 display_origin_;
+  bool display_origin_is_url_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionsBubbleDialogDelegateView);
 };
@@ -103,8 +103,10 @@ class PermissionsBubbleDialogDelegateView
 PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
     PermissionPromptImpl* owner,
     const std::vector<PermissionRequest*>& requests,
-    const base::string16& display_origin)
-    : owner_(owner), display_origin_(display_origin) {
+    const PermissionPrompt::DisplayOrigin& display_origin)
+    : owner_(owner),
+      display_origin_(display_origin.origin),
+      display_origin_is_url_(display_origin.is_url) {
   DCHECK(!requests.empty());
 
   set_close_on_deactivate(false);
@@ -157,6 +159,10 @@ void PermissionsBubbleDialogDelegateView::CloseBubble() {
 }
 
 void PermissionsBubbleDialogDelegateView::AddedToWidget() {
+  // There is no URL spoofing risk from non-URL display origins.
+  if (!display_origin_is_url_)
+    return;
+
   std::unique_ptr<views::Label> title =
       views::BubbleFrameView::CreateDefaultTitleLabel(GetWindowTitle());
 
