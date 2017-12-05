@@ -385,11 +385,11 @@ Function<base::MakeUnboundRunType<FunctionType, BoundParameters...>> Bind(
                     std::index_sequence_for<BoundParameters...>,
                     std::decay_t<BoundParameters>...>::ok,
                 "A bound argument uses a bad pattern.");
-  using UnboundRunType =
-      base::MakeUnboundRunType<FunctionType, BoundParameters...>;
   auto cb = base::BindOnce(function,
                            std::forward<BoundParameters>(bound_parameters)...);
 #if DCHECK_IS_ON()
+  using UnboundRunType =
+      base::MakeUnboundRunType<FunctionType, BoundParameters...>;
   using WrapperType =
       ThreadCheckingCallbackWrapper<base::OnceCallback<UnboundRunType>>;
   cb = base::BindOnce(&WrapperType::Run,
