@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "cee99537_6dfe525a",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-05T18:35:52Z",
+      "side": 1,
+      "message": "As far as I can tell we unref sync decoded images in CreateRasterTask. If these images are not locked them adding them to a \"new_locked_image_tasks\" vector is wrong. We can\u0027t run tasks on images that don\u0027t have a ref on them.",
+      "parentUuid": "63790ac4_3ac5f991",
+      "range": {
+        "startLine": 1057,
+        "startChar": 6,
+        "endLine": 1057,
+        "endChar": 53
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a644e8a_cf5e6899",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 9
