@@ -34,6 +34,24 @@
       "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f68ed8_61a51939",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T23:27:04Z",
+      "side": 0,
+      "message": "To me, I feel so. The false positive \"behind-portal-chrome-sees\" but shill is online state wouldn\u0027t stop chrome portal detection. Maybe we can log the shill state here.\n\nSorry for the confusion in #107 in the bug thread.\n\nSadly, I asked aashutoshk@. There is no successful in-house repro",
+      "parentUuid": "f40bb7f6_e59bf158",
+      "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
