@@ -221,8 +221,13 @@ void ModelTypeWorker::PassiveApplyUpdates(StatusController* status) {
 void ModelTypeWorker::EncryptionAcceptedApplyUpdates() {
   DCHECK(cryptographer_);
   DCHECK(cryptographer_->is_ready());
-  // Reuse ApplyUpdates(...) to get its DCHECKs as well.
-  ApplyUpdates(nullptr);
+
+  // Only push the encryption to the processor if we're already connected.
+  // Otherwise this information can wait for the initial sync's first apply.
+  if (model_type_state_.initial_sync_done()) {
+    // Reuse ApplyUpdates(...) to get its DCHECKs as well.
+    ApplyUpdates(nullptr);
+  }
 }
 
 void ModelTypeWorker::ApplyPendingUpdates() {

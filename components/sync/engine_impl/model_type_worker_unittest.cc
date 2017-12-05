@@ -285,6 +285,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
     if (worker()) {
       worker()->UpdateCryptographer(
           std::make_unique<Cryptographer>(*cryptographer_));
+      worker()->EncryptionAcceptedApplyUpdates();
     }
   }
 
@@ -732,14 +733,9 @@ TEST_F(ModelTypeWorkerTest, EncryptedCommit) {
 
   ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
 
-  // Tell the worker about the new encryption key but no ApplyUpdates yet.
+  // Init the Cryptographer, it'll cause the EKN to be pushed.
   AddPendingKey();
   DecryptPendingKey();
-  EXPECT_EQ(0, nudge_handler()->GetNumCommitNudges());
-  ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
-
-  // Now the information is allowed to reach the processor.
-  ApplyUpdates();
   ASSERT_EQ(1U, processor()->GetNumUpdateResponses());
   EXPECT_EQ(GetLocalCryptographerKeyName(),
             processor()->GetNthUpdateState(0).encryption_key_name());
@@ -779,7 +775,6 @@ TEST_F(ModelTypeWorkerTest, EncryptionBlocksUpdates) {
 
   // Update local cryptographer, verify everything is pushed to processor.
   DecryptPendingKey();
-  ApplyUpdates();
   ASSERT_EQ(1U, processor()->GetNumUpdateResponses());
   UpdateResponseDataList updates_list = processor()->GetNthUpdateResponse(0);
   ASSERT_EQ(
@@ -879,12 +874,8 @@ TEST_F(ModelTypeWorkerTest, InitializeWithPendingCryptographer) {
   // Shouldn't be informed of the EKN, since there's a pending key.
   ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
 
-  // Although the cryptographer is ready, it should wait until being told to
-  // update the processor.
+  // Init the cryptographer, it'll push the EKN.
   DecryptPendingKey();
-  ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
-
-  ApplyUpdates();
   ASSERT_EQ(1U, processor()->GetNumUpdateResponses());
   EXPECT_EQ(GetLocalCryptographerKeyName(),
             processor()->GetNthUpdateState(0).encryption_key_name());
@@ -898,6 +889,24 @@ TEST_F(ModelTypeWorkerTest, FirstInitializeWithCryptographer) {
 
   // Initialize with initial sync done to false.
   FirstInitialize();
+
+  // Shouldn't be informed of the EKN, since normal activation will drive this.
+  ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
+
+  // Now perform first sync and make sure the EKN makes it.
+  TriggerTypeRootUpdateFromServer();
+  ASSERT_EQ(1U, processor()->GetNumUpdateResponses());
+  EXPECT_EQ(GetLocalCryptographerKeyName(),
+            processor()->GetNthUpdateState(0).encryption_key_name());
+}
+
+TEST_F(ModelTypeWorkerTest, CryptographerDuringInitialization) {
+  // Initialize with initial sync done to false.
+  FirstInitialize();
+
+  // Set up the Cryptographer logic after initialization but before first sync.
+  AddPendingKey();
+  DecryptPendingKey();
 
   // Shouldn't be informed of the EKN, since normal activation will drive this.
   ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
@@ -926,13 +935,9 @@ TEST_F(ModelTypeWorkerTest, ReceiveUndecryptableEntries) {
   // updates will be undecryptable. This will block all updates.
   ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
 
-  // The update can be delivered once the cryptographer is ready, but it'll
-  // still wait for the apply call.
+  // The update should now that the cryptographer is ready.
   DecryptPendingKey();
-  ASSERT_EQ(0U, processor()->GetNumUpdateResponses());
-
-  // ApplyUpdates() will cause everything to finally be delivered.
-  ApplyUpdates();
+  ASSERT_EQ(1U, processor()->GetNumUpdateResponses());
   ASSERT_TRUE(processor()->HasUpdateResponse(kHash1));
   UpdateResponseData update = processor()->GetUpdateResponse(kHash1);
   EXPECT_EQ(kTag1, update.entity->specifics.preference().name());
