@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f453b42_2dd29342",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-05T07:55:42Z",
+      "side": 1,
+      "message": "Note: this may be good candidate to move FakeShillProfileClient::HasService().\nBut at the moment, it looks to need to be a part of TestInterface?\nThen, it would need a bit more code change, so I just avoided it.\n\nOr, if we can directly define the method in FakeShillProfileClient,\nI\u0027m happy to move this to there now if you\u0027d like.",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c59153_4a42a2fc",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-05T07:55:42Z",
+      "side": 0,
+      "message": "Note: This is identical with SetPolicyManageUnmanaged, so I just removed this.\nAccording to the log, it is since the beginning... ???\nhttps://chromiumcodereview.appspot.com/19518005",
+      "revId": "a8fb3d1f496e54e2abca7fbde01257434957552f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
