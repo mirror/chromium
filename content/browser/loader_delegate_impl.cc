@@ -23,22 +23,6 @@ void DidGetResourceResponseStartOnUI(
     web_contents->DidGetResourceResponseStart(*details.get());
 }
 
-// This method is called in the UI thread to send the timestamp of a resource
-// request to the respective Navigator (for an UMA histogram).
-void DidGetLogResourceRequestTimeOnUI(base::TimeTicks timestamp,
-                                      int render_process_id,
-                                      int render_frame_id,
-                                      const GURL& url) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  RenderFrameHostImpl* host =
-      RenderFrameHostImpl::FromID(render_process_id, render_frame_id);
-  if (host != nullptr) {
-    DCHECK(host->frame_tree_node()->IsMainFrame());
-    host->frame_tree_node()->navigator()->LogResourceRequestTime(
-      timestamp, url);
-  }
-}
-
 }  // namespace
 
 LoaderDelegateImpl::~LoaderDelegateImpl() {}
