@@ -133,6 +133,12 @@ IN_PROC_BROWSER_TEST_P(MediaCapabilitiesTestWithConfigType,
       kSupported,
       CanDecodeVideo(config_type, "'video/webm; codecs=\"vp09.00.10.08\"'"));
 
+  // MP3 and VP09 available in MP4 container irrespective of
+  // USE_PROPRIETARY_CODECS.
+  EXPECT_EQ(kSupported, CanDecodeAudio("'audio/mpeg; codecs=\"mp4a.69\"'"));
+  EXPECT_EQ(kSupported,
+            CanDecodeVideo("'video/mp4; codecs=\"vp09.00.10.08\"'"));
+
   // Supported when built with USE_PROPRIETARY_CODECS
   EXPECT_EQ(kPropSupported,
             CanDecodeVideo(config_type, "'video/mp4; codecs=\"avc1.42E01E\"'"));
@@ -142,9 +148,6 @@ IN_PROC_BROWSER_TEST_P(MediaCapabilitiesTestWithConfigType,
             CanDecodeVideo(config_type, "'video/mp4; codecs=\"avc1.42701E\"'"));
   EXPECT_EQ(kPropSupported,
             CanDecodeVideo(config_type, "'video/mp4; codecs=\"avc1.42F01E\"'"));
-  EXPECT_EQ(
-      kPropSupported,
-      CanDecodeVideo(config_type, "'video/mp4; codecs=\"vp09.00.10.08\"'"));
 
   // Test a handful of invalid strings.
   EXPECT_EQ(kUnsupported,
@@ -172,13 +175,13 @@ IN_PROC_BROWSER_TEST_P(MediaCapabilitiesTestWithConfigType,
             CanDecodeAudio(config_type, "'audio/webm; codecs=\"opus\"'"));
   EXPECT_EQ(kSupported,
             CanDecodeAudio(config_type, "'audio/webm; codecs=\"vorbis\"'"));
+  EXPECT_EQ(kSupported,
+            CanDecodeAudio(config_type, "'audio/mp4; codecs=\"flac\"'"));
 
   // Supported when built with USE_PROPRIETARY_CODECS
   EXPECT_EQ(kPropSupported,
             CanDecodeAudio(config_type, "'audio/mp4; codecs=\"mp4a.40.02\"'"));
   EXPECT_EQ(kPropSupported, CanDecodeAudio(config_type, "'audio/aac'"));
-  EXPECT_EQ(kPropSupported,
-            CanDecodeAudio(config_type, "'audio/mp4; codecs=\"flac\"'"));
   EXPECT_EQ(kPropSupported, CanDecodeAudio(config_type, "'audio/mpeg'"));
 
   // Test a handful of invalid strings.
