@@ -8,7 +8,7 @@
 
 #include <ostream>
 
-#include "base/strings/string_number_conversions.h"
+#include "base/base64.h"
 
 namespace net {
 namespace ct {
@@ -33,16 +33,17 @@ SignedTreeHead::SignedTreeHead(const SignedTreeHead& other) = default;
 
 SignedTreeHead::~SignedTreeHead() {}
 
-void PrintTo(const SignedTreeHead& sth, std::ostream* os) {
-  (*os) << "{\n"
-        << "\t\"version\": " << sth.version << ",\n"
-        << "\t\"timestamp\": " << sth.timestamp << ",\n"
-        << "\t\"tree_size\": " << sth.tree_size << ",\n"
-        << "\t\"sha256_root_hash\": \""
-        << base::HexEncode(sth.sha256_root_hash, kSthRootHashLength)
-        << "\",\n\t\"log_id\": \""
-        << base::HexEncode(sth.log_id.data(), sth.log_id.size()) << "\"\n"
-        << "}";
+std::ostream& operator<<(std::ostream& os, const SignedTreeHead& sth) {
+  std::string root_hash_base64, log_id_base64;
+  base::Base64Encode(sth.sha256_root_hash, &root_hash_base64);
+  base::Base64Encode(sth.log_id, &log_id_base64);
+  return os << "{\n"
+            << "\t\"version\": " << sth.version << ",\n"
+            << "\t\"timestamp\": " << sth.timestamp << ",\n"
+            << "\t\"tree_size\": " << sth.tree_size << ",\n"
+            << "\t\"sha256_root_hash\": \"" << root_hash_base64
+            << "\",\n\t\"log_id\": \"" << log_id_base64 << "\"\n"
+            << "}";
 }
 
 bool operator==(const SignedTreeHead& lhs, const SignedTreeHead& rhs) {
