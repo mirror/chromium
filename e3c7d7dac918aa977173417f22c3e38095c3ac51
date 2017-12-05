@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632fde40_198930bd",
+        "filename": "ios/chrome/app/startup_tasks.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:24:45Z",
+      "side": 1,
+      "message": "If you need the service to be created when a BrowserState is created, it is better to override the method ServiceIsCreatedWithBrowserState() in the factory to return true.\n\n  // By default, we create instances of a service lazily and wait until\n  // GetForBrowserState() is called on our subclass. Some services need to be\n  // created as soon as the BrowserState has been brought up.\n  virtual bool ServiceIsCreatedWithBrowserState() const;\n\nSince your keyed service does nothing in its constructor (apart from registering as an observer), I think it is better to use ServiceIsCreatedWithBrowserState() instead of adding an explicit call to the factory here.\n\nThe other two service do start network request or start reading file from disk so they need to be delayed to avoid blocking startup.",
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aa847c_7542b1ef",
+        "filename": "ios/chrome/browser/download/browser_download_service.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:24:45Z",
+      "side": 1,
+      "message": "There are many copies of that string in the code. Can we define a constant to avoid copy-n-paste errors?",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9f5beb_b45ca96c",
+        "filename": "ios/chrome/browser/download/browser_download_service.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:24:45Z",
+      "side": 1,
+      "message": "I\u0027ve not seen the call to PassKitTabHelper::CreateForWebState() and from its prototype I don\u0027t think it can go into AttachTabHelpers, thus it is possible for PassKitTabHelper::FromWebState() to return null.\n\nThus I think you need to check for that a handle this case. Or add a DCHECK to ensure this code cannot be invoked if the PassKitTabHelper is not attached.\n\nLooking at CL 3/4 I see that the tab helper is created when the tab is inserted into the TabModel (i.e. in BVC -installDelegatesForTab). This mean that this tab helper will be null for pre-rendering tabs for example, so I think the right thing to do is to handle a null return value here.\n\nNote that ios/ tab helpers design is based on content/ and thus the same documentation can be used (https://chromium.googlesource.com/chromium/src/+/master/docs/tab_helpers.md). Documentation states that \"Not every WebStates [WebContents] has every tab helper\".",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 47
+      },
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
