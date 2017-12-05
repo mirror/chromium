@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d816f253_dba46181",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:20:02Z",
+      "side": 1,
+      "message": "nit: Spell out SimpleCache--people will probably be able to figure it out, but for folks not familiar with the code, it\u0027ll cause a cognitive speed bump.",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "880729d0b6c5c6abf983f9f4bb33111ee5104f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae94e5e4_d26d5fe2",
+        "filename": "net/disk_cache/simple/simple_backend_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:20:02Z",
+      "side": 1,
+      "message": "nit, suggestion: \"run_post_doom\" -\u003e \"PostDoomWaiting::run_post_doom\"",
+      "range": {
+        "startLine": 259,
+        "startChar": 37,
+        "endLine": 259,
+        "endChar": 50
+      },
+      "revId": "880729d0b6c5c6abf983f9f4bb33111ee5104f3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
