@@ -390,8 +390,8 @@ TEST_F(StructTraitsTest, ResourceSettings) {
   ResourceSettings input;
   input.texture_id_allocation_chunk_size = kArbitrarySize;
   input.use_gpu_memory_buffer_resources = kArbitraryBool;
-  input.buffer_to_texture_target_map =
-      DefaultBufferToTextureTargetMapForTesting();
+  input.texture_target_exception_list.push_back(
+      std::make_pair(gfx::BufferFormat::BGRX_8888, gfx::BufferUsage::SCANOUT));
 
   ResourceSettings output;
   SerializeAndDeserialize<mojom::ResourceSettings>(input, &output);
