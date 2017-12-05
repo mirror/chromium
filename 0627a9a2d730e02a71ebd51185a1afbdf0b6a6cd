@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e36492c4_8af6de16",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:48:47Z",
+      "side": 1,
+      "message": "Can just given refreshing a default value, and merge this with the previous constructor. \n Alternatively, could use a delegating constructor - there is a bias against using default values in net, but it\u0027s allowed by the style guide, and using multiple functions instead of default values doesn\u0027t seem to get us anything.",
+      "range": {
+        "startLine": 144,
+        "startChar": 24,
+        "endLine": 144,
+        "endChar": 30
+      },
+      "revId": "0627a9a2d730e02a71ebd51185a1afbdf0b6a6cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fef465e3_f0bbf630",
         "filename": "net/dns/host_resolver_impl.cc",
         "patchSetId": 9
