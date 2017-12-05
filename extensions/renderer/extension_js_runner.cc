@@ -18,10 +18,16 @@ void ExtensionJSRunner::RunJSFunction(v8::Local<v8::Function> function,
                                       v8::Local<v8::Context> context,
                                       int argc,
                                       v8::Local<v8::Value> argv[]) {
-  DCHECK(script_context_->v8_context() == context);
+  RunJSFunction(function, context, argc, argv, ResultCallback());
+}
 
+void ExtensionJSRunner::RunJSFunction(v8::Local<v8::Function> function,
+                                      v8::Local<v8::Context> context,
+                                      int argc,
+                                      v8::Local<v8::Value> argv[],
+                                      ResultCallback callback) {
   // TODO(devlin): Move ScriptContext::SafeCallFunction() into here?
-  script_context_->SafeCallFunction(function, argc, argv);
+  script_context_->SafeCallFunction(function, argc, argv, std::move(callback));
 }
 
 v8::MaybeLocal<v8::Value> ExtensionJSRunner::RunJSFunctionSync(
