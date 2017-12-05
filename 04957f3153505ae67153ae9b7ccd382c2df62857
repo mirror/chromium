@@ -94,6 +94,30 @@
       "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc22bbc_a634c9cd",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-12-05T19:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b719777_5a9680cd",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
