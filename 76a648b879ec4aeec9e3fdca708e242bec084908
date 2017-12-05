@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f902bb5_d2cfbf53",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-05T15:04:37Z",
+      "side": 1,
+      "message": "nit: Cert",
+      "range": {
+        "startLine": 172,
+        "startChar": 38,
+        "endLine": 172,
+        "endChar": 41
+      },
+      "revId": "76a648b879ec4aeec9e3fdca708e242bec084908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
