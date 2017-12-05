@@ -572,7 +572,7 @@ void FrameTreeNode::DidStopLoading() {
 
   // Notify the WebContents.
   if (!frame_tree_->IsLoading())
-    navigator()->GetDelegate()->DidStopLoading();
+    navigator()->GetDelegate()->DidStopLoading(this);
 
   // Notify the RenderFrameHostManager of the event.
   render_manager()->OnDidStopLoading();

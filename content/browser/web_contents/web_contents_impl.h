@@ -657,7 +657,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   bool ShouldPreserveAbortedURLs() override;
   void DidStartLoading(FrameTreeNode* frame_tree_node,
                        bool to_different_document) override;
-  void DidStopLoading() override;
+  void DidStopLoading(FrameTreeNode* frame_tree_node) override;
   void DidChangeLoadProgress() override;
   std::vector<std::unique_ptr<NavigationThrottle>> CreateThrottlesForNavigation(
       NavigationHandle* navigation_handle) override;
