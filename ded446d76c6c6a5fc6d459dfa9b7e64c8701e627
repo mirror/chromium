@@ -52,6 +52,24 @@
       "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0541c7ab_543b2278",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T00:59:56Z",
+      "side": 1,
+      "message": "This wait only happens for Android WebVR while the screen is being exclusively used for VR presentation, so the risk of collision with other tasks is greatly reduced. Other platforms (currently that\u0027s just Windows/OpenVR) don\u0027t do this wait.\n\nIn any case, I agree that this wait is unfortunate, but it\u0027s not new to this CL, just made more explicit by refactoring. This code runs as part of a WebVR 1.1 \"submitFrame\" API call triggered from JavaScript, and the API doesn\u0027t support doing an asynchronous wait at this stage. I\u0027m trying to reduce or (ideally) eliminate this wait time in followups along with using GPU server wait instead of CPU synchronization. Let me know if you want to discuss this further separately.",
+      "parentUuid": "9d16ab4e_2f41c3b9",
+      "revId": "ded446d76c6c6a5fc6d459dfa9b7e64c8701e627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
