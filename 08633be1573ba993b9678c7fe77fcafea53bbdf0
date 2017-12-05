@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "805b2455_c5ecf344",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-05T22:29:46Z",
+      "side": 1,
+      "message": "The same: I believe we should use something like kRealTimeMedia here.",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
