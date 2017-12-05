@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8f06ed6_e4e87ca3",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T19:37:41Z",
+      "side": 1,
+      "message": "We probably need to something similar like [1]. We usually should remove after the investigation and I left mine around since it turns out useful for various login failures. :p\n\n[1] https://cs.corp.google.com/chromeos_internal/src/platform2/login_manager/chrome_setup.cc?rcl\u003d6415a4c2d4909019cdc5e5c770630af3ac5fe58c\u0026l\u003d447",
+      "parentUuid": "42a5410a_5ae9cf28",
+      "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0f57da4_1d5d9a1c",
         "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
         "patchSetId": 1
