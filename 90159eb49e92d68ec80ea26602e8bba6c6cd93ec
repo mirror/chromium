@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e4af30_2208adca",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "Is there any guidance that can be given as to what reasonable sizes might be?  Is there a minimum size that any implementation must support?  Is there a way (don\u0027t see it) to probe the current send buffer size?  What is the default if this function is not called?\n\n(All comments apply to receive buffer size as well.)",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afc7d2a_2445128f",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "(NOt for this CL) I wonder if we should have an explicit Mojo enum type for net error codes.",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80395f72_93876c11",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "Is it reasonable to indicate that any compatible implementation of this interface will allow at least a single queued datagram?",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d03948f_99e2052b",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "Most of this interface allows the implementation to refuse \"too large\" resource requests from the client, but this interface seems unbounded in the amount of resources it asks the implementation to use on behalf of the client.  I\u0027d suggest either a) a possible error return from this call, or (I think preferred, but up to you) b) adding comments indicating that the implementation may resource-limit incoming packets.  The latter shouldn\u0027t have any effect on correctness (it just provided backpressure to the OS, which, of course, may drop packets if *it* runs out of room), but might affect performance.",
+      "range": {
+        "startLine": 76,
+        "startChar": 31,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8051de_8a65ffce",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "Could this comment also say a bit more about timing?  Specifically, I\u0027d actually vote for (up to you) explicitly calling out the INSUFFICIENT_RESOURCES response as occurring \"quickly\" if the request overflows the queue, and that successful results will be returned after the datagram has been successfully handed off to the network (/OS).",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 24
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c69c45a_c119efbb",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "Confirming from the above and my understanding of the target workflow: result will never equal 0, correct?",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dee143_6df4a710",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "My personal preference (up to you) would be for this CL to include the NetworkService interfaces uses to create UDP sockets, as that would allow evaluation of the API targeting the entire workflow at once, as opposed to over separate CLs.",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc80b957_501d7d80",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-05T18:03:11Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re distinguishing between client and server sockets any more in the Mojo interface; worth scrubbing the distinction from this API as well?  (Note that there\u0027s a possible confusion of terminology, as in the .mojom file you talk about \"a UDP socket and its client\", and that use of client means something different than this use.)\n\nIf you do keep this terminology, it\u0027s worth some extra text to define the client and server distinction in the context of UDP sockets.",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
