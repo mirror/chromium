@@ -16,6 +16,24 @@
       "revId": "da41776e57685c169abda2435c4f0b92f3b4265c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a178bf92_2a23e465",
+        "filename": "third_party/WebKit/Source/bindings/modules/v8/wasm/WasmResponseExtensions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-05T06:13:31Z",
+      "side": 1,
+      "message": "v8::Function::New creates a new v8::FunctionTemplate on each call.  v8::FunctionTemplate is associated with a v8::Isolate, and IIUC, it\u0027s not GC\u0027ed.  v8::Function is GC\u0027ed and it\u0027s fine.\n\nWe have the same issue at several places (e.g. ScriptFunction), and the bug is on my queue.",
+      "parentUuid": "09b2b2cd_fe37f508",
+      "revId": "da41776e57685c169abda2435c4f0b92f3b4265c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
