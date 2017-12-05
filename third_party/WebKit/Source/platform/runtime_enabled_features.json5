@@ -546,9 +546,6 @@
       status: "experimental",
     },
     {
-      name: "LoadingWithMojo",
-    },
-    {
       name: "LongTaskObserver",
       status: "stable",
     },
