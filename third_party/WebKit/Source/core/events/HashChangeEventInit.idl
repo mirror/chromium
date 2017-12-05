@@ -5,6 +5,6 @@
 // https://html.spec.whatwg.org/multipage/browsers.html#hashchangeevent
 
 dictionary HashChangeEventInit : EventInit {
-    DOMString oldURL;
-    DOMString newURL;
+    USVString oldURL;
+    USVString newURL;
 };

@@ -6,7 +6,7 @@
 
 dictionary MessageEventInit : EventInit {
     any data;
-    DOMString origin;
+    USVString origin;
     DOMString lastEventId;
     // TODO(bashi): |source| should be (WindowProxy or MessagePort)?
     EventTarget? source;

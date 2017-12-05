@@ -21,6 +21,6 @@
 // https://html.spec.whatwg.org/#the-del-element
 
 interface HTMLModElement : HTMLElement {
-    [CEReactions, Reflect, URL] attribute DOMString cite;
+    [CEReactions, Reflect, URL] attribute USVString cite;
     [CEReactions, Reflect] attribute DOMString dateTime;
 };

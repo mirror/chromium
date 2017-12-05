@@ -33,7 +33,7 @@
     RaisesException=Constructor
 ] interface MessageEvent : Event {
     [Custom=Getter] readonly attribute any data;
-    readonly attribute DOMString origin;
+    readonly attribute USVString origin;
     readonly attribute DOMString lastEventId;
     // TODO(bashi): |source| should be (WindowProxy or MessagePort)?
     readonly attribute EventTarget? source;
@@ -47,7 +47,7 @@
                                    [Default=Undefined] optional boolean canBubbleArg,
                                    [Default=Undefined] optional boolean cancelableArg,
                                    [Default=Undefined] optional any dataArg,
-                                   [Default=Undefined] optional DOMString originArg,
+                                   [Default=Undefined] optional USVString originArg,
                                    [Default=Undefined] optional DOMString lastEventIdArg,
                                    [Default=Undefined] optional EventTarget sourceArg,
                                    [Default=Undefined] optional sequence<MessagePort> portsArg);

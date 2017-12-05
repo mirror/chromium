@@ -25,7 +25,7 @@
     OverrideBuiltins,
     ActiveScriptWrappable
 ] interface HTMLEmbedElement : HTMLElement {
-    [CEReactions, Reflect, URL] attribute DOMString src;
+    [CEReactions, Reflect, URL] attribute USVString src;
     [CEReactions, Reflect] attribute DOMString type;
     [CEReactions, Reflect] attribute DOMString width;
     [CEReactions, Reflect] attribute DOMString height;

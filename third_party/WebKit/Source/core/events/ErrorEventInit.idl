@@ -6,7 +6,7 @@
 
 dictionary ErrorEventInit : EventInit {
     DOMString message;
-    DOMString filename;
+    USVString filename;
     unsigned long lineno;
     unsigned long colno;
     any error;

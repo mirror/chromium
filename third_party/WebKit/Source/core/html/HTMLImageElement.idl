@@ -26,8 +26,8 @@
     NamedConstructor=Image(optional unsigned long width, optional unsigned long height)
 ] interface HTMLImageElement : HTMLElement {
     [CEReactions, Reflect] attribute DOMString alt;
-    [CEReactions, Reflect, URL] attribute DOMString src;
-    [CEReactions, Reflect] attribute DOMString srcset;
+    [CEReactions, Reflect, URL] attribute USVString src;
+    [CEReactions, Reflect] attribute USVString srcset;
     [CEReactions, Reflect] attribute DOMString sizes;
     [CEReactions, Reflect, ReflectOnly=("anonymous","use-credentials"), ReflectEmpty="anonymous", ReflectInvalid="anonymous"] attribute DOMString? crossOrigin;
     [CEReactions, Reflect] attribute DOMString useMap;
@@ -37,18 +37,18 @@
     readonly attribute unsigned long naturalWidth;
     readonly attribute unsigned long naturalHeight;
     readonly attribute boolean complete;
-    readonly attribute DOMString currentSrc;
+    readonly attribute DOMString USVString;
     [CEReactions, Reflect, ReflectOnly=("","no-referrer","origin","no-referrer-when-downgrade","origin-when-cross-origin","unsafe-url"), ReflectMissing="", ReflectInvalid=""] attribute DOMString referrerPolicy;
     [RuntimeEnabled=ImageDecodingAttribute, CEReactions, Reflect, ReflectOnly=("async", "sync", "auto"), ReflectMissing="auto", ReflectInvalid="auto"] attribute DOMString decoding;
 
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLImageElement-partial
     [CEReactions, Reflect] attribute DOMString name;
-    [CEReactions, Reflect, URL] attribute DOMString lowsrc;
+    [CEReactions, Reflect, URL] attribute USVString lowsrc;
     [CEReactions, Reflect] attribute DOMString align;
     [CEReactions, Reflect] attribute unsigned long hspace;
     [CEReactions, Reflect] attribute unsigned long vspace;
-    [CEReactions, Reflect, URL] attribute DOMString longDesc;
+    [CEReactions, Reflect, URL] attribute USVString longDesc;
 
     [CEReactions, Reflect, TreatNullAs=EmptyString] attribute DOMString border;
 
