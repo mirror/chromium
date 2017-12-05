@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d349a9d_980b965a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T20:10:18Z",
+      "side": 1,
+      "message": "nit: Rephrase to \"Use X instead of Y.\"",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906c92d7_20e31339",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T20:10:18Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do cleanups anymore, and there\u0027s generally merit to leaving everything out on the page so it can be debugged.",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062fe83b_56951ca7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T20:10:18Z",
+      "side": 1,
+      "message": "Can this comment go away?",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666c7094_05b3bc9e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T20:10:18Z",
+      "side": 1,
+      "message": "\"Dropped\" is no longer valid, here and below.\n\nAlso, this particular assertion doesn\u0027t seem useful anymore -- we have File API tests checking that the File constructor passes the name correctly.",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9724023_7ff3e019",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-05T20:10:18Z",
+      "side": 1,
+      "message": "nit: I\u0027d have a slightly easier time understanding the code if this line was at the end of the block, to match the sequence in which things run. (onload happens after the DataTransfer code runs)",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
