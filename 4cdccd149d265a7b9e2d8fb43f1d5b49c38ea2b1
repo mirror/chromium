@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0f4152_eb66eaf1",
+        "filename": "components/viz/service/display_embedder/software_output_device_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-05T23:03:31Z",
+      "side": 1,
+      "message": "Strictly speaking, this is more work than was done before. But we\u0027re so far from the fast path when using the SoftwareOutputDevice that I am not concerned.",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
