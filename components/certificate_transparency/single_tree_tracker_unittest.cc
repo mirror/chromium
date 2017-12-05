@@ -278,7 +278,8 @@ TEST_F(SingleTreeTrackerTest, CorrectlyClassifiesUnobservedSCTNoSTH) {
 
   // Expect logging of a value indicating a valid STH is required.
   histograms.ExpectTotalCount(kCanCheckForInclusionHistogramName, 1);
-  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName, 0, 1);
+  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName,
+                               VALID_STH_REQUIRED, 1);
   EXPECT_EQ(0u, net_log_.GetSize());
 }
 
@@ -311,7 +312,8 @@ TEST_F(SingleTreeTrackerTest, CorrectlyClassifiesUnobservedSCTWithRecentSTH) {
   // inclusion, as |tree_tracker_| did have a valid STH when it was notified
   // of a new SCT.
   histograms.ExpectTotalCount(kCanCheckForInclusionHistogramName, 1);
-  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName, 2, 1);
+  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName,
+                               CAN_BE_CHECKED, 1);
   // Nothing should be logged in the result histogram since inclusion check
   // didn't finish.
   histograms.ExpectTotalCount(kInclusionCheckResultHistogramName, 0);
@@ -393,7 +395,8 @@ TEST_F(SingleTreeTrackerTest, LogsUMAForNewSCTAndOldSTH) {
   // Exactly one value should be logged, indicating the SCT cannot be checked
   // for inclusion as the STH is too old.
   histograms.ExpectTotalCount(kCanCheckForInclusionHistogramName, 1);
-  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName, 1, 1);
+  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName,
+                               NEWER_STH_REQUIRED, 1);
   EXPECT_EQ(0u, net_log_.GetSize());
 }
 
@@ -714,7 +717,8 @@ TEST_F(SingleTreeTrackerTest,
   // inclusion, as |tree_tracker_| did have a valid STH when it was notified
   // of a new SCT.
   histograms.ExpectTotalCount(kCanCheckForInclusionHistogramName, 1);
-  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName, 2, 1);
+  histograms.ExpectBucketCount(kCanCheckForInclusionHistogramName,
+                               CAN_BE_CHECKED, 1);
   // Failure due to DNS configuration should be logged in the result histogram.
   histograms.ExpectTotalCount(kInclusionCheckResultHistogramName, 1);
   histograms.ExpectBucketCount(kInclusionCheckResultHistogramName, 3, 1);
