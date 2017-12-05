@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7828a5_92256ada",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-05T22:17:55Z",
+      "side": 1,
+      "message": "Hajime, I suggest that we start a list with all kUnthrottled usages to convert them to something more specific. I suggest introducing kDevtools or something similar.",
+      "range": {
+        "startLine": 231,
+        "startChar": 63,
+        "endLine": 231,
+        "endChar": 75
+      },
+      "revId": "f1ba53b7a9e96a87729ade24a450dfd09f8b0996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
