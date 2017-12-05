@@ -4,6 +4,7 @@
 
 #include "request.h"
 
+#include <iostream>
 #include <sstream>
 
 namespace {
@@ -42,6 +43,7 @@ pp::VarDictionary request::CreateReadChunkRequest(
     const std::string& request_id,
     int64_t offset,
     int64_t length) {
+  std::cout << "CreateReadChunkReq." << std::endl;
   pp::VarDictionary request =
       CreateBasicRequest(READ_CHUNK, file_system_id, request_id);
 
@@ -102,6 +104,7 @@ pp::VarDictionary request::CreateCreateArchiveDoneResponse(
 pp::VarDictionary request::CreateReadFileChunkRequest(const int compressor_id,
                                                       const int64_t length) {
   pp::VarDictionary request;
+  std::cout << "CreateReadFileChunkReq." << std::endl;
   request.Set(request::key::kOperation, READ_FILE_CHUNK);
   request.Set(request::key::kCompressorId, compressor_id);
 
