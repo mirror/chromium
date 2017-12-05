@@ -16,6 +16,24 @@
       "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8d1f48_44a6be3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T05:15:40Z",
+      "side": 0,
+      "message": "I thought about that. It just seemed weird to be inconsistent with the case when Notifications are on but location is on+disabled. Personally I think it\u0027s ok to just go through Site Details. But I\u0027m happy to get the opinion of UX if you like. WDYT?",
+      "parentUuid": "848f0495_0e9f73c0",
+      "revId": "0c66124898cd349fcdc0e32466df0a7f3e19f395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
