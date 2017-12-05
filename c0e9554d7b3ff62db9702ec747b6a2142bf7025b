@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce6202bc_eb3c436d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-05T23:38:22Z",
+      "side": 1,
+      "message": "Math.max(0, mOriginalSize - mDataUsed)?  Can probably inline it on one line then I think?",
+      "range": {
+        "startLine": 77,
+        "startChar": 37,
+        "endLine": 77,
+        "endChar": 98
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0c3087_38d241a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-05T23:38:22Z",
+      "side": 1,
+      "message": "Maybe add @see Formatter.formatFileSize",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 45
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f054f7_fc2321c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-05T23:38:22Z",
+      "side": 1,
+      "message": "bytes?",
+      "range": {
+        "startLine": 24,
+        "startChar": 68,
+        "endLine": 24,
+        "endChar": 74
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
