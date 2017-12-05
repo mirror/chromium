@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "63790ac4_3ac5f991",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T01:21:58Z",
+      "side": 1,
+      "message": "image_controller_.SetPredecodeImages above will create the tasks and also keep them locked until the TileManager decides to release them. In this case there is no lock on these images. We Unref them immediately in CreateRasterTask if we decide to not raster that tile.",
+      "parentUuid": "c9b910e8_e965682b",
+      "range": {
+        "startLine": 1057,
+        "startChar": 6,
+        "endLine": 1057,
+        "endChar": 53
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a644e8a_cf5e6899",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 9
