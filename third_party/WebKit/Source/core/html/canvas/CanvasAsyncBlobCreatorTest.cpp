@@ -11,6 +11,7 @@
 #include "public/platform/Platform.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkSurface.h"
 
 namespace blink {
 
@@ -18,18 +19,19 @@ typedef CanvasAsyncBlobCreator::IdleTaskStatus IdleTaskStatus;
 
 class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
  public:
-  MockCanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
-                             const IntSize& size,
+  MockCanvasAsyncBlobCreator(scoped_refptr<StaticBitmapImage> image,
                              MimeType mime_type,
-                             Document* document)
-      : CanvasAsyncBlobCreator(data,
-                               nullptr,
+                             Document* document,
+                             bool fail_encoder_initialization = false)
+      : CanvasAsyncBlobCreator(image,
                                mime_type,
-                               size,
                                nullptr,
                                0,
                                document,
-                               nullptr) {}
+                               nullptr) {
+    if (fail_encoder_initialization)
+      fail_encoder_initialization_for_test_ = true;
+  }
 
   CanvasAsyncBlobCreator::IdleTaskStatus GetIdleTaskStatus() {
     return idle_task_status_;
@@ -67,10 +69,10 @@ void MockCanvasAsyncBlobCreator::PostDelayedTaskToCurrentThread(
 class MockCanvasAsyncBlobCreatorWithoutStartPng
     : public MockCanvasAsyncBlobCreator {
  public:
-  MockCanvasAsyncBlobCreatorWithoutStartPng(DOMUint8ClampedArray* data,
-                                            const IntSize& size,
-                                            Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypePng, document) {}
+  MockCanvasAsyncBlobCreatorWithoutStartPng(
+      scoped_refptr<StaticBitmapImage> image,
+      Document* document)
+      : MockCanvasAsyncBlobCreator(image, kMimeTypePng, document) {}
 
  protected:
   void ScheduleInitiateEncoding(double) override {
@@ -84,10 +86,14 @@ class MockCanvasAsyncBlobCreatorWithoutStartPng
 class MockCanvasAsyncBlobCreatorWithoutCompletePng
     : public MockCanvasAsyncBlobCreator {
  public:
-  MockCanvasAsyncBlobCreatorWithoutCompletePng(DOMUint8ClampedArray* data,
-                                               const IntSize& size,
-                                               Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypePng, document) {}
+  MockCanvasAsyncBlobCreatorWithoutCompletePng(
+      scoped_refptr<StaticBitmapImage> image,
+      Document* document,
+      bool fail_encoder_initialization = false)
+      : MockCanvasAsyncBlobCreator(image,
+                                   kMimeTypePng,
+                                   document,
+                                   fail_encoder_initialization) {}
 
  protected:
   void ScheduleInitiateEncoding(double quality) override {
@@ -111,10 +117,10 @@ class MockCanvasAsyncBlobCreatorWithoutCompletePng
 class MockCanvasAsyncBlobCreatorWithoutStartJpeg
     : public MockCanvasAsyncBlobCreator {
  public:
-  MockCanvasAsyncBlobCreatorWithoutStartJpeg(DOMUint8ClampedArray* data,
-                                             const IntSize& size,
-                                             Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypeJpeg, document) {}
+  MockCanvasAsyncBlobCreatorWithoutStartJpeg(
+      scoped_refptr<StaticBitmapImage> image,
+      Document* document)
+      : MockCanvasAsyncBlobCreator(image, kMimeTypeJpeg, document) {}
 
  protected:
   void ScheduleInitiateEncoding(double) override {
@@ -128,10 +134,14 @@ class MockCanvasAsyncBlobCreatorWithoutStartJpeg
 class MockCanvasAsyncBlobCreatorWithoutCompleteJpeg
     : public MockCanvasAsyncBlobCreator {
  public:
-  MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(DOMUint8ClampedArray* data,
-                                                const IntSize& size,
-                                                Document* document)
-      : MockCanvasAsyncBlobCreator(data, size, kMimeTypeJpeg, document) {}
+  MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(
+      scoped_refptr<StaticBitmapImage> image,
+      Document* document,
+      bool fail_encoder_initialization = false)
+      : MockCanvasAsyncBlobCreator(image,
+                                   kMimeTypeJpeg,
+                                   document,
+                                   fail_encoder_initialization) {}
 
  protected:
   void ScheduleInitiateEncoding(double quality) override {
@@ -177,62 +187,51 @@ class CanvasAsyncBlobCreatorTest : public PageTestBase {
 CanvasAsyncBlobCreatorTest::CanvasAsyncBlobCreatorTest() {
 }
 
+scoped_refptr<StaticBitmapImage> CreateTransparentImage(int width, int height) {
+  sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(width, height);
+  if (!surface)
+    return nullptr;
+  return StaticBitmapImage::Create(surface->makeImageSnapshot());
+}
+
 void CanvasAsyncBlobCreatorTest::
     PrepareMockCanvasAsyncBlobCreatorWithoutStartPng() {
-  IntSize test_size(20, 20);
-  ImageData* image_data = ImageData::Create(test_size);
-
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutStartPng(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument());
 }
 
 void CanvasAsyncBlobCreatorTest::
     PrepareMockCanvasAsyncBlobCreatorWithoutCompletePng() {
-  IntSize test_size(20, 20);
-  ImageData* image_data = ImageData::Create(test_size);
-
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutCompletePng(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument());
 }
 
 void CanvasAsyncBlobCreatorTest::PrepareMockCanvasAsyncBlobCreatorFailPng() {
-  IntSize test_size(0, 0);
-  ImageData* image_data = ImageData::CreateForTest(test_size);
-
   // We reuse the class MockCanvasAsyncBlobCreatorWithoutCompletePng because
   // this test case is expected to fail at initialization step before
   // completion.
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutCompletePng(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument(), true);
 }
 
 void CanvasAsyncBlobCreatorTest::
     PrepareMockCanvasAsyncBlobCreatorWithoutStartJpeg() {
-  IntSize test_size(20, 20);
-  ImageData* image_data = ImageData::Create(test_size);
-
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutStartJpeg(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument());
 }
 
 void CanvasAsyncBlobCreatorTest::
     PrepareMockCanvasAsyncBlobCreatorWithoutCompleteJpeg() {
-  IntSize test_size(20, 20);
-  ImageData* image_data = ImageData::Create(test_size);
-
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument());
 }
 
 void CanvasAsyncBlobCreatorTest::PrepareMockCanvasAsyncBlobCreatorFailJpeg() {
-  IntSize test_size(0, 0);
-  ImageData* image_data = ImageData::CreateForTest(test_size);
-
   // We reuse the class MockCanvasAsyncBlobCreatorWithoutCompleteJpeg because
   // this test case is expected to fail at initialization step before
   // completion.
   async_blob_creator_ = new MockCanvasAsyncBlobCreatorWithoutCompleteJpeg(
-      image_data->data(), test_size, &GetDocument());
+      CreateTransparentImage(20, 20), &GetDocument(), true);
 }
 
 void CanvasAsyncBlobCreatorTest::TearDown() {
