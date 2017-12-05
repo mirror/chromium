@@ -16,6 +16,41 @@
       "revId": "5031bf857bf78604ce5571bab7226051789241b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1512e3e_d7f6fa31",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T19:49:49Z",
+      "side": 1,
+      "message": "Does the ResourceClient/ResourceOwner merging CL affect the behavior?\nIt looks like preserving Resource lifetime regarding to CSSPreloaderResourceClient but I might be missing something.\n\nAlternatively can we make the reference from |css_preloaders_| weak, i.e.\nHeapHashMap\u003cWeakMember\u003cResource\u003e, Member\u003cCSSPreloaderResourceClient\u003e\u003e?\n(I\u0027m not so sure this works / which is better though)\n\nIIUC in the current patch set, strong reference(s) to Resource from around HTMLResourcePreloader are:\n1. Until the first DataReceived():\n  Always kept via CSSPreloaderResourceClient.\n2. Until end():\n  (Previously) Kept only for unused preloads via CSSPreloaderResourceClient.\n  (After this CL w/o Line 936) Always kept via |preloader_|.\n  (After this CL w/ Line 936) Always kept via |preloader_|.\n3. After end() until HTMLDocumentParser is garbage-collected:\n  (Previously) Kept only for unused preloads via CSSPreloaderResourceClient.\n  (After this CL w/o Line 936) Always kept via |preloader_|.\n  (After this CL w/ Line 936) No longer kept.\n4. After HTMLDocumentParser is garbage-collected:\n  No longer kept.\n\nCalling preloader_.Clear() has an additional (perhaps good?) side effect of clearing the Resource references for unused preloads a little earlier (i.e. in end() instead of HTMLDocumentParser\u0027s destruction).\n\n+kouhei@ (parsing expert) +csharrison@ (CSSPreloadScanner expert), do you have any opinion about the lifetime here?",
+      "parentUuid": "0009e5bc_e636dee2",
+      "revId": "5031bf857bf78604ce5571bab7226051789241b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536576c8_f4c5d7f8",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLResourcePreloader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T19:49:49Z",
+      "side": 1,
+      "message": "Adding a short comment for why this check is needed is helpful, e.g.\nDo CSS preloading only once per Resource to avoid infinite recursion. crbug/...",
+      "revId": "5031bf857bf78604ce5571bab7226051789241b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
