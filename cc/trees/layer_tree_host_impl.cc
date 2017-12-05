@@ -1634,7 +1634,44 @@ void LayerTreeHostImpl::DidReceiveCompositorFrameAck() {
 void LayerTreeHostImpl::DidPresentCompositorFrame(uint32_t presentation_token,
                                                   base::TimeTicks time,
                                                   base::TimeDelta refresh,
-                                                  uint32_t flags) {}
+                                                  uint32_t flags) {
+  if (!presentation_token)
+    return;
+
+  // |presentation_token| may identify multiple
+  // |in_flight_presentation_time_tokens_|. Iterate to find all; see
+  // MakeCompositorFrameMetadata() for details.
+  base::flat_set<uint32_t> to_remove;
+  base::flat_set<uint32_t> client_tokens;
+  for (auto iter = in_flight_presentation_time_tokens_.begin();
+       iter != in_flight_presentation_time_tokens_.end() &&
+       iter->first <= presentation_token;
+       ++iter) {
+    client_tokens.insert(iter->second.begin(), iter->second.end());
+    to_remove.insert(iter->first);
+  }
+
+  if (presentation_token == last_presentation_token_) {
+    DCHECK_EQ(to_remove.size(), in_flight_presentation_time_tokens_.size());
+    last_presentation_token_ = 0u;
+  }
+
+  if (to_remove.empty()) {
+    // The client was already notified. This case occurs because we may end up
+    // setting presentation_tokens for multiple CFs (see comment in
+    // MakeCompositorFrameMetadata()).
+    DCHECK(client_tokens.empty());
+    return;
+  }
+
+  base::EraseIf(
+      in_flight_presentation_time_tokens_,
+      [&to_remove](const std::pair<uint32_t, base::flat_set<uint32_t>> p) {
+        return to_remove.count(p.first) > 0u;
+      });
+  client_->DidPresentCompositorFrame(client_tokens, time, refresh, flags);
+}
+
 void LayerTreeHostImpl::DidDiscardCompositorFrame(uint32_t presentation_token) {
 }
 
@@ -1716,9 +1753,27 @@ void LayerTreeHostImpl::OnCanDrawStateChangedForTree() {
   client_->OnCanDrawStateChanged(CanDraw());
 }
 
-viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata()
-    const {
+viz::CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() {
   viz::CompositorFrameMetadata metadata;
+
+  if (!pending_request_presentation_time_tokens_.empty()) {
+    metadata.presentation_token = ++last_presentation_token_;
+    // There should never be that many requests in flight that the value
+    // wraps.
+    DCHECK_NE(0u, last_presentation_token_);
+    in_flight_presentation_time_tokens_[metadata.presentation_token] =
+        std::move(pending_request_presentation_time_tokens_);
+    pending_request_presentation_time_tokens_.clear();
+  } else if (!in_flight_presentation_time_tokens_.empty()) {
+    // No calls have been made to RequestPresentationTimeForNextFrame() but
+    // we're still waiting for DidPresentCompositorFrame(). Schedule another
+    // token to handle the case of the previous CF being discarded.
+    metadata.presentation_token = ++last_presentation_token_;
+    // There should never be that many requests in flight that the value
+    // wraps.
+    DCHECK_NE(0u, last_presentation_token_);
+  }
+
   metadata.device_scale_factor = active_tree_->painted_device_scale_factor() *
                                  active_tree_->device_scale_factor();
 
@@ -2790,6 +2845,10 @@ void LayerTreeHostImpl::SetCurrentBrowserControlsShownRatio(float ratio) {
 
 float LayerTreeHostImpl::CurrentBrowserControlsShownRatio() const {
   return active_tree_->CurrentBrowserControlsShownRatio();
+}
+
+void LayerTreeHostImpl::RequestPresentationTimeForNextFrame(uint32_t token) {
+  pending_request_presentation_time_tokens_.insert(token);
 }
 
 void LayerTreeHostImpl::BindToClient(InputHandlerClient* client,

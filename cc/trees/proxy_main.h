@@ -5,6 +5,8 @@
 #ifndef CC_TREES_PROXY_MAIN_H_
 #define CC_TREES_PROXY_MAIN_H_
 
+#include <stdint.h>
+
 #include "base/macros.h"
 #include "cc/cc_export.h"
 #include "cc/input/browser_controls_state.h"
@@ -51,6 +53,10 @@ class CC_EXPORT ProxyMain : public Proxy {
   void DidCompletePageScaleAnimation();
   void BeginMainFrame(
       std::unique_ptr<BeginMainFrameAndCommitState> begin_main_frame_state);
+  void DidPresentCompositorFrame(const base::flat_set<uint32_t>& tokens,
+                                 base::TimeTicks time,
+                                 base::TimeDelta refresh,
+                                 uint32_t flags);
 
   CommitPipelineStage max_requested_pipeline_stage() const {
     return max_requested_pipeline_stage_;
@@ -75,6 +81,7 @@ class CC_EXPORT ProxyMain : public Proxy {
   void SetNeedsRedraw(const gfx::Rect& damage_rect) override;
   void SetNextCommitWaitsForActivation() override;
   void NotifyInputThrottledUntilCommit() override;
+  void RequestPresentationTimeForNextFrame(uint32_t token) override;
   void SetDeferCommits(bool defer_commits) override;
   bool CommitRequested() const override;
   void MainThreadHasStoppedFlinging() override;

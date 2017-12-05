@@ -217,6 +217,10 @@ void ProxyImpl::FinishGLOnImpl(CompletionEvent* completion) {
   completion->Signal();
 }
 
+void ProxyImpl::RequestPresentationTimeForNextFrameOnImpl(uint32_t token) {
+  host_impl_->RequestPresentationTimeForNextFrame(token);
+}
+
 void ProxyImpl::MainFrameWillHappenOnImplForTesting(
     CompletionEvent* completion,
     bool* main_frame_will_happen) {
@@ -498,6 +502,17 @@ void ProxyImpl::NeedsImplSideInvalidation(bool needs_first_draw_on_activation) {
 void ProxyImpl::NotifyImageDecodeRequestFinished() {
   DCHECK(IsImplThread());
   SetNeedsCommitOnImplThread();
+}
+
+void ProxyImpl::DidPresentCompositorFrame(
+    const base::flat_set<uint32_t>& tokens,
+    base::TimeTicks time,
+    base::TimeDelta refresh,
+    uint32_t flags) {
+  MainThreadTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ProxyMain::DidPresentCompositorFrame,
+                     proxy_main_weak_ptr_, tokens, time, refresh, flags));
 }
 
 void ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {

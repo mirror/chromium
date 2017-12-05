@@ -669,6 +669,20 @@ bool LayerTreeHost::UpdateLayers() {
   return result;
 }
 
+void LayerTreeHost::DidPresentCompositorFrame(
+    const base::flat_set<uint32_t>& tokens,
+    base::TimeTicks time,
+    base::TimeDelta refresh,
+    uint32_t flags) {
+  for (uint32_t token : tokens) {
+    auto iter = presentation_time_callbacks_.find(token);
+    DCHECK(iter != presentation_time_callbacks_.end());
+    auto callback = std::move(iter->second);
+    presentation_time_callbacks_.erase(iter);
+    std::move(callback).Run(time, refresh, flags);
+  }
+}
+
 void LayerTreeHost::DidCompletePageScaleAnimation() {
   did_complete_scale_animation_ = true;
 }
@@ -929,6 +943,15 @@ bool LayerTreeHost::IsThreaded() const {
   DCHECK(compositor_mode_ != CompositorMode::THREADED ||
          task_runner_provider_->HasImplThread());
   return compositor_mode_ == CompositorMode::THREADED;
+}
+
+void LayerTreeHost::RequestPresentationTimeForNextFrame(
+    PresentationTimeCallback callback) {
+  uint32_t token = 1;
+  if (!presentation_time_callbacks_.empty())
+    token = std::max(1u, presentation_time_callbacks_.rbegin()->first + 1);
+  presentation_time_callbacks_[token] = std::move(callback);
+  proxy_->RequestPresentationTimeForNextFrame(token);
 }
 
 void LayerTreeHost::SetRootLayer(scoped_refptr<Layer> root_layer) {

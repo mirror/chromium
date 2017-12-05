@@ -292,6 +292,14 @@ void ProxyMain::BeginMainFrame(
   layer_tree_host_->DidBeginMainFrame();
 }
 
+void ProxyMain::DidPresentCompositorFrame(
+    const base::flat_set<uint32_t>& tokens,
+    base::TimeTicks time,
+    base::TimeDelta refresh,
+    uint32_t flags) {
+  layer_tree_host_->DidPresentCompositorFrame(tokens, time, refresh, flags);
+}
+
 bool ProxyMain::IsStarted() const {
   DCHECK(IsMainThread());
   return started_;
@@ -376,6 +384,14 @@ void ProxyMain::NotifyInputThrottledUntilCommit() {
   ImplThreadTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&ProxyImpl::SetInputThrottledUntilCommitOnImpl,
                                 base::Unretained(proxy_impl_.get()), true));
+}
+
+void ProxyMain::RequestPresentationTimeForNextFrame(uint32_t token) {
+  DCHECK(IsMainThread());
+  ImplThreadTaskRunner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&ProxyImpl::RequestPresentationTimeForNextFrameOnImpl,
+                     base::Unretained(proxy_impl_.get()), token));
 }
 
 void ProxyMain::SetDeferCommits(bool defer_commits) {

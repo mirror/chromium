@@ -30,6 +30,7 @@ class FakeProxy : public Proxy {
   void SetNeedsRedraw(const gfx::Rect& damage_rect) override {}
   void SetNextCommitWaitsForActivation() override {}
   void NotifyInputThrottledUntilCommit() override {}
+  void RequestPresentationTimeForNextFrame(uint32_t token) override {}
   void SetDeferCommits(bool defer_commits) override {}
   void MainThreadHasStoppedFlinging() override {}
   bool CommitRequested() const override;
