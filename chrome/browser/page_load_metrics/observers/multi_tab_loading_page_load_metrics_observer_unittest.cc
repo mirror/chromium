@@ -23,8 +23,9 @@ class TestMultiTabLoadingPageLoadMetricsObserver
   ~TestMultiTabLoadingPageLoadMetricsObserver() override {}
 
  private:
-  bool IsAnyTabLoading(content::NavigationHandle* navigation_handle) override {
-    return multi_tab_loading_;
+  int NumberOfLoadingTabs(
+      content::NavigationHandle* navigation_handle) override {
+    return multi_tab_loading_ ? 1 : 0;
   }
 
   const bool multi_tab_loading_;
