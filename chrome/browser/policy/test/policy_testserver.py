@@ -773,20 +773,20 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     group_message.__setattr__(field.name, field_value)
     return True
 
-  def SetProtobufMessageField(self, group_message, field, field_value):
+  def SetProtobufMessageField(self, message, field, field_value):
     """Sets a field in a protobuf message.
 
     Args:
-      group_message: The protobuf message.
+      message: The protobuf message.
       field: The field of the message to set, it should be a member of
           group_message.DESCRIPTOR.fields.
       field_value: The value to set.
     """
     if field.label == field.LABEL_REPEATED:
-      self.SetProtoRepeatedField(group_message, field, field_value)
+      self.SetProtoRepeatedField(message, field, field_value)
     elif field.type == field.TYPE_MESSAGE:
-      self.SetProtoMessageField(group_message, field, field_value)
-    elif not self.SetProtoField(group_message, field, field_value):
+      self.SetProtoMessageField(message, field, field_value)
+    elif not self.SetProtoField(message, field, field_value):
       raise Exception('Unknown field type %s' % field.type)
 
   def GatherDevicePolicySettings(self, settings, policies):
@@ -801,16 +801,9 @@ class PolicyRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       # Create protobuf message for group.
       group_message = eval('dp.' + group.message_type.name + '()')
       # Indicates if at least one field was set in |group_message|.
-      got_fields = False
-      # Iterate over fields of the message and feed them from the
-      # policy config file.
-      for field in group_message.DESCRIPTOR.fields:
-        field_value = None
-        if field.name in policies:
-          got_fields = True
-          field_value = policies[field.name]
-          self.SetProtobufMessageField(group_message, field, field_value)
-      if got_fields:
+      if group.name in policies:
+        field_value = policies[group.name]
+        self.SetProtobufMessageField(settings, group_message, field_value)
         settings.__getattribute__(group.name).CopyFrom(group_message)
 
   def GatherUserPolicySettings(self, settings, policies):
