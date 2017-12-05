@@ -452,10 +452,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
               password_form->username_value);
     // Check that the username field was found by HTML detector.
     ASSERT_EQ(1u, username_detector_cache_.size());
-    ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
+    ASSERT_FALSE(username_detector_cache_.begin()->second.empty());
     EXPECT_EQ(
         cases[i].expected_username_element,
-        username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+        username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
   }
 }
 
@@ -486,9 +486,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetector_SeveralDetections) {
   EXPECT_EQ(base::UTF8ToUTF16("johnsmith"), password_form->username_value);
   // Check that the username field was found by HTML detector.
   ASSERT_EQ(1u, username_detector_cache_.size());
-  ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
-  EXPECT_EQ("loginid",
-            username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, username_detector_cache_.begin()->second.size());
+  EXPECT_EQ(
+      "loginid",
+      username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,
@@ -605,10 +606,10 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
               password_form->username_value);
     // Check that the username field was found by HTML detector.
     ASSERT_EQ(1u, username_detector_cache_.size());
-    ASSERT_FALSE(username_detector_cache_.begin()->second.IsNull());
+    ASSERT_FALSE(username_detector_cache_.begin()->second.empty());
     EXPECT_EQ(
         cases[i].expected_username_element,
-        username_detector_cache_.begin()->second.NameForAutofill().Utf8());
+        username_detector_cache_.begin()->second[0].NameForAutofill().Utf8());
   }
 }
 
@@ -625,17 +626,17 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   std::string html = builder.ProduceHTML();
   WebFormElement form;
   LoadWebFormFromHTML(html, &form, nullptr);
-  UsernameDetectorCache username_detector_cache;
+  UsernameDetectorCache detector_cache;
 
   // No signals from HTML attributes. The classifier found nothing and cached
   // it.
   base::HistogramTester histogram_tester;
-  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
-      form, nullptr, nullptr, &username_detector_cache);
+  std::unique_ptr<PasswordForm> password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  EXPECT_EQ(blink::WebInputElement(), username_detector_cache.begin()->second);
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  EXPECT_TRUE(detector_cache.begin()->second.empty());
   histogram_tester.ExpectUniqueSample("PasswordManager.UsernameDetectionMethod",
                                       UsernameDetectionMethod::BASE_HEURISTIC,
                                       1);
@@ -645,27 +646,26 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   WebVector<WebFormControlElement> control_elements;
   form.GetFormControlElements(control_elements);
   control_elements[0].SetAttribute("name", "id");
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  EXPECT_EQ(blink::WebInputElement(), username_detector_cache.begin()->second);
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  EXPECT_TRUE(detector_cache.begin()->second.empty());
   histogram_tester.ExpectUniqueSample("PasswordManager.UsernameDetectionMethod",
                                       UsernameDetectionMethod::BASE_HEURISTIC,
                                       2);
 
   // Clear the cache. The classifier will find username field and cache it.
-  username_detector_cache.clear();
+  detector_cache.clear();
   ASSERT_EQ(4u, control_elements.size());
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("id",
-            username_detector_cache.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  ASSERT_EQ(1u, detector_cache.begin()->second.size());
+  EXPECT_EQ("id", detector_cache.begin()->second[0].NameForAutofill().Utf8());
   EXPECT_THAT(
       histogram_tester.GetAllSamples("PasswordManager.UsernameDetectionMethod"),
       testing::UnorderedElementsAre(
@@ -675,14 +675,13 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest, HTMLDetectorCache) {
   // Change the attributes again ("username" is stronger signal than "login"),
   // but keep the cache. The classifier's output should be the same.
   control_elements[1].SetAttribute("name", "username");
-  password_form = CreatePasswordFormFromWebForm(form, nullptr, nullptr,
-                                                &username_detector_cache);
+  password_form =
+      CreatePasswordFormFromWebForm(form, nullptr, nullptr, &detector_cache);
   EXPECT_TRUE(password_form);
-  ASSERT_EQ(1u, username_detector_cache.size());
-  EXPECT_EQ(form, username_detector_cache.begin()->first);
-  ASSERT_FALSE(username_detector_cache.begin()->second.IsNull());
-  EXPECT_EQ("id",
-            username_detector_cache.begin()->second.NameForAutofill().Utf8());
+  ASSERT_EQ(1u, detector_cache.size());
+  EXPECT_EQ(form, detector_cache.begin()->first);
+  ASSERT_EQ(1u, detector_cache.begin()->second.size());
+  EXPECT_EQ("id", detector_cache.begin()->second[0].NameForAutofill().Utf8());
   EXPECT_THAT(
       histogram_tester.GetAllSamples("PasswordManager.UsernameDetectionMethod"),
       testing::UnorderedElementsAre(
