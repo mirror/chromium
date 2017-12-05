@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2da5952_9d4c0af8",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T21:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a522626_a4145eb1",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee866cd_4c2e6d76",
         "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
         "patchSetId": 67
@@ -33,6 +51,24 @@
       "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4969a4_b018f1e7",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T21:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee866cd_4c2e6d76",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf6313c3_3ffb7f13",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T21:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d212145_3b2aa211",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ca72d3d_eda15ce9",
         "filename": "ui/gfx/gpu_fence_handle.h",
         "patchSetId": 67
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-05T19:32:53Z",
       "side": 1,
       "message": "Nit: kEmpty, kAndroidNativeFenceSync, et cetera.\n\nAlso, is EMPTY just to allow null gpu fence handles to be sent?",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b87f97_b9853ee9",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T21:03:21Z",
+      "side": 1,
+      "message": "Renamed.\n\nYes, the kEmpty type is intended to represent a null GpuFenceHandle, and to make it possible for the kAndroidNativeFenceSync type to always contain a valid file descriptor. I added a comment.",
+      "parentUuid": "2ca72d3d_eda15ce9",
       "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

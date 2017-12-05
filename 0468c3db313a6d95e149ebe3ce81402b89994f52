@@ -22,6 +22,30 @@
       "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dbbfd6_07d73eae",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 68
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-05T21:03:21Z",
+      "side": 1,
+      "message": "I think it\u0027s cleaner to leave it as-is, I reworded the comment and linked to the \"refactor QueueTask to use OnceClosure\" bug:\n\n  // TODO(crbug.com/789349): QueueTask requires a RepeatingClosure,\n  // but it\u0027s actually single use.\n\nI had initially changed it as suggested, but I think that ended up being actively misleading. The way I understand it, the point of the base::Bind-banning presubmit check is to discourage use of the implicitly-repeating base::Bind in new code, but it would be counterproductive if this leads to people using base::BindRepeating just for compatibility with existing consumers.\n\nThe problem is that it would complicate future refactoring since then the next person needs to verify that this explicit BindRepeating still only effectively expects BindOnce semantics. Using AdaptCallbackForRepeating makes it obvious that it\u0027s single use since the callback will only be executed at most once.\n\nBasically, I\u0027d consider the AdaptCallbackForRepeating(BindOnce(...)) pattern to be equivalent to a hypothetical BindRepeatingWhichIsSupposedToBeChangedToBindOnceAfterTheConsumingCodeGotUpdated(...) function which clarifies the semantics for future refactoring. A comment saying \"This BindRepeating should be BindOnce\" isn\u0027t as good IMHO since the person editing needs to trust it, I think it\u0027s safer to use code which guarantees it\u0027s safe to change.",
+      "parentUuid": "f74fe098_85bee6bb",
+      "range": {
+        "startLine": 981,
+        "startChar": 19,
+        "endLine": 981,
+        "endChar": 65
+      },
+      "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
