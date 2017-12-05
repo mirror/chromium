@@ -5,6 +5,8 @@
 #ifndef NGInlineFragmentIterator_h
 #define NGInlineFragmentIterator_h
 
+// TODO(xiaochengh): Rename this file into ng_inline_fragment_traversal.h
+
 #include "core/CoreExport.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/wtf/Allocator.h"
@@ -15,8 +17,41 @@ namespace blink {
 class LayoutObject;
 class NGPhysicalBoxFragment;
 class NGPhysicalContainerFragment;
-struct NGPhysicalOffset;
 
+// Iterate through inline descendant fragments.
+class CORE_EXPORT NGInlineFragmentTraversal {
+  STATIC_ONLY(NGInlineFragmentTraversal);
+
+ public:
+  // Return list of ancestors from |target| to |container|. Offsets are relative
+  // to |container|.
+  static Vector<NGPhysicalFragmentWithOffset> AncestorsOf(
+      const NGPhysicalContainerFragment& container,
+      const NGPhysicalFragment& target);
+
+  // Return list inclusive ancestors from |target| to |container|. Offsets are
+  // relative to |container|.
+  static Vector<NGPhysicalFragmentWithOffset> InclusiveAncestorsOf(
+      const NGPhysicalContainerFragment& container,
+      const NGPhysicalFragment& target);
+
+  // Returns list of descendants in preorder. Offsets are relative to
+  // specified fragment.
+  static Vector<NGPhysicalFragmentWithOffset> DescendantsOf(
+      const NGPhysicalContainerFragment&);
+
+  // Returns list of inclusive descendants in preorder. Offsets are relative to
+  // specified fragment.
+  static Vector<NGPhysicalFragmentWithOffset> InclusiveDescendantsOf(
+      const NGPhysicalFragment&);
+
+  // Returns list of inline fragments produced from the specified LayoutObject.
+  static Vector<NGPhysicalFragmentWithOffset, 1> SelfFragmentsOf(
+      const NGPhysicalContainerFragment& container,
+      const LayoutObject* target);
+};
+
+// TODO(xiaochengh): Replace clients by NGInlineFragmentTraversal::FragmentsOf.
 // Iterate through inline descendant fragments.
 class CORE_EXPORT NGInlineFragmentIterator {
   STACK_ALLOCATED();
@@ -33,11 +68,6 @@ class CORE_EXPORT NGInlineFragmentIterator {
   Results::const_iterator end() const { return results_.end(); }
 
  private:
-  static void CollectInlineFragments(const NGPhysicalContainerFragment&,
-                                     NGPhysicalOffset offset_to_container_box,
-                                     const LayoutObject* filter,
-                                     Results*);
-
   Results results_;
 };
 
