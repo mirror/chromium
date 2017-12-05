@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab4ea49_5ea72f7d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-05T01:13:58Z",
+      "side": 1,
+      "message": "I suggest making a helper function for recording to this histogram.",
+      "range": {
+        "startLine": 642,
+        "startChar": 4,
+        "endLine": 644,
+        "endChar": 73
+      },
+      "revId": "df56e9184fd1f0cc448e19a4e3e8afdf0682d284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
