@@ -196,7 +196,10 @@ public class ChromeHomePromoDialog extends PromoDialog {
     public void onDismiss(DialogInterface dialogInterface) {
         // If the dialog is info-only, do not record any metrics since there were no provided
         // options.
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) return;
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) {
+            ChromePreferenceManager.getInstance().setChromeHomeInfoPromoShown();
+            return;
+        }
 
         // If the state of Chrome Home changed while this dialog was opened, do nothing. This can
         // happen in multi-window if this dialog is shown in both windows.
