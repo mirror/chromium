@@ -16,8 +16,10 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/metrics/metrics_switches.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/zoom/metrics/zoom_metrics_cache.h"
 #include "components/zoom/test/zoom_test_utils.h"
 #include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/navigation_entry.h"
@@ -26,8 +28,10 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/page_type.h"
+#include "content/public/common/page_zoom.h"
 #include "content/public/test/browser_test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
+#include "third_party/metrics_proto/zoom_event.pb.h"
 
 using zoom::ZoomChangedWatcher;
 using zoom::ZoomController;
@@ -297,3 +301,149 @@ IN_PROC_BROWSER_TEST_F(ZoomControllerBrowserTest,
   zoom_change_watcher.Wait();
 }
 #endif  // !defined(OS_CHROMEOS)
+
+// Used to test that when a user zooms, information about the action along with
+// style information from the page are offered to the metrics service.
+class ZoomMetricsBrowserTest : public InProcessBrowserTest {
+ public:
+  ZoomMetricsBrowserTest() {}
+  ~ZoomMetricsBrowserTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(metrics::switches::kMetricsRecordingOnly);
+  }
+
+  // Perform a zoom on |page| to trigger collection of zoom metrics.
+  void CollectMetricsForPage(const base::FilePath& page) {
+    GURL url = ui_test_utils::GetTestUrl(base::FilePath(), page);
+    ui_test_utils::NavigateToURL(browser(), url);
+
+    content::WebContents* web_contents =
+        browser()->tab_strip_model()->GetActiveWebContents();
+    ZoomController* zoom_controller =
+        ZoomController::FromWebContents(web_contents);
+
+    zoom_controller->GetDefaultZoomLevel();
+    ASSERT_TRUE(content::ZoomValuesEqual(zoom_controller->GetDefaultZoomLevel(),
+                                         content::ZoomFactorToZoomLevel(1.0)));
+
+    ASSERT_TRUE(
+        zoom::metrics::ZoomMetricsCache::GetInstance()->IsRecordingEnabled());
+    zoom_controller->SkipMetricsDelaysForTesting();
+
+    ZoomController::ZoomChangedEventData zoom_change_data(
+        web_contents, content::ZoomFactorToZoomLevel(1.0),
+        content::ZoomFactorToZoomLevel(1.1), ZoomController::ZOOM_MODE_DEFAULT,
+        true);
+    ZoomChangedWatcher zoom_change_watcher(web_contents, zoom_change_data);
+    base::RunLoop wait_for_collection;
+    zoom_controller->CollectionDoneNotificationForTesting(
+        wait_for_collection.QuitClosure());
+
+    chrome::Zoom(browser(), content::PAGE_ZOOM_IN);
+
+    // Zooming will trigger the collection.
+    zoom_change_watcher.Wait();
+    wait_for_collection.Run();
+
+    // The data is not made into an event for metrics until navigation away
+    // from the zoomed page.
+    ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(ZoomMetricsBrowserTest, CollectMetricsOnZoom) {
+  CollectMetricsForPage(base::FilePath(FILE_PATH_LITERAL("title1.html")));
+
+  std::vector<::metrics::ZoomEventProto> zoom_events;
+  zoom::metrics::ZoomMetricsCache::GetInstance()->FlushZoomEvents(&zoom_events);
+  ASSERT_EQ(1U, zoom_events.size());
+
+  const ::metrics::ZoomEventProto& zoom_proto = zoom_events.at(0);
+
+  // Several of these fields will vary by testing environment, so we just do
+  // sanity checks for the values.
+
+  ASSERT_TRUE(zoom_proto.has_zoom_factor());
+  EXPECT_TRUE(content::ZoomValuesEqual(1.1, zoom_proto.zoom_factor()));
+  ASSERT_TRUE(zoom_proto.has_default_zoom_factor());
+  EXPECT_TRUE(content::ZoomValuesEqual(1.0, zoom_proto.default_zoom_factor()));
+
+  EXPECT_TRUE(zoom_proto.has_visible_content_width());
+  EXPECT_TRUE(zoom_proto.has_visible_content_height());
+  EXPECT_TRUE(zoom_proto.has_contents_width());
+  EXPECT_TRUE(zoom_proto.has_contents_height());
+  EXPECT_TRUE(zoom_proto.has_preferred_width());
+
+  ASSERT_EQ(1, zoom_proto.font_size_distribution_size());
+  EXPECT_FLOAT_EQ(1.0, zoom_proto.font_size_distribution().at(16));
+
+  EXPECT_FALSE(zoom_proto.has_largest_image_width());
+  EXPECT_FALSE(zoom_proto.has_largest_image_height());
+  EXPECT_FALSE(zoom_proto.has_largest_object_width());
+  EXPECT_FALSE(zoom_proto.has_largest_object_height());
+
+  ASSERT_TRUE(zoom_proto.has_text_area());
+  EXPECT_GT(zoom_proto.text_area(), 0U);
+  ASSERT_TRUE(zoom_proto.has_image_area());
+  EXPECT_EQ(0U, zoom_proto.image_area());
+  ASSERT_TRUE(zoom_proto.has_object_area());
+  EXPECT_EQ(0U, zoom_proto.object_area());
+}
+
+IN_PROC_BROWSER_TEST_F(ZoomMetricsBrowserTest, IncludeIFrameContent) {
+  CollectMetricsForPage(base::FilePath(FILE_PATH_LITERAL("iframe.html")));
+
+  std::vector<::metrics::ZoomEventProto> zoom_events;
+  zoom::metrics::ZoomMetricsCache::GetInstance()->FlushZoomEvents(&zoom_events);
+  ASSERT_EQ(1U, zoom_events.size());
+
+  const ::metrics::ZoomEventProto& zoom_proto = zoom_events.at(0);
+
+  ASSERT_EQ(1, zoom_proto.font_size_distribution_size());
+  EXPECT_FLOAT_EQ(1.0, zoom_proto.font_size_distribution().at(16));
+
+  ASSERT_TRUE(zoom_proto.has_text_area());
+  EXPECT_GT(zoom_proto.text_area(), 0U);
+}
+
+IN_PROC_BROWSER_TEST_F(ZoomMetricsBrowserTest, NontrivialPage) {
+  CollectMetricsForPage(
+      base::FilePath(FILE_PATH_LITERAL("google/google.html")));
+
+  std::vector<::metrics::ZoomEventProto> zoom_events;
+  zoom::metrics::ZoomMetricsCache::GetInstance()->FlushZoomEvents(&zoom_events);
+  ASSERT_EQ(1U, zoom_events.size());
+
+  const ::metrics::ZoomEventProto& zoom_proto = zoom_events.at(0);
+
+  // Character counts from manual inspection of the test page.
+  const int num_10px = 52;
+#if defined(OS_MACOSX)
+  // Mac uses a different font size for the buttons.
+  const int num_11px = 30;
+  const int num_13px = 213;
+  const int total_chars = num_10px + num_11px + num_13px;
+  ASSERT_EQ(3, zoom_proto.font_size_distribution_size());
+  EXPECT_FLOAT_EQ(static_cast<float>(num_11px) / total_chars,
+                  zoom_proto.font_size_distribution().at(11));
+#else
+  const int num_13px = 243;
+  const int total_chars = num_10px + num_13px;
+  ASSERT_EQ(2, zoom_proto.font_size_distribution_size());
+#endif
+  EXPECT_FLOAT_EQ(static_cast<float>(num_10px) / total_chars,
+                  zoom_proto.font_size_distribution().at(10));
+  EXPECT_FLOAT_EQ(static_cast<float>(num_13px) / total_chars,
+                  zoom_proto.font_size_distribution().at(13));
+
+  ASSERT_TRUE(zoom_proto.has_largest_image_width());
+  EXPECT_GT(zoom_proto.largest_image_width(), 0U);
+  ASSERT_TRUE(zoom_proto.has_largest_image_height());
+  EXPECT_GT(zoom_proto.largest_image_height(), 0U);
+
+  ASSERT_TRUE(zoom_proto.has_text_area());
+  EXPECT_GT(zoom_proto.text_area(), 0U);
+  ASSERT_TRUE(zoom_proto.has_image_area());
+  EXPECT_GT(zoom_proto.image_area(), 0U);
+}
