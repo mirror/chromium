@@ -51,6 +51,24 @@
       "revId": "8090fe842cf50e6d85ca9212cfad8d987c3fb700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7d3169_33891a50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SnackbarActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1254839
+      },
+      "writtenOn": "2017-12-05T00:59:38Z",
+      "side": 1,
+      "message": "Oh, sorry, didn\u0027t notice that the code was already in here :-) Carry on...",
+      "parentUuid": "716e36e0_d68fa663",
+      "revId": "8090fe842cf50e6d85ca9212cfad8d987c3fb700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
