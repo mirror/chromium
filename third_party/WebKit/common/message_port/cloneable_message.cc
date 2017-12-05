@@ -15,6 +15,7 @@ CloneableMessage& CloneableMessage::operator=(CloneableMessage&&) = default;
 CloneableMessage::~CloneableMessage() = default;
 
 CloneableMessage CloneableMessage::ShallowClone() const {
+  // FIXME(malcolmwhite): add shared array buffer contents
   CloneableMessage clone;
   clone.encoded_message = encoded_message;
   for (const auto& blob : blobs) {

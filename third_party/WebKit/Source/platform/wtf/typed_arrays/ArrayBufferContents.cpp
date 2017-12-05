@@ -27,6 +27,7 @@
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "build/build_config.h"
 
+#include <stdio.h>
 #include <string.h>
 #if defined(OS_LINUX)
 #include "sandbox/linux/services/resource_limits.h"  // nogncheck
@@ -61,6 +62,7 @@ ArrayBufferContents::ArrayBufferContents(
     SharingType is_shared,
     ArrayBufferContents::InitializationPolicy policy)
     : holder_(base::AdoptRef(new DataHolder())) {
+  printf("creating new arrayBuffercontents A\n");
   // Do not allow 32-bit overflow of the total size.
   unsigned total_size = num_elements * element_byte_size;
   if (num_elements) {
@@ -76,9 +78,12 @@ ArrayBufferContents::ArrayBufferContents(DataHandle data,
                                          unsigned size_in_bytes,
                                          SharingType is_shared)
     : holder_(base::AdoptRef(new DataHolder())) {
+  printf("creating new arrayBuffercontents B.\n");
   if (data) {
+    printf("creating new arrayBuffercontents B. yes data\n");
     holder_->Adopt(std::move(data), size_in_bytes, is_shared);
   } else {
+    printf("creating new arrayBuffercontents B. no data\n");
     DCHECK_EQ(size_in_bytes, 0u);
     size_in_bytes = 0;
     // Allow null data if size is 0 bytes, make sure data is valid pointer.
@@ -103,6 +108,7 @@ void ArrayBufferContents::Transfer(ArrayBufferContents& other) {
 void ArrayBufferContents::ShareWith(ArrayBufferContents& other) {
   DCHECK(IsShared());
   DCHECK(!other.holder_->Data());
+  printf("sharing from, to: %p, %p\n", holder_.get(), &other);
   other.holder_ = holder_;
 }
 
@@ -155,6 +161,7 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
 }
 
 void ArrayBufferContents::FreeMemory(void* data) {
+  printf("freeing memory for location: %p", data);
   base::PartitionFreeGeneric(Partitions::ArrayBufferPartition(), data);
 }
 
@@ -180,9 +187,12 @@ ArrayBufferContents::DataHolder::DataHolder()
     : data_(nullptr, FreeMemory),
       size_in_bytes_(0),
       is_shared_(kNotShared),
-      has_registered_external_allocation_(false) {}
+      has_registered_external_allocation_(false) {
+  printf("creating new DataHolder 1\n");
+}
 
 ArrayBufferContents::DataHolder::~DataHolder() {
+  printf("destroying holder %p\n", this);
   if (has_registered_external_allocation_)
     AdjustAmountOfExternalAllocatedMemory(
         -static_cast<int64_t>(size_in_bytes_));
