@@ -68,6 +68,52 @@ class CrossSiteDocumentBlockingBaseTest : public ContentBrowserTest {
     embedded_test_server()->StartAcceptingConnections();
   }
 
+  // Ensure the correct histograms are incremented for blocking events.
+  // Assumes the resource type is XHR.
+  void InspectHistograms(const base::HistogramTester& histograms,
+                         bool should_be_blocked,
+                         const std::string& resource_name) {
+    std::string bucket;
+    if (base::MatchPattern(resource_name, "*.html")) {
+      bucket = "HTML";
+    } else if (base::MatchPattern(resource_name, "*.xml")) {
+      bucket = "XML";
+    } else if (base::MatchPattern(resource_name, "*.json")) {
+      bucket = "JSON";
+    } else if (base::MatchPattern(resource_name, "*.txt")) {
+      bucket = "Plain";
+    } else {
+      bucket = "Other";
+    }
+
+    // Determine the appropriate conditionally-incremented histograms.
+    base::HistogramTester::CountsMap expected_metrics;
+    std::string base = "SiteIsolation.XSD.Browser";
+    if (should_be_blocked) {
+      expected_metrics[base + ".Blocked"] = 1;
+      expected_metrics[base + ".Blocked." + bucket] = 1;
+    } else {
+      expected_metrics[base + ".NotBlocked"] = 1;
+    }
+
+    // Make sure that the expected metrics, and only those metrics, were
+    // incremented.
+    EXPECT_THAT(histograms.GetTotalCountsForPrefix("SiteIsolation.XSD.Browser"),
+                testing::ContainerEq(expected_metrics))
+        << "For resource_name=" << resource_name
+        << ", should_be_blocked=" << should_be_blocked;
+
+    // Determine if the bucket for the resource type (XHR) was incremented.
+    if (should_be_blocked) {
+      EXPECT_THAT(histograms.GetAllSamples(base + ".Blocked"),
+                  testing::ElementsAre(base::Bucket(RESOURCE_TYPE_XHR, 1)))
+          << "The wrong Blocked bucket was incremented.";
+      EXPECT_THAT(histograms.GetAllSamples(base + ".Blocked." + bucket),
+                  testing::ElementsAre(base::Bucket(RESOURCE_TYPE_XHR, 1)))
+          << "The wrong Blocked bucket was incremented.";
+    }
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentBlockingBaseTest);
 };
@@ -111,11 +157,13 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockDocuments) {
       "nosniff.xml",   "nosniff.json",   "nosniff.txt"};
   for (const char* resource : blocked_resources) {
     SCOPED_TRACE(base::StringPrintf("... while testing page: %s", resource));
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), base::StringPrintf("sendRequest('%s');", resource),
         &was_blocked));
     EXPECT_TRUE(was_blocked);
+    InspectHistograms(histograms, true, resource);
   }
 
   // These files are allowed for XHR under the document blocking policy because
@@ -129,11 +177,13 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockDocuments) {
       "img.xml",    "img.json",        "img.txt"};
   for (const char* resource : sniff_allowed_resources) {
     SCOPED_TRACE(base::StringPrintf("... while testing page: %s", resource));
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), base::StringPrintf("sendRequest('%s');", resource),
         &was_blocked));
     EXPECT_FALSE(was_blocked);
+    InspectHistograms(histograms, false, resource);
   }
 
   // These files should be allowed for XHR under the document blocking policy.
@@ -143,11 +193,13 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockDocuments) {
                                      "cors.txt", "valid.js"};
   for (const char* resource : allowed_resources) {
     SCOPED_TRACE(base::StringPrintf("... while testing page: %s", resource));
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), base::StringPrintf("sendRequest('%s');", resource),
         &was_blocked));
     EXPECT_FALSE(was_blocked);
+    InspectHistograms(histograms, false, resource);
   }
 }
 
@@ -163,26 +215,32 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, RangeRequest) {
     // Try to skip the first byte using a range request in an attempt to get the
     // response to fail sniffing and be allowed through.  It should still be
     // blocked because sniffing is disabled.
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), "sendRequest('valid.html', 'bytes=1-24');", &was_blocked));
     EXPECT_TRUE(was_blocked);
+    InspectHistograms(histograms, true, "valid.html");
   }
   {
     // Verify that a response which would have been allowed by MIME type anyway
     // is still allowed for range requests.
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), "sendRequest('valid.js', 'bytes=1-5');", &was_blocked));
     EXPECT_FALSE(was_blocked);
+    InspectHistograms(histograms, false, "valid.js");
   }
   {
     // Verify that a response which would have been allowed by CORS anyway is
     // still allowed for range requests.
+    base::HistogramTester histograms;
     bool was_blocked;
     ASSERT_TRUE(ExecuteScriptAndExtractBool(
         shell(), "sendRequest('cors.json', 'bytes=2-7');", &was_blocked));
     EXPECT_FALSE(was_blocked);
+    InspectHistograms(histograms, false, "cors.json");
   }
 }
 
