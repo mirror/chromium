@@ -7,6 +7,8 @@
 #include <string>
 
 #include "ash/public/cpp/shelf_model.h"
+#include "ash/shelf/shelf_context_menu_model.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
@@ -16,6 +18,7 @@
 #include "chrome/browser/ui/ash/launcher/extension_launcher_context_menu.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/grit/generated_resources.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/display/types/display_constants.h"
 
 // static
@@ -98,6 +101,13 @@ void LauncherContextMenu::ExecuteCommand(int command_id, int event_flags) {
     default:
       NOTREACHED();
   }
+  RecordCommandId(command_id);
+}
+
+void LauncherContextMenu::RecordCommandId(int command_id) {
+  UMA_HISTOGRAM_ENUMERATION(
+      app_list::kAppContextMenuExecuteCommand, command_id,
+      static_cast<int>(ash::ShelfContextMenuModel::MENU_LOCAL_END));
 }
 
 void LauncherContextMenu::AddPinMenu() {

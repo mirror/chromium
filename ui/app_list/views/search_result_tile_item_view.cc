@@ -280,11 +280,40 @@ void SearchResultTileItemView::ShowContextMenuForView(
   if (!selected())
     result_container_->ClearSelectedIndex();
 
-  context_menu_runner_.reset(
-      new views::MenuRunner(menu_model, views::MenuRunner::HAS_MNEMONICS));
+  context_menu_runner_.reset(new views::MenuRunner(
+      menu_model, views::MenuRunner::HAS_MNEMONICS,
+      base::Bind(&SearchResultTileItemView::OnContextMenuClosed,
+                 base::Unretained(this), base::Time::Now(), source_type)));
   context_menu_runner_->RunMenuAt(GetWidget(), nullptr,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);
+}
+
+void SearchResultTileItemView::OnContextMenuClosed(
+    base::Time context_menu_open_time,
+    ui::MenuSourceType source_type) {
+  if (is_suggested_app_) {
+    if (view_delegate_->GetModel()->state_fullscreen() ==
+        AppListViewState::FULLSCREEN_ALL_APPS) {
+      UMA_HISTOGRAM_TIMES(
+          kAppListContextMenuUserJourneyTimeSuggestedAppFullscreen,
+          base::Time::Now() - context_menu_open_time);
+      UMA_HISTOGRAM_ENUMERATION(
+          kAppListContextMenuShowSourceSuggestedAppFullscreen, source_type,
+          ui::MENU_SOURCE_TYPE_LAST);
+    } else {
+      UMA_HISTOGRAM_TIMES(kAppListContextMenuUserJourneyTimeSuggestedAppPeeking,
+                          base::Time::Now() - context_menu_open_time);
+      UMA_HISTOGRAM_ENUMERATION(
+          kAppListContextMenuShowSourceSuggestedAppPeeking, source_type,
+          ui::MENU_SOURCE_TYPE_LAST);
+    }
+  } else {
+    UMA_HISTOGRAM_TIMES(kAppListContextMenuUserJourneyTimeSearchResult,
+                        base::Time::Now() - context_menu_open_time);
+    UMA_HISTOGRAM_ENUMERATION(kAppListContextMenuShowSourceSearchResult,
+                              source_type, ui::MENU_SOURCE_TYPE_LAST);
+  }
 }
 
 void SearchResultTileItemView::Layout() {

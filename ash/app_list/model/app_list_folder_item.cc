@@ -48,6 +48,7 @@ const char* AppListFolderItem::GetItemType() const {
 
 ui::MenuModel* AppListFolderItem::GetContextMenuModel() {
   // TODO(stevenjb/jennyz): Implement.
+  // TODO(newcomer): Add folder context menu histograms.
   return NULL;
 }
 

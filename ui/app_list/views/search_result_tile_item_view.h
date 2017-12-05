@@ -58,6 +58,9 @@ class APP_LIST_EXPORT SearchResultTileItemView
                               const gfx::Point& point,
                               ui::MenuSourceType source_type) override;
 
+  void OnContextMenuClosed(base::Time context_menu_open_time,
+                           ui::MenuSourceType source_type);
+
  private:
   // Shows rating in proper format if |rating| is not negative. Otherwise, hides
   // the rating label.

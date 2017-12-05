@@ -2126,6 +2126,41 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Apps.ContextMenuExecuteCommand" enum="CommandId">
+<!-- Name completed by histogram_suffixes
+     name="ForApp" -->
+
+  <owner>=newcomer@chromium.org</owner>
+  <summary>
+    The number of times a certain command was executed by a context menu, split
+    by whether the context menu came from an app, or another part of the system
+    UI.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Apps.ContextMenuShowSource" enum="MenuSourceType">
+<!-- Name completed by histogram_suffixes
+     name="ContextMenuComponent" -->
+
+  <owner>=newcomer@chromium.org</owner>
+  <summary>
+    The show source (touch, mouse, keyboard, etc) for a context menu. Split by
+    the component from which the context menu originated.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Apps.ContextMenuUserJourneyTime" units="ms">
+<!-- Name completed by histogram_suffixes
+     name="ContextMenuComponent" -->
+
+  <owner>=newcomer@chromium.org</owner>
+  <summary>
+    The user journey time for a ContextMenu, defined as the time between
+    launching a context menu and the context menu's close callback being
+    activated. Split by the component from which the context menu originated.
+  </summary>
+</histogram>
+
 <histogram name="Apps.LockScreen.AppsProfile.Creation.Duration" units="ms">
   <owner>tbarzic@chromium.org</owner>
   <summary>
@@ -99592,6 +99627,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="NewTabPage.ContentSuggestions.VisitDuration"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="ContextMenuComponent" separator=".">
+  <suffix name="SearchResult" label="Launcher App Search Result"/>
+  <suffix name="ShelfButton" label="ShelfButton"/>
+  <suffix name="SuggestedAppPeeking" label="Suggested App, Peeking Launcher"/>
+  <suffix name="SuggestedAppFullscreen"
+      label="Suggested App, Fullscreen Launcher"/>
+  <suffix name="AppGrid" label="App - Fullscreen Launcher"/>
+  <affected-histogram name="Apps.ContextMenuShowSource"/>
+  <affected-histogram name="Apps.ContextMenuUserJourneyTime"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="ContextMenuType" separator=".">
   <suffix name="Link"
       label="The context menu was shown for a (non-image) link"/>
@@ -101106,6 +101152,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Omnibox" label="The user interacted with the omnibox."/>
   <suffix name="SwitchTabs" label="The user switched tabs."/>
   <affected-histogram name="FirstUserAction.BackgroundTime.MainIntent"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="ForApp" separator=".">
+  <suffix name="ForApp" label="The source of the context menu was an app."/>
+  <suffix name="NotForApp"
+      label="The source of the context menu was shelf or wallpaper."/>
+  <affected-histogram name="Apps.ContextMenuExecuteCommand"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="FreedesktopNotificationCapabilitiesId" separator=".">

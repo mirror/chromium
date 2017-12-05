@@ -92,6 +92,8 @@ class APP_LIST_EXPORT AppListItemView : public views::Button,
 
   // ImageShadowAnimator::Delegate overrides:
   void ImageShadowAnimationProgressed(ImageShadowAnimator* animator) override;
+  void OnContextMenuClosed(base::Time context_menu_open_time,
+                           ui::MenuSourceType source_type);
 
  private:
   enum UIState {
