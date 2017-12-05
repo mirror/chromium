@@ -546,15 +546,21 @@ void RenderWidgetHostViewAura::Show() {
     return;
 
   window_->Show();
-  WasUnOccluded();
 }
 
 void RenderWidgetHostViewAura::Hide() {
   if (is_mus_browser_plugin_guest_)
     return;
 
+  const bool was_visible = window_->IsVisible();
   window_->Hide();
-  WasOccluded();
+
+  // If |window_| was already hidden, the call to Hide() above didn't trigger a
+  // call to WasHidden() on |this|. Therefore, call WasHidden() directly.
+  // Note: It is possible for the window to be hidden and |host_| to act like
+  // it was visible if it was constructed with hidden = false.
+  if (!was_visible)
+    WasHidden();
 }
 
 void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
@@ -696,7 +702,7 @@ Visibility RenderWidgetHostViewAura::GetVisibility() const {
   return Visibility::VISIBLE;
 }
 
-void RenderWidgetHostViewAura::WasUnOccluded() {
+void RenderWidgetHostViewAura::WasShown() {
   if (!host_->is_hidden())
     return;
 
@@ -728,7 +734,7 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
 #endif
 }
 
-void RenderWidgetHostViewAura::WasOccluded() {
+void RenderWidgetHostViewAura::WasHidden() {
   if (!host_->is_hidden()) {
     host_->WasHidden();
     if (delegated_frame_host_)
@@ -1628,6 +1634,10 @@ void RenderWidgetHostViewAura::OnWindowDestroyed(aura::Window* window) {
 }
 
 void RenderWidgetHostViewAura::OnWindowTargetVisibilityChanged(bool visible) {
+}
+
+void RenderWidgetHostViewAura::OnWindowOcclusionChanged(bool is_occluded) {
+  VisibilityChanged();
 }
 
 bool RenderWidgetHostViewAura::HasHitTestMask() const {
