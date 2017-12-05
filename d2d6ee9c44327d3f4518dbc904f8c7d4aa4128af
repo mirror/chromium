@@ -22,6 +22,30 @@
       "revId": "d2d6ee9c44327d3f4518dbc904f8c7d4aa4128af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e62d3e8_895dad7b",
+        "filename": "components/variations/net/variations_http_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:04:59Z",
+      "side": 0,
+      "message": "Apparently so.  Removed.  Changelist size *\u003d 10;",
+      "parentUuid": "9104b4cd_3fafc01d",
+      "range": {
+        "startLine": 93,
+        "startChar": 45,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "d2d6ee9c44327d3f4518dbc904f8c7d4aa4128af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
