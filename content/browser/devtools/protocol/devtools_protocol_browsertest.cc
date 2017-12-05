@@ -582,7 +582,13 @@ IN_PROC_BROWSER_TEST_F(SyntheticKeyEventTest, KeyboardEventAck) {
   EXPECT_EQ(3u, result_ids_.size());
 }
 
-IN_PROC_BROWSER_TEST_F(SyntheticMouseEventTest, MouseEventAck) {
+// Flaky on Linux and ChromeOS. crbug.com/789869
+#if defined(OS_LINUX) || defined(OS_CHROMEOS)
+#define MAYBE_MouseEventAck DISABLED_MouseEventAck
+#else
+#define MAYBE_MouseEventAck MouseEventAck
+#endif
+IN_PROC_BROWSER_TEST_F(SyntheticMouseEventTest, MAYBE_MouseEventAck) {
   NavigateToURLBlockUntilNavigationsComplete(shell(), GURL("about:blank"), 1);
   Attach();
   ASSERT_TRUE(content::ExecuteScript(
