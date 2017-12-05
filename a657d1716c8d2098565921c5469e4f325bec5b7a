@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30de31de_8a4a34cd",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-05T02:13:06Z",
+      "side": 1,
+      "message": "CreateSystemNotification returns unique_ptr so it still has to be a pointer.",
+      "parentUuid": "fec8d155_2985c0ed",
+      "range": {
+        "startLine": 113,
+        "startChar": 7,
+        "endLine": 113,
+        "endChar": 17
+      },
+      "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b73913_a60f8c3c",
         "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd9cc27_abda2203",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-05T02:13:06Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "55b73913_a60f8c3c",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
