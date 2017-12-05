@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2b9798dc_01cc2463",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "I think the hesitation was largely just \"suspension is a blink concept and shouldn\u0027t be exposed if we can help it\", but I don\u0027t recall much more than that (or how emphatic it was).  We can resume discussion on a new CL. :)",
+      "parentUuid": "04168f45_88b5462a",
+      "revId": "c74049c83f48f97c345757c2c5a42822b2544cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2334ca83_dfddbc99",
         "filename": "extensions/renderer/bindings/event_emitter.h",
         "patchSetId": 5

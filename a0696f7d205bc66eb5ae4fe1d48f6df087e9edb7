@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6ec9a51_2565cec5",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "At first glance, I thought this could happen here:\nhttps://chromium.googlesource.com/chromium/src/+/f3d7ed742b085414c8e3f5de707c255b699cd30e/third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp#831\n\nBut diving into V8ScriptRunner::CallFunction(), it *looks* like that should only happen if we did indeed throw an exception (though feel free to double-check me on that).\n\nUpdated.",
+      "parentUuid": "20a86624_3f81132e",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "176deb0b_0570d7a0",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deaaf7de_2c818511",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "176deb0b_0570d7a0",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6510f276_2bb30488",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "Let\u0027s find out!  Added a CHECK.",
+      "parentUuid": "f6e08954_bc1f3e55",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51d90392_ac2720e9",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc5a84d_14a5fd93",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "Good to know!  Removed.",
+      "parentUuid": "51d90392_ac2720e9",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3d058502_5b8206bf",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01e8dbd4_30327d3f",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c6504c_39782d6c",
         "filename": "extensions/renderer/bindings/event_emitter.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5bb56d_ea638076",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T01:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c6504c_39782d6c",
+      "revId": "a0696f7d205bc66eb5ae4fe1d48f6df087e9edb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
