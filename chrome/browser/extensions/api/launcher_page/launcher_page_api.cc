@@ -4,9 +4,11 @@
 
 #include "chrome/browser/extensions/api/launcher_page/launcher_page_api.h"
 
-#include "ash/app_list/model/app_list_model.h"
+#include <memory>
+
 #include "base/lazy_instance.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/app_list/app_list_model_updater.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
@@ -44,8 +46,8 @@ ExtensionFunction::ResponseAction LauncherPagePushSubpageFunction::Run() {
       LauncherPageAPI::GetFactoryInstance()
           ->Get(browser_context())
           ->GetService();
-  app_list::AppListModel* model = service->GetModel();
-  model->PushCustomLauncherPageSubpage();
+  app_list::AppListModelUpdater* model_updater = service->GetModelUpdater();
+  model_updater->PushCustomLauncherPageSubpage();
 
   return RespondNow(NoArguments());
 }
@@ -81,8 +83,8 @@ ExtensionFunction::ResponseAction LauncherPageSetEnabledFunction::Run() {
       LauncherPageAPI::GetFactoryInstance()
           ->Get(browser_context())
           ->GetService();
-  app_list::AppListModel* model = service->GetModel();
-  model->SetCustomLauncherPageEnabled(params->enabled);
+  app_list::AppListModelUpdater* model_updater = service->GetModelUpdater();
+  model_updater->SetCustomLauncherPageEnabled(params->enabled);
 
   return RespondNow(NoArguments());
 }
