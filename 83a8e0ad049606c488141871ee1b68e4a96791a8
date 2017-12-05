@@ -111,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "0861b7b1_26fa107e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "Is the intention here that a user can enter the tab switcher, dismissing all of the dialogs, and that if/when they come back to the tab the dialogs are no longer present?",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d3064f_bf9dae50",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
         "patchSetId": 11
@@ -197,6 +214,120 @@
     },
     {
       "key": {
+        "uuid": "6e7e27c3_ab78ed04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "style nit: put this in a new line, e.g.\n\n/**\n  * The presenter...\n  * ...\n  */",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5901984_b07c27a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "nit: ... at the bottom.",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f45f63_c60889c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "nit: there\u0027s no need to call super here.",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd44d37a_95e20547",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "Should we set the dialog container as obscuring all tabs rather than the dialog view since the scrim also sits on top of all tabs?",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da06bf6_a5f4526d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "This seems a bit error-prone in that people may update main.xml without being aware of this requirement in TabModalPresenter. It\u0027s a bit more round-about, but we could do something like:\n\nint index \u003d mContainerParent.indexOfChild(mDialogContainer);\nmDefaultNextSiblingView \u003d mContainerParent.getChildAt(index + 1);",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8acc99_ecba189a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "nit: s/overwritten/overridden",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b44c23e_6bc22d1c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
         "patchSetId": 11
@@ -214,6 +345,80 @@
         "endLine": 98,
         "endChar": 82
       },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9393c613_80de7fea",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "Should there be a call to checkBrowserControls(true) in this block?",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6d7260_a64587c2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "nit: s/there is/there are",
+      "range": {
+        "startLine": 234,
+        "startChar": 21,
+        "endLine": 234,
+        "endChar": 29
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddcba45_7cc4f951",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "The manager already calls dismisseDialog() in its onCancel, so is this necessary?",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0757d492_5ba420de",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T16:22:01Z",
+      "side": 1,
+      "message": "This is a great set of tests!\n\nIn this CL or a follow-up, can we also add some test for APP_MODAL dialogs?",
       "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
