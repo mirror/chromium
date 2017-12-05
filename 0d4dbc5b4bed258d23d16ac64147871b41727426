@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d892a3_731d8c0d",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-05T16:43:30Z",
+      "side": 1,
+      "message": "This seems wrong, see https://cs.chromium.org/chromium/src/tools/clang/scripts/update.py?rcl\u003d6e0ab6ae54cc837abd96024dae5595a8d299e7b8\u0026l\u003d433. I am working on a fix.",
+      "revId": "0d4dbc5b4bed258d23d16ac64147871b41727426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
