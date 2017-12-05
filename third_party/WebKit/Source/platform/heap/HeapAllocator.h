@@ -72,8 +72,10 @@ class PLATFORM_EXPORT HeapAllocator {
     size_t gc_info_index = GCInfoTrait<HeapVectorBacking<T>>::Index();
     NormalPageArena* arena = static_cast<NormalPageArena*>(
         state->Heap().VectorBackingArena(gc_info_index));
-    return reinterpret_cast<T*>(arena->AllocateObject(
+    T* x = reinterpret_cast<T*>(arena->AllocateObject(
         ThreadHeap::AllocationSizeFromSize(size), gc_info_index));
+    ThreadState::Current()->ManualWriteBarrier(x);
+    return x;
   }
   template <typename T>
   static T* AllocateExpandedVectorBacking(size_t size) {
@@ -83,8 +85,10 @@ class PLATFORM_EXPORT HeapAllocator {
     size_t gc_info_index = GCInfoTrait<HeapVectorBacking<T>>::Index();
     NormalPageArena* arena = static_cast<NormalPageArena*>(
         state->Heap().ExpandedVectorBackingArena(gc_info_index));
-    return reinterpret_cast<T*>(arena->AllocateObject(
+    T* x = reinterpret_cast<T*>(arena->AllocateObject(
         ThreadHeap::AllocationSizeFromSize(size), gc_info_index));
+    ThreadState::Current()->ManualWriteBarrier(x);
+    return x;
   }
   static void FreeVectorBacking(void*);
   static bool ExpandVectorBacking(void*, size_t);
@@ -97,9 +101,11 @@ class PLATFORM_EXPORT HeapAllocator {
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     const char* type_name = WTF_HEAP_PROFILER_TYPE_NAME(HeapVectorBacking<T>);
-    return reinterpret_cast<T*>(state->Heap().AllocateOnArenaIndex(
+    T* x = reinterpret_cast<T*>(state->Heap().AllocateOnArenaIndex(
         state, size, BlinkGC::kInlineVectorArenaIndex, gc_info_index,
         type_name));
+    ThreadState::Current()->ManualWriteBarrier(x);
+    return x;
   }
   static void FreeInlineVectorBacking(void*);
   static bool ExpandInlineVectorBacking(void*, size_t);
@@ -115,8 +121,10 @@ class PLATFORM_EXPORT HeapAllocator {
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     const char* type_name =
         WTF_HEAP_PROFILER_TYPE_NAME(HeapHashTableBacking<HashTable>);
-    return reinterpret_cast<T*>(state->Heap().AllocateOnArenaIndex(
+    T* x = reinterpret_cast<T*>(state->Heap().AllocateOnArenaIndex(
         state, size, BlinkGC::kHashTableArenaIndex, gc_info_index, type_name));
+    ThreadState::Current()->ManualWriteBarrier(x);
+    return x;
   }
   template <typename T, typename HashTable>
   static T* AllocateZeroedHashTableBacking(size_t size) {
@@ -160,6 +168,10 @@ class PLATFORM_EXPORT HeapAllocator {
   template <typename T>
   static bool IsHeapObjectAlive(T* object) {
     return ThreadHeap::IsHeapObjectAlive(object);
+  }
+
+  static void ManualWriteBarrier(const void* object) {
+    return ThreadState::Current()->ManualWriteBarrier(object);
   }
 
   template <typename VisitorDispatcher>

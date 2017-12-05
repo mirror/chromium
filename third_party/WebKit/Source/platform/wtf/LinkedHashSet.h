@@ -301,10 +301,12 @@ class LinkedHashSet {
 
   template <typename VisitorDispatcher>
   void Trace(VisitorDispatcher visitor) {
+    //LOG(ERROR) << "LinkedHashSet::Trace " << static_cast<void*>(this);
     impl_.Trace(visitor);
     // Should the underlying table be moved by GC, register a callback
     // that fixes up the interior pointers that the (Heap)LinkedHashSet keeps.
     if (impl_.table_) {
+      //LOG(ERROR) << "LinkedHashSet::Trace Allocator::RegisterBackingStoreCallback " << static_cast<void*>(this) << " impl_.table_ " << static_cast<void*>(impl_.table_);
       Allocator::RegisterBackingStoreCallback(
           visitor, impl_.table_, MoveBackingCallback,
           reinterpret_cast<void*>(&anchor_));
@@ -345,6 +347,7 @@ class LinkedHashSet {
                                   void* from,
                                   void* to,
                                   size_t size) {
+    //LOG(ERROR) << "LinkedHashSet::MoveBackingCallback anchor" << static_cast<void*>(anchor) << " from " << static_cast<void*>(from) << " to " << static_cast<void*>(to) << " size " << size;
     // Note: the hash table move may have been overlapping; linearly scan the
     // entire table and fixup interior pointers into the old region with
     // correspondingly offset ones into the new.
@@ -383,6 +386,7 @@ class LinkedHashSet {
       anchor_node->prev_ =
           reinterpret_cast<NodeBase*>(reinterpret_cast<uintptr_t>(to) + diff);
     }
+    //LOG(ERROR) << "LinkedHashSet::MoveBackingCallback END anchor" << static_cast<void*>(anchor) << " from " << static_cast<void*>(from) << " to " << static_cast<void*>(to) << " size " << size;
   }
 
   ImplType impl_;

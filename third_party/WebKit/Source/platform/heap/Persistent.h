@@ -94,6 +94,7 @@ class PersistentBase {
   }
 
   ~PersistentBase() {
+    //LOG(ERROR) << "~PersistentBase " << this;
     Uninitialize();
     raw_ = nullptr;
   }
@@ -206,6 +207,7 @@ class PersistentBase {
     static_assert(IsGarbageCollectedType<T>::value,
                   "T needs to be a garbage collected object");
     if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      //LOG(ERROR) << "PersistentBase::TracePersistent RegisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_);
       visitor->RegisterWeakCallback(this, HandleWeakPersistent);
     } else {
       visitor->Mark(raw_);
@@ -238,9 +240,16 @@ class PersistentBase {
 
   void Uninitialize() {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_)))
+      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_))) {
         ProcessHeap::GetCrossThreadPersistentRegion().FreePersistentNode(
             persistent_node_);
+        if (weaknessConfiguration == kWeakPersistentConfiguration) {
+          ThreadState* state = ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
+          //LOG(ERROR) << "PersistentBase::Uninitialize CTP UnregisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_) << " state " << state << " currentstate " << ThreadState::Current();
+          if (state) // state can sometimes be null for some reason (state and ThreadState::Current are both null)
+            state->Heap().UnregisterWeakCallbackForObject(this); // T may not be defined so we can't access HandleWeakPersistent
+        }
+      }
       return;
     }
 
@@ -255,6 +264,11 @@ class PersistentBase {
 #endif
     state->FreePersistentNode(persistent_node_);
     persistent_node_ = nullptr;
+
+    if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      //LOG(ERROR) << "PersistentBase::Uninitialize UnregisterWeakCallback this " << reinterpret_cast<const void*>(this) << " raw_ " << reinterpret_cast<const void*>(raw_);
+      state->Heap().UnregisterWeakCallbackForObject(this); // T may not be defined so we can't access HandleWeakPersistent
+    }
   }
 
   void CheckPointer() const {
@@ -291,6 +305,7 @@ class PersistentBase {
   }
 
   static void HandleWeakPersistent(Visitor* self, void* persistent_pointer) {
+    //LOG(ERROR) << "PersistentBase::HandleWeakPersistent persistent_pointer " << reinterpret_cast<const void*>(persistent_pointer);
     using Base =
         PersistentBase<typename std::remove_const<T>::type,
                        weaknessConfiguration, crossThreadnessConfiguration>;

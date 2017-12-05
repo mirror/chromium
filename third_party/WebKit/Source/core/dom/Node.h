@@ -106,6 +106,7 @@ class NodeRenderingData {
 
   LayoutObject* GetLayoutObject() const { return layout_object_; }
   void SetLayoutObject(LayoutObject* layout_object) {
+    //LOG(ERROR) << "NodeRenderingData::SetLayoutObject " << static_cast<void*>(this) << " layout_object_ " << layout_object_;
     DCHECK_NE(&SharedEmptyData(), this);
     layout_object_ = layout_object;
   }

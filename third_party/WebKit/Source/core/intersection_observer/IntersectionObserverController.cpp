@@ -21,9 +21,13 @@ IntersectionObserverController* IntersectionObserverController::Create(
 
 IntersectionObserverController::IntersectionObserverController(
     Document* document)
-    : PausableObject(document), callback_fired_while_suspended_(false) {}
+    : PausableObject(document), callback_fired_while_suspended_(false) {
+  LOG(ERROR) << "IntersectionObserverController::IntersectionObserverController " << static_cast<void*>(this);
+}
 
-IntersectionObserverController::~IntersectionObserverController() {}
+IntersectionObserverController::~IntersectionObserverController() {
+  LOG(ERROR) << "IntersectionObserverController::~IntersectionObserverController " << static_cast<void*>(this);
+}
 
 void IntersectionObserverController::PostTaskToDeliverObservations() {
   DCHECK(GetExecutionContext());
@@ -96,6 +100,7 @@ void IntersectionObserverController::RemoveTrackedObserversForRoot(
 }
 
 void IntersectionObserverController::Trace(blink::Visitor* visitor) {
+  LOG(ERROR) << "IntersectionObserverController::Trace " << static_cast<void*>(this);
   visitor->Trace(tracked_intersection_observers_);
   visitor->Trace(pending_intersection_observers_);
   PausableObject::Trace(visitor);

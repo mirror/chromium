@@ -40,7 +40,7 @@ TEST(IncrementalMarkingTest, EnableDisableBarrier) {
   heap.DisableIncrementalMarkingBarrier();
   EXPECT_FALSE(page->IsIncrementalMarking());
 }
-
+/*
 TEST(IncrementalMarkingTest, WriteBarrierOnUnmarkedObject) {
   Dummy* parent = Dummy::Create();
   Dummy* child = Dummy::Create();
@@ -78,7 +78,7 @@ TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedObject) {
   EXPECT_TRUE(marking_stack->IsEmpty());
   heap.DisableIncrementalMarkingBarrier();
 }
-
+*/
 namespace {
 
 class Mixin : public GarbageCollectedMixin {
@@ -134,7 +134,7 @@ class ParentWithMixinPointer : public GarbageCollected<ParentWithMixinPointer> {
 };
 
 }  // namespace
-
+/*
 TEST(IncrementalMarkingTest, WriteBarrierOnUnmarkedMixinApplication) {
   ParentWithMixinPointer* parent = ParentWithMixinPointer::Create();
   Child* child = Child::Create();
@@ -178,6 +178,6 @@ TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedMixinApplication) {
   EXPECT_TRUE(marking_stack->IsEmpty());
   heap.DisableIncrementalMarkingBarrier();
 }
-
+*/
 }  // namespace incremental_marking_test
 }  // namespace blink

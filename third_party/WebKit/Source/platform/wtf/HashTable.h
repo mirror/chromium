@@ -689,6 +689,7 @@ class HashTable final
     if (LIKELY(!table_))
       return;
     EnterAccessForbiddenScope();
+    //LOG(ERROR) << "HashTable::Finalize DeleteAllBucketsAndDeallocate table_ " << static_cast<void*>(table_);
     DeleteAllBucketsAndDeallocate(table_, table_size_);
     LeaveAccessForbiddenScope();
     table_ = nullptr;
@@ -1241,6 +1242,7 @@ typename HashTable<Key,
                    Allocator>::AddResult
 HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     insert(T&& key, Extra&& extra) {
+  //LOG(ERROR) << "HashTable::insert table_ " << table_;
   DCHECK(!AccessForbidden());
   DCHECK(Allocator::IsAllocationAllowed());
   if (!table_)
@@ -1300,6 +1302,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
 
   if (ShouldExpand()) {
     entry = Expand(entry);
+    //LOG(ERROR) << "HashTable::insert expand table_ " << table_;
   } else if (Traits::kWeakHandlingFlag == kWeakHandlingInCollections &&
              ShouldShrink()) {
     // When weak hash tables are processed by the garbage collector,
@@ -1315,6 +1318,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     // To prevent weak hash tables with very low load factors from
     // developing, we perform it when adding elements instead.
     entry = Rehash(table_size_ / 2, entry);
+    //LOG(ERROR) << "HashTable::insert shrunk table_ " << table_;
   }
 
   return AddResult(this, entry, true);
@@ -1606,9 +1610,11 @@ void HashTable<Key,
       // enough to call the destructor, since we will free the memory
       // explicitly and we won't see the memory with the bucket again.
       if (Allocator::kIsGarbageCollected) {
+        //LOG(ERROR) << "HashTable::DeleteAllBucketsAndDeallocate IsEmptyOrDeletedBucket i" << i;
         if (!IsEmptyOrDeletedBucket(table[i]))
           DeleteBucket(table[i]);
       } else {
+        //LOG(ERROR) << "HashTable::DeleteAllBucketsAndDeallocate IsDeletedBucket i" << i;
         if (!IsDeletedBucket(table[i]))
           table[i].~ValueType();
       }
@@ -1682,6 +1688,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     }
   }
   table_ = temporary_table;
+  //LOG(ERROR) << "HashTable::ExpandBuffer " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
 
   if (Traits::kEmptyValueIsZero) {
     memset(original_table, 0, new_table_size * sizeof(ValueType));
@@ -1692,6 +1699,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
   new_entry = RehashTo(original_table, new_table_size, new_entry);
 
   EnterAccessForbiddenScope();
+  //LOG(ERROR) << "HashTable::ExpandBuffer DeleteAllBucketsAndDeallocate " << static_cast<void*>(this) << " temporary_table " << static_cast<void*>(temporary_table);
   DeleteAllBucketsAndDeallocate(temporary_table, old_table_size);
   LeaveAccessForbiddenScope();
 
@@ -1723,6 +1731,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
 
   table_ = new_table;
   table_size_ = new_table_size;
+  //LOG(ERROR) << "HashTable::RehashTo " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
 
   Value* new_entry = nullptr;
   for (unsigned i = 0; i != old_table_size; ++i) {
@@ -1744,6 +1753,8 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     stats_ = HashTableStatsPtr<Allocator>::Create();
 #endif
 
+  Allocator::ManualWriteBarrier(table_);
+
   return new_entry;
 }
 
@@ -1757,6 +1768,7 @@ template <typename Key,
 Value*
 HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
     Rehash(unsigned new_table_size, Value* entry) {
+  //LOG(ERROR) << "HashTable::Rehash " << static_cast<const void*>(this) << " table_ " << static_cast<void*>(table_) << " new_table_size " << new_table_size;
   unsigned old_table_size = table_size_;
   ValueType* old_table = table_;
 
@@ -1784,6 +1796,7 @@ HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits, Allocator>::
   Value* new_entry = RehashTo(new_table, new_table_size, entry);
 
   EnterAccessForbiddenScope();
+  //LOG(ERROR) << "HashTable::Rehash DeleteAllBucketsAndDeallocate " << static_cast<const void*>(this) << " old_table " << static_cast<void*>(old_table);
   DeleteAllBucketsAndDeallocate(old_table, old_table_size);
   LeaveAccessForbiddenScope();
 
@@ -1809,11 +1822,13 @@ void HashTable<Key,
     return;
 
   EnterAccessForbiddenScope();
+  //LOG(ERROR) << "HashTable::clear DeleteAllBucketsAndDeallocate " << static_cast<const void*>(this) << " table_ " << static_cast<void*>(table_);
   DeleteAllBucketsAndDeallocate(table_, table_size_);
   LeaveAccessForbiddenScope();
   table_ = nullptr;
   table_size_ = 0;
   key_count_ = 0;
+  //LOG(ERROR) << "HashTable::clear DeleteAllBucketsAndDeallocate END table_ " << static_cast<void*>(table_);
 }
 
 template <typename Key,
@@ -1890,6 +1905,7 @@ void HashTable<Key,
                Traits,
                KeyTraits,
                Allocator>::swap(HashTable& other) {
+  //LOG(ERROR) << "HashTable::swap " << static_cast<void*>(this) << " table_ " << table_;
   DCHECK(!AccessForbidden());
   std::swap(table_, other.table_);
   std::swap(table_size_, other.table_size_);
@@ -2033,6 +2049,70 @@ struct WeakProcessingHashTableHelper<kWeakHandlingInCollections,
   static void EphemeronIteration(typename Allocator::Visitor* visitor,
                                  void* closure) {
     HashTableType* table = reinterpret_cast<HashTableType*>(closure);
+    if (!table->table_) // not sure if this is right
+      return;
+    // STDERR: [1547:775:1203/191753.203664:FATAL:HashTable.h(2052)] Check failed: table->table_.
+    // STDERR: 0   Content Shell Framework             0x000000010f65ab4e base::debug::StackTrace::StackTrace(unsigned long) + 174
+    // STDERR: 1   Content Shell Framework             0x000000010f65abad base::debug::StackTrace::StackTrace(unsigned long) + 29
+    // STDERR: 2   Content Shell Framework             0x000000010f658f6c base::debug::StackTrace::StackTrace() + 28
+    // STDERR: 3   Content Shell Framework             0x000000010f6cfa8f logging::LogMessage::~LogMessage() + 479
+    // STDERR: 4   Content Shell Framework             0x000000010f6cd2e5 logging::LogMessage::~LogMessage() + 21
+    // STDERR: 5   Content Shell Framework             0x0000000115e61d7d WTF::WeakProcessingHashTableHelper<(WTF::WeakHandlingFlag)1, unsigned int, WTF::KeyValuePair<unsigned int, blink::Member<blink::CachedMatchedProperties> >, WTF::KeyValuePairKeyExtractor, WTF::IntHash<unsigned int>, WTF::HashMapValueTraits<WTF::HashTraits<unsigned int>, blink::CachedMatchedPropertiesHashTraits>, WTF::HashTraits<unsigned int>, blink::HeapAllocator>::EphemeronIteration(blink::Visitor*, void*) + 205
+    // STDERR: 6   Content Shell Framework             0x000000010ebe7f80 blink::CallbackStack::Item::Call(blink::Visitor*) + 208
+    // STDERR: 7   Content Shell Framework             0x000000010ebe7e92 blink::CallbackStack::Block::InvokeEphemeronCallbacks(blink::Visitor*) + 98
+    // STDERR: 8   Content Shell Framework             0x000000010ebe8e4d blink::CallbackStack::InvokeOldestCallbacks(blink::CallbackStack::Block*, blink::CallbackStack::Block*, blink::Visitor*) + 301
+    // STDERR: 9   Content Shell Framework             0x000000010ebe8d10 blink::CallbackStack::InvokeEphemeronCallbacks(blink::Visitor*) + 96
+    // STDERR: 10  Content Shell Framework             0x000000010ebef32a blink::ThreadHeap::AdvanceMarkingStackProcessing(blink::Visitor*, double) + 842
+    // STDERR: 11  Content Shell Framework             0x000000010ec2f2d4 blink::ThreadState::MarkPhaseAdvanceMarking(double) + 164
+    // STDERR: 12  Content Shell Framework             0x000000010ec2ba07 blink::ThreadState::IncrementalMarkingStep() + 263
+    // STDERR: 13  Content Shell Framework             0x000000010ec2b415 blink::ThreadState::RunScheduledGC(blink::BlinkGC::StackState) + 421
+    // STDERR: 14  Content Shell Framework             0x000000010ec2d244 blink::ThreadState::SafePoint(blink::BlinkGC::StackState) + 228
+    // STDERR: 15  Content Shell Framework             0x00000001151b5d3e blink::GCTaskObserver::DidProcessTask() + 78
+    // STDERR: 16  Content Shell Framework             0x000000010edbd4c9 blink::scheduler::WebThreadBase::TaskObserverAdapter::DidProcessTask(base::PendingTask const&) + 41
+    // STDERR: 17  Content Shell Framework             0x000000010ed7f38b blink::scheduler::TaskQueueManager::ProcessTaskFromWorkQueue(blink::scheduler::internal::WorkQueue*, bool, blink::scheduler::LazyNow, base::TimeTicks*) + 2891
+    // STDERR: 18  Content Shell Framework             0x000000010ed7def0 blink::scheduler::TaskQueueManager::DoWork(blink::scheduler::internal::Sequence::WorkType) + 2544
+    // STDERR: 19  Content Shell Framework             0x000000010ed96431 void base::internal::FunctorTraits<void (blink::scheduler::TaskQueueManager::*)(blink::scheduler::internal::Sequence::WorkType), void>::Invoke<base::WeakPtr<blink::scheduler::TaskQueueManager> const&, blink::scheduler::internal::Sequence::WorkType const&>(void (blink::scheduler::TaskQueueManager::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::TaskQueueManager> const&&&, blink::scheduler::internal::Sequence::WorkType const&&&) + 145
+    // STDERR: 20  Content Shell Framework             0x000000010ed96335 void base::internal::InvokeHelper<true, void>::MakeItSo<void (blink::scheduler::TaskQueueManager::* const&)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::TaskQueueManager> const&, blink::scheduler::internal::Sequence::WorkType const&>(void (blink::scheduler::TaskQueueManager::* const&&&)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::TaskQueueManager> const&&&, blink::scheduler::internal::Sequence::WorkType const&&&) + 117
+    // STDERR: 21  Content Shell Framework             0x000000010ed962ad void base::internal::Invoker<base::internal::BindState<void (blink::scheduler::TaskQueueManager::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::TaskQueueManager>, blink::scheduler::internal::Sequence::WorkType>, void ()>::RunImpl<void (blink::scheduler::TaskQueueManager::* const&)(blink::scheduler::internal::Sequence::WorkType), std::__1::tuple<base::WeakPtr<blink::scheduler::TaskQueueManager>, blink::scheduler::internal::Sequence::WorkType> const&, 0ul, 1ul>(void (blink::scheduler::TaskQueueManager::* const&&&)(blink::scheduler::internal::Sequence::WorkType), std::__1::tuple<base::WeakPtr<blink::scheduler::TaskQueueManager>, blink::scheduler::internal::Sequence::WorkType> const&&&, std::__1::integer_sequence<unsigned long, 0ul, 1ul>) + 125
+    // STDERR: 22  Content Shell Framework             0x000000010ed961bc base::internal::Invoker<base::internal::BindState<void (blink::scheduler::TaskQueueManager::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::TaskQueueManager>, blink::scheduler::internal::Sequence::WorkType>, void ()>::Run(base::internal::BindStateBase*) + 44
+    // STDERR: 23  Content Shell Framework             0x00000001096273cf base::OnceCallback<void ()>::Run() && + 95
+    // STDERR: 24  Content Shell Framework             0x000000010f65cc14 base::debug::TaskAnnotator::RunTask(char const*, base::PendingTask*) + 884
+    // STDERR: 25  Content Shell Framework             0x000000010ed9a4ad blink::scheduler::internal::ThreadControllerImpl::DoWork(blink::scheduler::internal::Sequence::WorkType) + 541
+    // STDERR: 26  Content Shell Framework             0x000000010ed9bf91 void base::internal::FunctorTraits<void (blink::scheduler::internal::ThreadControllerImpl::*)(blink::scheduler::internal::Sequence::WorkType), void>::Invoke<base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl> const&, blink::scheduler::internal::Sequence::WorkType const&>(void (blink::scheduler::internal::ThreadControllerImpl::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl> const&&&, blink::scheduler::internal::Sequence::WorkType const&&&) + 145
+    // STDERR: 27  Content Shell Framework             0x000000010ed9bec5 void base::internal::InvokeHelper<true, void>::MakeItSo<void (blink::scheduler::internal::ThreadControllerImpl::* const&)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl> const&, blink::scheduler::internal::Sequence::WorkType const&>(void (blink::scheduler::internal::ThreadControllerImpl::* const&&&)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl> const&&&, blink::scheduler::internal::Sequence::WorkType const&&&) + 117
+    // STDERR: 28  Content Shell Framework             0x000000010ed9be3d void base::internal::Invoker<base::internal::BindState<void (blink::scheduler::internal::ThreadControllerImpl::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl>, blink::scheduler::internal::Sequence::WorkType>, void ()>::RunImpl<void (blink::scheduler::internal::ThreadControllerImpl::* const&)(blink::scheduler::internal::Sequence::WorkType), std::__1::tuple<base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl>, blink::scheduler::internal::Sequence::WorkType> const&, 0ul, 1ul>(void (blink::scheduler::internal::ThreadControllerImpl::* const&&&)(blink::scheduler::internal::Sequence::WorkType), std::__1::tuple<base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl>, blink::scheduler::internal::Sequence::WorkType> const&&&, std::__1::integer_sequence<unsigned long, 0ul, 1ul>) + 125
+    // STDERR: 29  Content Shell Framework             0x000000010ed9bd4c base::internal::Invoker<base::internal::BindState<void (blink::scheduler::internal::ThreadControllerImpl::*)(blink::scheduler::internal::Sequence::WorkType), base::WeakPtr<blink::scheduler::internal::ThreadControllerImpl>, blink::scheduler::internal::Sequence::WorkType>, void ()>::Run(base::internal::BindStateBase*) + 44
+    // STDERR: 30  Content Shell Framework             0x00000001096273cf base::OnceCallback<void ()>::Run() && + 95
+    // STDERR: 31  Content Shell Framework             0x000000010f65cc14 base::debug::TaskAnnotator::RunTask(char const*, base::PendingTask*) + 884
+    // STDERR: 32  Content Shell Framework             0x000000010f712526 base::internal::IncomingTaskQueue::RunTask(base::PendingTask*) + 246
+    // STDERR: 33  Content Shell Framework             0x000000010f71d9db base::MessageLoop::RunTask(base::PendingTask*) + 923
+    // STDERR: 34  Content Shell Framework             0x000000010f71dcc7 base::MessageLoop::DeferOrRunPendingTask(base::PendingTask) + 103
+    // STDERR: 35  Content Shell Framework             0x000000010f71e019 base::MessageLoop::DoWork() + 569
+    // STDERR: 36  Content Shell Framework             0x000000010f7289d2 base::MessagePumpCFRunLoopBase::RunWork() + 98
+    // STDERR: 37  Content Shell Framework             0x000000010f72895c ___ZN4base24MessagePumpCFRunLoopBase13RunWorkSourceEPv_block_invoke + 28
+    // STDERR: 38  Content Shell Framework             0x000000010f6d3cda base::mac::CallWithEHFrame(void () block_pointer) + 10
+    // STDERR: 39  Content Shell Framework             0x000000010f727805 base::MessagePumpCFRunLoopBase::RunWorkSource(void*) + 101
+    // STDERR: 40  CoreFoundation                      0x00007fff951fe3e1 __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + 17
+    // STDERR: 41  CoreFoundation                      0x00007fff951df65c __CFRunLoopDoSources0 + 556
+    // STDERR: 42  CoreFoundation                      0x00007fff951deb46 __CFRunLoopRun + 934
+    // STDERR: 43  CoreFoundation                      0x00007fff951de544 CFRunLoopRunSpecific + 420
+    // STDERR: 44  Foundation                          0x00007fff96c0f252 -[NSRunLoop(NSRunLoop) runMode:beforeDate:] + 277
+    // STDERR: 45  Content Shell Framework             0x000000010f729489 base::MessagePumpNSRunLoop::DoRun(base::MessagePump::Delegate*) + 137
+    // STDERR: 46  Content Shell Framework             0x000000010f726ea4 base::MessagePumpCFRunLoopBase::Run(base::MessagePump::Delegate*) + 116
+    // STDERR: 47  Content Shell Framework             0x000000010f71d14d base::MessageLoop::Run(bool) + 605
+    // STDERR: 48  Content Shell Framework             0x000000010f7e67ec base::RunLoop::Run() + 604
+    // STDERR: 49  Content Shell Framework             0x00000001194d640b content::RendererMain(content::MainFunctionParams const&) + 3995
+    // STDERR: 50  Content Shell Framework             0x000000010b50c10b content::RunNamedProcessTypeMain(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, content::MainFunctionParams const&, content::ContentMainDelegate*) + 603
+    // STDERR: 51  Content Shell Framework             0x000000010b50da13 content::ContentMainRunnerImpl::Run() + 1347
+    // STDERR: 52  Content Shell Framework             0x000000010b504765 content::ContentServiceManagerMainDelegate::RunEmbedderProcess() + 53
+    // STDERR: 53  Content Shell Framework             0x0000000113508508 service_manager::Main(service_manager::MainParams const&) + 2152
+    // STDERR: 54  Content Shell Framework             0x000000010b50be69 content::ContentMain(content::ContentMainParams const&) + 89
+    // STDERR: 55  Content Shell Framework             0x00000001095b0813 ContentMain + 83
+    // STDERR: 56  Content Shell Helper                0x0000000101476f82 main + 34
+    // STDERR: 57  libdyld.dylib                       0x00007fffaada9235 start + 1
+    // STDERR: 58  ???                                 0x0000000000000020 0x0 + 32
+    // STDERR:
+
     DCHECK(table->table_);
     // Check the hash table for elements that we now know will not be
     // removed by weak processing. Those elements need to have their strong
@@ -2073,6 +2153,7 @@ void HashTable<Key,
                Traits,
                KeyTraits,
                Allocator>::Trace(VisitorDispatcher visitor) {
+  //LOG(ERROR) << "HashTable::Trace " << static_cast<const void*>(this) << " table_ " << static_cast<void*>(table_);
 #if DUMP_HASHTABLE_STATS_PER_TABLE
 // XXX: this will simply crash.
 // Allocator::MarkNoTracing(visitor, stats_);
@@ -2098,8 +2179,10 @@ void HashTable<Key,
   // register a weakProcessing callback which will perform weak processing if
   // needed.
   if (Traits::kWeakHandlingFlag == kNoWeakHandlingInCollections) {
+    //LOG(ERROR) << "HashTable::Trace Allocator::MarkNoTracing " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
     Allocator::MarkNoTracing(visitor, table_);
   } else {
+    //LOG(ERROR) << "HashTable::Trace RegisterDelayedMarkNoTracing " << static_cast<void*>(this) << " table_ " << static_cast<void*>(table_);
     Allocator::RegisterDelayedMarkNoTracing(visitor, table_);
     // Since we're delaying marking this HashTable, it is possible that the
     // registerWeakMembers is called multiple times (in rare
@@ -2124,6 +2207,10 @@ void HashTable<Key,
     // http://dl.acm.org/citation.cfm?doid=263698.263733 - see also
     // http://www.jucs.org/jucs_14_21/eliminating_cycles_in_weak
 #if DCHECK_IS_ON()
+    if (!(!Enqueued() || Allocator::WeakTableRegistered(visitor, this))) {
+      LOG(ERROR) << !Enqueued();
+      LOG(ERROR) << Allocator::WeakTableRegistered(visitor, this);
+    }
     DCHECK(!Enqueued() || Allocator::WeakTableRegistered(visitor, this));
 #endif
     if (!Enqueued()) {
@@ -2146,9 +2233,11 @@ void HashTable<Key,
   }
   for (ValueType* element = table_ + table_size_ - 1; element >= table_;
        element--) {
-    if (!IsEmptyOrDeletedBucket(*element))
+    if (!IsEmptyOrDeletedBucket(*element)) {
+      //LOG(ERROR) << "HashTable::Trace trace element " << static_cast<void*>(element);
       Allocator::template Trace<VisitorDispatcher, ValueType, Traits>(visitor,
                                                                       *element);
+    }
   }
 }
 

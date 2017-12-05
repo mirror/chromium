@@ -6,9 +6,11 @@
 #define CallbackStack_h
 
 #include "platform/heap/BlinkGC.h"
+#include "platform/heap/HeapPage.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Threading.h"
+#include "platform/wtf/LinkedHashSet.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 
 namespace blink {
@@ -29,10 +31,16 @@ class PLATFORM_EXPORT CallbackStack final {
    public:
     Item() {}
     Item(void* object, VisitorCallback callback)
-        : object_(object), callback_(callback) {}
+        : object_(object), callback_(callback) {
+          // object_ maybe a Persistent so not appropriate to check header
+        }
     void* Object() { return object_; }
     VisitorCallback Callback() { return callback_; }
-    void Call(Visitor* visitor) { callback_(visitor, object_); }
+    void Call(Visitor* visitor) {
+      CHECK(object_);
+      // object_ maybe a Persistent so not appropriate to check header
+      callback_(visitor, object_);
+    }
 
    private:
     void* object_;
@@ -112,6 +120,7 @@ class PLATFORM_EXPORT CallbackStack final {
 
   Block* first_;
   Block* last_;
+  std::set<std::pair<void*, VisitorCallback>> set_;
 };
 
 class CallbackStackMemoryPool final {
@@ -148,11 +157,94 @@ ALWAYS_INLINE CallbackStack::Item* CallbackStack::AllocateEntry() {
 
 ALWAYS_INLINE CallbackStack::Item* CallbackStack::Pop() {
   Item* item = first_->Pop();
-  if (LIKELY(!!item))
-    return item;
-
-  return PopSlow();
+  if (!item)
+    item = PopSlow();
+  if (item) {
+    auto it = set_.find(std::pair<void*, VisitorCallback>(item->Object(), item->Callback()));
+    set_.erase(it);
+  }
+  return item;
 }
+
+class NewCallbackStack {
+public:
+  NewCallbackStack() {
+    CHECK(callbacks_.IsEmpty());
+  }
+  void Commit() {
+    if (!callbacks_.IsEmpty()) {
+      LOG(ERROR) << "NewCallbackStack::Commit error not empty " << static_cast<void*>(this);
+    }
+    CHECK(callbacks_.IsEmpty());
+  }
+  void Decommit() {
+    callbacks_.clear();
+    CHECK(callbacks_.IsEmpty());
+  }
+  // True if an new entry was added.
+  void Register(void* object, VisitorCallback callback) {
+    LOG(ERROR) << "NewCallbackStack::Register " << static_cast<void*>(this);
+    callbacks_.insert(std::pair<void*, VisitorCallback>(object, callback));
+  }
+  void UnregisterForObject(void* object) {
+    //LOG(ERROR) << "NewCallbackStack::UnregisterForObject " << static_cast<void*>(this) << " object " << object << " callbacks_.size() " << callbacks_.size();
+    LinkedHashSet<std::pair<void*, VisitorCallback>> x;
+    callbacks_.Swap(x);
+    for (auto it : x) {
+      if (it.first == object)
+        continue;
+      callbacks_.insert(it);
+    }
+    //LOG(ERROR) << "NewCallbackStack::UnregisterForObject END " << static_cast<void*>(this) << " object " << object << " callbacks_.size() " << callbacks_.size();
+  }
+  bool IsEmpty() {
+    return callbacks_.IsEmpty();
+  }
+#if DCHECK_IS_ON()
+  bool HasCallbackForObject(const void* object) {
+    for (auto it : callbacks_) {
+      if (it.first == object)
+        return true;
+    }
+    return false;
+  }
+#endif
+  std::pair<void*, VisitorCallback> Pop() {
+    if (callbacks_.IsEmpty())
+      return std::pair<void*, VisitorCallback>(nullptr, nullptr);
+    std::pair<void*, VisitorCallback> p = callbacks_.back();
+    callbacks_.pop_back();
+    return p;
+  }
+  bool PopAndInvoke(Visitor* visitor) {
+    std::pair<void*, VisitorCallback> p = Pop();
+    if (!p.first)
+      return false;
+    p.second(visitor, p.first);
+    return true;
+  }
+  std::pair<void*, VisitorCallback> Shift() {
+    if (callbacks_.IsEmpty())
+      return std::pair<void*, VisitorCallback>(nullptr, nullptr);
+    std::pair<void*, VisitorCallback> p = callbacks_.front();
+    callbacks_.RemoveFirst();
+    return p;
+  }
+  void InvokeEphemeronCallbacks(Visitor* visitor) {
+    LinkedHashSet<std::pair<void*, VisitorCallback>> x(callbacks_);
+    while (!x.IsEmpty()) {
+      std::pair<void*, VisitorCallback> p = x.front();
+      x.RemoveFirst();
+      if (!p.first) {
+        // FIXME: must call new callbacks
+        break;
+      }
+      p.second(visitor, p.first);
+    }
+  }
+private:
+  LinkedHashSet<std::pair<void*, VisitorCallback>> callbacks_;
+};
 
 }  // namespace blink
 

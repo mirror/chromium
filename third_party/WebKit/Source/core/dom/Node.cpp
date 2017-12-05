@@ -141,9 +141,12 @@ struct SameSizeAsNode : EventTarget {
 NodeRenderingData::NodeRenderingData(
     LayoutObject* layout_object,
     scoped_refptr<ComputedStyle> non_attached_style)
-    : layout_object_(layout_object), non_attached_style_(non_attached_style) {}
+    : layout_object_(layout_object), non_attached_style_(non_attached_style) {
+      //LOG(ERROR) << "NodeRenderingData::NodeRenderingData " << static_cast<void*>(this) << " layout_object_ " << layout_object_;
+    }
 
 NodeRenderingData::~NodeRenderingData() {
+  //LOG(ERROR) << "NodeRenderingData::~NodeRenderingData " << static_cast<void*>(this) << " layout_object_ " << layout_object_;
   CHECK(!layout_object_);
 }
 
@@ -309,6 +312,7 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
       tree_scope_(tree_scope),
       previous_(nullptr),
       next_(nullptr) {
+  //LOG(ERROR) << "Node::Node " << static_cast<void*>(this);
   DCHECK(tree_scope_ || type == kCreateDocument || type == kCreateShadowRoot);
 #if !defined(NDEBUG) || (defined(DUMP_NODE_STATISTICS) && DUMP_NODE_STATISTICS)
   TrackForDebugging();
@@ -317,6 +321,7 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
 }
 
 Node::~Node() {
+  //LOG(ERROR) << "Node::~Node " << static_cast<void*>(this);
   if (!HasRareData() && !data_.node_layout_data_->IsSharedEmptyData())
     delete data_.node_layout_data_;
   InstanceCounters::DecrementCounter(InstanceCounters::kNodeCounter);
@@ -328,14 +333,18 @@ NodeRareData* Node::RareData() const {
 }
 
 NodeRareData& Node::EnsureRareData() {
+  //LOG(ERROR) << "Node::EnsureRareData " << static_cast<void*>(this);
   if (HasRareData())
     return *RareData();
 
-  if (IsElementNode())
+  if (IsElementNode()) {
+    //LOG(ERROR) << "Node::EnsureRareData ElementRareData::Create " << static_cast<void*>(this);
     data_.rare_data_ = ElementRareData::Create(data_.node_layout_data_);
-  else
+  } else {
+    //LOG(ERROR) << "Node::EnsureRareData NodeRareData::Create " << static_cast<void*>(this);
     data_.rare_data_ = NodeRareData::Create(data_.node_layout_data_);
-
+  }
+  ThreadState::Current()->ManualWriteBarrier(data_.rare_data_);
   DCHECK(data_.rare_data_);
   SetFlag(kHasRareDataFlag);
   ScriptWrappableVisitor::WriteBarrier(RareData());
@@ -635,6 +644,7 @@ LayoutBox* Node::GetLayoutBox() const {
 }
 
 void Node::SetLayoutObject(LayoutObject* layout_object) {
+    //LOG(ERROR) << "Node::SetLayoutObject " << static_cast<void*>(this) << " layout_object " << layout_object;
   NodeRenderingData* node_layout_data =
       HasRareData() ? data_.rare_data_->GetNodeRenderingData()
                     : data_.node_layout_data_;
@@ -653,9 +663,10 @@ void Node::SetLayoutObject(LayoutObject* layout_object) {
   // the static SharedEmptyData instance.
   DCHECK(!node_layout_data->GetNonAttachedStyle());
   node_layout_data = new NodeRenderingData(layout_object, nullptr);
-  if (HasRareData())
+  if (HasRareData()) {
+    //LOG(ERROR) << "Node::SetLayoutObject HasRareData " << static_cast<void*>(this) << " data_.rare_data_ " << data_.rare_data_;
     data_.rare_data_->SetNodeRenderingData(node_layout_data);
-  else
+  } else
     data_.node_layout_data_ = node_layout_data;
 }
 
@@ -2682,17 +2693,23 @@ bool Node::HasMediaControlAncestor() const {
 }
 
 void Node::Trace(blink::Visitor* visitor) {
+  //LOG(ERROR) << "Node::Trace " << static_cast<void*>(this);
   visitor->Trace(parent_or_shadow_host_node_);
   visitor->Trace(previous_);
   visitor->Trace(next_);
   // rareData() and m_data.m_layoutObject share their storage. We have to trace
   // only one of them.
-  if (HasRareData())
+  if (HasRareData()) {
+    //LOG(ERROR) << "Node::Trace Trace(RareData)" << static_cast<void*>(this);
     visitor->Trace(RareData());
+  } else {
+    //LOG(ERROR) << "Node::Trace no rare data" << static_cast<void*>(this);
+  }
 
   visitor->Trace(tree_scope_);
   // EventTargetData is traced through EventTargetDataMap.
   EventTarget::Trace(visitor);
+  //LOG(ERROR) << "Node::Trace END" << static_cast<void*>(this);
 }
 
 void Node::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
