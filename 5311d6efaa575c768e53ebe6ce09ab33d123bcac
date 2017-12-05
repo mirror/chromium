@@ -46,6 +46,30 @@
       "revId": "5311d6efaa575c768e53ebe6ce09ab33d123bcac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b4eec0_15a5456c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T23:24:24Z",
+      "side": 0,
+      "message": "Any page can send any message and our code may not be prepared to handle iframe messages safely.  I don\u0027t think we should have a function which knows which handlers support iframe messages and which do not. We can pass an extra boolean to respondToMessage:userIsInteracting:originURL: and then pass it further to individual handlers via contextdictionary. But that\u0027s probably too much for this CL. WDYT?",
+      "parentUuid": "110dfa3f_dcdcab59",
+      "range": {
+        "startLine": 2318,
+        "startChar": 14,
+        "endLine": 2318,
+        "endChar": 0
+      },
+      "revId": "5311d6efaa575c768e53ebe6ce09ab33d123bcac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
