@@ -33,6 +33,24 @@
       "revId": "8090fe842cf50e6d85ca9212cfad8d987c3fb700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716e36e0_d68fa663",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SnackbarActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T00:51:53Z",
+      "side": 1,
+      "message": "\u003e why are you doing this? I think this is going to change the behavior about drawing system bars on O an earlier, no?\n\nIf I clear the flag on O, then activities that extend this one can\u0027t set the bottom nav bar color. If I don\u0027t clear the flag on older versions, we may be needlessly saying that we draw the system bar background when we don\u0027t.\n\nI haven\u0027t done the code archaeology to track down why this specific line of code exists. For now, it\u0027s safer to leave this code unchanged for older versions of Android, and remove it later if it turns out we don\u0027t really need it.\n\n\u003e Also note that even if you remove this flag, we\u0027ll still force you to draw a black status bar background since you\u0027re targeting N+ (I assume?)\n\nYes, we are targeting N+. This code was likely added before N.",
+      "parentUuid": "582b4e59_cea84b79",
+      "revId": "8090fe842cf50e6d85ca9212cfad8d987c3fb700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
