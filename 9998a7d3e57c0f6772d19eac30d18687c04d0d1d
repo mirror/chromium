@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "55f69ac6_6bc89392",
+        "filename": "components/certificate_transparency/single_tree_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "Is this domain critical to the test? In general, we try to use the IANA-assigned ones here (either example.com/example.net or, more preferably, something in the .test TLD)",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f0dd26_18e0dcd7",
+        "filename": "components/certificate_transparency/single_tree_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "You can replace these two checks with\n\nhistograms.ExpectUniqueSample(kCanCheckForInclusionHistogramName, 4, 1);",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f40d74ad_55abca27",
         "filename": "components/certificate_transparency/single_tree_tracker_unittest.cc",
         "patchSetId": 17
@@ -13,6 +47,142 @@
       "writtenOn": "2017-12-05T16:24:01Z",
       "side": 1,
       "message": "nit: update the comment",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eda4d7_76d17529",
+        "filename": "components/certificate_transparency/single_tree_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "ditto replacement",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b7f9d9_d6ce6e9a",
+        "filename": "components/certificate_transparency/single_tree_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995dfb12_d9ce88f7",
+        "filename": "components/certificate_transparency/tree_state_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "ditto domain name",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b463d71_fe88d791",
+        "filename": "components/certificate_transparency/tree_state_tracker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "Don\u0027t CHECK in unittests.\n\nIf you\u0027re concerned about there being no HostCache, then use the https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#propagating-fatal-failures pattern",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da04132_76bb1858",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "nit: The preferred idiom here in Chromium land is:\n\nif (!entry) {}\n\n(Instilled in me by //base owners, in part due to the nullptr_t conversion behaviours that we used to have; while those no longer apply, the dominant style is still dominant)",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e9edfe_ff359426",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2124,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "if (!cache_)",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598f4544_0b64a227",
+        "filename": "net/dns/host_resolver_mojo.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "if (!host_cache_)",
+      "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7acef_bfb02b24",
+        "filename": "net/dns/mock_host_resolver.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-05T16:43:37Z",
+      "side": 1,
+      "message": "if (!cache_)",
       "revId": "9998a7d3e57c0f6772d19eac30d18687c04d0d1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
