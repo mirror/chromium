@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89a4ded6_8e12681b",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:14:41Z",
+      "side": 1,
+      "message": "Wow, that\u0027s disturbing. Let\u0027s chat more about this offline.\n\nAlso, this a good argument for using enums for params instead of booleans. WDYT of making that switch in this CL given you\u0027re already touching all the call sites? (Sorry for the extra yak shaving - but this will leave things in a much less error prone state for the future.)",
+      "range": {
+        "startLine": 509,
+        "startChar": 25,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
