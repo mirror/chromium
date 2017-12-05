@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "2d4d54b9_390c0a48",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-05T20:34:19Z",
+      "side": 1,
+      "message": "fetch() doesn\u0027t need a full URL - can this be dropped?",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 16
+      },
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55396573_c7b89b02",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-05T20:34:19Z",
+      "side": 1,
+      "message": "nit: since it\u0027s shorter, how about just `append` ?",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "906c92d7_20e31339",
         "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
         "patchSetId": 4
@@ -30,6 +70,24 @@
       "writtenOn": "2017-12-05T20:10:18Z",
       "side": 1,
       "message": "I don\u0027t think we need to do cleanups anymore, and there\u0027s generally merit to leaving everything out on the page so it can be debugged.",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7a7b01_5323f8ae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-05T20:34:19Z",
+      "side": 1,
+      "message": "FWIW, I\u0027m a fan of removing the clutter from the test results, especially if there will be multiple tests leaving stuff on the page.",
+      "parentUuid": "906c92d7_20e31339",
       "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +139,23 @@
       "writtenOn": "2017-12-05T20:10:18Z",
       "side": 1,
       "message": "nit: I\u0027d have a slightly easier time understanding the code if this line was at the end of the block, to match the sequence in which things run. (onload happens after the DataTransfer code runs)",
+      "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ae6a45_d2e040c6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/fileapi/resources/send-file-form-helper.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-05T20:34:19Z",
+      "side": 1,
+      "message": "nit: wrap to 80 chars like the rest of the file",
       "revId": "05160b7466bcdbb86816b703f4dd0f78ed6ba2a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
