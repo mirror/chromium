@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96132ba_f05c9dc5",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115885
+      },
+      "writtenOn": "2017-12-05T23:54:49Z",
+      "side": 1,
+      "message": "I\u0027let the other folks (whose dayjob is chrome) but the IsDeviceUsedAsATablet() name is misleading and it might be improperly used in the future.\n\nFor example I don\u0027t see why split the original function in two at this point, what I would imagine you want here, if I understood the bug correctly is to have a heuristic that tells you the user has not pressed a hard key in N seconds and has touched the screen in the last M seconds and the rest as you have it.\n\nBut if this resolves the bug, then maybe a better name?",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
