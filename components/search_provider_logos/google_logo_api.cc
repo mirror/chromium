@@ -181,6 +181,7 @@ std::unique_ptr<EncodedLogo> ParseDoodleLogoResponse(
   }
 
   const bool is_animated = (logo->metadata.type == LogoType::ANIMATED);
+  const bool is_interactive = (logo->metadata.type == LogoType::INTERACTIVE);
 
   // Check if the main image is animated.
   if (is_animated) {
@@ -195,6 +196,14 @@ std::unique_ptr<EncodedLogo> ParseDoodleLogoResponse(
 
   logo->metadata.full_page_url =
       ParseUrl(*ddljson, "fullpage_interactive_url", base_url);
+
+  if (is_interactive) {
+    std::string behavior;
+    if (ddljson->GetString("launch_interactive_behavior", &behavior) &&
+        (behavior == "NEW_WINDOW")) {
+      logo->metadata.type = LogoType::SIMPLE;
+    }
+  }
 
   // Data is optional, since we may be revalidating a cached logo.
   // If there is a CTA image, get that; otherwise use the regular image.
