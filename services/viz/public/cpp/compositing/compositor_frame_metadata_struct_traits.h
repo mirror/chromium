@@ -109,6 +109,11 @@ struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
     return metadata.referenced_surfaces;
   }
 
+  static const std::vector<viz::SurfaceId>& unused_surfaces(
+      const viz::CompositorFrameMetadata& metadata) {
+    return metadata.unused_surfaces;
+  }
+
   static const std::vector<viz::SurfaceId>& activation_dependencies(
       const viz::CompositorFrameMetadata& metadata) {
     return metadata.activation_dependencies;

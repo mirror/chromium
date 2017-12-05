@@ -1172,7 +1172,8 @@ bool LayerTreeHost::PaintContent(const LayerList& update_layer_list,
 }
 
 void LayerTreeHost::AddSurfaceLayerId(const viz::SurfaceId& surface_id) {
-  if (++surface_layer_ids_[surface_id] == 1)
+  SurfaceLayerInfo& info = surface_layer_ids_[surface_id];
+  if (++info.layers == 1)
     needs_surface_ids_sync_ = true;
 }
 
@@ -1181,17 +1182,9 @@ void LayerTreeHost::RemoveSurfaceLayerId(const viz::SurfaceId& surface_id) {
   if (iter == surface_layer_ids_.end())
     return;
 
-  if (--iter->second <= 0) {
-    surface_layer_ids_.erase(iter);
+  SurfaceLayerInfo& info = iter->second;
+  if (--info.layers <= 0)
     needs_surface_ids_sync_ = true;
-  }
-}
-
-base::flat_set<viz::SurfaceId> LayerTreeHost::SurfaceLayerIds() const {
-  base::flat_set<viz::SurfaceId> ids;
-  for (auto& map_entry : surface_layer_ids_)
-    ids.insert(map_entry.first);
-  return ids;
 }
 
 void LayerTreeHost::AddLayerShouldPushProperties(Layer* layer) {
@@ -1326,12 +1319,35 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
 }
 
 void LayerTreeHost::PushSurfaceIdsTo(LayerTreeImpl* tree_impl) {
-  if (needs_surface_ids_sync()) {
-    tree_impl->ClearSurfaceLayerIds();
-    tree_impl->SetSurfaceLayerIds(SurfaceLayerIds());
-    // Reset for next update
-    set_needs_surface_ids_sync(false);
+  if (!needs_surface_ids_sync())
+    return;
+
+  base::flat_set<viz::SurfaceId> referenced_surface_ids;
+  base::flat_set<viz::SurfaceId> unused_surface_ids;
+  for (auto& map_entry : surface_layer_ids_) {
+    SurfaceLayerInfo& info = map_entry.second;
+    if (info.layers > 0) {
+      referenced_surface_ids.insert(map_entry.first);
+      info.has_been_committed = true;
+    } else if (!info.has_been_committed) {
+      // SurfaceIds that were never committed.
+      unused_surface_ids.insert(map_entry.first);
+      LOG(ERROR) << "UNUSED: " << map_entry.first;
+    }
   }
+
+  tree_impl->ClearSurfaceLayerIds();
+  if (!referenced_surface_ids.empty())
+    tree_impl->SetReferencedSurfaceIds(referenced_surface_ids);
+  if (!unused_surface_ids.empty())
+    tree_impl->SetUnusedSurfaceIds(unused_surface_ids);
+
+  // Remove any SurfaceIds that aren't in a SurfaceLayer.
+  base::EraseIf(surface_layer_ids_,
+                [](auto& map_entry) { return map_entry.second.layers <= 0; });
+
+  // Reset for next update
+  set_needs_surface_ids_sync(false);
 }
 
 void LayerTreeHost::PushLayerTreeHostPropertiesTo(
