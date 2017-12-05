@@ -8,6 +8,7 @@
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_item.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -279,10 +280,21 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
     apps_grid_view_->ClearAnySelectedView();
   int run_types = views::MenuRunner::HAS_MNEMONICS |
                   views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
-  context_menu_runner_.reset(new views::MenuRunner(menu_model, run_types));
+  context_menu_runner_.reset(new views::MenuRunner(
+      menu_model, run_types,
+      base::Bind(&AppListItemView::OnContextMenuClosed, base::Unretained(this),
+                 base::Time::Now(), source_type)));
   context_menu_runner_->RunMenuAt(GetWidget(), NULL,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);
+}
+
+void AppListItemView::OnContextMenuClosed(base::Time context_menu_open_time,
+                                          ui::MenuSourceType source_type) {
+  UMA_HISTOGRAM_TIMES(kAppListContextMenuUserJourneyTimeAppGrid,
+                      base::Time::Now() - context_menu_open_time);
+  UMA_HISTOGRAM_ENUMERATION(kAppListContextMenuShowSourceAppGrid, source_type,
+                            ui::MENU_SOURCE_TYPE_LAST);
 }
 
 void AppListItemView::StateChanged(ButtonState old_state) {

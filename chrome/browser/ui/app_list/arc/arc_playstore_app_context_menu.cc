@@ -39,5 +39,7 @@ void ArcPlayStoreAppContextMenu::ExecuteCommand(int command_id,
       break;
     default:
       app_list::AppContextMenu::ExecuteCommand(command_id, event_flags);
+      return;
   }
+  app_list::AppContextMenu::RecordCommandId(command_id);
 }

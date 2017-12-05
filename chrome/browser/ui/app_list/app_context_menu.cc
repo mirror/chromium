@@ -4,12 +4,22 @@
 
 #include "chrome/browser/ui/app_list/app_context_menu.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/ui/app_list/app_context_menu_delegate.h"
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 #include "chrome/grit/generated_resources.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace app_list {
+
+namespace {
+
+// The max value of ash::ShelfContextMenuModel::CommandId, which is used in
+// histograms.
+const int kMenuLocalEnd = 506;
+
+}  // namespace
 
 AppContextMenu::AppContextMenu(AppContextMenuDelegate* delegate,
                                Profile* profile,
@@ -94,6 +104,12 @@ void AppContextMenu::ExecuteCommand(int command_id, int event_flags) {
       TogglePin(app_id_);
       break;
   }
+  RecordCommandId(command_id);
+}
+
+void AppContextMenu::RecordCommandId(int command_id) {
+  UMA_HISTOGRAM_ENUMERATION(kAppContextMenuExecuteCommand, command_id,
+                            kMenuLocalEnd);
 }
 
 }  // namespace app_list

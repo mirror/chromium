@@ -232,7 +232,9 @@ void ExtensionAppContextMenu::ExecuteCommand(int command_id, int event_flags) {
     controller()->CreateNewWindow(profile(), true);
   } else {
     AppContextMenu::ExecuteCommand(command_id, event_flags);
+    return;
   }
+  AppContextMenu::RecordCommandId(command_id);
 }
 
 }  // namespace app_list

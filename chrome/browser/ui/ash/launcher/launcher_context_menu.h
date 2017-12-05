@@ -42,6 +42,8 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
 
+  void RecordCommandId(int command_id);
+
  protected:
   LauncherContextMenu(ChromeLauncherController* controller,
                       const ash::ShelfItem* item,

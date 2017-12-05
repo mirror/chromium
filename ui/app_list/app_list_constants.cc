@@ -176,6 +176,11 @@ const size_t kMaxFolderNameChars = 80;
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;
 
+// The UMA histogram that logs the commands which are executed on app context
+// menus in the system UI.
+const char kAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.FromApp";
+
 // The UMA histogram that logs usage of suggested and regular apps.
 const char kAppListAppLaunched[] = "Apps.AppListAppLaunched";
 
@@ -183,6 +188,36 @@ const char kAppListAppLaunched[] = "Apps.AppListAppLaunched";
 // fullscreen launcher is enabled.
 const char kAppListAppLaunchedFullscreen[] =
     "Apps.AppListAppLaunchedFullscreen";
+
+// The UMA histogram that logs the lifetime of a context menu from an app.
+const char kAppListContextMenuUserJourneyTimeAppGrid[] =
+    "Apps.ContextMenuUserJourneyTime.AppGrid";
+
+// The UMA histogram that logs the lifetime of a context menu from a
+// SearchResult.
+const char kAppListContextMenuUserJourneyTimeSearchResult[] =
+    "Apps.ContextMenuUserJourneyTime.SearchResult";
+
+// The UMA histogram that logs the lifetime of a context menu from a suggested
+// app in the fullscreen AppList.
+const char kAppListContextMenuUserJourneyTimeSuggestedAppFullscreen[] =
+    "Apps.ContextMenuUserJourneyTime.SuggestedAppFullscreen";
+
+// The UMA histogram that logs the lifetime of a context menu from a suggested
+// app in the peeking AppList.
+const char kAppListContextMenuUserJourneyTimeSuggestedAppPeeking[] =
+    "Apps.ContextMenuUserJourneyTime.SuggestedAppPeeking";
+
+// The series of UMA histograms that log the source (touch, mouse, keyboard,
+// etc) of the context menu for the given component.
+const char kAppListContextMenuShowSourceAppGrid[] =
+    "Apps.ContextMenuShowSource.AppGrid";
+const char kAppListContextMenuShowSourceSearchResult[] =
+    "Apps.ContextMenuShowSource.SearchResult";
+const char kAppListContextMenuShowSourceSuggestedAppFullscreen[] =
+    "Apps.ContextMenuShowSource.SuggestedAppFullscreen";
+const char kAppListContextMenuShowSourceSuggestedAppPeeking[] =
+    "Apps.ContextMenuShowSource.SuggestedAppPeeking";
 
 // The UMA histogram that logs the creation time of the AppListView.
 const char kAppListCreationTimeHistogram[] = "Apps.AppListCreationTime";
