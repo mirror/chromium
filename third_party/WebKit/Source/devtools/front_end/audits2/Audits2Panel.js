@@ -220,7 +220,8 @@ Audits2.Audits2Panel = class extends UI.Panel {
       row.createChild('span', 'audits2-launcher-description dimmed').textContent = preset.description;
     }
 
-    this._statusView = this._createStatusView(uiElement);
+    this._statusView = new Audits2.Audits2Panel.StatusView();
+    this._statusView.render(uiElement);
     this._dialogHelpText = uiElement.createChild('div', 'audits2-dialog-help-text');
 
     var buttonsRow = uiElement.createChild('div', 'audits2-dialog-buttons hbox');
@@ -237,18 +238,6 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._dialog.show(this._auditResultsElement);
     auditsViewElement.tabIndex = 0;
     auditsViewElement.focus();
-  }
-
-  /**
-   * @param {!Element} launcherUIElement
-   * @return {!Element}
-   */
-  _createStatusView(launcherUIElement) {
-    var statusView = launcherUIElement.createChild('div', 'audits2-status vbox hidden');
-    this._statusIcon = statusView.createChild('div', 'icon');
-    this._statusElement = statusView.createChild('div');
-    this._updateStatus(Common.UIString('Loading...'));
-    return statusView;
   }
 
   /**
@@ -324,7 +313,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
         })
         .catch(err => {
           if (err instanceof Error)
-            this._renderBugReport(err);
+            this._statusView.renderBugReport(err, this._inspectedURL);
         });
   }
 
@@ -335,8 +324,6 @@ Audits2.Audits2Panel = class extends UI.Panel {
 
     delete this._dialog;
     delete this._statusView;
-    delete this._statusIcon;
-    delete this._statusElement;
     delete this._startButton;
     delete this._cancelButton;
     delete this._auditSelectorForm;
@@ -353,7 +340,10 @@ Audits2.Audits2Panel = class extends UI.Panel {
   _cancel() {
     if (this._auditRunning) {
       this._updateStatus(Common.UIString('Cancelling\u2026'));
-      this._stopAndReattach();
+      this._stopAndReattach().then(() => {
+        if (this._statusView)
+          this._statusView.reset();
+      });
     } else {
       this._hideDialog();
     }
@@ -364,21 +354,24 @@ Audits2.Audits2Panel = class extends UI.Panel {
       return;
     this._startButton.classList.toggle('hidden', this._auditRunning);
     this._startButton.disabled = this._auditRunning;
-    this._statusView.classList.toggle('hidden', !this._auditRunning);
+    this._statusView.setVisible(this._auditRunning);
     this._auditSelectorForm.classList.toggle('hidden', this._auditRunning);
-    if (this._auditRunning)
-      this._headerTitleElement.textContent = Common.UIString('Auditing your web page \u2026');
-    else
+    if (this._auditRunning) {
+      var parsedURL = (this._inspectedURL || '').asParsedURL();
+      var pageName = (parsedURL && parsedURL.host) || 'your web page';
+      this._headerTitleElement.textContent = Common.UIString(`Auditing ${pageName}\u2026`);
+    } else {
       this._headerTitleElement.textContent = Common.UIString('Audits to perform');
+    }
   }
 
   /**
    * @param {string} statusMessage
    */
   _updateStatus(statusMessage) {
-    if (!this._dialog)
+    if (!this._dialog || !this._statusView)
       return;
-    this._statusElement.textContent = statusMessage;
+    this._statusView.updateStatus(statusMessage);
   }
 
   /**
@@ -416,49 +409,6 @@ Audits2.Audits2Panel = class extends UI.Panel {
   }
 
   /**
-   * @param {!Error} err
-   */
-  _renderBugReport(err) {
-    console.error(err);
-    this._statusElement.textContent = '';
-    this._statusIcon.classList.add('error');
-    this._statusElement.createTextChild(Common.UIString('Ah, sorry! We ran into an error: '));
-    this._statusElement.createChild('em').createTextChild(err.message);
-    if (Audits2.Audits2Panel.KnownBugPatterns.some(pattern => pattern.test(err.message))) {
-      var message = Common.UIString(
-          'Try to navigate to the URL in a fresh Chrome profile without any other tabs or ' +
-          'extensions open and try again.');
-      this._statusElement.createChild('p').createTextChild(message);
-    } else {
-      this._createBugReportLink(err, this._statusElement);
-    }
-  }
-
-  /**
-   * @param {!Error} err
-   * @param {!Element} parentElem
-   */
-  _createBugReportLink(err, parentElem) {
-    var baseURI = 'https://github.com/GoogleChrome/lighthouse/issues/new?';
-    var title = encodeURI('title=DevTools Error: ' + err.message.substring(0, 60));
-
-    var issueBody = `
-**Initial URL**: ${this._inspectedURL}
-**Chrome Version**: ${navigator.userAgent.match(/Chrome\/(\S+)/)[1]}
-**Error Message**: ${err.message}
-**Stack Trace**:
-\`\`\`
-${err.stack}
-\`\`\`
-    `;
-    var body = '&body=' + encodeURIComponent(issueBody.trim());
-    var reportErrorEl = parentElem.createChild('a', 'audits2-link audits2-report-error');
-    reportErrorEl.href = baseURI + title + body;
-    reportErrorEl.textContent = Common.UIString('Report this bug');
-    reportErrorEl.target = '_blank';
-  }
-
-  /**
    * @param {!DataTransfer} dataTransfer
    */
   _handleDrop(dataTransfer) {
@@ -488,6 +438,265 @@ ${err.stack}
     this._buildReportUI(/** @type {!ReportRenderer.ReportJSON} */ (data));
   }
 };
+
+Audits2.Audits2Panel.StatusView = class {
+  constructor() {
+    this._statusView = null;
+    this._progressWrapper = null;
+    this._progressBar = null;
+    this._statusText = null;
+
+    this._textChangedAt = 0;
+    this._fastFactUpdatedAt = 0;
+    this._currentPhase = null;
+    this._scheduledTextChangeTimeout = null;
+    this._progressUpdateTimeout = null;
+    this._progressUpdateBaseline = null;
+    this._progressUpdateTarget = null;
+    this._progressUpdateStartedAt = null;
+    this._progressUpdateShouldEndAt = null;
+  }
+
+  /**
+   * @param {!Element} parentElement
+   */
+  render(parentElement) {
+    this.reset();
+
+    this._statusView = parentElement.createChild('div', 'audits2-status vbox hidden');
+    this._progressWrapper = this._statusView.createChild('div', 'audits2-progress-wrapper');
+    this._progressBar = this._progressWrapper.createChild('div', 'audits2-progress-bar');
+    this._statusText = this._statusView.createChild('div', 'audits2-status-text');
+
+    this.updateStatus(Common.UIString('Loading...'));
+  }
+
+  reset() {
+    this._textChangedAt = 0;
+    this._fastFactUpdatedAt = 0;
+    this._currentPhase = null;
+    this._scheduledTextChangeTimeout = null;
+    this._progressUpdateTimeout = null;
+    this._progressUpdateBaseline = null;
+    this._progressUpdateTarget = null;
+    this._progressUpdateStartedAt = null;
+    this._progressUpdateShouldEndAt = null;
+    this._setProgressBarTo(0);
+  }
+
+  /**
+   * @param {boolean} isVisible
+   */
+  setVisible(isVisible) {
+    this._statusView.classList.toggle('hidden', !isVisible);
+  }
+
+  /**
+   * @param {?string} message
+   */
+  updateStatus(message) {
+    if (!message || !this._statusText)
+      return;
+
+    var phases = Audits2.Audits2Panel.StatusView.StatusPhases;
+    if (!this._currentPhase && message.startsWith(phases.Loading.messagePrefix)) {
+      this._currentPhase = phases.Loading;
+      this._scheduleTextChange(Common.UIString(
+          'Lighthouse is loading your page with throttling to measure performance on a mobile device on 3G.'));
+      this._scheduleProgressAnimation(phases.Loading.progressAsDecimal, phases.Loading.duration);
+    } else if (this._currentPhase === phases.Loading && message.startsWith(phases.Gathering.messagePrefix)) {
+      this._currentPhase = phases.Gathering;
+      this._scheduleTextChange(
+          Common.UIString('Lighthouse is gathering information about the page to compute your score.'));
+      this._scheduleProgressAnimation(phases.Gathering.progressAsDecimal, phases.Gathering.duration);
+    } else if (this._currentPhase === phases.Gathering && message.startsWith(phases.Auditing.messagePrefix)) {
+      this._currentPhase = phases.Auditing;
+      this._scheduleTextChange(
+          Common.UIString('Almost there! Lighthouse is now generating your own special pretty report!'));
+      this._scheduleProgressAnimation(phases.Auditing.progressAsDecimal, phases.Auditing.duration);
+    } else if (message.startsWith('Cancel')) {
+      this._immediateTextChange(Common.UIString('Cancelling\u2026'), true);
+      clearTimeout(this._progressUpdateTimeout);
+    } else if (!this._currentPhase) {
+      this._immediateTextChange(Common.UIString('Lighthouse is warming up\u2026'), true);
+    } else {
+      this._updateFastFactIfNecessary();
+    }
+  }
+
+  _updateFastFactIfNecessary() {
+    var now = performance.now();
+    if (now - this._progressUpdateStartedAt < Audits2.Audits2Panel.StatusView.fastFactRotationInterval)
+      return;
+    if (this._fastFactUpdatedAt &&
+        now - this._fastFactUpdatedAt < Audits2.Audits2Panel.StatusView.fastFactRotationInterval)
+      return;
+
+    var fastFactIndex = Math.round(Math.random() * (Audits2.Audits2Panel.StatusView.FastFacts.length - 1));
+    this._scheduleTextChange(
+        '💡 ' + Audits2.Audits2Panel.StatusView.FastFacts[fastFactIndex],
+        () => this._fastFactUpdatedAt = performance.now());
+  }
+
+  /**
+   * @param {string} text
+   * @param {boolean=} canBeReplacedImmediately
+   */
+  _immediateTextChange(text, canBeReplacedImmediately) {
+    if (!this._statusText)
+      return;
+    this._textChangedAt = canBeReplacedImmediately ? 0 : performance.now();
+    this._statusText.textContent = text;
+  }
+
+  /**
+   * @param {string} text
+   * @param {function()=} callback
+   */
+  _scheduleTextChange(text, callback) {
+    if (this._scheduledTextChangeTimeout)
+      clearTimeout(this._scheduledTextChangeTimeout);
+
+    var elapsedSinceLastChange = performance.now() - this._textChangedAt;
+    this._scheduledTextChangeTimeout = setTimeout(() => {
+      this._immediateTextChange(text);
+      if (callback)
+        callback();
+    }, Math.max(Audits2.Audits2Panel.StatusView.minimumTextVisibilityDuration - elapsedSinceLastChange, 0));
+  }
+
+  /**
+   * @param {number} targetProgressAsDecimal
+   * @param {number} animationDurationInMs
+   */
+  _scheduleProgressAnimation(targetProgressAsDecimal, animationDurationInMs) {
+    this._progressUpdateBaseline = this._computeCurrentProgress();
+    this._progressUpdateTarget = targetProgressAsDecimal;
+    this._progressUpdateStartedAt = performance.now();
+    this._progressUpdateShouldEndAt = this._progressUpdateStartedAt + animationDurationInMs;
+    clearTimeout(this._progressUpdateTimeout);
+    this._scheduleProgressTick();
+  }
+
+  _scheduleProgressTick() {
+    this._progressUpdateTimeout = setTimeout(() => {
+      this._updateFastFactIfNecessary();
+
+      var currentProgress = this._computeCurrentProgress();
+      this._setProgressBarTo(currentProgress);
+      if (currentProgress < this._progressUpdateTarget)
+        this._scheduleProgressTick();
+    }, 100);
+  }
+
+  _computeCurrentProgress() {
+    if (typeof this._progressUpdateStartedAt !== 'number')
+      return 0;
+
+    var timeElapsed = performance.now() - this._progressUpdateStartedAt;
+    var percentTimeRemaining =
+        1 - Math.min(timeElapsed / (this._progressUpdateShouldEndAt - this._progressUpdateStartedAt), 1);
+    var progressToCover = this._progressUpdateTarget - this._progressUpdateBaseline;
+    var targetProgressElapsed = (1 - percentTimeRemaining * percentTimeRemaining) * progressToCover;
+    return this._progressUpdateBaseline + targetProgressElapsed;
+  }
+
+  /**
+   * @param {number} progressAsDecimal
+   */
+  _setProgressBarTo(progressAsDecimal) {
+    if (!this._progressBar)
+      return;
+    var percentComplete = `${Math.round(progressAsDecimal * 1000) / 10}%`;
+    this._progressBar.style.width = percentComplete;
+  }
+
+  /**
+   * @param {!Error} err
+   * @param {string} inspectedURL
+   */
+  renderBugReport(err, inspectedURL) {
+    console.error(err);
+    this._immediateTextChange('');
+    this._statusText.createTextChild(Common.UIString('Ah, sorry! We ran into an error: '));
+    this._statusText.createChild('em').createTextChild(err.message);
+    if (Audits2.Audits2Panel.KnownBugPatterns.some(pattern => pattern.test(err.message))) {
+      var message = Common.UIString(
+          'Try to navigate to the URL in a fresh Chrome profile without any other tabs or ' +
+          'extensions open and try again.');
+      this._statusText.createChild('p').createTextChild(message);
+    } else {
+      this._renderBugReportLink(err, inspectedURL);
+    }
+  }
+
+  /**
+   * @param {!Error} err
+   * @param {string} inspectedURL
+   */
+  _renderBugReportLink(err, inspectedURL) {
+    var baseURI = 'https://github.com/GoogleChrome/lighthouse/issues/new?';
+    var title = encodeURI('title=DevTools Error: ' + err.message.substring(0, 60));
+
+    var issueBody = `
+**Initial URL**: ${inspectedURL}
+**Chrome Version**: ${navigator.userAgent.match(/Chrome\/(\S+)/)[1]}
+**Error Message**: ${err.message}
+**Stack Trace**:
+\`\`\`
+${err.stack}
+\`\`\`
+    `;
+    var body = '&body=' + encodeURIComponent(issueBody.trim());
+    var reportErrorEl = this._statusText.createChild('a', 'audits2-link audits2-report-error');
+    reportErrorEl.href = baseURI + title + body;
+    reportErrorEl.textContent = Common.UIString('Report this bug');
+    reportErrorEl.target = '_blank';
+  }
+};
+
+Audits2.Audits2Panel.StatusView.StatusPhases = {
+  Loading: {
+    messagePrefix: 'Loading page',
+    duration: 45000,
+    progressAsDecimal: .7,
+  },
+  Gathering: {
+    messagePrefix: 'Retrieving',
+    duration: 12000,
+    progressAsDecimal: .95,
+  },
+  Auditing: {
+    messagePrefix: 'Evaluating',
+    duration: 3000,
+    progressAsDecimal: 1,
+  },
+};
+
+Audits2.Audits2Panel.StatusView.FastFacts = [
+  '1MB takes a minimum of 5 seconds to download on a typical 3G connection [Source: WebPageTest and DevTools 3G definition].',
+  'Rebuilding Pinterest pages for performance increased conversion rates by 15% [Source: WPO Stats]',
+  'BBC has seen a loss of 10% of their users for every extra second of page load [Source: WPO Stats]',
+  '53% of all sites are abandoned after 3 seconds [Source: Google DoubleClick blog]',
+  'By reducing the response size of JSON needed for displaying comments, Instagram saw increased impressions [Source: WPO Stats]',
+  'Walmart saw a 1% increase in revenue for every 100ms improvement in page load [Source: WPO Stats]',
+  'If a site takes >1 second to become interactive, users lose attention, and their perception of completing the page task is broken [Source: Google Developers Blog]',
+  '75% of all mobile user connections occur on 2G or 3G [Source: GSMA Mobile]',
+  'The average user device is an Android device in the $150-200 range [Source: International Data Corporation]',
+  '19 seconds is the average time a mobile web page takes to load on a 3G connection [Source: Google DoubleClick blog]',
+  '14 seconds is the average time a mobile web page takes to load on a 4G connection [Source: Google DoubleClick blog]',
+  'The average time it takes to fully load a mobile landing page is 22 seconds [Source: Think with Google]',
+  '70% of mobile pages take nearly seven seconds for the visual content above the fold to display on the screen. [Source: Think with Googled]',
+  'As page load time increases from one second to seven seconds, the probability of a mobile site visitor bouncing increases 113%. [Source: Think with Google]',
+  'As the number of elements—text, titles, and images—on a page increases from 400 to 6,000, the probability of conversion drops 95%. [Source: Think with Google]',
+  '70% of mobile pages weigh over 1MB, 36% over 2MB, and 12% over 4MB. [Source: Think with Google]',
+  'Lighthouse only simulates mobile performance; to measure performance on a real device, use WebPageTest [Source: Lighthouse team]',
+];
+
+/** @const */
+Audits2.Audits2Panel.StatusView.fastFactRotationInterval = 6000;
+/** @const */
+Audits2.Audits2Panel.StatusView.minimumTextVisibilityDuration = 3000;
 
 /**
  * @override

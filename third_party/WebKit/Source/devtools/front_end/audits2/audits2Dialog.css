@@ -65,6 +65,29 @@ header {
     content: "";
 }
 
+.audits2-status-text {
+    text-align: center;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.audits2-progress-wrapper {
+    width: calc(100% + 40px);
+    height: 2px;
+    background-color: #E1F5FE;
+    position: relative;
+    margin: 10px;
+}
+
+.audits2-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #039BE5;
+    position: absolute;
+}
+
 .audits2-report-error {
     display: block;
     margin-top: 5px;
