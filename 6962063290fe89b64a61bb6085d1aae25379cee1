@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80cd0f8f_3acedb71",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Could it be interesting to trace if parent is null?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926dd1c1_56a8ea6d",
+        "filename": "components/exo/surface_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t parent use pipes? ||",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab91c2b_6f2fe9da",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Can you add a description of the client?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3570ff_ba865267",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Comment before struct",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ee13d1_85137167",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Can you add a comment why we have modes and next_modes (I\u0027m assuming you get a few and then an on done rpc). Why would this be useful for a client that runs once and exit?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe52ca5_ccfd72a6",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t this get called only once?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652108d2_12d37581",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "Why do you mix streams and StringPrintf?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4d642e_772bc307",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T05:41:29Z",
+      "side": 1,
+      "message": "When does this return false?",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
