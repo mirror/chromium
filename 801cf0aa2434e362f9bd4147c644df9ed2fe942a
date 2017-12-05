@@ -52,6 +52,24 @@
       "revId": "801cf0aa2434e362f9bd4147c644df9ed2fe942a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a53b6d7_17c2a835",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-05T23:11:49Z",
+      "side": 1,
+      "message": "I tried asking on bug 758429, but I still haven\u0027t found anyone to verify.  Could we land as-is?",
+      "parentUuid": "78f16c41_36b56851",
+      "revId": "801cf0aa2434e362f9bd4147c644df9ed2fe942a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
