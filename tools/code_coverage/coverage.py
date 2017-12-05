@@ -368,6 +368,17 @@ def _ValidateBuildingWithClangCoverage():
         CLANG_COVERAGE_BUILD_ARG)
 
 
+def _ValidateTargetOsIsMacOrLinux():
+  """Asserts that the target os of the build is Linux or Mac."""
+  build_args = _ParseArgsGnFile()
+
+  target_os_key = 'target_os'
+  if target_os_key in build_args and (build_args[target_os_key] not in
+                                      ('linux', 'mac')):
+    assert False, ('This script is only tested and working when building for '
+                   'linux or mac for now.')
+
+
 def _ParseArgsGnFile():
   """Parses args.gn file and returns results as a dictionary.
 
@@ -433,6 +444,10 @@ def _ParseCommandArguments():
 
 def Main():
   """Execute tool commands."""
+  if sys.platform not in ('darwin', 'linux2'):
+    print('This script is only tested and working on Linux and Mac for now.')
+    sys.exit(1)
+
   assert os.path.abspath(os.getcwd()) == SRC_ROOT_PATH, ('This script must be '
                                                          'called from the root '
                                                          'of checkout')
@@ -450,6 +465,7 @@ def Main():
   assert os.path.exists(BUILD_DIR), ('Build directory: {} doesn\'t exist. '
                                      'Please run "gn gen" to generate.').format(
                                          BUILD_DIR)
+  _ValidateTargetOsIsMacOrLinux()
   _ValidateBuildingWithClangCoverage()
   _ValidateCommandsAreRelativeToSrcRoot(args.command)
   if not os.path.exists(OUTPUT_DIR):
