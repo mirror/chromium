@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad2751a5_77e8e2cb",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:56:20Z",
+      "side": 1,
+      "message": "SimpleURLLoader can be deleted at any time and will safely shut down the request and not invoke the callback, so weak ptrs aren\u0027t needed.",
+      "parentUuid": "5c2b9ce9_db7af576",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dbe6fb3_cc937e3e",
         "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
         "patchSetId": 47
@@ -82,6 +106,30 @@
       "writtenOn": "2017-12-05T17:46:28Z",
       "side": 1,
       "message": "Since this is a naked pointer - what is its lifetime? Are we guaranteed it will outlive this?",
+      "range": {
+        "startLine": 69,
+        "startChar": 36,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a558b968_b5514ef6",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T17:56:20Z",
+      "side": 1,
+      "message": "This is a valid concern.  If the network service crashes and we restart it (Something we want to handle, though I\u0027m not a fan of the idea), this can be invalidated.  I\u0027d rather we not hang onto this at all, but if we need to, we should make a URLLoaderFactoryPtr with loader_factory.Clone() (Which consumes more resources, though no idea how much more - it basically makes a new Mojo pipe).",
+      "parentUuid": "4680d825_6cd9f6ad",
       "range": {
         "startLine": 69,
         "startChar": 36,
