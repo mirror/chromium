@@ -52,6 +52,24 @@
       "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10318f7b_b6c6df3a",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:36:46Z",
+      "side": 1,
+      "message": "I thought the \"ignoring\" part would warn people that it\u0027s only part of the picture so they\u0027re less likely to use it without knowing what they\u0027re doing. However it creates a negative that\u0027s confusing.\n\nWhat about BackgroundColorVisitedOnly/BackgroundColorUnvisitedOnly or BackgroundColorRawVisited/BackgroundColorRawUnvisited?\n\nDo you think VisitedLinkBackgroundColor is explicit enough that I can just make those ones public and only make copies of the unvisited ones?\n\nI\u0027ll add Naina and Darren so they can bikeshed with us :P",
+      "parentUuid": "04708861_65529f1d",
+      "revId": "4e7e9ebc2ff6da23b9b7edf18b501b806f432a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
