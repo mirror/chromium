@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5f8d6e_cdf9cc94",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:42:03Z",
+      "side": 1,
+      "message": "does this change this for all ozone platforms? Or for ozone_x11 only?\n\nIt\u0027s important that ozone drm unit tests not use the windowed_test_launcher.",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c1ea32_1eb93ceb",
+        "filename": "ui/events/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:42:03Z",
+      "side": 1,
+      "message": "that we need a ozone_platform_x11 test here demonstrates some kind of platform layering violation. We need a bug to resolve that someday.\n\n(But fixing the layering issue is not in scope for this CL.)",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6a7f4b_b98a8b89",
+        "filename": "ui/platform_window/x11/x11_window_ozone.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:42:03Z",
+      "side": 1,
+      "message": "Question for sadrul@: is this wired up how it should be? It follows the existing code but it I don\u0027t think it aligns with how I\u0027d like the external/internal window tree code to be arranged.",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3800abc5_927a6dac",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-05T16:42:03Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
