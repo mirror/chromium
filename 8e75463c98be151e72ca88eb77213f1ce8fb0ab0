@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "c5f83ba6_547a6b27",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-05T22:11:04Z",
+      "side": 1,
+      "message": "newline above",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcfd32f_555667b6",
+        "filename": "device/vr/oculus/oculus_render_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-05T22:11:04Z",
+      "side": 1,
+      "message": "This wording is ambiguous. I think you should clarify that there\u0027s no parallelism so we don\u0027t need to check the frame id because it will always match the current id here. Maybe we should also DCHECK that that\u0027s true.",
+      "range": {
+        "startLine": 132,
+        "startChar": 35,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d708aba4_03e6b9c6",
         "filename": "device/vr/oculus/oculus_type_converters.h",
         "patchSetId": 1
