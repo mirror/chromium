@@ -207,6 +207,18 @@ TEST_F(ContentVerifyJobUnittest, DeletedAndMissingFiles) {
               RunContentVerifyJob(*extension.get(), unexpected_resource_path,
                                   contents));
   }
+
+  {
+    // Now ask for a non-existent resource with an empty path. Verification
+    // should skip this file as if it was non-existent.
+    // See http://crbug.com/791929.
+    const base::FilePath::CharType kEmptyPathResource[] = FILE_PATH_LITERAL("");
+    base::FilePath empty_path_resource_path(kEmptyPathResource);
+    std::string empty_contents;
+    EXPECT_EQ(ContentVerifyJob::NONE,
+              RunContentVerifyJob(*extension.get(), empty_path_resource_path,
+                                  empty_contents));
+  }
 }
 
 // Tests that content modification causes content verification failure.
