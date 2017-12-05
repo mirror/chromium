@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46638f12_c72a5def",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814ba87a_5bdf8efd",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4309483c_8818ac15",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T03:49:09Z",
       "side": 1,
       "message": "You define CurrentColorOrValidColor in the new ComputedStyleUtils file. Would it be bad to reference that here? (Or maybe we don\u0027t care because you\u0027re working on getting rid of this file?)",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e36069_e61177d4",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1889,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "I feel like it would be a bit weird to call that from here, and I am planning to delete this within a week :P",
+      "parentUuid": "4309483c_8818ac15",
       "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4fbd862a_5f64185f",
+        "filename": "third_party/WebKit/Source/core/css/properties/ComputedStyleUtils.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f37503c_774ac0b8",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2aac005b_ecbcb050",
         "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
         "patchSetId": 19
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-04T03:49:09Z",
       "side": 1,
       "message": "Do we instantiate the Longhand class anywhere? If we don\u0027t, it might be better to make this function virtual.\n\nAlso, does every longhand need a Color getter? I find that mildly surprising.",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebc6ab7_168d78b5",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "It is currently instantiated, but soon it won\u0027t be.\n\nI think it does need to be declared in longhand. It\u0027s used in VisitedDependentColor\n\nColor unvisited_color \u003d\n      ToLonghand(color_property).ColorIncludingFallback(false, *this);\n\nThis won\u0027t work if it\u0027s not in the Longhand header, right?\n\nAlso the generator is currently set up so that property_methods generates overrides in the subclass headers, so it needs to be in the superclass to be overridden. I could change that to be more flexible though.",
+      "parentUuid": "2aac005b_ecbcb050",
       "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d0b7dd76_d186894f",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTapHighlightColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ba5e3b_c32f694c",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8c9d88_4ac3b362",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTextEmphasisColor.cpp",
         "patchSetId": 19
@@ -101,6 +191,24 @@
       "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b2b40a_b04fab99",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTextEmphasisColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8c9d88_4ac3b362",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "06362a7f_1c44506b",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTextFillColor.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8d45c6_e669c8ed",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae17bdbd_165f4113",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 19
@@ -135,6 +261,24 @@
       "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867050ff_c410efae",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 2203,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-05T05:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae17bdbd_165f4113",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
