@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87c50948_b70c9f61",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-05T23:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291951ee_cc837e9b",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b11b287d_44d05637",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "770176ca_614c8342",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-05T23:33:28Z",
+      "side": 1,
+      "message": "Done, about to send a server side CL with the matching change for review.",
+      "parentUuid": "b11b287d_44d05637",
+      "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8dbd118_fa960461",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b766933_c311cd87",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-05T23:33:28Z",
+      "side": 1,
+      "message": "Done, the plan is to use unique keys for each of the 3 places, I will change them once the server side changes are ready. Filed a bug for this and added a TODO.",
+      "parentUuid": "a8dbd118_fa960461",
+      "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa67bc1_c06690f7",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-05T23:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17bed15f_b0fe6811",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "1b8a68bdf8eb897055ffa58aa558296c079cf300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
