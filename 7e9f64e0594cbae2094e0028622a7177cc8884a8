@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4805be2_1c94b2d5",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-05T20:06:53Z",
+      "side": 1,
+      "message": "As discussed offline, we can nix the kKeyboard check now.",
+      "revId": "7e9f64e0594cbae2094e0028622a7177cc8884a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7c3424_aa8e0acd",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-05T20:06:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t !focused-\u003eIsFocusable() imply !focused?",
+      "revId": "7e9f64e0594cbae2094e0028622a7177cc8884a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
