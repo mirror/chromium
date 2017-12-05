@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3827429b_01697c3d",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-05T15:41:41Z",
+      "side": 1,
+      "message": "No, in that case we have result.get() and std::move(result) in one PostTaskAndReply statement. That\u0027s a recipe for disaster due to undefined execution order.\n\nMaybe I still don\u0027t understand your proposal.",
+      "parentUuid": "139c8019_cf2d0d0c",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7690a0bc_22d580de",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 10
