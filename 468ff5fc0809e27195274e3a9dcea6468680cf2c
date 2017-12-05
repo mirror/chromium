@@ -141,6 +141,23 @@
       "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386a401b_322ac6a3",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-05T10:27:28Z",
+      "side": 1,
+      "message": "While the spec discussions are ongoing, could try this change as it is? IsHidden() is less common than !HasSelectionFocus() so it should be safer to land (less impact). I think it would be good to try it first. I\u0027d like to land a fix for the bug as soon as possible.",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
