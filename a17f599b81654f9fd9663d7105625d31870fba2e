@@ -107,6 +107,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480eedf0_9801e854",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T00:53:16Z",
+      "side": 1,
+      "message": "I don\u0027t think it describes state that is meaningful for the GLImage API itself. It describes state that the code using the image is interested in keeping track of. New functions added to GLImage should come with additions to the templated image tests we have but not sure what to test in this case..\n\nI understand that it\u0027s useful to pass metadata around with images so maybe we should have it inherit from ui::PropertyHandler so people can add whatever properties they want without having to change the GLImage class and make the core API harder to understand. That would also allow us to cleanup the EmulatingRGB hacks we have in there..",
+      "parentUuid": "f4096650_94910728",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
