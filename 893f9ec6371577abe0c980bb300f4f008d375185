@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "172fb041_8566a455",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: kVariationsHttpRetryFeature - or just kHttpRetryFeature since it\u0027s internal to this file which is already in variations namespace.",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1859128_c9b487b2",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: base::Time should be passed by value.",
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d9d353_9d00eb47",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "You defined a return value for EncryptString() - but you\u0027re not checking it. Please check it and handle things gracefully.",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3691faa_adb3902a",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: Suggest moving the IsEnabled() check to be around the \"insecure_variations_server_url_ \u003d\" statement in StartRepeatedVariationsSeedFetch() - so it\u0027s only done once and this code can just check if that var is not empty like it does already.",
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdb2c67_37a54449",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: Capitalize Enum since it\u0027s the start of a sentence.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a985889f_c07f4a25",
+        "filename": "components/variations/variations_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: variations-server-url -\u003e |kVariationsServerURL|",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936e553f_588e1519",
+        "filename": "components/variations/variations_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:46:30Z",
+      "side": 1,
+      "message": "Nit: Your constants don\u0027t match whether they say ServerInsecureURL or InsecureServerURL - please use the latter here to match the url constant.",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
