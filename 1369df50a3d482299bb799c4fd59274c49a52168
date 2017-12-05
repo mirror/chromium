@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b01b5c1_70b51e63",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40afff2e_215cf71c",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a7975b6_a6babcb8",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d12850_33308c25",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a7975b6_a6babcb8",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "86610419_dcce744c",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t intend for this to also be a parameterised test, but yeah I don\u0027t think there\u0027s any reason why it shouldn\u0027t be? Done.",
+      "parentUuid": "22e49b7a_ab2111ef",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e8852b_f9af646f",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b1e12d_0e85d1a2",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Oh! I was looking for this method but I thought it was on TabStripModel or something. Thank you!",
+      "parentUuid": "e1e8852b_f9af646f",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3c79e612_bf6d25a4",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2b425e_335185b8",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9b4b43_d13521f0",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ec4dc89d_2a82391f",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9b4b43_d13521f0",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4898b803_743a2a00",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-01T06:19:18Z",
       "side": 1,
       "message": "I think this is equivalent to doing chrome::SelectNextTab(browser()); If it really needs a keyboard shortcut, it should probably be dispatched differently.",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96886890_8a0e1e58",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "I think it just needs to change the tab without focusing something else? I tried running the tests without the fix and it fails, so I think it\u0027s OK. Should I change it to chrome::SelectNextTab(browser()) instead, or would you prefer a proper key event gets fired?",
+      "parentUuid": "4898b803_743a2a00",
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "94f0b44c_d8eab6fe",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0888a8d8_a9c4db97",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6601b48_02c24c8f",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1872630d_1b4a4be4",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Yeah, I was thinking that, but I wasn\u0027t sure. Done now ! :)",
+      "parentUuid": "e6601b48_02c24c8f",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +349,24 @@
       "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0aed30_bb9ef816",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T03:56:02Z",
+      "side": 1,
+      "message": "Done w/ the above comment :)",
+      "parentUuid": "776f0ee3_7df32223",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
