@@ -46,6 +46,47 @@
       "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa7d7c7_8f9be73d",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T03:39:42Z",
+      "side": 1,
+      "message": "Didn\u0027t get enough time to get anywhere with this, but I\u0027ve at least ruled out #3 as not workable. #2 would work much better. Should be able to get to it tomorrow if you\u0027re happy to wait.",
+      "parentUuid": "fbf2d8fd_0781c185",
+      "range": {
+        "startLine": 2491,
+        "startChar": 6,
+        "endLine": 2491,
+        "endChar": 21
+      },
+      "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa82acb_0c2c91d4",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T03:39:42Z",
+      "side": 1,
+      "message": "Try changing this line from \"Direct\" to \"All\":\nhttps://cs.chromium.org/chromium/src/build/android/gyp/write_build_config.py?rcl\u003def76aa28acf16fb46cb31b3bf7504652a9f7df08\u0026l\u003d612\n\nclasspath_deps was very recently added with processors in mind, so if it makes it work, then we can change to that.",
+      "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
