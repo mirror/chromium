@@ -891,8 +891,6 @@ TEST(ObserverListTest, IteratorOutlivesList) {
 
   for (auto& observer : *observer_list)
     observer.Observe(0);
-  // If this test fails, there'll be Valgrind errors when this function goes out
-  // of scope.
 }
 
 TEST(ObserverListTest, BasicStdIterator) {
