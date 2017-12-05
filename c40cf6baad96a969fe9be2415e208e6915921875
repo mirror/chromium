@@ -16,6 +16,24 @@
       "revId": "c40cf6baad96a969fe9be2415e208e6915921875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015f9f23_b0a9d502",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T03:17:46Z",
+      "side": 1,
+      "message": "\u003e Optional: The tests have some duplicate functionality. Maybe it makes sense to generalize? Your choice, I\u0027m not confident it would end up being more readable.\n\nYeah, I tend to lean towards thinking some duplication is ok in tests, to make them easier to skim and to make error messages more useful.  In this case, I\u0027m ok with the balance between the TestScenarios and then having similar structures between the two tests.",
+      "parentUuid": "e7319344_41db08a7",
+      "revId": "c40cf6baad96a969fe9be2415e208e6915921875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
