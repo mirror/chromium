@@ -87,6 +87,30 @@
       "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9062b8_32db7c0e",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-05T04:27:07Z",
+      "side": 1,
+      "message": "I uploaded the incomplete CL that use this method: https://crrev.com/c/807677/1/ui/message_center/views/notification_view_md.cc#693\n\nThe comment below says MessageView does not know how to react to user actions, so I thought it is reasonable to add the method to MessageViewDelegate instead of calling the MessageCenter method directly from NotificationViewMD.\n\nhttps://cs.chromium.org/chromium/src/ui/message_center/views/message_view_delegate.h?l\u003d15\u0026rcl\u003d7b5ad18f8fc3c09bf9d3990948818650354b7dc0\n\nHowever if you feel this is redundant abstraction, I would remove this from MessageViewDelegate. Thanks!",
+      "parentUuid": "abb7e94e_bd985ce4",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
