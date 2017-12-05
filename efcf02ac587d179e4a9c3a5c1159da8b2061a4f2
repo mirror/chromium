@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dae0d5f_d7b27dbb",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "Should this be done only for linker_raw_symbols?\n\nMight be better to .extend() raw_symbols at the end so as to not run any of this logic on symbols that already existed. Or maybe even just return symbols, section_sizes and let the caller merge them?",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9f3e22_c6153750",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: paths -\u003e object_paths, and move the filtering to the caller.",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa40229_21f3d78b",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: use ()s rather than []s",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a275ad_c4d1bd53",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: os.path.getsize() returns 0 for missing files, so no need to check exists() first.",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257d3121_05fde6d9",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: more efficient to do: for line in f:",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ca6222_0270a388",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: rstrip()",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb00aa6_e918b73f",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: add a comment about when this would happen.",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfc9528_470dce2d",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "this removes the (unpacked) entry added on the previous line. Not clear why it\u0027s here...",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e656cd7_26165c81",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: this should be ()s as well",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0677b4ac_c4a94e64",
+        "filename": "tools/binary_size/libsupersize/ninja_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-05T01:53:17Z",
+      "side": 1,
+      "message": "nit: change to IterAllPaths() and return iterkeys()",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
