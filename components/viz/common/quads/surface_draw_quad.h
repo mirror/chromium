@@ -29,6 +29,7 @@ class VIZ_COMMON_EXPORT SurfaceDrawQuad : public DrawQuad {
               const SurfaceId& primary_surface_id,
               const base::Optional<SurfaceId>& fallback_surface_id,
               SkColor default_background_color,
+              const base::Optional<SkColor>& gutter_color_override,
               bool stretch_content_to_fill_bounds);
 
   void SetAll(const SharedQuadState* shared_quad_state,
@@ -38,11 +39,13 @@ class VIZ_COMMON_EXPORT SurfaceDrawQuad : public DrawQuad {
               const SurfaceId& primary_surface_id,
               const base::Optional<SurfaceId>& fallback_surface_id,
               SkColor default_background_color,
+              const base::Optional<SkColor>& gutter_color_override,
               bool stretch_content_to_fill_bounds);
 
   SurfaceId primary_surface_id;
   base::Optional<SurfaceId> fallback_surface_id;
   SkColor default_background_color = SK_ColorWHITE;
+  base::Optional<SkColor> gutter_color_override;
   bool stretch_content_to_fill_bounds = false;
 
   static const SurfaceDrawQuad* MaterialCast(const DrawQuad* quad);

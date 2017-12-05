@@ -241,10 +241,13 @@ void SurfaceAggregator::HandleSurfaceQuad(
         gfx::ScaleToEnclosingRect(fallback_rect, scale_ratio, scale_ratio);
     fallback_rect = gfx::IntersectRects(fallback_rect, surface_quad->rect);
 
+    SkColor gutter_color = surface_quad->gutter_color_override
+                               ? *surface_quad->gutter_color_override
+                               : fallback_frame.metadata.root_background_color;
+
     EmitGutterQuadsIfNecessary(
         surface_quad->rect, fallback_rect, surface_quad->shared_quad_state,
-        target_transform, clip_rect,
-        fallback_frame.metadata.root_background_color, dest_pass);
+        target_transform, clip_rect, gutter_color, dest_pass);
   }
 
   ++uma_stats_.using_fallback_surface;

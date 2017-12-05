@@ -37,6 +37,7 @@ class CONTENT_EXPORT DelegatedFrameHostClientAura
   std::unique_ptr<CompositorResizeLock> DelegatedFrameHostCreateResizeLock()
       override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
+  bool IsInFullscreenMode() const override;
   void OnBeginFrame() override;
   bool IsAutoResizeEnabled() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
