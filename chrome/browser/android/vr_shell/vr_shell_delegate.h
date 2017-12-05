@@ -59,6 +59,7 @@ class VrShellDelegate : public device::GvrDelegateProvider {
 
  private:
   // device::GvrDelegateProvider implementation.
+  bool IsGvrReady() override;
   void SetDeviceId(unsigned int device_id) override;
   void RequestWebVRPresent(device::mojom::VRSubmitFrameClientPtr submit_client,
                            device::mojom::VRPresentationProviderRequest request,

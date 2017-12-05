@@ -181,6 +181,12 @@ void VrShellDelegate::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
+bool VrShellDelegate::IsGvrReady() {
+  JNIEnv* env = AttachCurrentThread();
+  std::unique_ptr<VrCoreInfo> vr_core_info = MakeVrCoreInfo(env);
+  return vr_core_info->compatibility == VR_CORE_COMPATIBILITY_VR_READY;
+}
+
 void VrShellDelegate::SetDeviceId(unsigned int device_id) {
   device_id_ = device_id;
   if (vr_shell_) {
