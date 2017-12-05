@@ -286,10 +286,4 @@ static void JNI_VrShellDelegate_RegisterVrAssetsComponent(
       g_browser_process->component_updater());
 }
 
-static void JNI_VrShellDelegate_OnChromeStarted(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz) {
-  vr::Assets::GetInstance()->GetMetricsHelper()->OnChromeStarted();
-}
-
 }  // namespace vr_shell
