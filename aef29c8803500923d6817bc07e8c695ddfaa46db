@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468be76f_d56edf1f",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T06:33:32Z",
+      "side": 1,
+      "message": "Perhaps group these in a separate section and mention that base::Bind is specifically not allowed, since WTF::Bind has some debug threading checks?",
+      "revId": "aef29c8803500923d6817bc07e8c695ddfaa46db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
