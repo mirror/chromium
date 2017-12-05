@@ -21,6 +21,7 @@ namespace views {
 class Label;
 class LabelButton;
 class ProgressBar;
+class RadioButton;
 }
 
 namespace message_center {
@@ -197,6 +198,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   NotificationControlButtonsView* GetControlButtonsView() const override;
   bool IsExpanded() const override;
   void SetExpanded(bool expanded) override;
+  void OnSettingsButtonPressed() override;
 
   // Overridden from NotificationInputDelegate:
   void OnNotificationInputSubmit(size_t index,
@@ -238,6 +240,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   bool IsExpandable();
   void ToggleExpanded();
   void UpdateViewForExpandedState(bool expanded);
+  void ToggleInlineSettings();
 
   // View containing close and settings buttons
   std::unique_ptr<NotificationControlButtonsView> control_buttons_view_;
@@ -254,10 +257,14 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   // Describes whether the view should display a hand pointer or not.
   bool clickable_;
 
+  // Show inline settings when the settings butotn is clicked.
+  bool use_inline_settings_ = false;
+
   // Container views directly attached to this view.
   NotificationHeaderView* header_row_ = nullptr;
   views::View* content_row_ = nullptr;
   views::View* actions_row_ = nullptr;
+  views::View* settings_row_ = nullptr;
 
   // Containers for left and right side on |content_row_|
   views::View* left_content_ = nullptr;
@@ -275,6 +282,10 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   CompactTitleMessageView* compact_title_message_view_ = nullptr;
   views::View* action_buttons_row_ = nullptr;
   NotificationInputMD* inline_reply_ = nullptr;
+
+  views::RadioButton* block_all_button_ = nullptr;
+  views::RadioButton* dont_block_button_ = nullptr;
+  views::LabelButton* settings_done_button_ = nullptr;
 
   std::unique_ptr<ui::EventHandler> click_activator_;
 
