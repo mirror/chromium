@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0682427e_c1e497cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 43
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T09:11:36Z",
+      "side": 1,
+      "message": "Nit: remove the \u0027t\u0027",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd2de9c_cd694f9e",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T09:11:36Z",
+      "side": 1,
+      "message": "Nit: const GURL\u0026 (same below for resource_request-\u003emethod)",
+      "range": {
+        "startLine": 767,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 6
+      },
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e41f43_2dc8406f",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T09:11:36Z",
+      "side": 1,
+      "message": "Is it necessary to new this? Or can we just have use mojo::Binding directly?",
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a10d3d5_ce1ba73b",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T09:11:36Z",
+      "side": 1,
+      "message": "Can this check if url_lodaer_client_endpoints is empty instead?",
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca56aa0_23aad4b9",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T09:11:36Z",
+      "side": 1,
+      "message": "Note that nullptr is an acceptable way to write this as well.",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 73
+      },
+      "revId": "368f9978133102a4dae7e48dfe11828616e34931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
