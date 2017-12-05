@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faa2e6e8_5cf6102a",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T07:23:22Z",
+      "side": 1,
+      "message": "Nit: I think you want a custom comparator so you can look up by raw pointer: https://chromium.googlesource.com/chromium/src/+/bd278588b337b976c49f28604f7c807aeb869fac/base/containers/README.md#base_flat_map-and-base_flat_set. I\u0027m not sure why base doesn\u0027t already provide one though.",
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5f997c_48f54846",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T07:23:22Z",
+      "side": 1,
+      "message": "From the implementation, it seems like the stream\u0027s lifetime is bounded by the lifetime of |client|. If this is the case, please document this.",
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9038a6b9_43b586ef",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T07:23:22Z",
+      "side": 1,
+      "message": "Are these guessable?",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
