@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075f3f0e_60203dad",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-05T19:54:01Z",
+      "side": 1,
+      "message": "Hrm, do we need to pass the |task| here?",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "8a5cd94370825de04567a7d9d558d370ea179ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
