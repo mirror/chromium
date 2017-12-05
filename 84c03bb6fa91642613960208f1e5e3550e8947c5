@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9aa4d6b4_036e6a90",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04584d02_48d0f6f1",
+      "range": {
+        "startLine": 30,
+        "startChar": 22,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb872b0_4040c1c1",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedcd2d7_a2186f3f",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb872b0_4040c1c1",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 55,
+        "endChar": 71
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f5f28378_702edf6e",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Made static, and changed to AsWeakPtr().",
+      "parentUuid": "02ab2417_687b7f6a",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb97ee1_cd18c046",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0ea82c90_e29159da",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Oh, no longer needed. Thanks; removed.",
+      "parentUuid": "acb97ee1_cd18c046",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 35
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70b34e14_0fea2e0b",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
         "patchSetId": 6
@@ -108,6 +204,24 @@
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620df58a_30979d96",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70b34e14_0fea2e0b",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "0dcb631e_3e7592d2",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ebf048_ce8642ec",
+      "range": {
+        "startLine": 80,
+        "startChar": 61,
+        "endLine": 80,
+        "endChar": 76
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b773d147_e58774e8",
         "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
         "patchSetId": 6
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "80182174_e8ef634c",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b773d147_e58774e8",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0030633_faaf7b25",
         "filename": "content/common/speech_recognition_host.mojom",
         "patchSetId": 6
@@ -162,6 +318,24 @@
       "writtenOn": "2017-12-04T03:17:46Z",
       "side": 1,
       "message": "Why not speech_recognition.mojom?",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbdd94e_c9e5844f",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "I\u0027m saving that for the renderer-\u003ebrowser messages.",
+      "parentUuid": "c0030633_faaf7b25",
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "b4681d00_c49df113",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "927de454_30e54ec9",
+      "range": {
+        "startLine": 24,
+        "startChar": 54,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a238e18b_7bef47aa",
         "filename": "content/common/speech_recognition_host.mojom",
         "patchSetId": 6
@@ -202,6 +400,30 @@
       "writtenOn": "2017-12-04T03:17:46Z",
       "side": 1,
       "message": "SpeechRecognizer?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bae04ca_d2663723",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Again, it has host to distinguish it from the ones going the other way.",
+      "parentUuid": "a238e18b_7bef47aa",
       "range": {
         "startLine": 32,
         "startChar": 10,
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "b0fd4f1a_e62461a5",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b874fd9_d4d0f8c1",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a75cd0a_ac7c7932",
         "filename": "content/common/speech_recognition_host.mojom",
         "patchSetId": 6
@@ -242,6 +482,30 @@
       "writtenOn": "2017-12-04T03:17:46Z",
       "side": 1,
       "message": "wat?",
+      "range": {
+        "startLine": 49,
+        "startChar": 63,
+        "endLine": 49,
+        "endChar": 66
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a492a1f_d2bdbedf",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Removed \"or\" after this",
+      "parentUuid": "6a75cd0a_ac7c7932",
       "range": {
         "startLine": 49,
         "startChar": 63,
@@ -271,6 +535,24 @@
     },
     {
       "key": {
+        "uuid": "5f981cb0_2ccd0b32",
+        "filename": "content/public/common/speech_recognition_grammar.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Changed to \u0027then remove content::SpeechRecognitionGrammar\u0027.",
+      "parentUuid": "9e94f637_1187a571",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbed174b_eb17adf4",
         "filename": "content/public/common/speech_recognition_grammar.typemap",
         "patchSetId": 6
@@ -285,6 +567,24 @@
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522d65b4_b98c289c",
+        "filename": "content/public/common/speech_recognition_grammar.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbed174b_eb17adf4",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "25fe4ec5_345e5e77",
+        "filename": "content/public/common/speech_recognition_grammar_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27ee918_1792e784",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16432559_a108715f",
         "filename": "content/renderer/speech_recognition_dispatcher.cc",
         "patchSetId": 6
@@ -322,6 +646,24 @@
       "writtenOn": "2017-12-04T03:17:46Z",
       "side": 1,
       "message": "Connect lazily. Most renderers won\u0027t use speech recognition.",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da2d302_7d3a16c0",
+        "filename": "content/renderer/speech_recognition_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-05T05:07:29Z",
+      "side": 1,
+      "message": "Done. Changed accessors to use a method that binds if the interfaceptr is unbound.",
+      "parentUuid": "16432559_a108715f",
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
