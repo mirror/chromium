@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e25c564_5360b501",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Yay!",
+      "parentUuid": "83b882d1_ee9755ab",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46d2ad8e_db8d678e",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-01T00:33:16Z",
       "side": 1,
       "message": "This would have even better if we started making them async instead of passing nextTest(), but we can as well do it as a separate step.",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1c80dc_459505d1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "This will play nicely if all the helper methods are moved from callbacks to promises.\n\nThis surely could be done, but might be a little invasive due to those cases where callbacks are called with multiple arguments.",
+      "parentUuid": "46d2ad8e_db8d678e",
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1cdd8e33_bf4f6fe5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-api.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b5f841_04d4fd25",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "798a8ee3_862209f9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-content-script.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bb2b07_8a05f82e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits-content-script.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798a8ee3_862209f9",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "293e04c4_a1eb963a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-audits.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fca3de_2bc24994",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96e29890_99b16416",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10138b5_8d82fbe7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e29890_99b16416",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "af4bd6d7_ef5d6fcc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ab31ea_e84ffca1",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2f48dbe_288938cc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faeb67a_05b03b96",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2f48dbe_288938cc",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "65a9bb9b_5dc41f5e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-network.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a1ac967_5de6890b",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a189033c_34f15fd4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-network.js",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071ea67f_b8c70256",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-network.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a189033c_34f15fd4",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "8c1a9fe1_ac546b0b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-panel-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c517099d_d37108f2",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f88a56_37e020a6",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-panel.js",
         "patchSetId": 2
@@ -203,6 +401,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c1b1cf_a41e9554",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f88a56_37e020a6",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "9a99a948_e8bccf0d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "789069db_7f2201d9",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e4a6785_48672371",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
         "patchSetId": 2
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "33c3314f_808240e2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e4a6785_48672371",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fc933dc_1993fd51",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar-expected.txt",
         "patchSetId": 2
@@ -251,6 +503,24 @@
       "writtenOn": "2017-12-01T00:33:16Z",
       "side": 1,
       "message": "Weird. Any idea why this changed?",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125c5736_354869bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "The test has been skipped for quite some time",
+      "parentUuid": "4fc933dc_1993fd51",
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "6fa8a778_e2258f4a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "There\u0027s a version of this method in extensions-events.js. This method relies on _extensionSidebar(panelname) method, which is also used here. The other one expands the sidebar on the current panel.\n\nI don\u0027t think extracting yields much benefit.",
+      "parentUuid": "e1b42fc0_5674d047",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "854e26d9_550cb066",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar.js",
         "patchSetId": 2
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "14dc9afb_e3343e06",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854e26d9_550cb066",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d87ce6c_4c8b6999",
         "filename": "third_party/WebKit/Source/devtools/front_end/extensions_test_runner/ExtensionsTestRunner.js",
         "patchSetId": 2
@@ -305,6 +611,24 @@
       "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8ddd0a_d5bbe709",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions_test_runner/ExtensionsTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-05T01:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d87ce6c_4c8b6999",
+      "revId": "9a94b7a837d1679c0e644c6cda6f71190e467dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
