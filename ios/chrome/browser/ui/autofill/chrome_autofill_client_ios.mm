@@ -7,28 +7,23 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "components/autofill/core/browser/autofill_credit_card_filling_infobar_delegate_mobile.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_mobile.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_view.h"
-#include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/autofill/core/common/autofill_pref_names.h"
+#include "components/autofill/ios/browser/autofill_util.h"
 #include "components/infobars/core/infobar.h"
-#include "components/infobars/core/infobar_manager.h"
 #include "components/keyed_service/core/service_access_type.h"
-#include "components/password_manager/core/browser/password_generation_manager.h"
-#include "components/prefs/pref_service.h"
-#include "google_apis/gaia/identity_provider.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
-#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar_utils.h"
 #import "ios/chrome/browser/ssl/insecure_input_tab_helper.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #include "ios/chrome/browser/web_data_service_factory.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
-#import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -43,13 +38,13 @@ ChromeAutofillClientIOS::ChromeAutofillClientIOS(
     id<AutofillClientIOSBridge> bridge,
     password_manager::PasswordGenerationManager* password_generation_manager,
     std::unique_ptr<IdentityProvider> identity_provider)
-    : AutofillClientIOS(
-          browser_state->GetPrefs(),
-          PersonalDataManagerFactory::GetForBrowserState(
-              browser_state->GetOriginalChromeBrowserState()),
-          web_state,
-          bridge,
-          std::move(identity_provider),
+    : pref_service_(browser_state->GetPrefs()),
+      personal_data_manager_(PersonalDataManagerFactory::GetForBrowserState(
+          browser_state->GetOriginalChromeBrowserState())),
+      web_state_(web_state),
+      bridge_(bridge),
+      identity_provider_(std::move(identity_provider)),
+      autofill_web_data_service_(
           ios::WebDataServiceFactory::GetAutofillWebDataForBrowserState(
               browser_state,
               ServiceAccessType::EXPLICIT_ACCESS)),
@@ -58,7 +53,26 @@ ChromeAutofillClientIOS::ChromeAutofillClientIOS(
       unmask_controller_(browser_state->GetPrefs(),
                          browser_state->IsOffTheRecord()) {}
 
-ChromeAutofillClientIOS::~ChromeAutofillClientIOS() {}
+ChromeAutofillClientIOS::~ChromeAutofillClientIOS() {
+  HideAutofillPopup();
+}
+
+PersonalDataManager* ChromeAutofillClientIOS::GetPersonalDataManager() {
+  return personal_data_manager_;
+}
+
+PrefService* ChromeAutofillClientIOS::GetPrefs() {
+  return pref_service_;
+}
+
+// TODO(crbug.com/535784): Implement this when adding credit card upload.
+syncer::SyncService* ChromeAutofillClientIOS::GetSyncService() {
+  return nullptr;
+}
+
+IdentityProvider* ChromeAutofillClientIOS::GetIdentityProvider() {
+  return identity_provider_.get();
+}
 
 ukm::UkmRecorder* ChromeAutofillClientIOS::GetUkmRecorder() {
   return GetApplicationContext()->GetUkmRecorder();
@@ -67,6 +81,15 @@ ukm::UkmRecorder* ChromeAutofillClientIOS::GetUkmRecorder() {
 AddressNormalizer* ChromeAutofillClientIOS::GetAddressNormalizer() {
   // TODO(crbug.com/788229): Supply an AddressNormalizer instance.
   return nullptr;
+}
+
+SaveCardBubbleController*
+ChromeAutofillClientIOS::GetSaveCardBubbleController() {
+  return nullptr;
+}
+
+void ChromeAutofillClientIOS::ShowAutofillSettings() {
+  NOTREACHED();
 }
 
 void ChromeAutofillClientIOS::ShowUnmaskPrompt(
@@ -127,6 +150,38 @@ void ChromeAutofillClientIOS::LoadRiskData(
   callback.Run(ios::GetChromeBrowserProvider()->GetRiskData());
 }
 
+bool ChromeAutofillClientIOS::HasCreditCardScanFeature() {
+  return false;
+}
+
+void ChromeAutofillClientIOS::ScanCreditCard(
+    const CreditCardScanCallback& callback) {
+  NOTREACHED();
+}
+
+void ChromeAutofillClientIOS::ShowAutofillPopup(
+    const gfx::RectF& element_bounds,
+    base::i18n::TextDirection text_direction,
+    const std::vector<Suggestion>& suggestions,
+    base::WeakPtr<AutofillPopupDelegate> delegate) {
+  [bridge_ showAutofillPopup:suggestions popupDelegate:delegate];
+}
+
+void ChromeAutofillClientIOS::HideAutofillPopup() {
+  [bridge_ hideAutofillPopup];
+}
+
+bool ChromeAutofillClientIOS::IsAutocompleteEnabled() {
+  // For browser, Autocomplete is always enabled as part of Autofill.
+  return GetPrefs()->GetBoolean(prefs::kAutofillEnabled);
+}
+
+void ChromeAutofillClientIOS::UpdateAutofillPopupDataListValues(
+    const std::vector<base::string16>& values,
+    const std::vector<base::string16>& labels) {
+  NOTREACHED();
+}
+
 void ChromeAutofillClientIOS::PropagateAutofillPredictions(
     content::RenderFrameHost* rfh,
     const std::vector<FormStructure*>& forms) {
@@ -135,9 +190,33 @@ void ChromeAutofillClientIOS::PropagateAutofillPredictions(
   }
 }
 
+void ChromeAutofillClientIOS::DidFillOrPreviewField(
+    const base::string16& autofilled_value,
+    const base::string16& profile_full_name) {}
+
+scoped_refptr<AutofillWebDataService> ChromeAutofillClientIOS::GetDatabase() {
+  return autofill_web_data_service_;
+}
+
 void ChromeAutofillClientIOS::DidInteractWithNonsecureCreditCardInput() {
-  InsecureInputTabHelper::GetOrCreateForWebState(web_state())
+  InsecureInputTabHelper::GetOrCreateForWebState(web_state_)
       ->DidInteractWithNonsecureCreditCardInput();
+}
+
+bool ChromeAutofillClientIOS::IsContextSecure() {
+  return IsContextSecureForWebState(web_state_);
+}
+
+bool ChromeAutofillClientIOS::ShouldShowSigninPromo() {
+  return false;
+}
+
+void ChromeAutofillClientIOS::ExecuteCommand(int id) {
+  NOTIMPLEMENTED();
+}
+
+bool ChromeAutofillClientIOS::IsAutofillSupported() {
+  return true;
 }
 
 }  // namespace autofill
