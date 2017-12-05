@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "198496ef_75d2ecb6",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:30:42Z",
+      "side": 1,
+      "message": "I\u0027m OK with that, but would like to do it in a separate CL since it\u0027s used plenty already.",
+      "parentUuid": "e0873a18_b87dbe70",
+      "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f4ccb9_4692c3fe",
         "filename": "chrome/browser/notifications/stub_notification_display_service.h",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef2ce2f_278b2e52",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f4ccb9_4692c3fe",
+      "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
