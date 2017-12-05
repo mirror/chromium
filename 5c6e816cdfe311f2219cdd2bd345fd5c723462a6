@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b3bfc3_35e60704",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:17:09Z",
+      "side": 1,
+      "message": "Can we move this file to ios/web/system_cookie_store_util.mm to mirror the header location?",
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95b4f44_d9c7643d",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:17:09Z",
+      "side": 1,
+      "message": "s/base::MakeUnique/std::make_unique\n\nand no need for base/memory/ptr_util.h include",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62010705_399c2299",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:17:09Z",
+      "side": 1,
+      "message": "This will return main cookie store for Incognito, which may lead to privacy bugs.",
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5743117_46730123",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:17:09Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\" http://go/unit-test-practices#public-apis\n\nWith that how about testing that cookies are piped from net::SystemCookieStore to net::SystemCookieStore on iOS 11 and NSHTTPSystemCookieStorage on iOS 10? Can we also have tests for Off The Records cookie storage?",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5354e1_50722fc1",
+        "filename": "ios/web/public/system_cookie_store_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:17:09Z",
+      "side": 1,
+      "message": "This (NSHTTPSystemCookieStore) is private implementation details and callers should not be concerns about specific instances. How about explaining the functional difference between iOS 11 and 10. F.e. on iOS 10 the cookie are not up to date? Also it would be useful to explain the difference for Off The Record browser state.",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 47
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
