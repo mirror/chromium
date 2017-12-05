@@ -71,7 +71,10 @@ static void InvalidateStyleForAllLinksRecursively(
         ToHTMLAnchorElement(node).InvalidateCachedVisitedLinkHash();
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoLink);
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoVisited);
-      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoWebkitAnyLink);
+      if (RuntimeEnabledFeatures::PseudoAnyLinkEnabled()) {
+        ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      }
     }
     if (IsShadowHost(&node)) {
       for (ShadowRoot* root = node.YoungestShadowRoot(); root;
@@ -95,7 +98,10 @@ static void InvalidateStyleForLinkRecursively(Node& root_node,
     if (node.IsLink() && LinkHashForElement(ToElement(node)) == link_hash) {
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoLink);
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoVisited);
-      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      ToElement(node).PseudoStateChanged(CSSSelector::kPseudoWebkitAnyLink);
+      if (RuntimeEnabledFeatures::PseudoAnyLinkEnabled()) {
+        ToElement(node).PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      }
     }
     if (IsShadowHost(&node))
       for (ShadowRoot* root = node.YoungestShadowRoot(); root;

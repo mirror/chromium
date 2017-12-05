@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Use counter test for :-webkit-any-link</title>
+    <title>Use counter test for :any-link</title>
     <script src="../../resources/testharness.js"></script>
     <script src="../../resources/testharnessreport.js"></script>
     <style id="style"></style>
@@ -9,19 +9,19 @@
     <script>
       'use strict';
       test(() => {
-        let CSSSelectorPseudoWebkitAnyLink = 2260;
-        let isCounted = () => internals.isUseCounted(document, CSSSelectorPseudoWebkitAnyLink);
+        let CSSSelectorPseudoAnyLink = 2261;
+        let isCounted = () => internals.isUseCounted(document, CSSSelectorPseudoAnyLink);
         var style = document.getElementById('style');
         var div = document.createElement('div');
-
-        style.textContent = ':any-link { color: green; }';
+        
+        style.textContent = ':-webkit-any-link { color: green; }';
         getComputedStyle(link);
-        assert_false(isCounted(), ':-webkit-any-link should not be counted');
+        assert_false(isCounted(), ':any-link should not be counted');
 
-        style.textContent = ':-webkit-any-link { color: blue; }';
+        style.textContent = ':any-link { color: blue; }';
         assert_equals(getComputedStyle(link).color, 'rgb(0, 0, 255)');
-        assert_true(isCounted(), ':-webkit-any-link should be counted');
-      }, ':-webkit-any-link counter is working');
+        assert_true(isCounted(), ':any-link should be counted');
+      }, ':any-link counter is working');
     </script>
   </head>
 <html>

@@ -118,6 +118,7 @@ static void ExtractSelectorValues(const CSSSelector* selector,
         case CSSSelector::kPseudoCue:
         case CSSSelector::kPseudoLink:
         case CSSSelector::kPseudoVisited:
+        case CSSSelector::kPseudoWebkitAnyLink:
         case CSSSelector::kPseudoAnyLink:
         case CSSSelector::kPseudoFocus:
         case CSSSelector::kPseudoPlaceholder:
@@ -189,9 +190,14 @@ bool RuleSet::FindBestRuleSetAndAdd(const CSSSelector& component,
       return true;
     case CSSSelector::kPseudoLink:
     case CSSSelector::kPseudoVisited:
-    case CSSSelector::kPseudoAnyLink:
+    case CSSSelector::kPseudoWebkitAnyLink:
       link_pseudo_class_rules_.push_back(rule_data);
       return true;
+    case CSSSelector::kPseudoAnyLink:
+      if (RuntimeEnabledFeatures::PseudoAnyLinkEnabled()) {
+        link_pseudo_class_rules_.push_back(rule_data);
+        return true;
+      }
     case CSSSelector::kPseudoFocus:
       focus_pseudo_class_rules_.push_back(rule_data);
       return true;

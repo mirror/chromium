@@ -1779,6 +1779,7 @@ enum WebFeature {
   kUserMediaDisableHardwareNoiseSuppression = 2258,
   kCertificateTransparencyRequiredErrorOnResourceLoad = 2259,
   kPseudoWebkitAnyLink = 2260,
+  kPseudoAnyLink = 2261,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
