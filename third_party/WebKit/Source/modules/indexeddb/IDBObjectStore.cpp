@@ -529,7 +529,11 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   IDBRequest* request = IDBRequest::Create(
       script_state, source, transaction_.Get(), std::move(metrics));
 
+  value_wrapper.DoneCloning();
   value_wrapper.WrapIfBiggerThan(IDBValueWrapper::kWrapThreshold);
+  value_wrapper.SerializeBundles();
+  value_wrapper.WrapIfBiggerThan(IDBValueWrapper::kWrapThreshold);
+
   value_wrapper.ExtractBlobDataHandles(request->transit_blob_handles());
 
   BackendDB()->Put(

@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "base/memory/scoped_refptr.h"
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBKeyPath.h"
@@ -16,7 +17,6 @@
 namespace blink {
 
 class BlobDataHandle;
-class SerializedScriptValue;
 class WebBlobInfo;
 struct WebIDBValue;
 
@@ -67,6 +67,7 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
   const scoped_refptr<SharedBuffer> data_;
   const std::unique_ptr<Vector<scoped_refptr<BlobDataHandle>>> blob_data_;
   const std::unique_ptr<Vector<WebBlobInfo>> blob_info_;
+  const std::unique_ptr<Vector<SerializedScriptValue::Bundle>> bundles_;
   const Persistent<const IDBKey> primary_key_;
   const IDBKeyPath key_path_;
   int64_t external_allocated_size_ = 0;

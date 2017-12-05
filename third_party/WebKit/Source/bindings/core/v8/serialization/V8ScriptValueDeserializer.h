@@ -99,6 +99,12 @@ class CORE_EXPORT V8ScriptValueDeserializer
   v8::MaybeLocal<v8::Object> ReadHostObject(v8::Isolate*) override;
   v8::MaybeLocal<v8::WasmCompiledModule> GetWasmModuleFromId(v8::Isolate*,
                                                              uint32_t) override;
+  v8::MemorySpan<const uint8_t> OpenBundle(uint32_t bundle_type);
+  v8::Maybe<size_t> OpenItem(uint64_t item_id);
+  v8::MemorySpan<const uint8_t> NextItemBuffer();
+  void ReleaseItemBuffer();
+  void CloseItem();
+  void CloseBundle();
 
   scoped_refptr<ScriptState> script_state_;
   Member<UnpackedSerializedScriptValue> unpacked_value_;
@@ -111,11 +117,21 @@ class CORE_EXPORT V8ScriptValueDeserializer
   // Blob info for blobs stored by index.
   const WebBlobInfoArray* blob_info_array_ = nullptr;
 
+  // WebAssembly module support.
+  const SerializedScriptValue::BundleArray* bundle_array_ = nullptr;
+  HashMap<uint64_t, size_t> bundle_item_indices_;
+  size_t next_opened_bundle_index_ = 0;
+  const SerializedScriptValue::Bundle* opened_bundle_;
+  const SerializedScriptValue::Bundle::Item* opened_bundle_item_;
+
   // Set during deserialize after the header is read.
   uint32_t version_ = 0;
 
 #if DCHECK_IS_ON()
   bool deserialize_invoked_ = false;
+  bool bundle_opened_ = false;
+  bool bundle_item_opened_ = false;
+  bool bundle_item_buffer_locked_ = false;
 #endif
 };
 
