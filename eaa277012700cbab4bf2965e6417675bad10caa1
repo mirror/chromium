@@ -16,6 +16,24 @@
       "revId": "eaa277012700cbab4bf2965e6417675bad10caa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab0922e_37209157",
+        "filename": "ui/ozone/platform/drm/gpu/crtc_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-05T18:39:58Z",
+      "side": 1,
+      "message": "At line 87, a CrtcController can only have one pending page flip request, and it can be overwritten. So OnPageFlipEvent() has to be for the current pending page flip request I think.",
+      "parentUuid": "63679061_d64d499d",
+      "revId": "eaa277012700cbab4bf2965e6417675bad10caa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
