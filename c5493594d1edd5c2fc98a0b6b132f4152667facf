@@ -22,6 +22,30 @@
       "revId": "c5493594d1edd5c2fc98a0b6b132f4152667facf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1f6e78_aec945e9",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-12-05T19:09:51Z",
+      "side": 1,
+      "message": "I\u0027m all for simple. I\u0027d taken it on faith that there was a reason that wasn\u0027t done in the first place.\n\nView::Focus() could call a new virtual function ScrollViewToVisible() which would then call ScrollRectToVisible(gfx::Rect(...)); This would allow subclasses to later customize the rect, if necessary.\n\nThere is this interesting comment near View::ScrollRectToVisible():\n\n  // TODO(beng): Figure out if this can live somewhere other than View, i.e.\n  //             closer to ScrollView.\n\nIt looks like there is some desire to keep most of this in or around ScrollView. That just may not be practical, however desirable. A common technique that isn\u0027t supported in the Chromium codebase is to use optional interfaces which can be queried for dynamically at run time.",
+      "parentUuid": "fff9dbba_d6c9de0c",
+      "range": {
+        "startLine": 864,
+        "startChar": 19,
+        "endLine": 864,
+        "endChar": 28
+      },
+      "revId": "c5493594d1edd5c2fc98a0b6b132f4152667facf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
