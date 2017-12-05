@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a522626_a4145eb1",
+        "filename": "gpu/command_buffer/service/gpu_fence_manager.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T19:32:53Z",
+      "side": 1,
+      "message": "Nit: prefer emplace() over insert() + std::make_pair()\n\n(Ditto below)",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee866cd_4c2e6d76",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 67
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T19:32:53Z",
+      "side": 1,
+      "message": "Ditto: prefer emplace() here",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d212145_3b2aa211",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T19:32:53Z",
+      "side": 1,
+      "message": "Nit: in new code, generally prefer using A \u003d B; over typedef B A;",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca72d3d_eda15ce9",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T19:32:53Z",
+      "side": 1,
+      "message": "Nit: kEmpty, kAndroidNativeFenceSync, et cetera.\n\nAlso, is EMPTY just to allow null gpu fence handles to be sent?",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
