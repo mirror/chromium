@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff9dbba_d6c9de0c",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:50:39Z",
+      "side": 1,
+      "message": "The FocusManager comes from GetTopLevelWidget() so you\u0027re not necessarily tracking the right widget here.\n\nHow about we go with the simpler fix that avoids all this. Change View::Focus() to call ScrollRectToVisible(gfx::Rect(bounds.size());\nI could certainly see some subclasses wanting to customize what rectangle to use, but we can deal with that later if necessary.",
+      "range": {
+        "startLine": 864,
+        "startChar": 19,
+        "endLine": 864,
+        "endChar": 28
+      },
+      "revId": "c5493594d1edd5c2fc98a0b6b132f4152667facf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
