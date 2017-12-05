@@ -139,6 +139,7 @@ const char kForceColorProfileSRGB[] = "sRGB";
 const char kForceColorProfileP3[] = "Display P3 D65";
 const char kForceColorProfileColorSpin[] = "Color spin with gamma 2.4";
 const char kForceColorProfileHdr[] = "scRGB linear (HDR where available)";
+const char kForceColorProfilePseudoHdrP3[] = "Pseudo HDR P3";
 
 const char kForceColorProfileName[] = "Force color profile";
 const char kForceColorProfileDescription[] =
