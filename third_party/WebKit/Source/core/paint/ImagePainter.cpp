@@ -12,11 +12,14 @@
 #include "core/html/HTMLImageElement.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutReplaced.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/TextRunConstructor.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/PaintLayer.h"
 #include "platform/geometry/LayoutPoint.h"
+#include "platform/graphics/HighContrastSettings.h"
 #include "platform/graphics/Path.h"
 #include "platform/graphics/ScopedInterpolationQuality.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
@@ -181,10 +184,24 @@ void ImagePainter::PaintIntoRect(GraphicsContext& context,
           ? ToHTMLImageElement(node)->GetDecodingModeForPainting(
                 image->paint_image_id())
           : Image::kUnspecifiedDecode;
+
+  bool reset_high_contrast_image_policy = false;
+  if (context.high_contrast_settings().mode != HighContrastMode::kOff &&
+      context.high_contrast_settings().image_policy ==
+          HighContrastImagePolicy::kFilterSmart) {
+    if (layout_image_.HasOverlayingText()) {
+      reset_high_contrast_image_policy = true;
+      context.SetHighContrastImagePolicy(HighContrastImagePolicy::kFilterAll);
+    }
+  }
+
   context.DrawImage(
       image.get(), decode_mode, pixel_snapped_dest_rect, &src_rect,
       SkBlendMode::kSrcOver,
       LayoutObject::ShouldRespectImageOrientation(&layout_image_));
+
+  if (reset_high_contrast_image_policy)
+    context.SetHighContrastImagePolicy(HighContrastImagePolicy::kFilterSmart);
 }
 
 }  // namespace blink

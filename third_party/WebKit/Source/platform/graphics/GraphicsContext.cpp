@@ -175,6 +175,11 @@ void GraphicsContext::SetHighContrast(const HighContrastSettings& settings) {
   high_contrast_filter_ = SkHighContrastFilter::Make(config);
 }
 
+void GraphicsContext::SetHighContrastImagePolicy(
+    HighContrastImagePolicy image_policy) {
+  high_contrast_settings_.image_policy = image_policy;
+}
+
 void GraphicsContext::SaveLayer(const SkRect* bounds, const PaintFlags* flags) {
   if (ContextDisabled())
     return;

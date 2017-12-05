@@ -97,6 +97,7 @@ class PLATFORM_EXPORT GraphicsContext {
 #endif
 
   void SetHighContrast(const HighContrastSettings&);
+  void SetHighContrastImagePolicy(HighContrastImagePolicy);
 
   float StrokeThickness() const {
     return ImmutableState()->GetStrokeData().Thickness();
