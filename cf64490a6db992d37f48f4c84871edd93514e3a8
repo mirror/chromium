@@ -52,6 +52,24 @@
       "revId": "cf64490a6db992d37f48f4c84871edd93514e3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e55f94_cd7fd5a7",
+        "filename": "ui/aura/mus/window_tree_host_mus_init_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-05T20:22:47Z",
+      "side": 1,
+      "message": "Yes, applying that extra fix on top of this CL let me use chrome os for a few minutes without crashing, thanks. I\u0027ll still defer to Scott on the naming and comment clarity here.",
+      "parentUuid": "472c8f50_4dac53cc",
+      "revId": "cf64490a6db992d37f48f4c84871edd93514e3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
