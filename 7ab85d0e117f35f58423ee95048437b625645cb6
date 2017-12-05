@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715d5736_6b32f6c7",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-05T09:08:03Z",
+      "side": 1,
+      "message": "Maybe it\u0027s better to check the diff between modifiers at the start and modifiers at the end?",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
