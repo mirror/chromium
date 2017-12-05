@@ -392,9 +392,32 @@ static CounterNode* MakeCounterNodeIfNeeded(LayoutObject& object,
   scoped_refptr<CounterNode> new_node =
       CounterNode::Create(object, is_reset, value);
   if (FindPlaceForCounter(object, identifier, is_reset, new_parent,
-                          new_previous_sibling))
+                          new_previous_sibling)) {
+    if (is_reset) {
+      // Find the place where we would've inserted the new node if it was a
+      // non-reset node. We have to move every sibling after the insertion point
+      // to a child of the new node.
+      scoped_refptr<CounterNode> non_reset_parent = nullptr;
+      scoped_refptr<CounterNode> non_reset_previous_sibling = nullptr;
+      if (FindPlaceForCounter(object, identifier, false, non_reset_parent,
+                              non_reset_previous_sibling)) {
+        CounterNode* node_to_move =
+            non_reset_previous_sibling
+                ? non_reset_previous_sibling->NextSibling()
+                : non_reset_parent->FirstChild();
+        while (node_to_move) {
+          CounterNode* next = node_to_move->NextSibling();
+          non_reset_parent->RemoveChild(node_to_move);
+          new_node->InsertAfter(node_to_move, new_node->LastChild(),
+                                identifier);
+          node_to_move = next;
+        }
+      }
+    }
+
     new_parent->InsertAfter(new_node.get(), new_previous_sibling.get(),
                             identifier);
+  }
   CounterMap* node_map;
   if (object.HasCounterNodeMap()) {
     node_map = GetCounterMaps().at(&object);
