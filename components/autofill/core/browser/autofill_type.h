@@ -11,6 +11,10 @@
 
 namespace autofill {
 
+FieldTypeGroup GroupTypeOfServerFieldType(ServerFieldType field_type);
+FieldTypeGroup GroupTypeOfHtmlFieldType(HtmlFieldType field_type,
+                                        HtmlFieldMode field_mode);
+
 // The high-level description of Autofill types, used to categorize form fields
 // and for associating form fields with form values in the Web Database.
 class AutofillType {
