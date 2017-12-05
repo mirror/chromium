@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ec531e_4aed26b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-12-05T13:29:25Z",
+      "side": 1,
+      "message": "Actually, I\u0027ve been using this metric for analyzing the condensed layout experiments. That\u0027s all done now so I guess it\u0027s truly unused. If you\u0027re still sure you want to delete this, I can take another look.",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 38
+      },
+      "revId": "315f738bb39a0a2b6ceec18ad2fec3a916cbc8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
