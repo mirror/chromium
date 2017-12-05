@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2bcb322f_cd6d1198",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-05T00:07:19Z",
+      "side": 1,
+      "message": "I cleaned it up to be more in line with what you/Mounir suggested.",
+      "parentUuid": "a1491569_ae145d56",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "e6ff26b53f06414c34a1bc7ab2c8c4cfe07ff028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c40ec23b_6345d93a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
         "patchSetId": 6
