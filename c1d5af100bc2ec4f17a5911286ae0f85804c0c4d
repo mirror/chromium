@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a01780f3_625f2fb4",
+        "filename": "testing/buildbot/GENERATION_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-05T20:53:47Z",
+      "side": 1,
+      "message": "nit: trailing whitespace aaaahhhhh",
+      "revId": "c1d5af100bc2ec4f17a5911286ae0f85804c0c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
