@@ -19,7 +19,8 @@ AuditorResult::AuditorResult(Type type,
          type == AuditorResult::Type::RESULT_OK ||
          type == AuditorResult::Type::RESULT_IGNORE ||
          type == AuditorResult::Type::ERROR_FATAL ||
-         type == AuditorResult::Type::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE ||
+         type == AuditorResult::Type::ERROR_HASH_CODE_COLLISION ||
+         type == AuditorResult::Type::ERROR_REPEATED_ID ||
          type == AuditorResult::Type::ERROR_MERGE_FAILED ||
          type == AuditorResult::Type::ERROR_ANNOTATIONS_XML_UPDATE);
   DCHECK(!message.empty() || type == AuditorResult::Type::RESULT_OK ||
@@ -91,11 +92,18 @@ std::string AuditorResult::ToText() const {
           "unique id and should be changed.",
           details_[0].c_str(), file_path_.c_str(), line_);
 
-    case AuditorResult::Type::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE:
+    case AuditorResult::Type::ERROR_HASH_CODE_COLLISION:
       DCHECK_EQ(details_.size(), 2u);
       return base::StringPrintf(
-          "The following annotations have similar unique id "
-          "hash codes and should be updated: %s, %s.",
+          "The following annotations have colliding hash codes and should be "
+          "updated: %s, %s.",
+          details_[0].c_str(), details_[1].c_str());
+
+    case AuditorResult::Type::ERROR_REPEATED_ID:
+      DCHECK_EQ(details_.size(), 2u);
+      return base::StringPrintf(
+          "The following annotations have similar ids and should be updated: "
+          "%s, %s.",
           details_[0].c_str(), details_[1].c_str());
 
     case AuditorResult::Type::ERROR_UNIQUE_ID_INVALID_CHARACTER:
