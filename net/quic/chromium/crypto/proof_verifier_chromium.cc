@@ -32,7 +32,7 @@ using std::string;
 namespace net {
 
 ProofVerifyDetailsChromium::ProofVerifyDetailsChromium()
-    : pkp_bypassed(false) {}
+    : pkp_bypassed(false), is_fatal_cert_error(false) {}
 
 ProofVerifyDetailsChromium::~ProofVerifyDetailsChromium() {}
 
@@ -464,6 +464,11 @@ int ProofVerifierChromium::Job::DoVerifyCertComplete(int result) {
         // possible values of CheckCTRequirements() are handled.
         break;
     }
+
+    verify_details_->is_fatal_cert_error =
+        IsCertStatusError(cert_status) &&
+        !IsCertStatusMinorError(cert_status) &&
+        transport_security_state_->ShouldSSLErrorsBeFatal(hostname_);
 
     TransportSecurityState::PKPStatus pin_validity =
         transport_security_state_->CheckPublicKeyPins(
