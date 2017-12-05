@@ -29,7 +29,7 @@
 #include "modules/ModulesExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
-#include "public/platform/WebMediaDeviceInfo.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -40,7 +40,10 @@ class MODULES_EXPORT MediaDeviceInfo final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static MediaDeviceInfo* Create(const WebMediaDeviceInfo&);
+  static MediaDeviceInfo* Create(const String& device_id,
+                                 const String& kind,
+                                 const String& label,
+                                 const String& group_id);
 
   String deviceId() const;
   String kind() const;
@@ -50,12 +53,18 @@ class MODULES_EXPORT MediaDeviceInfo final : public ScriptWrappable {
   ScriptValue toJSONForBinding(ScriptState*);
 
  private:
-  explicit MediaDeviceInfo(const WebMediaDeviceInfo&);
+  MediaDeviceInfo(const String& device_id,
+                  const String& kind,
+                  const String& label,
+                  const String& group_id);
 
-  WebMediaDeviceInfo web_media_device_info_;
+  String device_id_;
+  String kind_;
+  String label_;
+  String group_id_;
 };
 
-typedef HeapVector<Member<MediaDeviceInfo>> MediaDeviceInfoVector;
+using MediaDeviceInfoVector = HeapVector<Member<MediaDeviceInfo>>;
 
 }  // namespace blink
 

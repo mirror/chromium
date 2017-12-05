@@ -11,7 +11,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/Event.h"
-#include "modules/mediastream/MediaDevicesRequest.h"
+#include "modules/mediastream/MediaDeviceInfo.h"
 #include "modules/mediastream/MediaErrorState.h"
 #include "modules/mediastream/MediaStream.h"
 #include "modules/mediastream/MediaStreamConstraints.h"
@@ -21,10 +21,28 @@
 #include "modules/mediastream/UserMediaController.h"
 #include "modules/mediastream/UserMediaRequest.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/wtf/Functional.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+
+using blink::mojom::blink::MediaDeviceType;
 
 namespace blink {
 
 namespace {
+
+String ToMediaDeviceKind(MediaDeviceType type) {
+  switch (type) {
+    case MediaDeviceType::MEDIA_AUDIO_INPUT:
+      return "audioinput";
+    case blink::mojom::MediaDeviceType::MEDIA_VIDEO_INPUT:
+      return "audiooutput";
+    case blink::mojom::MediaDeviceType::MEDIA_AUDIO_OUTPUT:
+      return "videoinput";
+    default:
+      NOTREACHED();
+      return String();
+  }
+}
 
 class PromiseSuccessCallback final : public NavigatorUserMediaSuccessCallback {
  public:
@@ -82,20 +100,64 @@ MediaDevices::MediaDevices(ExecutionContext* context)
 
 MediaDevices::~MediaDevices() {}
 
+void MediaDevices::DevicesEnumerated(
+    ScriptPromiseResolver* resolver,
+    Vector<Vector<mojom::blink::MediaDeviceInfoPtr>> enumeration) {
+  if (!resolver->GetExecutionContext() ||
+      resolver->GetExecutionContext()->IsContextDestroyed()) {
+    return;
+  }
+
+  DCHECK_EQ(static_cast<size_t>(MediaDeviceType::NUM_MEDIA_DEVICE_TYPES),
+            enumeration.size());
+
+  MediaDeviceInfoVector media_devices(
+      enumeration[static_cast<size_t>(MediaDeviceType::MEDIA_AUDIO_INPUT)]
+          .size() +
+      enumeration[static_cast<size_t>(MediaDeviceType::MEDIA_VIDEO_INPUT)]
+          .size() +
+      enumeration[static_cast<size_t>(MediaDeviceType::MEDIA_AUDIO_OUTPUT)]
+          .size());
+
+  size_t index = 0;
+  for (size_t i = 0;
+       i < static_cast<size_t>(MediaDeviceType::NUM_MEDIA_DEVICE_TYPES); ++i) {
+    String device_kind = ToMediaDeviceKind(static_cast<MediaDeviceType>(i));
+    for (const auto& device_info : enumeration[i]) {
+      media_devices[index++] =
+          MediaDeviceInfo::Create(device_info->device_id, device_kind,
+                                  device_info->label, device_info->group_id);
+    }
+  }
+
+  resolver->Resolve(media_devices);
+}
+
 ScriptPromise MediaDevices::enumerateDevices(ScriptState* script_state) {
-  Document* document = ToDocument(ExecutionContext::From(script_state));
-  UserMediaController* user_media =
-      UserMediaController::From(document->GetFrame());
-  if (!user_media)
+  LocalFrame* frame =
+      ToDocument(ExecutionContext::From(script_state))->GetFrame();
+  if (!frame) {
     return ScriptPromise::RejectWithDOMException(
         script_state,
-        DOMException::Create(kNotSupportedError,
-                             "No media device controller available; is this a "
-                             "detached window?"));
+        DOMException::Create(kNotSupportedError, "Current frame is detached."));
+  }
 
-  MediaDevicesRequest* request =
-      MediaDevicesRequest::Create(script_state, user_media);
-  return request->Start();
+  if (!dispatcher_host_) {
+    frame->GetInterfaceProvider().GetInterface(
+        mojo::MakeRequest(&dispatcher_host_));
+    dispatcher_host_.set_connection_error_handler(ConvertToBaseCallback(
+        WTF::Bind(&MediaDevices::OnDispatcherHostConnectionError,
+                  WrapWeakPersistent(this))));
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+
+  dispatcher_host_->EnumerateDevices(
+      true /* audio input */, true /* video input */, true /* audio output */,
+      ConvertToBaseCallback(WTF::Bind(&MediaDevices::DevicesEnumerated,
+                                      WrapPersistent(this),
+                                      WrapPersistent(resolver))));
+  return resolver->Promise();
 }
 
 ScriptPromise MediaDevices::getUserMedia(ScriptState* script_state,
@@ -250,6 +312,10 @@ UserMediaController* MediaDevices::GetUserMediaController() {
 
 void MediaDevices::Dispose() {
   StopObserving();
+}
+
+void MediaDevices::OnDispatcherHostConnectionError() {
+  dispatcher_host_.reset();
 }
 
 void MediaDevices::Trace(blink::Visitor* visitor) {
