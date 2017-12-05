@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb0a0271_9c51ae66",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "why 80 here?",
+      "range": {
+        "startLine": 219,
+        "startChar": 42,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f121fb_1b1cc200",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "all of these should be inside internal/\n\nInternal should provide an interface that is something like std::vector\u003cunit8_t\u003e EncodeAssistantRequest([any needed input params....])\n\nAlso this method and the above share the same logic to capture screenshot.  There is no need to duplicate the code.  You can chain a callback to the method above and reuse it.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 0
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8769399_c531085d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "This method should share the same logic as CaptureFullScreen(), no need to duplicate logic.",
+      "range": {
+        "startLine": 411,
+        "startChar": 42,
+        "endLine": 411,
+        "endChar": 59
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9653287_a41ff040",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "can we pass in nullptr instead?",
+      "range": {
+        "startLine": 418,
+        "startChar": 28,
+        "endLine": 418,
+        "endChar": 50
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9394d2_26ba8871",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "What\u0027s the diff between this and the method above?  Only the last base:Bind()?  We should combine these two methods since they are almost exactly the same.",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 55
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4318a204_cda9fb83",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "The selected region of",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2e4aef_b3d7a600",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "If this is only the selected region, we should name it accordingly.",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53125a8_4684601e",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "Is it only for the screenshot?  We should have the method name reflect that e.g. \"GetAssistRequestDataWithScreenshot()\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207e6d59_de5f5f8e",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-05T00:44:58Z",
+      "side": 1,
+      "message": "Let\u0027s expose this flag as a separate config method call into the Instance when Instance is bound.  Otherwise, we will have to pass this flag in every method call and each entry point methods.",
+      "range": {
+        "startLine": 80,
+        "startChar": 69,
+        "endLine": 80,
+        "endChar": 120
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
