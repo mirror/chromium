@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bfe3fac_f53b1fe2",
+        "filename": "chrome/browser/download/download_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:49:33Z",
+      "side": 1,
+      "message": "nit: I think we can remove the ternary operator here and just static_cast the value.\n\nAccording to 5.2.9-11 in C++ standard (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3690.pdf):\n\n\u003e 11 - A prvalue of type “pointer to cv1 B,” where B is a class type, can be converted\n\u003e to a prvalue of type “pointer to cv2 D,” where D is a class derived (Clause 10)\n\u003e from B, if a valid standard conversion from “pointer to D” to “pointer to B” exists\n\u003e (4.10), cv2 is the same cv-qualification as, or greater cv-qualification than, cv1,\n\u003e and B is neither a virtual base class of D nor a base class of a virtual base class\n\u003e of D. The null pointer value (4.10) is converted to the null pointer value of the\n\u003e destination type. If the prvalue of type “pointer to cv1 B” points to a B that is\n\u003e actually a subobject of an object of type D, the resulting pointer points to the\n\u003e enclosing object of type D. Otherwise, the behavior is undefined.\n\nThe important bit is \"The null pointer value (4.10) is converted to the null pointer value of the destination type.\" So I think we can just static_cast data without checking for null.",
+      "revId": "4a4df1c8925af95d278ea9a77fad170768b2cb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733f2c71_0faad353",
+        "filename": "chrome/browser/download/download_history.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:49:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "4a4df1c8925af95d278ea9a77fad170768b2cb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe66b2_196d223b",
+        "filename": "chrome/browser/download/download_history_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T09:49:33Z",
+      "side": 1,
+      "message": "Maybe use make_unique here?",
+      "range": {
+        "startLine": 191,
+        "startChar": 35,
+        "endLine": 191,
+        "endChar": 69
+      },
+      "revId": "4a4df1c8925af95d278ea9a77fad170768b2cb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
