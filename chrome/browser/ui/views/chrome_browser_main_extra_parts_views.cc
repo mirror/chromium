@@ -204,3 +204,13 @@ void ChromeBrowserMainExtraPartsViews::ServiceManagerConnectionStarted(
       create_wm_state);
 #endif  // defined(USE_AURA)
 }
+
+void ChromeBrowserMainExtraPartsViews::PostMainMessageLoopRun() {
+#if defined(USE_AURA)
+  // |mus_client_| is only created in mash. Close all widgets to match the
+  // behavior of classic ash, where ash shell is torn down and closes all
+  // windows before shutting down main message loop.
+  if (mus_client_)
+    mus_client_->CloseAllWidgets();
+#endif  // defined(USE_AURA)
+}
