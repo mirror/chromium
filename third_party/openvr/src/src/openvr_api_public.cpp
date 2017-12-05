@@ -8,6 +8,8 @@
 #include "hmderrors_public.h"
 #include "vrpathregistry_public.h"
 
+#include <cstdio>
+
 using vr::EVRInitError;
 using vr::IVRSystem;
 using vr::IVRClientCore;
@@ -89,11 +91,17 @@ void VR_ShutdownInternal()
 
 EVRInitError VR_LoadHmdSystemInternal()
 {
+	fprintf(stderr, "ASDF LoadHmdSystemInternal\n");
 	std::string sRuntimePath, sConfigPath, sLogPath;
 
 	bool bReadPathRegistry = CVRPathRegistry_Public::GetPaths( &sRuntimePath, &sConfigPath, &sLogPath, NULL, NULL );
+	fprintf(stderr, "ASDF ran GetPaths\n");
+	fprintf(stderr, "ASDF sRuntimePath: %s\n", sRuntimePath.c_str());
+	fprintf(stderr, "ASDF sConfigPath: %s\n", sConfigPath.c_str());
+	fprintf(stderr, "ASDF sLogPath: %s\n", sLogPath.c_str());
 	if( !bReadPathRegistry )
 	{
+		fprintf(stderr, "ASDF !bReadPathRegistry\n");
 		return vr::VRInitError_Init_PathRegistryNotFound;
 	}
 
@@ -101,6 +109,7 @@ EVRInitError VR_LoadHmdSystemInternal()
 	// see if the specified path actually exists.
 	if( !Path_IsDirectory( sRuntimePath ) )
 	{
+		fprintf(stderr, "ASDF sRuntimePath is not a directory\n");
 		return vr::VRInitError_Init_InstallationNotFound;
 	}
 
@@ -111,8 +120,10 @@ EVRInitError VR_LoadHmdSystemInternal()
 #else
 	std::string sTestPath = Path_Join( sRuntimePath, "bin" );
 #endif
+	fprintf(stderr, "ASDF sTestPath: %s\n", sTestPath.c_str());
 	if( !Path_IsDirectory( sTestPath ) )
 	{
+		fprintf(stderr, "ASDF sTestPath is not a directory\n");
 		return vr::VRInitError_Init_InstallationCorrupt;
 	}
 
@@ -122,30 +133,37 @@ EVRInitError VR_LoadHmdSystemInternal()
 	std::string sDLLPath = Path_Join( sTestPath, "vrclient" DYNAMIC_LIB_EXT );
 #endif
 
+	fprintf(stderr, "ASDF sDLLPath: %s\n", sDLLPath.c_str());
 	// only look in the override
 	void *pMod = SharedLib_Load( sDLLPath.c_str() );
 	// nothing more to do if we can't load the DLL
 	if( !pMod )
 	{
+		fprintf(stderr, "ASDF couldn't load DLL\n");
 		return vr::VRInitError_Init_VRClientDLLNotFound;
 	}
 
+	fprintf(stderr, "ASDF getting factory function\n");
 	VRClientCoreFactoryFn fnFactory = ( VRClientCoreFactoryFn )( SharedLib_GetFunction( pMod, "VRClientCoreFactory" ) );
 	if( !fnFactory )
 	{
+		fprintf(stderr, "ASDF could not get factory function\n");
 		SharedLib_Unload( pMod );
 		return vr::VRInitError_Init_FactoryNotFound;
 	}
 
 	int nReturnCode = 0;
+	fprintf(stderr, "ASDF running factory function\n");
 	g_pHmdSystem = static_cast< IVRClientCore * > ( fnFactory( vr::IVRClientCore_Version, &nReturnCode ) );
 	if( !g_pHmdSystem )
 	{
+		fprintf(stderr, "ASDF failed to run factory function\n");
 		SharedLib_Unload( pMod );
 		return vr::VRInitError_Init_InterfaceNotFound;
 	}
 
 	g_pVRModule = pMod;
+	fprintf(stderr, "Success\n");
 	return VRInitError_None;
 }
 
