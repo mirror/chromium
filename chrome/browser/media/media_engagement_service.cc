@@ -136,7 +136,10 @@ MediaEngagementService::MediaEngagementService(
   }
 
   // Record the stored scores to a histogram.
-  RecordStoredScoresToHistogram();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&MediaEngagementService::RecordStoredScoresToHistogram,
+                     base::Unretained(this)));
 }
 
 MediaEngagementService::~MediaEngagementService() = default;
