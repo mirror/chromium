@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d2622a_be50976f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-05T23:25:02Z",
+      "side": 1,
+      "message": "nit: This macro has a range that goes up to 1M – is that sufficient range?  If so, please use the name UMA_HISTOGRAM_COUNTS_1M, which is an alias for this same macro, but preferred for the added clarity about the covered range.",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 26
+      },
+      "revId": "911effc8ee0d53c9a2546ad5de9addb0b18e4d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52067e69_0d9a6458",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 37
+      },
+      "lineNbr": 81358,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-05T23:25:02Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure that I follow this comment.  Did you find that sampling is more performant than just always recording the data?  The intent is for the macros to be blazing fast – I\u0027d expect actually faster than sampling.  I wonder whether this has regressed...",
+      "range": {
+        "startLine": 81358,
+        "startChar": 4,
+        "endLine": 81358,
+        "endChar": 62
+      },
+      "revId": "911effc8ee0d53c9a2546ad5de9addb0b18e4d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
