@@ -19,6 +19,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/web_application_info.h"
+#include "chrome/common/web_application_info_provider.mojom.h"
 #include "components/dom_distiller/core/url_utils.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon_base/favicon_types.h"
@@ -27,6 +28,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/manifest.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/favicon_size.h"
@@ -118,14 +120,21 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
 
   // Send a message to the renderer to retrieve information about the page.
   content::RenderFrameHost* main_frame = web_contents->GetMainFrame();
-  main_frame->Send(
-      new ChromeFrameMsg_GetWebApplicationInfo(main_frame->GetRoutingID()));
+  chrome::mojom::WebApplicationInfoProviderAssociatedPtr client;
+  main_frame->GetRemoteAssociatedInterfaces()->GetInterface(&client);
+  auto callback =
+      base::Bind(&AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo,
+                 base::Unretained(this));
+  client->GetWebApplicationInfo(callback);
 }
 
 AddToHomescreenDataFetcher::~AddToHomescreenDataFetcher() {}
 
 void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
     const WebApplicationInfo& received_web_app_info) {
+  if (!is_waiting_for_web_application_info_)
+    return;
+
   is_waiting_for_web_application_info_ = false;
   if (!web_contents())
     return;
@@ -177,23 +186,6 @@ void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
       ParamsToPerformManifestAndIconFetch(check_webapk_compatibility_),
       base::Bind(&AddToHomescreenDataFetcher::OnDidGetManifestAndIcons,
                  weak_ptr_factory_.GetWeakPtr()));
-}
-
-bool AddToHomescreenDataFetcher::OnMessageReceived(
-    const IPC::Message& message,
-    content::RenderFrameHost* sender) {
-  if (!is_waiting_for_web_application_info_)
-    return false;
-
-  bool handled = true;
-
-  IPC_BEGIN_MESSAGE_MAP(AddToHomescreenDataFetcher, message)
-    IPC_MESSAGE_HANDLER(ChromeFrameHostMsg_DidGetWebApplicationInfo,
-                        OnDidGetWebApplicationInfo)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
 }
 
 void AddToHomescreenDataFetcher::StopTimer() {
