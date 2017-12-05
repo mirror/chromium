@@ -11,9 +11,13 @@ QueuedRequest::Response::~Response() {}
 
 QueuedRequest::QueuedRequest(
     const base::trace_event::MemoryDumpRequestArgs& args,
-    const RequestGlobalMemoryDumpInternalCallback& callback,
-    bool add_to_trace)
-    : args(args), callback(callback), add_to_trace(add_to_trace) {}
+    RequestGlobalMemoryDumpInternalCallback callback,
+    bool add_to_trace,
+    base::Optional<base::ProcessId> pid)
+    : args(args),
+      callback(std::move(callback)),
+      add_to_trace(add_to_trace),
+      pid(pid) {}
 
 QueuedRequest::~QueuedRequest() {}
 

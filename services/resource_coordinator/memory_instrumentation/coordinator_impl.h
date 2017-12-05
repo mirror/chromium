@@ -55,6 +55,9 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void RequestGlobalMemoryDump(
       const base::trace_event::GlobalMemoryDumpRequestArgs&,
       const RequestGlobalMemoryDumpCallback&) override;
+  void RequestGlobalMemoryDumpForPid(
+      base::ProcessId,
+      const RequestGlobalMemoryDumpForPidCallback&) override;
   void RequestGlobalMemoryDumpAndAppendToTrace(
       const base::trace_event::GlobalMemoryDumpRequestArgs&,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
@@ -73,7 +76,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   using OSMemDumpMap =
       std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr>;
   using RequestGlobalMemoryDumpInternalCallback =
-      base::Callback<void(bool, uint64_t, mojom::GlobalMemoryDumpPtr)>;
+      base::OnceCallback<void(bool, uint64_t, mojom::GlobalMemoryDumpPtr)>;
   friend std::default_delete<CoordinatorImpl>;  // For testing
   friend class CoordinatorImplTest;             // For testing
 
@@ -91,8 +94,9 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
 
   void RequestGlobalMemoryDumpInternal(
       const base::trace_event::GlobalMemoryDumpRequestArgs& args,
+      base::Optional<base::ProcessId> pid,
       bool add_to_trace,
-      const RequestGlobalMemoryDumpInternalCallback& callback);
+      RequestGlobalMemoryDumpInternalCallback callback);
 
   // Callback of RequestChromeMemoryDump.
   void OnChromeMemoryDumpResponse(

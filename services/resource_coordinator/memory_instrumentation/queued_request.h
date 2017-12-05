@@ -21,7 +21,7 @@ struct QueuedRequest {
   using OSMemDumpMap =
       std::unordered_map<base::ProcessId,
                          memory_instrumentation::mojom::RawOSMemDumpPtr>;
-  using RequestGlobalMemoryDumpInternalCallback = base::Callback<
+  using RequestGlobalMemoryDumpInternalCallback = base::OnceCallback<
       void(bool, uint64_t, memory_instrumentation::mojom::GlobalMemoryDumpPtr)>;
 
   struct PendingResponse {
@@ -48,8 +48,9 @@ struct QueuedRequest {
   };
 
   QueuedRequest(const base::trace_event::MemoryDumpRequestArgs& args,
-                const RequestGlobalMemoryDumpInternalCallback& callback,
-                bool add_to_trace);
+                RequestGlobalMemoryDumpInternalCallback callback,
+                bool add_to_trace,
+                base::Optional<base::ProcessId> pid);
   ~QueuedRequest();
 
   bool wants_mmaps() const {
@@ -71,8 +72,9 @@ struct QueuedRequest {
   }
 
   const base::trace_event::MemoryDumpRequestArgs args;
-  const RequestGlobalMemoryDumpInternalCallback callback;
+  RequestGlobalMemoryDumpInternalCallback callback;
   const bool add_to_trace;
+  const base::Optional<base::ProcessId> pid;
 
   // When a dump, requested via RequestGlobalMemoryDump(), is in progress this
   // set contains a |PendingResponse| for each |RequestChromeMemoryDump| and
