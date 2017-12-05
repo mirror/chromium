@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "72a81cab_f612428b",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-05T23:01:49Z",
+      "side": 1,
+      "message": "From https://chromium.googlesource.com/chromium/src/+/master/mojo/public/tools/bindings/README.md#Versioning\n\n\"\"\"\nNOTE: You don‘t need to worry about versioning if you don’t care about backwards compatibility. Specifically, all parts of Chrome are updated atomically today and there is not yet any possibility of any two Chrome processes communicating with two different versions of any given Mojom interface.\n\"\"\"\n\nI think this is really used for the cases where pieces of chrome that use mojo  are not part of the same binary. concrete example: the malware removal tool for windows.\n\nI\u0027d drop this, we never used this before as we don\u0027t care about non-chrome use cases.",
+      "parentUuid": "fd2e62d4_28c47644",
+      "revId": "94ab88f48cfef6b1cfa7b6e1767461994aa445a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1da0c6e1_2614f7ab",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
