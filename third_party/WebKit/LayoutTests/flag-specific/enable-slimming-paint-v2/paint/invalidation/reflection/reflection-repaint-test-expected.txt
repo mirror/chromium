@@ -9,17 +9,17 @@
         {
           "object": "LayoutBlockFlow DIV id='target'",
           "rect": [22, 50, 226, 167],
-          "reason": "geometry"
+          "reason": "paint property change"
         },
         {
-          "object": "InlineTextBox 'PASS'",
+          "object": "LayoutBlockFlow DIV id='target'",
           "rect": [23, 51, 72, 110],
-          "reason": "appeared"
+          "reason": "paint property change"
         },
         {
-          "object": "InlineTextBox 'FAIL'",
+          "object": "LayoutBlockFlow DIV id='target'",
           "rect": [23, 51, 69, 109],
-          "reason": "disappeared"
+          "reason": "paint property change"
         }
       ]
     }
