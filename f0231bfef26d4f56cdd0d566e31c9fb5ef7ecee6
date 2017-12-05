@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfad3d75_18815787",
+        "filename": "components/nacl/zygote/nacl_fork_delegate_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000264
+      },
+      "writtenOn": "2017-12-05T23:38:17Z",
+      "side": 1,
+      "message": "Maybe you could also comment out the constant to enforce that it\u0027s no longer used?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "f0231bfef26d4f56cdd0d566e31c9fb5ef7ecee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
