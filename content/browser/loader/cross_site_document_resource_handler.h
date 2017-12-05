@@ -119,6 +119,9 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
   // completed, and thus it is safe to cancel or detach on the next read.
   bool blocked_read_completed_ = false;
 
+  // Message to print on the console if the response is blocked.
+  std::string console_message_;
+
   DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentResourceHandler);
 };
 

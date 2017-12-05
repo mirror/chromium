@@ -18,13 +18,30 @@
 #include "content/browser/site_instance_impl.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/console_message_level.h"
 #include "content/public/common/content_client.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
 #include "net/url_request/url_request.h"
 
 namespace content {
+
+namespace {
+
+// Prints an informational message to console when a page's request is blocked.
+void OutputConsoleMessageOnUI(int render_process_id,
+                              int render_frame_id,
+                              const std::string& message) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  RenderFrameHost* rfh =
+      RenderFrameHost::FromID(render_process_id, render_frame_id);
+  if (rfh)
+    rfh->AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_INFO, message);
+}
+
+}  // namespace
 
 // ResourceController used in OnWillRead in cases that sniffing will happen.
 // When invoked, it runs the corresponding method on the ResourceHandler.
@@ -216,9 +233,19 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       bytes_read = 0;
       blocked_read_completed_ = true;
 
+      // Add message to console to help web developers diagnose.
+      const ResourceRequestInfoImpl* info = GetRequestInfo();
+      if (info) {
+        BrowserThread::PostTask(
+            BrowserThread::UI, FROM_HERE,
+            base::BindOnce(&OutputConsoleMessageOnUI, info->GetChildID(),
+                           info->GetRenderFrameID(),
+                           std::move(console_message_)));
+      }
+
       // Log the blocking event.  Inline the Serialize call to avoid it when
       // tracing is disabled.
-      // TODO(creis): Add a console log message and histograms.
+      // TODO(creis): Add histograms.
       TRACE_EVENT2("navigation",
                    "CrossSiteDocumentResourceHandler::ShouldBlockResponse",
                    "initiator",
@@ -341,6 +368,12 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
   response->head.headers->GetNormalizedHeader("content-range", &range_header);
   needs_sniffing_ = !base::LowerCaseEqualsASCII(nosniff_header, "nosniff") &&
                     range_header.empty();
+
+  console_message_ = base::StringPrintf(
+      "Blocked origin '%s' from receiving cross-site document at %s with "
+      "MIME type %s.",
+      initiator.Serialize().c_str(), url.spec().c_str(),
+      response->head.mime_type.c_str());
 
   return true;
 }
