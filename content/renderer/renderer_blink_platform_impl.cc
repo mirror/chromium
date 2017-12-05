@@ -1364,12 +1364,13 @@ void RendererBlinkPlatformImpl::StopListening(
 //------------------------------------------------------------------------------
 
 void RendererBlinkPlatformImpl::QueryStorageUsageAndQuota(
-    const blink::WebURL& storage_partition,
+    const blink::WebSecurityOrigin& storage_partition,
     blink::WebStorageQuotaType type,
     blink::WebStorageQuotaCallbacks callbacks) {
   QuotaDispatcher::ThreadSpecificInstance(default_task_runner_)
       ->QueryStorageUsageAndQuota(
-          storage_partition, static_cast<storage::StorageType>(type),
+          static_cast<url::Origin>(storage_partition),
+          static_cast<storage::StorageType>(type),
           QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(callbacks));
 }
 
