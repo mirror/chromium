@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82cd4fb_86631be2",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T20:08:18Z",
+      "side": 1,
+      "message": "1) Can you also confirm that GURL tries to fix up the URL to a valid one in the process, e.g., \n\"http://cs foo\" will be listed as has_scheme, even though that\u0027s not a valid URL in the normal form? \n2) Does has_scheme work if GURL() returns a URL that is invalid? (!is_valid()?)",
+      "range": {
+        "startLine": 291,
+        "startChar": 6,
+        "endLine": 291,
+        "endChar": 35
+      },
+      "revId": "c1e3d317224b81f7f8a9d2616a53797e3b728c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
