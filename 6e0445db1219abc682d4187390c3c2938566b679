@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8d68753_050679df",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-05T14:55:54Z",
+      "side": 1,
+      "message": "Alternatively\n__gCrWeb.common.setInputElementValue(value, usernameInput, true);",
+      "range": {
+        "startLine": 238,
+        "startChar": 24,
+        "endLine": 238,
+        "endChar": 49
+      },
+      "revId": "6e0445db1219abc682d4187390c3c2938566b679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
