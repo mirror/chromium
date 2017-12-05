@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1946ed88_ea4f16f8",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-05T01:57:44Z",
+      "side": 1,
+      "message": "Note that delaying the flush doesn\u0027t make as much sense for VP9 as for H.264, but if the corruption in the bug does occur at a non-keyframe then this could aid recovery.\n\nDid you test a version where config changes are reported iff they occur on a keyframe?",
+      "range": {
+        "startLine": 513,
+        "startChar": 8,
+        "endLine": 513,
+        "endChar": 31
+      },
+      "revId": "4d786a83524979f4d7c4568413e64623e26a3494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4f61fd_7b1cdfd8",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-05T01:57:44Z",
+      "side": 1,
+      "message": "Looks noisy, if you want to log this then probably only do so once per change. However it\u0027s probably better to just log explicitly in the reporting of config changes, so that Detect/Report log entries are always paired.",
+      "range": {
+        "startLine": 527,
+        "startChar": 6,
+        "endLine": 527,
+        "endChar": 67
+      },
+      "revId": "4d786a83524979f4d7c4568413e64623e26a3494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
