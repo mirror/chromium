@@ -22,6 +22,30 @@
       "revId": "dbdf81bc3ed1d41f0e90ab3db88e1d66cf9f534e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68aa8f7_d7924326",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-05T12:04:57Z",
+      "side": 1,
+      "message": "Oops, that\u0027s entirely my fault, I left there the blank line by accident and clang-format respects that by design. I removed the blank line and automatic formatting now does what you suggest.",
+      "parentUuid": "7fa7119b_382396aa",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "dbdf81bc3ed1d41f0e90ab3db88e1d66cf9f534e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
