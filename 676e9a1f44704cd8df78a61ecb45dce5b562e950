@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "172f9fb7_66e39276",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-05T20:37:09Z",
+      "side": 1,
+      "message": "Transient children should move along with its parent, so you should move the parent instead. Let me know if it doesn\u0027t work that way. We need to fix it.",
+      "revId": "676e9a1f44704cd8df78a61ecb45dce5b562e950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
