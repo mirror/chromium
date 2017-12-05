@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("lib") {
+  sources = [
+    "udp_socket_impl.cc",
+    "udp_socket_impl.h",
+  ]
+
+  deps = [
+    "//base",
+    "//mojo/common",
+    "//mojo/common:common_base",
+    "//net",
+    "//services/network/public/interfaces",
+  ]
+}
+
+source_set("tests") {
+  testonly = true
+  sources = [
+    "udp_socket_unittest.cc",
+  ]
+  deps = [
+    ":lib",
+    "//base",
+    "//base/test:test_support",
+    "//mojo/public/cpp/bindings:bindings",
+    "//net",
+    "//services/network/public/interfaces",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
