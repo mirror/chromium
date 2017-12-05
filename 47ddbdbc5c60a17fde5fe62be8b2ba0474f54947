@@ -16,6 +16,40 @@
       "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0873a18_b87dbe70",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-05T15:20:33Z",
+      "side": 1,
+      "message": "optional: rename this to SimulateClose for consistency with your new Simulate* method names? (\u0026 to help clarify the difference between this method and the NDS::Close implementation)",
+      "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f4ccb9_4692c3fe",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-05T15:20:33Z",
+      "side": 1,
+      "message": "optional: 2nd sentence -\u003e \"If there is no notification that matches, returns the end() iterator.\"",
+      "revId": "47ddbdbc5c60a17fde5fe62be8b2ba0474f54947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
