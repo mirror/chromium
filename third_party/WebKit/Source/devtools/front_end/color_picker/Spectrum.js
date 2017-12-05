@@ -318,7 +318,8 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._shadesContainer.animate(
         [{transform: 'scaleY(0)', opacity: '0'}, {transform: 'scaleY(1)', opacity: '1'}],
         {duration: 200, easing: 'cubic-bezier(0.4, 0, 0.2, 1)'});
-    this._shadesContainer.style.top = colorElement.offsetTop + colorElement.parentElement.offsetTop + 'px';
+    this._shadesContainer.style.top =
+        this._paletteColorsContainer.offsetTop + colorElement.offsetTop + colorElement.parentElement.offsetTop + 'px';
     this._shadesContainer.style.left = colorElement.offsetLeft + 'px';
     colorElement.classList.add('spectrum-shades-shown');
 
