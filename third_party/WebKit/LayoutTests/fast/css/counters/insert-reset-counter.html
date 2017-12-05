@@ -1,0 +1,43 @@
+<!doctype html>
+<title>Dynamic changes to 'counter-reset'</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+#root { counter-reset: c }
+p.item { counter-increment: c }
+p:before { content: counter(c) }
+p.reset { counter-reset: c }
+</style>
+<div id="root">
+  <p class="item" id="first">First item</p>
+  <p class="item" id="second">Second item</p>
+  <p class="item" id="third">Third item</p>
+</div>
+<script>
+'use strict';
+
+test(() => {
+  let first = document.getElementById('first');
+  let second = document.getElementById('second');
+  let third = document.getElementById('third');
+
+  assert_equals(window.internals.counterValue(first), '1');
+  assert_equals(window.internals.counterValue(second), '2');
+  assert_equals(window.internals.counterValue(third), '3');
+
+  first.className = 'reset';
+
+  assert_equals(window.internals.counterValue(first), '0');
+  assert_equals(window.internals.counterValue(second), '1');
+  assert_equals(window.internals.counterValue(third), '2');
+
+  let elem = document.createElement('p');
+  elem.className = 'reset';
+  root.insertBefore(elem, third);
+
+  assert_equals(window.internals.counterValue(first), '0');
+  assert_equals(window.internals.counterValue(second), '1');
+  assert_equals(window.internals.counterValue(third), '1');
+}, 'Dynamically changing counter-reset updates counters accordingly');
+
+</script>
