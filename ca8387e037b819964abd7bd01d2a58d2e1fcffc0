@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8d8124d_e9846029",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22372,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-05T04:08:52Z",
+      "side": 1,
+      "message": "Could you add some detail about when this is recorded? I think it is recorded when apps are opened from navigations (not directly from launches) but I\u0027m not sure.",
+      "revId": "ca8387e037b819964abd7bd01d2a58d2e1fcffc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
