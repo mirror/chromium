@@ -38,6 +38,7 @@ import org.chromium.content_public.browser.SmartClipCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_public.browser.WebContentsObserver;
+import org.chromium.content_public.browser.WebContentsUserData;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
@@ -168,6 +169,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static class WebContentsInternalsImpl implements WebContentsInternals {
         public HashSet<Object> retainedObjects;
         public HashMap<String, Pair<Object, Class>> injectedObjects;
+        public HashMap<Class<? extends WebContentsUserData>, WebContentsUserData> userDataMap;
     }
 
     private WebContentsImpl(
@@ -181,6 +183,7 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
         WebContentsInternalsImpl internals = new WebContentsInternalsImpl();
         internals.retainedObjects = new HashSet<Object>();
         internals.injectedObjects = new HashMap<String, Pair<Object, Class>>();
+        internals.userDataMap = new HashMap<>();
 
         mRenderCoordinates = new RenderCoordinates();
         mRenderCoordinates.reset();
@@ -736,6 +739,42 @@ public class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
      */
     public RenderCoordinates getRenderCoordinates() {
         return mRenderCoordinates;
+    }
+
+    /**
+     * Sets {@link WebContentsUserData} object in the map.
+     * @param key
+     * @param data
+     */
+    public <T extends WebContentsUserData> void setUserData(Class<T> key, T data) {
+        assert key == data.getClass();
+        Map<Class<? extends WebContentsUserData>, WebContentsUserData> userDataMap =
+                getUserDataMap();
+        if (userDataMap != null) {
+            assert !userDataMap.containsKey(key); // Do not allow duplicated Data
+            userDataMap.put(key, data);
+        } else {
+            assert false;
+        }
+    }
+
+    public <T extends WebContentsUserData> T getUserData(Class<T> key) {
+        WebContentsInternals internals = mInternalsHolder.get();
+        if (internals == null) return null;
+        Map<Class<? extends WebContentsUserData>, WebContentsUserData> userDataMap =
+                getUserDataMap();
+
+        // Downcasting WebContentsUserData to T is fine since only the object of type T is
+        // stored in the entry with key of type T.
+        @SuppressWarnings("unchecked")
+        T data = (T) (userDataMap != null ? userDataMap.get(key) : null);
+        return data;
+    }
+
+    private Map<Class<? extends WebContentsUserData>, WebContentsUserData> getUserDataMap() {
+        WebContentsInternals internals = mInternalsHolder.get();
+        if (internals == null) return null;
+        return ((WebContentsInternalsImpl) internals).userDataMap;
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
