@@ -70,7 +70,8 @@ TEST_F(VideoCaptureDeviceClientTest, Minimal) {
   const size_t kScratchpadSizeInBytes = 400;
   unsigned char data[kScratchpadSizeInBytes] = {};
   const VideoCaptureFormat kFrameFormat(gfx::Size(10, 10), 30.0f /*frame_rate*/,
-                                        PIXEL_FORMAT_I420, PIXEL_STORAGE_CPU);
+                                        PIXEL_FORMAT_I420,
+                                        VideoPixelStorage::CPU);
   DCHECK(device_client_.get());
   {
     InSequence s;
