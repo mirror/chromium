@@ -16,6 +16,24 @@
       "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9d2038_3ba7eb56",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-05T02:43:16Z",
+      "side": 1,
+      "message": "Should it go back to:\n\ncolor_chooser_.reset(new ColorChooser ...",
+      "parentUuid": "b2341879_590c2b32",
+      "revId": "85825e9b1d6d67b066e6f78a15ea352685014d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
