@@ -22,6 +22,30 @@
       "revId": "1a0d61c7aac7250de05fb7c86fb20dc94eba1d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce5ee4f_cbe97587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ChromeContextMenuItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-05T01:09:46Z",
+      "side": 0,
+      "message": "This change seems fine to me.  I thought we only needed ResourceCompat if it was across apps.  If we do require both within our own app, then this is definitely a bug in the app compat code.",
+      "parentUuid": "bdd1f0a6_3671f1eb",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "1a0d61c7aac7250de05fb7c86fb20dc94eba1d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
