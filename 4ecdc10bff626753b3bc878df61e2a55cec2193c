@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df09526_6cb0bd1d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-05T09:52:44Z",
+      "side": 1,
+      "message": "Dominic: reopening bubble after re-auth breaks this DCHECK. What is the proper way to fix that?",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 64
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

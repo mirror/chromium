@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7184b43a_ea25fc61",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-05T09:52:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71d57106_d1e78800",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9efeab_c0349ad4",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07afcb7d_f4aa70fa",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-05T09:52:44Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure it\u0027s the right place to keep |passwords_view_reauth_time_| and decide on reauth. ManagePasswordsUIController is limited to a tab. It would be consistent to\n\u003e - have a timeout for the whole Chrome profile or\n\u003e - have a timeout valid during the bubble lifetime.\n\u003e Note that in the second case we must reopen the bubble after reauth. I think we should do it anyway.\n\u003e \n\u003e We can discuss which option makes more sense.\n\nChanged.",
+      "parentUuid": "4e9efeab_c0349ad4",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 50
+      },
+      "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
