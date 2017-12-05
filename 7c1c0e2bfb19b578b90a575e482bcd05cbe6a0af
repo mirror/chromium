@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "794c3365_66fd7f19",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3dc6d0_5bc9ff6b",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ba8df3_4297a1b0",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7148489f_e396e686",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ba8df3_4297a1b0",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9a21f74_74a7a800",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d471df_834ed5cf",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9639a03a_d45c10df",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c94f041_918ce809",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9639a03a_d45c10df",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3fae5d05_6003e3b6",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done.\n\nNote that this is the same way as in speech_monitor -- it also constructed the loop runner in the waiter function.",
+      "parentUuid": "afc1202c_edb4ddfc",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d271545_b0e4bb6e",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38dfb3a_53988fed",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d271545_b0e4bb6e",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1cbfd092_0e4d29c2",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ac850e_a92c9936",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32bc75d2_90934432",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1445ba0f_9d41db13",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bc75d2_90934432",
+      "revId": "7c1c0e2bfb19b578b90a575e482bcd05cbe6a0af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
