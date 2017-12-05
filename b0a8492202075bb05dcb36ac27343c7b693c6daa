@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9409aca_11857abf",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "The parallel writing metrics need to be updated for both the transactions that can join and those that could not join. Thus doing it unconditionally here.",
+      "parentUuid": "b3d7409a_146b260a",
+      "range": {
+        "startLine": 1082,
+        "startChar": 4,
+        "endLine": 1082,
+        "endChar": 79
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f3b61a1_0080d68e",
         "filename": "net/http/http_cache.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61357a1_be7e3f7d",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Updated to \"when a Writers object is first created\"",
+      "parentUuid": "5f3b61a1_0080d68e",
+      "range": {
+        "startLine": 114,
+        "startChar": 46,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5d6e781b_3ed29c75",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c5e5e9_51bbdca4",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fac0539b_63102a5d",
         "filename": "net/http/http_cache.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fa3306_fe5240e8",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fac0539b_63102a5d",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8dfe2a2d_e0a806b7",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "The early returns actually do not record metrics for range requests or non-GET requests but this metric needs to be logged for them as well.",
+      "parentUuid": "2683adb0_a6fc941a",
+      "range": {
+        "startLine": 3249,
+        "startChar": 0,
+        "endLine": 3250,
+        "endChar": 77
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ba43b9_278e4ead",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cc0600_adefc1ae",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ba43b9_278e4ead",
+      "range": {
+        "startLine": 194,
+        "startChar": 25,
+        "endLine": 194,
+        "endChar": 31
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a9a9337f_f25fdc54",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f83e79_d56dfe2c",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795bc7aa_9677dd8b",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8fa3ee_6dcedcf3",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "How about we set it only the first time a transaction is added? PTAL at the change which combines the logic for this argument and is_exclusive_ since both are only relevant for the first transaction).\nI could send is_exclusive but then somewhere writers will need to figure out the reason for the exclusiveness and that would be a duplicate of what HttpCache has already figured out.",
+      "parentUuid": "795bc7aa_9677dd8b",
+      "range": {
+        "startLine": 111,
+        "startChar": 27,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "d6d760a6_d8f6bc88",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "As discussed f2f, removing these reasons since these are really rare cases and for recording them we would actually need plumbing in another path since we are restarting the transactions in these scenarios.",
+      "parentUuid": "d8004e42_f3409e6a",
+      "range": {
+        "startLine": 488,
+        "startChar": 41,
+        "endLine": 488,
+        "endChar": 72
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d0ce4a_6868f961",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "0310e690_d1b08de6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 20992,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d0ce4a_6868f961",
+      "range": {
+        "startLine": 20991,
+        "startChar": 13,
+        "endLine": 20992,
+        "endChar": 31
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35dc6fc_27f43671",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -252,6 +492,30 @@
       "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e504781b_885d1293",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 28339,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-05T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35dc6fc_27f43671",
+      "range": {
+        "startLine": 28339,
+        "startChar": 3,
+        "endLine": 28339,
+        "endChar": 10
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
