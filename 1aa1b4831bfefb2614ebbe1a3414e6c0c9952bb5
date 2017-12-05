@@ -33,6 +33,24 @@
       "revId": "1aa1b4831bfefb2614ebbe1a3414e6c0c9952bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c85b9cd_d9bc8178",
+        "filename": "remoting/base/buffered_socket_writer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-05T19:52:42Z",
+      "side": 1,
+      "message": "Note that I asked Ramin to convert these to the TODO(crbug.com/XXX) form.\nThis is an accepted form according to the Google C++ style guide.\n\n(1) Google C++ style guide allows referencing bug numbers in TODO in place of a username:\n  https://google.github.io/styleguide/cppguide.html#TODO_Comments\n\n(2) Chromium code may have different bug trackers, so specifying the domain of the bug (in the form of a URL) is preferable\n\nThe conclusion in https://groups.google.com/a/chromium.org/d/msg/chromium-dev/40g-LXlxYvk/f6yHEBA7CwAJ was to prefer TODO(crbug.com/XXX) as the form when identifying bug IDs, as this is the most widely used today.\n\nAs for adding specific recommendations to the style guide on this matter, that was brought up in https://groups.google.com/a/chromium.org/d/msg/chromium-dev/whBCkcY8xtA/GIESB45aDQAJ. The conclusion there was that it wasn\u0027t worth providing a recommendation in the Chromium style guide (which I don\u0027t agree with, but will respect).\n\nHope that helps resolve this mismatch!",
+      "parentUuid": "d1621627_67132fe8",
+      "revId": "1aa1b4831bfefb2614ebbe1a3414e6c0c9952bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
