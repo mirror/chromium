@@ -85,7 +85,7 @@ void NGBoxFragmentPainter::PaintInlineBox(
   block_paint_offset_ = block_paint_offset;
   PaintInfo info(paint_info);
   PaintWithAdjustedOffset(
-      info, paint_offset + box_fragment_.Offset().ToLayoutPoint());
+      info, block_paint_offset + box_fragment_.Offset().ToLayoutPoint());
 }
 
 void NGBoxFragmentPainter::PaintWithAdjustedOffset(
