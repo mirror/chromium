@@ -24,7 +24,6 @@
 
 namespace {
 char kUrl[] = "https://test.test/";
-char kMimeType[] = "application/vnd.apple.pkpass";
 
 // Used as no-op callback.
 void DoNothing(int) {}
@@ -49,7 +48,8 @@ class PassKitTabHelperTest : public PlatformTest {
 
 // Tests downloading empty pkpass file.
 TEST_F(PassKitTabHelperTest, EmptyFile) {
-  auto task = std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kMimeType);
+  auto task =
+      std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kPkPassMimeType);
   web::FakeDownloadTask* task_ptr = task.get();
   tab_helper()->Download(std::move(task));
   task_ptr->SetDone(true);
@@ -59,11 +59,13 @@ TEST_F(PassKitTabHelperTest, EmptyFile) {
 
 // Tests downloading 2 empty pkpass files.
 TEST_F(PassKitTabHelperTest, MultipleEmptyFiles) {
-  auto task = std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kMimeType);
+  auto task =
+      std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kPkPassMimeType);
   web::FakeDownloadTask* task_ptr = task.get();
   tab_helper()->Download(std::move(task));
 
-  auto task2 = std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kMimeType);
+  auto task2 =
+      std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kPkPassMimeType);
   web::FakeDownloadTask* task_ptr2 = task2.get();
   tab_helper()->Download(std::move(task2));
 
@@ -78,7 +80,8 @@ TEST_F(PassKitTabHelperTest, MultipleEmptyFiles) {
 
 // Tests downloading a valid pkpass file.
 TEST_F(PassKitTabHelperTest, ValidPassKitFile) {
-  auto task = std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kMimeType);
+  auto task =
+      std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kPkPassMimeType);
   web::FakeDownloadTask* task_ptr = task.get();
   tab_helper()->Download(std::move(task));
 
