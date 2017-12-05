@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993805ae_01874ed0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-05T15:52:21Z",
+      "side": 1,
+      "message": "nit: s/an/a",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25d04db_f5a64e65",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-05T15:52:21Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15320cf_11cfb090",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-05T15:52:21Z",
+      "side": 1,
+      "message": "Add a TODO We might need to go through the rest of the function once there are several types of URLLoader handling the navigation, even in non network-service mode.",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685c5d89_ba63f067",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-05T15:52:21Z",
+      "side": 1,
+      "message": "All the tests in this file are testing NavigationURLLoaderImpl*. They are not applicable to the network service version at all. Just return early when NavigationMojoResponse is enabled - and check that we have equivalent browser tests.",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80efc845_8a945068",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 34
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-05T15:52:21Z",
+      "side": 1,
+      "message": "Let\u0027s modify IsNavigationMojoResponseEnabled() to return false if the network service is enabled. Otherwise we\u0027ll end up in a very weird state when creating the NavigationURLLoader.",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
