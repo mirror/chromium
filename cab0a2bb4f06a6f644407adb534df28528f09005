@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1ee35ee_69975073",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-05T21:56:03Z",
+      "side": 1,
+      "message": "It looks like browser crash after device account was marked for removal, but before clean exit.",
+      "parentUuid": "40e4b45e_fd96492f",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "243b6442_28624640",
         "filename": "components/user_manager/user_manager.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T20:17:28Z",
       "side": 1,
       "message": "When is user null?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7bd210_2fbfcf63",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-05T21:56:03Z",
+      "side": 1,
+      "message": "I think this happens when user is new. I did not find User creation before this.",
+      "parentUuid": "243b6442_28624640",
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +117,24 @@
       "writtenOn": "2017-12-05T20:17:28Z",
       "side": 1,
       "message": "const bool for browser_restart and is_child seems meaningless; we should drop it",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e289ec_2ae21ef3",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-05T21:56:03Z",
+      "side": 1,
+      "message": "It just makes them read-only inside the method.\nIt\u0027s useful for debugging.\n\nRemoved.",
+      "parentUuid": "2e6b47db_ac1dffd4",
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +220,24 @@
       "writtenOn": "2017-12-05T20:17:28Z",
       "side": 1,
       "message": "This is a change in behavior right?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4c20b0_614c57f5",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-05T21:56:03Z",
+      "side": 1,
+      "message": "This has never been used, so it\u0027s just the time to do it ;)",
+      "parentUuid": "393304fc_d6b21d42",
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
