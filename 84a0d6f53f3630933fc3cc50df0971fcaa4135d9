@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06093068_9a0724c1",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:28:25Z",
+      "side": 1,
+      "message": "It is kind of odd to stash the color matrix on the output surface and then pick it up later in the DirectRenderer.\nCan we instead pass it directly to renderer_ in DrawAndSwap?",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f9b40d_0b4048ef",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:28:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we should force a DrawAndSwap, but instead let the scheduler schedule a new frame, IOW maybe follow the steps of Display::SetNeedsRedrawRect",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304d1891_55d49ccf",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:28:25Z",
+      "side": 1,
+      "message": "nit: maybe move this to l.1019 to avoid separating the alpha source code from its headers",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb78548_597f88ad",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:28:25Z",
+      "side": 1,
+      "message": "What about software?\nIn particular as we will be switching to SkiaRenderer at some point, this needs to work there too.",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63dff4e_3a6f44b6",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:28:25Z",
+      "side": 1,
+      "message": "What about software?\nIn particular as we will be switching to SkiaRenderer at some point, this needs to work there too.",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
