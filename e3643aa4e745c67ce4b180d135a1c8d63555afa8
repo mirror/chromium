@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "286a1e96_6170137e",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:06:09Z",
+      "side": 1,
+      "message": "It seems like we should be able to get rid of this function: most callers should call LazyInitialize, the ones that use the bool value should just check IsDisabled beforehand. But it can be a follow-up.",
+      "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2430d1a4_337c53bf",
+        "filename": "content/browser/service_worker/service_worker_storage_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T06:06:09Z",
+      "side": 1,
+      "message": "Does this need to be ForTest?",
+      "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
