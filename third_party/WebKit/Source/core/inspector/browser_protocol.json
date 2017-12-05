@@ -11949,6 +11949,16 @@
                             ]
                         },
                         {
+                            "name": "transferCompression",
+                            "description": "Compression format to use. This only applies when using <code>ReturnAsStream</code> transfer mode (defaults to <code>none</code>).",
+                            "optional": true,
+                            "type": "string",
+                            "enum": [
+                                "none",
+                                "gzip"
+                            ]
+                        },
+                        {
                             "name": "traceConfig",
                             "optional": true,
                             "$ref": "TraceConfig"

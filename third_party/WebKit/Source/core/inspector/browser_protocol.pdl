@@ -5469,6 +5469,11 @@ experimental domain Tracing
       optional enum transferMode
         ReportEvents
         ReturnAsStream
+      # Compression format to use. This only applies when using `ReturnAsStream`
+      # transfer mode (defaults to `none`)
+      optional enum transferCompression
+        none
+        gzip
       optional TraceConfig traceConfig
 
   event bufferUsage
