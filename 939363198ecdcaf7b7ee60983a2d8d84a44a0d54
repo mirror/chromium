@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f13e9f5d_c88b9491",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-05T05:55:10Z",
+      "side": 1,
+      "message": "Yes, wasn\u0027t there concern that this was an expensive operation and thus we must make sure to only do it once? Regardless, I generally prefer to simplify any repeated expression into a variable.",
+      "parentUuid": "bec6f9df_85fd0573",
+      "range": {
+        "startLine": 288,
+        "startChar": 46,
+        "endLine": 288,
+        "endChar": 58
+      },
+      "revId": "939363198ecdcaf7b7ee60983a2d8d84a44a0d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c007e7_f05ea726",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 10
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done. Let me know what you think!",
       "parentUuid": "25c007e7_f05ea726",
+      "range": {
+        "startLine": 3126,
+        "startChar": 13,
+        "endLine": 3126,
+        "endChar": 33
+      },
+      "revId": "939363198ecdcaf7b7ee60983a2d8d84a44a0d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92ef4279_2019a569",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 3126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-05T05:55:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09a06ee5_5dbbe383",
       "range": {
         "startLine": 3126,
         "startChar": 13,
