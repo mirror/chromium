@@ -46,6 +46,30 @@
       "revId": "ed41d6eb85455db9f8d396b823428a13942eb995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104d0e30_ebd113e1",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3886,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-05T20:01:05Z",
+      "side": 1,
+      "message": "\u0027all\u0027 is all of the targets listed in any BUILD.gn that contains anything that is referenced from the root BUILD.gn, so it will take a fair bit of work to cut it down to building.\n\n\u0027gn_all\u0027 is a hold-over from the GYP-\u003eGN transition, but these days is basically a hand-rolled set of \"all\" targets.",
+      "parentUuid": "19ddea07_96e16c1f",
+      "range": {
+        "startLine": 3886,
+        "startChar": 6,
+        "endLine": 3886,
+        "endChar": 14
+      },
+      "revId": "ed41d6eb85455db9f8d396b823428a13942eb995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
