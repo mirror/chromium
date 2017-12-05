@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import static org.chromium.chrome.browser.ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL;
+import static org.chromium.chrome.test.util.browser.Features.EnableFeatures;
+
 import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
@@ -15,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
@@ -31,6 +35,7 @@ import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.RenderTestRule;
 import org.chromium.chrome.test.util.browser.ChromeHome;
+import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.net.test.EmbeddedTestServerRule;
@@ -46,11 +51,8 @@ import java.util.concurrent.TimeoutException;
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add(ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG)
-@CommandLineFlags.Remove(ChromeHome.ENABLE_FLAGS)
 @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
 public class ContextualSuggestionsTest {
-    private static final String ENABLE_CONTEXTUAL_SUGGESTIONS = ChromeHome.ENABLE_FLAGS + ","
-            + ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL;
     private static final String TEST_PAGE = "/chrome/test/data/android/test.html";
 
     private static final List<SnippetArticle> FAKE_CONTEXTUAL_SUGGESTIONS = Arrays.asList(
@@ -84,7 +86,10 @@ public class ContextualSuggestionsTest {
                     0L, // fetchTimestamp
                     false, // isVideoSuggestion
                     null)); // thumbnailDominantColor
-
+    @Rule
+    public TestRule mChromeHomeStateRule = new ChromeHome.Processor();
+    @Rule
+    public TestRule mProcessor = new Features.InstrumentationProcessor();
     @Rule
     public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
     @Rule
@@ -113,7 +118,7 @@ public class ContextualSuggestionsTest {
     @Test
     @SmallTest
     @Feature({"ContextualSuggestions"})
-    @CommandLineFlags.Add(ChromeHome.ENABLE_FLAGS)
+    @ChromeHome.Enable
     public void testCarouselIsNotShownWhenFlagIsDisabled() {
         Assert.assertFalse(
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL));
@@ -128,12 +133,13 @@ public class ContextualSuggestionsTest {
     @Test
     @SmallTest
     @DisabledTest(message = "See crbug.com/758179. The fix there involves setting the"
-                    + "SuggestionsCarousel to always be visible inside the NewTabPageAdapter."
-                    + "However, the desired behaviour is that it is only visible when there are"
-                    + "suggestions to show. This test covers the desired behaviour and should be"
-                    + "enabled when this is handled properly.")
+            + "SuggestionsCarousel to always be visible inside the NewTabPageAdapter."
+            + "However, the desired behaviour is that it is only visible when there are"
+            + "suggestions to show. This test covers the desired behaviour and should be"
+            + "enabled when this is handled properly.")
     @Feature({"ContextualSuggestions"})
-    @CommandLineFlags.Add(ENABLE_CONTEXTUAL_SUGGESTIONS)
+    @ChromeHome.Enable
+    @EnableFeatures(CONTEXTUAL_SUGGESTIONS_CAROUSEL)
     public void testCarouselIsNotShownWhenFlagsEnabledButNoSuggestions() {
         Assert.assertTrue(
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL));
@@ -148,7 +154,8 @@ public class ContextualSuggestionsTest {
     @Test
     @SmallTest
     @Feature({"ContextualSuggestions"})
-    @CommandLineFlags.Add(ENABLE_CONTEXTUAL_SUGGESTIONS)
+    @ChromeHome.Enable
+    @EnableFeatures(CONTEXTUAL_SUGGESTIONS_CAROUSEL)
     public void testCarouselIsShownWhenItReceivedSuggestions()
             throws InterruptedException, TimeoutException {
         mSuggestionsSource.setContextualSuggestions(FAKE_CONTEXTUAL_SUGGESTIONS);
@@ -172,7 +179,8 @@ public class ContextualSuggestionsTest {
     @Test
     @MediumTest
     @Feature({"ContextualSuggestions", "RenderTest"})
-    @CommandLineFlags.Add(ENABLE_CONTEXTUAL_SUGGESTIONS)
+    @ChromeHome.Enable
+    @EnableFeatures(CONTEXTUAL_SUGGESTIONS_CAROUSEL)
     public void testCardAppearance() throws InterruptedException, TimeoutException, IOException {
         mSuggestionsSource.setContextualSuggestions(FAKE_CONTEXTUAL_SUGGESTIONS);
 
