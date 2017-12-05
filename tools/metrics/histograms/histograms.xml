@@ -22364,6 +22364,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.BookmarkApp.TimeBetweenOpenAppAndLastNavigation"
+    units="ms">
+  <owner>mgiuca@chromium.org</owner>
+  <owner>ortuno@chromium.org</owner>
+  <summary>
+    Records the time difference between the last navigation and us opening an
+    app window. If the time difference is small, then we probably opened an app
+    window in response to a client side redirect.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.BookmarkAppLaunchContainer"
     enum="AppLaunchContainer">
   <owner>benwells@chromium.org</owner>
