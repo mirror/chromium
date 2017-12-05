@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cbb822_aab20865",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-12-05T02:55:46Z",
+      "side": 1,
+      "message": "You can use BUG\u003dchromium:785117 here, since this will help with the libva 2.0 transition by making sure the proper drivers are opened before sandboxing.",
+      "revId": "821b8fa7195d16956fc58ed2bdbe77642e41168c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
