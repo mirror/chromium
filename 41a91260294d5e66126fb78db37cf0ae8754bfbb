@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "173b8579_74773a9b",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-05T20:10:33Z",
+      "side": 1,
+      "message": "Is this just for build/buildflag.h; if so is there merit in including that directly? (To include less). If it\u0027s better to include \"printing/features/features.h\", I\u0027m okay with that too.",
+      "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
