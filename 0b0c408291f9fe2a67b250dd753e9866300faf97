@@ -16,6 +16,24 @@
       "revId": "0b0c408291f9fe2a67b250dd753e9866300faf97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d7ddd3_e9c5aadb",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-05T17:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6441279c_32dd312b",
+      "revId": "0b0c408291f9fe2a67b250dd753e9866300faf97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
