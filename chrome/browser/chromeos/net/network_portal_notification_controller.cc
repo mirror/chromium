@@ -28,6 +28,8 @@
 #include "chrome/browser/chromeos/net/network_portal_web_dialog.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
@@ -47,13 +49,10 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_id.h"
 #include "ui/views/widget/widget.h"
-
-using message_center::Notification;
 
 namespace chromeos {
 
@@ -64,17 +63,18 @@ bool IsPortalNotificationEnabled() {
       switches::kDisableNetworkPortalNotification);
 }
 
-void CloseNotification() {
-  message_center::MessageCenter::Get()->RemoveNotification(
-      NetworkPortalNotificationController::kNotificationId, false);
-}
-
 Profile* GetProfileForPrimaryUser() {
   const user_manager::User* primary_user =
       user_manager::UserManager::Get()->GetPrimaryUser();
   if (!primary_user)
     return nullptr;
   return ProfileHelper::Get()->GetProfileByUser(primary_user);
+}
+
+void CloseNotification() {
+  NotificationDisplayService::GetForProfile(GetProfileForPrimaryUser())
+      ->Close(NotificationHandler::Type::TRANSIENT,
+              NetworkPortalNotificationController::kNotificationId);
 }
 
 // Note that NetworkingConfigService may change after login as the profile
@@ -306,8 +306,9 @@ void NetworkPortalNotificationController::OnPortalDetectionCompleted(
         network->guid());
   }
 
-  message_center::MessageCenter::Get()->AddNotification(
-      GetNotification(network, state));
+  NotificationDisplayService::GetForProfile(GetProfileForPrimaryUser())
+      ->Display(NotificationHandler::Type::TRANSIENT,
+                *GetNotification(network, state));
 }
 
 void NetworkPortalNotificationController::ShowDialog() {
