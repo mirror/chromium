@@ -36,5 +36,5 @@
 ] interface CloseEvent : Event {
     readonly attribute boolean wasClean;
     readonly attribute unsigned short code;
-    readonly attribute DOMString reason;
+    readonly attribute USVString reason;
 };

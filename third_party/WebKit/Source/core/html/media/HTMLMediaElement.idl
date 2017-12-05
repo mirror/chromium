@@ -34,9 +34,9 @@ enum CanPlayTypeResult { "" /* empty string */, "maybe", "probably" };
     readonly attribute MediaError? error;
 
     // network state
-    [CEReactions, Reflect, URL] attribute DOMString src;
+    [CEReactions, Reflect, URL] attribute USVString src;
     // FIXME: attribute MediaProvider? srcObject; crbug.com/387740
-    readonly attribute DOMString currentSrc;
+    readonly attribute USVString currentSrc;
     [CEReactions, Reflect, ReflectOnly=("anonymous","use-credentials"), ReflectEmpty="anonymous", ReflectInvalid="anonymous"] attribute DOMString? crossOrigin;
     const unsigned short NETWORK_EMPTY = 0;
     const unsigned short NETWORK_IDLE = 1;

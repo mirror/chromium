@@ -25,7 +25,7 @@
     OverrideBuiltins,
     ActiveScriptWrappable
 ] interface HTMLObjectElement : HTMLElement {
-    [CEReactions, Reflect, URL] attribute DOMString data;
+    [CEReactions, Reflect, URL] attribute USVString data;
     [CEReactions, Reflect] attribute DOMString type;
     // TODO(foolip): attribute boolean typeMustMatch;
     [CEReactions, Reflect] attribute DOMString name;

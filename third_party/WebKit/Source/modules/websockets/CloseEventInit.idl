@@ -7,5 +7,5 @@
 dictionary CloseEventInit : EventInit {
     boolean wasClean;
     unsigned short code;
-    DOMString reason;
+    USVString reason;
 };

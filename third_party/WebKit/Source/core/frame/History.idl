@@ -35,6 +35,6 @@ interface History {
     [CallWith=ScriptState, RaisesException] void go(optional long delta = 0);
     [CallWith=ScriptState, RaisesException] void back();
     [CallWith=ScriptState, RaisesException] void forward();
-    [RaisesException] void pushState(SerializedScriptValue data, DOMString title, optional DOMString? url = null);
-    [RaisesException] void replaceState(SerializedScriptValue data, DOMString title, optional DOMString? url = null);
+    [RaisesException] void pushState(SerializedScriptValue data, DOMString title, optional USVString? url = null);
+    [RaisesException] void replaceState(SerializedScriptValue data, DOMString title, optional USVString? url = null);
 };

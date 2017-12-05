@@ -41,7 +41,7 @@
     // attribute EventHandler ononline;
 
     // https://html.spec.whatwg.org/#apis-available-to-workers
-    [RaisesException] void importScripts(DOMString... urls);
+    [RaisesException] void importScripts(USVString... urls);
     readonly attribute WorkerNavigator navigator;
 
 

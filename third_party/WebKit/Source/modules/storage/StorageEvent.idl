@@ -31,7 +31,7 @@
     readonly attribute DOMString? key;
     readonly attribute DOMString? oldValue;
     readonly attribute DOMString? newValue;
-    readonly attribute DOMString url;
+    readonly attribute USVString url;
     readonly attribute Storage? storageArea;
 
     // Non-standard API
