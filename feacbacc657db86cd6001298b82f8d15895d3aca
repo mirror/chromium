@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd8381b5_7d70d0bd",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-05T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a194ba75_5556da9a",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 80
+      },
+      "revId": "feacbacc657db86cd6001298b82f8d15895d3aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951720d6_745de442",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f3bc17f0_9ac34b8d",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-05T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951720d6_745de442",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 65
+      },
+      "revId": "feacbacc657db86cd6001298b82f8d15895d3aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "824b11b7_abfd4956",
         "filename": "services/shape_detection/face_detection_provider_win.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "feacbacc657db86cd6001298b82f8d15895d3aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdcfb31_008324f8",
+        "filename": "services/shape_detection/face_detection_provider_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-05T01:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "824b11b7_abfd4956",
+      "revId": "feacbacc657db86cd6001298b82f8d15895d3aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

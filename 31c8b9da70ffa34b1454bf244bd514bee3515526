@@ -476,6 +476,30 @@
     },
     {
       "key": {
+        "uuid": "6089af2f_ba129297",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-05T01:33:54Z",
+      "side": 1,
+      "message": "\u003e That path would be taken if e.g. l.57 (of this patch)\nor l.66 are hit, correct?\n\nl.73 still need use the |callback| if create failed AsyncOperation.",
+      "parentUuid": "07f7f1a4_d866f301",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 50
+      },
+      "revId": "31c8b9da70ffa34b1454bf244bd514bee3515526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0bb69b_eed26e1b",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 6
