@@ -168,7 +168,8 @@ def main(argv):
     input_file = open(file_name, "r")
     pdl_string = input_file.read()
     protocol = parse(pdl_string)
-    output_file = open(argv[0].replace('.pdl', '.json'), "w")
+    # Open as "wb" to avoid CR-LF endings on Windows.
+    output_file = open(argv[0].replace('.pdl', '.json'), "wb")
     json.dump(protocol, output_file, indent=4, separators=(',', ': '))
     output_file.close()
 
