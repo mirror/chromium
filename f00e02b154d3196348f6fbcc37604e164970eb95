@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9baf6c59_15b5ca0e",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineFlowBox.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-12-05T12:16:58Z",
+      "side": 1,
+      "message": "This was wrong, we cannot use the code from InlineTextBox\nas here we have logical dimensions already and the other code\nwas dealing with that.\nWe just need to increase the width no matter if the element\nis horizontal or vertical.",
+      "revId": "f00e02b154d3196348f6fbcc37604e164970eb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
