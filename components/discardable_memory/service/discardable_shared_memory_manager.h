@@ -29,6 +29,10 @@
 #include "components/discardable_memory/common/discardable_memory_export.h"
 #include "components/discardable_memory/public/interfaces/discardable_shared_memory_manager.mojom.h"
 
+namespace base {
+class WaitableEvent;
+}
+
 namespace service_manager {
 struct BindSourceInfo;
 }
@@ -131,6 +135,9 @@ class DISCARDABLE_MEMORY_EXPORT DiscardableSharedMemoryManager
   virtual base::Time Now() const;
   virtual void ScheduleEnforceMemoryPolicy();
 
+  // Invalidate weak pointers for the Mojo Thread.
+  void InvalidateMojoThreadWeakPtrs(base::WaitableEvent* event);
+
   int32_t next_client_id_;
 
   base::Lock lock_;
@@ -150,7 +157,12 @@ class DISCARDABLE_MEMORY_EXPORT DiscardableSharedMemoryManager
       enforce_memory_policy_task_runner_;
   base::Closure enforce_memory_policy_callback_;
   bool enforce_memory_policy_pending_;
+  scoped_refptr<base::SingleThreadTaskRunner> mojo_task_runner_;
   base::WeakPtrFactory<DiscardableSharedMemoryManager> weak_ptr_factory_;
+
+  // WeakPtrFractory for generating weak ptr used in the mojo thread.
+  base::WeakPtrFactory<DiscardableSharedMemoryManager>
+      mojo_thread_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DiscardableSharedMemoryManager);
 };
