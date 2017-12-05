@@ -27,20 +27,6 @@ class ExecutionContext;
 class CORE_EXPORT CanvasAsyncBlobCreator
     : public GarbageCollectedFinalized<CanvasAsyncBlobCreator> {
  public:
-  static CanvasAsyncBlobCreator* Create(
-      DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
-      const String& mime_type,
-      const IntSize&,
-      V8BlobCallback*,
-      double start_time,
-      ExecutionContext*);
-  static CanvasAsyncBlobCreator* Create(
-      DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
-      const String& mime_type,
-      const IntSize&,
-      double start_time,
-      ExecutionContext*,
-      ScriptPromiseResolver*);
   static CanvasAsyncBlobCreator* Create(scoped_refptr<StaticBitmapImage>,
                                         const String& mime_type,
                                         V8BlobCallback*,
@@ -86,10 +72,8 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   virtual void Trace(blink::Visitor*);
 
  protected:
-  CanvasAsyncBlobCreator(DOMUint8ClampedArray* data,
-                         scoped_refptr<StaticBitmapImage>,
+  CanvasAsyncBlobCreator(scoped_refptr<StaticBitmapImage>,
                          MimeType,
-                         const IntSize&,
                          V8BlobCallback*,
                          double,
                          ExecutionContext*,
@@ -105,6 +89,8 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   virtual void CreateNullAndReturnResult();
 
   void InitiateEncoding(double quality, double deadline_seconds);
+
+ protected:
   IdleTaskStatus idle_task_status_;
 
  private:
@@ -112,7 +98,6 @@ class CORE_EXPORT CanvasAsyncBlobCreator
 
   void Dispose();
 
-  Member<DOMUint8ClampedArray> data_;
   scoped_refptr<StaticBitmapImage> image_;
   std::unique_ptr<ImageEncoder> encoder_;
   Vector<unsigned char> encoded_image_;
