@@ -11,6 +11,11 @@
 namespace blink {
 
 NGInlineFragmentIterator::NGInlineFragmentIterator(
+    const NGPhysicalBoxFragment& box) {
+  CollectInlineFragments(box, {}, nullptr, &results_);
+}
+
+NGInlineFragmentIterator::NGInlineFragmentIterator(
     const NGPhysicalBoxFragment& box,
     const LayoutObject* filter) {
   DCHECK(filter);
@@ -25,12 +30,12 @@ NGInlineFragmentIterator::NGInlineFragmentIterator(
 void NGInlineFragmentIterator::CollectInlineFragments(
     const NGPhysicalContainerFragment& container,
     NGPhysicalOffset offset_to_container_box,
-    const LayoutObject* filter,
+    const LayoutObject* optional_filter,
     Results* results) {
   for (const auto& child : container.Children()) {
     NGPhysicalOffset child_offset = child->Offset() + offset_to_container_box;
 
-    if (filter == child->GetLayoutObject()) {
+    if (!optional_filter || optional_filter == child->GetLayoutObject()) {
       results->push_back(
           NGPhysicalFragmentWithOffset{child.get(), child_offset});
     }
@@ -39,7 +44,7 @@ void NGInlineFragmentIterator::CollectInlineFragments(
     // inline layout algorithm.
     if (child->IsContainer() && !child->IsBlockLayoutRoot()) {
       CollectInlineFragments(ToNGPhysicalContainerFragment(*child),
-                             child_offset, filter, results);
+                             child_offset, optional_filter, results);
     }
   }
 }
