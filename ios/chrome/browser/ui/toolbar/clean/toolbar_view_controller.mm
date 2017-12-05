@@ -54,7 +54,6 @@
 @property(nonatomic, strong) ToolbarButton* contractButton;
 @property(nonatomic, assign) BOOL voiceSearchEnabled;
 @property(nonatomic, strong) MDCProgressView* progressBar;
-@property(nonatomic, strong) UIStackView* locationBarContainerStackView;
 // The shadow below the toolbar. Lazily instantiated.
 @property(nonatomic, strong) UIImageView* shadowView;
 // Background view, used to display the incognito NTP background color on the
@@ -99,7 +98,6 @@
 @synthesize contractButton = _contractButton;
 @synthesize voiceSearchEnabled = _voiceSearchEnabled;
 @synthesize progressBar = _progressBar;
-@synthesize locationBarContainerStackView = _locationBarContainerStackView;
 @synthesize shadowView = _shadowView;
 @synthesize expandedToolbarConstraints = _expandedToolbarConstraints;
 @synthesize topSafeAnchor = _topSafeAnchor;
@@ -144,8 +142,10 @@
   [NSLayoutConstraint activateConstraints:self.regularToolbarConstraints];
   [animator addAnimations:^{
     [self.view layoutIfNeeded];
-    self.contractButton.hidden = YES;
     self.contractButton.alpha = 0;
+  }];
+  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+    self.contractButton.hidden = finalPosition == UIViewAnimatingPositionEnd;
   }];
   self.expanded = NO;
 }
@@ -226,23 +226,25 @@
 // locationBarView, and other buttons like Voice Search, Bookmarks and Contract
 // Toolbar.
 - (void)setUpLocationBarContainerView {
-  self.locationBarContainerStackView =
-      [[UIStackView alloc] initWithArrangedSubviews:@[ self.locationBarView ]];
-  self.locationBarContainerStackView.translatesAutoresizingMaskIntoConstraints =
-      NO;
-  self.locationBarContainerStackView.spacing = kStackViewSpacing;
-  self.locationBarContainerStackView.distribution = UIStackViewDistributionFill;
+  [self.locationBarContainer addSubview:self.locationBarView];
   // Bookmarks and Voice Search buttons will only be part of the Toolbar on
   // iPad. On the other hand the contract button is only needed on non iPad
   // devices, since iPad doesn't animate, thus it doesn't need to contract.
   if (IsIPadIdiom()) {
-    [self.locationBarContainerStackView addArrangedSubview:self.bookmarkButton];
-    [self.locationBarContainerStackView
-        addArrangedSubview:self.voiceSearchButton];
-  } else {
-    [self.locationBarContainerStackView addArrangedSubview:self.contractButton];
+    [self.locationBarContainer addSubview:self.bookmarkButton];
+    [self.locationBarContainer addSubview:self.voiceSearchButton];
+    ApplyVisualConstraints(@[ @"H:[bookmark][voiceSearch]|" ], @{
+      @"bookmark" : self.bookmarkButton,
+      @"voiceSearch" : self.voiceSearchButton
+    });
+    [NSLayoutConstraint activateConstraints:@[
+      [self.bookmarkButton.centerYAnchor
+          constraintEqualToAnchor:self.locationBarView.centerYAnchor],
+      [self.voiceSearchButton.centerYAnchor
+          constraintEqualToAnchor:self.locationBarView.centerYAnchor],
+    ]];
   }
-  [self.locationBarContainer addSubview:self.locationBarContainerStackView];
+  [self.locationBarContainer addSubview:self.contractButton];
 }
 
 - (void)setConstraints {
@@ -306,36 +308,40 @@
       });
 
   // LocationBarContainer constraints.
+  // The location bar has its trailing anchor equals to the contract button
+  // leading's. When expanding, the contract button is moved inside the
+  // container, shrinking the location bar.
+  UILayoutGuide* locationBarContainerSafeAreaGuide =
+      SafeAreaLayoutGuideForView(self.locationBarContainer);
   NSArray* locationBarRegularConstraints = @[
     [self.locationBarContainer.bottomAnchor
         constraintEqualToAnchor:self.leadingStackView.bottomAnchor],
     [self.locationBarContainer.topAnchor
-        constraintEqualToAnchor:self.leadingStackView.topAnchor]
+        constraintEqualToAnchor:self.leadingStackView.topAnchor],
+    [self.locationBarView.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
+    [self.contractButton.leadingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+    [self.locationBarView.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
   ];
   [self.regularToolbarConstraints
       addObjectsFromArray:locationBarRegularConstraints];
   [NSLayoutConstraint activateConstraints:locationBarRegularConstraints];
-
-  // LocationBarStackView constraints. The StackView inside the
-  // LocationBarContainer View.
-  UILayoutGuide* locationBarContainerSafeAreaGuide =
-      SafeAreaLayoutGuideForView(self.locationBarContainer);
-  NSLayoutConstraint* locationBarContainerStackViewTopConstraint =
-      [self.locationBarContainerStackView.topAnchor
-          constraintEqualToAnchor:self.locationBarContainer.topAnchor];
+  // Sets the contract button is on the side of the location bar, with the same
+  // height.
   [NSLayoutConstraint activateConstraints:@[
-    [self.locationBarContainerStackView.bottomAnchor
-        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
-    [self.locationBarContainerStackView.leadingAnchor
-        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
-                                    .leadingAnchor],
-    [self.locationBarContainerStackView.trailingAnchor
-        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
-                                    .trailingAnchor],
-    locationBarContainerStackViewTopConstraint,
+    [locationBarContainerSafeAreaGuide.leadingAnchor
+        constraintEqualToAnchor:self.locationBarView.leadingAnchor],
+    [self.contractButton.leadingAnchor
+        constraintEqualToAnchor:self.locationBarView.trailingAnchor],
+    [self.locationBarView.heightAnchor
+        constraintEqualToConstant:kToolbarHeight - 2 * kVerticalMargin],
+    [self.contractButton.bottomAnchor
+        constraintEqualToAnchor:self.locationBarView.bottomAnchor],
+    [self.contractButton.heightAnchor
+        constraintEqualToAnchor:self.locationBarView.heightAnchor],
   ]];
-  [self.regularToolbarConstraints
-      addObject:locationBarContainerStackViewTopConstraint];
 }
 
 #pragma mark - Components Setup
@@ -707,9 +713,11 @@
           constraintEqualToAnchor:self.view.leadingAnchor],
       [self.locationBarContainer.trailingAnchor
           constraintEqualToAnchor:self.view.trailingAnchor],
-      [self.locationBarContainerStackView.topAnchor
-          constraintEqualToAnchor:self.topSafeAnchor
-                         constant:kVerticalMargin],
+      [self.contractButton.trailingAnchor
+          constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+      [self.locationBarView.bottomAnchor
+          constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
+                         constant:-kVerticalMargin],
     ];
   }
   return _expandedToolbarConstraints;
