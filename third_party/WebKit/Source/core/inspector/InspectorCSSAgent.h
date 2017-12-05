@@ -217,7 +217,7 @@ class CORE_EXPORT InspectorCSSAgent final
       CSSRule*);
 
   CSSStyleDeclaration* FindEffectiveDeclaration(
-      CSSPropertyID,
+      const CSSProperty&,
       const HeapVector<Member<CSSStyleDeclaration>>& styles);
 
   HeapVector<Member<CSSStyleDeclaration>> MatchingStyles(Element*);
