@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "480e0da2_07eebdcc",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-05T19:56:18Z",
+      "side": 1,
+      "message": "I put a DCHECK(!inside_scheduled_action_) above each mark_inside, and it didn\u0027t seem to break anything. So maybe we don\u0027t have to worry about a second level of recursion between scheduler and client.\n\nI\u0027m not sure I understand the discussion about inside_process_scheduled_actions_ - is there any harm in having a redundant check in cases where we go from ProcessScheduledActions -\u003e (some scheduler function) -\u003e client?",
+      "parentUuid": "50739f79_d48d0d40",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95986be5_fd6e780c",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "writtenOn": "2017-12-05T17:34:17Z",
       "side": 1,
       "message": "Could the begin_frame_source_ re-enter the scheduler too?",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeead52_6c55e4e2",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-05T19:56:18Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like it could from DidFinishFrame, but in general maybe it can? https://cs.chromium.org/chromium/src/components/viz/common/frame_sinks/begin_frame_source.cc?l\u003d53",
+      "parentUuid": "95986be5_fd6e780c",
       "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
