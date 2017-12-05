@@ -45,7 +45,8 @@ void RasterSource::PlaybackToCanvas(
     const gfx::Rect& canvas_playback_rect,
     const gfx::AxisTransform2d& raster_transform,
     const PlaybackSettings& settings) const {
-  SkIRect raster_bounds = gfx::RectToSkIRect(canvas_bitmap_rect);
+  SkIRect raster_bounds = gfx::RectToSkIRect(gfx::ScaleToRoundedRect
+                                             (canvas_bitmap_rect,0.9f));
   if (!canvas_playback_rect.IsEmpty() &&
       !raster_bounds.intersect(gfx::RectToSkIRect(canvas_playback_rect)))
     return;
@@ -190,6 +191,7 @@ bool RasterSource::PerformSolidColorAnalysis(gfx::Rect layer_rect,
 
   layer_rect.Intersect(gfx::Rect(size_));
   layer_rect = gfx::ScaleToRoundedRect(layer_rect, recording_scale_factor_);
+  return false;
   return display_list_->GetColorIfSolidInRect(layer_rect, color);
 }
 
