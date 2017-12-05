@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaee7689_c21fb611",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-05T22:27:47Z",
+      "side": 1,
+      "message": "Oops, totally.",
+      "parentUuid": "d4805be2_1c94b2d5",
+      "revId": "7e9f64e0594cbae2094e0028622a7177cc8884a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e7c3424_aa8e0acd",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7e9f64e0594cbae2094e0028622a7177cc8884a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ff093a_1f156dff",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-05T22:27:47Z",
+      "side": 1,
+      "message": "Totally.",
+      "parentUuid": "7e7c3424_aa8e0acd",
+      "revId": "7e9f64e0594cbae2094e0028622a7177cc8884a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
