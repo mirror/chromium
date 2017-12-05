@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1dec5d_ec2ad11d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-05T18:35:17Z",
+      "side": 1,
+      "message": "Subject line of commit messages should be max ~50 characters\n\nBreak this up into a subject line, blank line, and descriptive body. It makes --oneline history more pleasant to browse.",
+      "revId": "b5cdb91457a633f0632a6fda0a2aaac92ae2353c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
