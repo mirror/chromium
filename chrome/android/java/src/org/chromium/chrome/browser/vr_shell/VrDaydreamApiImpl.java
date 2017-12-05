@@ -112,4 +112,9 @@ public class VrDaydreamApiImpl implements VrDaydreamApi {
         daydreamApi.close();
         return true;
     }
+
+    @Override
+    public boolean isInHeadset() {
+        return true;
+    }
 }

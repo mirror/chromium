@@ -63,4 +63,10 @@ public interface VrDaydreamApi {
      * Launch the stereoscopic, 3D VR launcher homescreen.
      */
     boolean launchVrHomescreen();
+
+    /**
+     * Whether the user is currently in the headset. Note that this should be treated as heuristic,
+     * and may at times be wrong.
+     */
+    boolean isInHeadset();
 }

@@ -1295,10 +1295,6 @@ public class VrShellDelegate
         // are safe.
         if (mInVr) mVrShell.pause();
         if (mShowingDaydreamDoff || mProbablyInDon) return;
-
-        // TODO(mthiesse): When the user resumes Chrome in a 2D context, we don't want to tear down
-        // VR UI, so for now, exit VR.
-        shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
     }
 
     protected void onPause() {
@@ -1308,10 +1304,6 @@ public class VrShellDelegate
         mExpectPauseOrDonSucceeded.removeCallbacksAndMessages(null);
         unregisterDaydreamIntent(mVrDaydreamApi);
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return;
-
-        // TODO(ymalik): We should be able to remove this if we handle it for multi-window in
-        // {@link onMultiWindowModeChanged} since we're calling it in onStop.
-        if (!mInVr && !mProbablyInDon) cancelPendingVrEntry();
 
         // When the active web page has a vrdisplayactivate event handler,
         // mListeningForWebVrActivate should be set to true, which means a vrdisplayactive event
@@ -1330,12 +1322,14 @@ public class VrShellDelegate
 
     private void onStart() {
         mStopped = false;
+        if (mInVr && !mVrDaydreamApi.isInHeadset()) {
+            shutdownVr(true, false);
+        }
     }
 
     private void onStop() {
         if (DEBUG_LOGS) Log.i(TAG, "onStop");
         mStopped = true;
-        if (!mProbablyInDon) cancelPendingVrEntry();
         assert !mCancellingEntryAnimation;
     }
 
