@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afca2cd_ecc95f19",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-05T13:09:53Z",
+      "side": 1,
+      "message": "Since other three conditions are included in |is_intervention_triggered_|, we can simply write this logic like this.",
+      "range": {
+        "startLine": 228,
+        "startChar": 10,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "8dc84a52e9024bbae213610480ff878b6b0c9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3412d189_78eac4d3",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-05T13:09:53Z",
+      "side": 1,
+      "message": "As I added comments above, the original check code may have caused a crash if the request finished synchronously.",
+      "range": {
+        "startLine": 235,
+        "startChar": 11,
+        "endLine": 235,
+        "endChar": 19
+      },
+      "revId": "8dc84a52e9024bbae213610480ff878b6b0c9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
