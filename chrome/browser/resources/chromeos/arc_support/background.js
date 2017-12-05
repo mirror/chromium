@@ -478,6 +478,7 @@ class ActiveDirectoryAuthPage {
     // See if we hit the device management server. This should happen at the
     // end of the SAML flow. Before that, we're on the Active Directory
     // Federation Services server.
+    console.error('XXXXXXXX URL = ' + details.url);
     if (this.deviceManagementUrlPrefix_ &&
         details.url.startsWith(this.deviceManagementUrlPrefix_)) {
       // Once we hit the final URL, stop processing further events.

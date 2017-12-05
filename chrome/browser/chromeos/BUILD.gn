@@ -315,6 +315,8 @@ source_set("chromeos") {
     "arc/arc_support_host.h",
     "arc/arc_util.cc",
     "arc/arc_util.h",
+    "arc/auth/active_directory_user_signin_handler.cc",
+    "arc/auth/active_directory_user_signin_handler.h",
     "arc/auth/arc_active_directory_enrollment_token_fetcher.cc",
     "arc/auth/arc_active_directory_enrollment_token_fetcher.h",
     "arc/auth/arc_auth_code_fetcher.h",

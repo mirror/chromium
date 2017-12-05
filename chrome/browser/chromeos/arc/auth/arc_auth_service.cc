@@ -225,13 +225,20 @@ void ArcAuthService::RequestAccountInfo(bool initial_signin) {
   if (IsActiveDirectoryUserForProfile(profile_)) {
     // For Active Directory enrolled devices, we get an enrollment token for a
     // managed Google Play account from DMServer.
-    auto enrollment_token_fetcher =
-        std::make_unique<ArcActiveDirectoryEnrollmentTokenFetcher>(
+    //auto enrollment_token_fetcher =
+    //    std::make_unique<ArcActiveDirectoryEnrollmentTokenFetcher>(
+    //      ArcSessionManager::Get()->support_host());
+    //enrollment_token_fetcher->Fetch(
+    //    base::Bind(&ArcAuthService::OnEnrollmentTokenFetched,
+    //               weak_ptr_factory_.GetWeakPtr()));
+    //fetcher_ = std::move(enrollment_token_fetcher);
+    auto signin_handler =
+        std::make_unique<ActiveDirectoryUserSigninHandler>(
             ArcSessionManager::Get()->support_host());
-    enrollment_token_fetcher->Fetch(
-        base::Bind(&ArcAuthService::OnEnrollmentTokenFetched,
+    signin_handler->Signin(
+        base::Bind(&ArcAuthService::OnUserSigninComplete,
                    weak_ptr_factory_.GetWeakPtr()));
-    fetcher_ = std::move(enrollment_token_fetcher);
+    fetcher_ = std::move(signin_handler);
     return;
   }
   // For non-AD enrolled devices an auth code is fetched.
@@ -280,6 +287,25 @@ void ArcAuthService::OnEnrollmentTokenFetched(
     case ArcActiveDirectoryEnrollmentTokenFetcher::Status::ARC_DISABLED: {
       // Send error to ARC.
       OnAccountInfoReady(nullptr, mojom::ArcSignInStatus::ARC_DISABLED);
+      break;
+    }
+  }
+}
+
+void ArcAuthService::OnUserSigninComplete(ActiveDirectoryUserSigninHandler::Status status) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  fetcher_.reset();
+
+  switch (status) {
+    case ActiveDirectoryUserSigninHandler::Status::SUCCESS: {
+      // For now, send error to ARC...
+      OnAccountInfoReady(nullptr, mojom::ArcSignInStatus::ARC_DISABLED);
+      break;
+    }
+    case ActiveDirectoryUserSigninHandler::Status::FAILURE: {
+      // Send error to ARC.
+      OnAccountInfoReady(
+          nullptr, mojom::ArcSignInStatus::CHROME_SERVER_COMMUNICATION_ERROR);
       break;
     }
   }
