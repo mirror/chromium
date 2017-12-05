@@ -15,7 +15,7 @@ var removed_attr = false;
 var test_done = false;
 var v = document.getElementById("video");
 v.addEventListener("loadstart", function() {
-  if (!removed_attr) { 
+  if (!removed_attr) {
     window.setTimeout(function() {
      removed_attr = true;
      v.removeAttribute("src");
@@ -33,7 +33,7 @@ v.addEventListener("loadstart", function() {
   t.step(function(){ assert_false(true); });
   t.done();
 });
-v.src = getVideoURI("http://media.w3.org/2010/05/video/movie_300") + "?" + new Date() + Math.random();
+v.src = getVideoURI();
   </script>
  </body>
 </html>

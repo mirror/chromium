@@ -1,7 +1,5 @@
 <html>
  <head>
-  <script src="../media/media-file.js"></script>
-
   <script>
     if (window.testRunner) {
       testRunner.waitUntilDone();
@@ -9,7 +7,7 @@
 
     function onLoad() {
       video = document.getElementsByTagName('video')[0];
-      video.src = findMediaFile("video", "../media/content/test");
+      video.src = "../media/content/test-vp9-opus.webm";
 
       canvas = document.getElementsByTagName('canvas')[0];
       ctx = canvas.getContext('2d');

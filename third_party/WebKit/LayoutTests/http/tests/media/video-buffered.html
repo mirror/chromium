@@ -2,7 +2,6 @@
 <title>Check multiple buffered timeranges with video preload.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <video preload="auto"></video>
 <script>
 async_test(function(t) {
@@ -19,7 +18,7 @@ async_test(function(t) {
 
     // This test needs a large media file to test multiple buffered timeranges.
     var mediaFile = "../../../media/resources/frame_size_change.webm";
-    var type = mimeTypeForExtension(mediaFile.split(".").pop());
+    var type = "video/webm";
     video.src = "http://127.0.0.1:8000/media/video-throttled-load.cgi?nph=1&name=" + mediaFile + "&throttle=100000&type=" + type;
     video.play();
 });

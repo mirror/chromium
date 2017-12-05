@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <title>Test that the painted buffered range contains currentTime.</title>
-<script src="../../media-resources/media-file.js"></script>
 <video controls></video>
 <script>
 var video = document.querySelector("video");
@@ -23,7 +22,7 @@ video.onloadedmetadata = function() {
     video.currentTime = video.duration - 0.5;
 };
 
-var mediaFile = findMediaFile("audio", "../../../media/content/test");
-var type = mimeTypeForExtension(mediaFile.split(".").pop());
+var mediaFile = "../../../media/content/silence-opus.webm";
+var type = "audio/webm";
 video.src = "http://127.0.0.1:8000/media/video-throttled-load.cgi?name=" + mediaFile + "&throttle=5000&nph=1&type=" + type;
 </script>
