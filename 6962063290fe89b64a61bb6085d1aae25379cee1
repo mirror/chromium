@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a8efe62_20e1a11a",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80cd0f8f_3acedb71",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "926dd1c1_56a8ea6d",
         "filename": "components/exo/surface_delegate.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11da19_28f10aa3",
+        "filename": "components/exo/surface_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "I\u0027m not referring to the specific argument here but rather the concept of a parent.",
+      "parentUuid": "926dd1c1_56a8ea6d",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "df98e645_56a7426a",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab91c2b_6f2fe9da",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3570ff_ba865267",
         "filename": "components/exo/wayland/clients/info.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0f909a_57e43528",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3570ff_ba865267",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9fe66cb8_9be735f3",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "this will be set twice. once when created and once when adding the zaura_output interface.",
+      "parentUuid": "53ee13d1_85137167",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe52ca5_ccfd72a6",
         "filename": "components/exo/wayland/clients/info.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fc0520_d10d0203",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "No, see comment above for why. And generally we shouldn\u0027t rely on the compositor sending these in a specific way. It\u0027s allowed to send it 3 times if it wants to.",
+      "parentUuid": "bfe52ca5_ccfd72a6",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f336fe6a_00def03f",
+        "filename": "components/exo/wayland/clients/info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "setw() manipulator above only affects the next value to be printed. I use StringPrintf to create variable length chunks that I want padded.",
+      "parentUuid": "652108d2_12d37581",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef4d642e_772bc307",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1268d3_e5c3c11d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T15:21:11Z",
+      "side": 1,
+      "message": "I guess it\u0027s possible that a non-primary display can be without an active mode. In this case it\u0027s the primary display so there should always be an active mode. If that\u0027s not the case, then we definitely want to find out and make changes to more than this code.",
+      "parentUuid": "ef4d642e_772bc307",
+      "revId": "6962063290fe89b64a61bb6085d1aae25379cee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
