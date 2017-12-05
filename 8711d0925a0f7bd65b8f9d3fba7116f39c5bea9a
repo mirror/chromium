@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd8bd25d_b8b11c32",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29b5af3_fb55be75",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1869627_6fba1e8d",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "503dbead_f7764c5d",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1869627_6fba1e8d",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ec48c2_f62535fa",
         "filename": "chrome/browser/profiling_host/profiling_process_host.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-05T19:51:07Z",
       "side": 1,
       "message": "Should we consider base::flat_set?",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c889fd1_35748f73",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "seems like overkill/inappropriate, given that we mostly want O(1) lookup, insertion/deletion.",
+      "parentUuid": "79ec48c2_f62535fa",
       "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3c4af1b2_8717d245",
+        "filename": "chrome/browser/resources/memory_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a833310_6c967595",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173fe712_0c7cd357",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6ad8ae_a3305801",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "173fe712_0c7cd357",
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5754c50e_6405125d",
+        "filename": "chrome/common/profiling/profiling_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-05T20:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c9b3ed_85924dd3",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
