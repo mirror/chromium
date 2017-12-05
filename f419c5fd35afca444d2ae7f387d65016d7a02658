@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e21d81a_db7bf0d9",
+        "filename": "ios/chrome/browser/download/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47484e23_11204cfd",
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6095ca0b_c458d660",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bb147d4b_d6b98908",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6095ca0b_c458d660",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "368c0cf1_022d03e6",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-05T09:06:11Z",
       "side": 1,
       "message": "What is going to own the delegate? The tab helpers are usually created in the free function AttachTabHelpers (defined in ios/chrome/browser/tabs/tab_helper_util.mm). As it is a free function it cannot own the delegate.\n\nI don\u0027t see in your design document how this is addressed. Will this tab helper be created differently from the others?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1920f63_c119cf04",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "Per Design doc: \"PassKitCoordinator will implement PassKitTabHelperDelegate.\" as follows:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/794302/6/ios/chrome/browser/ui/browser_view_controller.mm\n\nUpdated CL description to reference subsequent CLs",
+      "parentUuid": "368c0cf1_022d03e6",
       "range": {
         "startLine": 47,
         "startChar": 2,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "002a2943_8a0e77c2",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da66f60_b11e22d0",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 49
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "362df3d6_e617f7f9",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
         "patchSetId": 6
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-05T09:06:11Z",
       "side": 1,
       "message": "→ iterator",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e97f82_538eafbd",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "This name makes formatting ugly:\n\nauto iterator \u003d std::find_if(\n    tasks_.begin(), tasks_.end(),\n    [\u003d](const auto\u0026 task) { return task.get() \u003d\u003d updated_task; });\n\n|it| is pretty common name for an iterator in C++, so I would strongly prefer to leave the code as it is.",
+      "parentUuid": "362df3d6_e617f7f9",
       "range": {
         "startLine": 58,
         "startChar": 7,
@@ -125,6 +239,24 @@
       "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c1bc57_27854401",
+        "filename": "ios/web/public/test/fakes/fake_download_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T16:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb158b4_e5a97a3e",
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
