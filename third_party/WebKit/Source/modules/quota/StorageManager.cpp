@@ -124,9 +124,8 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
     return promise;
   }
 
-  KURL storage_partition = KURL(NullURL(), security_origin->ToString());
   Platform::Current()->QueryStorageUsageAndQuota(
-      storage_partition, kWebStorageQuotaTypeTemporary,
+      security_origin, kWebStorageQuotaTypeTemporary,
       new EstimateCallbacks(resolver));
   return promise;
 }

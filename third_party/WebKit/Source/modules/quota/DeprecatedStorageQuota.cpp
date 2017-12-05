@@ -78,12 +78,11 @@ void DeprecatedStorageQuota::queryUsageAndQuota(
     return;
   }
 
-  KURL storage_partition = KURL(NullURL(), security_origin->ToString());
   StorageQuotaCallbacks* callbacks =
       DeprecatedStorageQuotaCallbacksImpl::Create(success_callback,
                                                   error_callback);
-  Platform::Current()->QueryStorageUsageAndQuota(storage_partition,
-                                                 storage_type, callbacks);
+  Platform::Current()->QueryStorageUsageAndQuota(security_origin, storage_type,
+                                                 callbacks);
 }
 
 void DeprecatedStorageQuota::requestQuota(
