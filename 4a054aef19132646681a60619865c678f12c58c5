@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ac0784_bf944c16",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-05T15:35:57Z",
+      "side": 1,
+      "message": "The problem with not touching CommandUpdater AFAICT is that I have to resort to a hack like this if I want to disable all commands. If this is fine by you, then all good. This loops ~25K times (0xDFFF - 0x8000).\n\nAlso not sure I\u0027m following:\n- make sure any functions that are called during locked-fullscreen in BrowserCommandController to update state early out.",
+      "range": {
+        "startLine": 1146,
+        "startChar": 0,
+        "endLine": 1146,
+        "endChar": 71
+      },
+      "revId": "4a054aef19132646681a60619865c678f12c58c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
