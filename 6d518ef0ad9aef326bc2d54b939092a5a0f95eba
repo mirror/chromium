@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32711342_74c6c5c9",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "constexpr base::TimeDelta kNoteLaunchTimeout",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e545a7_f04d3720",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "please add a comment explaining this, as it seems a bit confusing: the member says that note launch is delayed until the screen is off, so why is the launch happening now that chrome is no longer forcing the backlights off?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d499a8_d6841085",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "do you actually need kUserInitiatedOff? i don\u0027t see it being used anywhere.",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05241b16_92667aa7",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "nit: \"force them off to ensure they do not ..\"",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ba544b_0ac1981c",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "turned on? i don\u0027t understand how they can get turned off if they\u0027re already off.",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824123d5_bf3fd4f8",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "this is only called in one place and is really only a single statement. how about just inlining it there?\n\n  if (AreBacklightsOff() \u0026\u0026 !backlights_forced_off_)\n    backlights_forced_off_ \u003d ...;",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b7f36d_b3f45a69",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "why wouldn\u0027t a user-initiated backlights-off state also count here? if this method is supposed to return something more subtle than \"are the backlights currently off?\", please document what it is and update the method name to be more precise.",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562e6603_3e541157",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "this method name seems inaccurate. NoteLaunchInProgressOrDelayed?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd2f188_43ec9aea",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "nit: move getter after d\u0027tor",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79775847_535f5e9d",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-05T07:05:17Z",
+      "side": 1,
+      "message": "can this be const as well?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
