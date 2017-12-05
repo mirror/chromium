@@ -1584,6 +1584,9 @@ FileTransferController.prototype.selectDropEffect_ = function(
     return new DropEffectAndLabel(DropEffectType.NONE, null);
   var destinationLocationInfo =
       this.volumeManager_.getLocationInfo(destinationEntry);
+  console.log(dragAndDropData);
+  console.log(destinationLocationInfo);
+  console.log(destinationEntry);
   if (!destinationLocationInfo)
     return new DropEffectAndLabel(DropEffectType.NONE, null);
   if (destinationLocationInfo.volumeInfo &&
