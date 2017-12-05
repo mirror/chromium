@@ -3448,7 +3448,6 @@
       "ipc_tests",
       "media_unittests",
       "mojo_common_unittests",
-      "mojo_js_unittests",
       "mojo_public_bindings_unittests",
       "mojo_public_system_unittests",
       "mojo_system_unittests",
@@ -3475,7 +3474,6 @@
       "ipc_tests",
       "media_unittests",
       "mojo_common_unittests",
-      "mojo_js_unittests",
       "mojo_public_bindings_unittests",
       "mojo_public_system_unittests",
       "mojo_system_unittests",
@@ -3916,12 +3914,6 @@
           "can_use_on_swarming_builders": true
         },
         "test": "mojo_common_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "mojo_js_unittests"
       },
       {
         "swarming": {
@@ -4536,12 +4528,6 @@
           "can_use_on_swarming_builders": true
         },
         "test": "mojo_common_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "mojo_js_unittests"
       },
       {
         "swarming": {
