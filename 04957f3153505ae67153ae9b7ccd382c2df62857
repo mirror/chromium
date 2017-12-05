@@ -70,6 +70,30 @@
       "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b719777_5a9680cd",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T16:13:44Z",
+      "side": 1,
+      "message": "Can we give a way for tests to set the low memory/amount of memory instead of having GrContextForGLES2Interface call base?\n\nWhat if it takes the amount of memory as an argument, instead of calling base itself? Then TestContextProvider can make something up?",
+      "parentUuid": "f4151618_263f8df2",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
