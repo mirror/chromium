@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0a00a26_911f9e04",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-12-05T06:09:30Z",
+      "side": 1,
+      "message": "Looks this can be nullptr? https://cs.chromium.org/chromium/src/content/public/browser/web_contents_user_data.h?l\u003d44\u0026rcl\u003dec814212b97416cff7c277f3eecf418d326471b8",
+      "range": {
+        "startLine": 209,
+        "startChar": 4,
+        "endLine": 209,
+        "endChar": 14
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d867253_fb900767",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-12-05T06:09:30Z",
+      "side": 1,
+      "message": "enum class?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
