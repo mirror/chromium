@@ -574,6 +574,7 @@ source_set("blink_headers") {
     "web/WebScopedWindowFocusAllowedIndicator.h",
     "web/WebScriptController.h",
     "web/WebScriptExecutionCallback.h",
+    "web/WebScriptNotPausedCallback.h",
     "web/WebScriptSource.h",
     "web/WebSearchableFormData.h",
     "web/WebSecurityPolicy.h",

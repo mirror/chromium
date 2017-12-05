@@ -237,6 +237,7 @@
 #include "public/web/WebPrintParams.h"
 #include "public/web/WebPrintPresetOptions.h"
 #include "public/web/WebRange.h"
+#include "public/web/WebScriptNotPausedCallback.h"
 #include "public/web/WebScriptSource.h"
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
@@ -246,6 +247,80 @@ namespace blink {
 static int g_frame_count = 0;
 
 namespace {
+
+class PausableInvoker final : public GarbageCollectedFinalized<PausableInvoker>,
+                              public PausableTimer {
+  USING_GARBAGE_COLLECTED_MIXIN(PausableInvoker);
+
+ public:
+  PausableInvoker(LocalFrame*, std::unique_ptr<WebScriptNotPausedCallback>);
+  ~PausableInvoker() override;
+
+  // PausableTimer:
+  void ContextDestroyed(ExecutionContext*) override;
+  void Fired() override;
+
+ private:
+  void Invoke();
+  void Dispose();
+
+  WebScriptNotPausedCallback* ResetAndReturnCallback();
+
+  std::unique_ptr<WebScriptNotPausedCallback> callback_;
+
+  SelfKeepAlive<PausableInvoker> keep_alive_;
+};
+
+PausableInvoker::PausableInvoker(
+    LocalFrame* frame,
+    std::unique_ptr<WebScriptNotPausedCallback> callback)
+    : PausableTimer(frame->GetDocument(), TaskType::kJavascriptTimer),
+      callback_(std::move(callback)),
+      keep_alive_(this) {
+  ExecutionContext* context = GetExecutionContext();
+  DCHECK(context);
+  DCHECK(!context->IsContextDestroyed());
+  if (!context->IsContextPaused()) {
+    PauseIfNeeded();
+    Invoke();
+    return;
+  }
+  StartOneShot(TimeDelta(), BLINK_FROM_HERE);
+  PauseIfNeeded();
+}
+
+PausableInvoker::~PausableInvoker() {}
+
+void PausableInvoker::ContextDestroyed(ExecutionContext* destroyed_context) {
+  PausableTimer::ContextDestroyed(destroyed_context);
+  DCHECK(callback_);
+  std::move(callback_)->Run(WebScriptNotPausedCallback::CONTEXT_DESTROYED);
+  Dispose();
+}
+
+void PausableInvoker::Fired() {
+  Invoke();
+}
+
+void PausableInvoker::Invoke() {
+  CHECK(!GetExecutionContext()->IsContextDestroyed());
+  DCHECK(callback_);
+
+  auto callback = std::move(callback_);
+
+  // Call Dispose() now, since it's possible that the callback will destroy the
+  // context.
+  Dispose();
+
+  callback->Run(WebScriptNotPausedCallback::READY);
+}
+
+void PausableInvoker::Dispose() {
+  // Remove object as a ContextLifecycleObserver.
+  PausableObject::ClearContext();
+  keep_alive_.Clear();
+  Stop();
+}
 
 HeapVector<ScriptSourceCode> CreateSourcesVector(
     const WebScriptSource* sources_in,
@@ -755,6 +830,18 @@ void WebLocalFrameImpl::RequestExecuteV8Function(
   PausableScriptExecutor::CreateAndRun(GetFrame(), ToIsolate(GetFrame()),
                                        context, function, receiver, argc, argv,
                                        callback);
+}
+
+void WebLocalFrameImpl::NotifyWhenNotPaused(
+    v8::Local<v8::Context> context,
+    std::unique_ptr<WebScriptNotPausedCallback> callback) {
+  DCHECK(GetFrame());
+  ScriptState* script_state = ScriptState::From(context);
+  if (!script_state->ContextIsValid()) {
+    callback->Run(WebScriptNotPausedCallback::CONTEXT_INVALID);
+    return;
+  }
+  new PausableInvoker(GetFrame(), std::move(callback));
 }
 
 void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
