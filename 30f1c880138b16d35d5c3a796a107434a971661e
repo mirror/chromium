@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54d8f80_2fc2412e",
+        "filename": "chrome/browser/previews/previews_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-05T21:04:16Z",
+      "side": 1,
+      "message": "Does the test fail without the fix?",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "30f1c880138b16d35d5c3a796a107434a971661e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
