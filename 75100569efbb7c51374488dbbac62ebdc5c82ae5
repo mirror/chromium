@@ -94,6 +94,30 @@
       "revId": "75100569efbb7c51374488dbbac62ebdc5c82ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b09183_76cfd971",
+        "filename": "chrome/browser/chromeos/login/enrollment/auto_enrollment_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-12-05T18:51:08Z",
+      "side": 1,
+      "message": "I guess if there\u0027s no reason to treat the two cases differently we should treat them the same. Otherwise we\u0027re just creating confusion as readers of the code have to wonder why the condition only applies to EXPLICITLY_REQUIRED but not to REQUIRED.",
+      "parentUuid": "12aeb83f_107a1693",
+      "range": {
+        "startLine": 239,
+        "startChar": 28,
+        "endLine": 239,
+        "endChar": 47
+      },
+      "revId": "75100569efbb7c51374488dbbac62ebdc5c82ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
