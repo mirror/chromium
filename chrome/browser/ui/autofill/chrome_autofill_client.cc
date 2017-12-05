@@ -11,7 +11,6 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "build/build_config.h"
 #include "chrome/browser/autofill/address_normalizer_factory.h"
 #include "chrome/browser/autofill/personal_data_manager_factory.h"
 #include "chrome/browser/autofill/risk_util.h"
@@ -206,6 +205,8 @@ void ChromeAutofillClient::ConfirmSaveCreditCardLocally(
       web_contents());
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents());
+  if (save_card_bubble_controller_event_observer_)
+    controller->SetEventObserver(save_card_bubble_controller_event_observer_);
   controller->ShowBubbleForLocalSave(card, callback);
 #endif
 }
@@ -230,6 +231,8 @@ void ChromeAutofillClient::ConfirmSaveCreditCardToCloud(
   autofill::SaveCardBubbleControllerImpl::CreateForWebContents(web_contents());
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents());
+  if (save_card_bubble_controller_event_observer_)
+    controller->SetEventObserver(save_card_bubble_controller_event_observer_);
   controller->ShowBubbleForUpload(card, std::move(legal_message),
                                   should_cvc_be_requested, callback);
 #endif
@@ -253,7 +256,7 @@ void ChromeAutofillClient::ConfirmCreditCardFillAssist(
 
 void ChromeAutofillClient::LoadRiskData(
     const base::Callback<void(const std::string&)>& callback) {
-  ::autofill::LoadRiskData(0, web_contents(), callback);
+  ::autofill::LoadRiskData(0, web_contents(), callback, connector_);
 }
 
 bool ChromeAutofillClient::HasCreditCardScanFeature() {
@@ -437,6 +440,13 @@ void ChromeAutofillClient::ShowHttpNotSecureExplanation() {
       WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
       false /* is_renderer_initiated */));
 }
+
+#if !defined(OS_ANDROID)
+void ChromeAutofillClient::SetSaveCardBubbleControllerObserverForTest(
+    SaveCardBubbleController::ObserverForTest* observer) {
+  save_card_bubble_controller_event_observer_ = observer;
+}
+#endif  // !defined(OS_ANDROID)
 
 bool ChromeAutofillClient::IsAutofillSupported() {
   // VR browsing does not support popups at the moment.
