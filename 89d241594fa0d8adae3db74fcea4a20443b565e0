@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a5410a_5ae9cf28",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-12-05T17:49:17Z",
+      "side": 1,
+      "message": "How would one turn on this VLOG on a misbehaving device? There is no UI for it, there is no access to command line flags, there is no policy for setting the flags in a kiosk session either.",
+      "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f57da4_1d5d9a1c",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-12-05T17:49:17Z",
+      "side": 1,
+      "message": "Nit: The output of TimeDelta::operator\u003c\u003c() is suffixed with \"s\" for seconds already:\n\nhttps://cs.chromium.org/chromium/src/base/time/time.cc?l\u003d132",
+      "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
