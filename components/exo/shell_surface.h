@@ -120,16 +120,19 @@ class ShellSurface : public SurfaceTreeHost,
   void Activate();
 
   // Maximizes the shell surface.
-  void Maximize();
+  virtual void Maximize();
 
   // Minimize the shell surface.
-  void Minimize();
+  virtual void Minimize();
 
   // Restore the shell surface.
-  void Restore();
+  virtual void Restore();
 
   // Set fullscreen state for shell surface.
-  void SetFullscreen(bool fullscreen);
+  virtual void SetFullscreen(bool fullscreen);
+
+  virtual void SetBounds(const gfx::Rect& bounds);
+  virtual void SetBoundsInParent(const gfx::Rect& bounds);
 
   // Start an interactive move of surface.
   virtual void Move();
@@ -247,6 +250,9 @@ class ShellSurface : public SurfaceTreeHost,
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
 
   Surface* surface_for_testing() { return root_surface(); }
+
+  void SendWindowStateChangeEvent(ash::mojom::WindowStateType old_state,
+                                  ash::mojom::WindowStateType next_state);
 
  protected:
   // Helper class used to coalesce a number of changes into one "configure"

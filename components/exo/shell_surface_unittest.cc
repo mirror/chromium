@@ -6,9 +6,22 @@
 
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/public/cpp/shell_window_ids.h"
+
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/shell_test_api.h"
+
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/screen_util.h"
+#include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/shell_test_api.h"
+#include "ash/system/tray/system_tray.h"
+#include "ash/wm/client_controlled_state.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
@@ -19,10 +32,12 @@
 #include "components/exo/buffer.h"
 #include "components/exo/client_controlled_shell_surface.h"
 #include "components/exo/display.h"
+#include "components/exo/shell_surface_widget_wrapper.h"
 #include "components/exo/sub_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/exo/test/test_client_controlled_state_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/window.h"
@@ -41,7 +56,24 @@
 namespace exo {
 namespace {
 
-using ShellSurfaceTest = test::ExoTestBase;
+class ShellSurfaceTest : public test::ExoTestBase {
+ public:
+  ShellSurfaceTest() = default;
+  ~ShellSurfaceTest() override = default;
+
+  void SetUp() override {
+    test::ExoTestBase::SetUp();
+    test::TestClientControlledStateDelegate::InstallFactory();
+  }
+
+  void TearDown() override {
+    test::TestClientControlledStateDelegate::UninstallFactory();
+    test::ExoTestBase::TearDown();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ShellSurfaceTest);
+};
 
 uint32_t ConfigureFullscreen(uint32_t serial,
                              const gfx::Size& size,
@@ -553,6 +585,7 @@ TEST_P(ShellSurfaceBoundsModeTest, ToggleFullscreen) {
                                           .size()
                                           .ToString());
   }
+
   shell_surface->Maximize();
   EXPECT_EQ(IsClientBoundsMode(), HasBackdrop());
   if (!IsClientBoundsMode()) {

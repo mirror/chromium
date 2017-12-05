@@ -476,6 +476,14 @@ void ShellSurface::SetFullscreen(bool fullscreen) {
   widget_->SetFullscreen(fullscreen);
 }
 
+void ShellSurface::SetBounds(const gfx::Rect& bounds) {
+  widget_->SetBounds(bounds);
+}
+
+void ShellSurface::SetBoundsInParent(const gfx::Rect& bounds) {
+  widget_->GetNativeWindow()->SetBounds(bounds);
+}
+
 void ShellSurface::SetTitle(const base::string16& title) {
   TRACE_EVENT1("exo", "ShellSurface::SetTitle", "title",
                base::UTF16ToUTF8(title));
@@ -853,8 +861,8 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
   aura::Window* window = widget_->GetNativeWindow();
   // ShellSurfaces always use immersive mode.
   window->SetProperty(aura::client::kImmersiveFullscreenKey, true);
-  if (!frame_enabled_) {
-    ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);
+  ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);
+  if (!frame_enabled_ && !window_state->HasDelegate()) {
     window_state->SetDelegate(std::make_unique<CustomWindowStateDelegate>());
   }
   return new CustomFrameView(widget, frame_enabled_);
@@ -943,8 +951,9 @@ void ShellSurface::OnPostWindowStateTypeChange(
     UpdateBackdrop();
   }
 
-  if (old_type != new_type && !state_changed_callback_.is_null())
-    state_changed_callback_.Run(old_type, new_type);
+  if (old_type != new_type && bounds_mode_ != BoundsMode::CLIENT) {
+    SendWindowStateChangeEvent(old_type, new_type);
+  }
 
   // Re-enable animations if they were disabled in pre state change handler.
   scoped_animations_disabled_.reset();
@@ -1147,7 +1156,6 @@ bool ShellSurface::AcceleratorPressed(const ui::Accelerator& accelerator) {
 void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   DCHECK(enabled());
   DCHECK(!widget_);
-
   views::Widget::InitParams params;
   params.type = views::Widget::InitParams::TYPE_WINDOW;
   params.ownership = views::Widget::InitParams::NATIVE_WIDGET_OWNS_WIDGET;
@@ -1170,7 +1178,6 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   // Note: NativeWidget owns this widget.
   widget_ = new ShellSurfaceWidget(this);
   widget_->Init(params);
-
   aura::Window* window = widget_->GetNativeWindow();
   window->SetName("ExoShellSurface");
   window->SetProperty(aura::client::kAccessibilityFocusFallsbackToWidgetKey,
@@ -1183,21 +1190,11 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   window->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter(widget_)));
   SetApplicationId(window, application_id_);
   SetMainSurface(window, root_surface());
-
   // Start tracking changes to window bounds and window state.
   window->AddObserver(this);
   ash::wm::WindowState* window_state = ash::wm::GetWindowState(window);
   window_state->AddObserver(this);
-
   InitializeWindowState(window_state);
-
-  // Notify client of initial state if different than normal.
-  if (window_state->GetStateType() != ash::mojom::WindowStateType::NORMAL &&
-      !state_changed_callback_.is_null()) {
-    state_changed_callback_.Run(ash::mojom::WindowStateType::NORMAL,
-                                window_state->GetStateType());
-  }
-
   // AutoHide shelf in fullscreen state.
   window_state->SetHideShelfWhenFullscreen(false);
 
@@ -1214,7 +1211,6 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
         ui::Accelerator(entry.keycode, entry.modifiers),
         ui::AcceleratorManager::kNormalPriority, this);
   }
-
   // Show widget next time Commit() is called.
   pending_show_widget_ = true;
 }
@@ -1496,7 +1492,7 @@ void ShellSurface::UpdateWidgetBounds() {
   const gfx::Rect widget_bounds = widget_->GetWindowBoundsInScreen();
   if (widget_bounds != new_widget_bounds) {
     if (bounds_mode_ != BoundsMode::CLIENT || !resizer_) {
-      widget_->SetBounds(new_widget_bounds);
+      SetBounds(new_widget_bounds);
       UpdateSurfaceBounds();
     } else {
       // TODO(domlaskowski): Synchronize window state transitions with the
@@ -1511,7 +1507,7 @@ void ShellSurface::UpdateWidgetBounds() {
       new_widget_bounds.set_origin(origin);
 
       // Move the window relative to the current display.
-      widget_->GetNativeWindow()->SetBounds(new_widget_bounds);
+      SetBoundsInParent(new_widget_bounds);
       UpdateSurfaceBounds();
 
       // Render phantom windows when beyond the current display.
@@ -1589,6 +1585,13 @@ gfx::Point ShellSurface::GetMouseLocation() const {
   return location;
 }
 
+void ShellSurface::SendWindowStateChangeEvent(
+    ash::mojom::WindowStateType current_state,
+    ash::mojom::WindowStateType next_state) {
+  if (!state_changed_callback_.is_null())
+    state_changed_callback_.Run(current_state, next_state);
+}
+
 void ShellSurface::InitializeWindowState(ash::wm::WindowState* window_state) {
   // Allow the client to request bounds that do not fill the entire work area
   // when maximized, or the entire display when fullscreen.
@@ -1597,6 +1600,12 @@ void ShellSurface::InitializeWindowState(ash::wm::WindowState* window_state) {
   bool movement_disabled = bounds_mode_ != BoundsMode::SHELL;
   widget_->set_movement_disabled(movement_disabled);
   window_state->set_ignore_keyboard_bounds_change(movement_disabled);
+
+  // Notify client of initial state if different than normal.
+  if (window_state->GetStateType() != ash::mojom::WindowStateType::NORMAL) {
+    SendWindowStateChangeEvent(ash::mojom::WindowStateType::NORMAL,
+                               window_state->GetStateType());
+  }
 }
 
 }  // namespace exo
