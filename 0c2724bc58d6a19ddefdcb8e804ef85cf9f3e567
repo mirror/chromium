@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d354e81b_482e426d",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "Suggest just making this return a std::string.  Regardless, I don\u0027t think I\u0027ve seen an array with a length as a function argument in Chrome - such lengths aren\u0027t enforced by the compiler, so seem very unsafe.",
+      "range": {
+        "startLine": 37,
+        "startChar": 39,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc0728c5_e1bdf4b9",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -54,6 +77,52 @@
     },
     {
       "key": {
+        "uuid": "84987e71_0e0e7a01",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "Can we initialize this in the test fixture?  Seems like it should be set before we start setting stuff up, to minimize chance of a breakage in the test when the code still actually works.",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790029e9_ab86de2e",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "I assume this won\u0027t expire at some point?",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49dd4ec2_e8f808bf",
         "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
         "patchSetId": 3
@@ -83,6 +152,75 @@
       "side": 1,
       "message": "Yes, there\u0027s a TODO one line down to override the built-in log list with one that will permanently contain Pilot and Aviator. That doesn\u0027t appear to be trivial so I was deferring that to a separate change.",
       "parentUuid": "49dd4ec2_e8f808bf",
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fceab5e5_a803510f",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "fulfill.",
+      "range": {
+        "startLine": 151,
+        "startChar": 44,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835c6570_be05e930",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "This isn\u0027t thread safe - should be done before starting the test server, as it runs off thread.  Should set this up before starting the server.  Also I don\u0027t think this method is intended to allow mutating the server\u0027s live cert...is it?",
+      "range": {
+        "startLine": 153,
+        "startChar": 25,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41e9b0c_4997a7d8",
+        "filename": "chrome/browser/ssl/certificate_transparency_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T21:51:28Z",
+      "side": 1,
+      "message": "What does this get us?  Note that this just spins the UI thread\u0027s message loop, not the IO thread\u0027s, or the test servers.  So it\u0027s possible the UI thread could be idle while the other threads are not.",
+      "range": {
+        "startLine": 161,
+        "startChar": 18,
+        "endLine": 161,
+        "endChar": 30
+      },
       "revId": "0c2724bc58d6a19ddefdcb8e804ef85cf9f3e567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
