@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4cbb2df_64af3d8a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-12-05T23:46:43Z",
+      "side": 1,
+      "message": "Hmm. I only know Worklet constructor needs a Frame object to function. From WebAudio POV, if the |audio_worklet_| is null, it will prohibit all the related operations from happening.\n\nHowever, I am also not really sure what happens if a frame object is gone while WebAudio is running.\n\nnhiroki@ might be able to answer this question better.",
+      "parentUuid": "da6e5a6a_48fe2a98",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec4847e_9879b5ca",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T23:42:46Z",
       "side": 1,
       "message": "Move this test into the upper if on line 152?",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096d2207_7684f924",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-12-05T23:46:43Z",
+      "side": 1,
+      "message": "I believe that this fix is a temporary one, so I prefer to have this as a separate if block so I can remove it later cleanly.",
+      "parentUuid": "bec4847e_9879b5ca",
       "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
