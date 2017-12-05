@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "41a9a63c_1add469b",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-05T19:03:41Z",
+      "side": 1,
+      "message": "The current best practice is:\n\nstatic const char kDeviceName[] \u003d \"Orientation Device\";",
+      "parentUuid": "fb46189a_1d4fabe8",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20c1297c_a5ae1164",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -59,6 +83,80 @@
         "endLine": 80,
         "endChar": 46
       },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c8ab25_f44e44b9",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-05T19:03:41Z",
+      "side": 1,
+      "message": "No trailing underscore as this is not a member variable.",
+      "range": {
+        "startLine": 104,
+        "startChar": 38,
+        "endLine": 104,
+        "endChar": 53
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7e4402_bf86b12c",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-05T19:03:41Z",
+      "side": 1,
+      "message": "Before this also:\n\nsensor_.set_connection_error_handler(\n    base::BindOnce(\u0026VROrientationDevice::HandleSensorError,\n                   base::Unretained(this)));",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189daf9f_f8c21904",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-05T19:03:41Z",
+      "side": 1,
+      "message": "nit: no semicolon at the end of the line.",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071e858e_23a2bb2c",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-05T19:03:41Z",
+      "side": 1,
+      "message": "nit: space between override and {}, no semicolon at the end of the line.",
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
