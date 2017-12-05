@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff807a2b_59fe8d4f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-05T01:45:21Z",
+      "side": 1,
+      "message": "Now calling chooser-\u003eEnd() in ColorChooser dtor.\n\nRemoved call to color_chooser_-\u003echooser-\u003eEnd() in WebContentsImpl dtor.  This will be done in ColorChooser dtor.\n\nIt is now possible that chooser_-End() can be called twice when the close is initiated by the renderer.  This matches the existing behaviour and I can see that code that implements End already handles this.",
+      "parentUuid": "0e175f43_c4d75db2",
+      "revId": "cf6dc8a78153f79f96ffb64bcd9bdcf63a6c6a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0596e761_d0231172",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "cf6dc8a78153f79f96ffb64bcd9bdcf63a6c6a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4651ee8_9f6d9bd9",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-05T01:45:21Z",
+      "side": 1,
+      "message": "Fields set private.  Created method DidChooseColorInColorChooser rather than expose field chooser.",
+      "parentUuid": "0596e761_d0231172",
+      "revId": "cf6dc8a78153f79f96ffb64bcd9bdcf63a6c6a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
