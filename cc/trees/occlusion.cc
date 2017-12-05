@@ -62,7 +62,7 @@ gfx::Rect Occlusion::GetUnoccludedContentRect(
   if (!ok)
     return content_rect;
 
-  gfx::Rect unoccluded_rect = MathUtil::ProjectEnclosingClippedRect(
+  gfx::Rect unoccluded_rect = MathUtil::ProjectEnClippedRect(
       inverse_draw_transform, unoccluded_rect_in_target_surface);
   unoccluded_rect.Intersect(content_rect);
 

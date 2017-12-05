@@ -154,9 +154,10 @@ void RecordingSource::DetermineIfSolidColor() {
 
   TRACE_EVENT1("cc", "RecordingSource::DetermineIfSolidColor", "opcount",
                display_list_->op_count());
-  is_solid_color_ = display_list_->GetColorIfSolidInRect(
-      gfx::ScaleToRoundedRect(gfx::Rect(GetSize()), recording_scale_factor_),
-      &solid_color_, kMaxOpsToAnalyzeForLayer);
+  is_solid_color_ = false;
+  //is_solid_color_ = display_list_->GetColorIfSolidInRect(
+      //gfx::ScaleToRoundedRect(gfx::Rect(GetSize()), recording_scale_factor_),
+      //&solid_color_, kMaxOpsToAnalyzeForLayer);
 }
 
 }  // namespace cc
