@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "cab5ac1a_37a57494",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Again, suggest writing this out.  I don\u0027t think anyone knows what DoH means (Unless it\u0027s a reference to the critically acclaimed (No, not really) \"Arkanoid 2: Revenge of Doh\"",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 16
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db30ab17_d7ce9681",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Generally net does not apply field trials - the embedder does, and then passes them to net/ when setting it up.  This gives embedders more controls, and doesn\u0027t bake chrome/ code into net.  I\u0027m less concerned about this for more limit-y things (number of connections per socket pool, for instance), but for major behavior-altering things, think it\u0027s best to give the embedded explicit control.",
+      "range": {
+        "startLine": 129,
+        "startChar": 15,
+        "endLine": 129,
+        "endChar": 24
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd5e9f4_99df6ad8",
+        "filename": "net/dns/dns_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Does the order mean anything?",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 27
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f045d2_e87d9e0e",
         "filename": "net/dns/dns_session.h",
         "patchSetId": 6
@@ -30,6 +99,300 @@
       "writtenOn": "2017-11-29T17:01:33Z",
       "side": 1,
       "message": "This would be more clear with the tuple as a struct instead, or at least a typedef for \"DohServerConfig\" or something. Also it should be private.",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea09ec85_ba0bd48b",
+        "filename": "net/dns/dns_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Google style guide prohibits public and protected member variables.",
+      "range": {
+        "startLine": 118,
+        "startChar": 38,
+        "endLine": 118,
+        "endChar": 48
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13dadc2b_39b01025",
+        "filename": "net/dns/dns_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Style guide prohibits uncommon abbreviations.  I suggest just writing out dns_over_http_servers.  I agree that this should use a struct for clarity.",
+      "parentUuid": "b6f045d2_e87d9e0e",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f0fedd_445a0954",
+        "filename": "net/dns/dns_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Should this be in DnsConfig instead?  Admittedly, DnsConfigService presumably can\u0027t retrieve these from the system config on any platform, but it would put the config all in one place - maybe give the embedder some way to tell the DnsConfigService to populate this field in the config with some hard-coded value.",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e51a878_c5cd95ba",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "const GURL\u0026",
+      "range": {
+        "startLine": 311,
+        "startChar": 50,
+        "endLine": 311,
+        "endChar": 55
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8246163e_4afa9290",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "DCHECK that server uses an IP address instead of a hostname?  Otherwise, we\u0027re in trouble.",
+      "range": {
+        "startLine": 316,
+        "startChar": 21,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333194ad_024f869b",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to use URLFetcher - it has no protection against excessively long responses, among other things.  I\u0027d also like to get rid of it once the network service ships.  Since we\u0027re using a ResponseWriter anyways, I don\u0027t think we really get anything from using URLFetcher.\n\nAlso, should we be following redirects?",
+      "range": {
+        "startLine": 331,
+        "startChar": 24,
+        "endLine": 331,
+        "endChar": 34
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7af0be8_8ea4e773",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "URLRequestContexts are extremely heavy weight objects.  We should not be creating one per DNS lookup.  Figuring out what to do about this strikes me as a non-trivial problem we\u0027ll need to work out before even experimenting with this.  I\u0027d suggest using the main one, but disabling cookies, auth, the proxy, and the cache.  Then during teardown, have the builder\u0027s URLRequestContext tell the HostResolver to shutdown early, which cancels these requests, and prevents it from creating more.\n\nThat would also let us reuse connections to the DNS resolver, which this code doesn\u0027t do.",
+      "range": {
+        "startLine": 339,
+        "startChar": 9,
+        "endLine": 339,
+        "endChar": 34
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b359234a_fd745590",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to use a proxy, on any platform.",
+      "range": {
+        "startLine": 342,
+        "startChar": 13,
+        "endLine": 342,
+        "endChar": 24
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893f6eda_bc6cd669",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Also need to disable the cache.",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 343,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e3bf4b_51496770",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "We don\u0027t seem to be checking the HTTP response code anywhere?  I don\u0027t think we should be treating a 4xx/5xx response as a valid response.",
+      "range": {
+        "startLine": 362,
+        "startChar": 32,
+        "endLine": 362,
+        "endChar": 42
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e17915_7245d809",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Bug:  GetContentLength() is the content-length header (Which may or may not be present, and may or may not be accurate).  This method is called for every read from the socket - so it may be called multiple times, even when GetContextLengtH() is accurate.  So this code is potentially copying data from uninitialized memory.\n\nWe should have a test for that.  And tests for HTTP errors, redirects, maybe an invalid certs test, too, just because that follows another path?",
+      "range": {
+        "startLine": 396,
+        "startChar": 23,
+        "endLine": 396,
+        "endChar": 39
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c192de4_fe5a337c",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "Should document that we use these servers first.  I assume we have privacy signoff for this?",
+      "range": {
+        "startLine": 831,
+        "startChar": 51,
+        "endLine": 831,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d49673_43dd0e5c",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-05T18:39:43Z",
+      "side": 1,
+      "message": "better to use make_unique instead of new above, and std::move here",
+      "range": {
+        "startLine": 901,
+        "startChar": 24,
+        "endLine": 901,
+        "endChar": 28
+      },
       "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
