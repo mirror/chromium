@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "753c43f5_75bbbb0e",
+        "filename": "components/browser_sync/profile_sync_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-05T00:26:08Z",
+      "side": 1,
+      "message": "I tried to rewrite this code, the result is not much shorter, but I think more obscure. That being said... Current implementation has room for improvement.",
+      "parentUuid": "e7fb06c5_b7dd860e",
+      "revId": "aa5a11ed8bd072d8cfa876ba7b98ff20383a888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac697ad1_38acfbb9",
         "filename": "components/browser_sync/profile_sync_service.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "aa5a11ed8bd072d8cfa876ba7b98ff20383a888f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ef6d63_a7be166a",
+        "filename": "components/browser_sync/profile_sync_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-05T00:26:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac697ad1_38acfbb9",
+      "revId": "aa5a11ed8bd072d8cfa876ba7b98ff20383a888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
