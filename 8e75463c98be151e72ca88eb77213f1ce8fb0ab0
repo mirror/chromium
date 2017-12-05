@@ -33,6 +33,23 @@
       "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d708aba4_03e6b9c6",
+        "filename": "device/vr/oculus/oculus_type_converters.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T19:19:41Z",
+      "side": 1,
+      "message": "Is there a reason to use type converters rather than a typemap? Is it because we might want to support multiple VR toolkits on one platform?",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
