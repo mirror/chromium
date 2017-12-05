@@ -647,7 +647,10 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (!navigation_handles_.empty()) {
+    // If there are any pending uncommitted side navigations, it's not safe to
+    // to forward messages to the renderer because it may not exist yet or we
+    // may be about to transition to a new renderer.
+    if (!uncomitted_navigations_.empty()) {
       suspended_messages_by_session_id_[session_id].push_back(
           {call_id, method, message});
       return true;
@@ -716,6 +719,21 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(handle->GetRenderFrameHost());
   DCHECK(CheckConsistency());
+
+  uncomitted_navigations_.erase(navigation_handle);
+  if (uncomitted_navigations_.empty()) {
+    for (auto& pair : suspended_messages_by_session_id_) {
+      int session_id = pair.first;
+      DevToolsSession* session = SessionById(session_id);
+      for (const Message& message : pair.second) {
+        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
+                                                message.message);
+        session->waiting_messages()[message.call_id] = {message.method,
+                                                        message.message};
+      }
+    }
+    suspended_messages_by_session_id_.clear();
+  }
 }
 
 void RenderFrameDevToolsAgentHost::DidFinishNavigation(
@@ -751,19 +769,6 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   UpdateFrameHost(frame_tree_node_->current_frame_host());
   DCHECK(CheckConsistency());
 
-  if (navigation_handles_.empty()) {
-    for (auto& pair : suspended_messages_by_session_id_) {
-      int session_id = pair.first;
-      DevToolsSession* session = SessionById(session_id);
-      for (const Message& message : pair.second) {
-        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
-                                                message.message);
-        session->waiting_messages()[message.call_id] = {message.method,
-                                                        message.message};
-      }
-    }
-    suspended_messages_by_session_id_.clear();
-  }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
       target->DidCommitNavigation();
@@ -895,7 +900,9 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
+
   navigation_handles_.insert(handle);
+  uncomitted_navigations_.insert(handle);
   DCHECK(CheckConsistency());
 }
 

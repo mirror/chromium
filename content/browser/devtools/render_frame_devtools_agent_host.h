@@ -128,6 +128,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   void DiscardPending();
   void UpdateProtocolHandlers(RenderFrameHostImpl* host);
 
+  void UnsuspendMessages();
+
   bool IsChildFrame();
 
   void OnClientsAttached();
@@ -172,6 +174,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   RenderFrameHostImpl* frame_host_ = nullptr;
   mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::flat_set<NavigationHandleImpl*> navigation_handles_;
+  base::flat_set<NavigationHandleImpl*> uncomitted_navigations_;
   bool render_frame_alive_ = false;
 
   // These messages were queued after suspending, not sent to the agent,
