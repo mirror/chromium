@@ -913,7 +913,6 @@ enum WebFeature {
   kSinkDocumentInFrame = 1316,
   kTextDocument = 1317,
   kTextDocumentInFrame = 1318,
-  kViewSourceDocument = 1319,
   kFileAPINativeLineEndings = 1320,
   kPointerEventAttributeCount = 1321,
   kCompositedReplication = 1322,
