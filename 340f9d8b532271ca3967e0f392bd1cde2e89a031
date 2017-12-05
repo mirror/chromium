@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3466f3b_6f23a59e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/console-stack-overflow-source-url-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-12-05T22:09:06Z",
+      "side": 1,
+      "message": "what happened to the column numbers?",
+      "revId": "340f9d8b532271ca3967e0f392bd1cde2e89a031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
