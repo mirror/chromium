@@ -16,6 +16,24 @@
       "revId": "5c8a241432067fceff13b148630281f80c63f67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efc1233_27430c5f",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-05T19:57:20Z",
+      "side": 0,
+      "message": "I believe so- added back a comment and a link to the bug/task that introduced this test.",
+      "parentUuid": "c4c5a660_31f29924",
+      "revId": "5c8a241432067fceff13b148630281f80c63f67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
