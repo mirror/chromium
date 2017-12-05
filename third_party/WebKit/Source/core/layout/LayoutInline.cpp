@@ -40,6 +40,7 @@
 #include "core/paint/InlinePainter.h"
 #include "core/paint/ObjectPainter.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/ng/ng_box_fragment_painter.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/Region.h"
 #include "platform/geometry/TransformState.h"
@@ -636,6 +637,21 @@ void LayoutInline::AddChildToContinuation(LayoutObject* new_child,
 
 void LayoutInline::Paint(const PaintInfo& paint_info,
                          const LayoutPoint& paint_offset) const {
+  if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
+      if (NGPaintFragment* block_flow_fragment = block_flow->PaintFragment()) {
+        block_flow_fragment->ForEachDescendants(
+            this, [&paint_info, &paint_offset](const NGPaintFragment& fragment,
+                                               const NGPhysicalOffset& offset) {
+              NGBoxFragmentPainter(fragment).PaintInlineBox(
+                  paint_info, paint_offset + offset.ToLayoutPoint(),
+                  paint_offset);
+              return false;  // Don't need descendants of this fragment.
+            });
+      }
+    }
+  }
+
   InlinePainter(*this).Paint(paint_info, paint_offset);
 }
 
