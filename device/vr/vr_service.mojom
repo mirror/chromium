@@ -53,8 +53,10 @@ struct VRDisplayInfo {
   string displayName;
   VRDisplayCapabilities capabilities;
   VRStageParameters? stageParameters;
-  VREyeParameters leftEye;
-  VREyeParameters rightEye;
+  // Parameters required to distort a scene for viewing in a VR headset. Only
+  // required for devices which can present.
+  VREyeParameters? leftEye;
+  VREyeParameters? rightEye;
 };
 
 enum VRDisplayEventReason {
