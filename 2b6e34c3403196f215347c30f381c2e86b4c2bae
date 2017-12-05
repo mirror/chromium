@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32a8075f_fe602291",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3502,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-05T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab741e69_9c188888",
+      "range": {
+        "startLine": 3502,
+        "startChar": 72,
+        "endLine": 3502,
+        "endChar": 75
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c23dc1_42127509",
         "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbb68b3_a832b1e7",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-05T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c23dc1_42127509",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8c0afe02_54319226",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-05T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ccc78e3_fb6b01bd",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266c2234_26f5cb02",
         "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dc6e40bc_9b708357",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-05T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "266c2234_26f5cb02",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fad8b3_f6eab062",
         "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389825b6_1f1637a5",
+        "filename": "ios/web/public/web_state/ui/crw_native_content_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-05T00:26:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54fad8b3_f6eab062",
+      "range": {
+        "startLine": 47,
+        "startChar": 72,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "2b6e34c3403196f215347c30f381c2e86b4c2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
