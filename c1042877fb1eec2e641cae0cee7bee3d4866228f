@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc769300_67be7d34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/iframe-load-event.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-05T18:55:25Z",
+      "side": 1,
+      "message": "You can use TestRunner.addIframe:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js?q\u003dTestRunner.addIframe\u0026sq\u003dpackage:chromium\u0026l\u003d586",
+      "revId": "c1042877fb1eec2e641cae0cee7bee3d4866228f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
