@@ -69,8 +69,11 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_pin_type.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 #include "chrome/browser/ui/browser_commands_chromeos.h"
+#include "ui/base/clipboard/clipboard.h"
+#include "ui/base/clipboard/clipboard_types.h"
 #endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
@@ -241,6 +244,12 @@ void BrowserCommandController::ContentRestrictionsChanged() {
 void BrowserCommandController::FullscreenStateChanged() {
   UpdateCommandsForFullscreenMode();
 }
+
+#if defined(OS_CHROMEOS)
+void BrowserCommandController::LockedFullscreenStateChanged() {
+  UpdateCommandsForLockedFullscreenMode();
+}
+#endif
 
 void BrowserCommandController::PrintingStateChanged() {
   UpdatePrintingState();
@@ -1112,6 +1121,47 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
   UpdateCommandsForBookmarkBar();
   UpdateCommandsForIncognitoAvailability();
 }
+
+#if defined(OS_CHROMEOS)
+void BrowserCommandController::UpdateCommandsForLockedFullscreenMode() {
+  // Disable most keyboard shortcuts in locked fullscreen mode (allow a few
+  // whitelisted ones).
+  constexpr int kWhitelistedIds[] = {
+    IDC_CUT, IDC_COPY, IDC_PASTE,
+    IDC_FIND, IDC_FIND_NEXT, IDC_FIND_PREVIOUS,
+    IDC_ZOOM_PLUS, IDC_ZOOM_NORMAL, IDC_ZOOM_MINUS,
+    IDC_TOGGLE_REQUEST_TABLET_SITE,
+  };
+  // Valid range for command ids is [0x8000, 0xDFFF] (ref. Microsoft
+  // documentation).
+  constexpr int kCommandRangeStart = 0x8000;
+  constexpr int kCommandRangeEnd   = 0xDFFF;
+
+  if (browser_ && browser_->window()) {
+    // Reset the clipboard when entering or exiting locked fullscreen (security
+    // concerns).
+    ui::Clipboard::GetForCurrentThread()->Clear(ui::CLIPBOARD_TYPE_COPY_PASTE);
+
+    if (ash::IsWindowTrustedPinned(browser_->window())) {
+      for (int id = kCommandRangeStart; id <= kCommandRangeEnd; id++) {
+        if (command_updater_.IsCommandEnabled(id)) {
+          // Save all the commands that are enabled and disable them.
+          saved_command_updater_state_.insert(id);
+          command_updater_.UpdateCommandEnabled(id, false);
+        }
+      }
+      // Enable the commands that we whitelisted.
+      for (int id : kWhitelistedIds)
+        command_updater_.UpdateCommandEnabled(id, true);
+    } else {
+      // Restore the previously enabled command_updater_ commands.
+      for (int id : saved_command_updater_state_)
+        command_updater_.UpdateCommandEnabled(id, true);
+      saved_command_updater_state_.clear();
+    }
+  }
+}
+#endif
 
 void BrowserCommandController::UpdatePrintingState() {
   bool print_enabled = CanPrint(browser_);
