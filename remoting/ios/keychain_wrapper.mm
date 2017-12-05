@@ -131,6 +131,8 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
           JSONObjectWithData:data
                      options:NSJSONReadingMutableContainers
                        error:&err];
+    } else {
+      pairingMap = @{};
     }
     if (!err) {
       return [NSMutableDictionary dictionaryWithDictionary:pairingMap];
