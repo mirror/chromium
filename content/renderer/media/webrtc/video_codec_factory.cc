@@ -4,9 +4,10 @@
 
 #include "content/renderer/media/webrtc/video_codec_factory.h"
 
+#include <memory>
+
 #include "base/base_switches.h"
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "content/public/common/content_switches.h"
 #include "content/renderer/media/gpu/rtc_video_decoder_factory.h"
@@ -69,7 +70,7 @@ template <typename SoftwareWrapperClass, typename CoderClass>
 std::unique_ptr<CoderClass> Wrap(std::unique_ptr<CoderClass> internal_coder,
                                  std::unique_ptr<CoderClass> external_coder) {
   if (internal_coder && external_coder) {
-    return base::MakeUnique<SoftwareWrapperClass>(std::move(internal_coder),
+    return std::make_unique<SoftwareWrapperClass>(std::move(internal_coder),
                                                   std::move(external_coder));
   }
   return external_coder ? std::move(external_coder) : std::move(internal_coder);
@@ -99,7 +100,7 @@ class EncoderAdapter : public webrtc::VideoEncoderFactory {
                           format)) {
       internal_encoder =
           cricket::CodecNamesEq(format.name.c_str(), cricket::kVp8CodecName)
-              ? base::MakeUnique<webrtc::VP8EncoderSimulcastProxy>(
+              ? std::make_unique<webrtc::VP8EncoderSimulcastProxy>(
                     &internal_encoder_factory_)
               : internal_encoder_factory_.CreateVideoEncoder(format);
     }
@@ -108,7 +109,7 @@ class EncoderAdapter : public webrtc::VideoEncoderFactory {
     if (IsFormatSupported(external_encoder_factory_.get(), format)) {
       external_encoder =
           cricket::CodecNamesEq(format.name.c_str(), cricket::kVp8CodecName)
-              ? base::MakeUnique<webrtc::SimulcastEncoderAdapter>(
+              ? std::make_unique<webrtc::SimulcastEncoderAdapter>(
                     external_encoder_factory_.get())
               : external_encoder_factory_->CreateVideoEncoder(format);
     }
@@ -182,7 +183,7 @@ std::unique_ptr<webrtc::VideoEncoderFactory> CreateWebrtcVideoEncoderFactory(
     encoder_factory.reset();
 #endif
 
-  return base::MakeUnique<EncoderAdapter>(std::move(encoder_factory));
+  return std::make_unique<EncoderAdapter>(std::move(encoder_factory));
 }
 
 std::unique_ptr<webrtc::VideoDecoderFactory> CreateWebrtcVideoDecoderFactory(
@@ -195,7 +196,7 @@ std::unique_ptr<webrtc::VideoDecoderFactory> CreateWebrtcVideoDecoderFactory(
     decoder_factory.reset(new RTCVideoDecoderFactory(gpu_factories));
   }
 
-  return base::MakeUnique<DecoderAdapter>(std::move(decoder_factory));
+  return std::make_unique<DecoderAdapter>(std::move(decoder_factory));
 }
 
 }  // namespace content

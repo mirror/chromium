@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "content/renderer/media/gpu/rtc_video_decoder.h"
 #include "media/video/gpu_video_accelerator_factories.h"
 #include "third_party/webrtc/api/video_codecs/sdp_video_format.h"
@@ -86,7 +85,7 @@ RTCVideoDecoderFactory::CreateVideoDecoder(
   std::unique_ptr<webrtc::VideoDecoder> decoder = RTCVideoDecoder::Create(
       webrtc::PayloadStringToCodecType(format.name), gpu_factories_);
   // Make sure the decoder is destructed on the correct thread.
-  return decoder ? base::MakeUnique<ScopedVideoDecoder>(
+  return decoder ? std::make_unique<ScopedVideoDecoder>(
                        gpu_factories_->GetTaskRunner(), std::move(decoder))
                  : nullptr;
 }

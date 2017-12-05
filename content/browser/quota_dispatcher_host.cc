@@ -9,7 +9,6 @@
 #include <memory>
 
 #include "base/bind.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
@@ -242,7 +241,7 @@ void QuotaDispatcherHost::Create(
     scoped_refptr<QuotaPermissionContext> permission_context,
     mojom::QuotaDispatcherHostRequest request) {
   mojo::MakeStrongBinding(
-      base::MakeUnique<QuotaDispatcherHost>(process_id, quota_manager,
+      std::make_unique<QuotaDispatcherHost>(process_id, quota_manager,
                                             std::move(permission_context)),
       std::move(request));
 }
