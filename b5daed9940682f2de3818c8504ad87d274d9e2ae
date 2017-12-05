@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cf7c66_b0ee57a6",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-05T06:14:53Z",
+      "side": 1,
+      "message": "nit: Could you please expand a little bit? I guess the position of the shadow could be useful.",
+      "revId": "b5daed9940682f2de3818c8504ad87d274d9e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a796928_f9ce658a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-05T06:14:53Z",
+      "side": 1,
+      "message": "Thanks for moving this :)",
+      "revId": "b5daed9940682f2de3818c8504ad87d274d9e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
