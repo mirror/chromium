@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c0ac0ea_fbc58644",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Now posting a task. I\u0027m not sure it is crucial that it happens as early as possible, but we can always change it, I guess.",
+      "parentUuid": "75ae46ff_c887629e",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8929f0d_5ae631dd",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T12:57:28Z",
       "side": 1,
       "message": "this thread will be stopped, joined, and destroyed on line 564 when |notification_thread| goes out of scope. don\u0027t you want it to live for the lifetime of the browser?\n\ncan you make this thread an implementation detail of NotificationPlatformBridgeWin or some other class? i imagine ChromeBrowserMainPartsWin having a member holding either an instance of this thing or a unique_ptr\u003c\u003e to one, and the impl of the task i mentioned above being something simple like:\n\nvoid ChromeBrowserMainPartsWin::StartNativeNotificationPlatformBridge() {\n  native_notification_platform_bridge_ \u003d std::make_unique\u003cNotificationPlatformBridgeWin\u003e();\n}\n\nand the ctor for that thing takes care of spinning up the thread. likewise, in shutdown:\n\nvoid ChromeBrowserMainPartsWin::PostMainMessageLoopRun() {\n...\n  // Stop processing native notifications.\n  native_notification_platform_bridge_-\u003eStop();  // (maybe this calls StopSoon on the thread, maybe it just posts a task to turn down the native notification thingie.)\n...\n}\n\ni can imagine making the bg thread non-joinable so that shutdown doesn\u0027t block on joining this thread.",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac2343b_3c8c2e87",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "\u003e don\u0027t you want it to live for the lifetime of the browser?\n\nWow. Yes. Sorry, this was copied from the original CL and it seemed to work, so I didn\u0027t give it a second thought.\n\n\u003e can you make this thread an implementation detail of NotificationPlatformBridgeWin or \n\u003e some other class?\n\nI\u0027ve made it so. \n\n\u003e i imagine ChromeBrowserMainPartsWin having a member holding either an instance of this thing\n\nI\u0027m hesitant to change the lifetime of NativeNotificationPlatformBridge, but see if you like the current approach.",
+      "parentUuid": "b8929f0d_5ae631dd",
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "b2f44e72_02165d33",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Out of curiosity... Does the mini_installer support only creating the shortcut (and not all the rest)?",
+      "parentUuid": "c90b641e_1280ed84",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2baa886f_837ef9aa",
         "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
         "patchSetId": 4
@@ -151,6 +211,30 @@
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2134b12_d3711f64",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2baa886f_837ef9aa",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 41
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +327,24 @@
     },
     {
       "key": {
+        "uuid": "783d955b_033f8d8f",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "I\u0027ve added a function that returns the uuid. I tried using the toast_clsid function in installer_static directly, but InstallDetails::Get() asserts on g_module_details not being created. Too early in the process, I guess. I\u0027m wondering how to solve that... Any pointers?",
+      "parentUuid": "b6d95709_580a2305",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6dc517e_77a014c6",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -313,6 +415,30 @@
     },
     {
       "key": {
+        "uuid": "b3a1629c_6fb9601d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "No. I had DebugBreak() in here and never saw that...",
+      "parentUuid": "474c9d30_b6cae625",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 10
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85fcd56b_010142f6",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -330,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "676b9662_4b42e217",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "85fcd56b_010142f6",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d56eca0_86909cd5",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -341,6 +485,24 @@
       "writtenOn": "2017-12-04T12:57:28Z",
       "side": 1,
       "message": "delete nullptr is well-defined, so you can get rid of this check and unconditionally call delete and clear the ptr.",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f806594_1cdb1f84",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "7d56eca0_86909cd5",
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -370,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "c064fdd6_23770481",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f8fa45_eedb1b1f",
+      "range": {
+        "startLine": 554,
+        "startChar": 11,
+        "endLine": 554,
+        "endChar": 30
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "024116ed_e749333d",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -390,6 +576,30 @@
       "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5631869_7326627d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T15:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "024116ed_e749333d",
+      "range": {
+        "startLine": 570,
+        "startChar": 2,
+        "endLine": 570,
+        "endChar": 18
+      },
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
