@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "fd766784_1d1add07",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T23:54:44Z",
+      "side": 1,
+      "message": "Renamed to _viewController",
+      "parentUuid": "22d8f40f_55e0ea15",
+      "range": {
+        "startLine": 18,
+        "startChar": 20,
+        "endLine": 18,
+        "endChar": 42
+      },
+      "revId": "8c272214e7945d3f868ff611075d1fb739790163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed57a0d_1866f0d6",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 5
