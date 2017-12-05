@@ -284,7 +284,9 @@ class ManagedNetworkConfigurationHandlerTest : public testing::Test {
                  const std::string& userhash,
                  const std::string& path_to_onc) {
     std::unique_ptr<base::DictionaryValue> policy =
-        test_utils::ReadTestDictionary(path_to_onc);
+        path_to_onc.empty()
+            ? onc::ReadDictionaryFromJson(onc::kEmptyUnencryptedConfiguration)
+            : test_utils::ReadTestDictionary(path_to_onc);
 
     base::ListValue network_configs;
     {
@@ -316,6 +318,14 @@ class ManagedNetworkConfigurationHandlerTest : public testing::Test {
     std::unique_ptr<base::DictionaryValue> entry =
         test_utils::ReadTestDictionary(path_to_shill_json);
     GetShillProfileClient()->AddEntry(profile_path, entry_path, *entry);
+  }
+
+  // Returns true if |service_name| is contained in ShillProfileClient.
+  bool ProfileClientHasService(const std::string& service_name) {
+    std::string profile_path;
+    base::DictionaryValue properties;
+    return GetShillProfileClient()->GetService(service_name, &profile_path,
+                                               &properties);
   }
 
  private:
@@ -611,12 +621,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest,
   base::RunLoop().RunUntilIdle();
 
   // Verify eth_entry is deleted.
-  {
-    std::string eth_profile_path;
-    base::DictionaryValue properties;
-    EXPECT_FALSE(GetShillProfileClient()->GetService(
-        "eth_entry", &eth_profile_path, &properties));
-  }
+  EXPECT_FALSE(ProfileClientHasService("eth_entry"));
 
   const base::DictionaryValue* properties =
       GetShillServiceClient()->GetServiceProperties("guid");
@@ -697,7 +702,7 @@ TEST_F(ManagedNetworkConfigurationHandlerTest, UpdatePolicyBeforeFinished) {
   EXPECT_EQ(1, policy_observer()->GetPoliciesAppliedCountAndReset());
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyManageUnmanaged) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyManageUnmanaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -707,63 +712,26 @@ TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyManageUnmanaged) {
       test_utils::ReadTestDictionary(
           "policy/shill_policy_on_unmanaged_wifi1.json");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      DeleteEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
+  // Before setting policy, old_entry_path should exist.
+  ASSERT_TRUE(ProfileClientHasService("old_entry_path"));
 
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
+
+  // Verify old_entry_path is deleted.
+  EXPECT_FALSE(ProfileClientHasService("old_entry_path"));
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
-// Old ChromeOS versions may not have used the UIData property
-TEST_F(ManagedNetworkConfigurationHandlerMockTest,
-       SetPolicyManageUnmanagedWithoutUIData) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedNewGUID) {
   InitializeStandardProfiles();
-  SetUpEntry("policy/shill_unmanaged_wifi1.json",
-             kUser1ProfilePath,
-             "old_entry_path");
-
-  std::unique_ptr<base::DictionaryValue> expected_shill_properties =
-      test_utils::ReadTestDictionary(
-          "policy/shill_policy_on_unmanaged_wifi1.json");
-
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      DeleteEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
-  SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(ManagedNetworkConfigurationHandlerMockTest,
-       SetPolicyUpdateManagedNewGUID) {
-  InitializeStandardProfiles();
+  GetShillServiceClient()->AddService(
+      "old_entry_path", std::string() /* guid */, std::string() /* name */,
+      "wifi", std::string() /* state */, true /* visible */);
   SetUpEntry("policy/shill_managed_wifi1.json",
              kUser1ProfilePath,
              "old_entry_path");
@@ -777,53 +745,39 @@ TEST_F(ManagedNetworkConfigurationHandlerMockTest,
   expected_shill_properties->RemoveWithoutPathExpansion(
       shill::kPassphraseProperty, NULL);
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      DeleteEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
+  // Before setting policy, old_entry_path should exist.
+  ASSERT_TRUE(ProfileClientHasService("old_entry_path"));
 
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
+
+  // Verify old_entry_path is deleted.
+  EXPECT_FALSE(ProfileClientHasService("old_entry_path"));
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyUpdateManagedVPN) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUpdateManagedVPN) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_managed_vpn.json", kUser1ProfilePath, "entry_path");
 
   std::unique_ptr<base::DictionaryValue> expected_shill_properties =
       test_utils::ReadTestDictionary("policy/shill_policy_on_managed_vpn.json");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "entry_path", _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_vpn.onc");
   base::RunLoop().RunUntilIdle();
-  VerifyAndClearExpectations();
+
+  const base::DictionaryValue* properties =
+      GetShillServiceClient()->GetServiceProperties(
+          "{a3860e83-f03d-4cb1-bafa-b22c9e746950}");
+  ASSERT_TRUE(properties);
+  EXPECT_EQ(*expected_shill_properties, *properties);
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyReapplyToManaged) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyReapplyToManaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_policy_on_unmanaged_wifi1.json",
              kUser1ProfilePath,
@@ -838,77 +792,55 @@ TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyReapplyToManaged) {
   expected_shill_properties->RemoveWithoutPathExpansion(
       shill::kPassphraseProperty, NULL);
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
-  EXPECT_CALL(*mock_manager_client_,
-              ConfigureServiceForProfile(
-                  dbus::ObjectPath(kUser1ProfilePath),
-                  IsEqualTo(expected_shill_properties.get()),
-                  _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
-  VerifyAndClearExpectations();
+
+  {
+    const base::DictionaryValue* properties =
+        GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+    ASSERT_TRUE(properties);
+    EXPECT_EQ(*expected_shill_properties, *properties);
+  }
 
   // If we apply the policy again, without change, then the Shill profile will
   // not be modified.
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(
-      *mock_profile_client_,
-      GetEntry(dbus::ObjectPath(kUser1ProfilePath), "old_entry_path", _, _));
-
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "policy/policy_wifi1.onc");
   base::RunLoop().RunUntilIdle();
+
+  {
+    const base::DictionaryValue* properties =
+        GetShillServiceClient()->GetServiceProperties("policy_wifi1");
+    ASSERT_TRUE(properties);
+    EXPECT_EQ(*expected_shill_properties, *properties);
+  }
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerMockTest, SetPolicyUnmanageManaged) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyUnmanageManaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_policy_on_unmanaged_wifi1.json",
              kUser1ProfilePath,
              "old_entry_path");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(*mock_profile_client_,
-              GetEntry(dbus::ObjectPath(kUser1ProfilePath),
-                       "old_entry_path",
-                       _, _));
-
-  EXPECT_CALL(*mock_profile_client_,
-              DeleteEntry(dbus::ObjectPath(kUser1ProfilePath),
-                          "old_entry_path",
-                          _, _));
+  // Before setting policy, old_entry_path should exist.
+  ASSERT_TRUE(ProfileClientHasService("old_entry_path"));
 
   SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "");
   base::RunLoop().RunUntilIdle();
+
+  // Verify old_entry_path is deleted.
+  EXPECT_FALSE(ProfileClientHasService("old_entry_path"));
 }
 
-TEST_F(ManagedNetworkConfigurationHandlerMockTest,
-       SetEmptyPolicyIgnoreUnmanaged) {
+TEST_F(ManagedNetworkConfigurationHandlerTest, SetEmptyPolicyIgnoreUnmanaged) {
   InitializeStandardProfiles();
   SetUpEntry("policy/shill_unmanaged_wifi1.json",
              kUser1ProfilePath,
              "old_entry_path");
 
-  EXPECT_CALL(*mock_profile_client_,
-              GetProperties(dbus::ObjectPath(kUser1ProfilePath), _, _));
-
-  EXPECT_CALL(*mock_profile_client_,
-              GetEntry(dbus::ObjectPath(kUser1ProfilePath),
-                       "old_entry_path",
-                       _, _));
-
-  SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1, "");
+  SetPolicy(::onc::ONC_SOURCE_USER_POLICY, kUser1,
+            std::string() /* path_to_onc */);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(1, policy_observer_.GetPoliciesAppliedCountAndReset());
+  EXPECT_EQ(1, policy_observer()->GetPoliciesAppliedCountAndReset());
 }
 
 TEST_F(ManagedNetworkConfigurationHandlerTest, SetPolicyIgnoreUnmanaged) {
