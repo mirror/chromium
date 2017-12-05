@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4360998_d9f08424",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-05T19:27:30Z",
+      "side": 1,
+      "message": "I stole it from net/..registry_controlled..    Just to see how it looks, I switched to using StringPiece instead. That requires two reinterpret_cast between unsigned char* and char*. I\u0027m not very fond of it, but it\u0027s ok. \n\n Hmm.... C++ 17\u0027s basic_string_view\u003cunsigned char\u003e would be handy, but apparently, it\u0027s not even been on the radar, yet ( https://chromium-cpp.appspot.com/ ).",
+      "parentUuid": "fd863c3d_8259e2bf",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48494287_a4944551",
         "filename": "components/url_formatter/idn_spoof_checker.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T23:44:34Z",
       "side": 1,
       "message": "Nit: Any reason not to use DCHECKs instead?\n\n(expected, actual) order for EQ/NE.",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ffd4c91_f1f9fa4e",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-05T19:27:30Z",
+      "side": 1,
+      "message": "I blindly copied what\u0027s in net/...registry_controlled_domains ...  Changed it to DCHECK and also swapped parameters.",
+      "parentUuid": "48494287_a4944551",
       "revId": "526cfc019645be169de32cf6556051575a373eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0283721f_0f9c1d35",
+        "filename": "components/url_formatter/idn_spoof_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-05T19:27:30Z",
+      "side": 1,
+      "message": "Moved.",
+      "parentUuid": "a599c325_88ce2842",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "240bfbf0_cdba04bf",
         "filename": "components/url_formatter/top_domains/README",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-04T23:44:34Z",
       "side": 1,
       "message": "Nit: Extra newline",
+      "revId": "526cfc019645be169de32cf6556051575a373eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1841d628_131c2e2c",
+        "filename": "components/url_formatter/top_domains/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-05T19:27:30Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "240bfbf0_cdba04bf",
       "revId": "526cfc019645be169de32cf6556051575a373eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
