@@ -14,7 +14,6 @@
 #include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
-#include "ui/views/linux_ui/linux_ui.h"
 #include "ui/views/widget/desktop_aura/desktop_window_tree_host.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
@@ -56,49 +55,34 @@ void WindowEventFilter::OnMouseEvent(ui::MouseEvent* event) {
 void WindowEventFilter::OnClickedCaption(ui::MouseEvent* event,
                                          int previous_click_component) {
   aura::Window* target = static_cast<aura::Window*>(event->target());
+  LinuxUI* linux_ui = LinuxUI::instance();
 
-  if (event->IsMiddleMouseButton()) {
-    LinuxUI::NonClientMiddleClickAction action =
-        LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
-    LinuxUI* linux_ui = LinuxUI::instance();
-    if (linux_ui)
-      action = linux_ui->GetNonClientMiddleClickAction();
+  views::LinuxUI::NonClientWindowFrameActionSourceType action_type;
+  views::LinuxUI::NonClientWindowFrameAction default_action;
 
-    switch (action) {
-      case LinuxUI::MIDDLE_CLICK_ACTION_NONE:
-        break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_LOWER:
-        LowerWindow();
-        break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_MINIMIZE:
-        window_tree_host_->Minimize();
-        break;
-      case LinuxUI::MIDDLE_CLICK_ACTION_TOGGLE_MAXIMIZE:
-        if (target->GetProperty(aura::client::kResizeBehaviorKey) &
-            ui::mojom::kResizeBehaviorCanMaximize)
-          ToggleMaximizedState();
-        break;
-    }
-
-    event->SetHandled();
-    return;
-  }
-
-  if (event->IsLeftMouseButton() && event->flags() & ui::EF_IS_DOUBLE_CLICK) {
+  if (event->IsOnlyRightMouseButton()) {
+    action_type = LinuxUI::WINDOW_FRAME_ACTION_SOURCE_RIGHT_CLICK;
+    default_action = LinuxUI::WINDOW_FRAME_ACTION_MENU;
+  } else if (event->IsOnlyMiddleMouseButton()) {
+    action_type = LinuxUI::WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK;
+    default_action = LinuxUI::WINDOW_FRAME_ACTION_NONE;
+  } else if (event->IsOnlyLeftMouseButton() &&
+             event->flags() & ui::EF_IS_DOUBLE_CLICK) {
     click_component_ = HTNOWHERE;
-    if ((target->GetProperty(aura::client::kResizeBehaviorKey) &
-         ui::mojom::kResizeBehaviorCanMaximize) &&
-        previous_click_component == HTCAPTION) {
-      // Our event is a double click in the caption area in a window that can be
-      // maximized. We are responsible for dispatching this as a minimize/
-      // maximize on X11 (Windows converts this to min/max events for us).
-      ToggleMaximizedState();
-      event->SetHandled();
-      return;
+    if (previous_click_component == HTCAPTION) {
+      action_type = LinuxUI::WINDOW_FRAME_ACTION_SOURCE_DOUBLE_CLICK;
+      default_action = LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
     }
+  } else {
+    MaybeDispatchHostWindowDragMovement(HTCAPTION, event);
   }
 
-  MaybeDispatchHostWindowDragMovement(HTCAPTION, event);
+  LinuxUI::NonClientWindowFrameAction action =
+      linux_ui ? linux_ui->GetNonClientWindowFrameAction(action_type)
+               : default_action;
+  if (DoNonClientWindowFrameAction(target, action))
+    event->SetHandled();
+  return;
 }
 
 void WindowEventFilter::OnClickedMaximizeButton(ui::MouseEvent* event) {
@@ -128,6 +112,29 @@ void WindowEventFilter::ToggleMaximizedState() {
     window_tree_host_->Restore();
   else
     window_tree_host_->Maximize();
+}
+
+bool WindowEventFilter::DoNonClientWindowFrameAction(
+    aura::Window* target,
+    LinuxUI::NonClientWindowFrameAction action) {
+  switch (action) {
+    case LinuxUI::WINDOW_FRAME_ACTION_NONE:
+      return true;
+    case LinuxUI::WINDOW_FRAME_ACTION_LOWER:
+      LowerWindow();
+      return true;
+    case LinuxUI::WINDOW_FRAME_ACTION_MINIMIZE:
+      window_tree_host_->Minimize();
+      return true;
+    case LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE:
+      if (target->GetProperty(aura::client::kResizeBehaviorKey) &
+          ui::mojom::kResizeBehaviorCanMaximize)
+        ToggleMaximizedState();
+      return true;
+    case LinuxUI::WINDOW_FRAME_ACTION_MENU:
+      // Menu creation is handled by views.
+      return false;
+  }
 }
 
 void WindowEventFilter::LowerWindow() {}

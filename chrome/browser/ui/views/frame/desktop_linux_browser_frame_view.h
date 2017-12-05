@@ -18,6 +18,9 @@ class DesktopLinuxBrowserFrameView : public OpaqueBrowserFrameView {
       std::unique_ptr<views::NavButtonProvider> nav_button_provider);
   ~DesktopLinuxBrowserFrameView() override;
 
+  // ui::EventHandler:
+  void OnMouseEvent(ui::MouseEvent* event) override;
+
  protected:
   // OpaqueBrowserFrameView:
   void MaybeRedrawFrameButtons() override;
