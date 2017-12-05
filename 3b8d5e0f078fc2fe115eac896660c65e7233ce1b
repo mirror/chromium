@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "95accea2_1cbe1d31",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-05T02:33:01Z",
+      "side": 1,
+      "message": "It seems possible that InsertTextDuringCompositionWithEvents() triggers some event handler, which runs more commands besides the TypingCommand.\n\nWhat should we do when:\n\n1. The undo stack is empty\n\n2. The undo stack top is not the TypingCommand",
+      "revId": "3b8d5e0f078fc2fe115eac896660c65e7233ce1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9102413f_1d2fd089",
         "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
         "patchSetId": 1
