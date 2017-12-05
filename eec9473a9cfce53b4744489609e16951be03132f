@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0577b78e_0c5e7cd4",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "A couple of naming nits. It may be good to associate this with PageInfo since it\u0027s specific to that UI surface. Also it\u0027s quite a long name. I\u0027m going to suggest something like:\nContentSettingChangedViaPageInfo\n\nand then below:\n\nHasContentSettingChangedViaPageInfo",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4332ef88_1b4875fb",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "nit: may want to add a comment above too\n// Returns true if the user changed the given ContentSettingsType via PageInfo since the last navigation.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01a5a47_605c08a8",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "ClearContentSettingsChangedViaPageInfo",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd121b6_c191bdc2",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "// Stores content settings changed by the user via page info since the last navigation. Used to determine whether to display the settings in page info.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d495c3d_0af9c4ea",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "content_settings_changed_via_page_info_",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425613e1_1180a4c7",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "nit:\nShow the content setting if it has been changed by the user since the last page load.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c6ca9a_dcb10601",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "nit:\nShow the content setting when it has a non-default value.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c5673b_576c5a5a",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "nit: this can probably go right at the top of the function. It avoids the risk of early returning and missing it.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd3bc6a_04949ad5",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-05T03:47:28Z",
+      "side": 1,
+      "message": "nit:\nMake sure changing a setting to its default causes it to show up, since it has been recently changed.",
+      "revId": "eec9473a9cfce53b4744489609e16951be03132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
