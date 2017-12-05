@@ -87,7 +87,8 @@ class CompositorController::AnimationBeginFrameTask
     // posted above.
     compositor_controller_->BeginFrame(
         base::Bind(&AnimationBeginFrameTask::BeginFrameComplete,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   weak_ptr_factory_.GetWeakPtr()),
+        compositor_controller_->update_display_for_animations_);
   }
 
   void BeginFrameComplete(std::unique_ptr<BeginFrameResult>) {
@@ -112,7 +113,8 @@ CompositorController::CompositorController(
     HeadlessDevToolsClient* devtools_client,
     VirtualTimeController* virtual_time_controller,
     base::TimeDelta animation_begin_frame_interval,
-    base::TimeDelta wait_for_compositor_ready_begin_frame_delay)
+    base::TimeDelta wait_for_compositor_ready_begin_frame_delay,
+    bool update_display_for_animations)
     : task_runner_(std::move(task_runner)),
       devtools_client_(devtools_client),
       virtual_time_controller_(virtual_time_controller),
@@ -120,6 +122,7 @@ CompositorController::CompositorController(
       animation_begin_frame_interval_(animation_begin_frame_interval),
       wait_for_compositor_ready_begin_frame_delay_(
           wait_for_compositor_ready_begin_frame_delay),
+      update_display_for_animations_(update_display_for_animations),
       weak_ptr_factory_(this) {
   devtools_client_->GetHeadlessExperimental()->GetExperimental()->AddObserver(
       this);
@@ -142,6 +145,7 @@ CompositorController::~CompositorController() {
 void CompositorController::PostBeginFrame(
     const base::Callback<void(std::unique_ptr<BeginFrameResult>)>&
         begin_frame_complete_callback,
+    bool update_display,
     std::unique_ptr<ScreenshotParams> screenshot) {
   // In certain nesting situations, we should not issue a BeginFrame immediately
   // - for example, issuing a new BeginFrame within a BeginFrameCompleted or
@@ -151,12 +155,13 @@ void CompositorController::PostBeginFrame(
       FROM_HERE,
       base::Bind(&CompositorController::BeginFrame,
                  weak_ptr_factory_.GetWeakPtr(), begin_frame_complete_callback,
-                 base::Passed(&screenshot)));
+                 update_display, base::Passed(&screenshot)));
 }
 
 void CompositorController::BeginFrame(
     const base::Callback<void(std::unique_ptr<BeginFrameResult>)>&
         begin_frame_complete_callback,
+    bool update_display,
     std::unique_ptr<ScreenshotParams> screenshot) {
   DCHECK(!begin_frame_complete_callback_);
   begin_frame_complete_callback_ = begin_frame_complete_callback;
@@ -179,6 +184,8 @@ void CompositorController::BeginFrame(
 
     params_builder.SetInterval(
         animation_begin_frame_interval_.InMillisecondsF());
+
+    params_builder.SetUpdateDisplay(update_display);
 
     // TODO(eseckler): Set time fields. This requires obtaining the absolute
     // virtual time stamp.
@@ -392,9 +399,11 @@ void CompositorController::CaptureScreenshot(
   // animation BeginFrame for the current virtual time pause.
   animation_task_->CompositorControllerIssuingScreenshotBeginFrame();
 
+  const bool update_display = true;
   PostBeginFrame(
       base::Bind(&CompositorController::CaptureScreenshotBeginFrameComplete,
                  weak_ptr_factory_.GetWeakPtr()),
+      update_display,
       ScreenshotParams::Builder()
           .SetFormat(format)
           .SetQuality(quality)

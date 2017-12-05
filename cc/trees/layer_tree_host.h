@@ -420,7 +420,9 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   void BeginMainFrameNotExpectedSoon();
   void BeginMainFrameNotExpectedUntil(base::TimeTicks time);
   void AnimateLayers(base::TimeTicks monotonic_frame_begin_time);
-  void RequestMainFrameUpdate();
+  using MainFrameLifecyclePhase = LayerTreeHostClient::MainFrameLifecyclePhase;
+  void RequestMainFrameUpdate(
+      MainFrameLifecyclePhase target_phase = MainFrameLifecyclePhase::kAll);
   void FinishCommitOnImplThread(LayerTreeHostImpl* host_impl);
   void WillCommit();
   void CommitComplete();

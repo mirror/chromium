@@ -40,6 +40,10 @@ struct StructTraits<viz::mojom::BeginFrameArgsDataView, viz::BeginFrameArgs> {
     return args.on_critical_path;
   }
 
+  static bool skip_compositor_frame(const viz::BeginFrameArgs& args) {
+    return args.skip_compositor_frame;
+  }
+
   static bool Read(viz::mojom::BeginFrameArgsDataView data,
                    viz::BeginFrameArgs* out);
 };
