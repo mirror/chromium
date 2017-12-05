@@ -566,7 +566,8 @@ void GraphProcessor::CalculateSizeForNode(Node* node) {
 
   // Check that if both aggregated and node sizes exist that the node size
   // is bigger than the aggregated.
-  DCHECK(!node_size || !aggregated_size || *node_size >= *aggregated_size);
+  // TODO(lalitm): these should not
+  // DCHECK(!node_size || !aggregated_size || *node_size >= *aggregated_size);
 
   // Calculate the maximal size of an owner node.
   base::Optional<uint64_t> max_owner_size;
