@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8384633b_1041f332",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-05T02:55:35Z",
+      "side": 1,
+      "message": "Would there be a benefit to using base::AtomicSequenceNumber even if this is only called from the UI thread?",
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d647a1_bee74b28",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-05T02:55:35Z",
+      "side": 1,
+      "message": "This could be placed in in chrome/browser/ui, but it exists only for the purposes of chrome/browser/ui/tabs/tab_activity_watcher.cc.\n\nWorth noting also that most of this stuff will probably end up moving into chrome/browser/resource_coordinator as the GRC matures.",
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
