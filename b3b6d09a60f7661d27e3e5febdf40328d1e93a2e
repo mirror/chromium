@@ -22,6 +22,30 @@
       "revId": "b3b6d09a60f7661d27e3e5febdf40328d1e93a2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bf2371_281cdb43",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T01:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8955fb0_a565990c",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "b3b6d09a60f7661d27e3e5febdf40328d1e93a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
