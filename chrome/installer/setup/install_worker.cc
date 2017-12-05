@@ -7,9 +7,11 @@
 
 #include "chrome/installer/setup/install_worker.h"
 
-#include <windows.h>  // NOLINT
+#include <windows.h>
+
 #include <atlsecurity.h>
 #include <oaidl.h>
+#include <objbase.h>
 #include <shlobj.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -163,6 +165,27 @@ void AddFirewallRulesWorkItems(const InstallerState& installer_state,
                  dist,
                  installer_state.target_path().Append(kChromeExe),
                  is_new_install));
+}
+
+// Adds work items to |list| to register a COM server with the OS, which is used
+// to handle the Windows toast notifications.
+void AddNativeNotificationWorkItems(const InstallerState& installer_state,
+                                    WorkItemList* list) {
+  base::string16 toast_activator_reg_path = GetToastActivatorRegistryPath();
+
+  if (toast_activator_reg_path.size() != 0) {
+    toast_activator_reg_path.append(L"\\LocalServer32");
+    HKEY root = installer_state.root_key();
+
+    list->AddCreateRegKeyWorkItem(root, toast_activator_reg_path,
+                                  WorkItem::kWow64Default);
+
+    list->AddSetRegValueWorkItem(
+        root, toast_activator_reg_path, WorkItem::kWow64Default, L"",
+        installer_state.target_path().Append(kChromeExe).value(), true);
+  } else {
+    LOG(DFATAL) << "Cannot retrieve the toast activator registry path";
+  }
 }
 
 // This is called when an MSI installation is run. It may be that a user is
@@ -743,6 +766,8 @@ void AddInstallWorkItems(const InstallationState& original_state,
                         install_list);
   AddFirewallRulesWorkItems(installer_state, dist, current_version == nullptr,
                             install_list);
+
+  AddNativeNotificationWorkItems(installer_state, install_list);
 
   InstallUtil::AddUpdateDowngradeVersionItem(installer_state.system_install(),
                                              current_version, new_version, dist,
