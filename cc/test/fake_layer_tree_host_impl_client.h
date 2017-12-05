@@ -38,6 +38,10 @@ class FakeLayerTreeHostImplClient : public LayerTreeHostImplClient {
   void NeedsImplSideInvalidation(bool needs_first_draw_on_activation) override;
   void RequestBeginMainFrameNotExpected(bool new_state) override {}
   void NotifyImageDecodeRequestFinished() override {}
+  void DidPresentCompositorFrame(const base::flat_set<uint32_t>& tokens,
+                                 base::TimeTicks time,
+                                 base::TimeDelta refresh,
+                                 uint32_t flags) override {}
 
   void reset_did_request_impl_side_invalidation() {
     did_request_impl_side_invalidation_ = false;
