@@ -52,6 +52,24 @@
       "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3470e0_96764a41",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T21:30:53Z",
+      "side": 1,
+      "message": "As far as I can tell, there are no uses of |frame| below (otherwise I\u0027d agree that the way it\u0027s currently written is best). Until there are other uses, it doesn\u0027t seem necessary to store it in a variable (but I don\u0027t feel super strongly).",
+      "parentUuid": "d76c4bbf_9a97101c",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
