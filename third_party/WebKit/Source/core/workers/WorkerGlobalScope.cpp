@@ -36,6 +36,7 @@
 #include "core/css/OffscreenFontSelector.h"
 #include "core/dom/ContextLifecycleNotifier.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/ModuleScript.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/Event.h"
 #include "core/events/ErrorEvent.h"
@@ -311,6 +312,38 @@ ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
   return const_cast<WorkerGlobalScope*>(this);
 }
 
+// A partial implementation of the "Processing model" algorithm in the HTML
+// WebWorker spec:
+// https://html.spec.whatwg.org/multipage/workers.html#worker-processing-model
+void WorkerGlobalScope::NotifyModuleTreeLoadFinished(
+    ModuleScript* module_script) {
+  if (!module_script) {
+    // Step 11: ... "If the algorithm asynchronously completes with null, queue
+    // a task to fire an event named error at worker, and abort these steps."
+    // ...
+    // TODO(nhiroki): Throw an ErrorEvent at the Worker object on the owner
+    // Document.
+    return;
+  }
+
+  // Step 11: ... "Otherwise, continue the rest of these steps after the
+  // algorithm's asynchronous completion, with script being the asynchronous
+  // completion value." ...
+
+  // TODO(nhiroki): Call WorkerReportingProxy::WillEvaluateWorkerScript() or
+  // something like that (e.g., WillEvaluateModuleScript()).
+  Modulator* modulator = Modulator::From(ScriptController()->GetScriptState());
+  modulator->ExecuteModule(module_script,
+                           Modulator::CaptureEvalErrorFlag::kReport);
+  ReportingProxy().DidEvaluateModuleScript(!module_script->IsErrored());
+}
+
+void WorkerGlobalScope::ImportModuleScript(
+    const KURL& module_url_record,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  FetchModuleScript(module_url_record, credentials_mode, this);
+}
+
 WorkerGlobalScope::WorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params,
     WorkerThread* thread,
@@ -405,6 +438,7 @@ void WorkerGlobalScope::Trace(blink::Visitor* visitor) {
   WorkerOrWorkletGlobalScope::Trace(visitor);
   SecurityContext::Trace(visitor);
   Supplementable<WorkerGlobalScope>::Trace(visitor);
+  ModuleTreeClient::Trace(visitor);
 }
 
 void WorkerGlobalScope::TraceWrappers(

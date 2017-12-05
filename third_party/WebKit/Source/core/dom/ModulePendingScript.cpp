@@ -46,7 +46,6 @@ void ModulePendingScriptTreeClient::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(module_script_);
   visitor->TraceWrappers(pending_script_);
-  ModuleTreeClient::TraceWrappers(visitor);
 }
 
 ModulePendingScript::ModulePendingScript(ScriptElementBase* element,
