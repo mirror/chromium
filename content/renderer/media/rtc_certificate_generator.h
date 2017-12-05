@@ -18,17 +18,19 @@ namespace content {
 // rtc::RTCCertificate and content::RTCCertificate.
 class RTCCertificateGenerator : public blink::WebRTCCertificateGenerator {
  public:
-  RTCCertificateGenerator() {}
-  ~RTCCertificateGenerator() override {}
+  RTCCertificateGenerator(){};
+  ~RTCCertificateGenerator() override{};
 
   // blink::WebRTCCertificateGenerator implementation.
   void GenerateCertificate(
       const blink::WebRTCKeyParams& key_params,
-      std::unique_ptr<blink::WebRTCCertificateCallback> observer) override;
+      std::unique_ptr<blink::WebRTCCertificateCallback> observer,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void GenerateCertificateWithExpiration(
       const blink::WebRTCKeyParams& key_params,
       uint64_t expires_ms,
-      std::unique_ptr<blink::WebRTCCertificateCallback> observer) override;
+      std::unique_ptr<blink::WebRTCCertificateCallback> observer,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   bool IsSupportedKeyParams(const blink::WebRTCKeyParams& key_params) override;
   std::unique_ptr<blink::WebRTCCertificate> FromPEM(
       blink::WebString pem_private_key,
@@ -38,7 +40,8 @@ class RTCCertificateGenerator : public blink::WebRTCCertificateGenerator {
   void generateCertificateWithOptionalExpiration(
       const blink::WebRTCKeyParams& key_params,
       const rtc::Optional<uint64_t>& expires_ms,
-      std::unique_ptr<blink::WebRTCCertificateCallback> observer);
+      std::unique_ptr<blink::WebRTCCertificateCallback> observer,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   DISALLOW_COPY_AND_ASSIGN(RTCCertificateGenerator);
 };
