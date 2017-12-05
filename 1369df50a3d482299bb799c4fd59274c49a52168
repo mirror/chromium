@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "ac513c47_5e1a99f4",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "\u003e I think it just needs to change the tab without focusing something else? I tried running the tests without the fix and it fails, so I think it\u0027s OK. Should I change it to chrome::SelectNextTab(browser()) instead, or would you prefer a proper key event gets fired?\n\nnah - it doesn\u0027t need a key event fired. I think the comment above threw me a little though - it suggests key dispatch is intended, which this doesn\u0027t do. Perhaps say \"Switch to the second tab without clicking (which would normally dismiss the bubble).\"\n\nThen, I\u0027d lean towards chrome::SelectNextTab(browser()) just because it\u0027s simpler and sufficient, but I don\u0027t feel to strongly about it.",
+      "parentUuid": "96886890_8a0e1e58",
+      "revId": "1369df50a3d482299bb799c4fd59274c49a52168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0888a8d8_a9c4db97",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 2

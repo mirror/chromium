@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2947b03f_16f077be",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "I think this will instantiate more tests than you need. E.g. this pattern exists so that you can instantiate the same set of tests, but with different ValuesIn. But PageInfoNoCrashOnFullScreenToggle and PageInfoBubbleClosesOnKeyboardTabSwitch use the same ValuesIn. I think we need to omit this INSTANTIATE_TEST_CASE_P.\n\nThen, what\u0027s typically done is -- when there is only one parameter set -- the first argument to INSTANTIATE_TEST_CASE_P will be an empty string.",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbec2195_274e6896",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "i.e., change this to \n\nINSTANTIATE_TEST_CASE_P(,\n                        PageInfoBubbleViewsMacTest,\n                        testing::ValuesIn(kGurlBubbleTypePairs));",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc521270_702630aa",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "(with other comments, we might be able to keep this in the .cc file as well, which would be nice)",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b5e008_76aadea1",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "I think it would be preferable just to make the constructor public rather than have these friend declarations.",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71db64e_db11d722",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "I guess this should be updated to 2017",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d2d095_e074fa2b",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "This sorta creates a dependency \"loop\" - we should try to avoid #including the child class declaration here.",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a30d5d_f0acf2e7",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "can there be more stuff trimmed from this list of #includes? e.g. GURL seems to just pass through without accessing it (but also I\u0027ve suggested we move CreatePageInfoBubble back to the other file anyway :)",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aff6847_7da3088a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "hmmm .. this should be calling BubbleDialogDelegateView::OnWidgetDestroying as well....",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e962541_6127ca93",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T04:41:08Z",
+      "side": 1,
+      "message": "this static method probably doesn\u0027t need to move.\n\nAnd, as it is, I think there are callers that still call PageInfoBubbleView::CreatePageInfoBubble(..) rather than PageInfoBubbleViewBase::CreatePageInfoBubble(..). If we do move it, those should be updated too. However, I think it\u0027s reasonable to keep it on PageInfoBubbleView (see comment about page_info_bubble_view.h in .cc)\n\nMaybe (one or both of) the constructors can remain private: then too, without needing a friend.",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
