@@ -94,6 +94,30 @@
       "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6b145d_083ad315",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T17:06:15Z",
+      "side": 1,
+      "message": "I think at the very least, add a comment above the while condition explaining all of this.\n\nI\u0027m not sure HasMoreFiles() is worth it, since I think without the comment, I\u0027d still wonder whether it would loop forever after last file failed. (Since it wasn\u0027t clear to me that each iteration through the loop processes a new file - maybe add that bit to a comment above it too.)",
+      "parentUuid": "7993a852_de2d5b46",
+      "range": {
+        "startLine": 416,
+        "startChar": 47,
+        "endLine": 416,
+        "endChar": 48
+      },
+      "revId": "8859293c83cdf81daf9fe011344a45f1e93f758f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
