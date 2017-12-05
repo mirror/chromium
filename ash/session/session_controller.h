@@ -109,6 +109,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Returns true if the current user is a child account.
   bool IsUserChild() const;
 
+  // Returns true if the current user is a kiosk app account.
+  bool IsUserKioskApp() const;
+
   // Returns the type of the current user, or empty if there is no current user
   // logged in.
   base::Optional<user_manager::UserType> GetUserType() const;

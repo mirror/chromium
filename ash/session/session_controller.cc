@@ -182,6 +182,14 @@ bool SessionController::IsUserChild() const {
   return active_user_type == user_manager::USER_TYPE_CHILD;
 }
 
+bool SessionController::IsUserKioskApp() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  return active_user_type == user_manager::USER_TYPE_KIOSK_APP;
+}
+
 base::Optional<user_manager::UserType> SessionController::GetUserType() const {
   if (!IsActiveUserSessionStarted())
     return base::nullopt;

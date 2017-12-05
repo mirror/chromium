@@ -191,7 +191,7 @@ class WallpaperImageFetcherFactory {
                   SkColor color,
                   const size_t require_retries) {
     std::vector<unsigned char> oem_wallpaper_;
-    ASSERT_TRUE(wallpaper_manager_test_utils::CreateJPEGImage(
+    ASSERT_TRUE(ash::WallpaperController::CreateJPEGImageForTesting(
         width, height, color, &oem_wallpaper_));
 
     url_callback_.reset(new TestWallpaperImageURLFetcherCallback(
@@ -226,39 +226,16 @@ class CustomizationWallpaperDownloaderBrowserTest
     command_line->AppendSwitchASCII(chromeos::switches::kLoginProfile, "user");
   }
 
- protected:
-  void CreateCmdlineWallpapers() {
-    cmdline_wallpaper_dir_.reset(new base::ScopedTempDir);
-    ASSERT_TRUE(cmdline_wallpaper_dir_->CreateUniqueTempDir());
-    wallpaper_manager_test_utils::CreateCmdlineWallpapers(
-        *cmdline_wallpaper_dir_, &wallpaper_manager_command_line_);
-  }
-
-  std::unique_ptr<base::CommandLine> wallpaper_manager_command_line_;
-
-  // Directory created by CreateCmdlineWallpapersAndSetFlags() to store default
-  // wallpaper images.
-  std::unique_ptr<base::ScopedTempDir> cmdline_wallpaper_dir_;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(CustomizationWallpaperDownloaderBrowserTest);
 };
 
 IN_PROC_BROWSER_TEST_F(CustomizationWallpaperDownloaderBrowserTest,
                        OEMWallpaperIsPresent) {
-  CreateCmdlineWallpapers();
-  WallpaperManager::Get()->SetDefaultWallpaper(EmptyAccountId(),
-                                               true /* update_wallpaper */);
-  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  EXPECT_TRUE(wallpaper_manager_test_utils::ImageIsNearColor(
-      ash::Shell::Get()->wallpaper_controller()->GetWallpaper(),
-      wallpaper_manager_test_utils::kSmallDefaultWallpaperColor));
-
   WallpaperImageFetcherFactory url_factory(
-      GURL(kOEMWallpaperURL),
+      GURL(kOEMWallpaperURL), wallpaper_manager_test_utils::kWallpaperSize,
       wallpaper_manager_test_utils::kWallpaperSize,
-      wallpaper_manager_test_utils::kWallpaperSize,
-      wallpaper_manager_test_utils::kCustomWallpaperColor,
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor,
       0 /* require_retries */);
 
   TestWallpaperObserver observer(WallpaperManager::Get());
@@ -270,25 +247,16 @@ IN_PROC_BROWSER_TEST_F(CustomizationWallpaperDownloaderBrowserTest,
   observer.WaitForWallpaperAnimationFinished();
   EXPECT_TRUE(wallpaper_manager_test_utils::ImageIsNearColor(
       ash::Shell::Get()->wallpaper_controller()->GetWallpaper(),
-      wallpaper_manager_test_utils::kCustomWallpaperColor));
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor));
   EXPECT_EQ(1U, url_factory.num_attempts());
 }
 
 IN_PROC_BROWSER_TEST_F(CustomizationWallpaperDownloaderBrowserTest,
                        OEMWallpaperRetryFetch) {
-  CreateCmdlineWallpapers();
-  WallpaperManager::Get()->SetDefaultWallpaper(EmptyAccountId(),
-                                               true /* update_wallpaper */);
-  wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  EXPECT_TRUE(wallpaper_manager_test_utils::ImageIsNearColor(
-      ash::Shell::Get()->wallpaper_controller()->GetWallpaper(),
-      wallpaper_manager_test_utils::kSmallDefaultWallpaperColor));
-
   WallpaperImageFetcherFactory url_factory(
-      GURL(kOEMWallpaperURL),
+      GURL(kOEMWallpaperURL), wallpaper_manager_test_utils::kWallpaperSize,
       wallpaper_manager_test_utils::kWallpaperSize,
-      wallpaper_manager_test_utils::kWallpaperSize,
-      wallpaper_manager_test_utils::kCustomWallpaperColor,
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor,
       1 /* require_retries */);
 
   TestWallpaperObserver observer(WallpaperManager::Get());
@@ -300,7 +268,7 @@ IN_PROC_BROWSER_TEST_F(CustomizationWallpaperDownloaderBrowserTest,
   observer.WaitForWallpaperAnimationFinished();
   EXPECT_TRUE(wallpaper_manager_test_utils::ImageIsNearColor(
       ash::Shell::Get()->wallpaper_controller()->GetWallpaper(),
-      wallpaper_manager_test_utils::kCustomWallpaperColor));
+      wallpaper_manager_test_utils::kSmallCustomWallpaperColor));
 
   EXPECT_EQ(2U, url_factory.num_attempts());
 }
