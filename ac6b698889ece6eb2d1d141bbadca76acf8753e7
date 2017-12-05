@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96710aa4_a230e7c4",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T23:35:28Z",
+      "side": 1,
+      "message": "If we only do ready to commit, then in addition to excluding the time the main thread is blocked, it will also exclude the time it takes to commit (tree sync, push properties, etc.). The estimate is being used to decide whether we should bail on the main thread if the activation won\u0027t happen before the draw deadline, which we are aggressive about doing in smoothness mode. Do you think its okay to exclude the duration above for that?",
+      "parentUuid": "231782cf_9ef7a08c",
+      "revId": "ac6b698889ece6eb2d1d141bbadca76acf8753e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b67e9e01_2b144356",
         "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
         "patchSetId": 5
