@@ -70,6 +70,24 @@
       "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a29ce5_97fc65af",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-05T22:48:11Z",
+      "side": 1,
+      "message": "Ah yes, I see it now.",
+      "parentUuid": "230342c3_af9df55f",
+      "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
