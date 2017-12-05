@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21fab5af_93409f21",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasHeuristicParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-05T20:55:22Z",
+      "side": 1,
+      "message": "This threshold is used in Canvas2DLayerBridge::DidDraw(const FloatRect\u0026 rect).",
+      "revId": "048d8688f3b1fb1ee59f450d9b1cdcbf4a441a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
