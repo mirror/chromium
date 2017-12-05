@@ -71,12 +71,22 @@ CLANG_COVERAGE_BUILD_ARG = 'use_clang_coverage'
 GTEST_TARGET_NAMES = None
 
 
+def _GetPlatform():
+  """Returns current running platform."""
+  if sys.platform.startswith('linux'):
+    return 'linux'
+  elif sys.platform == 'darwin':
+    return 'mac'
+
+  assert False, 'Coverage is only supported on linux and mac platforms.'
+
+
 # TODO(crbug.com/759794): remove this function once tools get included to
 # Clang bundle:
 # https://chromium-review.googlesource.com/c/chromium/src/+/688221
 def DownloadCoverageToolsIfNeeded():
   """Temporary solution to download llvm-profdata and llvm-cov tools."""
-  def _GetRevisionFromStampFile(stamp_file_path):
+  def _GetRevisionFromStampFile(stamp_file_path, platform):
     """Returns a pair of revision number by reading the build stamp file.
 
     Args:
@@ -89,16 +99,29 @@ def DownloadCoverageToolsIfNeeded():
       return 0, 0
 
     with open(stamp_file_path) as stamp_file:
-      revision_stamp_data = stamp_file.readline().strip().split('-')
-    return int(revision_stamp_data[0]), int(revision_stamp_data[1])
+      for stamp_file_line in stamp_file.readlines():
+        if ',' in stamp_file_line:
+          package_version, target_os = stamp_file_line.rstrip().split(',')
+        else:
+          package_version = stamp_file_line.rstrip()
+          target_os = ''
 
+        if target_os and platform != target_os:
+          continue
+
+        clang_revision_str, clang_sub_revision_str = package_version.split('-')
+        return int(clang_revision_str), int(clang_sub_revision_str)
+
+    assert False, 'Coverage is only supported on target_os - linux, mac.'
+
+  platform = _GetPlatform()
   clang_revision, clang_sub_revision = _GetRevisionFromStampFile(
-      clang_update.STAMP_FILE)
+      clang_update.STAMP_FILE, platform)
 
   coverage_revision_stamp_file = os.path.join(
       os.path.dirname(clang_update.STAMP_FILE), 'cr_coverage_revision')
   coverage_revision, coverage_sub_revision = _GetRevisionFromStampFile(
-      coverage_revision_stamp_file)
+      coverage_revision_stamp_file, platform)
 
   if (coverage_revision == clang_revision and
       coverage_sub_revision == clang_sub_revision):
@@ -109,12 +132,12 @@ def DownloadCoverageToolsIfNeeded():
   coverage_tools_file = 'llvm-code-coverage-%s.tgz' % package_version
 
   # The code bellow follows the code from tools/clang/scripts/update.py.
-  if sys.platform == 'win32' or sys.platform == 'cygwin':
+  if platform == 'win':
     coverage_tools_url = clang_update.CDS_URL + '/Win/' + coverage_tools_file
-  elif sys.platform == 'darwin':
+  elif platform == 'mac':
     coverage_tools_url = clang_update.CDS_URL + '/Mac/' + coverage_tools_file
   else:
-    assert sys.platform.startswith('linux')
+    assert platform == 'linux'
     coverage_tools_url = (
         clang_update.CDS_URL + '/Linux_x64/' + coverage_tools_file)
 
@@ -123,7 +146,7 @@ def DownloadCoverageToolsIfNeeded():
                                    clang_update.LLVM_BUILD_DIR)
     print('Coverage tools %s unpacked' % package_version)
     with open(coverage_revision_stamp_file, 'w') as file_handle:
-      file_handle.write(package_version)
+      file_handle.write('%s,%s' % (package_version, platform))
       file_handle.write('\n')
   except urllib2.URLError:
     raise Exception(
@@ -435,7 +458,7 @@ def Main():
   """Execute tool commands."""
   assert os.path.abspath(os.getcwd()) == SRC_ROOT_PATH, ('This script must be '
                                                          'called from the root '
-                                                         'of checkout')
+                                                         'of checkout.')
   DownloadCoverageToolsIfNeeded()
 
   args = _ParseCommandArguments()
