@@ -19,6 +19,8 @@
 
 namespace internal {
 
+const char kHistogramMultiTabLoadingLoadingTabCount[] =
+    "PageLoad.Clients.MultiTabLoading.LoadingTabCount";
 const char kHistogramMultiTabLoadingFirstContentfulPaint[] =
     "PageLoad.Clients.MultiTabLoading.PaintTiming."
     "NavigationToFirstContentfulPaint";
@@ -57,8 +59,10 @@ MultiTabLoadingPageLoadMetricsObserver::OnStart(
     content::NavigationHandle* navigation_handle,
     const GURL& currently_committed_url,
     bool started_in_foreground) {
-  return IsAnyTabLoading(navigation_handle) ? CONTINUE_OBSERVING
-                                            : STOP_OBSERVING;
+  int num_loading_tabs = NumberOfLoadingTabs(navigation_handle);
+  UMA_HISTOGRAM_COUNTS_100(internal::kHistogramMultiTabLoadingLoadingTabCount,
+                           num_loading_tabs);
+  return num_loading_tabs > 0 ? CONTINUE_OBSERVING : STOP_OBSERVING;
 }
 
 void MultiTabLoadingPageLoadMetricsObserver::OnFirstContentfulPaintInPage(
@@ -127,9 +131,10 @@ void MultiTabLoadingPageLoadMetricsObserver::OnLoadEventStart(
 
 #if defined(OS_ANDROID)
 
-bool MultiTabLoadingPageLoadMetricsObserver::IsAnyTabLoading(
+int MultiTabLoadingPageLoadMetricsObserver::NumberOfLoadingTabs(
     content::NavigationHandle* navigation_handle) {
   content::WebContents* this_contents = navigation_handle->GetWebContents();
+  int num_loading = 0;
   for (TabModelList::const_iterator it = TabModelList::begin();
        it != TabModelList::end(); ++it) {
     TabModel* model = *it;
@@ -137,28 +142,29 @@ bool MultiTabLoadingPageLoadMetricsObserver::IsAnyTabLoading(
       content::WebContents* other_contents = model->GetWebContentsAt(i);
       if (other_contents && other_contents != this_contents &&
           other_contents->IsLoading()) {
-        return true;
+        num_loading++;
       }
     }
   }
-  return false;
+  return num_loading;
 }
 
 #else  // defined(OS_ANDROID)
 
-bool MultiTabLoadingPageLoadMetricsObserver::IsAnyTabLoading(
+int MultiTabLoadingPageLoadMetricsObserver::NumberOfLoadingTabs(
     content::NavigationHandle* navigation_handle) {
   content::WebContents* this_contents = navigation_handle->GetWebContents();
+  int num_loading = 0;
   for (auto* browser : *BrowserList::GetInstance()) {
     TabStripModel* model = browser->tab_strip_model();
     for (int i = 0; i < model->count(); ++i) {
       content::WebContents* other_contents = model->GetWebContentsAt(i);
       if (other_contents != this_contents && other_contents->IsLoading()) {
-        return true;
+        num_loading++;
       }
     }
   }
-  return false;
+  return num_loading;
 }
 
 #endif  // defined(OS_ANDROID)

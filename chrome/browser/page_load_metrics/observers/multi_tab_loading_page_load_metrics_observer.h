@@ -54,7 +54,7 @@ class MultiTabLoadingPageLoadMetricsObserver
 
  protected:
   // Overridden in testing.
-  virtual bool IsAnyTabLoading(content::NavigationHandle* navigation_handle);
+  virtual int NumberOfLoadingTabs(content::NavigationHandle* navigation_handle);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MultiTabLoadingPageLoadMetricsObserver);
