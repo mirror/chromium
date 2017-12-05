@@ -70,8 +70,10 @@ public class MotionEventSynthesizer {
      * @param action Type of the action to inject.
      * @param pointerCount The number of points associated with the event.
      * @param timeInMs Timestamp for the event.
+     * @return Whether the event was handled.
      */
-    public void inject(int action, int pointerCount, long timeInMs) {
+    public boolean inject(int action, int pointerCount, long timeInMs) {
+        boolean handled = false;
         switch (action) {
             case MotionEventAction.START: {
                 mDownTimeInMs = timeInMs;
@@ -79,7 +81,7 @@ public class MotionEventSynthesizer {
                         mDownTimeInMs, timeInMs, MotionEvent.ACTION_DOWN, 1,
                         mPointerProperties, mPointerCoords,
                         0, 0, 1, 1, 0, 0, 0, 0);
-                mTarget.dispatchTouchEvent(event);
+                if (mTarget.dispatchTouchEvent(event)) handled = true;
                 event.recycle();
 
                 if (pointerCount > 1) {
@@ -90,7 +92,7 @@ public class MotionEventSynthesizer {
                     event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
                             MotionEvent.ACTION_POINTER_DOWN | pointerIndex, pointerCount,
                             mPointerProperties, mPointerCoords, 0, 0, 1, 1, 0, 0, 0, 0);
-                    mTarget.dispatchTouchEvent(event);
+                    if (mTarget.dispatchTouchEvent(event)) handled = true;
                     event.recycle();
                 }
                 break;
@@ -100,7 +102,7 @@ public class MotionEventSynthesizer {
                         MotionEvent.ACTION_MOVE,
                         pointerCount, mPointerProperties, mPointerCoords,
                         0, 0, 1, 1, 0, 0, 0, 0);
-                mTarget.dispatchTouchEvent(event);
+                if (mTarget.dispatchTouchEvent(event)) handled = true;
                 event.recycle();
                 break;
             }
@@ -109,7 +111,7 @@ public class MotionEventSynthesizer {
                         mDownTimeInMs, timeInMs, MotionEvent.ACTION_CANCEL, 1,
                         mPointerProperties, mPointerCoords,
                         0, 0, 1, 1, 0, 0, 0, 0);
-                mTarget.dispatchTouchEvent(event);
+                if (mTarget.dispatchTouchEvent(event)) handled = true;
                 event.recycle();
                 break;
             }
@@ -122,7 +124,7 @@ public class MotionEventSynthesizer {
                     MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
                             MotionEvent.ACTION_POINTER_UP | pointerIndex, pointerCount,
                             mPointerProperties, mPointerCoords, 0, 0, 1, 1, 0, 0, 0, 0);
-                    mTarget.dispatchTouchEvent(event);
+                    if (mTarget.dispatchTouchEvent(event)) handled = true;
                     event.recycle();
                 }
 
@@ -130,7 +132,7 @@ public class MotionEventSynthesizer {
                         mDownTimeInMs, timeInMs, MotionEvent.ACTION_UP, 1,
                         mPointerProperties, mPointerCoords,
                         0, 0, 1, 1, 0, 0, 0, 0);
-                mTarget.dispatchTouchEvent(event);
+                if (mTarget.dispatchTouchEvent(event)) handled = true;
                 event.recycle();
                 break;
             }
@@ -139,14 +141,14 @@ public class MotionEventSynthesizer {
                 MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs,
                         MotionEvent.ACTION_SCROLL, pointerCount, mPointerProperties, mPointerCoords,
                         0, 0, 1, 1, 0, 0, InputDevice.SOURCE_CLASS_POINTER, 0);
-                mTarget.dispatchGenericMotionEvent(event);
+                if (mTarget.dispatchTouchEvent(event)) handled = true;
                 event.recycle();
                 break;
             }
             case MotionEventAction.HOVER_ENTER:
             case MotionEventAction.HOVER_EXIT:
             case MotionEventAction.HOVER_MOVE: {
-                injectHover(action, pointerCount, timeInMs);
+                handled = injectHover(action, pointerCount, timeInMs);
                 break;
             }
             default: {
@@ -154,9 +156,10 @@ public class MotionEventSynthesizer {
                 break;
             }
         }
+        return handled;
     }
 
-    private void injectHover(int action, int pointerCount, long timeInMs) {
+    private boolean injectHover(int action, int pointerCount, long timeInMs) {
         assert pointerCount == 1;
         int androidAction = MotionEvent.ACTION_HOVER_ENTER;
         if (MotionEventAction.HOVER_EXIT == action) androidAction = MotionEvent.ACTION_HOVER_EXIT;
@@ -164,7 +167,8 @@ public class MotionEventSynthesizer {
         MotionEvent event = MotionEvent.obtain(mDownTimeInMs, timeInMs, androidAction, pointerCount,
                 mPointerProperties, mPointerCoords, 0, 0, 1, 1, 0, 0,
                 InputDevice.SOURCE_CLASS_POINTER, 0);
-        mTarget.dispatchGenericMotionEvent(event);
+        boolean handled = mTarget.dispatchGenericMotionEvent(event);
         event.recycle();
+        return handled;
     }
 }

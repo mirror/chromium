@@ -760,7 +760,7 @@ public class VrShellDelegate
      */
     private boolean enterVrAfterDon() {
         if (mNativeVrShellDelegate == 0) return false;
-        if (!canEnterVr(mActivity.getActivityTab(), true)) return false;
+        if (!canEnterVr(true)) return false;
 
         // If the page is listening for vrdisplayactivate we assume it wants to request
         // presentation. Go into WebVR mode tentatively. If the page doesn't request presentation
@@ -795,6 +795,7 @@ public class VrShellDelegate
     }
 
     private void enterVr(final boolean tentativeWebVrMode) {
+        Log.wtf("TAG", "LIFECYCLE: enterVr1");
         // We can't enter VR before the application resumes, or we encounter bizarre crashes
         // related to gpu surfaces.
         // TODO(mthiesse): Is the above comment still accurate? It may have been tied to our HTML
@@ -835,6 +836,7 @@ public class VrShellDelegate
 
         mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(this);
         removeBlackOverlayView(mActivity);
+        Log.wtf("TAG", "LIFECYCLE: enterVr2");
         if (!donSuceeded && !mAutopresentWebVr && isDaydreamCurrentViewer()) {
             // TODO(mthiesse): This is a VERY dirty hack. We need to know whether or not entering VR
             // will trigger the DON flow, so that we can wait for it to complete before we let the
@@ -1062,7 +1064,7 @@ public class VrShellDelegate
         mRestoreSystemUiVisibilityFlag = -1;
     }
 
-    /* package */ boolean canEnterVr(Tab tab, boolean justCompletedDon) {
+    /* package */ boolean canEnterVr(boolean justCompletedDon) {
         if (!LibraryLoader.isInitialized()) return false;
         if (mVrSupportLevel == VR_NOT_AVAILABLE || mNativeVrShellDelegate == 0) return false;
 
@@ -1070,13 +1072,14 @@ public class VrShellDelegate
         boolean presenting = mRequestedWebVr || mListeningForWebVrActivate
                 || (justCompletedDon && mListeningForWebVrActivateBeforePause) || mAutopresentWebVr;
         if (!isVrShellEnabled(mVrSupportLevel) && !presenting) return false;
-
-        // TODO(mthiesse): When we have VR UI for opening new tabs, etc., allow VR Shell to be
-        // entered without any current tabs.
-        if (tab == null) return false;
-
-        // For now we don't handle sad tab page. crbug.com/661609
-        if (tab.isShowingSadTab()) return false;
+        //
+        //        // TODO(mthiesse): When we have VR UI for opening new tabs, etc., allow VR Shell
+        //        to be
+        //        // entered without any current tabs.
+        //        if (tab == null) return false;
+        //
+        //        // For now we don't handle sad tab page. crbug.com/661609
+        //        if (tab.isShowingSadTab()) return false;
         return true;
     }
 
@@ -1113,7 +1116,7 @@ public class VrShellDelegate
         // Update VR support level as it can change at runtime
         maybeUpdateVrSupportLevel();
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return ENTER_VR_CANCELLED;
-        if (!canEnterVr(mActivity.getActivityTab(), false)) return ENTER_VR_CANCELLED;
+        if (!canEnterVr(false)) return ENTER_VR_CANCELLED;
         if (mVrSupportLevel == VR_DAYDREAM && isDaydreamCurrentViewer()) {
             // TODO(mthiesse): This is a workaround for b/66486878 (see also crbug.com/767594).
             // We have to trigger the DON flow before setting VR mode enabled to prevent the DON
@@ -1176,6 +1179,7 @@ public class VrShellDelegate
     }
 
     protected void onResume() {
+        Log.wtf("TAG", "LIFECYCLE: onResume1");
         if (DEBUG_LOGS) Log.i(TAG, "onResume");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) return;
         if (mNeedsAnimationCancel) {
@@ -1243,6 +1247,7 @@ public class VrShellDelegate
                 cancelPendingVrEntry();
             }
         } else if (mDonSucceeded) {
+            Log.wtf("TAG", "LIFECYCLE: mDonSucceeded");
             mCancellingEntryAnimation = false;
             handleDonFlowSuccess();
         } else {
@@ -1411,7 +1416,7 @@ public class VrShellDelegate
                 // UI which is suboptimal.
                 nativeDisplayActivate(mNativeVrShellDelegate);
             }
-        } else if (!canEnterVr(mActivity.getActivityTab(), false)) {
+        } else if (!canEnterVr(false)) {
             unregisterDaydreamIntent(mVrDaydreamApi);
         }
     }
@@ -1554,6 +1559,7 @@ public class VrShellDelegate
     }
 
     private static void promptForFeedback(final Tab tab) {
+        if (tab == null) return;
         final ChromeActivity activity = tab.getActivity();
         SimpleConfirmInfoBarBuilder.Listener listener = new SimpleConfirmInfoBarBuilder.Listener() {
             @Override

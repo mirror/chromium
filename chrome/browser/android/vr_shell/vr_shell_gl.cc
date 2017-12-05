@@ -178,6 +178,7 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       webvr_render_time_(
           new vr::SlidingTimeDeltaAverage(kWebVRSlidingAverageSize)),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "LIFECYCLE: VrShellGl";
   GvrInit(gvr_api);
 }
 
@@ -194,6 +195,7 @@ void VrShellGl::Initialize() {
 }
 
 void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
+  LOG(ERROR) << "LIFECYCLE: InitializeGl " << (paused_ ? "true" : "false");
   bool reinitializing = ready_to_draw_;
 
   // We should only ever re-initialize when our surface is destroyed, which
@@ -234,24 +236,43 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 
-  unsigned int textures[2];
-  glGenTextures(2, textures);
-  unsigned int content_texture_id = textures[0];
-  webvr_texture_id_ = textures[1];
+  unsigned int textures[3];
+  glGenTextures(3, textures);
+  webvr_texture_id_ = textures[0];
+  unsigned int content_texture_id = textures[1];
+  unsigned int content_overlay_texture_id = textures[2];
+
   content_surface_texture_ = gl::SurfaceTexture::Create(content_texture_id);
+  content_overlay_surface_texture_ =
+      gl::SurfaceTexture::Create(content_overlay_texture_id);
   webvr_surface_texture_ = gl::SurfaceTexture::Create(webvr_texture_id_);
-  CreateContentSurface();
+
+  content_surface_ =
+      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
+  browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
+  content_overlay_surface_ = base::MakeUnique<gl::ScopedJavaSurface>(
+      content_overlay_surface_texture_.get());
+  browser_->ContentOverlaySurfaceChanged(
+      content_overlay_surface_->j_surface().obj());
+
   content_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnContentFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
+  content_overlay_surface_texture_->SetFrameAvailableCallback(
+      base::Bind(&VrShellGl::OnContentOverlayFrameAvailable,
+                 weak_ptr_factory_.GetWeakPtr()));
   webvr_surface_texture_->SetFrameAvailableCallback(base::Bind(
       &VrShellGl::OnWebVRFrameAvailable, weak_ptr_factory_.GetWeakPtr()));
   content_surface_texture_->SetDefaultBufferSize(
-      content_tex_physical_size_.width(), content_tex_physical_size_.height());
+      content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
+  content_overlay_surface_texture_->SetDefaultBufferSize(
+      content_tex_buffer_size_.width(), content_tex_buffer_size_.height());
 
   if (!reinitializing)
     InitializeRenderer();
 
   ui_->OnGlInitialized(content_texture_id,
+                       vr::UiElementRenderer::kTextureLocationExternal,
+                       content_overlay_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
 
   vr::Assets::GetInstance()->LoadWhenComponentReady(base::BindOnce(
@@ -274,12 +295,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   ready_to_draw_ = true;
   if (!paused_ && !reinitializing)
     OnVSync(base::TimeTicks::Now());
-}
-
-void VrShellGl::CreateContentSurface() {
-  content_surface_ =
-      base::MakeUnique<gl::ScopedJavaSurface>(content_surface_texture_.get());
-  browser_->ContentSurfaceChanged(content_surface_->j_surface().obj());
 }
 
 void VrShellGl::CreateOrResizeWebVRSurface(const gfx::Size& size) {
@@ -384,6 +399,10 @@ void VrShellGl::OnSwapContents(int new_content_id) {
 void VrShellGl::OnContentFrameAvailable() {
   content_surface_texture_->UpdateTexImage();
   content_frame_available_ = true;
+}
+
+void VrShellGl::OnContentOverlayFrameAvailable() {
+  content_overlay_surface_texture_->UpdateTexImage();
 }
 
 void VrShellGl::OnWebVRFrameAvailable() {
@@ -1056,6 +1075,7 @@ void VrShellGl::OnPause() {
 }
 
 void VrShellGl::OnResume() {
+  LOG(ERROR) << "LIFECYCLE: OnResume";
   paused_ = false;
   gvr_api_->RefreshViewerProfile();
   gvr_api_->ResumeTracking();
@@ -1090,11 +1110,17 @@ void VrShellGl::ContentBoundsChanged(int width, int height) {
   ui_->OnContentBoundsChanged(width, height);
 }
 
-void VrShellGl::ContentPhysicalBoundsChanged(int width, int height) {
-  if (content_surface_texture_.get())
-    content_surface_texture_->SetDefaultBufferSize(width, height);
-  content_tex_physical_size_.set_width(width);
-  content_tex_physical_size_.set_height(height);
+void VrShellGl::BufferBoundsChanged(const gfx::Size& content_buffer_size,
+                                    const gfx::Size& overlay_buffer_size) {
+  if (content_surface_texture_.get()) {
+    content_surface_texture_->SetDefaultBufferSize(
+        content_buffer_size.width(), content_buffer_size.height());
+  }
+  if (content_overlay_surface_texture_.get()) {
+    content_overlay_surface_texture_->SetDefaultBufferSize(
+        overlay_buffer_size.width(), overlay_buffer_size.height());
+  }
+  content_tex_buffer_size_ = content_buffer_size;
 }
 
 base::WeakPtr<VrShellGl> VrShellGl::GetWeakPtr() {
@@ -1110,6 +1136,7 @@ void VrShellGl::SetControllerMesh(std::unique_ptr<vr::ControllerMesh> mesh) {
 }
 
 void VrShellGl::OnVSync(base::TimeTicks frame_time) {
+  LOG(ERROR) << "LIFECYCLE: OnVSync";
   TRACE_EVENT0("gpu", "VrShellGl::OnVSync");
   // Create a synthetic VSync trace event for the reported last-VSync time. Use
   // this specific type since it appears to be the only one which supports

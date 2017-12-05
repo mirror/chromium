@@ -297,13 +297,15 @@ void UiInputManager::SendHoverMove(const gfx::PointF& target_point) {
     return;
   }
 
-  // TODO(mthiesse, vollick): Content is currently way too sensitive to mouse
-  // moves for how noisy the controller is. It's almost impossible to click a
-  // link without unintentionally starting a drag event. For this reason we
-  // disable mouse moves, only delivering a down and up event.
-  if (element->name() == kContentQuad && in_click_) {
-    return;
-  }
+  //  // TODO(mthiesse, vollick): Content is currently way too sensitive to
+  //  mouse
+  //  // moves for how noisy the controller is. It's almost impossible to click
+  //  a
+  //  // link without unintentionally starting a drag event. For this reason we
+  //  // disable mouse moves, only delivering a down and up event.
+  //  if (element->name() == kContentQuad && in_click_) {
+  //    return;
+  //  }
 
   element->OnMove(target_point);
 }

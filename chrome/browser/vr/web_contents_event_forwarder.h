@@ -26,7 +26,7 @@ class WebContentsEventForwarder {
   explicit WebContentsEventForwarder(content::WebContents* web_contents);
   ~WebContentsEventForwarder();
 
-  void ForwardEvent(std::unique_ptr<blink::WebInputEvent> event);
+  void ForwardEvent(blink::WebInputEvent* event);
 
  private:
   content::WebContents* web_contents_;

@@ -128,6 +128,8 @@ public class CompositorViewHolder extends FrameLayout
     private int mOverlayContentWidthMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
     private int mOverlayContentHeightMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
 
+    private boolean mDetachedForVr;
+
     /**
      * This view is created on demand to display debugging information.
      */
@@ -463,7 +465,7 @@ public class CompositorViewHolder extends FrameLayout
      * @param h Height of the view.
      */
     public void setSize(WebContents webContents, View view, int w, int h) {
-        if (webContents == null || view == null) return;
+        if (webContents == null || view == null || mDetachedForVr) return;
         // The view size takes into account of the browser controls whose height
         // should be subtracted from the view if they are visible, therefore shrink
         // Blink-side view size.
@@ -961,6 +963,7 @@ public class CompositorViewHolder extends FrameLayout
      */
     private void adjustPhysicalBackingSize(
             View view, WebContents webContents, int width, int height) {
+        if (mDetachedForVr) return;
         if (view == mOverlayContentView) {
             width = MeasureSpec.getSize(mOverlayContentWidthMeasureSpec);
             height = MeasureSpec.getSize(mOverlayContentHeightMeasureSpec);
@@ -1018,13 +1021,14 @@ public class CompositorViewHolder extends FrameLayout
      * @return The detached {@link TabModelSelector}.
      */
     public TabModelSelector detachForVr() {
-        if (mTabModelSelector != null) mTabModelSelector.removeObserver(mTabModelSelectorObserver);
-        TabModelSelector selector = mTabModelSelector;
-        mTabModelSelector = null;
-        mLayerTitleCache.setTabModelSelector(null);
-        setTab(null);
+        mDetachedForVr = true;
+        //        if (mTabModelSelector != null)
+        //        mTabModelSelector.removeObserver(mTabModelSelectorObserver); TabModelSelector
+        //        selector = mTabModelSelector; mTabModelSelector = null;
+        //        mLayerTitleCache.setTabModelSelector(null);
+        //        setTab(null);
         getCompositorView().setVisibility(View.INVISIBLE);
-        return selector;
+        return mTabModelSelector;
     }
 
     /**
@@ -1034,7 +1038,8 @@ public class CompositorViewHolder extends FrameLayout
      */
     public void onExitVr(TabModelSelector tabModelSelector) {
         getCompositorView().setVisibility(View.VISIBLE);
-        attachToTabModelSelector(tabModelSelector);
+        mDetachedForVr = false;
+        //        attachToTabModelSelector(tabModelSelector);
     }
 
     private void attachToTabModelSelector(TabModelSelector tabModelSelector) {

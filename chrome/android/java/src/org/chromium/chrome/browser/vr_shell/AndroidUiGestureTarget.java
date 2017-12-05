@@ -24,8 +24,8 @@ public class AndroidUiGestureTarget {
     }
 
     @CalledByNative
-    private void inject(int action, long timeInMs) {
-        mMotionEventSynthesizer.inject(action, 1 /* pointerCount */, timeInMs);
+    private boolean inject(int action, long timeInMs) {
+        return mMotionEventSynthesizer.inject(action, 1 /* pointerCount */, timeInMs);
     }
 
     @CalledByNative

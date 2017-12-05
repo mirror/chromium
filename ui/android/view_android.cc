@@ -113,6 +113,10 @@ float ViewAndroid::GetDipScale() {
 }
 
 ScopedJavaLocalRef<jobject> ViewAndroid::GetEventForwarder() {
+  return GetNativeEventForwarder()->GetJavaObject();
+}
+
+EventForwarder* ViewAndroid::GetNativeEventForwarder() {
   if (!event_forwarder_) {
     DCHECK(!RootPathHasEventForwarder(parent_))
         << "The view tree path already has an event forwarder.";
@@ -120,7 +124,7 @@ ScopedJavaLocalRef<jobject> ViewAndroid::GetEventForwarder() {
         << "The view tree path already has an event forwarder.";
     event_forwarder_.reset(new EventForwarder(this));
   }
-  return event_forwarder_->GetJavaObject();
+  return event_forwarder_.get();
 }
 
 void ViewAndroid::AddChild(ViewAndroid* child) {
@@ -504,6 +508,10 @@ template <typename E>
 bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
                           const E& event,
                           const gfx::PointF& point) {
+  LOG(ERROR) << "GetDipScale: " << GetDipScale() << ", "
+             << (parent_ ? parent_->GetDipScale() : 0) << ", "
+             << (parent_ && parent_->parent_ ? parent_->parent_->GetDipScale()
+                                             : 0);
   if (client_) {
     if (view_rect_.origin().IsOrigin()) {  // (x, y) == (0, 0)
       if (send_to_client.Run(client_, event))

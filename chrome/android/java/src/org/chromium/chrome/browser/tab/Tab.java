@@ -2555,7 +2555,6 @@ public class Tab
         // (zero) to the renderer process, although the new size will be set soon.
         // However, this size fluttering may confuse Blink and rendered result can be broken
         // (see http://crbug.com/340987).
-        newContentViewCore.onSizeChanged(originalWidth, originalHeight, 0, 0);
         newContentViewCore.getWebContents().setSize(originalWidth, originalHeight);
 
         if (!bounds.isEmpty()) {
@@ -3186,7 +3185,6 @@ public class Tab
         Rect bounds = getEstimatedContentSize(context);
         int width = bounds.right - bounds.left;
         int height = bounds.bottom - bounds.top;
-        tab.getContentViewCore().onSizeChanged(width, height, 0, 0);
         tab.getWebContents().setSize(width, height);
 
         tab.detach();
