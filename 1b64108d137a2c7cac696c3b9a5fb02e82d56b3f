@@ -69,6 +69,30 @@
       "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11c02db_1d9ba7a8",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T22:46:00Z",
+      "side": 1,
+      "message": "Exposing for test SGTM.",
+      "parentUuid": "1089cb93_3d9bc3c9",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
