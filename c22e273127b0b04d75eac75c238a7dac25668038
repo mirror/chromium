@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bdccfa8_42257678",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-05T22:01:27Z",
+      "side": 1,
+      "message": "Can you initialize this variable in the constructor?",
+      "revId": "c22e273127b0b04d75eac75c238a7dac25668038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f656c9_dc5a2d03",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreatorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-05T22:01:27Z",
+      "side": 1,
+      "message": "At the time when this test is written, PNG and JPEG follow two different code paths (i.e., they have their own functions of initialization, idleEncode, etc). But now it seems that they are all merged together, I think we should now keep only 1 set of unit tests.",
+      "revId": "c22e273127b0b04d75eac75c238a7dac25668038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
