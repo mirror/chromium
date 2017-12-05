@@ -46,6 +46,30 @@
       "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4151618_263f8df2",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-12-05T16:03:25Z",
+      "side": 1,
+      "message": "It\u0027s somewhat indirect.  TestContextProvider::GrContext() on its first invocation creates a  skia_bindings::GrContextForGLES2Interface(). GrContextForGLES2Interface\u0027s constructor calls base::SysInfo::AmountOfPhysicalMemory() which in turn checks base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(switches::kEnableLowEndDeviceMode).\n\nWould it be appropriate to make base::SysInfo::AmountOfPhysicalMemory() check base::CommandLine::InitializedForCurrentProcess() before calling HasSwitch()?",
+      "parentUuid": "4e89f949_cf47d436",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "04957f3153505ae67153ae9b7ccd382c2df62857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
