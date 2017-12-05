@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a8f0640_13919240",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T22:58:32Z",
+      "side": 0,
+      "message": "This case used to return RGBA_8888 for the buffer format, now changed to YUV_420_BIPLANAR. Is that expected? I don\u0027t see code that would change there... is it that the previous code was wrong but the buffer_format isn\u0027t used later on?",
+      "revId": "e731622c7806758304f86c47a145d3607a9d6f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
