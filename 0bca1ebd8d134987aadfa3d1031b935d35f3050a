@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5249c3d_3ed1d1eb",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "Should be true I think.  (Extensions support replacement, even if this particular input is not a replacement.)",
+      "range": {
+        "startLine": 218,
+        "startChar": 36,
+        "endLine": 218,
+        "endChar": 41
+      },
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2a272_6f9a2b66",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you be only adding this if there was no normal substitution match, not adding it unconditionally?",
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2d824e_76b10386",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "The line and 225 shouldn\u0027t be necessary.  The call you make on line 220 set\nallowed_to_be_default_match to input.allow_exact_keyword_match().  I think that sounds right.  If you want to explicitly override that to \"true\", you should do it in the CreateAutocompleteMatch call, not by looking in back() and modifying it.",
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9cb84fa_117c5b26",
         "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
         "patchSetId": 13
@@ -13,6 +70,47 @@
       "writtenOn": "2017-12-02T06:13:46Z",
       "side": 1,
       "message": "Lines 217 - 225 adds a placeholder item labeled with the extension name for OnKeywordEntered only.\n\nAlong with this change, the change on line 238 fixes the issue where the google search term gets ranked first. Now it is ranked last. Setting |supports_replacement| to true gives a lower rank of the suggestion result than the google search. [1]\n\n[1] https://chromium.googlesource.com/chromium/src/+/1743273d0ea5d0d73e4ba5cbdc1c9acb684e21ff/components/omnibox/browser/keyword_provider.cc#409",
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cad2313_25eeefa5",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9cb84fa_117c5b26",
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "337068da_45a975a4",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "I think this should still be true.  Leave it.",
+      "range": {
+        "startLine": 238,
+        "startChar": 38,
+        "endLine": 238,
+        "endChar": 43
+      },
       "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +145,30 @@
       "writtenOn": "2017-12-02T06:13:46Z",
       "side": 1,
       "message": "Bug 2:  \n\nWhen this method returns false, it means that OnKeywordEntered will eventually be called so OnInputStarted and OnInputChanged should not be called. The problem occurs when this method incorrectly returns true, meaning we think that OnKeywordEntered will not be called given the input. As a result, OnInputStarted and OnInputChanged are called, but later so is OnKeywordEntered. Now the omnibox result box has matches from *both* OnInputChanged and OnKeywordEntered. \n\nIn attempts to resolve this issue, my approach has been to check the input in all its forms to determine if it means OnKeywordEntered should be called, but there are several edge cases with input. Overall, these checks seems too fine grained and really fragile, esp. if since some cases might be missing. Plus adding a check here may fix bug 2, but break and introduce bug 1 (discussed above).\n\nAny thoughts?",
+      "range": {
+        "startLine": 270,
+        "startChar": 36,
+        "endLine": 270,
+        "endChar": 63
+      },
+      "revId": "0bca1ebd8d134987aadfa3d1031b935d35f3050a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2665b520_bdc9c844",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:58:18Z",
+      "side": 1,
+      "message": "\u003e Bug 2:  \n\u003e \n\u003e When this method returns false, it means that OnKeywordEntered will eventually be called so OnInputStarted and OnInputChanged should not be called. The problem occurs when this method incorrectly returns true, meaning we think that OnKeywordEntered will not be called given the input. As a result, OnInputStarted and OnInputChanged are called, but later so is OnKeywordEntered. Now the omnibox result box has matches from *both* OnInputChanged and OnKeywordEntered. \n\u003e \n\u003e In attempts to resolve this issue, my approach has been to check the input in all its forms to determine if it means OnKeywordEntered should be called, but there are several edge cases with input. Overall, these checks seems too fine grained and really fragile, esp. if since some cases might be missing. Plus adding a check here may fix bug 2, but break and introduce bug 1 (discussed above).\n\u003e \n\u003e Any thoughts?\n\nWhat exactly are the constraints you have on the API?  Do you have a doc to refer to?  I would like a flow chart showing possible state changes, which functions can be called in what order, and which functions can be called repeatedly?  And has the OnKeywordEntered API been published?  If not, then we can re-think whether we want to change any of the invariants for extensions that register for that call.  (After all, if an extension registers for that call, the extension clearly has been revised.  This allows us to introduce changes in the previous state flow diagram.)\n\n(I agree with you, by the way -- I really don\u0027t like the code below.)",
+      "parentUuid": "d42cc191_624dff33",
       "range": {
         "startLine": 270,
         "startChar": 36,
