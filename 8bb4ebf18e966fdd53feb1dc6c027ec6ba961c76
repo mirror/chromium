@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2299a65a_2ea431f7",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Can we take item id instead of |item|?",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b7012f_784de6f1",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "It is strange that some methods are pure virtual and some have an empty default impl. We should be consistent. I think it is fine to have an empty default impl for all methods.",
+      "range": {
+        "startLine": 27,
+        "startChar": 62,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8357dd_3dc45eca",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "ditto, pass item id instead",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea98377e_791887c6",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Think customer launcher page feature is no longer in use. It was added in http://crbug.com/434243 and recently started to get removed as part of http://crbug.com/731991 with \"Google Now Card in Launcher\".\n\nWe probably can remove them in a separate pre-flight CL or something. Not sure what to do with the launcher page API, probably should remove them as well.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e956984_c5dba89f",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Can we consolidate the two? Folder is just a special item and should be updated like other items.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 77
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ed7fb6_feea463b",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "We probably can assume folders support is always enabled and get rid of this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c690cab0_b92914de",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Can these be removed now?",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50aefa81_3c211c0a",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "app_sync_ui_state_watcher_ is a std::unique_ptr. Is this the the preferred way to reset a unique_ptr now?",
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcb72e1_6bd1479b",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "I prefer not exposing this via AppListViewDelegate. Is this used anywhere?",
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69131937_5804910d",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "nit: prefer to do this as initializer\ni.e.\n  ChromeAppListModelUpdater::ChromeAppListModelUpdater()\n      : model_(std::make_uniqyue\u003c..\u003e()),\n        search_model_(std::make_unique\u003c...\u003e()) {}",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed7f382_10b66d09",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "nit: \u003d default; is preferred",
+      "range": {
+        "startLine": 21,
+        "startChar": 56,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652ee630_6d12b724",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "nit: sync_name -\u003e update_name, sync_folder -\u003e update_folder\n\nThe method update item from synced data. \"update_\" prefix is better, IMHO.",
+      "range": {
+        "startLine": 160,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 18
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0270b79_aec9173b",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0afa92_ce957d96",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Move the include to cc and forward declare them in header.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95a2e2f_fa00c4bd",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "nit: move this down above L24, where the section of interface functino decl starts.",
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c7178c_2e8bb4d8",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T22:47:26Z",
+      "side": 1,
+      "message": "Is this necessary? Can we get rid of this by putting all APIs in public?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
