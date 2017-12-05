@@ -62,6 +62,13 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return {location, VisualRect().Size()};
   }
 
+  // Call the function for all descendant fragments that belong to the
+  // specified LayoutObject.
+  void ForEachDescendant(
+      const LayoutObject*,
+      std::function<bool(const NGPaintFragment&, const NGPhysicalOffset&)>,
+      NGPhysicalOffset = {}) const;
+
   // DisplayItemClient methods.
   String DebugName() const override { return "NGPaintFragment"; }
 
