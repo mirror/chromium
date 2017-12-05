@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9f3af63_649b67de",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Leaving it as is as discussed.",
+      "parentUuid": "5f6d52f1_5a9e1af0",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32fefcda_60f166ba",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcfbc00_247aba59",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32fefcda_60f166ba",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5473f884_24c03a96",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a16c29_ec5dbd64",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c729f697_cf64bbdb",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bd2abddf_576ae28d",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c729f697_cf64bbdb",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6f1c11_7700d2ca",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-05T02:46:30Z",
       "side": 1,
       "message": "nit: is this needed?",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a64d679_0fd398c5",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "fa6f1c11_7700d2ca",
       "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4645c52d_950e1466",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "*shrug* Look at the comments above. Some people just like comments.",
+      "parentUuid": "7e699172_942d9c0a",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4886a7aa_7e33ad56",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-05T02:46:30Z",
       "side": 1,
       "message": "Is this function used in this CL?",
+      "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44db910_0587be6d",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-05T07:28:45Z",
+      "side": 1,
+      "message": "Wups, this was from trying to do crazy stuff with tests. Removed.",
+      "parentUuid": "4886a7aa_7e33ad56",
       "revId": "ec03e0c54ed6289ccea1da512f01487eb193d3b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
