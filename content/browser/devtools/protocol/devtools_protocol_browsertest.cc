@@ -671,10 +671,10 @@ bool MatchesBitmap(const SkBitmap& expected_bmp,
           actual_bmp.getColor(x * device_scale_factor, y * device_scale_factor);
       SkColor expected_color = expected_bmp.getColor(x, y);
       if (!ColorsMatchWithinLimit(actual_color, expected_color, error_limit)) {
-        if (error_pixels_count < 10) {
+        // if (error_pixels_count < 10) {
           LOG(ERROR) << "Pixel (" << x << "," << y << "): expected " << std::hex
                      << expected_color << " actual " << actual_color;
-        }
+        // }
         error_pixels_count++;
         error_bounding_rect.Union(gfx::Rect(x, y, 1, 1));
       }
