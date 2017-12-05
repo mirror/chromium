@@ -9,9 +9,11 @@
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
+#include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
+#include "cc/test/pixel_test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -21,6 +23,7 @@
 #include "ui/events/base_event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/gfx_paths.h"
 #include "ui/gfx/render_text.h"
 #include "ui/gfx/switches.h"
 #include "ui/gfx/text_elider.h"
@@ -57,10 +60,12 @@ class TestLabel : public Label {
 
   void SimulatePaint() {
     SkBitmap bitmap;
-    SkColor color = SK_ColorTRANSPARENT;
+    SimulatePaint(&bitmap, SK_ColorTRANSPARENT);
+  }
+
+  void SimulatePaint(SkBitmap* bitmap, SkColor color) {
     Paint(PaintInfo::CreateRootPaintInfo(
-        ui::CanvasPainter(&bitmap, bounds().size(), 1.f, color, false)
-            .context(),
+        ui::CanvasPainter(bitmap, bounds().size(), 1.f, color, false).context(),
         bounds().size()));
   }
 
@@ -405,6 +410,52 @@ TEST_F(LabelTest, ElideBehaviorMinimumWidth) {
 
   label()->SetSize(label()->GetMinimumSize());
   EXPECT_EQ(text, label()->GetDisplayTextForTesting());
+}
+
+// It is really hard to write pixel test on text rendering, due to different
+// font appearance. So we choose to check result only on Windows.
+// See https://codereview.chromium.org/1634103003/#msg41
+#if defined(OS_WIN)
+#define MAYBE_CanvasDrawFadedString CanvasDrawFadedString
+#else
+#define MAYBE_CanvasDrawFadedString DISABLED_CanvasDrawFadedString
+#endif
+
+// Pixel test for FADE_TAIL.
+TEST_F(LabelTest, MAYBE_CanvasDrawFadedString) {
+  TestLabel label;
+  label.SetBounds(0, 0, 28, 50);
+  label.SetText(base::ASCIIToUTF16("Tests!"));
+  label.SetElideBehavior(gfx::FADE_TAIL);
+  label.SetHorizontalAlignment(gfx::ALIGN_LEFT);
+
+  gfx::RegisterPathProvider();
+  base::FilePath test_data_directory;
+  ASSERT_TRUE(PathService::Get(gfx::DIR_TEST_DATA, &test_data_directory));
+  test_data_directory = test_data_directory.AppendASCII("compositor");
+
+  SkBitmap bitmap;
+  label.SetEnabledColor(SK_ColorRED);
+  label.SimulatePaint(&bitmap, SK_ColorBLUE);
+  ASSERT_FALSE(bitmap.empty());
+
+  base::FilePath ref_img = test_data_directory.AppendASCII("string_faded.png");
+
+  // Uncomment the next line to update the reference image.
+  // cc::WritePNGFile(bitmap, ref_img, true);
+
+  float percentage_pixels_large_error = 8.0f;  // 200px / (50*50)
+  float percentage_pixels_small_error = 0.0f;
+  float average_error_allowed_in_bad_pixels = 80.f;
+  int large_error_allowed = 255;
+  int small_error_allowed = 0;
+
+  EXPECT_TRUE(MatchesPNGFile(
+      bitmap, ref_img,
+      cc::FuzzyPixelComparator(true, percentage_pixels_large_error,
+                               percentage_pixels_small_error,
+                               average_error_allowed_in_bad_pixels,
+                               large_error_allowed, small_error_allowed)));
 }
 
 TEST_F(LabelTest, MultiLineProperty) {
