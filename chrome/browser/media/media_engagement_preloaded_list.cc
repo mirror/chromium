@@ -5,10 +5,17 @@
 #include "chrome/browser/media/media_engagement_preloaded_list.h"
 
 #include "base/files/file_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "chrome/browser/media/media_engagement_preload.pb.h"
 #include "net/base/lookup_string_in_fixed_set.h"
 #include "url/origin.h"
+
+const char* const MediaEngagementPreloadedList::kHistogramCheckResultName =
+    "Media.Engagement.PreloadedList.CheckResult";
+
+const char* const MediaEngagementPreloadedList::kHistogramLoadResultName =
+    "Media.Engagement.PreloadedList.LoadResult";
 
 MediaEngagementPreloadedList::MediaEngagementPreloadedList() = default;
 
@@ -16,24 +23,31 @@ MediaEngagementPreloadedList::~MediaEngagementPreloadedList() = default;
 
 bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
   // Check the file exists.
-  if (!base::PathExists(path))
+  if (!base::PathExists(path)) {
+    RecordLoadResult(LoadResult::FILE_NOT_FOUND);
     return false;
+  }
 
   // Read the file to a string.
   std::string file_data;
-  if (!base::ReadFileToString(path, &file_data))
+  if (!base::ReadFileToString(path, &file_data)) {
+    RecordLoadResult(LoadResult::FILE_READ_FAILED);
     return false;
+  }
 
   // Load the preloaded list into a proto message.
   chrome_browser_media::PreloadedData message;
-  if (!message.ParseFromString(file_data))
+  if (!message.ParseFromString(file_data)) {
+    RecordLoadResult(LoadResult::PARSE_PROTO_FAILED);
     return false;
+  }
 
   // Copy data from the protobuf message.
   dafsa_ = std::vector<unsigned char>(message.dafsa().size());
   for (unsigned long i = 0; i < message.dafsa().size(); i++)
     dafsa_[i] = static_cast<unsigned char>(message.dafsa()[i]);
 
+  RecordLoadResult(LoadResult::LOADED);
   is_loaded_ = true;
   return true;
 }
@@ -45,7 +59,33 @@ bool MediaEngagementPreloadedList::CheckOriginIsPresent(
 
 bool MediaEngagementPreloadedList::CheckStringIsPresent(
     const std::string& input) const {
-  return net::LookupStringInFixedSet(dafsa_.data(), dafsa_.size(),
-                                     input.c_str(),
-                                     input.size()) == net::kDafsaFound;
+  // Check if we have loaded the data.
+  if (!IsLoaded()) {
+    RecordCheckResult(CheckResult::LIST_NOT_LOADED);
+    return false;
+  }
+
+  // Check if the data is empty.
+  if (IsEmpty()) {
+    RecordCheckResult(CheckResult::LIST_IS_EMPTY);
+    return false;
+  }
+
+  bool result =
+      net::LookupStringInFixedSet(dafsa_.data(), dafsa_.size(), input.c_str(),
+                                  input.size()) == net::kDafsaFound;
+
+  // Record and return the result.
+  RecordCheckResult(result ? CheckResult::FOUND : CheckResult::NOT_FOUND);
+  return result;
+}
+
+void MediaEngagementPreloadedList::RecordLoadResult(LoadResult result) {
+  UMA_HISTOGRAM_ENUMERATION(kHistogramLoadResultName, result,
+                            LoadResult::COUNT);
+}
+
+void MediaEngagementPreloadedList::RecordCheckResult(CheckResult result) const {
+  UMA_HISTOGRAM_ENUMERATION(kHistogramCheckResultName, result,
+                            CheckResult::COUNT);
 }
