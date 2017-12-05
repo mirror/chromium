@@ -46,6 +46,74 @@
       "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dea2498_ccc2bfa1",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T20:44:44Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the duplicated code in this function. It feels like this function is doing too much.\n\nCan it be written to only take care of the rationalization metric?\n\nFor example:\n\n  void LogQalityMetricsIfFillWhenFocused(metric_name, field, form, quality_metric) {\n    if (!field.fill_when_focused)\n      return;\n    switch (quality_metric) {\n      case TRUE_POSITIVE:\n        Log(metric_name, (IsDuplicateFill(...) ? BAD : GOOD),...);\n        return;\n      case TRUE_NEGATIVE:\n        LOG(metric_name, (is_empty ? GOOD) : OK, ...);\n        return;\n      case MISMATCH...:\n      case MISMATCH...:\n      case MISMATCH...:\n        LOG(metric_name, OK, ...);\n        return;\n      default:\n        return;\n    }\n  }\n\nThis helper can then be called at the appropriate places in LogPredictionQualityMetrics()",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe94a47_d5e78911",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T20:44:44Z",
+      "side": 1,
+      "message": "pass these by const ref",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e29249b_79ad29a2",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T20:44:44Z",
+      "side": 1,
+      "message": "pass these by const ref",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded54f87_9f3e3988",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 5650,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T20:44:44Z",
+      "side": 1,
+      "message": "I think the metric name should either be phone number specific or specific to the fill-when-focused mechanism.\n\nThe enum, however, can be shared across rationalization metrics for other types.",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
