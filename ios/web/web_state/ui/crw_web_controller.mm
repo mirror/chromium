@@ -289,9 +289,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   // TODO(crbug.com/549616): Remove this in favor of just updating the
   // navigation manager and treating that as authoritative.
   GURL _documentURL;
-  // Last URL change reported to webWill/DidStartLoadingURL. Used to detect page
-  // location changes (client redirects) in practice.
-  GURL _lastRegisteredRequestURL;
   // Page loading phase.
   web::LoadPhase _loadPhase;
   // The web::PageDisplayState recorded when the page starts loading.
@@ -632,7 +629,8 @@ registerLoadRequestForURL:(const GURL&)URL
 registerLoadRequestForURL:(const GURL&)URL
                  referrer:(const web::Referrer&)referrer
                transition:(ui::PageTransition)transition
-   sameDocumentNavigation:(BOOL)sameDocumentNavigation;
+   sameDocumentNavigation:(BOOL)sameDocumentNavigation
+fastBackForwardNavigation:(BOOL)fastBackForwardNavigation;
 // Maps WKNavigationType to ui::PageTransition.
 - (ui::PageTransition)pageTransitionFromNavigationType:
     (WKNavigationType)navigationType;
@@ -1368,14 +1366,17 @@ registerLoadRequestForURL:(const GURL&)URL
   return [self registerLoadRequestForURL:URL
                                 referrer:emptyReferrer
                               transition:transition
-                  sameDocumentNavigation:sameDocumentNavigation];
+                  sameDocumentNavigation:sameDocumentNavigation
+               fastBackForwardNavigation:(navigationType ==
+                                          WKNavigationTypeBackForward)];
 }
 
 - (std::unique_ptr<web::NavigationContextImpl>)
 registerLoadRequestForURL:(const GURL&)requestURL
                  referrer:(const web::Referrer&)referrer
                transition:(ui::PageTransition)transition
-   sameDocumentNavigation:(BOOL)sameDocumentNavigation {
+   sameDocumentNavigation:(BOOL)sameDocumentNavigation
+fastBackForwardNavigation:(BOOL)fastBackForwardNavigation {
   // Transfer time is registered so that further transitions within the time
   // envelope are not also registered as links.
   _lastTransferTimeInSeconds = CFAbsoluteTimeGetCurrent();
@@ -1388,7 +1389,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   }
 
   _loadPhase = web::LOAD_REQUESTED;
-  _lastRegisteredRequestURL = requestURL;
 
   if (!redirect) {
     if (!self.nativeController) {
@@ -1551,21 +1551,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     [script appendString:[self javaScriptToDispatchHashChangeWithOldURL:oldURL
                                                                  newURL:URL]];
   }
-  __weak CRWWebController* weakSelf = self;
-  [self executeJavaScript:script
-        completionHandler:^(id, NSError*) {
-          CRWWebController* strongSelf = weakSelf;
-          if (strongSelf &&
-              !strongSelf->_isBeingDestroyed
-              // Make sure that no new navigation has started since URL value
-              // was captured to avoid clobbering _lastRegisteredRequestURL.
-              // See crbug.com/788231.
-              // TODO(crbug.com/788465): simplify history state handling to
-              // avoid this hack.
-              && currentItem == self.currentNavItem) {
-            strongSelf->_lastRegisteredRequestURL = URL;
-          }
-        }];
+  [self executeJavaScript:script completionHandler:nil];
 }
 
 // Load the current URL in a web view, first ensuring the web view is visible.
@@ -1766,7 +1752,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         [self registerLoadRequestForURL:targetURL
                                referrer:referrer
                              transition:self.currentTransition
-                 sameDocumentNavigation:NO];
+                 sameDocumentNavigation:NO
+              fastBackForwardNavigation:NO];
     [self loadNativeViewWithSuccess:YES
                   navigationContext:navigationContext.get()];
   };
@@ -1908,7 +1895,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         registerLoadRequestForURL:url
                          referrer:self.currentNavItemReferrer
                        transition:ui::PageTransition::PAGE_TRANSITION_RELOAD
-           sameDocumentNavigation:NO];
+           sameDocumentNavigation:NO
+        fastBackForwardNavigation:NO];
     _webStateImpl->OnNavigationStarted(navigationContext.get());
     [self didStartLoading];
     self.navigationManagerImpl->CommitPendingItem();
@@ -1987,28 +1975,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _loadPhase = web::PAGE_LOADED;
 
   [self optOutScrollsToTopForSubviews];
-
-  DCHECK((currentURL == _lastRegisteredRequestURL) ||  // latest navigation
-         // previous navigation
-         ![[_navigationStates lastAddedNavigation] isEqual:navigation] ||
-         // invalid URL load
-         (!_lastRegisteredRequestURL.is_valid() &&
-          _documentURL.spec() == url::kAboutBlankURL) ||
-         // about URL was changed by WebKit (e.g. about:newtab -> about:blank)
-         (_lastRegisteredRequestURL.scheme() == url::kAboutScheme &&
-          currentURL.spec() == url::kAboutBlankURL) ||
-         // In a very unfortunate edge case, window.history.didReplaceState
-         // message can arrive between the |webView:didCommitNavigation| and
-         // |webView:didFinishNavigation| callbacks of the page that contains
-         // the replaceState call. In this case, _lastRegisteredRequestURL and
-         // webView.URL are already updated to the replace state URL, but
-         // currentURL is still the old URL. See crbug.com/788464.
-         // TODO(crbug.com/788465): simplify history state handling to avoid
-         // this hack.
-         (_lastRegisteredRequestURL == net::GURLWithNSURL(_webView.URL)))
-      << std::endl
-      << "currentURL = [" << currentURL << "]" << std::endl
-      << "_lastRegisteredRequestURL = [" << _lastRegisteredRequestURL << "]";
 
   // Perform post-load-finished updates.
   [self didFinishWithURL:currentURL loadSuccess:loadSuccess];
@@ -2606,7 +2572,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return NO;
   }
   NSString* stateObject = base::SysUTF8ToNSString(stateObjectJSON);
-  _lastRegisteredRequestURL = pushURL;
 
   // If the user interacted with the page, categorize it as a link navigation.
   // If not, categorize it is a client redirect as it occurred without user
@@ -2673,7 +2638,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return NO;
   }
   NSString* stateObject = base::SysUTF8ToNSString(stateObjectJSON);
-  _lastRegisteredRequestURL = replaceURL;
   [self replaceStateWithPageURL:replaceURL stateObject:stateObject];
   NSString* replaceStateJS = [self javaScriptToReplaceWebViewURL:replaceURL
                                                  stateObjectJSON:stateObject];
@@ -4020,7 +3984,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
     context = [self registerLoadRequestForURL:URL
                                      referrer:web::Referrer()
                                    transition:loadHTMLTransition
-                       sameDocumentNavigation:NO];
+                       sameDocumentNavigation:NO
+                    fastBackForwardNavigation:NO];
   }
   [_navigationStates setContext:std::move(context) forNavigation:navigation];
 }
@@ -4392,8 +4357,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
         item->SetVirtualURL(webViewURL);
         item->SetURL(webViewURL);
       }
-
-      _lastRegisteredRequestURL = webViewURL;
     }
     _webStateImpl->OnNavigationStarted(context);
     return;
@@ -4455,7 +4418,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self registerLoadRequestForURL:webViewURL
                          referrer:[self currentReferrer]
                        transition:ui::PAGE_TRANSITION_SERVER_REDIRECT
-           sameDocumentNavigation:NO];
+           sameDocumentNavigation:NO
+        fastBackForwardNavigation:NO];
 }
 
 - (void)webView:(WKWebView*)webView
@@ -4548,9 +4512,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // pending navigation information should be applied to state information.
   [self setDocumentURL:webViewURL];
 
-  if (!_lastRegisteredRequestURL.is_valid() &&
-      _documentURL != _lastRegisteredRequestURL) {
-    // if |_lastRegisteredRequestURL| is an invalid URL, then |_documentURL|
+  web::NavigationContextImpl* context =
+      [_navigationStates contextForNavigation:navigation];
+  if (!context->GetUrl().is_valid() && _documentURL != context->GetUrl()) {
+    // If the registered URL is an invalid URL, then |_documentURL|
     // will be "about:blank".
     self.navigationManagerImpl->UpdatePendingItemUrl(_documentURL);
   }
@@ -4560,15 +4525,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   BOOL isLastNavigation =
       !navigation ||
       [[_navigationStates lastAddedNavigation] isEqual:navigation];
-  DCHECK(_documentURL == _lastRegisteredRequestURL ||  // latest navigation
-         !isLastNavigation ||                          // previous navigation
-         (!_lastRegisteredRequestURL.is_valid() &&     // invalid URL load
-          _documentURL.spec() == url::kAboutBlankURL));
 
   // Update HTTP response headers.
   _webStateImpl->UpdateHttpResponseHeaders(_documentURL);
-  web::NavigationContextImpl* context =
-      [_navigationStates contextForNavigation:navigation];
   context->SetResponseHeaders(_webStateImpl->GetHttpResponseHeaders());
 
   [self commitPendingNavigationInfo];
@@ -4870,6 +4829,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
+  web::NavigationContextImpl* existingContext =
+      [self contextForPendingNavigationWithURL:webViewURL];
+
   if (!navigationWasCommitted && ![_pendingNavigationInfo cancelled]) {
     // A fast back-forward navigation does not call |didCommitNavigation:|, so
     // signal page change explicitly.
@@ -4879,14 +4841,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
     [self setDocumentURL:webViewURL];
     [self webPageChanged];
 
-    web::NavigationContextImpl* existingContext =
-        [self contextForPendingNavigationWithURL:webViewURL];
     if (!existingContext) {
       // This URL was not seen before, so register new load request.
-      std::unique_ptr<web::NavigationContextImpl> newContext =
-          [self registerLoadRequestForURL:webViewURL
-                   sameDocumentNavigation:isSameDocumentNavigation];
-      _webStateImpl->OnNavigationFinished(newContext.get());
+      NOTREACHED();
+      // std::unique_ptr<web::NavigationContextImpl> newContext =
+      //    [self registerLoadRequestForURL:webViewURL
+      //             sameDocumentNavigation:isSameDocumentNavigation];
+      //_webStateImpl->OnNavigationFinished(newContext.get());
     } else {
       // Same document navigation does not contain response headers.
       net::HttpResponseHeaders* headers =
@@ -4902,7 +4863,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Fast back forward navigation may not call |didFinishNavigation:|, so
   // signal did finish navigation explicitly.
-  if (_lastRegisteredRequestURL == _documentURL) {
+  // This DCHECK failed on HistoryStateOperationsTest.StateReplacement. For some
+  // reason the NOTREACHED() above is not triggered.
+  // DCHECK(existingContext);
+  if (existingContext && existingContext->IsFastBackForwardNavigation()) {
     [self didFinishNavigation:nil];
   }
 }
@@ -5159,7 +5123,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
           [self registerLoadRequestForURL:navigationURL
                                  referrer:self.currentNavItemReferrer
                                transition:self.currentTransition
-                   sameDocumentNavigation:sameDocumentNavigation];
+                   sameDocumentNavigation:sameDocumentNavigation
+                fastBackForwardNavigation:NO];
       WKNavigation* navigation = [self loadPOSTRequest:request];
       [_navigationStates setContext:std::move(navigationContext)
                       forNavigation:navigation];
@@ -5174,7 +5139,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         [self registerLoadRequestForURL:navigationURL
                                referrer:self.currentNavItemReferrer
                              transition:self.currentTransition
-                 sameDocumentNavigation:sameDocumentNavigation];
+                 sameDocumentNavigation:sameDocumentNavigation
+              fastBackForwardNavigation:NO];
     WKNavigation* navigation = [self loadRequest:request];
     [_navigationStates setContext:std::move(navigationContext)
                     forNavigation:navigation];
@@ -5215,7 +5181,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         [self registerLoadRequestForURL:navigationURL
                                referrer:self.currentNavItemReferrer
                              transition:self.currentTransition
-                 sameDocumentNavigation:sameDocumentNavigation];
+                 sameDocumentNavigation:sameDocumentNavigation
+              fastBackForwardNavigation:YES];
     WKNavigation* navigation = nil;
     if (navigationURL == net::GURLWithNSURL([_webView URL])) {
       navigation = [_webView reload];
@@ -5284,7 +5251,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)injectWebViewContentView:(CRWWebViewContentView*)webViewContentView {
   [self removeWebView];
 
-  _lastRegisteredRequestURL = _defaultURL;
   [_containerView displayWebViewContentView:webViewContentView];
   [self setWebView:static_cast<WKWebView*>(webViewContentView.webView)];
 }

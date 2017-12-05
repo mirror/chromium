@@ -98,6 +98,17 @@ void NavigationContextImpl::SetNavigationItemUniqueID(int unique_id) {
   navigation_item_unique_id_ = unique_id;
 }
 
+void NavigationContextImpl::SetIsFastBackForwardNavigation(
+    bool is_fast_back_forward_navigation) {
+  DCHECK(ui::PageTransitionCoreTypeIs(page_transition_,
+                                      ui::PAGE_TRANSITION_FORWARD_BACK));
+  is_fast_back_forward_navigation_ = is_fast_back_forward_navigation;
+}
+
+bool NavigationContextImpl::IsFastBackForwardNavigation() const {
+  return is_fast_back_forward_navigation_;
+}
+
 NavigationContextImpl::NavigationContextImpl(WebState* web_state,
                                              const GURL& url,
                                              ui::PageTransition page_transition,
@@ -105,6 +116,7 @@ NavigationContextImpl::NavigationContextImpl(WebState* web_state,
     : web_state_(web_state),
       url_(url),
       page_transition_(page_transition),
+      is_fast_back_forward_navigation_(false),
       is_same_document_(false),
       error_(nil),
       response_headers_(nullptr),
