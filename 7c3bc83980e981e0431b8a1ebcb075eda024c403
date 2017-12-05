@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b4f1214_14b599ce",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-12-05T00:37:42Z",
+      "side": 1,
+      "message": "If this is to handle the case where it starts as an active notification, I suggest rephrasing to be more explicit:\n\n\"If the application starts as an active notification, synthesize an initial UIApplicationWillResignActiveNotification event.\"",
+      "range": {
+        "startLine": 245,
+        "startChar": 46,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "7c3bc83980e981e0431b8a1ebcb075eda024c403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
