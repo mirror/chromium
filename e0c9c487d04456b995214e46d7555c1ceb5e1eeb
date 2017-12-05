@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1272b853_bc7c9b5f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-05T21:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc16bd34_50a4ce7d",
+      "revId": "e0c9c487d04456b995214e46d7555c1ceb5e1eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d3ff4b3_403efa74",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e0c9c487d04456b995214e46d7555c1ceb5e1eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eae32ce_05f7e219",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-05T21:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3ff4b3_403efa74",
+      "revId": "e0c9c487d04456b995214e46d7555c1ceb5e1eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
