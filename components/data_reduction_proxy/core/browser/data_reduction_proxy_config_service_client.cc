@@ -400,7 +400,6 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
   // Attach variations headers.
   net::HttpRequestHeaders headers;
   variations::AppendVariationHeaders(config_service_url_, false /* incognito */,
-                                     false /* uma_enabled */,
                                      false /* is_signed_in */, &headers);
   if (!headers.IsEmpty())
     fetcher_->SetExtraRequestHeaders(headers.ToString());

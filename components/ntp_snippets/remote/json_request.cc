@@ -300,7 +300,6 @@ std::string JsonRequest::Builder::BuildHeaders() const {
   bool is_signed_in = false;
   variations::AppendVariationHeaders(url_,
                                      false,  // incognito
-                                     false,  // uma_enabled
                                      is_signed_in, &headers);
   return headers.ToString();
 }

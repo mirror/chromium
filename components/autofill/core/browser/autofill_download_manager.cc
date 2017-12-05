@@ -325,8 +325,8 @@ bool AutofillDownloadManager::StartRequest(
   // not affect transmission of experiments coming from the variations server.
   bool is_signed_in = false;
   variations::AppendVariationHeaders(fetcher->GetOriginalURL(),
-                                     driver_->IsIncognito(), false,
-                                     is_signed_in, &headers);
+                                     driver_->IsIncognito(), is_signed_in,
+                                     &headers);
   fetcher->SetExtraRequestHeaders(headers.ToString());
   fetcher->Start();
 

@@ -37,7 +37,6 @@ const char* kHostsToSetHeadersFor[] = {
     "googleweblight.com",
 };
 
-const char kChromeUMAEnabled[] = "X-Chrome-UMA-Enabled";
 const char kClientData[] = "X-Client-Data";
 
 // The result of checking if a URL should have variations headers appended.
@@ -90,7 +89,6 @@ void LogUrlValidationHistogram(URLValidationResult result) {
 
 void AppendVariationHeaders(const GURL& url,
                             bool incognito,
-                            bool uma_enabled,
                             bool is_signed_in,
                             net::HttpRequestHeaders* headers) {
   // Note the criteria for attaching client experiment headers:
@@ -100,14 +98,9 @@ void AppendVariationHeaders(const GURL& url,
   //         exactly www.googleadservices.com or
   //         international TLD domains *.google.<TLD> or *.youtube.<TLD>.
   // 2. Only transmit for non-Incognito profiles.
-  // 3. For the X-Chrome-UMA-Enabled bit, only set it if UMA is in fact enabled
-  //    for this install of Chrome.
-  // 4. For the X-Client-Data header, only include non-empty variation IDs.
+  // 3. For the X-Client-Data header, only include non-empty variation IDs.
   if (incognito || !internal::ShouldAppendVariationHeaders(url))
     return;
-
-  if (uma_enabled)
-    headers->SetHeaderIfMissing(kChromeUMAEnabled, "1");
 
   const std::string variation_ids_header =
       VariationsHttpHeaderProvider::GetInstance()->GetClientDataHeader(
@@ -120,7 +113,6 @@ void AppendVariationHeaders(const GURL& url,
 
 std::set<std::string> GetVariationHeaderNames() {
   std::set<std::string> headers;
-  headers.insert(kChromeUMAEnabled);
   headers.insert(kClientData);
   return headers;
 }
