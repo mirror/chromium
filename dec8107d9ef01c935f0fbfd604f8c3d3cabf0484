@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6b7625_2224cab4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T13:49:10Z",
+      "side": 1,
+      "message": "I think it might be more helpful to change this to an enum \"action\" style histogram which counts more general things about this class. Here are a few buckets that might make sense:\n\n - Request started\n - Blocked\n - Not blocked\n - Needed sniffing\n\nThese sorts of histograms are generally useful and easy to expand when a new edge case comes up.",
+      "revId": "dec8107d9ef01c935f0fbfd604f8c3d3cabf0484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec295e1_3aab75ca",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 81246,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T13:49:10Z",
+      "side": 1,
+      "message": "It might make sense to use histogram_suffixes for these, since there are quite a few.",
+      "revId": "dec8107d9ef01c935f0fbfd604f8c3d3cabf0484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
