@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5237a86e_0e307aaf",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-05T13:39:13Z",
+      "side": 1,
+      "message": "s/_EQ/_NEAR/",
+      "range": {
+        "startLine": 680,
+        "startChar": 8,
+        "endLine": 680,
+        "endChar": 11
+      },
+      "revId": "ca269ab6e6f28cf14808e0b414b8cb8ad9e5e456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
