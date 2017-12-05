@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "20bd3f46_e785dc10",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T07:24:06Z",
+      "side": 1,
+      "message": "No - the visible icons should be the same (the exception is the content paste icon). So padding is the main issue, with a few icons which also a bit fuzzy. I took a screenshot so you can see as well: https://drive.google.com/file/d/1RbbuzxIjBrIM-8VfYE-j7qh_ErT9L9y0/view?usp\u003dsharing (left is using the existing icons, right is after applying this patch).\n\nIn the screenshot, it seems like the location, notification, flash/extension and MIDI icons look fuzzy. The rest look clear but the size is wrong (I assumed due to additional internal padding).",
+      "parentUuid": "c7492d9d_cab02924",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd32ca0_fb2397e9",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 14
@@ -87,6 +111,24 @@
       "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0659a968_91f685ad",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T07:24:06Z",
+      "side": 1,
+      "message": "Ah, thank you! Done",
+      "parentUuid": "7dd32ca0_fb2397e9",
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
