@@ -146,6 +146,9 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 #import "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
@@ -396,6 +399,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     CRWNativeContentProvider,
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
+                                    FullscreenUIElement,
                                     LegacyFullscreenControllerDelegate,
                                     InfobarContainerStateDelegate,
                                     KeyCommandsPlumbing,
@@ -586,6 +590,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // The forwarder for web scroll view interation events.
   WebScrollViewMainContentUIForwarder* _webMainContentUIForwarder;
+
+  // The updater that adjusts the toolbar's layout for fullscreen events.
+  std::unique_ptr<FullscreenUIUpdater> _fullscreenUIUpdater;
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
@@ -1182,9 +1189,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // TODO(crbug.com/790886): Use the Browser's broadcaster once Browsers are
     // supported.
-    ChromeBroadcaster* broadcaster = FullscreenControllerFactory::GetInstance()
-                                         ->GetForBrowserState(_browserState)
-                                         ->broadcaster();
+    FullscreenController* fullscreenController =
+        FullscreenControllerFactory::GetInstance()->GetForBrowserState(
+            _browserState);
+    ChromeBroadcaster* broadcaster = fullscreenController->broadcaster();
     if (_broadcasting) {
       _toolbarUIUpdater = [[LegacyToolbarUIUpdater alloc]
           initWithToolbarUI:[[ToolbarUIState alloc] init]
@@ -1192,12 +1200,16 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                webStateList:[_model webStateList]];
       [_toolbarUIUpdater startUpdating];
       StartBroadcastingToolbarUI(_toolbarUIUpdater.toolbarUI, broadcaster);
+
       _mainContentUIUpdater = [[MainContentUIStateUpdater alloc]
           initWithState:[[MainContentUIState alloc] init]];
       _webMainContentUIForwarder = [[WebScrollViewMainContentUIForwarder alloc]
           initWithUpdater:_mainContentUIUpdater
              webStateList:[_model webStateList]];
       StartBroadcastingMainContentUI(self, broadcaster);
+
+      _fullscreenUIUpdater = base::MakeUnique<FullscreenUIUpdater>(self);
+      fullscreenController->AddObserver(_fullscreenUIUpdater.get());
     } else {
       StopBroadcastingToolbarUI(broadcaster);
       StopBroadcastingMainContentUI(broadcaster);
@@ -1206,6 +1218,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       _mainContentUIUpdater = nil;
       [_webMainContentUIForwarder disconnect];
       _webMainContentUIForwarder = nil;
+      fullscreenController->RemoveObserver(_fullscreenUIUpdater.get());
+      _fullscreenUIUpdater = nullptr;
     }
   }
 }
@@ -1918,6 +1932,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_dispatcher startDispatchingToTarget:_toolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
   [_toolbarCoordinator setTabCount:[_model count]];
+  [_toolbarCoordinator start];
   [self updateBroadcastState];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(
@@ -3571,6 +3586,25 @@ bubblePresenterForFeature:(const base::Feature&)feature
       break;
     }
   }
+}
+
+#pragma mark - FullscreenUIElement methods
+
+- (void)updateForFullscreenProgress:(CGFloat)progress {
+  CGFloat offset = (1.0 - progress) * [self toolbarHeight];
+  [self setFramesForHeaders:[self headerViews] atOffset:offset];
+}
+
+- (void)updateForFullscreenEnabled:(BOOL)enabled {
+  [self updateForFullscreenProgress:1.0];
+}
+
+- (void)finishFullscreenScrollWithAnimator:
+    (FullscreenScrollEndAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    [self updateForFullscreenProgress:finalProgress];
+  }];
 }
 
 #pragma mark - Context menu methods
