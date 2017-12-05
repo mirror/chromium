@@ -16,6 +16,7 @@
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/network/public/interfaces/network_change_manager.mojom.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
@@ -65,6 +66,15 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
   void GetNetworkChangeManager(
       network::mojom::NetworkChangeManagerRequest request) override;
+  void CreateUDPClientSocket(network::mojom::UDPSocketRequest request,
+                             network::mojom::UDPSocketReceiverPtr receiver,
+                             const net::IPEndPoint& remote_addr,
+                             CreateUDPClientSocketCallback callback) override;
+  void CreateUDPServerSocket(network::mojom::UDPSocketRequest request,
+                             network::mojom::UDPSocketReceiverPtr receiver,
+                             const net::IPEndPoint& local_addr,
+                             bool allow_address_reuse,
+                             CreateUDPServerSocketCallback callback) override;
 
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
