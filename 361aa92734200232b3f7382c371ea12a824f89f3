@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a57efe1e_8b1f4d4e",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-05T21:57:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "061d93de_7c6e9cf4",
+      "revId": "361aa92734200232b3f7382c371ea12a824f89f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1238d89e_2ab57649",
         "filename": "content/browser/renderer_host/delegated_frame_host_client_aura.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T19:16:25Z",
       "side": 1,
       "message": "missed something here?",
+      "revId": "361aa92734200232b3f7382c371ea12a824f89f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caaebde8_7b5856ff",
+        "filename": "content/browser/renderer_host/delegated_frame_host_client_aura.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-05T21:57:04Z",
+      "side": 1,
+      "message": "Wow not sure how that slipped into this CL...especially after testing this...",
+      "parentUuid": "1238d89e_2ab57649",
       "revId": "361aa92734200232b3f7382c371ea12a824f89f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
