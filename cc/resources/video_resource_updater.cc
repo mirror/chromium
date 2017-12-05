@@ -38,7 +38,7 @@ namespace {
 const viz::ResourceFormat kRGBResourceFormat = viz::RGBA_8888;
 
 VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
-    GLuint format,
+    media::VideoPixelFormat format,
     GLuint target,
     int num_textures,
     gfx::BufferFormat* buffer_format,
@@ -70,6 +70,7 @@ VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
       switch (target) {
         case GL_TEXTURE_EXTERNAL_OES:
         case GL_TEXTURE_2D:
+        case GL_TEXTURE_RECTANGLE_ARB:
           // Single plane textures can be sampled as RGB.
           if (num_textures > 1) {
             return VideoFrameExternalResources::YUV_RESOURCE;
@@ -77,8 +78,6 @@ VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
             *buffer_format = gfx::BufferFormat::YUV_420_BIPLANAR;
             return VideoFrameExternalResources::RGB_RESOURCE;
           }
-        case GL_TEXTURE_RECTANGLE_ARB:
-          return VideoFrameExternalResources::RGB_RESOURCE;
         default:
           NOTREACHED();
           break;
@@ -887,7 +886,8 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
   if (external_resources.type == VideoFrameExternalResources::RGB_RESOURCE)
     resource_color_space = resource_color_space.GetAsFullRangeRGB();
 
-  const size_t num_planes = media::VideoFrame::NumPlanes(video_frame->format());
+  const size_t num_planes = video_frame->NumTextures();
+                  //media::VideoFrame::NumPlanes(video_frame->format());
   for (size_t i = 0; i < num_planes; ++i) {
     const gpu::MailboxHolder& mailbox_holder = video_frame->mailbox_holder(i);
     if (mailbox_holder.mailbox.IsZero())
