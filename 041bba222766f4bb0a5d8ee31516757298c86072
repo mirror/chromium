@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9bfd4e6_fd10e666",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T16:01:01Z",
+      "side": 1,
+      "message": "Do we care about internal whitespace? If not, can all of these be combined into a single RemoveChars() invocation? Maybe combined with caching the set of removal chars?\n\nnamespace {\n\nbase::string16 GetPhoneFieldCharsToTrim() {\n  base::string16 chars_to_trim(base::kWhitespaceUTF16);\n  chars_to_trim.append(\n      {base::kRightToLeftMark, base::kLeftToRightMark, \u0027-\u0027, \u0027_\u0027, \u0027(\u0027, \u0027)\u0027});\n  return chars_to_trim;\n}\n\n}  // namespace\n\nbase::string16 SanitizePhoneFieldValue(const base::string16\u0026 value) {\n  static const base::StringPiece16 kCachedCharsToTrim(\n      *(new base::string16(GetPhoneFieldCharsToTrimImpl()));  // Leaked on shutdown.\n  base::string16 sanitized;\n  base::RemoveChars(value, kCharsToTrim, sanitized);\n  return sanitized;\n}",
+      "revId": "041bba222766f4bb0a5d8ee31516757298c86072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca639f2_a35505d2",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T16:01:01Z",
+      "side": 1,
+      "message": "if you make value a const ref you can avoid the copy/move.",
+      "revId": "041bba222766f4bb0a5d8ee31516757298c86072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
