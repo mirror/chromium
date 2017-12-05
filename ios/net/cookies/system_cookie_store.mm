@@ -47,6 +47,8 @@ NSInteger SystemCookieStore::CompareCookies(id a, id b, void* context) {
     return NSOrderedAscending;
 
   // Compare creation times.
+  if (!context)
+    return NSOrderedSame;
   CookieCreationTimeManager* manager =
       static_cast<CookieCreationTimeManager*>(context);
   base::Time created_a = manager->GetCreationTime(cookie_a);
