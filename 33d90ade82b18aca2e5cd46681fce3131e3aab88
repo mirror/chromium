@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a650466c_6fa3dd9d",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-12-05T21:43:50Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "33d90ade82b18aca2e5cd46681fce3131e3aab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00019530_7715cb86",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_accessor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-12-05T21:43:50Z",
+      "side": 1,
+      "message": "The docs[1] recommend not using Optional\u003cT\u003e as a function parameter and to keep using *T, thoughts?\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/docs/optional.md",
+      "revId": "33d90ade82b18aca2e5cd46681fce3131e3aab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b06d7e3_fdf656ac",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-12-05T21:43:50Z",
+      "side": 1,
+      "message": "This fails the DCHECK since it was never reset. You\u0027d need a call of ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(base::nullopt) every time this is changed.",
+      "revId": "33d90ade82b18aca2e5cd46681fce3131e3aab88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
