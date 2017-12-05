@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2fc6b81_7bc96aca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "W00t! I found a tab! :)",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a98b03_4b463947",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "What about clearance on blocks that don\u0027t establish a new formatting context? Need to reset float_foo_inline_size then, too. And probably commit whatever we have to sizes.max_size as well.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37f8bed_2b5c6445",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Duplicate code. Can you move this out, with a condition child_clear !\u003d EClear::kNone?",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c82a074_fbf24623",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Is this covered by any of the layout tests that now pass? I don\u0027t really understand what this is about. Why don\u0027t we use the *sum* of float_left_inline_size and margin_line_left (even if the margin is positive), for instance?",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2285a7dc_2d297c7e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "LayoutUnit() instead of 0, to avoid generating a lot of unnecessary code for saturated arithmetic checking.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc22898e_7a3b7083",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f054853_a7b5ac61",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "*inline*",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636a7d04_b0c1d4c2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "How could they ever become negative?",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fc9864_6e8ae9ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Why do you need this? Looks suspicious to go below the sizes.min_size we\u0027ve already found.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed9b4ab_f85d67a4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Why shouldn\u0027t the floats fit beside the flexbox? I expected 100+20+30 here.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f817ea93_f82dede1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Why this? Margins on inlines also contribute to intrinsic size.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d783f9c_0a151287",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "Using the style of the parent here seems weird. There\u0027s obviously something I\u0027m missing.",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d20f7f_2e310a36",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-05T11:21:12Z",
+      "side": 1,
+      "message": "That sounds like a \"TODO\".",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
