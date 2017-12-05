@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23327e6e_1ee96193",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/fetch-cors-exposed-header-names.https.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-05T10:52:34Z",
+      "side": 1,
+      "message": "CORS tainting on the response of ...",
+      "revId": "c68cd1001e6a895648a8dae6af9ee1691365df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613b510b_477c7bab",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchResponseData.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-05T10:52:34Z",
+      "side": 1,
+      "message": "now this is not filtered by FetchUtils::IsForbiddenResponseHeaderName(). I think this is because cors_exposed_header_names_ may now hold something not in header_list_. but want to confirm that any side effect of this wouldn\u0027t cause any breakage.",
+      "revId": "c68cd1001e6a895648a8dae6af9ee1691365df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92046830_688ecce8",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-05T10:52:34Z",
+      "side": 1,
+      "message": "use the alias (CredentialsMode)?",
+      "revId": "c68cd1001e6a895648a8dae6af9ee1691365df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
