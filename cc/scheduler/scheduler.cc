@@ -404,6 +404,26 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   state_machine_.SetCriticalBeginMainFrameToActivateIsFast(
       bmf_to_activate_estimate_critical < bmf_to_activate_threshold);
 
+  // If we expect the main thread to respond within this frame, or we blocked
+  // the commit as a result of an impl-side tree in the last frame, defer the
+  // invalidation to merge it with the incoming main frame.
+  base::TimeDelta time_since_main_frame_sent;
+  if (compositor_timing_history_->begin_main_frame_sent_time() !=
+      base::TimeTicks()) {
+    time_since_main_frame_sent =
+        now - compositor_timing_history_->begin_main_frame_sent_time();
+  }
+  bool main_thread_response_expected_before_deadline =
+      compositor_timing_history_
+              ->BeginMainFrameStartToCommitDurationEstimate() -
+          time_since_main_frame_sent <
+      bmf_to_activate_threshold;
+  state_machine_.set_should_defer_invalidation_for_main_frame(
+      main_thread_response_expected_before_deadline ||
+      state_machine_.did_block_commit_on_impl_side_tree());
+  if (impl_side_invalidation_forced_for_testing_)
+    state_machine_.set_should_defer_invalidation_for_main_frame(false);
+
   // Update the BeginMainFrame args now that we know whether the main
   // thread will be on the critical path or not.
   begin_main_frame_args_ = adjusted_args;
