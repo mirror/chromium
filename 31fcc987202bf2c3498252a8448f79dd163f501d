@@ -685,6 +685,30 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398a53c7_37f7b1ed",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T18:03:32Z",
+      "side": 1,
+      "message": "I somewhat misread this code originally. I think the comment is fine. However, my main concern is that this way of checking for isolated worlds seems somewhat fragile: there\u0027s no documented requirement that states that two unequal security origins implies isolated world. If we can have a bug to track the potential consolidation of fields down the road or the formalization of a way to detect requests from isolated worlds, I would be happy with that.",
+      "parentUuid": "847a4128_d93ed98e",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 25
+      },
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
