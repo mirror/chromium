@@ -88,6 +88,24 @@
       "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c6c15e_6c270e1f",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T22:07:00Z",
+      "side": 1,
+      "message": "Ah. Feel free to disregard this comment, then; sorry for the noise.",
+      "parentUuid": "b92dd3c5_2d5a448c",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
