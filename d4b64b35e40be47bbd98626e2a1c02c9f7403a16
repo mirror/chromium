@@ -16,6 +16,24 @@
       "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145a32b4_d10bffc1",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-05T18:16:59Z",
+      "side": 1,
+      "message": "I see what you are saying -- but we currently use .75 and 1.25, which wouldn\u0027t fit smoothly into those buckets. I could do a step of .05 or keep it as-is. Happy to try either -- what do you think of buckets between 0 and 3 with a step of 0.05? Too many (60)?",
+      "parentUuid": "68677340_8d73c2d9",
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
