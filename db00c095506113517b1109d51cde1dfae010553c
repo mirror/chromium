@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8972b1_75166782",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-05T01:57:25Z",
+      "side": 1,
+      "message": "It seems this isn\u0027t related to this patch.",
+      "revId": "db00c095506113517b1109d51cde1dfae010553c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38eebe6a_e1af0c4e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-05T01:57:25Z",
+      "side": 1,
+      "message": "How about introducing NGInlineFragmentTraversal::DescendantsOf() and familiy as NodeTraversal and FlatTreeTraversal?\n\nhttp://crrev.com/c/763188 introduces\n DescendantsOf()\n InclusiveDescendantsOf()\n AncestorsOf() (controversial)\n InclusiveAncestorsOf() (controversial)",
+      "revId": "db00c095506113517b1109d51cde1dfae010553c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
