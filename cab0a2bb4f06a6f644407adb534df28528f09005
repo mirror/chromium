@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e4b45e_fd96492f",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "We never figured out what this is?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243b6442_28624640",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "When is user null?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b122016_9cdb6d46",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "Isn\u0027t the inverse also true? If account_id.GetAccountType \u003d\u003d ACTIVE_DIRECTORY, then user_type must be USER_TYPE_ACTIVE_DIRECTORY, right?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4405e5c_159269ac",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "Do we need:\nif (account_id.GetAccountType() \u003d\u003d AccountType::ACTIVE_DIRECTORY)\n  return USER_TYPE_ACTIVE_DIRECTORY;",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6b47db_ac1dffd4",
+        "filename": "components/user_manager/user_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "const bool for browser_restart and is_child seems meaningless; we should drop it",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a38e94_2b24d913",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "newlines between cases may help readability here.",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645ac8d0_63a64b04",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "USER_TYPE_CHILD would be more explicit here",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0bbbe6_3fccb30d",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "Do you know what happens with Active Directory users here?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6c503f_ac4278a7",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "Maybe DCHECK or CHECK user?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393304fc_d6b21d42",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "This is a change in behavior right?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1f280e_de8c8c58",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-05T20:17:28Z",
+      "side": 1,
+      "message": "Isn\u0027t this equivalent:\nif (!prefs_user_types-\u003eGetIntegerWithoutPathExpansion(it-\u003eGetAccountIdKey(), \u0026user_type)\n  user_type \u003d USER_TYPE_REGULAR;\nuser \u003d User::CreateRegularUser(*it, user_type);\n\nGetIntegerWithoutPathExpansion is apparently deprecated - do we want to continue to use this?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
