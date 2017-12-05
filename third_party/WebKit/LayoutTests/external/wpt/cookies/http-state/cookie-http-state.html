@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>Tests basic cookie setting functionality</title>
+  <meta name=help href="https://tools.ietf.org/html/rfc6265#page-8">
+
+  <script src="/resources/testharness.js"></script>
+  <script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<div id=log></div>
+<script>
+
+  setup({ explicit_timeout: true });
+
+  function create_cookie_test(file) {
+    return t => {
+      const iframe = document.createElement('iframe');
+      iframe.src = "./resources/cookie-setter.py?file="+file;
+      document.body.appendChild(iframe);
+      // const kInitialCookies =
+      //     iframe.contentDocument.cookie.replace(/^Cookie: /, '').split(/\s*;\s*/);
+      return new Promise((resolve, reject) => {
+        const i1 = document.createElement('iframe');
+        i1.src = "./resources/cookie-setter.py?clean";
+        document.body.appendChild(i1);
+        window.addEventListener("message", t.step_func(e => {
+          if (e.data.uri.match(file) === null) {
+            return;  // We intercepted the message of a different call.
+          }
+          resolve(iframe.contentDocument);
+        }));
+      }).then((response_doc) => {
+        let actual_cookies = response_doc.cookie;
+        // for (let i in kInitialCookies) {
+        //   let no_spaces_cookie_regex =
+        //       new RegExp(/\s*[\;]*\s/.source + kInitialCookies[i]);
+        //   actual_cookies = actual_cookies.replace(no_spaces_cookie_regex, '');
+        // }
+        let expected_cookies = response_doc.body.innerText
+            .replace(/^Cookie: /, '')
+            .replace(/^\s+|\s+$/g, '');
+        assert_equals(actual_cookies, expected_cookies);
+        t.done();
+      });
+    };
+  }
+
+  let cookie_tests = [
+    {name: "Set cookie.", file: "0001"},
+    {name: "Set cookie with future expiration.", file: "0002"},
+    {name: "Set expired cookie along with valid cookie.", file: "0003"},
+    {name: "Set cookie without value.", file: "0004"},
+    {name: "Set cookie with age.", file: "0005"},
+  ]
+
+  for (let i in cookie_tests) {    promise_test(create_cookie_test(cookie_tests[i].file),
+                 cookie_tests[i].name);
+  }
+</script>
