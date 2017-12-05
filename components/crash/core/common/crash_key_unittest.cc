@@ -5,6 +5,7 @@
 #include "components/crash/core/common/crash_key.h"
 
 #include "base/debug/crash_logging.h"
+#include "base/debug/debugging_flags.h"
 #include "base/debug/stack_trace.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -69,6 +70,9 @@ TEST_F(CrashKeyStringTest, FormatStackTrace64) {
 }
 #endif
 
+// If there is no way to produce a stack trace, then the crash key won't
+// get set (an empty string will be produced).
+#if !defined(OFFICIAL_BUILD) && !defined(NO_UNWIND_TABLES)
 TEST_F(CrashKeyStringTest, SetStackTrace) {
   static CrashKeyString<1024> key("test-trace");
 
@@ -78,6 +82,7 @@ TEST_F(CrashKeyStringTest, SetStackTrace) {
 
   EXPECT_TRUE(key.is_set());
 }
+#endif
 
 TEST_F(CrashKeyStringTest, BaseSupport) {
   static base::debug::CrashKeyString* crash_key =

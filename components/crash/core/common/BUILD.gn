@@ -112,6 +112,7 @@ source_set("unit_tests") {
   deps = [
     ":common",
     "//base",
+    "//base:debugging_flags",
     "//testing/gtest",
   ]
 
