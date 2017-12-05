@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "eae56c53_2711e91e",
+        "filename": "chrome/browser/ui/cocoa/apps/app_shim_menu_controller_mac_interactive_uitest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "\u003e Hmm, apparently this isn\u0027t enough. I just ran tests locally and it flakes, sometimes leaving Cmd pressed (and it\u0027s not because I check modiferFlags to early, all the following tests are seeing pressed Cmd too). Also, GlobalCommandsApiTest.GlobalCommand is sometimes failing too because it leaves Shift pressed.\n\ndoes base::RunLoop().RunUntilIdle() here help with the flakiness?\n\n(although I suspect it won\u0027t... I would expect the expectations in ExpectActiveWithCounts to fail as well if that were the culprit)",
+      "parentUuid": "fd81482c_8dc9001b",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e868d4_0f627719",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "nit: import",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "715d5736_6b32f6c7",
         "filename": "chrome/test/base/in_process_browser_test_mac.mm",
         "patchSetId": 4
@@ -30,6 +65,92 @@
       "writtenOn": "2017-12-05T09:08:03Z",
       "side": 1,
       "message": "Maybe it\u0027s better to check the diff between modifiers at the start and modifiers at the end?",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c20f50e_e972370f",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "\u003e Maybe it\u0027s better to check the diff between modifiers at the start and modifiers at the end?\n\nGood point - perhaps with sky\u0027s suggestion to clear them out as well, this will be less of an issue",
+      "parentUuid": "715d5736_6b32f6c7",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb791add_790b4906",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "does a constexpr struct work? std::pair is a class, and and \"Variables of class type with static storage duration are forbidden\" -\n https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\n(although I would hope that the compiler realises the std::pair destructor has nothing to do, so won\u0027t queue up a call to it on process exit..).\n\nalso naming: kKnownModifiers for constexpr",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eee2a7_bb072743",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "nit: modifierFlags -\u003e modifier_flags (or modifiers). (camelCase for new declarations only between @foo/@end). ditto for knownModifier below.",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a554eb_d71cf45a",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "Since we are fighting with tests that using CGEventPost, perhaps we should check\n\nCGEventSourceFlagsState(kCGEventSourceStateCombinedSessionState);\n\nAnd #include \u003cCoreGraphics/CoreGraphics.h\u003e\n\nthese are C apis (not ObjectiveC), so we wouldn\u0027t need the rename to .mm either.\n\nMaybe this will also help with the flakiness.",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f42d4e_87bb8957",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:18:46Z",
+      "side": 1,
+      "message": "nit: curlies not required on the if",
       "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
