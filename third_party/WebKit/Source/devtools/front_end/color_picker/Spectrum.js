@@ -109,7 +109,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
     UI.installDragHandle(
         this._colorElement, dragStart.bind(this, positionColor.bind(this)), positionColor.bind(this), null, 'default');
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio')) {
+    if (Runtime.experiments.isEnabled('colorContrastRatio') && Common.moduleSetting('showContrastLine').get()) {
       var boundToggleColorPicker = this._toggleColorPicker.bind(this);
       var boundContrastPanelExpanded = this._contrastPanelExpanded.bind(this);
       /** @type {!ColorPicker.ContrastInfo} */
