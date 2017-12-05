@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b348ee4a_28d5e232",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-05T19:24:06Z",
+      "side": 1,
+      "message": "I know these regular expressions are over 80 characters but I couldn\u0027t find anything in the style guide regarding how to break them up, and it doesn\u0027t appear that there\u0027s any language support for line-breaking them.\n\nI did find this stackoverflow post (https://stackoverflow.com/questions/12317049/how-to-split-a-long-regular-expression-into-multiple-lines-in-javascript) which suggested called the RegExp constructor using concatenated strings instead, so if this is the preferred way to line-break the expression I\u0027ll make those changes.",
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
