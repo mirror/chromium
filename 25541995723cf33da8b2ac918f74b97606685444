@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5beb511e_231d74e8",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3daab2b4_b9fdea5c",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c11d6855_b2023244",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "25541995723cf33da8b2ac918f74b97606685444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aadfa29_f9e67dbf",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c11d6855_b2023244",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99e751eb_2b17542e",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea7ca0f_3639f63c",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801dde70_aee0382d",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "25541995723cf33da8b2ac918f74b97606685444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f7fd2b_1296627b",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "Agreed. Done.",
+      "parentUuid": "801dde70_aee0382d",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2509c53e_cb5d1ab8",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41df6ce4_1d660a06",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71dac2c3_1bd5af7e",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "25541995723cf33da8b2ac918f74b97606685444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46d3a2b_7ed54bbd",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-05T22:09:40Z",
+      "side": 1,
+      "message": "As per our offline discussion am switching the DataPipeProducerObserver to specify that it\u0027s two methods may be called on any sequence.",
+      "parentUuid": "71dac2c3_1bd5af7e",
+      "revId": "25541995723cf33da8b2ac918f74b97606685444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
