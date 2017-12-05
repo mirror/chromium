@@ -162,6 +162,10 @@ NSHTTPCookieAcceptPolicy WKHTTPSystemCookieStore::GetCookieAcceptPolicy() {
   return [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookieAcceptPolicy];
 }
 
+const char* WKHTTPSystemCookieStore::GetClassName() const {
+  return "WKHTTPSystemCookieStore";
+}
+
 #pragma mark private methods
 
 void WKHTTPSystemCookieStore::RunSystemCookieCallbackForCookies(

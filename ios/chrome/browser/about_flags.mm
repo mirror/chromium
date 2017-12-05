@@ -200,6 +200,16 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"password-export", flag_descriptions::kPasswordExportName,
      flag_descriptions::kPasswordExportDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)}};
+FEATURE_VALUE_TYPE(fullscreen::features::kNewFullscreen)
+}
+, {
+  "wk-http-system-cookie-store",
+      flag_descriptions::kWKHTTPSystemCookieStoreName,
+      flag_descriptions::kWKHTTPSystemCookieStoreName, flags_ui::kOsIos,
+      FEATURE_VALUE_TYPE(web::features::kWKHTTPSystemCookieStore)
+}
+}
+;
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
