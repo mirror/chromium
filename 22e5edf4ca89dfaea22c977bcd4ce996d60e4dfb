@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "7dd96ce0_fede7bba",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-05T01:19:02Z",
+      "side": 1,
+      "message": "nit: \u003ddefault (and destructor)\n\nSee ongoing bug replacing these. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d778957\u0026desc\u003d3",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496149ec_e8143e49",
+        "filename": "chrome/browser/chromeos/file_system_provider/extension_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-05T01:19:02Z",
+      "side": 1,
+      "message": "return std::make_unique?",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afff68c_d1066f04",
+        "filename": "chrome/browser/chromeos/file_system_provider/fake_extension_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-05T01:19:02Z",
+      "side": 1,
+      "message": "make_unique?",
+      "revId": "22e5edf4ca89dfaea22c977bcd4ce996d60e4dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5991afb8_95c875af",
         "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
         "patchSetId": 3
