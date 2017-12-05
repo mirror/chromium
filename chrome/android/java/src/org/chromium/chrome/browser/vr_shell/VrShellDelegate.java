@@ -318,7 +318,9 @@ public class VrShellDelegate
      */
     public static int getVrSupportLevel(VrDaydreamApi daydreamApi,
             VrCoreVersionChecker versionChecker, Tab tabToShowInfobarIn) {
-        if (versionChecker == null || daydreamApi == null
+        // TODO(mthiesse, crbug.com/791090): Re-enable VR mode for devices that boot to VR once we
+        // support those devices.
+        if (versionChecker == null || daydreamApi == null || daydreamApi.bootsToVr()
                 || !isVrCoreCompatible(versionChecker, tabToShowInfobarIn)) {
             return VR_NOT_AVAILABLE;
         }
@@ -1112,6 +1114,7 @@ public class VrShellDelegate
 
         // Update VR support level as it can change at runtime
         maybeUpdateVrSupportLevel();
+        Log.wtf("TAG", "SUPPORT: " + (mVrSupportLevel == VR_NOT_AVAILABLE));
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return ENTER_VR_CANCELLED;
         if (!canEnterVr(mActivity.getActivityTab(), false)) return ENTER_VR_CANCELLED;
         if (mVrSupportLevel == VR_DAYDREAM && isDaydreamCurrentViewer()) {
@@ -1201,6 +1204,8 @@ public class VrShellDelegate
             }, (long) (WINDOW_FADE_ANIMATION_DURATION_MS * scale));
             return;
         }
+
+        Log.wtf("TAG", "BOOTSVR: " + mVrDaydreamApi.bootsToVr());
 
         mPaused = false;
 
