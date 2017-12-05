@@ -20,6 +20,10 @@ namespace blink {
 class WebStorageQuotaCallbacks;
 }
 
+namespace service_manager {
+class InterfaceProvider;
+}
+
 namespace url {
 class Origin;
 }
@@ -53,10 +57,12 @@ class QuotaDispatcher : public WorkerThread::Observer {
   // WorkerThread::Observer implementation.
   void WillStopCurrentWorkerThread() override;
 
-  void QueryStorageUsageAndQuota(const url::Origin& origin,
+  void QueryStorageUsageAndQuota(service_manager::InterfaceProvider*,
+                                 const url::Origin& origin,
                                  storage::StorageType type,
                                  std::unique_ptr<Callback> callback);
-  void RequestStorageQuota(int render_frame_id,
+  void RequestStorageQuota(service_manager::InterfaceProvider*,
+                           int render_frame_id,
                            const url::Origin& origin,
                            storage::StorageType type,
                            int64_t requested_size,

@@ -125,8 +125,8 @@ ScriptPromise StorageManager::estimate(ScriptState* script_state) {
   }
 
   Platform::Current()->QueryStorageUsageAndQuota(
-      security_origin->ToUrlOrigin(), kWebStorageQuotaTypeTemporary,
-      new EstimateCallbacks(resolver));
+      execution_context->GetInterfaceProvider(), security_origin->ToUrlOrigin(),
+      kWebStorageQuotaTypeTemporary, new EstimateCallbacks(resolver));
   return promise;
 }
 
