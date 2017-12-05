@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3d7409a_146b260a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit clearer if we only set this if we need to:\n\nif (parallel_writing_pattern !\u003d PARALLEL_WRITING_JOIN) {\n  transaction-\u003eSetParallelWritingPatternForMetrics(parallel_writing_pattern);\n  return;\n}",
+      "range": {
+        "startLine": 1082,
+        "startChar": 4,
+        "endLine": 1082,
+        "endChar": 79
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3b61a1_0080d68e",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Please s/writers/SharedWriters/ in this paragraph as \u0027writers\u0027 makes me think of writing transactions and not the SharedWriters object.",
+      "range": {
+        "startLine": 114,
+        "startChar": 46,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c5e5e9_51bbdca4",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Also add a warning that, because it\u0027s in enums.xml, this enum should only be appended to.",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac0539b_63102a5d",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Why is this needed? Can\u0027t we just leave it as PARALLEL_WRITING_NONE when we don\u0027t have a final outcome?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2683adb0_a6fc941a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Let\u0027s move this down below the conditionals below so that this UMA is recorded when the other UMA is recorded.",
+      "range": {
+        "startLine": 3249,
+        "startChar": 0,
+        "endLine": 3250,
+        "endChar": 77
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ba43b9_278e4ead",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Can remove \u0027not or\u0027",
+      "range": {
+        "startLine": 194,
+        "startChar": 25,
+        "endLine": 194,
+        "endChar": 31
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f83e79_d56dfe2c",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Add, \u0027Can be called repeatedly, but doesn\u0027t change once the value has been set to something other than PARALLEL_WRITING_NONE.\u0027",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795bc7aa_9677dd8b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Do we need this argument? It\u0027s hard to understand it since it overwrites parallel_writing_pattern_ each time a transaction is added. Could we make due with is_exclusive?",
+      "range": {
+        "startLine": 111,
+        "startChar": 27,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8004e42_f3409e6a",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "I expected to find test coverage for PARALLEL_WRITING_NOT_JOIN_CACHE_WRITE_FAIL or PARALLEL_WRITING_NOT_JOIN_STOP_CACHING but don\u0027t see it in this file.",
+      "range": {
+        "startLine": 488,
+        "startChar": 41,
+        "endLine": 488,
+        "endChar": 72
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d0ce4a_6868f961",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 20992,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "These labels need to be short as they show up on the histogram. See httpcache.pattern for an example.",
+      "range": {
+        "startLine": 20991,
+        "startChar": 13,
+        "endLine": 20992,
+        "endChar": 31
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35dc6fc_27f43671",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 28339,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-05T16:37:52Z",
+      "side": 1,
+      "message": "Suggest:\n\nRecords whether a transaction either joined an existing SharedWriters object, or why it failed to do so (e.g., because one didn\u0027t exist, it\u0027s not a GET request, etc.)",
+      "range": {
+        "startLine": 28339,
+        "startChar": 3,
+        "endLine": 28339,
+        "endChar": 10
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
