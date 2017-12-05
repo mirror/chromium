@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5909212d_bb7d4adb",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10570cb3_59f5efd1",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d3ab5ca_6fa66f09",
         "filename": "ash/system/power/display_forced_off_setter.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T00:07:22Z",
       "side": 1,
       "message": "this doesn\u0027t seem necessary; you\u0027re already invalidating the weak pointers",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaefece_5ab31c27",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "The idea was to invalidate |scoped_display_forced_off_| objects, so their owners can determine that they are inactive after the |DisplayForcedOffSetter| goes away.\n(though, considering that this is supposed to outlive objects that use it, it\u0027s probably not needed, so removing it).",
+      "parentUuid": "5d3ab5ca_6fa66f09",
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "39689254_4cb13ccd",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21dea668_8daec0be",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19ae8d2f_d6a1ae0a",
         "filename": "ash/system/power/display_forced_off_setter.cc",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afeee85d_8820281d",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ae8d2f_d6a1ae0a",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f1752370_b6f8c094",
+        "filename": "ash/system/power/display_forced_off_setter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e28543b8_6dc99dd4",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef2d289_1f0b021f",
         "filename": "ash/system/power/display_forced_off_setter.h",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c63bdc_c72e7faf",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef2d289_1f0b021f",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3018f2b7_55a19c90",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e45c5d2_45e5a4db",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21378a4f_d7a5fa6c",
         "filename": "ash/system/power/display_forced_off_setter.h",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada1ff30_984e3a94",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21378a4f_d7a5fa6c",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "51959329_2874b749",
+        "filename": "ash/system/power/display_forced_off_setter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46459a20_6e82acaf",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd097a5f_9dae96cb",
         "filename": "ash/system/power/power_button_display_controller.cc",
         "patchSetId": 20
@@ -169,6 +331,24 @@
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c878b29_c1071fea",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd097a5f_9dae96cb",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "5e26d20d_9a11ea1a",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66fb623e_85b9b8fa",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c63070a7_9998e472",
         "filename": "ash/system/power/scoped_display_forced_off.h",
         "patchSetId": 20
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-05T00:07:22Z",
       "side": 1,
       "message": "why is this needed? shouldn\u0027t callers just destroy the object when they\u0027re done with it?",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577fd68a_e2407536",
+        "filename": "ash/system/power/scoped_display_forced_off.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "I used it to reset from backlights_forced_off_setter to reset the state when that object goes out of scope (so the users of the class have a signal that the ScopedBacklightsForcedOff object is not valid anymore) - though, backlights_forced_off_setter getting destroyed before its clients is not really something that should happen.\nRemoved this.",
+      "parentUuid": "c63070a7_9998e472",
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +436,24 @@
       "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0b215f_2b03d0b6",
+        "filename": "ash/system/power/scoped_display_forced_off.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-05T02:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1adc058a_c54bd9c6",
+      "revId": "eafd6ca8c3530ad1f0448955da192173c2f48274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
