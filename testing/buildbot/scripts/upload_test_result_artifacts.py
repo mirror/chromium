@@ -129,7 +129,7 @@ def prep_artifacts_for_gs_upload(hashed_artifacts, tempdir):
       shutil.copyfile(absolute_filepath, new_location)
 
 
-def upload_artifacts(data, artifact_root, dry_run):
+def upload_artifacts(data, artifact_root, dry_run, bucket):
   """Uploads artifacts to google storage.
 
   Args:
@@ -145,8 +145,6 @@ def upload_artifacts(data, artifact_root, dry_run):
   local_data = copy.deepcopy(data)
   type_info = local_data['artifact_type_info']
 
-  # TODO(martiniss): Add support for uploading to other buckets.
-  bucket = 'chromium-test-artifacts'
   # Put the hashing algorithm as part of the filename, so that it's
   # easier to change the algorithm if we need to in the future.
   gs_path = 'sha1'
@@ -192,6 +190,9 @@ def main():
                       )
   parser.add_argument('--artifact-root', required=True, type=os.path.realpath,
                       help='The file path where artifact locations are rooted.')
+  parser.add_argument('--bucket', default='chromium-test-artifacts',
+                      help='The google storage bucket to upload artifacts to.'
+                      ' The default bucket is public and accessible by anyone.')
   parser.add_argument('-q', '--quiet', action='store_true',
                       help='If set, does not print the transformed json file'
                            ' to stdout.')
@@ -207,7 +208,8 @@ def main():
         args.test_result_file, 'artifact_type_info')
     return 1
 
-  new_data = upload_artifacts(data, args.artifact_root, args.dry_run)
+  new_data = upload_artifacts(
+      data, args.artifact_root, args.dry_run, args.bucket)
   if args.output_file:
     with open(args.output_file, 'w') as f:
       json.dump(new_data, f)
