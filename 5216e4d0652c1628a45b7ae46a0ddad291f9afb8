@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c40d17_c0dec296",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T14:30:53Z",
+      "side": 1,
+      "message": "The comment above says \"user visible\", but this is background?\n\nAlso, from the comment, this actually sounds like it should be USER_BLOCKING (in response to user action, generating data - \"Example: Generating data shown in the UI immediately after a click.\" [1]).  But I don\u0027t have the full context, so maybe not.  In either case, we should make sure the comment and enum match. :)\n\n[1] https://chromium.googlesource.com/chromium/src/+/2fe25ac6221de1d1e1151249fe56f0444b5ad6b0/base/task_scheduler/task_traits.h#36",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e5ee24_b466b59e",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T14:30:53Z",
+      "side": 1,
+      "message": "nit: since this is only used in one place, maybe just inline the result.get()?",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
