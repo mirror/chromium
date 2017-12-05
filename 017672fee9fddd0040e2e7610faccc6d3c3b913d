@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab24a4a9_5b834d20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-05T01:24:44Z",
+      "side": 1,
+      "message": "nit: mind also referencing 626802, since that\u0027s where the keys were introduced?",
+      "revId": "017672fee9fddd0040e2e7610faccc6d3c3b913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
