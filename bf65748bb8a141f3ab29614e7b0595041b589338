@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8358ce42_4582005e",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-05T08:11:35Z",
+      "side": 1,
+      "message": "Could you add test case for this?\nAnd move deployment of ComputeRange() in another patch?",
+      "range": {
+        "startLine": 159,
+        "startChar": 62,
+        "endLine": 159,
+        "endChar": 74
+      },
+      "revId": "bf65748bb8a141f3ab29614e7b0595041b589338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
