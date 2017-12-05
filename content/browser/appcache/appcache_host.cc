@@ -146,7 +146,6 @@ bool AppCacheHost::SelectCache(const GURL& document_url,
       frontend_->OnContentBlocked(host_id_, manifest_url);
       return true;
     }
-
     // Note: The client detects if the document was not loaded using HTTP GET
     // and invokes SelectCache without a manifest url, so that detection step
     // is also skipped here. See WebApplicationCacheHostImpl.cc
@@ -155,7 +154,6 @@ bool AppCacheHost::SelectCache(const GURL& document_url,
     LoadOrCreateGroup(manifest_url);
     return true;
   }
-
   // TODO(michaeln): If there was a manifest URL, the user agent may report
   // to the user that it was ignored, to aid in application development.
   FinishCacheSelection(nullptr, nullptr);
