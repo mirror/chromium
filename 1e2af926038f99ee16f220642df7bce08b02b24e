@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "12ea64fd_6d9757eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T18:00:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09439331_06c33553",
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a9c174_0352ac2e",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 1
@@ -260,6 +278,30 @@
       "side": 1,
       "message": "Done.  (follow-up CL at https://chromium-review.googlesource.com/#/c/chromium/src/+/797470 - hopefully the tryjobs will turn out green...)",
       "parentUuid": "ff523f4a_7b41f88d",
+      "range": {
+        "startLine": 1240,
+        "startChar": 0,
+        "endLine": 1243,
+        "endChar": 76
+      },
+      "revId": "1e2af926038f99ee16f220642df7bce08b02b24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71ef2e66_a0c35e47",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T18:00:09Z",
+      "side": 1,
+      "message": "Actually, I think this whole method will disappear soon as we rip out the old navigation code, so I wonder if it is worth the extra work to fix just that part.",
+      "parentUuid": "7bdb8801_6b57a188",
       "range": {
         "startLine": 1240,
         "startChar": 0,

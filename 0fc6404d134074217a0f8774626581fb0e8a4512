@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "9621f8d3_938fd8b4",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T18:00:09Z",
+      "side": 1,
+      "message": "nit: Technically, the test used to use the same site for the redirect URL as the init_url.",
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6c7bc1_162e3cbf",
         "filename": "content/browser/cross_site_transfer_browsertest.cc",
         "patchSetId": 3
@@ -94,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "511026cc_51e0db48",
+        "filename": "content/browser/cross_site_transfer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T18:00:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad6c7bc1_162e3cbf",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 267,
+        "endChar": 66
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "193a3bb9_5efb63b5",
         "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
         "patchSetId": 3
@@ -105,6 +146,30 @@
       "writtenOn": "2017-11-29T18:20:06Z",
       "side": 1,
       "message": "I think there is no need to explicitly call ShellContentBrowserClient::SetSwapProcessesForRedirect(true), because this test will be run by linux_chromium_rel_ng with and without --site-per-process (since this bot has a separate site_per_process_content_browsertests step).",
+      "range": {
+        "startLine": 535,
+        "startChar": 23,
+        "endLine": 535,
+        "endChar": 70
+      },
+      "revId": "0fc6404d134074217a0f8774626581fb0e8a4512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e13acd11_d8228ea9",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-05T18:00:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "193a3bb9_5efb63b5",
       "range": {
         "startLine": 535,
         "startChar": 23,
