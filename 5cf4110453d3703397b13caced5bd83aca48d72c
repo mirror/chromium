@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72621ecf_ef39a467",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-05T11:44:32Z",
+      "side": 1,
+      "message": "I suppose erasing using a custom comparator would be O(log(size)) while the current implementation is linear time, so it would make sense. I think that this custom comparator should be in base:: though (there are a few other flat_map\u003cunique_ptr\u003e in the code base, and I guess we\u0027d want to switch all of them). How about me doing this in a followup CL?",
+      "parentUuid": "faa2e6e8_5cf6102a",
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb5f997c_48f54846",
         "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cb4c86dc_91085cbd",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-05T11:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb5f997c_48f54846",
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9038a6b9_43b586ef",
         "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
         "patchSetId": 15
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-05T07:23:22Z",
       "side": 1,
       "message": "Are these guessable?",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "5cf4110453d3703397b13caced5bd83aca48d72c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bacd95_37338362",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-05T11:44:32Z",
+      "side": 1,
+      "message": "Yes, see crbug.com/775511 about switching to UnguessableToken.",
+      "parentUuid": "9038a6b9_43b586ef",
       "range": {
         "startLine": 16,
         "startChar": 12,
