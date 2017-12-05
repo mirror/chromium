@@ -10,6 +10,7 @@ package org.chromium.chrome.browser.tabmodel.document;
 
 option java_outer_classname = "DocumentTabModelInfo";
 option java_package = "org.chromium.chrome.browser.tabmodel.document";
+option optimize_for = LITE_RUNTIME;
 
 message DocumentEntry {
   // Next ID to use: 7
