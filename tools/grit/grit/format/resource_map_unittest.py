@@ -67,7 +67,6 @@ extern const size_t kTheRcHeaderSize;''', output)
 const GritResourceMap kTheRcHeader[] = {
   {"IDC_KLONKMENU", IDC_KLONKMENU},
   {"IDS_FIRSTPRESENT", IDS_FIRSTPRESENT},
-  {"IDS_MISSING", IDS_MISSING},
   {"IDS_LANGUAGESPECIFIC", IDS_LANGUAGESPECIFIC},
   {"IDS_THIRDPRESENT", IDS_THIRDPRESENT},
 };
@@ -82,9 +81,7 @@ const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
 const GritResourceMap kTheRcHeader[] = {
   {"grit/testdata/klonk.rc", IDC_KLONKMENU},
   {"abc", IDS_FIRSTPRESENT},
-  {"def", IDS_MISSING},
   {"ghi", IDS_LANGUAGESPECIFIC},
-  {"jkl", IDS_LANGUAGESPECIFIC},
   {"mno", IDS_THIRDPRESENT},
 };
 const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
@@ -129,7 +126,7 @@ const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
                          file="xyz.png" />
             </if>
          </structures>
-        </release>''', run_gatherers=True, output_all_resource_defines=False)
+        </release>''', run_gatherers=True)
     output = util.StripBlankLinesAndComments(''.join(
         resource_map.GetFormatter('resource_map_header')(grd, 'en', '.')))
     self.assertEqual('''\
@@ -208,7 +205,7 @@ const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
               <include type="foo" file="xyz" name="IDS_LAST" />
             </if>
          </includes>
-        </release>''', run_gatherers=True, output_all_resource_defines=False)
+        </release>''', run_gatherers=True)
     output = util.StripBlankLinesAndComments(''.join(
         resource_map.GetFormatter('resource_map_header')(grd, 'en', '.')))
     self.assertEqual('''\
@@ -280,7 +277,8 @@ const size_t kTheRcHeaderSize = arraysize(kTheRcHeader);''', output)
               </message>
             </if>
           </messages>
-        </release>''', run_gatherers=True, output_all_resource_defines=False)
+        </release>''', run_gatherers=True)
+    grd.InitializeIds('<in-memory-file>')
     output = util.StripBlankLinesAndComments(''.join(
         resource_map.GetFormatter('resource_map_header')(grd, 'en', '.')))
     self.assertEqual('''\

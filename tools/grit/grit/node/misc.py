@@ -35,6 +35,22 @@ _RTL_LANGS = (
 )
 
 
+class _IdMap(dict):
+  """A dict for id_map that gives better error messages."""
+  def __init__(self, first_output):
+    super(_IdMap, self).__init__()
+    self._first_output = first_output
+
+  def __getitem__(self, key):
+    try:
+      return super(_IdMap, self).__getitem__(key)
+    except KeyError, e:
+      raise KeyError(('ID "{}" is missing an assignment. IDs are assigned when '
+                      'the first output is generated ({}), so you must ensure '
+                      'that this resource is included in it.').format(
+                          key, self._first_output))
+
+
 def _ReadFirstIdsFromFile(filename, defines):
   """Read the starting resource id values from |filename|.  We also
   expand variables of the form <(FOO) based on defines passed in on
@@ -73,7 +89,7 @@ def _ReadFirstIdsFromFile(filename, defines):
   return (src_root_dir, first_ids_dict)
 
 
-def _ComputeIds(root, predetermined_tids):
+def _ComputeIds(root, output_file, predetermined_tids):
   """Returns a dict of textual id -> numeric id for all nodes in root.
 
   IDs are mostly assigned sequentially, but will vary based on:
@@ -89,14 +105,14 @@ def _ComputeIds(root, predetermined_tids):
   from grit.node import empty, include, message, misc, structure
 
   ids = {}  # Maps numeric id to textual id
-  tids = {}  # Maps textual id to numeric id
+  tids = _IdMap(output_file)  # Maps textual id to numeric id
   id_reasons = {}  # Maps numeric id to text id and a human-readable explanation
   group = None
   last_id = None
   predetermined_ids = {value: key
                        for key, value in predetermined_tids.iteritems()}
 
-  for item in root:
+  for item in root.ActiveDescendants():
     if isinstance(item, empty.GroupingNode):
       # Note: this won't work if any GroupingNode can be contained inside
       # another.
@@ -335,7 +351,6 @@ class GritNode(base.Node):
       'source_lang_id' : 'en',
       'enc_check' : constants.ENCODING_CHECK,
       'tc_project' : 'NEED_TO_SET_tc_project_ATTRIBUTE',
-      'output_all_resource_defines': 'true',
       'rc_header_format': None
     }
 
@@ -426,18 +441,6 @@ class GritNode(base.Node):
     """Returns the base directory, as set in the .grd file.
     """
     return self.attrs['base_dir']
-
-  def SetShouldOutputAllResourceDefines(self, value):
-    """Overrides the value of output_all_resource_defines found in the grd file.
-    """
-    self.attrs['output_all_resource_defines'] = 'true' if value else 'false'
-
-  def ShouldOutputAllResourceDefines(self):
-    """Returns true if all resource defines should be output, false if
-    defines for resources not emitted to resource files should be
-    skipped.
-    """
-    return self.attrs['output_all_resource_defines'] == 'true'
 
   def GetRcHeaderFormat(self):
     return self.attrs['rc_header_format']
@@ -632,15 +635,19 @@ class GritNode(base.Node):
         'SetPredeterminedIdsFile() after InitializeIds()')
     self._predetermined_ids_file = predetermined_ids_file
 
-  def InitializeIds(self):
-    '''Initializes the text ID -> numeric ID mapping.'''
+  def InitializeIds(self, output_file):
+    '''Initializes the text ID -> numeric ID mapping.
+
+    Args:
+      output_file: The output file for the current tree configuration.
+    '''
     predetermined_id_map = {}
     if self._predetermined_ids_file:
       with open(self._predetermined_ids_file) as f:
         for line in f:
           tid, nid = line.split()
           predetermined_id_map[tid] = int(nid)
-    self._id_map = _ComputeIds(self, predetermined_id_map)
+    self._id_map = _ComputeIds(self, output_file, predetermined_id_map)
 
   def RunGatherers(self, debug=False):
     '''Call RunPreSubstitutionGatherer() on every node of the tree, then apply
