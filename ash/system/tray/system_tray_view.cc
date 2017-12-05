@@ -53,7 +53,6 @@ SystemTrayView::SystemTrayView(SystemTrayType system_tray_type,
 }
 
 SystemTrayView::~SystemTrayView() {
-  DestroyItemViews();
 }
 
 bool SystemTrayView::CreateItemViews(LoginStatus login_status) {
