@@ -16,6 +16,24 @@
       "revId": "bcbb9b53e146352195c26bcaab8c6af364951102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f84663_6254cd50",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-05T00:05:38Z",
+      "side": 1,
+      "message": "Good idea. I\u0027ve renamed the method and changed the functionality.",
+      "parentUuid": "1874d0f3_7c775192",
+      "revId": "bcbb9b53e146352195c26bcaab8c6af364951102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
