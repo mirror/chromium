@@ -466,28 +466,23 @@ public class ChromeTabbedActivity
             mTabModelObserver = new TabModelSelectorTabModelObserver(mTabModelSelectorImpl) {
                 @Override
                 public void didCloseTab(int tabId, boolean incognito) {
-                    closeIfNoTabsAndHomepageEnabled(false);
+                    closeIfNoTabsAndHomepageEnabled();
                 }
 
                 @Override
                 public void tabPendingClosure(Tab tab) {
-                    closeIfNoTabsAndHomepageEnabled(true);
+                    closeIfNoTabsAndHomepageEnabled();
                 }
 
                 @Override
                 public void tabRemoved(Tab tab) {
-                    closeIfNoTabsAndHomepageEnabled(false);
+                    closeIfNoTabsAndHomepageEnabled();
                 }
 
-                private void closeIfNoTabsAndHomepageEnabled(boolean isPendingClosure) {
+                private void closeIfNoTabsAndHomepageEnabled() {
                     if (getTabModelSelector().getTotalTabCount() == 0) {
                         // If the last tab is closed, and homepage is enabled, then exit Chrome.
-                        if (HomepageManager.isHomepageEnabled()) {
-                            finish();
-                        } else if (isPendingClosure) {
-                            NewTabPageUma.recordNTPImpression(
-                                    NewTabPageUma.NTP_IMPESSION_POTENTIAL_NOTAB);
-                        }
+                        if (HomepageManager.isHomepageEnabled()) finish();
                     }
                 }
 
@@ -499,12 +494,6 @@ public class ChromeTabbedActivity
                                 R.string.open_in_new_tab_toast,
                                 Toast.LENGTH_SHORT).show();
                     }
-                }
-
-                @Override
-                public void allTabsPendingClosure(List<Tab> tabs) {
-                    NewTabPageUma.recordNTPImpression(
-                            NewTabPageUma.NTP_IMPESSION_POTENTIAL_NOTAB);
                 }
             };
         } finally {

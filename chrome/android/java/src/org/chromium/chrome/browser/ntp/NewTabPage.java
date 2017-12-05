@@ -224,7 +224,6 @@ public class NewTabPage
                     "Tab.NewTabOnload", loadTimeMs, TimeUnit.MILLISECONDS);
             mIsLoaded = true;
             StartupMetrics.getInstance().recordOpenedNTP();
-            NewTabPageUma.recordNTPImpression(NewTabPageUma.NTP_IMPRESSION_REGULAR);
             // If not visible when loading completes, wait until onShown is received.
             if (!mTab.isHidden()) recordNTPShown();
 

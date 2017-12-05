@@ -1246,6 +1246,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Android.NTP.Impression" enum="NTPImpressionType">
+  <obsolete>
+    Deprecated 12/2017 in crbug.com/590842 with the removal the experiment.
+  </obsolete>
   <owner>finkm@chromium.org</owner>
   <summary>
     Counts impressions of the NTP on Android. It also counts potential

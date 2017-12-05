@@ -74,15 +74,6 @@ public final class NewTabPageUma {
     /** User navigated to a page using one of the suggested tiles. */
     public static final int RAPPOR_ACTION_VISITED_SUGGESTED_TILE = 1;
 
-    /** Regular NTP impression (usually when a new tab is opened). */
-    public static final int NTP_IMPRESSION_REGULAR = 0;
-
-    /** Potential NTP impressions (instead of blank page if no tab is open). */
-    public static final int NTP_IMPESSION_POTENTIAL_NOTAB = 1;
-
-    /** The number of possible NTP impression types */
-    private static final int NUM_NTP_IMPRESSION = 2;
-
     /** The maximal number of suggestions per section. Keep in sync with kMaxSuggestionsPerCategory
      * in content_suggestions_metrics.cc. */
     private static final int MAX_SUGGESTIONS_PER_SECTION = 20;
@@ -245,17 +236,6 @@ public final class NewTabPageUma {
         RecordHistogram.recordCount100Histogram(
                 "NewTabPage.ContentSuggestions.UIUpdateSuccessNumberOfSuggestionsSeen",
                 numberOfSuggestionsSeen);
-    }
-
-    /**
-     * Record a NTP impression (even potential ones to make informed product decisions).
-     * @param impressionType Type of the impression from NewTabPageUma.java
-     */
-    public static void recordNTPImpression(int impressionType) {
-        assert impressionType >= 0;
-        assert impressionType < NUM_NTP_IMPRESSION;
-        RecordHistogram.recordEnumeratedHistogram(
-                "Android.NTP.Impression", impressionType, NUM_NTP_IMPRESSION);
     }
 
     /**
