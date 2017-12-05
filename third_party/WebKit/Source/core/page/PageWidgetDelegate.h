@@ -77,6 +77,7 @@ class CORE_EXPORT PageWidgetDelegate {
 
   // See documents of methods with the same names in FrameView class.
   static void UpdateAllLifecyclePhases(Page&, LocalFrame& root);
+  static void UpdateLifecycleToLayoutClean(Page&, LocalFrame& root);
 
   static void Paint(Page&, WebCanvas*, const WebRect&, LocalFrame& root);
   static void PaintIgnoringCompositing(Page&,
