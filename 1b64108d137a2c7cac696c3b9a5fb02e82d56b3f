@@ -45,6 +45,30 @@
       "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1089cb93_3d9bc3c9",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-05T18:27:58Z",
+      "side": 1,
+      "message": "This array should only change if Chrome adds schemes in the future, and the changes should only be additions, not insertions. There\u0027s a risk that a well-meaning CL inserts a new item alphabetically or accidentally transposes something. We can mitigate that risk with a test for GetSchemeValueFromString (preferred), or by replacing this array with a 21-branch if/else chain of strcmp\u0027s (ugly). So would exposing GetSchemeValueFromString to a test be an OK solution?\n\nThe protobuf itself will be used by our analysis pipeline to interpret the data correctly. The values of the enum in the proto shouldn\u0027t change, or we\u0027d have all the fun issues that come with client/server incompatibility. I think we just have to take that as a given.",
+      "parentUuid": "f1a10c22_e57713ab",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
