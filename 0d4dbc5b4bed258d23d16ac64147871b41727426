@@ -34,6 +34,24 @@
       "revId": "0d4dbc5b4bed258d23d16ac64147871b41727426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa072e3d_2fcb2bd5",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-05T16:54:51Z",
+      "side": 1,
+      "message": "We can build both target_os\u003dandroid and linux in same checkout, this was exactly what was happening in my case. Also, this does not parse target_os properly, a person can explicitly say target_os\u003dlinux in their args.gn and then the script will fail.",
+      "parentUuid": "23513504_9c897411",
+      "revId": "0d4dbc5b4bed258d23d16ac64147871b41727426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
