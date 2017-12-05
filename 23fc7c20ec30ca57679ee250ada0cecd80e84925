@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1dc97af_b811856c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "Can the new class register itself as an observer so that ChromeTabbedActivity doesn\u0027t need to be aware of how it functions?\n\nAlso, similar to how we initialize ChromeHomeSurveyController, does it make sense to expose a static method that takes care of creating since nothing is expected to hold on to the reference?",
+      "range": {
+        "startLine": 874,
+        "startChar": 12,
+        "endLine": 875,
+        "endChar": 65
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f1b762_b74fb510",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "You can extend EmptyTabModelSelectorObserver to avoid providing empty implementations for methods you don\u0027t need.",
+      "range": {
+        "startLine": 17,
+        "startChar": 50,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b067f6b_1a9757c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "This class should have a name related to what it\u0027s responsible for.\n\nAlso, the incognito package may be more appropriate than tabmodel since this is an incognito-specific feature.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6aa128_ed122b0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "You likely need to rest attribute flags here if exiting overview mode while to a normal tab.",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4ea64a_47350073",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "The activity tab may be null (e.g. if no tabs are open or on the Chrome Home NTP). mTabbedActivity#getCurrentModel()#isIncognito() is more robust.",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 72
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d9b7b4_210b1d8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "Why not just mTabbedActivity.getWindow()?",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 86
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac47be38_45a2448a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "We shouldn\u0027t clear all window flags. Window expose clearFlags() and addFlags() methods that I think you can rely on instead.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e1ccfe_f3585f58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "It\u0027d be good to build in some way to override this for testing (ideally in chrome://flags) so that it\u0027s easy to grab screenshots to attach bugs.",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6114aa_be96e244",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-05T22:26:04Z",
+      "side": 1,
+      "message": "This comment needs to be update to reflect that a boolean is returned.",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
