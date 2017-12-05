@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17074663_cac3b817",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Ohhhh, thanks - yep, that makes sense. Done!",
+      "parentUuid": "2947b03f_16f077be",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbec2195_274e6896",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ea2dbb_6f587893",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_views_mac_browsertest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec2195_274e6896",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9197db54_c40fb54f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc521270_702630aa",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2b5e008_76aadea1",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18efb0d_03ee9264",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Reverted back to private :)",
+      "parentUuid": "b2b5e008_76aadea1",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e45f1aca_11113813",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71db64e_db11d722",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d2d095_e074fa2b",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe727b3_e453311d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d2d095_e074fa2b",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "63215723_3e482c8d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a30d5d_f0acf2e7",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aff6847_7da3088a",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "dedc39ff_ede6ca3d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aff6847_7da3088a",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e962541_6127ca93",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.h",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54996986_7c2f6196",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-05T06:34:18Z",
+      "side": 1,
+      "message": "Done - the Internal PIBV constructor is still public but it\u0027s OK since it\u0027s back in the .cc now.",
+      "parentUuid": "4e962541_6127ca93",
+      "revId": "0ffb0330b4fb210caa7cd8d286969f82a5227c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
