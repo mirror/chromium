@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c7492d9d_cab02924",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T00:41:10Z",
+      "side": 1,
+      "message": "is the actual visible icon different, or just the amount of padding?",
+      "parentUuid": "9e96e1fe_731572a0",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd32ca0_fb2397e9",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 14
