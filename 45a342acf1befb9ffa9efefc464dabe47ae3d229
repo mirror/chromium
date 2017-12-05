@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b144af2_5a0d6b3a",
+        "filename": "net/reporting/reporting_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-05T16:16:26Z",
+      "side": 1,
+      "message": "This is confusing since I look at \"Callback\" and assume it\u0027s base::Callback, which is base::RepeatingCallback. I\u0027d be happy with \"OnceCallback\" or \"ReportingCallback\".",
+      "revId": "45a342acf1befb9ffa9efefc464dabe47ae3d229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
