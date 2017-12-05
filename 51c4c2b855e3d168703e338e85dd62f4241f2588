@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "fb13aaed_bb081c1c",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Using the hash.",
+      "parentUuid": "b549e9e1_f0c83cf5",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c217769_b71978e6",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
@@ -168,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "c21c8f9a_d16d1cff",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "85009907_cf112687",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 74
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acee06d9_700b61cc",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 3
@@ -179,6 +227,24 @@
       "writtenOn": "2017-12-04T23:26:11Z",
       "side": 1,
       "message": "Is there an invalid child_sequence_number?",
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90234fcd_3b94dcb9",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Not currently. But we can make one.\nMaybe the old constructor will initialize to 1, we always increment, and 0 becomes the invalid child_sequence_number.",
+      "parentUuid": "acee06d9_700b61cc",
       "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -232,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "cc09ceb4_18564753",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "8065365e_2faf9ce2",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcdcb43_efec132a",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 3
@@ -276,6 +366,54 @@
       "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c636797_587a1d30",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Oh, I missed the fact that this is the END corresponding to the other BEGIN. So we do need to update this as well.",
+      "parentUuid": "5dcdcb43_efec132a",
+      "range": {
+        "startLine": 2665,
+        "startChar": 2,
+        "endLine": 2666,
+        "endChar": 47
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d56c160_3dd2f84f",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Using the hash now.",
+      "parentUuid": "235b1d1b_9d7edef1",
+      "range": {
+        "startLine": 2665,
+        "startChar": 2,
+        "endLine": 2666,
+        "endChar": 47
+      },
+      "revId": "51c4c2b855e3d168703e338e85dd62f4241f2588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90c88440_bfbe71e3",
+        "filename": "cc/ipc/cc_param_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "Thank you.\nI meant this to be child_sequence_number.\nPart way through this semi-mindless coding I started typing \"client\" instead of \"child\". Thank you for catching this.",
+      "parentUuid": "3472f009_ded922fe",
+      "range": {
+        "startLine": 641,
+        "startChar": 27,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdeee117_3de4b952",
         "filename": "components/viz/common/surfaces/local_surface_id.h",
         "patchSetId": 5
@@ -41,6 +65,53 @@
         "startChar": 51,
         "endLine": 57,
         "endChar": 53
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99212b27_d82372fa",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "You are completely correct.\nBut I\u0027m ditching this function anyway in favor of hash() below.",
+      "parentUuid": "fdeee117_3de4b952",
+      "range": {
+        "startLine": 57,
+        "startChar": 51,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2669f5d_6ce9264d",
+        "filename": "components/viz/common/surfaces/local_surface_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-05T00:04:34Z",
+      "side": 1,
+      "message": "I added this to use rather than the hash for tracing.\n\nHowever, it feels a bit funky to add this method just for tracing. I think I like the hash suggestion more.\n\n(I added a method because we want to create the same tracing ID in two separate TUs.)",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 3
       },
       "revId": "034175bc2a3c69c294f933f92f5eea27b315602d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
