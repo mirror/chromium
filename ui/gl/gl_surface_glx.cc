@@ -26,6 +26,7 @@
 #include "ui/gfx/x/x11_connection.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_visual_picker_glx.h"
 #include "ui/gl/sync_control_vsync_provider.h"
@@ -558,11 +559,8 @@ NativeViewGLSurfaceGLX::NativeViewGLSurfaceGLX(gfx::AcceleratedWidget window)
       window_(0),
       glx_window_(0),
       config_(nullptr),
-      visual_id_(CopyFromParent) {}
-
-GLXDrawable NativeViewGLSurfaceGLX::GetDrawableHandle() const {
-  return glx_window_;
-}
+      visual_id_(CopyFromParent),
+      weak_ptr_factory_(this) {}
 
 bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
   XWindowAttributes attributes;
@@ -619,6 +617,8 @@ bool NativeViewGLSurfaceGLX::Initialize(GLSurfaceFormat format) {
         base::TimeDelta::FromSeconds(1) / 59.9;
     vsync_provider_.reset(
         new gfx::FixedVSyncProvider(kDefaultTimebase, kDefaultInterval));
+    vsync_timebase_ = kDefaultTimebase;
+    vsync_interval_ = kDefaultInterval;
   }
 
   return true;
@@ -655,10 +655,11 @@ bool NativeViewGLSurfaceGLX::IsOffscreen() {
 
 gfx::SwapResult NativeViewGLSurfaceGLX::SwapBuffers(
     const PresentationCallback& callback) {
-  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceGLX:RealSwapBuffers", "width",
                GetSize().width(), "height", GetSize().height());
+  PreSwapBuffers(callback);
   glXSwapBuffers(g_display, GetDrawableHandle());
+  PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
 }
 
@@ -668,6 +669,10 @@ gfx::Size NativeViewGLSurfaceGLX::GetSize() {
 
 void* NativeViewGLSurfaceGLX::GetHandle() {
   return reinterpret_cast<void*>(GetDrawableHandle());
+}
+
+bool NativeViewGLSurfaceGLX::SupportsPresentationCallback() {
+  return true;
 }
 
 bool NativeViewGLSurfaceGLX::SupportsPostSubBuffer() {
@@ -696,8 +701,16 @@ gfx::SwapResult NativeViewGLSurfaceGLX::PostSubBuffer(
     const PresentationCallback& callback) {
   // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   DCHECK(g_driver_glx.ext.b_GLX_MESA_copy_sub_buffer);
+  PreSwapBuffers(callback);
   glXCopySubBufferMESA(g_display, GetDrawableHandle(), x, y, width, height);
+  PostSwapBuffers();
   return gfx::SwapResult::SWAP_ACK;
+}
+
+bool NativeViewGLSurfaceGLX::OnMakeCurrent(GLContext* context) {
+  if (!gpu_timing_client_)
+    gpu_timing_client_ = context->CreateGPUTimingClient();
+  return GLSurfaceGLX::OnMakeCurrent(context);
 }
 
 gfx::VSyncProvider* NativeViewGLSurfaceGLX::GetVSyncProvider() {
@@ -719,6 +732,159 @@ void NativeViewGLSurfaceGLX::ForwardExposeEvent(XEvent* event) {
 bool NativeViewGLSurfaceGLX::CanHandleEvent(XEvent* event) {
   return event->type == Expose &&
          event->xexpose.window == static_cast<Window>(window_);
+}
+
+GLXDrawable NativeViewGLSurfaceGLX::GetDrawableHandle() const {
+  return glx_window_;
+}
+
+void NativeViewGLSurfaceGLX::PreSwapBuffers(
+    const PresentationCallback& callback) {
+  DCHECK(gpu_timing_client_);
+
+  while (!pending_frames_.empty() &&
+         pending_frames_.front().first->IsAvailable()) {
+    auto frame = std::move(pending_frames_.front());
+    pending_frames_.pop();
+    int64_t start = 0;
+    int64_t end = 0;
+    frame.first->GetStartEndTimestamps(&start, &end);
+    free_gpu_timers_.push(std::move(frame.first));
+  }
+
+  std::unique_ptr<GPUTimer> timer;
+  if (free_gpu_timers_.empty()) {
+    timer = gpu_timing_client_->CreateGPUTimer(false /* prefer_elapsed_time */);
+  } else {
+    timer = std::move(free_gpu_timers_.front());
+    free_gpu_timers_.pop();
+  }
+  timer->QueryTimeStamp();
+  pending_frames_.push(Frame(std::move(timer), callback));
+
+  // g_glx_oml_sync_control_supported Get timestamp sync.
+  // g_glx_sgi_video_sync_supported Get timestamp from another thread.
+  // other is a timer
+}
+
+void NativeViewGLSurfaceGLX::PostSwapBuffers() {
+  if (!task_is_pending_)
+    CheckPendingFrames();
+}
+
+void NativeViewGLSurfaceGLX::CheckPendingFrames() {
+  fprintf(stderr, "EEE %s\n", __func__);
+  // VSync parameters are fixed.
+  bool fixed_vsync =
+      !(g_glx_oml_sync_control_supported || g_glx_sgi_video_sync_supported);
+  // VSyncProvier::GetVSyncParameters returns VSync parameters via callback
+  // immediatelly.
+  bool get_vsync_parameters_return_immediatelly =
+      g_glx_oml_sync_control_supported || fixed_vsync;
+  // The VSync timestamp is from the driver.
+  bool hw_clock = g_glx_oml_sync_control_supported;
+
+  if (get_vsync_parameters_return_immediatelly && !fixed_vsync) {
+    if (!vsync_provider_->GetVSyncParametersSync(&vsync_timebase_, &vsync_interval_)) {
+      fprintf(stderr, "EEE !!!!!!!!1\n");
+    }
+  }
+
+  while (!pending_frames_.empty() &&
+         pending_frames_.front().first->IsAvailable()) {
+    auto& frame = pending_frames_.front();
+    int64_t start = 0;
+    int64_t end = 0;
+    frame.first->GetStartEndTimestamps(&start, &end);
+    base::TimeTicks timestamp =
+        base::TimeTicks() + base::TimeDelta::FromMicroseconds(start);
+
+    // Helper lambda for running the presentation callback and rekeasing the
+    // frame.
+    auto frame_presentation_callback =
+        [this, &frame](const gfx::PresentationFeedback& feedback) {
+          frame.second.Run(feedback);
+          free_gpu_timers_.push(std::move(frame.first));
+          pending_frames_.pop();
+        };
+
+    // If VSync parameters are not avaliable, we just run presentation
+    // callbacks with timestamp from GPUTimers.
+    if (vsync_interval_.is_zero()) {
+      frame_presentation_callback(
+          gfx::PresentationFeedback(timestamp, vsync_interval_, 0 /* flags */));
+      continue;
+    }
+
+    if (fixed_vsync) {
+      // For fixed VSyncProvider, we compute the next VSync timestamp and use
+      // it to run presentation callbacks.
+      auto offset = (timestamp - base::TimeTicks()) % vsync_interval_;
+      timestamp += vsync_interval_ - offset;
+      frame_presentation_callback(
+          gfx::PresentationFeedback(timestamp, vsync_interval_, 0 /* flags */));
+      continue;
+    }
+
+    if (timestamp < vsync_timebase_) {
+      // We got a VSync after GPU finish renderering the back buffer.
+      uint32_t flags = gfx::PresentationFeedback::kVSync |
+                       gfx::PresentationFeedback::kHWCompletion;
+      auto delta = vsync_timebase_ - timestamp;
+      if (delta < vsync_interval_) {
+        // The |vsync_timebase_| is the closest VSync's timestamp after the GPU
+        // finished renderering.
+        timestamp = vsync_timebase_;
+        if (hw_clock)
+          flags |= gfx::PresentationFeedback::kHWClock;
+      } else {
+        // The |vsync_timebase_| isn't the closest VSync's timestamp after the
+        // GPU finished renderering. We have to compute the closest VSync's
+        // timestmp.
+        auto offset = delta % vsync_interval_;
+        timestamp += vsync_interval_ - offset;
+      }
+      frame_presentation_callback(
+          gfx::PresentationFeedback(timestamp, vsync_interval_, flags));
+      continue;
+    }
+  }
+
+  if (pending_frames_.empty() || task_is_pending_)
+    return;
+  task_is_pending_ = true;
+
+  if (!get_vsync_parameters_return_immediatelly) {
+    vsync_provider_->GetVSyncParameters(base::Bind(
+        &NativeViewGLSurfaceGLX::UpdateVSyncCallback, base::Unretained(this)));
+    return;
+  }
+
+  const base::TimeDelta kDefaultInterval = base::TimeDelta::FromSeconds(1) / 60;
+  base::TimeDelta interval =
+      vsync_interval_.is_zero() ? kDefaultInterval : vsync_interval_;
+  auto offset = (base::TimeTicks() - base::TimeTicks::Now()) % interval;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&NativeViewGLSurfaceGLX::CheckPendingFramesCallback,
+                 weak_ptr_factory_.GetWeakPtr()),
+      interval - offset);
+}
+
+void NativeViewGLSurfaceGLX::CheckPendingFramesCallback() {
+  DCHECK(task_is_pending_);
+  task_is_pending_ = false;
+  CheckPendingFrames();
+}
+
+void NativeViewGLSurfaceGLX::UpdateVSyncCallback(
+    const base::TimeTicks timebase,
+    const base::TimeDelta interval) {
+  DCHECK(task_is_pending_);
+  vsync_timebase_ = timebase;
+  vsync_interval_ = interval;
+  task_is_pending_ = false;
+  CheckPendingFrames();
 }
 
 UnmappedNativeViewGLSurfaceGLX::UnmappedNativeViewGLSurfaceGLX(
