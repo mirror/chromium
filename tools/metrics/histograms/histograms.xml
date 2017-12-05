@@ -81243,6 +81243,66 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SiteIsolation.XSD.Browser.Blocked" enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The total count of responses that were blocked by the cross-site document
+    blocking logic in the browser process. Sampled with a resource type (0-17)
+    when the response is blocked, just after the first read from the network.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Blocked.HTML"
+    enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The count of HTML responses that were blocked by the cross-site document
+    blocking logic in the browser process. Sampled with a resource type (0-17)
+    when the response is blocked, just after the first read from the network.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Blocked.JSON"
+    enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The count of JSON responses that were blocked by the cross-site document
+    blocking logic in the browser process. Sampled with a resource type (0-17)
+    when the response is blocked, just after the first read from the network.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Blocked.Plain"
+    enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The count of plain text responses that looked like HTML, XML, or JSON, which
+    were blocked by the cross-site document blocking logic in the browser
+    process. Sampled with a resource type (0-17) when the response is blocked,
+    just after the first read from the network.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Blocked.XML"
+    enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The count of XML responses that were blocked by the cross-site document
+    blocking logic in the browser process. Sampled with a resource type (0-17)
+    when the response is blocked, just after the first read from the network.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.NotBlocked">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The count of responses that were not blocked in the browser process, because
+    they were not identified as cross-site HTML, XML, JSON, or plain text or
+    that had other reasons to be permitted in the renderer process. Sampled with
+    a value of 1 when the network response is completed.
+  </summary>
+</histogram>
+
 <histogram name="SiteIsolation.XSD.DataLength" units="byte">
   <owner>creis@chromium.org</owner>
   <summary>
