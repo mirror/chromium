@@ -70,6 +70,24 @@
       "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92dd3c5_2d5a448c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T22:02:03Z",
+      "side": 1,
+      "message": "Er, I\u0027m going to merge DoExecuteScript() into ExecuteScriptBlock() soon:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/791473\nand thus there will be a use for |frame|.",
+      "parentUuid": "2c3470e0_96764a41",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
