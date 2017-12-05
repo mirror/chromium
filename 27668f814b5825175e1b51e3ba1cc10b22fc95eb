@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4941b140_d1a47b93",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-05T22:51:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow your concern here -- neither telemetry nor perf tests run through this code path, and flags we set here get reset in TearDown.",
+      "parentUuid": "4dc22242_909a1d7d",
+      "revId": "27668f814b5825175e1b51e3ba1cc10b22fc95eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0aa1d49_75c82879",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeJUnit4ClassRunner.java",
         "patchSetId": 13
