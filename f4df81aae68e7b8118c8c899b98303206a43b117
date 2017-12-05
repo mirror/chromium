@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29361008_b8dc105b",
+        "filename": "chrome/browser/ui/views/renderer_context_menu/render_view_context_menu_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-05T20:33:39Z",
+      "side": 1,
+      "message": "nit: add a comment explaining \"Disable the inspect element context menu command (or just the accelerator label???) for print preview, because...\"",
+      "revId": "f4df81aae68e7b8118c8c899b98303206a43b117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d278f17f_f3ffa93b",
+        "filename": "chrome/browser/ui/views/renderer_context_menu/render_view_context_menu_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-05T20:33:39Z",
+      "side": 1,
+      "message": "So this just disables the accelerator label in the context menu, because the accelerator behaves differently than selecting the menu item? Can we instead fix the accelerator handling to behave the same as selecting the context menu item? (ie. if selecting the context menu item opens a devtools window to inspect the element in the print preview dialog, then the accelerator should probably do the same thing?)",
+      "revId": "f4df81aae68e7b8118c8c899b98303206a43b117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
