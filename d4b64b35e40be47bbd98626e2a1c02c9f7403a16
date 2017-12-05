@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68677340_8d73c2d9",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-05T16:21:36Z",
+      "side": 1,
+      "message": "The downside of this approach is that if we ever change the possible\nvalues for the enum, the old and new histogram data won\u0027t be\ncomparable.\n\nWhat about treating the speech rate as a numerical value instead,\nlike 30 buckets between 0 and 3 with a step of 0.1? Most buckets\nwould be 0, but if you changed the enums it\u0027d be easier to see.\n\nI don\u0027t have a strong opinion either way, maybe these are unlikely\nto change or it wouldn\u0027t really matter since this isn\u0027t something\nwe need to track over time, we just want an idea of what values\npeople prefer.",
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
