@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "b6d95709_580a2305",
+        "filename": "chrome/browser/chrome_native_notification_install_helper_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T10:35:50Z",
+      "side": 1,
+      "message": "I have a CL update coming which provides the CLSID at runtime. Stay tuned.",
+      "parentUuid": "b90c9f1f_83fabf3b",
+      "revId": "cb50e6e07b4e5796d4b2fd56a7ce3768497532c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6dc517e_77a014c6",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
