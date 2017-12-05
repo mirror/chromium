@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90fa89b2_7db91c2e",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-05T03:13:29Z",
+      "side": 1,
+      "message": "This caused menus not to show up when I have the double-click setting set to menu (so it gets handled by DesktopLinuxBrowserFrameView).  sky@ what is the right fix for this?",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
