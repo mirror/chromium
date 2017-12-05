@@ -49,6 +49,10 @@ void ProfilingClient::BindToInterface(mojom::ProfilingClientRequest request) {
 }
 
 void ProfilingClient::StartProfiling(mojo::ScopedHandle memlog_sender_pipe) {
+  if (started_profiling_)
+    return;
+  started_profiling_ = true;
+
   base::PlatformFile platform_file;
   CHECK_EQ(MOJO_RESULT_OK, mojo::UnwrapPlatformFile(
                                std::move(memlog_sender_pipe), &platform_file));
