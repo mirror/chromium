@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -96,6 +97,11 @@ void CrossSiteDocumentResourceHandler::OnResponseStarted(
     ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
   has_response_started_ = true;
+  UMA_HISTOGRAM_ENUMERATION(
+      "SiteIsolation.XSD.Browser.Action",
+      CrossSiteDocumentResourceHandler::Action::kResponseStarted,
+      CrossSiteDocumentResourceHandler::Action::kCount);
+
   should_block_based_on_headers_ = ShouldBlockBasedOnHeaders(response);
   next_handler_->OnResponseStarted(response, std::move(controller));
 }
@@ -192,6 +198,8 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       // Sniff the data to see if it likely matches the MIME type that caused us
       // to decide to block it.  If it doesn't match, it may be JavaScript,
       // JSONP, or another allowable data type and we should let it through.
+      UMA_HISTOGRAM_COUNTS("SiteIsolation.XSD.Browser.BytesReadForSniffing",
+                           bytes_read);
       DCHECK_LE(bytes_read, next_handler_buffer_size_);
       base::StringPiece data(local_buffer_->data(), bytes_read);
 
@@ -218,7 +226,6 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
 
       // Log the blocking event.  Inline the Serialize call to avoid it when
       // tracing is disabled.
-      // TODO(creis): Add a console log message and histograms.
       TRACE_EVENT2("navigation",
                    "CrossSiteDocumentResourceHandler::ShouldBlockResponse",
                    "initiator",
@@ -226,6 +233,43 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
                        ? request()->initiator().value().Serialize()
                        : "null",
                    "url", request()->url().spec());
+
+      // TODO(creis): Add data length?
+      UMA_HISTOGRAM_ENUMERATION(
+          "SiteIsolation.XSD.Browser.Action",
+          needs_sniffing_
+              ? CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing
+              : CrossSiteDocumentResourceHandler::Action::
+                    kBlockedWithoutSniffing,
+          CrossSiteDocumentResourceHandler::Action::kCount);
+      ResourceType resource_type = GetRequestInfo()->GetResourceType();
+      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked",
+                                resource_type,
+                                content::RESOURCE_TYPE_LAST_TYPE);
+      switch (canonical_mime_type_) {
+        case CROSS_SITE_DOCUMENT_MIME_TYPE_HTML:
+          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.HTML",
+                                    resource_type,
+                                    content::RESOURCE_TYPE_LAST_TYPE);
+          break;
+        case CROSS_SITE_DOCUMENT_MIME_TYPE_XML:
+          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.XML",
+                                    resource_type,
+                                    content::RESOURCE_TYPE_LAST_TYPE);
+          break;
+        case CROSS_SITE_DOCUMENT_MIME_TYPE_JSON:
+          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.JSON",
+                                    resource_type,
+                                    content::RESOURCE_TYPE_LAST_TYPE);
+          break;
+        case CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN:
+          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.Plain",
+                                    resource_type,
+                                    content::RESOURCE_TYPE_LAST_TYPE);
+          break;
+        default:
+          NOTREACHED();
+      }
     } else {
       // Allow the response through instead and proceed with reading more.
       // Copy sniffed data into the next handler's buffer before proceeding.
@@ -253,6 +297,13 @@ void CrossSiteDocumentResourceHandler::OnResponseCompleted(
     next_handler_->OnResponseCompleted(net::URLRequestStatus(),
                                        std::move(controller));
   } else {
+    UMA_HISTOGRAM_ENUMERATION(
+        "SiteIsolation.XSD.Browser.Action",
+        needs_sniffing_
+            ? CrossSiteDocumentResourceHandler::Action::kAllowedAfterSniffing
+            : CrossSiteDocumentResourceHandler::Action::kAllowedWithoutSniffing,
+        CrossSiteDocumentResourceHandler::Action::kCount);
+
     next_handler_->OnResponseCompleted(status, std::move(controller));
   }
 }

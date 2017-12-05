@@ -40,6 +40,27 @@ namespace content {
 class CONTENT_EXPORT CrossSiteDocumentResourceHandler
     : public LayeredResourceHandler {
  public:
+  // This enum backs a histogram. Update enums.xml if you make any updates, and
+  // put new entries before |kCount|.
+  enum class Action {
+    // Logged at OnResponseStarted.
+    kResponseStarted,
+
+    // Logged when a response is blocked without requiring sniffing.
+    kBlockedWithoutSniffing,
+
+    // Logged when a response is blocked as a result of sniffing the content.
+    kBlockedAfterSniffing,
+
+    // Logged when a response is allowed without requiring sniffing.
+    kAllowedWithoutSniffing,
+
+    // Logged when a response is allowed as a result of sniffing the content.
+    kAllowedAfterSniffing,
+
+    kCount
+  };
+
   CrossSiteDocumentResourceHandler(
       std::unique_ptr<ResourceHandler> next_handler,
       net::URLRequest* request);
