@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c2b9ce9_db7af576",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-05T17:46:28Z",
+      "side": 1,
+      "message": "Can |this| die before completion? Should we handle that?\n\n(I vaguely remember this class was always plagued by lifecycle issues, so I\u0027m super-cautious, sorry)",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbe6fb3_cc937e3e",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-05T17:46:28Z",
+      "side": 1,
+      "message": "Sigh. This will work until for whatever reason our default for SimpleUrlLoader allows partial results. Let\u0027s hope we never change the default. (I\u0027m tempted to ask for SetAllowPartialResults in Init, but that feels wasteful)",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fee99d_cca3120e",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-05T17:46:28Z",
+      "side": 1,
+      "message": "Would you mind removing the \"Callback\" from the name?\n\nI.e OnLoadCompleted() or similar?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 70
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4680d825_6cd9f6ad",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-05T17:46:28Z",
+      "side": 1,
+      "message": "Since this is a naked pointer - what is its lifetime? Are we guaranteed it will outlive this?",
+      "range": {
+        "startLine": 69,
+        "startChar": 36,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4bda3b_bf53fe45",
+        "filename": "chrome/browser/bitmap_fetcher/bitmap_fetcher_service.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-05T17:46:28Z",
+      "side": 1,
+      "message": "I assume those policies match? (The W3C spec is wordy, but not helpful)",
+      "range": {
+        "startLine": 138,
+        "startChar": 13,
+        "endLine": 138,
+        "endChar": 75
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
