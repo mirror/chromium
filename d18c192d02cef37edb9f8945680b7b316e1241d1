@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "34f0e7cc_376080e5",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T19:40:47Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be a bug, may be not optimal. The caches are already supposed to handle getting a task which has no ref. My understanding was that the GPU cache handles it by keeping an extra ref for the decode task, and we were adding the same thing for software?\n\nMy other suggestion was managing the ref for them with the rest of predecode images.",
+      "parentUuid": "cee99537_6dfe525a",
+      "range": {
+        "startLine": 1057,
+        "startChar": 6,
+        "endLine": 1057,
+        "endChar": 53
+      },
+      "revId": "d18c192d02cef37edb9f8945680b7b316e1241d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a644e8a_cf5e6899",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 9
