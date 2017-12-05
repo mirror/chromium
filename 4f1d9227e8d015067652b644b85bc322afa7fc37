@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8477703_1285f66e",
+        "filename": "chromecast/media/cma/backend/fuchsia/fuchsia_volume_control.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-12-05T06:23:20Z",
+      "side": 1,
+      "message": "won\u0027t this result in crashes?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 19
+      },
+      "revId": "4f1d9227e8d015067652b644b85bc322afa7fc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
