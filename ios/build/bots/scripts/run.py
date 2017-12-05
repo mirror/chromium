@@ -49,6 +49,7 @@ def main():
         mac_toolchain=args.mac_toolchain_cmd,
         retries=args.retries,
         test_args=test_args,
+        test_shard=args.test_shard,
         xcode_path=args.xcode_path,
         xctest=args.xctest,
       )
@@ -63,6 +64,7 @@ def main():
         restart=args.restart,
         retries=args.retries,
         test_args=test_args,
+        test_shard=args.test_shard,
         xcode_path=args.xcode_path,
         xctest=args.xctest,
       )
@@ -144,6 +146,14 @@ def parse_args():
     type=int,
   )
   parser.add_argument(
+    '-t',
+    '--test-shard',
+    action='append',
+    help=('Tests that should be included in the test run. '
+          'All other tests will be excluded from this run.'),
+    metavar='testcase',
+  )
+  parser.add_argument(
     '-v',
     '--version',
     help='Version of iOS the simulator should run.',
@@ -198,6 +208,8 @@ def parse_args():
   args.env_var = args.env_var or []
   args.env_var.extend(args_json.get('env_var', []))
   args.restart = args_json.get('restart', args.restart)
+  args.test_shard = args.test_shard or []
+  args.test_shard.extend(args_json.get('test shard', []))
   args.xctest = args_json.get('xctest', args.xctest)
   test_args.extend(args_json.get('test_args', []))
 

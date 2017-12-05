@@ -209,6 +209,7 @@ class TestRunner(object):
     mac_toolchain='',
     retries=None,
     test_args=None,
+    test_shard=None,
     xcode_path='',
     xctest=False,
   ):
@@ -225,6 +226,8 @@ class TestRunner(object):
       retries: Number of times to retry failed test cases.
       test_args: List of strings to pass as arguments to the test when
         launching.
+      test_shard: List of tests to be included in the test run. None or [] to
+        include all tests.
       xcode_path: Path to Xcode.app folder where its contents will be installed.
       xctest: Whether or not this is an XCTest.
 
@@ -263,6 +266,7 @@ class TestRunner(object):
     self.out_dir = out_dir
     self.retries = retries or 0
     self.test_args = test_args or []
+    self.test_shard = test_shard or []
     self.xcode_version = xcode_version
     self.xctest_path = ''
 
@@ -495,6 +499,7 @@ class SimulatorTestRunner(TestRunner):
       mac_toolchain='',
       retries=None,
       test_args=None,
+      test_shard=None,
       xcode_path='',
       xctest=False,
   ):
@@ -516,6 +521,8 @@ class SimulatorTestRunner(TestRunner):
       retries: Number of times to retry failed test cases.
       test_args: List of strings to pass as arguments to the test when
         launching.
+      test_shard: List of tests to be included in the test run. None or [] to
+        include all tests.
       xcode_path: Path to Xcode.app folder where its contents will be installed.
       xctest: Whether or not this is an XCTest.
 
@@ -534,6 +541,7 @@ class SimulatorTestRunner(TestRunner):
         mac_toolchain=mac_toolchain,
         retries=retries,
         test_args=test_args,
+        test_shard=test_shard,
         xcode_path=xcode_path,
         xctest=xctest,
     )
@@ -688,6 +696,9 @@ class SimulatorTestRunner(TestRunner):
         cmd.extend(['-e', 'GKIF_SCENARIO_FILTER=%s' % kif_filter])
         cmd.extend(['-c', '--gtest_filter=%s' % gtest_filter])
 
+    for test in self.test_shard:
+      cmd.extend(['-t', test])
+
     for env_var in self.env_vars:
       cmd.extend(['-e', env_var])
 
@@ -725,6 +736,7 @@ class DeviceTestRunner(TestRunner):
     restart=False,
     retries=None,
     test_args=None,
+    test_shard=None,
     xctest=False,
     xcode_path='',
   ):
@@ -742,6 +754,8 @@ class DeviceTestRunner(TestRunner):
       retries: Number of times to retry failed test cases.
       test_args: List of strings to pass as arguments to the test when
         launching.
+      test_shard: List of tests to be included in the test run. None or [] to
+        include all tests.
       xctest: Whether or not this is an XCTest.
       xcode_path: Path to Xcode.app folder where its contents will be installed.
 
@@ -759,6 +773,7 @@ class DeviceTestRunner(TestRunner):
       env_vars=env_vars,
       retries=retries,
       test_args=test_args,
+      test_shard=test_shard,
       xctest=xctest,
       mac_toolchain=mac_toolchain,
       xcode_path=xcode_path,
@@ -868,7 +883,16 @@ class DeviceTestRunner(TestRunner):
       A list of strings forming the command to launch the test.
     """
     if self.xctest_path:
-      if test_filter:
+      if self.test_shard:
+        filter = self.test_shard
+        if test_filter:
+          # Use the intersection or differnce of test_shard and test_filter to
+          # define list of tests be included
+          filter = (list(set(test_filter) ^ set(filter)) if invert
+                    else list(set(test_filter) & set(filter)) or test_filter)
+        self.xctestrun_data['TestTargetName'].update(
+          {'OnlyTestIdentifiers': filter})
+      elif test_filter:
         if invert:
           self.xctestrun_data['TestTargetName'].update(
             {'SkipTestIdentifiers': test_filter})
