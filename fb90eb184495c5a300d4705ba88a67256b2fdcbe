@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47f6b59_a4139f32",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Both children of this div (paper-spinner and iron-icon) are hidden when isWaitingForResult_ is true. Can we move the \"hidden\" attribute here, instead of including it for each child?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a815224_8cf90b58",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "This variable is computed solely based on this.explanation_ value. Can we just make it a computed Polymer property, instead of manually populating it at line 524?\n\nSee https://www.polymer-project.org/1.0/docs/devguide/observers#define-a-computed-property.",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b59cab_5e8b8c8e",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Since it is already a member of |this|, is there a benefit of passing it as a parameter?",
+      "range": {
+        "startLine": 478,
+        "startChar": 43,
+        "endLine": 478,
+        "endChar": 61
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c94f3d_4dcf9f77",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Can you help me find this element?",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4cb569_3e65b38f",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039e9626_8023b711",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "What is the reason for changing Bind to BindRepeating? I am not familiar with the latter.",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b536ea_578695dc",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Here and elsewhere in this file:\nThere is a helper method for firing events on the JS side, FireWebUIListener. See examples at \nhttps://cs.chromium.org/search/?q\u003dFireWebUIListener+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fd077a_3b4ba490",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "Nit: I think this would be more readable as follows \n\n#if defined(OS_WIN) \u0026\u0026 defined(GOOGLE_CHROME_BUILD)\n  {\"resetPageTitle\", IDS_SETTINGS_RESET_AND_CLEANUP},\n#else\n  {\"resetPageTitle\", IDS_SETTINGS_RESET},\n#endif\n\nThis also eliminates the need to assign a  value twice, when defined(OS_WIN) \u0026\u0026 defined(GOOGLE_CHROME_BUILD) is true.",
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c405da_e82c99d0",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "No need for the assignment. A function declaration should suffice here and elsewhere in this file.\n\nfunction initParametrizedTest(userInitiatedCleanupsEnabled) {\n  ...\n}",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 69
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c005af32_24d87997",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "The fact that every test in this file has to call this method first, is a sign that maybe having two separate mocha suites would make things easier. As follows:\n\nfunction initSetup(userInitiatedCleanupsEnabled) {\n  ChromeCleanupProxy \u003d new TestChromeCleanupProxy();\n  settings.ChromeCleanupProxyImpl.instance_ \u003d ChromeCleanupProxy;\n\n  PolymerTest.clearBody();\n\n  loadTimeData.overrideValues({\n    userInitiatedCleanupsEnabled: userInitiatedCleanupsEnabled,\n  });\n  chromeCleanupPage \u003d document.createElement(\u0027settings-chrome-cleanup-page\u0027);\n  document.body.appendChild(chromeCleanupPage);\n}\n\nsuite(\u0027ChromeCleanupHandler_enabled\u0027, function() {\n setup(function() {\n    initSetup(true);\n });\n\n test(...);\n test(...);\n});\n\nsuite(\u0027ChromeCleanupHandler_disabled\u0027, function() {\n setup(function() {\n    initSetup(false);\n });\n\n test(...);\n test(...);\n});",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

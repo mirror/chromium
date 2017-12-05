@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4dc8a38c_dc92b526",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-05T19:14:42Z",
+      "side": 1,
+      "message": "I am not referring to the hack of the empty \u003cdiv\u003e\u003c/div\u003e (although I\u0027d like to eliminate it too in theory, but I don\u0027t fully understand it yet). I am referring to using \u003ctemplate is\u003d\"dom-if\"\u003e to hide parts of the DOM.\n\nIn most cases one can replace\n\u003ctemplate is\u003d\"dom-if\" if\u003d\"[[condition_]]\"\u003e...\u003c/template\u003e\n\nWith\n\u003cdiv hidden\u003d\"[[!condition_]]\u003e...\u003c/div\u003e\n\nThe latter is much cheaper, when the subtree in question is trivial. Basically I am asking whether you can achieve the same behavior, without using dom-if.",
+      "parentUuid": "f644ec93_75fb3581",
+      "revId": "3eb406c46c6298a3a4378fad019da506a9cc92d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49127ada_f917c5e8",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 16
