@@ -255,6 +255,8 @@ blink_core_sources("dom") {
     "ScriptedIdleTaskController.h",
     "SecurityContext.cpp",
     "SecurityContext.h",
+    "SetInnerHTMLScope.cpp",
+    "SetInnerHTMLScope.h",
     "ShadowRoot.cpp",
     "ShadowRoot.h",
     "ShadowRootRareDataV0.h",

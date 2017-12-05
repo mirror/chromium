@@ -33,6 +33,7 @@
 #define CollectionItemsCache_h
 
 #include "core/dom/CollectionIndexCache.h"
+#include "core/dom/SetInnerHTMLScope.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -83,6 +84,18 @@ unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
   if (this->IsCachedNodeCountValid())
     return this->CachedNodeCount();
 
+  if (SetInnerHTMLScope::IsExecutingSetInnerHTML()) {
+    NodeType* current_node = collection.TraverseToFirst();
+    unsigned current_index = 0;
+    unsigned count = 0;
+    while (current_node) {
+      count++;
+      current_node = collection.TraverseForwardToOffset(
+          current_index + 1, *current_node, current_index);
+    }
+    return count;
+  }
+
   NodeType* current_node = collection.TraverseToFirst();
   unsigned current_index = 0;
   while (current_node) {
@@ -104,7 +117,11 @@ inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
     DCHECK(this->IsCachedNodeCountValid());
     return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
   }
-  return Base::NodeAt(collection, index);
+  NodeType* node = Base::NodeAt(collection, index);
+  if (SetInnerHTMLScope::IsExecutingSetInnerHTML()) {
+    Base::Invalidate();
+  }
+  return node;
 }
 
 }  // namespace blink

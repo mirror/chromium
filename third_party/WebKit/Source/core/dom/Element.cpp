@@ -69,6 +69,7 @@
 #include "core/dom/PresentationAttributeStyle.h"
 #include "core/dom/PseudoElement.h"
 #include "core/dom/ScriptableDocumentParser.h"
+#include "core/dom/SetInnerHTMLScope.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/ShadowRootInit.h"
 #include "core/dom/SlotAssignment.h"
@@ -3096,6 +3097,7 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
+  SetInnerHTMLScope scope(this);
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
   if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
           html, this, kAllowScriptingContent, "innerHTML", exception_state)) {

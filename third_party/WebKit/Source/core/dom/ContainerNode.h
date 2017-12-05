@@ -341,6 +341,8 @@ class CORE_EXPORT ContainerNode : public Node {
 
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
 
+  void InvalidateNodeListCachesInAncestors();
+
  protected:
   ContainerNode(TreeScope*, ConstructionType = kCreateContainer);
 
@@ -352,12 +354,8 @@ class CORE_EXPORT ContainerNode : public Node {
                                            Element* attribute_owner_element,
                                            const ChildrenChange*);
 
-  void SetFirstChild(Node* child) {
-    first_child_ = child;
-  }
-  void SetLastChild(Node* child) {
-    last_child_ = child;
-  }
+  void SetFirstChild(Node* child) { first_child_ = child; }
+  void SetLastChild(Node* child) { last_child_ = child; }
 
   // Utility functions for NodeListsNodeData API.
   template <typename Collection>
