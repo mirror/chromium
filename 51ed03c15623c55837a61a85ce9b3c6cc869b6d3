@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7ba9d6a_c2ef0b89",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T23:32:06Z",
+      "side": 1,
+      "message": "document please. Also, do we need unique_ptr given that std::set has a move ctor? (if not, extending the todo is fine)",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 64
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9abd0ac_3dda32ba",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T23:32:06Z",
+      "side": 1,
+      "message": "is there somewhere that the meaning of this param is documented?",
+      "range": {
+        "startLine": 35,
+        "startChar": 34,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3666ead0_71193e17",
         "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
         "patchSetId": 4
@@ -136,6 +182,76 @@
         "startChar": 32,
         "endLine": 103,
         "endChar": 78
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec001ad_470f74d5",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T23:32:06Z",
+      "side": 1,
+      "message": "Let me rephrase this: I don\u0027t see an advantage to having NDS and NDSImpl as separate entities. There\u0027s nothing preventing code that should be using NDS::GetForProfile from using NDSImpl::GetForProfile or vice versa. This class fits the mold of a controller, which both pushes updates to UI and handles interaction from the user.",
+      "parentUuid": "da9d5bdc_c2dcb77a",
+      "range": {
+        "startLine": 103,
+        "startChar": 32,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e4ccd3_c828f799",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T23:32:06Z",
+      "side": 1,
+      "message": "why asynchronously?",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62f8f1e_0432eac2",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-05T23:32:06Z",
+      "side": 1,
+      "message": "nitty, but this kinda feels like it belongs in the bridge itself, so you\u0027d be calling bridge_-\u003eIsReady(). Otherwise it\u0027s sorta confusing because |bridge_| can be non-null but not done initializing, whereas normally I\u0027d assume it was either null and uninitialized or non-null and initialized.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 26
       },
       "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
