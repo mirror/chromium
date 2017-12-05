@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4138d0eb_a9e4c2ef",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDeviceInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-05T18:16:51Z",
+      "side": 1,
+      "message": "|kind| is not a field in MediaDeviceInfoPtr. It has to be anyway passed separately.\nAdding MediaDeviceInfoPtr as one of the inputs would also require including its mojom header.\nMediaDeviceInfo looks clean and simple as it is. wdyt?",
+      "parentUuid": "aec49316_eccfc1f0",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b41fda98_f31d4fef",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4a6afb94_f5060f57",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-05T18:16:51Z",
+      "side": 1,
+      "message": "Consciously didn\u0027t add a separate method as dispatcher_host_ is accessed only here and nowhere else in the class.\nWould you still like to have this in a method?",
+      "parentUuid": "bf07894c_0299161f",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b77aafec_10c217a1",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
         "patchSetId": 3
@@ -91,6 +139,30 @@
       "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dad16d3_851e0f32",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-05T18:16:51Z",
+      "side": 1,
+      "message": "AFAIK, dispatcher_host_ will never be null here due to the above MakeRequest call.\nThis call will be through even if there\u0027s a connection error except that the message won\u0027t be read at the other end of the pipe.\nBut yes we should return a rejected promise, in the connection error handler though.",
+      "parentUuid": "b77aafec_10c217a1",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 18
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
