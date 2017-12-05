@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c5a660_31f29924",
+        "filename": "base/observer_list_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T16:11:27Z",
+      "side": 0,
+      "message": "There would be asan errors instead now or?",
+      "revId": "5c8a241432067fceff13b148630281f80c63f67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

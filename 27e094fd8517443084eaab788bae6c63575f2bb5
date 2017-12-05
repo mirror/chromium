@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e204c1f_3e131138",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T16:11:27Z",
+      "side": 1,
+      "message": "Should this be HARMFUL_ACCESS_IS_NOOP?",
+      "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f2526a_410410d6",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-05T16:11:27Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
