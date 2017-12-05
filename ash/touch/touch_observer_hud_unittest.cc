@@ -80,6 +80,7 @@ class TouchHudTestBase : public AshTestBase {
   }
 
   void MirrorDisplays() {
+    display_manager()->reset_previous_mirror_mode_for_test();
     DCHECK_EQ(2U, display_info_list_.size());
     DCHECK_EQ(internal_display_id_, display_info_list_[0].id());
     DCHECK_EQ(external_display_id_, display_info_list_[1].id());
@@ -88,6 +89,7 @@ class TouchHudTestBase : public AshTestBase {
   }
 
   void UnmirrorDisplays() {
+    display_manager()->reset_previous_mirror_mode_for_test();
     DCHECK_EQ(2U, display_info_list_.size());
     DCHECK_EQ(internal_display_id_, display_info_list_[0].id());
     DCHECK_EQ(mirrored_display_id_, display_info_list_[1].id());

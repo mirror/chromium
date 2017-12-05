@@ -227,6 +227,14 @@ class DisplayPreferencesTest : public ash::AshTestBase {
     pref_data->SetInteger("orientation", static_cast<int>(rotation));
   }
 
+  void StoreDisplayMirrorModes(
+      const std::map<int64_t, bool>& stored_mirror_modes) {
+    DictionaryPrefUpdate update(local_state(), prefs::kDisplayMirrorModes);
+    base::DictionaryValue* pref_data = update.Get();
+    for (const auto& modes : stored_mirror_modes)
+      pref_data->SetBoolean(base::Int64ToString(modes.first), modes.second);
+  }
+
   std::string GetRegisteredDisplayPlacementStr(
       const display::DisplayIdList& list) {
     return ash::Shell::Get()
@@ -290,11 +298,10 @@ TEST_F(DisplayPreferencesTest, ListedLayoutOverrides) {
 TEST_F(DisplayPreferencesTest, BasicStores) {
   ash::WindowTreeHostManager* window_tree_host_manager =
       ash::Shell::Get()->window_tree_host_manager();
-
-  UpdateDisplay("200x200*2, 400x300#400x400|300x200*1.25");
   int64_t id1 = display::Screen::GetScreen()->GetPrimaryDisplay().id();
   display::test::ScopedSetInternalDisplayId set_internal(display_manager(),
                                                          id1);
+  UpdateDisplay("200x200*2, 400x300#400x400|300x200*1.25");
   int64_t id2 = display_manager()->GetSecondaryDisplay().id();
   int64_t dummy_id = id2 + 1;
   ASSERT_NE(id1, dummy_id);
@@ -374,6 +381,13 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   bool mirrored = true;
   EXPECT_TRUE(layout_value->GetBoolean(kMirroredKey, &mirrored));
   EXPECT_FALSE(mirrored);
+
+  const base::DictionaryValue* mirror_modes =
+      local_state()->GetDictionary(prefs::kDisplayMirrorModes);
+  EXPECT_EQ(1U, mirror_modes->size());
+  bool mirror_mode = true;
+  EXPECT_TRUE(mirror_modes->GetBoolean(base::Int64ToString(id2), &mirror_mode));
+  EXPECT_FALSE(mirror_mode);
 
   const base::DictionaryValue* properties =
       local_state()->GetDictionary(prefs::kDisplayProperties);
@@ -518,6 +532,12 @@ TEST_F(DisplayPreferencesTest, BasicStores) {
   EXPECT_TRUE(properties->GetDictionary(base::Int64ToString(id1), &property));
   EXPECT_FALSE(property->GetInteger("width", &width));
   EXPECT_FALSE(property->GetInteger("height", &height));
+
+  mirror_modes = local_state()->GetDictionary(prefs::kDisplayMirrorModes);
+  EXPECT_EQ(1U, mirror_modes->size());
+  mirror_mode = false;
+  EXPECT_TRUE(mirror_modes->GetBoolean(base::Int64ToString(id2), &mirror_mode));
+  EXPECT_TRUE(mirror_mode);
 
   // External display's selected resolution must not change
   // by mirroring.
@@ -1078,7 +1098,10 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
   EXPECT_TRUE(display_manager()->IsInUnifiedMode());
 
   // Restored to mirror, then unified.
-  StoreDisplayBoolPropertyForList(list, "mirrored", true);
+  display_manager()->reset_previous_mirror_mode_for_test();
+  std::map<int64_t, bool> stored_mirror_modes;
+  stored_mirror_modes[id1 + 1] = true;
+  StoreDisplayMirrorModes(stored_mirror_modes);
   StoreDisplayBoolPropertyForList(list, "default_unified", true);
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
@@ -1088,8 +1111,10 @@ TEST_F(DisplayPreferencesTest, RestoreUnifiedMode) {
   EXPECT_TRUE(display_manager()->IsInUnifiedMode());
 
   // Sanity check. Restore to extended.
+  display_manager()->reset_previous_mirror_mode_for_test();
+  stored_mirror_modes[id1 + 1] = false;
+  StoreDisplayMirrorModes(stored_mirror_modes);
   StoreDisplayBoolPropertyForList(list, "default_unified", false);
-  StoreDisplayBoolPropertyForList(list, "mirrored", false);
   LoadDisplayPreferences(false);
   UpdateDisplay("100x100,200x200");
   EXPECT_FALSE(display_manager()->IsInMirrorMode());

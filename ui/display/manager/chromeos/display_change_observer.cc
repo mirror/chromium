@@ -152,14 +152,35 @@ MultipleDisplayState DisplayChangeObserver::GetStateForDisplayIds(
     // supported, so default to EXTENDED.
     return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
   }
-  DisplayIdList list =
-      GenerateDisplayIdList(display_states.begin(), display_states.end(),
-                            [](const DisplaySnapshot* display_state) {
-                              return display_state->display_id();
-                            });
-  bool mirrored = display_manager_->layout_store()->GetMirrorMode(list);
-  return mirrored ? MULTIPLE_DISPLAY_STATE_DUAL_MIRROR
-                  : MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+
+  if (display_manager_->layout_store()->forced_mirror_mode())
+    return MULTIPLE_DISPLAY_STATE_DUAL_MIRROR;
+
+  DisplayManager::PreviousMirrorMode previous_mirror_mode =
+      display_manager_->previous_mirror_mode();
+  if (previous_mirror_mode == DisplayManager::NOT_SET) {
+    // Mirror mode should be on if the one of the external display was in mirror
+    // mode before.
+    const std::map<int64_t, bool>& stored_mirror_modes =
+        display_manager_->stored_mirror_modes();
+    DisplayIdList list =
+        GenerateDisplayIdList(display_states.begin(), display_states.end(),
+                              [](const DisplaySnapshot* display_state) {
+                                return display_state->display_id();
+                              });
+    for (const auto& id : list) {
+      auto iter = stored_mirror_modes.find(id);
+      if (iter == stored_mirror_modes.end() || !iter->second)
+        continue;
+      return MULTIPLE_DISPLAY_STATE_DUAL_MIRROR;
+    }
+    return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+  }
+  // Mirror mode should be on if mirror mode is on in the previous
+  // configuration.
+  return previous_mirror_mode == DisplayManager::MIRROR_ON
+             ? MULTIPLE_DISPLAY_STATE_DUAL_MIRROR
+             : MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
 }
 
 bool DisplayChangeObserver::GetResolutionForDisplayId(int64_t display_id,
