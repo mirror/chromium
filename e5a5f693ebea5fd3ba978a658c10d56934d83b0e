@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5327693_69509b9b",
+        "filename": "net/ssl/ssl_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-05T04:04:16Z",
+      "side": 1,
+      "message": "Making the default not an IETF draft seems bad manners.",
+      "revId": "e5a5f693ebea5fd3ba978a658c10d56934d83b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34eb681_c3695ba3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-05T04:04:16Z",
+      "side": 1,
+      "message": "This also needs to be V3, otherwise we\u0027ll have all the same population problems as before.",
+      "range": {
+        "startLine": 3655,
+        "startChar": 29,
+        "endLine": 3655,
+        "endChar": 42
+      },
+      "revId": "e5a5f693ebea5fd3ba978a658c10d56934d83b0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
