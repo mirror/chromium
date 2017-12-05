@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647f33d8_18f770c4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-05T00:29:51Z",
+      "side": 1,
+      "message": "nit: TestRunner.showPanel(\u0027resources\u0027) for better readability.",
+      "revId": "f90744d5f9afb2e118545b456083b4a4caa39ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840511e9_a58f4848",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2514,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-05T00:29:51Z",
+      "side": 1,
+      "message": "nit: I would either nuke these descriptions as long as they don\u0027t differ from parameter name, or make descriptions non-trivial.",
+      "revId": "f90744d5f9afb2e118545b456083b4a4caa39ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de335090_8c7d7b75",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-05T00:29:51Z",
+      "side": 1,
+      "message": "drop third parameter (\u0027this\u0027)",
+      "revId": "f90744d5f9afb2e118545b456083b4a4caa39ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94dfa90_1b8ce29b",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-05T00:29:51Z",
+      "side": 1,
+      "message": "The above code is a pretty common pattern through the protocol methods here, perhaps make it a part of AssertIDBFactory()?",
+      "revId": "f90744d5f9afb2e118545b456083b4a4caa39ab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
