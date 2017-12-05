@@ -329,6 +329,20 @@ gfx::Size ContentSettingBubbleContents::CalculatePreferredSize() const {
   } else {
     preferred_size.set_width(std::min(preferred_width, kMaxContentsWidth));
   }
+
+  // These bubbles should all be the "small" dialog width, but only when in
+  // Harmony mode.
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  if (provider->IsHarmonyMode()) {
+    // Subtract out the dialog insets, because they're always re-added by
+    // BubbleFrameView and the overall BubbleFrameView should end up at the
+    // small dialog width.
+    preferred_size.set_width(
+        provider->GetSnappedDialogWidth(0) -
+        provider->GetInsetsMetric(views::INSETS_DIALOG).width());
+    preferred_size.set_height(GetHeightForWidth(preferred_size.width()));
+  }
+
   return preferred_size;
 }
 
@@ -437,6 +451,7 @@ void ContentSettingBubbleContents::Init() {
       views::RadioButton* radio = new views::RadioButton(*i, 0);
       radio->SetEnabled(bubble_content.radio_group_enabled);
       radio->set_listener(this);
+      radio->SetMultiLine(true);
       radio_group_.push_back(radio);
       layout->StartRow(0, kIndentedSingleColumnSetId);
       layout->AddView(radio);
