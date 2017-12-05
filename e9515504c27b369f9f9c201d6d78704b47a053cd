@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "843397a1_5c97e7ea",
+        "filename": "testing/gtest_ios/unittest-Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-05T15:09:39Z",
+      "side": 1,
+      "message": "I\u0027m assuming this was intentional to add? I\u0027m only checking since the CL description said that inbox-gmail is added, and obsolete ones are removed.",
+      "revId": "e9515504c27b369f9f9c201d6d78704b47a053cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
