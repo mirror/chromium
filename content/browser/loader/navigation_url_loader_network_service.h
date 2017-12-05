@@ -51,7 +51,8 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
       mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints,
       scoped_refptr<ResourceResponse> response,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file);
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data);
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          scoped_refptr<ResourceResponse> response);
   void OnComplete(const network::URLLoaderCompletionStatus& status);
