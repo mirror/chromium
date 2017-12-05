@@ -296,18 +296,9 @@
 #pragma mark - Components Setup
 
 - (void)setUpToolbarButtons {
-  NSMutableArray* buttonConstraints = [[NSMutableArray alloc] init];
-
   // Back button.
-  self.backButton = [self.buttonFactory backToolbarButton];
-  self.backButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
-                                   ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.backButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.backButton addTarget:self.dispatcher
-                      action:@selector(goBack)
-            forControlEvents:UIControlEventTouchUpInside];
+  self.backButton =
+      [self.buttonFactory backButtonWithDispatcher:self.dispatcher];
   UILongPressGestureRecognizer* backHistoryLongPress =
       [[UILongPressGestureRecognizer alloc]
           initWithTarget:self
@@ -315,115 +306,35 @@
   [self.backButton addGestureRecognizer:backHistoryLongPress];
 
   // Forward button.
-  self.forwardButton = [self.buttonFactory forwardToolbarButton];
-  self.forwardButton.visibilityMask =
-      ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled |
-      ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.forwardButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.forwardButton addTarget:self.dispatcher
-                         action:@selector(goForward)
-               forControlEvents:UIControlEventTouchUpInside];
+  self.forwardButton =
+      [self.buttonFactory forwardButtonWithDispatcher:self.dispatcher];
   UILongPressGestureRecognizer* forwardHistoryLongPress =
       [[UILongPressGestureRecognizer alloc]
           initWithTarget:self
                   action:@selector(handleLongPress:)];
   [self.forwardButton addGestureRecognizer:forwardHistoryLongPress];
 
-  // Tab switcher Strip button.
   self.tabSwitchStripButton =
-      [self.buttonFactory tabSwitcherStripToolbarButton];
-  self.tabSwitchStripButton.visibilityMask =
-      ToolbarComponentVisibilityCompactWidth |
-      ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.tabSwitchStripButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.tabSwitchStripButton addTarget:self.dispatcher
-                                action:@selector(displayTabSwitcher)
-                      forControlEvents:UIControlEventTouchUpInside];
-
-  // Tools menu button.
-  self.toolsMenuButton = [self.buttonFactory toolsMenuToolbarButton];
-  self.toolsMenuButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
-                                        ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.toolsMenuButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.toolsMenuButton addTarget:self.dispatcher
-                           action:@selector(showToolsMenu)
-                 forControlEvents:UIControlEventTouchUpInside];
-
-  // Share button.
-  self.shareButton = [self.buttonFactory shareToolbarButton];
-  self.shareButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.shareButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  self.shareButton.titleLabel.text = @"Share";
-  [self.shareButton addTarget:self.dispatcher
-                       action:@selector(sharePage)
-             forControlEvents:UIControlEventTouchUpInside];
-
-  // Reload button.
-  self.reloadButton = [self.buttonFactory reloadToolbarButton];
-  self.reloadButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.reloadButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.reloadButton addTarget:self.dispatcher
-                        action:@selector(reload)
-              forControlEvents:UIControlEventTouchUpInside];
-
-  // Stop button.
-  self.stopButton = [self.buttonFactory stopToolbarButton];
-  self.stopButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.stopButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.stopButton addTarget:self.dispatcher
-                      action:@selector(stopLoading)
-            forControlEvents:UIControlEventTouchUpInside];
-
-  // Voice Search button.
-  self.voiceSearchButton = [self.buttonFactory voiceSearchButton];
-  self.voiceSearchButton.visibilityMask =
-      ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.voiceSearchButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  self.voiceSearchButton.enabled = NO;
-
-  // Bookmark button.
-  self.bookmarkButton = [self.buttonFactory bookmarkToolbarButton];
-  self.bookmarkButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
-  [buttonConstraints
-      addObject:[self.bookmarkButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.bookmarkButton addTarget:self.dispatcher
-                          action:@selector(bookmarkPage)
-                forControlEvents:UIControlEventTouchUpInside];
-
-  // Contract button.
-  self.contractButton = [self.buttonFactory contractToolbarButton];
-  self.contractButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
-                                       ToolbarComponentVisibilityRegularWidth;
-  self.contractButton.alpha = 0;
-  self.contractButton.hidden = YES;
-  [buttonConstraints
-      addObject:[self.contractButton.widthAnchor
-                    constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.contractButton addTarget:self.dispatcher
-                          action:@selector(contractToolbar)
-                forControlEvents:UIControlEventTouchUpInside];
+      [self.buttonFactory tabSwitcherStripButtonWithDispatcher:self.dispatcher];
+  self.toolsMenuButton =
+      [self.buttonFactory toolsMenuButtonWithDispatcher:self.dispatcher];
+  self.shareButton =
+      [self.buttonFactory shareButtonWithDispatcher:self.dispatcher];
+  self.reloadButton =
+      [self.buttonFactory reloadButtonWithDispatcher:self.dispatcher];
+  self.stopButton =
+      [self.buttonFactory stopButtonWithDispatcher:self.dispatcher];
+  self.voiceSearchButton =
+      [self.buttonFactory voiceSearchButtonWithDispatcher:self.dispatcher];
+  self.bookmarkButton =
+      [self.buttonFactory bookmarkButtonWithDispatcher:self.dispatcher];
+  self.contractButton =
+      [self.buttonFactory contractButtonWithDispatcher:self.dispatcher];
 
   // Add buttons to button updater.
   self.buttonUpdater.backButton = self.backButton;
   self.buttonUpdater.forwardButton = self.forwardButton;
   self.buttonUpdater.voiceSearchButton = self.voiceSearchButton;
-
-  [NSLayoutConstraint activateConstraints:buttonConstraints];
 }
 
 - (void)setUpLocationBarContainer {
