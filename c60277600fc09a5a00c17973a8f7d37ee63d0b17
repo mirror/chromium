@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31dcdfd0_7b93067b",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-05T00:10:25Z",
+      "side": 1,
+      "message": "Test_filter is used for retries, so can overwrite the test_shards",
+      "revId": "c60277600fc09a5a00c17973a8f7d37ee63d0b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
