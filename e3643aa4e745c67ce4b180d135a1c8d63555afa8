@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7c5ac83_84f2dacd",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-05T18:44:24Z",
+      "side": 1,
+      "message": "I don\u0027t see a reason why we shouldn\u0027t be able to get rid of this. But let\u0027s not do this in this CL.",
+      "parentUuid": "286a1e96_6170137e",
+      "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2430d1a4_337c53bf",
         "filename": "content/browser/service_worker/service_worker_storage_unittest.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T06:06:09Z",
       "side": 1,
       "message": "Does this need to be ForTest?",
+      "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfe02b8_e558c89e",
+        "filename": "content/browser/service_worker/service_worker_storage_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-05T18:44:24Z",
+      "side": 1,
+      "message": "Yes because LazyInitialize should only be called if it\u0027s uninitialized or initializing.\nMaybe we should rename LazyInitialize to Initialize and worry about this when we try to get rid of ForTest.",
+      "parentUuid": "2430d1a4_337c53bf",
       "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
