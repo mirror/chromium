@@ -90,8 +90,25 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
                              mojom::GlobalMemoryDumpPtr global_memory_dump) {
     callback.Run(success, std::move(global_memory_dump));
   };
-  RequestGlobalMemoryDumpInternal(args_in, false,
-                                  base::Bind(callback_adapter, callback));
+  RequestGlobalMemoryDumpInternal(args_in, base::nullopt, false,
+                                  base::BindOnce(callback_adapter, callback));
+}
+
+void CoordinatorImpl::RequestGlobalMemoryDumpForPid(
+    base::ProcessId pid,
+    const RequestGlobalMemoryDumpForPidCallback& callback) {
+  // This merely strips out the |success| and |dump_guid| arguments.
+  auto callback_adapter =
+      [](const RequestGlobalMemoryDumpForPidCallback& callback, bool success,
+         uint64_t, mojom::GlobalMemoryDumpPtr global_memory_dump) {
+        callback.Run(std::move(global_memory_dump));
+      };
+  base::trace_event::GlobalMemoryDumpRequestArgs args{
+      base::trace_event::MemoryDumpType::SUMMARY_ONLY,
+      base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND};
+  RequestGlobalMemoryDumpInternal(args, base::Optional<base::ProcessId>(pid),
+                                  false,
+                                  base::BindOnce(callback_adapter, callback));
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
@@ -102,8 +119,8 @@ void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
       [](const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback,
          bool success, uint64_t dump_guid,
          mojom::GlobalMemoryDumpPtr) { callback.Run(success, dump_guid); };
-  RequestGlobalMemoryDumpInternal(args_in, true,
-                                  base::Bind(callback_adapter, callback));
+  RequestGlobalMemoryDumpInternal(args_in, base::nullopt, true,
+                                  base::BindOnce(callback_adapter, callback));
 }
 
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
@@ -156,8 +173,9 @@ void CoordinatorImpl::UnregisterClientProcess(
 
 void CoordinatorImpl::RequestGlobalMemoryDumpInternal(
     const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
+    base::Optional<base::ProcessId> pid,
     bool add_to_trace,
-    const RequestGlobalMemoryDumpInternalCallback& callback) {
+    RequestGlobalMemoryDumpInternalCallback callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   UMA_HISTOGRAM_COUNTS_1000("Memory.Experimental.Debug.GlobalDumpQueueLength",
@@ -185,14 +203,15 @@ void CoordinatorImpl::RequestGlobalMemoryDumpInternal(
                 << base::trace_event::MemoryDumpLevelOfDetailToString(
                        args.level_of_detail)
                 << ") is already in the queue";
-        callback.Run(false /* success */, 0 /* dump_guid */,
-                     nullptr /* global_memory_dump */);
+        std::move(callback).Run(false /* success */, 0 /* dump_guid */,
+                                nullptr /* global_memory_dump */);
         return;
       }
     }
   }
 
-  queued_memory_dump_requests_.emplace_back(args, callback, add_to_trace);
+  queued_memory_dump_requests_.emplace_back(args, std::move(callback),
+                                            add_to_trace, pid);
 
   // If another dump is already in queued, this dump will automatically be
   // scheduled when the other dump finishes.

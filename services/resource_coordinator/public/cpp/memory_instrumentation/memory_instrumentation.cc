@@ -52,6 +52,13 @@ void MemoryInstrumentation::RequestGlobalDump(
   coordinator->RequestGlobalMemoryDump(args, callback);
 }
 
+void MemoryInstrumentation::RequestGlobalDumpForPid(
+    base::ProcessId pid,
+    RequestGlobalDumpForPidCallback callback) {
+  const auto& coordinator = GetCoordinatorBindingForCurrentThread();
+  coordinator->RequestGlobalMemoryDumpForPid(pid, callback);
+}
+
 void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,

@@ -119,6 +119,10 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   void RequestGlobalMemoryDump(const GlobalMemoryDumpRequestArgs& args,
                                const RequestGlobalMemoryDumpCallback&) override;
 
+  void RequestGlobalMemoryDumpForPid(
+      base::ProcessId pid,
+      const RequestGlobalMemoryDumpForPidCallback&) override {}
+
   void RequestGlobalMemoryDumpAndAppendToTrace(
       const GlobalMemoryDumpRequestArgs& args,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
