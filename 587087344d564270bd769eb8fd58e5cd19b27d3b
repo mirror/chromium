@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "fc9c0c98_1074a089",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-05T22:20:27Z",
+      "side": 1,
+      "message": "Did I say virtual? I meant abstract -_-; Sorry for the confusion.",
+      "parentUuid": "1a08af67_e3f01da1",
+      "revId": "587087344d564270bd769eb8fd58e5cd19b27d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ba5e3b_c32f694c",
         "filename": "third_party/WebKit/Source/core/css/properties/longhands/WebkitTapHighlightColor.cpp",
         "patchSetId": 19
