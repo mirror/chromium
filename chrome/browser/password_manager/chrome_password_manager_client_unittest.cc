@@ -229,8 +229,7 @@ class FakePasswordAutofillAgent
 
 class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
  public:
-  ChromePasswordManagerClientTest()
-      : field_trial_list_(nullptr), metrics_enabled_(false) {}
+  ChromePasswordManagerClientTest() : field_trial_list_(nullptr) {}
   void SetUp() override;
   void TearDown() override;
 
@@ -257,7 +256,7 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
     ProfileSyncServiceMock* mock_sync_service = SetupBasicMockSync();
     EXPECT_CALL(*mock_sync_service, IsUsingSecondaryPassphrase())
         .WillRepeatedly(Return(false));
-    metrics_enabled_ = true;
+    ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
     NavigateAndCommit(GURL("about:blank"));
   }
 
@@ -273,7 +272,6 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
 
   TestingPrefServiceSimple prefs_;
   base::FieldTrialList field_trial_list_;
-  bool metrics_enabled_;
 };
 
 void ChromePasswordManagerClientTest::SetUp() {
@@ -292,12 +290,12 @@ void ChromePasswordManagerClientTest::SetUp() {
       web_contents(), nullptr);
 
   // Connect our bool for testing.
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled_);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(false);
 }
 
 void ChromePasswordManagerClientTest::TearDown() {
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
   ChromeRenderViewHostTestHarness::TearDown();
 }
 
@@ -562,7 +560,7 @@ TEST_F(ChromePasswordManagerClientTest,
   ProfileSyncServiceMock* mock_sync_service = SetupBasicMockSync();
   EXPECT_CALL(*mock_sync_service, IsUsingSecondaryPassphrase())
       .WillRepeatedly(Return(false));
-  metrics_enabled_ = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
 
   NavigateAndCommit(GURL("about:blank"));
   GetClient()->AnnotateNavigationEntry(true);
@@ -578,7 +576,7 @@ TEST_F(ChromePasswordManagerClientTest,
   ProfileSyncServiceMock* mock_sync_service = SetupBasicMockSync();
   EXPECT_CALL(*mock_sync_service, IsUsingSecondaryPassphrase())
       .WillRepeatedly(Return(false));
-  metrics_enabled_ = false;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(false);
 
   NavigateAndCommit(GURL("about:blank"));
   GetClient()->AnnotateNavigationEntry(true);
@@ -594,7 +592,7 @@ TEST_F(ChromePasswordManagerClientTest,
   ProfileSyncServiceMock* mock_sync_service = SetupBasicMockSync();
   EXPECT_CALL(*mock_sync_service, IsUsingSecondaryPassphrase())
       .WillRepeatedly(Return(true));
-  metrics_enabled_ = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
 
   NavigateAndCommit(GURL("about:blank"));
   GetClient()->AnnotateNavigationEntry(true);
@@ -610,7 +608,7 @@ TEST_F(ChromePasswordManagerClientTest,
   ProfileSyncServiceMock* mock_sync_service = SetupBasicMockSync();
   EXPECT_CALL(*mock_sync_service, IsUsingSecondaryPassphrase())
       .WillRepeatedly(Return(true));
-  metrics_enabled_ = false;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(false);
 
   NavigateAndCommit(GURL("about:blank"));
   GetClient()->AnnotateNavigationEntry(true);
