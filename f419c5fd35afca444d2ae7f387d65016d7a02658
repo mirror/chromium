@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "5a3874fc_40f34f2f",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T16:38:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1920f63_c119cf04",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8da66f60_b11e22d0",
         "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
         "patchSetId": 6
@@ -222,6 +246,30 @@
       "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b78f2b9_8ecdb711",
+        "filename": "ios/chrome/browser/download/pass_kit_tab_helper.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-05T16:38:18Z",
+      "side": 1,
+      "message": "I don\u0027t really mind (it is just that every time I use \"i\" as a index in a for loop, I\u0027m asked to use \"index\" even though the style guide explicitly allow the use of \"i\" in such a case, so I felt I had to point this too). Ok for using \"it\" here.",
+      "parentUuid": "58e97f82_538eafbd",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "f419c5fd35afca444d2ae7f387d65016d7a02658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
