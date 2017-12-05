@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "852e82ff_02c9c629",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-05T23:58:02Z",
+      "side": 1,
+      "message": "Added a check inside canAddPrinter_()",
+      "parentUuid": "628b6707_fbf10768",
+      "range": {
+        "startLine": 188,
+        "startChar": 42,
+        "endLine": 188,
+        "endChar": 52
+      },
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b348ee4a_28d5e232",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 2
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6abe67d6_c5fc4a2f",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-05T23:58:02Z",
+      "side": 1,
+      "message": "Created pattern strings for smaller capture groups and joined them into a single regular expression.",
+      "parentUuid": "3be3dc85_b2aac891",
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30eee7fd_39743ae8",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 2
@@ -80,6 +122,30 @@
       "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ff8340_2b059e13",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-05T23:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30eee7fd_39743ae8",
+      "range": {
+        "startLine": 212,
+        "startChar": 14,
+        "endLine": 212,
+        "endChar": 20
+      },
+      "revId": "6efc4067a7ac5d93c67d6482868e5ad929e67a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
