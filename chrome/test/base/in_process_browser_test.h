@@ -246,6 +246,12 @@ class InProcessBrowserTest : public content::BrowserTestBase {
   // Quits all open browsers and waits until there are no more browsers.
   void QuitBrowsers();
 
+#if defined(OS_MACOSX)
+  // Helper function to check if there're any modifiers left hanging after the
+  // test runs. It'll report failure if there are any.
+  void CheckHangingModifiers();
+#endif  // OS_MACOSX
+
   static SetUpBrowserFunction* global_browser_set_up_function_;
 
   // Browser created in BrowserMain().
