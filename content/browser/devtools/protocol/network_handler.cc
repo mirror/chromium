@@ -20,6 +20,7 @@
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/protocol/page.h"
 #include "content/browser/devtools/protocol/security.h"
+#include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -660,9 +661,13 @@ class NetworkNavigationThrottle : public content::NavigationThrottle {
 
   // content::NavigationThrottle implementation:
   NavigationThrottle::ThrottleCheckResult WillProcessResponse() override {
-    if (network_handler_ && network_handler_->ShouldCancelNavigation(
-                                navigation_handle()->GetGlobalRequestID())) {
-      return CANCEL_AND_IGNORE;
+    if (network_handler_) {
+      RenderFrameDevToolsAgentHost::InterceptorNavigationThrottleDone(
+          NavigationThrottle::navigation_handle());
+      if (network_handler_->ShouldCancelNavigation(
+              navigation_handle()->GetGlobalRequestID())) {
+        return CANCEL_AND_IGNORE;
+      }
     }
     return PROCEED;
   }
@@ -1302,6 +1307,7 @@ bool NetworkHandler::ShouldCancelNavigation(
   WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
   if (!web_contents)
     return false;
+
   DevToolsInterceptorController* interceptor =
       DevToolsInterceptorController::FromBrowserContext(
           web_contents->GetBrowserContext());

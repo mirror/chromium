@@ -59,6 +59,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
 
   static std::unique_ptr<NavigationThrottle> CreateThrottleForNavigation(
       NavigationHandle* navigation_handle);
+  static void InterceptorNavigationThrottleDone(
+      NavigationHandle* navigation_handle);
   static bool IsNetworkHandlerEnabled(FrameTreeNode* frame_tree_node);
   static void AppendDevToolsHeaders(FrameTreeNode* frame_tree_node,
                                     net::HttpRequestHeaders* headers);
@@ -128,6 +130,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   void DiscardPending();
   void UpdateProtocolHandlers(RenderFrameHostImpl* host);
 
+  void UnsuspendMessages();
+
   bool IsChildFrame();
 
   void OnClientsAttached();
@@ -142,6 +146,9 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   void MaybeReattachToRenderFrame();
   void GrantPolicy(RenderFrameHostImpl* host);
   void RevokePolicy(RenderFrameHostImpl* host);
+
+  void OnInterceptorNavigationThrottlePending();
+  void OnInterceptorNavigationThrottleDone();
 
 #if defined(OS_ANDROID)
   device::mojom::WakeLock* GetWakeLock();
@@ -172,6 +179,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   RenderFrameHostImpl* frame_host_ = nullptr;
   mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::flat_set<NavigationHandleImpl*> navigation_handles_;
+  base::flat_set<NavigationHandleImpl*> uncomitted_navigations_;
+  int pending_interceptor_navigation_throttles_ = 0;
   bool render_frame_alive_ = false;
 
   // These messages were queued after suspending, not sent to the agent,
