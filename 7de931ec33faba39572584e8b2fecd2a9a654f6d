@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ff4003_21cde46b",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-05T23:53:44Z",
+      "side": 1,
+      "message": "Would it be possible to call your Sanitize function here, so that we never change the value of the element?",
+      "range": {
+        "startLine": 824,
+        "startChar": 7,
+        "endLine": 824,
+        "endChar": 35
+      },
+      "revId": "7de931ec33faba39572584e8b2fecd2a9a654f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
