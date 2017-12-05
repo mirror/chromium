@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8af5106_a4faef7e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T22:07:29Z",
+      "side": 1,
+      "message": "The macros expand to a non-trivial amount of code. Can you use anonymous function so we only have a single macro per histogram?",
+      "revId": "4ad5257e5b49cfdd7abb3e7523a906cbd580931f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
