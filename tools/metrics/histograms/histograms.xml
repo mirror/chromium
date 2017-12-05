@@ -13450,6 +13450,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch.SecureProxy"
+    enum="BooleanSuccess">
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+
+  </summary>
+</histogram>
+
 <histogram name="DataUsage.MatchingRulesCount.Invalid" units="count">
   <owner>bengr@chromium.org</owner>
   <owner>rajendrant@chromium.org</owner>
