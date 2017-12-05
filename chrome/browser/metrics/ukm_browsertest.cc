@@ -106,9 +106,7 @@ class UkmBrowserTest : public SyncTest {
 // Make sure that UKM is disabled while an incognito window is open.
 IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
   // Enable metrics recording and update MetricsServicesManager.
-  bool metrics_enabled = true;
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(
       false);
 
@@ -130,15 +128,14 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
 }
 
 // Make sure that UKM is disabled while an non-sync profile's window is open.
 IN_PROC_BROWSER_TEST_F(UkmBrowserTest, NonSyncCheck) {
   // Enable metrics recording and update MetricsServicesManager.
-  bool metrics_enabled = true;
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(
       false);
 
@@ -162,15 +159,14 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, NonSyncCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
 }
 
 // Make sure that UKM is disabled when metrics consent is revoked.
 IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsConsentCheck) {
   // Enable metrics recording and update MetricsServicesManager.
-  bool metrics_enabled = true;
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
 
   Profile* profile = ProfileManager::GetActiveUserProfile();
@@ -181,12 +177,12 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsConsentCheck) {
   EXPECT_TRUE(ukm_enabled());
   uint64_t original_client_id = client_id();
 
-  metrics_enabled = false;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(false);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
 
   EXPECT_FALSE(ukm_enabled());
 
-  metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
 
   EXPECT_TRUE(ukm_enabled());
@@ -195,15 +191,14 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsConsentCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
 }
 
 // Make sure that UKM is disabled while an non-sync window is open.
 IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
   // Enable metrics recording and update MetricsServicesManager.
-  bool metrics_enabled = true;
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
 
   Profile* profile = ProfileManager::GetActiveUserProfile();
@@ -224,7 +219,8 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
 }
 
 // Make sure that UKM is not affected by MetricsReporting Feature (sampling).
@@ -240,9 +236,7 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsReportingCheck) {
       base::FeatureList::IsEnabled(internal::kMetricsReportingFeature));
 
   // Enable metrics recording and update MetricsServicesManager.
-  bool metrics_enabled = true;
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-      &metrics_enabled);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
 
   Profile* profile = ProfileManager::GetActiveUserProfile();
@@ -254,7 +248,8 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsReportingCheck) {
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
-  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      base::nullopt);
 }
 
 // TODO(crbug/745939): Add a tests for disable w/ multiprofiles.

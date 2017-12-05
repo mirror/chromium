@@ -10,6 +10,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "components/metrics/metrics_service_accessor.h"
 
 class IOSChromeDataReductionProxySettings;
@@ -24,9 +25,8 @@ class CrashesDOMHandler;
 class IOSChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
  public:
   // If arg is non-null, the value will be returned from future calls to
-  // IsMetricsAndCrashReportingEnabled(). Pointer must be valid until it is
-  // reset to null here.
-  static void SetMetricsAndCrashReportingForTesting(const bool* value);
+  // IsMetricsAndCrashReportingEnabled().
+  static void SetMetricsAndCrashReportingForTesting(base::Optional<bool> value);
 
  private:
   friend class IOSChromeMetricsServicesManagerClient;

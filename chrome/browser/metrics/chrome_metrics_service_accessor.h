@@ -10,6 +10,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
 #include "components/metrics/metrics_service_accessor.h"
@@ -86,9 +87,8 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   // This test method is public so tests don't need to befriend this class.
 
   // If arg is non-null, the value will be returned from future calls to
-  // IsMetricsAndCrashReportingEnabled().  Pointer must be valid until
-  // it is reset to null here.
-  static void SetMetricsAndCrashReportingForTesting(const bool* value);
+  // IsMetricsAndCrashReportingEnabled().
+  static void SetMetricsAndCrashReportingForTesting(base::Optional<bool> value);
 
  private:
   friend class ::CrashesDOMHandler;

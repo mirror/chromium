@@ -79,34 +79,30 @@ class FakeBackgroundProfilingTriggers : public BackgroundProfilingTriggers {
 class BackgroundProfilingTriggersTest : public testing::Test {
  public:
   BackgroundProfilingTriggersTest()
-      : scoped_task_envrionment_(
+      : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         testing_profile_manager_(TestingBrowserProcess::GetGlobal()),
-        triggers_(&host_),
-        is_metrics_enabled_(true) {}
+        triggers_(&host_) {}
 
   void SetUp() override {
     ASSERT_TRUE(testing_profile_manager_.SetUp());
-    ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-        &is_metrics_enabled_);
+    ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(true);
   }
 
   void TearDown() override {
     ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-        nullptr);
+        base::nullopt);
   }
 
   void SetMode(ProfilingProcessHost::Mode mode) { host_.SetMode(mode); }
 
  protected:
-  base::test::ScopedTaskEnvironment scoped_task_envrionment_;
+  const base::test::ScopedTaskEnvironment scoped_task_environment_;
   content::TestBrowserThreadBundle thread_bundle;
   TestingProfileManager testing_profile_manager_;
 
   ProfilingProcessHost host_;
   FakeBackgroundProfilingTriggers triggers_;
-
-  bool is_metrics_enabled_;
 };
 
 // Ensures:
@@ -333,8 +329,7 @@ TEST_F(BackgroundProfilingTriggersTest,
 // Ensure IsAllowedToUpload() respects metrics collection settings.
 TEST_F(BackgroundProfilingTriggersTest, IsAllowedToUpload_Metrics) {
   EXPECT_TRUE(triggers_.IsAllowedToUpload());
-
-  is_metrics_enabled_ = false;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(false);
   EXPECT_FALSE(triggers_.IsAllowedToUpload());
 }
 

@@ -17,16 +17,14 @@
 
 namespace {
 
-const bool* g_metrics_consent_for_testing = nullptr;
+base::Optional<bool> g_metrics_consent_for_testing = base::nullopt;
 
 }  // namespace
 
 // static
 void ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
-    const bool* value) {
-  DCHECK_NE(g_metrics_consent_for_testing == nullptr, value == nullptr)
-      << "Unpaired set/reset";
-
+    base::Optional<bool> value) {
+  DCHECK_NE(!g_metrics_consent_for_testing, !value) << "Unpaired set/reset";
   g_metrics_consent_for_testing = value;
 }
 
