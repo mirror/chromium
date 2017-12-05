@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03521e1_d7f400c5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-12-05T02:00:48Z",
+      "side": 1,
+      "message": "This is to honor the override width? I thought flexbox used items\u0027 min/max preferred width as input to to the flex algorithm, and used the output of the algorithm to set override sizes on the items before telling the items to layout.\n\nMy understanding is most likely wrong, because if it were correct then this CL would make flex item tables report incorrect widths to the parent flexbox.\n\nWhere did I go wrong?",
+      "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
