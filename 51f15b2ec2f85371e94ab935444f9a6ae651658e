@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "009129bd_8e1b5dba",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-05T05:07:31Z",
+      "side": 1,
+      "message": "I shall change it to associated interface and check if there is nay functionality change",
+      "parentUuid": "a3c2e95d_5b3c4642",
+      "revId": "51f15b2ec2f85371e94ab935444f9a6ae651658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b082a148_ad8050ce",
         "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
         "patchSetId": 8
