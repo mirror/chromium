@@ -57,6 +57,12 @@ class MockFrameHost : public mojom::FrameHost {
   void BeginNavigation(const CommonNavigationParams& common_params,
                        mojom::BeginNavigationParamsPtr begin_params) override {}
 
+  void DidCommitSameDocumentNavigation(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params)
+      override {
+    last_commit_params_ = std::move(params);
+  }
+
  private:
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
       last_commit_params_;
