@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84cce40a_399f92e3",
+        "filename": "components/autofill/core/browser/phone_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T15:11:07Z",
+      "side": 1,
+      "message": "update this comment",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 33
+      },
+      "revId": "45dd2a12a45a639db6855e5d36c9f300390fa0e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5e6c36_5bf52f94",
+        "filename": "components/autofill/core/browser/phone_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T15:11:07Z",
+      "side": 1,
+      "message": "should this be an update to this existing rule or a additional rule?",
+      "revId": "45dd2a12a45a639db6855e5d36c9f300390fa0e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
