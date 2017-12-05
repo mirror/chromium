@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4d2d03_7531198b",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-05T23:51:20Z",
+      "side": 1,
+      "message": "nit: in most places in this file, we just use the presence of offscreen_target_frame_buffer_ to determine if we\u0027re offscreen. Could we do that in ::Destroy() too (just grab the state before we reset it)?\n\nAlternatively, we can change code everywhere to use this new data member, but I would prefer not having 2 ways of checking offscreen state.",
+      "revId": "660f70c19b5a837f593ac179fbf3dcb78bf52f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
