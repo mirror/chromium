@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57314306_2a5fa668",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T18:56:19Z",
+      "side": 1,
+      "message": "I think this entire statement could be reduced to base::StrAppend",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 76
+      },
+      "revId": "e69a34498f869e6d4ab6a90d4a817b59cb1622ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
