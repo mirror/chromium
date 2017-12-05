@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5a6243_b9fe92da",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-05T00:53:41Z",
+      "side": 1,
+      "message": "What is the advantage of including the div qualifier? (Is the div needed)?\n\nSame question for #container. i.e. I\u0027d expect line 22 and 33 to be more similar, save for the :last-of-type",
+      "revId": "0df19aae509cee533c7afdb67ae07888e0b911ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
