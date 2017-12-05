@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf6f98b_9c01d7ea",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-05T05:26:40Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure if this is the best way to do this, but my motivation in adding this is because we use BeginMainFrameStartToCommitDurationEstimate in deciding whether to defer the invalidation and that time is inclusive of the time the main thread is blocked from committing until a previous tree has been activated. So we can get into a state where the main thread is perpetually being de-prioritized and as a result has a larger duration from start to commit causing a bad feedback loop. Do you think it might be better to have another history in CompositorTimingHistory that measures only from start to ready to commit and use that instead?",
+      "range": {
+        "startLine": 799,
+        "startChar": 7,
+        "endLine": 799,
+        "endChar": 38
+      },
+      "revId": "7d5c1d50ab810381e0fdb21c00d64af5a8466e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
