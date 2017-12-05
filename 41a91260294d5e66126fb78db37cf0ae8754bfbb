@@ -16,6 +16,24 @@
       "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee3ddd0_44bff0fb",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-05T20:17:47Z",
+      "side": 1,
+      "message": "This is for BUILDFLAG(ENABLE_PRINTING) and friends. See out/Release/gen/printing/features/features.h and build/buildflag.h to see what it\u0027s done underneath.",
+      "parentUuid": "173b8579_74773a9b",
+      "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
