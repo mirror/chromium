@@ -65,7 +65,7 @@ class HttpServerPropertiesImplTest : public testing::Test {
   HttpServerPropertiesImplTest()
       : test_task_runner_(new base::TestMockTimeTaskRunner()),
         broken_services_clock_(test_task_runner_->GetMockTickClock()),
-        impl_(broken_services_clock_.get()) {}
+        impl_(broken_services_clock_) {}
 
   bool HasAlternativeService(const url::SchemeHostPort& origin) {
     const AlternativeServiceInfoVector alternative_service_info_vector =
@@ -93,7 +93,7 @@ class HttpServerPropertiesImplTest : public testing::Test {
 
   scoped_refptr<base::TestMockTimeTaskRunner> test_task_runner_;
 
-  std::unique_ptr<base::TickClock> broken_services_clock_;
+  base::TickClock* broken_services_clock_;
   HttpServerPropertiesImpl impl_;
 };
 

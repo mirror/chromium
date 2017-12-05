@@ -295,13 +295,14 @@ class AffiliationBackendTest : public testing::Test {
   }
 
   bool IsCachedDataFreshForFacetURI(const FacetURI& facet_uri) {
-    std::unique_ptr<base::Clock> clock(backend_task_runner_->GetMockClock());
-    return FacetManager(facet_uri, backend(), clock.get()).IsCachedDataFresh();
+    return FacetManager(facet_uri, backend(),
+                        backend_task_runner_->GetMockClock())
+        .IsCachedDataFresh();
   }
 
   bool IsCachedDataNearStaleForFacetURI(const FacetURI& facet_uri) {
-    std::unique_ptr<base::Clock> clock(backend_task_runner_->GetMockClock());
-    return FacetManager(facet_uri, backend(), clock.get())
+    return FacetManager(facet_uri, backend(),
+                        backend_task_runner_->GetMockClock())
         .IsCachedDataNearStale();
   }
 

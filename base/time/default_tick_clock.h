@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/time/tick_clock.h"
 
 namespace base {
@@ -21,6 +22,11 @@ class BASE_EXPORT DefaultTickClock : public TickClock {
 
   // Returns a shared instance of DefaultTickClock. This is thread-safe.
   static DefaultTickClock* GetInstance();
+
+ private:
+  friend struct LazyInstanceTraitsBase<DefaultTickClock>;
+
+  DefaultTickClock();
 };
 
 }  // namespace base

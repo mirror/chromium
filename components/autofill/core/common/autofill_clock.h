@@ -32,13 +32,13 @@ class AutofillClock {
   static void SetClock();
 
   // Sets the clock to be used for tests.
-  static void SetTestClock(std::unique_ptr<base::Clock> clock);
+  static void SetTestClock(base::Clock* clock);
 
   AutofillClock();
   ~AutofillClock();
 
   // The clock used to return the current time.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillClock);
 };

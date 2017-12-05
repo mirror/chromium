@@ -84,10 +84,8 @@ class BudgetDatabaseTest : public ::testing::Test {
   const url::Origin& origin() const { return origin_; }
 
   // Setup a test clock so that the tests can control time.
-  base::SimpleTestClock* SetClockForTesting() {
-    base::SimpleTestClock* clock = new base::SimpleTestClock();
-    db_.SetClockForTesting(base::WrapUnique(clock));
-    return clock;
+  void SetClockForTesting(base::SimpleTestClock* clock) {
+    db_.SetClockForTesting(clock);
   }
 
   void SetSiteEngagementScore(double score) {
@@ -117,9 +115,10 @@ TEST_F(BudgetDatabaseTest, GetBudgetNoBudgetOrSES) {
 }
 
 TEST_F(BudgetDatabaseTest, AddEngagementBudgetTest) {
-  base::SimpleTestClock* clock = SetClockForTesting();
+  base::SimpleTestClock clock;
+  SetClockForTesting(&clock);
   base::Time expiration_time =
-      clock->Now() + base::TimeDelta::FromDays(kDefaultExpirationInDays);
+      clock.Now() + base::TimeDelta::FromDays(kDefaultExpirationInDays);
 
   // Set the default site engagement.
   SetSiteEngagementScore(kEngagement);
@@ -137,7 +136,7 @@ TEST_F(BudgetDatabaseTest, AddEngagementBudgetTest) {
   ASSERT_EQ(expiration_time.ToJsTime(), prediction_[1]->time);
 
   // Advance time 1 day and add more engagement budget.
-  clock->Advance(base::TimeDelta::FromDays(1));
+  clock.Advance(base::TimeDelta::FromDays(1));
   GetBudgetDetails();
 
   // The budget should now have 1 full share plus 1 daily budget.
@@ -153,7 +152,7 @@ TEST_F(BudgetDatabaseTest, AddEngagementBudgetTest) {
 
   // Advance time by 59 minutes and check that no engagement budget is added
   // since budget should only be added for > 1 hour increments.
-  clock->Advance(base::TimeDelta::FromMinutes(59));
+  clock.Advance(base::TimeDelta::FromMinutes(59));
   GetBudgetDetails();
 
   // The budget should be the same as before the attempted add.
@@ -164,16 +163,17 @@ TEST_F(BudgetDatabaseTest, AddEngagementBudgetTest) {
 }
 
 TEST_F(BudgetDatabaseTest, SpendBudgetTest) {
-  base::SimpleTestClock* clock = SetClockForTesting();
+  base::SimpleTestClock clock;
+  SetClockForTesting(&clock);
 
   // Set the default site engagement.
   SetSiteEngagementScore(kEngagement);
 
   // Intialize the budget with several chunks.
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromDays(1));
+  clock.Advance(base::TimeDelta::FromDays(1));
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromDays(1));
+  clock.Advance(base::TimeDelta::FromDays(1));
   GetBudgetDetails();
 
   // Spend an amount of budget less than the daily budget.
@@ -207,7 +207,7 @@ TEST_F(BudgetDatabaseTest, SpendBudgetTest) {
 
   // Advance time until the last remaining chunk should be expired, then query
   // for the full engagement worth of budget.
-  clock->Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays + 1));
+  clock.Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays + 1));
   EXPECT_TRUE(SpendBudget(daily_budget * kDefaultExpirationInDays));
 }
 
@@ -216,14 +216,15 @@ TEST_F(BudgetDatabaseTest, SpendBudgetTest) {
 // time goes backwards and then forwards again, the origin isn't granted extra
 // budget.
 TEST_F(BudgetDatabaseTest, GetBudgetNegativeTime) {
-  base::SimpleTestClock* clock = SetClockForTesting();
+  base::SimpleTestClock clock;
+  SetClockForTesting(&clock);
 
   // Set the default site engagement.
   SetSiteEngagementScore(kEngagement);
 
   // Initialize the budget with two chunks.
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromDays(1));
+  clock.Advance(base::TimeDelta::FromDays(1));
   GetBudgetDetails();
 
   // Save off the budget total.
@@ -231,7 +232,7 @@ TEST_F(BudgetDatabaseTest, GetBudgetNegativeTime) {
   double budget = prediction_[0]->budget_at;
 
   // Move the clock backwards in time to before the budget awards.
-  clock->SetNow(clock->Now() - base::TimeDelta::FromDays(5));
+  clock.SetNow(clock.Now() - base::TimeDelta::FromDays(5));
 
   // Make sure the budget is the same.
   GetBudgetDetails();
@@ -240,14 +241,15 @@ TEST_F(BudgetDatabaseTest, GetBudgetNegativeTime) {
 
   // Now move the clock back to the original time and check that no extra budget
   // is awarded.
-  clock->SetNow(clock->Now() + base::TimeDelta::FromDays(5));
+  clock.SetNow(clock.Now() + base::TimeDelta::FromDays(5));
   GetBudgetDetails();
   ASSERT_EQ(3U, prediction_.size());
   ASSERT_EQ(budget, prediction_[0]->budget_at);
 }
 
 TEST_F(BudgetDatabaseTest, CheckBackgroundBudgetHistogram) {
-  base::SimpleTestClock* clock = SetClockForTesting();
+  base::SimpleTestClock clock;
+  SetClockForTesting(&clock);
 
   // Set the default site engagement.
   SetSiteEngagementScore(kEngagement);
@@ -256,11 +258,11 @@ TEST_F(BudgetDatabaseTest, CheckBackgroundBudgetHistogram) {
   // engagement), 15 budget (half of the engagement), 0 budget (less than an
   // hour), and then after the first two expire, another 30 budget.
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays / 2));
+  clock.Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays / 2));
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromMinutes(59));
+  clock.Advance(base::TimeDelta::FromMinutes(59));
   GetBudgetDetails();
-  clock->Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays + 1));
+  clock.Advance(base::TimeDelta::FromDays(kDefaultExpirationInDays + 1));
   GetBudgetDetails();
 
   // The BackgroundBudget UMA is recorded when budget is added to the origin.
@@ -280,7 +282,8 @@ TEST_F(BudgetDatabaseTest, CheckBackgroundBudgetHistogram) {
 }
 
 TEST_F(BudgetDatabaseTest, CheckEngagementHistograms) {
-  base::SimpleTestClock* clock = SetClockForTesting();
+  base::SimpleTestClock clock;
+  SetClockForTesting(&clock);
 
   // Manipulate the engagement so that the budget is twice the cost of an
   // action.
@@ -302,7 +305,7 @@ TEST_F(BudgetDatabaseTest, CheckEngagementHistograms) {
   // Advance the clock by 12 days (to guarantee a full new engagement grant)
   // then change the SES score to get a different UMA entry, then spend the
   // budget again.
-  clock->Advance(base::TimeDelta::FromDays(12));
+  clock.Advance(base::TimeDelta::FromDays(12));
   GetBudgetDetails();
   SetSiteEngagementScore(engagement * 2);
   ASSERT_TRUE(SpendBudget(cost));

@@ -221,8 +221,8 @@ TEST(ErrorReportTest, NetworkTimeQueryingFeatureInfo) {
   TestingPrefServiceSimple pref_service;
   network_time::NetworkTimeTracker::RegisterPrefs(pref_service.registry());
   network_time::NetworkTimeTracker network_time_tracker(
-      base::MakeUnique<base::DefaultClock>(),
-      base::MakeUnique<base::DefaultTickClock>(), &pref_service,
+      base::DefaultClock::GetInstance(), base::DefaultTickClock::GetInstance(),
+      &pref_service,
       new net::TestURLRequestContextGetter(io_thread.task_runner()));
 
   // Serialize a report containing information about the network time querying

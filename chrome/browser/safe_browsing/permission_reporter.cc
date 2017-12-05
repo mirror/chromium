@@ -179,13 +179,12 @@ PermissionReporter::PermissionReporter(net::URLRequestContext* request_context)
     : PermissionReporter(
           base::MakeUnique<net::ReportSender>(request_context,
                                               kTrafficAnnotation),
-          base::WrapUnique(new base::DefaultClock)) {}
+          base::DefaultClock::GetInstance()) {}
 
 PermissionReporter::PermissionReporter(
     std::unique_ptr<net::ReportSender> report_sender,
-    std::unique_ptr<base::Clock> clock)
-    : permission_report_sender_(std::move(report_sender)),
-      clock_(std::move(clock)) {}
+    base::Clock* clock)
+    : permission_report_sender_(std::move(report_sender)), clock_(clock) {}
 
 PermissionReporter::~PermissionReporter() {}
 

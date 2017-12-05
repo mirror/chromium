@@ -107,7 +107,7 @@ class HttpServerPropertiesManagerTest : public testing::TestWithParam<int> {
     net_test_task_runner_clock_ = test_task_runner_->GetMockTickClock();
     http_server_props_manager_ = std::make_unique<HttpServerPropertiesManager>(
         base::WrapUnique(pref_delegate_), /*net_log=*/nullptr,
-        net_test_task_runner_clock_.get());
+        net_test_task_runner_clock_);
 
     EXPECT_FALSE(http_server_props_manager_->IsInitialized());
     pref_delegate_->SetPrefs(base::DictionaryValue());
@@ -140,7 +140,7 @@ class HttpServerPropertiesManagerTest : public testing::TestWithParam<int> {
   // Overrides the main thread's message loop with a mock tick clock.
   base::ScopedMockTimeMessageLoopTaskRunner test_task_runner_;
 
-  std::unique_ptr<base::TickClock> net_test_task_runner_clock_;
+  base::TickClock* net_test_task_runner_clock_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HttpServerPropertiesManagerTest);

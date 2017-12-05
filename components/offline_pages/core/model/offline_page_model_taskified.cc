@@ -100,7 +100,7 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
       archive_manager_(std::move(archive_manager)),
       policy_controller_(new ClientPolicyController()),
       task_queue_(this),
-      clock_(new base::DefaultClock()),
+      clock_(base::DefaultClock::GetInstance()),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
   PostClearLegacyTemporaryPagesTask();

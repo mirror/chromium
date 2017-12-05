@@ -60,9 +60,7 @@ class BrowsingHistoryHandler : public content::WebUIMessageHandler,
   Profile* GetProfile() override;
 
   // For tests.
-  void set_clock(std::unique_ptr<base::Clock> clock) {
-    clock_ = std::move(clock);
-  }
+  void set_clock(base::Clock* clock) { clock_ = clock; }
 
  private:
   FRIEND_TEST_ALL_PREFIXES(BrowsingHistoryHandlerTest,
@@ -70,7 +68,7 @@ class BrowsingHistoryHandler : public content::WebUIMessageHandler,
   FRIEND_TEST_ALL_PREFIXES(BrowsingHistoryHandlerTest, MdTruncatesTitles);
 
   // The clock used to vend times.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   std::unique_ptr<history::BrowsingHistoryService> browsing_history_service_;
 

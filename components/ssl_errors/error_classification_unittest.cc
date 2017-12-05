@@ -249,8 +249,8 @@ TEST_F(SSLErrorClassificationTest, GetClockState) {
   network_time::NetworkTimeTracker::RegisterPrefs(pref_service.registry());
   base::MessageLoop loop;
   network_time::NetworkTimeTracker network_time_tracker(
-      base::MakeUnique<base::DefaultClock>(),
-      base::MakeUnique<base::DefaultTickClock>(), &pref_service,
+      base::DefaultClock::GetInstance(), base::DefaultTickClock::GetInstance(),
+      &pref_service,
       new net::TestURLRequestContextGetter(
           base::ThreadTaskRunnerHandle::Get()));
 
@@ -370,16 +370,15 @@ TEST_F(SSLErrorClassificationTest, NetworkClockStateHistogram) {
   histograms.ExpectTotalCount(kNetworkTimeHistogram, 0);
   TestingPrefServiceSimple pref_service;
   network_time::NetworkTimeTracker::RegisterPrefs(pref_service.registry());
-  base::SimpleTestTickClock* tick_clock = new base::SimpleTestTickClock;
-  base::SimpleTestClock* clock = new base::SimpleTestClock;
+  base::SimpleTestTickClock tick_clock;
+  base::SimpleTestClock clock;
   // Do this to be sure that |is_null| returns false.
-  clock->Advance(base::TimeDelta::FromDays(111));
-  tick_clock->Advance(base::TimeDelta::FromDays(222));
+  clock.Advance(base::TimeDelta::FromDays(111));
+  tick_clock.Advance(base::TimeDelta::FromDays(222));
 
   base::MessageLoop loop;
   network_time::NetworkTimeTracker network_time_tracker(
-      std::unique_ptr<base::Clock>(clock),
-      std::unique_ptr<base::TickClock>(tick_clock), &pref_service,
+      &clock, &tick_clock, &pref_service,
       new net::TestURLRequestContextGetter(io_thread.task_runner()));
   network_time_tracker.SetTimeServerURLForTesting(test_server.GetURL("/"));
   field_trial_test()->SetNetworkQueriesWithVariationsService(
@@ -430,46 +429,46 @@ TEST_F(SSLErrorClassificationTest, NetworkClockStateHistogram) {
 
   // System clock is correct.
   network_time_tracker.UpdateNetworkTime(
-      clock->Now(),
+      clock.Now(),
       base::TimeDelta::FromSeconds(1),         // resolution
       base::TimeDelta::FromMilliseconds(250),  // latency
-      tick_clock->NowTicks());                 // posting time
+      tick_clock.NowTicks());                  // posting time
   EXPECT_EQ(ssl_errors::ClockState::CLOCK_STATE_OK,
-            ssl_errors::GetClockState(clock->Now(), &network_time_tracker));
+            ssl_errors::GetClockState(clock.Now(), &network_time_tracker));
   histograms.ExpectTotalCount(kNetworkTimeHistogram, 5);
   histograms.ExpectBucketCount(kNetworkTimeHistogram,
                                ssl_errors::NETWORK_CLOCK_STATE_OK, 1);
 
   // System clock is in the past.
   network_time_tracker.UpdateNetworkTime(
-      clock->Now() + base::TimeDelta::FromHours(1),
+      clock.Now() + base::TimeDelta::FromHours(1),
       base::TimeDelta::FromSeconds(1),         // resolution
       base::TimeDelta::FromMilliseconds(250),  // latency
-      tick_clock->NowTicks());                 // posting time
+      tick_clock.NowTicks());                  // posting time
   EXPECT_EQ(ssl_errors::ClockState::CLOCK_STATE_PAST,
-            ssl_errors::GetClockState(clock->Now(), &network_time_tracker));
+            ssl_errors::GetClockState(clock.Now(), &network_time_tracker));
   histograms.ExpectTotalCount(kNetworkTimeHistogram, 6);
   histograms.ExpectBucketCount(
       kNetworkTimeHistogram, ssl_errors::NETWORK_CLOCK_STATE_CLOCK_IN_PAST, 1);
 
   // System clock is in the future.
   network_time_tracker.UpdateNetworkTime(
-      clock->Now() - base::TimeDelta::FromHours(1),
+      clock.Now() - base::TimeDelta::FromHours(1),
       base::TimeDelta::FromSeconds(1),         // resolution
       base::TimeDelta::FromMilliseconds(250),  // latency
-      tick_clock->NowTicks());                 // posting time
+      tick_clock.NowTicks());                  // posting time
   EXPECT_EQ(ssl_errors::ClockState::CLOCK_STATE_FUTURE,
-            ssl_errors::GetClockState(clock->Now(), &network_time_tracker));
+            ssl_errors::GetClockState(clock.Now(), &network_time_tracker));
   histograms.ExpectTotalCount(kNetworkTimeHistogram, 7);
   histograms.ExpectBucketCount(kNetworkTimeHistogram,
                                ssl_errors::NETWORK_CLOCK_STATE_CLOCK_IN_FUTURE,
                                1);
 
   // Sync has been lost.
-  tick_clock->Advance(base::TimeDelta::FromSeconds(1));
-  clock->Advance(base::TimeDelta::FromDays(1));
+  tick_clock.Advance(base::TimeDelta::FromSeconds(1));
+  clock.Advance(base::TimeDelta::FromDays(1));
   // GetClockState() will fall back to the build time heuristic.
-  ssl_errors::GetClockState(clock->Now(), &network_time_tracker);
+  ssl_errors::GetClockState(clock.Now(), &network_time_tracker);
   histograms.ExpectTotalCount(kNetworkTimeHistogram, 8);
   histograms.ExpectBucketCount(
       kNetworkTimeHistogram, ssl_errors::NETWORK_CLOCK_STATE_UNKNOWN_SYNC_LOST,

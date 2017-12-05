@@ -197,7 +197,7 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   base::Time last_clear_cached_pages_time_;
 
   // Clock for testing only.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   base::WeakPtrFactory<OfflinePageModelTaskified> weak_ptr_factory_;
 

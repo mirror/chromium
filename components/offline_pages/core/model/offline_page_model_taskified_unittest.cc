@@ -112,9 +112,7 @@ class OfflinePageModelTaskifiedTest
   std::unique_ptr<OfflinePageTestArchiver> BuildArchiver(const GURL& url,
                                                          ArchiverResult result);
   void CheckTaskQueueIdle();
-  void SetTestingClock(std::unique_ptr<base::Clock> clock) {
-    model_->clock_ = std::move(clock);
-  }
+  void SetTestingClock(base::Clock* clock) { model_->clock_ = clock; }
 
   // Getters for private fields.
   base::TestSimpleTaskRunner* task_runner() { return task_runner_.get(); }
@@ -1013,32 +1011,31 @@ TEST_F(OfflinePageModelTaskifiedTest, ClearStorage) {
   // storage during model initialization so that we can check the time.
   BuildStore();
   BuildModel();
-  auto clock = base::MakeUnique<base::SimpleTestClock>();
-  base::SimpleTestClock* clock_ptr = clock.get();
-  clock_ptr->SetNow(base::Time::Now());
-  SetTestingClock(std::move(clock));
+  base::SimpleTestClock clock;
+  clock.SetNow(base::Time::Now());
+  SetTestingClock(&clock);
 
   PumpLoop();
-  EXPECT_EQ(clock_ptr->Now(), last_clear_page_time());
+  EXPECT_EQ(clock.Now(), last_clear_page_time());
 
   // Only 5 minutes passed and the last clear page time should not be changed
   // since the clear page will not be triggered.
-  clock_ptr->Advance(base::TimeDelta::FromMinutes(5));
+  clock.Advance(base::TimeDelta::FromMinutes(5));
   auto archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
   int64_t offline_id = SavePageWithExpectedResult(
       kTestUrl, kTestClientId1, kTestUrl2, kEmptyRequestOrigin,
       std::move(archiver), SavePageResult::SUCCESS);
   PumpLoop();
-  EXPECT_EQ(clock_ptr->Now() - base::TimeDelta::FromMinutes(5),
+  EXPECT_EQ(clock.Now() - base::TimeDelta::FromMinutes(5),
             last_clear_page_time());
 
-  clock_ptr->Advance(base::TimeDelta::FromMinutes(30));
+  clock.Advance(base::TimeDelta::FromMinutes(30));
   archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
   offline_id = SavePageWithExpectedResult(
       kTestUrl, kTestClientId1, kTestUrl2, kEmptyRequestOrigin,
       std::move(archiver), SavePageResult::SUCCESS);
   PumpLoop();
-  EXPECT_EQ(clock_ptr->Now(), last_clear_page_time());
+  EXPECT_EQ(clock.Now(), last_clear_page_time());
 }
 
 }  // namespace offline_pages

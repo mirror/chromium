@@ -60,8 +60,7 @@ class PermissionReporterBrowserTest : public SyncTest {
     mock_report_sender_ = new MockPermissionReportSender;
 
     safe_browsing_service->ping_manager()->permission_reporter_.reset(
-        new PermissionReporter(base::WrapUnique(mock_report_sender_),
-                               base::WrapUnique(new base::SimpleTestClock)));
+        new PermissionReporter(base::WrapUnique(mock_report_sender_), &clock_));
   }
 
   PermissionRequestManager* GetPermissionRequestManager(Browser* browser) {
@@ -76,6 +75,8 @@ class PermissionReporterBrowserTest : public SyncTest {
   }
 
  private:
+  base::SimpleTestClock clock_;
+
   // Owned by permission reporter.
   MockPermissionReportSender* mock_report_sender_;
 

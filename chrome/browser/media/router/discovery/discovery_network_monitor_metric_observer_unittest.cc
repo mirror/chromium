@@ -90,10 +90,11 @@ class DiscoveryNetworkMonitorMetricObserverTest : public ::testing::Test {
   std::unique_ptr<MockNetworkChangeNotifier> mock_network_change_notifier_;
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
-  std::unique_ptr<base::TickClock> mock_clock_;
+  base::TickClock* mock_clock_;
   const base::TimeTicks start_ticks_;
   std::unique_ptr<MockMetrics> metrics_;
   MockMetrics* mock_metrics_;
+
   DiscoveryNetworkMonitorMetricObserver metric_observer_;
 };
 
