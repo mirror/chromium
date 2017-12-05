@@ -86,20 +86,7 @@ var testVideo = false;
 
 function init() {
   var video = document.getElementById("video");
-
-  var base = "http://localhost:8000/resources/";
-  var videos = [
-    ["video/mp4", base + "test.mp4"],
-    ["video/ogg", base + "test.ogv"],
-  ];
-  var videoFile = null;
-  for (var i = 0; i < videos.length; ++i) {
-    if (video.canPlayType(videos[i][0])) {
-      videoFile = videos[i][1];
-      break;
-    }
-  }
-  assertMsg(videoFile, "Playable video format found");
+  var videoFile = "http://localhost:8000/media-resources/content/test-vp9-opus.webm";;
 
   if (videoFile) {
     if (window.testRunner) {

@@ -10,7 +10,7 @@
       width: 300px;
       border: 1px solid black;
     }
-    
+
     </style>
     <script type="text/javascript" charset="utf-8">
       if (window.testRunner) {
@@ -25,11 +25,11 @@
             testRunner.notifyDone();
         }, 0);
       }
-      
+
       window.addEventListener('load', function() {
         var video = document.getElementById('video');
         video.addEventListener('loadeddata', testOnLoad, false);
-        video.src = 'resources/video.' + (video.canPlayType('video/ogg') ? 'ogv' : 'mp4');
+        video.src = 'resources/video.webm';
       }, false);
     </script>
   </head>

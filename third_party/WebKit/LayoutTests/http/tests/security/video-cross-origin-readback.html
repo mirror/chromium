@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
-<script src="../../media-resources/media-file.js"></script>
 <video crossorigin></video>
 <canvas></canvas>
 <script>
 async_test(function(t) {
     var video = document.querySelector("video");
-    var mediaFile = findMediaFile("video", "../../media/resources/test");
-    var type = mimeTypeForExtension(mediaFile.split('.').pop());
+    var mediaFile = "../../../../media/content/test-vp9-opus.webm";
+    var type = "video/webm";
 
     video.onerror = t.unreached_func();
     video.onplaying = t.step_func_done(function() {

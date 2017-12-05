@@ -3,14 +3,13 @@
 <title>autoplay</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <script>
-function autoplay_test(tagName, src)
+function autoplay_test(tagName, fileName)
 {
     async_test(function(t)
     {
         var media = document.createElement(tagName);
-        media.src = src;
+        media.src = 'content/' + fileName;
         media.autoplay = true;
         var actual_events = [];
         var expected_events = ['canplay', 'play', 'playing', 'canplaythrough'];
@@ -30,6 +29,6 @@ function autoplay_test(tagName, src)
     }, tagName + '.autoplay');
 }
 
-autoplay_test('audio', findMediaFile('audio', 'content/test'));
-autoplay_test('video', findMediaFile('video', 'content/test'));
+autoplay_test('audio', 'silence-opus.webm');
+autoplay_test('video', 'test-vp9-opus.webm');
 </script>

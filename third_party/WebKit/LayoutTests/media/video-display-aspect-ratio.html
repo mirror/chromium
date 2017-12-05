@@ -2,7 +2,6 @@
 <title>Test video dimension aspect ratio.</title>
 <script src="../resources/testharness.js"></script>
 <script src="../resources/testharnessreport.js"></script>
-<script src="media-file.js"></script>
 <video></video>
 <script>
 async_test(function(t) {
@@ -11,10 +10,10 @@ async_test(function(t) {
     assert_equals(video.videoHeight, 0);
 
     video.onloadedmetadata = t.step_func_done(function() {
-        assert_equals(video.videoWidth, 427);
+        assert_equals(video.videoWidth, 426);
         assert_equals(video.videoHeight, 240);
     });
 
-    video.src = findMediaFile("video", "content/test-par-16-9");
+    video.src = "content/test-par-16-9-vp9-opus.webm";
 });
 </script>
