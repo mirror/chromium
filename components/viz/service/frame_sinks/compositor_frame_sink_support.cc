@@ -226,6 +226,14 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     surface_manager_->SurfaceDamageExpected(current_surface->surface_id(),
                                             last_begin_frame_args_);
   }
+
+  for (auto& surface_id : frame.metadata.unused_surfaces) {
+    LOG(ERROR) << "REMOVING temporary reference to " << surface_id << " from "
+               << current_surface_id_;
+    // TODO(kylechar): Check the temporary reference owner.
+    surface_manager_->DropTemporaryReference(surface_id);
+  }
+
   bool result = current_surface->QueueFrame(
       std::move(frame), frame_index,
       base::BindOnce(&CompositorFrameSinkSupport::DidReceiveCompositorFrameAck,

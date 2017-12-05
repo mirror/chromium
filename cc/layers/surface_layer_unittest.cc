@@ -25,6 +25,7 @@
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/sequence_surface_reference_factory.h"
+#include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -39,6 +40,32 @@ using testing::SizeIs;
 
 static constexpr viz::FrameSinkId kArbitraryFrameSinkId(1, 1);
 
+viz::SurfaceId CreateSurfaceId(const viz::FrameSinkId& frame_sink_id,
+                               uint32_t local_id) {
+  return viz::SurfaceId(
+      frame_sink_id,
+      viz::LocalSurfaceId(local_id, base::UnguessableToken::Create()));
+}
+
+class MockSurfaceReferenceFactory
+    : public viz::SequenceSurfaceReferenceFactory {
+ public:
+  MockSurfaceReferenceFactory() {}
+
+  // SequenceSurfaceReferenceFactory implementation.
+  MOCK_CONST_METHOD1(SatisfySequence, void(const viz::SurfaceSequence&));
+  MOCK_CONST_METHOD2(RequireSequence,
+                     void(const viz::SurfaceId&, const viz::SurfaceSequence&));
+
+ protected:
+  ~MockSurfaceReferenceFactory() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockSurfaceReferenceFactory);
+};
+
+}  // namespace
+
 class SurfaceLayerTest : public testing::Test {
  public:
   SurfaceLayerTest()
@@ -49,6 +76,15 @@ class SurfaceLayerTest : public testing::Test {
     TreeSynchronizer::PushLayerProperties(layer_tree_host_.get(),
                                           host_impl_.pending_tree());
     layer_tree_host_->PushSurfaceIdsTo(host_impl_.pending_tree());
+  }
+
+  base::flat_set<viz::SurfaceId> HostSurfaceLayerIds() {
+    base::flat_set<viz::SurfaceId> surface_ids;
+    for (auto& map_entry : layer_tree_host_->surface_layer_ids_) {
+      if (map_entry.second.layers > 0)
+        surface_ids.insert(map_entry.first);
+    }
+    return surface_ids;
   }
 
  protected:
@@ -73,23 +109,6 @@ class SurfaceLayerTest : public testing::Test {
   std::unique_ptr<AnimationHost> animation_host_;
   std::unique_ptr<FakeLayerTreeHost> layer_tree_host_;
   FakeLayerTreeHostImpl host_impl_;
-};
-
-class MockSurfaceReferenceFactory
-    : public viz::SequenceSurfaceReferenceFactory {
- public:
-  MockSurfaceReferenceFactory() = default;
-
-  // SequenceSurfaceReferenceFactory implementation.
-  MOCK_CONST_METHOD1(SatisfySequence, void(const viz::SurfaceSequence&));
-  MOCK_CONST_METHOD2(RequireSequence,
-                     void(const viz::SurfaceId&, const viz::SurfaceSequence&));
-
- protected:
-  ~MockSurfaceReferenceFactory() override = default;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(MockSurfaceReferenceFactory);
 };
 
 // Check that one surface can be referenced by multiple LayerTreeHosts, and
@@ -158,10 +177,7 @@ TEST_F(SurfaceLayerTest, MultipleFramesOneSurface) {
 // This test verifies that SurfaceLayer properties are pushed across to
 // SurfaceLayerImpl.
 TEST_F(SurfaceLayerTest, PushProperties) {
-  // We use a nice mock here because we are not really interested in calls to
-  // MockSurfaceReferenceFactory and we don't want warnings printed.
-  scoped_refptr<viz::SurfaceReferenceFactory> ref_factory =
-      new testing::NiceMock<MockSurfaceReferenceFactory>();
+  auto ref_factory = base::MakeRefCounted<viz::StubSurfaceReferenceFactory>();
 
   scoped_refptr<SurfaceLayer> layer = SurfaceLayer::Create(ref_factory);
   layer_tree_host_->SetRootLayer(layer);
@@ -174,11 +190,11 @@ TEST_F(SurfaceLayerTest, PushProperties) {
   layer->SetStretchContentToFillBounds(true);
 
   EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
-  EXPECT_EQ(layer_tree_host_->SurfaceLayerIds().size(), 1u);
+  EXPECT_EQ(HostSurfaceLayerIds().size(), 1u);
 
   // Verify that pending tree has no surface ids already.
   EXPECT_FALSE(host_impl_.pending_tree()->needs_surface_ids_sync());
-  EXPECT_EQ(host_impl_.pending_tree()->SurfaceLayerIds().size(), 0u);
+  EXPECT_EQ(host_impl_.pending_tree()->ReferencedSurfaceIds().size(), 0u);
 
   std::unique_ptr<SurfaceLayerImpl> layer_impl =
       SurfaceLayerImpl::Create(host_impl_.pending_tree(), layer->id());
@@ -187,7 +203,7 @@ TEST_F(SurfaceLayerTest, PushProperties) {
   // Verify that pending tree received the surface id and also has
   // needs_surface_ids_sync set to true as it needs to sync with active tree.
   EXPECT_TRUE(host_impl_.pending_tree()->needs_surface_ids_sync());
-  EXPECT_EQ(host_impl_.pending_tree()->SurfaceLayerIds().size(), 1u);
+  EXPECT_EQ(host_impl_.pending_tree()->ReferencedSurfaceIds().size(), 1u);
 
   // Verify we have reset the state on layer tree host.
   EXPECT_FALSE(layer_tree_host_->needs_surface_ids_sync());
@@ -208,11 +224,11 @@ TEST_F(SurfaceLayerTest, PushProperties) {
   // Verify that fallback surface id is not recorded on the layer tree host as
   // surface synchronization is not enabled.
   EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
-  EXPECT_EQ(layer_tree_host_->SurfaceLayerIds().size(), 1u);
+  EXPECT_EQ(HostSurfaceLayerIds().size(), 1u);
 
   SynchronizeTrees();
 
-  EXPECT_EQ(host_impl_.pending_tree()->SurfaceLayerIds().size(), 1u);
+  EXPECT_EQ(host_impl_.pending_tree()->ReferencedSurfaceIds().size(), 1u);
 
   // Verify that the primary viz::SurfaceId stays the same and the new
   // fallback viz::SurfaceId is pushed through.
@@ -226,10 +242,7 @@ TEST_F(SurfaceLayerTest, PushProperties) {
 // surface layers. This emulates the flow of maximize and minimize animations on
 // Chrome OS.
 TEST_F(SurfaceLayerTest, CheckSurfaceReferencesForClonedLayer) {
-  // We use a nice mock here because we are not really interested in calls to
-  // MockSurfaceReferenceFactory and we don't want warnings printed.
-  scoped_refptr<viz::SurfaceReferenceFactory> ref_factory =
-      new testing::NiceMock<MockSurfaceReferenceFactory>();
+  auto ref_factory = base::MakeRefCounted<viz::StubSurfaceReferenceFactory>();
 
   const viz::SurfaceId old_surface_id(
       kArbitraryFrameSinkId,
@@ -257,8 +270,8 @@ TEST_F(SurfaceLayerTest, CheckSurfaceReferencesForClonedLayer) {
   SynchronizeTrees();
 
   // Verify that only |old_surface_id| is going to be referenced.
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(), ElementsAre(old_surface_id));
-  EXPECT_THAT(host_impl_.pending_tree()->SurfaceLayerIds(),
+  EXPECT_THAT(HostSurfaceLayerIds(), ElementsAre(old_surface_id));
+  EXPECT_THAT(host_impl_.pending_tree()->ReferencedSurfaceIds(),
               ElementsAre(old_surface_id));
 
   const viz::SurfaceId new_surface_id(
@@ -272,9 +285,9 @@ TEST_F(SurfaceLayerTest, CheckSurfaceReferencesForClonedLayer) {
   SynchronizeTrees();
 
   // Verify that both surface ids are going to be referenced.
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(),
+  EXPECT_THAT(HostSurfaceLayerIds(),
               ElementsAre(old_surface_id, new_surface_id));
-  EXPECT_THAT(host_impl_.pending_tree()->SurfaceLayerIds(),
+  EXPECT_THAT(host_impl_.pending_tree()->ReferencedSurfaceIds(),
               ElementsAre(old_surface_id, new_surface_id));
 
   // Unparent the old layer like it's being destroyed at the end of animation.
@@ -283,8 +296,8 @@ TEST_F(SurfaceLayerTest, CheckSurfaceReferencesForClonedLayer) {
   SynchronizeTrees();
 
   // Verify that only |new_surface_id| is going to be referenced.
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(), ElementsAre(new_surface_id));
-  EXPECT_THAT(host_impl_.pending_tree()->SurfaceLayerIds(),
+  EXPECT_THAT(HostSurfaceLayerIds(), ElementsAre(new_surface_id));
+  EXPECT_THAT(host_impl_.pending_tree()->ReferencedSurfaceIds(),
               ElementsAre(new_surface_id));
 
   // Cleanup for destruction.
@@ -294,10 +307,7 @@ TEST_F(SurfaceLayerTest, CheckSurfaceReferencesForClonedLayer) {
 // This test verifies LayerTreeHost::needs_surface_ids_sync() is correct when
 // there are cloned surface layers.
 TEST_F(SurfaceLayerTest, CheckNeedsSurfaceIdsSyncForClonedLayers) {
-  // We use a nice mock here because we are not really interested in calls to
-  // MockSurfaceReferenceFactory and we don't want warnings printed.
-  scoped_refptr<viz::SurfaceReferenceFactory> ref_factory =
-      new testing::NiceMock<MockSurfaceReferenceFactory>();
+  auto ref_factory = base::MakeRefCounted<viz::StubSurfaceReferenceFactory>();
 
   const viz::SurfaceId surface_id(
       kArbitraryFrameSinkId,
@@ -311,7 +321,7 @@ TEST_F(SurfaceLayerTest, CheckNeedsSurfaceIdsSyncForClonedLayers) {
   // Verify the surface id is in SurfaceLayerIds() and needs_surface_ids_sync()
   // is true.
   EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(), SizeIs(1));
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(1));
 
   std::unique_ptr<SurfaceLayerImpl> layer_impl1 =
       SurfaceLayerImpl::Create(host_impl_.pending_tree(), layer1->id());
@@ -329,7 +339,7 @@ TEST_F(SurfaceLayerTest, CheckNeedsSurfaceIdsSyncForClonedLayers) {
   // Verify that after creating the second layer with the same surface id that
   // needs_surface_ids_sync() is still false.
   EXPECT_FALSE(layer_tree_host_->needs_surface_ids_sync());
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(), SizeIs(1));
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(1));
 
   std::unique_ptr<SurfaceLayerImpl> layer_impl2 =
       SurfaceLayerImpl::Create(host_impl_.pending_tree(), layer2->id());
@@ -349,7 +359,58 @@ TEST_F(SurfaceLayerTest, CheckNeedsSurfaceIdsSyncForClonedLayers) {
 
   // Verify SurfaceLayerIds() is empty and needs_surface_ids_sync() is true.
   EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
-  EXPECT_THAT(layer_tree_host_->SurfaceLayerIds(), SizeIs(0));
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(0));
+}
+
+// This test verifies that adding surface layer then removing it before commit
+// is tracked properly.
+TEST_F(SurfaceLayerTest, CheckReturnUnusedSurfaceLayer) {
+  auto ref_factory = base::MakeRefCounted<viz::StubSurfaceReferenceFactory>();
+
+  const viz::SurfaceId surface_id1 = CreateSurfaceId(kArbitraryFrameSinkId, 1);
+
+  scoped_refptr<SurfaceLayer> layer1 = SurfaceLayer::Create(ref_factory);
+  layer1->SetLayerTreeHost(layer_tree_host_.get());
+  layer1->SetPrimarySurfaceId(surface_id1);
+  layer1->SetFallbackSurfaceId(surface_id1);
+
+  EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(1));
+
+  const viz::SurfaceId surface_id2 = CreateSurfaceId(viz::FrameSinkId(2, 1), 1);
+
+  // Create another surface layer.
+  scoped_refptr<SurfaceLayer> layer2 = SurfaceLayer::Create(ref_factory);
+  layer2->SetLayerTreeHost(layer_tree_host_.get());
+  layer2->SetPrimarySurfaceId(surface_id2);
+  layer2->SetFallbackSurfaceId(surface_id2);
+
+  EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(2));
+
+  // Remove the new surface layer from the tree before commit.
+  layer2->SetLayerTreeHost(nullptr);
+  layer2 = nullptr;
+
+  EXPECT_TRUE(layer_tree_host_->needs_surface_ids_sync());
+  EXPECT_THAT(HostSurfaceLayerIds(), SizeIs(1));
+
+  std::unique_ptr<SurfaceLayerImpl> layer_impl1 =
+      SurfaceLayerImpl::Create(host_impl_.pending_tree(), layer1->id());
+  SynchronizeTrees();
+
+  // After syncchronizing trees verify needs_surface_ids_sync() is false.
+  EXPECT_FALSE(layer_tree_host_->needs_surface_ids_sync());
+
+  // Check that |surface_id1| is in the referenced surface ids and |surface_id2|
+  // is in the unused surface ids.
+  EXPECT_THAT(host_impl_.pending_tree()->ReferencedSurfaceIds(),
+              ElementsAre(surface_id1));
+  EXPECT_THAT(host_impl_.pending_tree()->UnusedSurfaceIds(),
+              ElementsAre(surface_id2));
+
+  // Cleanup for destruction.
+  layer1->SetLayerTreeHost(nullptr);
 }
 
 // Check that viz::SurfaceSequence is sent through swap promise.
@@ -474,5 +535,4 @@ class SurfaceLayerSwapPromiseWithoutDraw : public SurfaceLayerSwapPromise {
 
 MULTI_THREAD_TEST_F(SurfaceLayerSwapPromiseWithoutDraw);
 
-}  // namespace
 }  // namespace cc

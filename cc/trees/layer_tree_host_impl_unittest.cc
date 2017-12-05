@@ -4060,7 +4060,7 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
   }
 
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->SetSurfaceLayerIds(fallback_surfaces_set);
+  host_impl_->active_tree()->SetReferencedSurfaceIds(fallback_surfaces_set);
   DrawFrame();
 
   auto* fake_layer_tree_frame_sink =

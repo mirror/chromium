@@ -398,7 +398,8 @@ void LayerTreeImpl::PushPropertyTreesTo(LayerTreeImpl* target_tree) {
 void LayerTreeImpl::PushSurfaceIdsTo(LayerTreeImpl* target_tree) {
   if (needs_surface_ids_sync()) {
     target_tree->ClearSurfaceLayerIds();
-    target_tree->SetSurfaceLayerIds(SurfaceLayerIds());
+    target_tree->SetReferencedSurfaceIds(ReferencedSurfaceIds());
+    target_tree->SetUnusedSurfaceIds(UnusedSurfaceIds());
     // Reset for next update
     set_needs_surface_ids_sync(false);
   }
@@ -1199,19 +1200,32 @@ LayerImpl* LayerTreeImpl::LayerById(int id) const {
   return iter != layer_id_map_.end() ? iter->second : nullptr;
 }
 
-void LayerTreeImpl::SetSurfaceLayerIds(
-    const base::flat_set<viz::SurfaceId>& surface_layer_ids) {
-  DCHECK(surface_layer_ids_.empty());
-  surface_layer_ids_ = surface_layer_ids;
+void LayerTreeImpl::SetReferencedSurfaceIds(
+    const base::flat_set<viz::SurfaceId>& surface_ids) {
+  DCHECK(referenced_surface_ids_.empty());
+  referenced_surface_ids_ = surface_ids;
   needs_surface_ids_sync_ = true;
 }
 
-const base::flat_set<viz::SurfaceId>& LayerTreeImpl::SurfaceLayerIds() const {
-  return surface_layer_ids_;
+void LayerTreeImpl::SetUnusedSurfaceIds(
+    const base::flat_set<viz::SurfaceId>& surface_ids) {
+  DCHECK(unused_surface_ids_.empty());
+  unused_surface_ids_ = surface_ids;
+  needs_surface_ids_sync_ = true;
+}
+
+const base::flat_set<viz::SurfaceId>& LayerTreeImpl::ReferencedSurfaceIds()
+    const {
+  return referenced_surface_ids_;
+}
+
+const base::flat_set<viz::SurfaceId>& LayerTreeImpl::UnusedSurfaceIds() const {
+  return unused_surface_ids_;
 }
 
 void LayerTreeImpl::ClearSurfaceLayerIds() {
-  surface_layer_ids_.clear();
+  referenced_surface_ids_.clear();
+  unused_surface_ids_.clear();
   needs_surface_ids_sync_ = true;
 }
 

@@ -85,6 +85,9 @@ class VIZ_COMMON_EXPORT CompositorFrameMetadata {
   // retain. Thus, this field will likely go away.
   std::vector<SurfaceId> referenced_surfaces;
 
+  // This is the set of surfaces that will never be used by this surface.
+  std::vector<SurfaceId> unused_surfaces;
+
   // This is the set of dependent SurfaceIds that should be active in the
   // display compositor before this CompositorFrame can be activated. Note
   // that if |can_activate_before_dependencies| then the display compositor

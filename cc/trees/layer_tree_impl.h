@@ -375,9 +375,12 @@ class CC_EXPORT LayerTreeImpl {
   void AddToElementMap(LayerImpl* layer);
   void RemoveFromElementMap(LayerImpl* layer);
 
-  void SetSurfaceLayerIds(
+  void SetReferencedSurfaceIds(
       const base::flat_set<viz::SurfaceId>& surface_layer_ids);
-  const base::flat_set<viz::SurfaceId>& SurfaceLayerIds() const;
+  void SetUnusedSurfaceIds(
+      const base::flat_set<viz::SurfaceId>& surface_layer_ids);
+  const base::flat_set<viz::SurfaceId>& ReferencedSurfaceIds() const;
+  const base::flat_set<viz::SurfaceId>& UnusedSurfaceIds() const;
   void ClearSurfaceLayerIds();
 
   void AddLayerShouldPushProperties(LayerImpl* layer);
@@ -620,7 +623,8 @@ class CC_EXPORT LayerTreeImpl {
 
   std::vector<PictureLayerImpl*> picture_layers_;
 
-  base::flat_set<viz::SurfaceId> surface_layer_ids_;
+  base::flat_set<viz::SurfaceId> referenced_surface_ids_;
+  base::flat_set<viz::SurfaceId> unused_surface_ids_;
 
   // List of render surfaces for the most recently prepared frame.
   RenderSurfaceList render_surface_list_;
