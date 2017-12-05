@@ -125,6 +125,23 @@
       "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907cc41c_562b4465",
+        "filename": "ui/accelerated_widget_mac/ca_layer_embedder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-05T23:42:35Z",
+      "side": 1,
+      "message": "(also these should probably have comments)",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
