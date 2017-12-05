@@ -1794,6 +1794,31 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="TabManager.BrowserMetrics">
+  <owner>michaelpg@chromium.org</owner>
+  <summary>
+    Collects information about a browser window to associate with the
+    TabManager.TabMetrics entries for tabs in that window.
+  </summary>
+  <metric name="BrowserId">
+    <summary>
+      ID of the browser this entry represents, unique for the browsing session.
+    </summary>
+  </metric>
+  <metric name="ShowState">
+    <summary>
+      Enumeration of the window show state, such as fullscreen or minimized.
+      Values are enumerated in metrics::BrowserMetricsEvent::ShowState.
+    </summary>
+  </metric>
+  <metric name="Type">
+    <summary>
+      Enumeration for the type of the window. Values are enumerated in
+      metrics::BrowserMetricsEvent::Type.
+    </summary>
+  </metric>
+</event>
+
 <event name="TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadStopped"
     singular="True">
   <owner>zhenw@chromium.org</owner>
@@ -2056,6 +2081,12 @@ be describing additional metrics about the same event.
     Collects tab information for a tab after navigations, activations and close
     events.
   </summary>
+  <metric name="BrowserId">
+    <summary>
+      BrowserId of the BrowserMetrics entry corresponding to the browser window
+      containing this tab.
+    </summary>
+  </metric>
   <metric name="ContentType">
     <summary>
       Enumeration for the MIME type of the page. Values are enumerated in
