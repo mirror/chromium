@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c213ff6_df16253f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-05T17:56:46Z",
+      "side": 1,
+      "message": "I like this property but I think we should iterate the stackviews. It will be extremely easy for someone to forger adding a button here in case we add one to either stackview.",
+      "revId": "4a910f121c5c1c7ddcaf5efd8d18d95d65faab02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
