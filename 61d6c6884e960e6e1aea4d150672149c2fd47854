@@ -16,6 +16,24 @@
       "revId": "61d6c6884e960e6e1aea4d150672149c2fd47854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da65db9_36aae85f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/invalid-image-constructor-error.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-12-05T18:21:33Z",
+      "side": 1,
+      "message": "My naming was terrible. The first registerPaint should be \u0027error\u0027, and the second one is \u0027geometry\u0027, then \"paint(error), paint(geometry)\" would make sense. This is done in the new patch. Also, I have verified that the test fails if I remove the exception in the constructor.",
+      "parentUuid": "1b37d2a2_a9b87fdc",
+      "revId": "61d6c6884e960e6e1aea4d150672149c2fd47854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
