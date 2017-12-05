@@ -34,6 +34,24 @@
       "revId": "e731622c7806758304f86c47a145d3607a9d6f00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e097e1_690186f4",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-05T23:46:48Z",
+      "side": 0,
+      "message": "buffer_format is passed to the resource and it is used by the display compositor to determine the format of the underlying buffer when we test HW overlays configurations.\nMac code for overlays has diverged and they have custom code for CALayers, they\u0027re not using buffer_format AFAIK.",
+      "parentUuid": "246347f6_256b359c",
+      "revId": "e731622c7806758304f86c47a145d3607a9d6f00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
