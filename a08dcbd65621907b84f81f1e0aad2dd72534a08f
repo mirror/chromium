@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a77c9b_5e667c04",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T23:18:36Z",
+      "side": 0,
+      "message": "hmm.. I start to feel it is not a chrome side bug. If shill state is \u0027online\u0027, we would not stop chrome portal detection.\nAnd if shill state is not online here (and later becomes online, a bug here that shill doesn\u0027t do connection state change?), it should trigger chrome portal detection because of connection state changed.",
+      "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
