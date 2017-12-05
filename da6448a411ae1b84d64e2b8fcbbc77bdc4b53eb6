@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "436ecfff_4ee9d4a1",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5085cb_1387e176",
+      "range": {
+        "startLine": 902,
+        "startChar": 2,
+        "endLine": 902,
+        "endChar": 6
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f3291d2_ce9d7235",
         "filename": "content/browser/interface_provider_filtering.h",
         "patchSetId": 35
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-05T08:49:06Z",
       "side": 1,
       "message": "To be clear, isn\u0027t this only needed because the Connector isn\u0027t set up?\n\n(Honestly, I feel like we should just fix the unit tests to set up the connector object...)",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e991e78_6f65e842",
+        "filename": "content/browser/interface_provider_filtering.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "It was a long time ago, and it\u0027s probably me being dumb, but even with a connector set up, I spent a lot of time and could not figure out how to set up the service manifests to let the requests through. :-)",
+      "parentUuid": "3f3291d2_ce9d7235",
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4d2519_e3627837",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Right, moved to RFHI browsertest.",
+      "parentUuid": "afc5d933_4abdab09",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,24 @@
       "side": 1,
       "message": "Unfortunately, this is correct. jakearchibald@ pointed me at this bizarre behavior of iframes in Chrome awhile back. See https://github.com/whatwg/html/issues/3267 as well. I\u0027m working on fixing this behavior in Chrome at least...",
       "parentUuid": "a7bc5eb1_793d2ce2",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6afecf_70ce5a0e",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Daniel, do you have a tracking bug for this that I could reference here? (Or would crbug.com/778318 cover this as well?)",
+      "parentUuid": "44267b24_036fd6a7",
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -164,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "79678d88_f96e142a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 4060,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Not sure what the exact requirements are here. @Max?",
+      "parentUuid": "d1a5e147_b3313f8c",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a10c32d_6e765b3c",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 35
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "b85738a5_867f92b7",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Wopps. Done.",
+      "parentUuid": "3a10c32d_6e765b3c",
+      "range": {
+        "startLine": 644,
+        "startChar": 40,
+        "endLine": 644,
+        "endChar": 51
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b53ae35f_3e60c8d9",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 35
@@ -201,6 +321,24 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4d9427_b3da11fd",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b53ae35f_3e60c8d9",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "4f5f61ba_a7272c22",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "968624ce_a4dd1f9e",
+      "range": {
+        "startLine": 751,
+        "startChar": 56,
+        "endLine": 751,
+        "endChar": 61
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4add09d8_a1b5dae2",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 35
@@ -247,6 +409,30 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac97d072_6bdfe958",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4add09d8_a1b5dae2",
+      "range": {
+        "startLine": 814,
+        "startChar": 6,
+        "endLine": 814,
+        "endChar": 26
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -273,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "2c2d63c6_56244a22",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304bc062_860794be",
+      "range": {
+        "startLine": 908,
+        "startChar": 10,
+        "endLine": 908,
+        "endChar": 36
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75019d92_19bf6fdd",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 35
@@ -284,6 +494,30 @@
       "writtenOn": "2017-12-05T08:49:06Z",
       "side": 1,
       "message": "I\u0027m a bit nervous about how many (internal) details of frame/document creation this encodes. Is it necessary to record all these events? We do have long-standing plans to change how this works, and having this specified so exactly in the tests makes things trickier down the road.",
+      "range": {
+        "startLine": 1024,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 37
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7134983_b42f1084",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "In keeping with layout test traditions, I\u0027d like to document the exact behavior here even if it is incorrect or we plan to change it later.\n\nThis would make sure that whoever ends up changing the behavior will think a bit about ramifications on the RemoteInterfaceProvider.\n\nHappy to reference a bug (is there one already?) and add a comment here stating that.",
+      "parentUuid": "75019d92_19bf6fdd",
       "range": {
         "startLine": 1024,
         "startChar": 0,
@@ -331,6 +565,24 @@
     },
     {
       "key": {
+        "uuid": "bc457ccb_fefa421e",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "Done, simplified.",
+      "parentUuid": "195d9367_231a96af",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf00925d_78085ab1",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 35
@@ -351,6 +603,30 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefab985_9b2a5aa0",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 35
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-05T15:23:52Z",
+      "side": 1,
+      "message": "You are absolutely right, thanks for catching this!\n\nI wanted to add a test for this, but seems like we don\u0027t inherit the Window object yet. Is that right?\n\nI left a TODO in the browsertest, let me know if https://crbug.com/778318 is the correct tracking bug, or if it should be more specific.",
+      "parentUuid": "cf00925d_78085ab1",
+      "range": {
+        "startLine": 1169,
+        "startChar": 27,
+        "endLine": 1169,
+        "endChar": 65
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
