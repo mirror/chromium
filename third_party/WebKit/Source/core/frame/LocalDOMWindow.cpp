@@ -30,6 +30,7 @@
 #include <string>
 #include <utility>
 
+#include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WindowProxy.h"
@@ -1534,6 +1535,21 @@ void LocalDOMWindow::PrintErrorMessage(const String& message) const {
 
   GetFrameConsole()->AddMessage(
       ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message));
+}
+
+DOMWindow* LocalDOMWindow::open(LocalDOMWindow* current_window,
+                                LocalDOMWindow* entered_window,
+                                const String& url,
+                                const AtomicString& target,
+                                const String& features,
+                                ExceptionState& exception_state) {
+  if (!BindingSecurity::ShouldAllowAccessTo(entered_window, current_window,
+                                            exception_state)) {
+    return nullptr;
+  }
+  AtomicString frame_name = target.IsEmpty() ? "_blank" : target;
+  return open(url, frame_name, features, current_window, entered_window,
+              exception_state);
 }
 
 DOMWindow* LocalDOMWindow::open(const String& url_string,
