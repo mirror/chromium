@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c1bd77_58aa7883",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-12-05T22:33:45Z",
+      "side": 1,
+      "message": "You can list a milestone (e.g. M66) here, so that if you never get around to this, somebody else will feel comfortable doing it.\n\nAlso, use the format:\n// TODO(xiaochu): remove this at...",
+      "range": {
+        "startLine": 98,
+        "startChar": 43,
+        "endLine": 98,
+        "endChar": 52
+      },
+      "revId": "6bfe416e16539e572dc8c3f2cf19db039bae6b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
