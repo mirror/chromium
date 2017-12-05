@@ -15,12 +15,10 @@ function output(src, txt) {
     txt = txt.message;
   }
   txt = src + ': ' + txt;
-  if (!domAutomationController) {
-    txt += ' window.domAutomationController not found.';
-  } else {
+  if (window.domAutomationController) {
     domAutomationController.send(txt);
   }
-  console.log(txt);
+  document.getElementById('output').innerHTML += txt + '<br>';
 }
 
 /**
