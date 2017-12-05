@@ -127,15 +127,19 @@ void VRDisplay::Update(const device::mojom::blink::VRDisplayInfoPtr& display) {
   capabilities_->SetCanPresent(display->capabilities->canPresent);
   capabilities_->SetMaxLayers(display->capabilities->canPresent ? 1 : 0);
 
+  bool is_valid = false;
+  if (capabilities_->canPresent()) {
+    is_valid = display->leftEye->renderWidth > 0;
+    eye_parameters_left_->Update(display->leftEye);
+    eye_parameters_right_->Update(display->rightEye);
+  }
+
   // Ignore non presenting delegate
-  bool is_valid = display->leftEye->renderWidth > 0;
   bool need_on_present_change = false;
   if (is_presenting_ && is_valid && !is_valid_device_for_presenting_) {
     need_on_present_change = true;
   }
   is_valid_device_for_presenting_ = is_valid;
-  eye_parameters_left_->Update(display->leftEye);
-  eye_parameters_right_->Update(display->rightEye);
 
   if (!display->stageParameters.is_null()) {
     if (!stage_parameters_)
@@ -176,6 +180,10 @@ bool VRDisplay::getFrameData(VRFrameData* frame_data) {
 }
 
 VREyeParameters* VRDisplay::getEyeParameters(const String& which_eye) {
+  if (!capabilities_->canPresent()) {
+    return nullptr;
+  }
+
   switch (StringToVREye(which_eye)) {
     case kVREyeLeft:
       return eye_parameters_left_;

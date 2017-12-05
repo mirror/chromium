@@ -53,8 +53,8 @@ struct VRDisplayInfo {
   string displayName;
   VRDisplayCapabilities capabilities;
   VRStageParameters? stageParameters;
-  VREyeParameters leftEye;
-  VREyeParameters rightEye;
+  VREyeParameters? leftEye;
+  VREyeParameters? rightEye;
 };
 
 enum VRDisplayEventReason {
