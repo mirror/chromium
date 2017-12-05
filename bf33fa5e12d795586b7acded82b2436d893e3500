@@ -94,6 +94,30 @@
       "revId": "bf33fa5e12d795586b7acded82b2436d893e3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61355b71_10ae0ae3",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-05T22:32:58Z",
+      "side": 1,
+      "message": "What are the benefits in allowing null context? For example right now it\u0027s unclear from the API contract how context affects the result of this call. Disallowing null will make API contract plain and simple. WDYT?",
+      "parentUuid": "0541f82f_6715390a",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "bf33fa5e12d795586b7acded82b2436d893e3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
