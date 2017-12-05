@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd3f9a6_81855ce1",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_event.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:11:49Z",
+      "side": 1,
+      "message": "Scheme is quite generic. Maybe ProtocalHandlerType?",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a10c22_e57713ab",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-05T18:11:49Z",
+      "side": 1,
+      "message": "Assuming this code stays in sync with the enum in the protobuff is rather fragile.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 2
+      },
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
