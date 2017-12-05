@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "50739f79_d48d0d40",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T18:12:42Z",
+      "side": 1,
+      "message": "\u003e Any call to the client_ should have this, as you did here I think.\n\nIs that rule of thumb right? Take this BeginMainFrameNotExpectedUntil for example. It\u0027s called by ProcessScheduledActions, which means it\u0027s already wrapped by the existing inside_process_scheduled_actions_, so this line doesn\u0027t actually do anything?\n\nI thought we were worried about methods that \"normally\" do not have ProcessScheduledActions lower in the stack only?\n\n\u003e The client can call back to anything that would ProcessScheduledActions. Should we DCHECK that inside_scheduled_action_ is false when we do this? It might be easy to end up resetting it to false early if we go through 2 autoresets in the same call stack.\n\nautoreset can deal with recursing correctly though? (not that we shouldn\u0027t have DCHECK anyway)\n\n\u003e \n\u003e If you feel adventurous we could make an RAII object that gives access to the client and does these things.\n\u003e \n\u003e ClientAccessor access(client_holder_);\n\u003e access-\u003eclient()-\u003eSchedu...();\n\u003e \n\u003e Or something? If we hid client_ then it becomes hard/impossible to do this wrong.",
+      "parentUuid": "764e291f_fa8d463b",
+      "revId": "a38ef266f97288dcf87bac08b7a1034b70d163b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95986be5_fd6e780c",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 4
