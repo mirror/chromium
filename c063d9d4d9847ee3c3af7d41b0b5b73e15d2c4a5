@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "c88213dd_4ee9ea29",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-05T23:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3943d1c_0b799cf0",
+      "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b7b3ae_81ae227a",
         "filename": "cc/tiles/tile_manager.h",
         "patchSetId": 11
@@ -56,6 +74,24 @@
       "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd955f56_6ca68419",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-05T23:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b7b3ae_81ae227a",
+      "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
