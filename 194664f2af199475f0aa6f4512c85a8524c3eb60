@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8bce2f4_a314f7ce",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-05T21:58:45Z",
+      "side": 1,
+      "message": "Why is the check in UseCounter::DidCommitLoad insufficient? Doing this check on every measurement seems expensive.",
+      "revId": "194664f2af199475f0aa6f4512c85a8524c3eb60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
