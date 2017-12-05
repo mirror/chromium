@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h"
+#include "chrome/browser/chromeos/arc/auth/active_directory_user_signin_handler.h"
 #include "components/arc/common/auth.mojom.h"
 #include "components/arc/connection_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -60,6 +61,7 @@ class ArcAuthService : public KeyedService,
       ArcActiveDirectoryEnrollmentTokenFetcher::Status status,
       const std::string& enrollment_token,
       const std::string& user_id);
+  void OnUserSigninComplete(ActiveDirectoryUserSigninHandler::Status status);
   void OnAuthCodeFetched(bool success, const std::string& auth_code);
 
   // Called to let ARC container know the account info.

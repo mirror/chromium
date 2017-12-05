@@ -158,6 +158,8 @@ const char* JobTypeToRequestType(DeviceManagementRequestJob::JobType type) {
       return dm_protocol::kValueRequestActiveDirectoryPlayActivity;
     case DeviceManagementRequestJob::TYPE_REQUEST_LICENSE_TYPES:
       return dm_protocol::kValueRequestCheckDeviceLicense;
+    case DeviceManagementRequestJob::TYPE_ACTIVE_DIRECTORY_USER_SIGNIN:
+      return dm_protocol::kValueRequestActiveDirectoryUserSignin;
   }
   NOTREACHED() << "Invalid job type " << type;
   return "";
