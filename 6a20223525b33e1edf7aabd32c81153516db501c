@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "212fb0fd_3f430e99",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:56:50Z",
+      "side": 1,
+      "message": "Ideally this would go to a site specific settings page, e.g.:\n\nchrome://settings/content/siteDetails?site\u003dhttps%3A%2F%2Fbugs.chromium.org\n\nSending the user to a list of sites of unknown length without highlighting the appropriate entry has been a source of confusion for way too long now. We\u0027ll have to figure out the implications of this anyhow and understand how it works for policies and extensions and so on.",
+      "parentUuid": "d6b7a0f7_9643bfe6",
+      "range": {
+        "startLine": 33,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46fb7270_a8d898b1",
         "filename": "chrome/browser/notifications/notification_common.cc",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d11bbf20_c785a456",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e844869_0bfaba7e",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be22e7bf_509c43f9",
         "filename": "chrome/browser/notifications/notification_common.cc",
         "patchSetId": 4
@@ -92,6 +140,30 @@
       "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f3af32_f9ae0ed3",
+        "filename": "chrome/browser/notifications/notification_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:56:50Z",
+      "side": 1,
+      "message": "Hmm. No, I don\u0027t know.\n\nTaking a step back, WebNotificationDelegate::SettingsClick() has been NOTREACHED()ing for Chrome OS for quite a while now, which I\u0027m moving to the PassThroughDelegate in this CL.\n\nThis is fine because the only place where we configure the settings button to go to the delegate, PlatformNotificationServiceImpl::CreateNotificationFromData(), #ifdefs this to the tray for Chrome OS again as well.\n\nSo I\u0027ve removed the NOTREACHED() from PassThroughDelegate and replaced the Chrome OS specific call in this function with NOTREACHED() as well by coalescing it with the OS_ANDROID block.",
+      "parentUuid": "be22e7bf_509c43f9",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 6
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +258,30 @@
       "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de8ebdc_4df560ac",
+        "filename": "chrome/browser/notifications/notification_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-05T15:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63076fa2_9cdbf8a1",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 69
+      },
+      "revId": "6a20223525b33e1edf7aabd32c81153516db501c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
