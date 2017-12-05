@@ -143,6 +143,11 @@ const viz::LocalSurfaceId kArbitraryLocalSurfaceId(
     1,
     base::UnguessableToken::Deserialize(2, 3));
 
+viz::LocalSurfaceId NewLocalSurfaceId() {
+  static viz::LocalSurfaceIdAllocator allocator;
+  return allocator.GenerateId();
+}
+
 std::string GetMessageNames(
     const MockWidgetInputHandler::MessageVector& events) {
   std::vector<std::string> result;
@@ -3364,7 +3369,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
 
   // Swap a frame on it, it should evict the next LRU [1].
   views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
   EXPECT_TRUE(views[0]->HasPrimarySurface());
   EXPECT_FALSE(views[1]->HasPrimarySurface());
@@ -3375,7 +3380,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   // LRU renderer is [1], still hidden. Swap a frame on it, it should evict
   // the next LRU [2].
   views[1]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
   EXPECT_TRUE(views[0]->HasPrimarySurface());
   EXPECT_TRUE(views[1]->HasPrimarySurface());
@@ -3393,8 +3398,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
     EXPECT_EQ(!views[i]->HasPrimarySurface(),
               views[i]->released_front_lock_active());
     views[i]->SubmitCompositorFrame(
-        kArbitraryLocalSurfaceId,
-        MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
+        NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
+        nullptr);
     // Now everyone has a frame.
     EXPECT_FALSE(views[i]->released_front_lock_active());
     EXPECT_TRUE(views[i]->HasPrimarySurface());
@@ -3403,7 +3408,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
 
   // Swap a frame on [0], it should be evicted immediately.
   views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
   EXPECT_FALSE(views[0]->HasPrimarySurface());
 
@@ -3413,7 +3418,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   // We don't have a frame, wait.
   EXPECT_TRUE(views[0]->released_front_lock_active());
   views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
   EXPECT_FALSE(views[0]->released_front_lock_active());
   for (size_t i = 0; i < renderer_count; ++i)
@@ -3434,14 +3439,14 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   views[1]->Hide();
   EXPECT_TRUE(views[1]->HasPrimarySurface());
   gfx::Size size2(200, 200);
-  viz::LocalSurfaceId id2 = local_surface_id_allocator_.GenerateId();
   views[1]->SetSize(size2);
   EXPECT_FALSE(views[1]->HasPrimarySurface());
   // Show it, it should block until we give it a frame.
   views[1]->Show();
   EXPECT_TRUE(views[1]->released_front_lock_active());
   views[1]->SubmitCompositorFrame(
-      id2, MakeDelegatedFrame(1.f, size2, gfx::Rect(size2)), nullptr);
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, size2, gfx::Rect(size2)),
+      nullptr);
   EXPECT_FALSE(views[1]->released_front_lock_active());
 
   for (size_t i = 0; i < renderer_count; ++i) {
@@ -3500,7 +3505,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithLocking) {
   // If we lock [0] before hiding it, then [0] should not be evicted.
   views[0]->Show();
   views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
+      NewLocalSurfaceId(), MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
   EXPECT_TRUE(views[0]->HasPrimarySurface());
   views[0]->GetDelegatedFrameHost()->LockResources();
