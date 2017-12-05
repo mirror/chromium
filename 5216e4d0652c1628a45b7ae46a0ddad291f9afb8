@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d36a0d13_c2e36164",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-05T16:04:00Z",
+      "side": 1,
+      "message": "Why is it undefined?\n\ntask_runner_for_anonymizer_-\u003ePostTaskAndReply(\n    FROM_HERE,\n    base::BindOnce(AnonymizeResults, anonymizer_container_,\n                   base::Unretained(result.get())),\n    base::BindOnce(callback, std::move(result)));\n\nI\u0027m pretty sure the C++ spec requires each argument to be evaluated in order.  For instance,\n\nvoid Print(int x, int y) {\n  std::cout \u003c\u003c x \u003c\u003c \",\" \u003c\u003c y;\n}\n\nvoid Foo() {\n  int num \u003d 0;\n  Print(num++, num++);\n}\n\nShould *always* print 0, 1.",
+      "parentUuid": "3827429b_01697c3d",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7690a0bc_22d580de",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 10
