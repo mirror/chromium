@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e175f43_c4d75db2",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T00:19:16Z",
+      "side": 1,
+      "message": "This needs to call chooser_-\u003eEnd() if it hasn\u0027t already. The windows and mac implementations DCHECK this. It does look pretty re-entrant though so that\u0027s fun.",
+      "revId": "cf6dc8a78153f79f96ffb64bcd9bdcf63a6c6a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0596e761_d0231172",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-05T00:19:16Z",
+      "side": 1,
+      "message": "Now this is a class, the fields should be private with public accessors:\n\n  content::ColorChooser\u0026 chooser() { return *chooser_; }\n  content::mojom::ColorChooserClient\u0026 client() { return *client_; }\n\n private:",
+      "revId": "cf6dc8a78153f79f96ffb64bcd9bdcf63a6c6a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
