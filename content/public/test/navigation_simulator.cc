@@ -4,6 +4,8 @@
 
 #include "content/public/test/navigation_simulator.h"
 
+#include <limits>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -71,6 +73,14 @@ class NavigationThrottleCallbackRunner : public NavigationThrottle {
   base::Closure on_will_fail_request_;
   base::Closure on_will_process_response_;
 };
+
+int64_t GenerateItemSequenceNumber() {
+  static int64_t counter = 1;
+  if (counter == std::numeric_limits<decltype(counter)>::max())
+    counter = 1;
+
+  return counter++;
+}
 
 }  // namespace
 
@@ -440,7 +450,7 @@ void NavigationSimulator::Commit() {
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
+  params.item_sequence_number = GenerateItemSequenceNumber();
   params.document_sequence_number = params.item_sequence_number + 1;
 
   params.page_state = PageState::CreateForTestingWithSequenceNumbers(
@@ -555,7 +565,7 @@ void NavigationSimulator::CommitErrorPage() {
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
+  params.item_sequence_number = GenerateItemSequenceNumber();
   params.document_sequence_number = params.item_sequence_number + 1;
 
   params.page_state = PageState::CreateForTestingWithSequenceNumbers(
