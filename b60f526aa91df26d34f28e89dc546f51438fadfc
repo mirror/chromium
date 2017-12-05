@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d566870_7633dd53",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-05T10:33:13Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "b60f526aa91df26d34f28e89dc546f51438fadfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
