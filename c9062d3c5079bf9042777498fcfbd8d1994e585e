@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "343e56ac_5c40c5c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderForO.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-05T15:38:14Z",
+      "side": 1,
+      "message": "You can remove this nullcheck now (it was only ever when showing web apk notifications that we passed null here on \u003e\u003dO).",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "c9062d3c5079bf9042777498fcfbd8d1994e585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c126927c_d9a550ba",
         "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
         "patchSetId": 18
