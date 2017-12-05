@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4f8a1e2_7300676d",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-05T18:49:17Z",
+      "side": 1,
+      "message": "Just to be safe: if (HasImageBuffer()) {...}",
+      "range": {
+        "startLine": 376,
+        "startChar": 4,
+        "endLine": 376,
+        "endChar": 18
+      },
+      "revId": "7ab756f0e9d271191371629c51d0fc35f83951ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f09ce5_cedb021b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasHeuristicParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-05T18:49:17Z",
+      "side": 1,
+      "message": "Layer promotion logic can all be removed.  We only needed this for display list canvases.  This CL is already biug enough though. Please do a follow-up CL that rips the rest of this out.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "7ab756f0e9d271191371629c51d0fc35f83951ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346d0fcb_03114e9c",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasHeuristicParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-05T18:49:17Z",
+      "side": 1,
+      "message": "Do we still need this one?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "7ab756f0e9d271191371629c51d0fc35f83951ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
