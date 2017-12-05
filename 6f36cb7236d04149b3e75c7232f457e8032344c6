@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "863753d3_80088920",
+        "filename": "components/autofill/core/browser/autofill_type.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T21:07:31Z",
+      "side": 1,
+      "message": "missing trailing return statement. If you expect that all group types are covered, you can add a default case with a NOTREACHED() body, as well.",
+      "revId": "6f36cb7236d04149b3e75c7232f457e8032344c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710c2d37_6f9a07d7",
+        "filename": "components/autofill/core/browser/autofill_type.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-05T21:07:31Z",
+      "side": 1,
+      "message": "missing trailing return statement. If you expect that all HTML types are covered, you can add a default case with a NOTREACHED() body, as well.",
+      "revId": "6f36cb7236d04149b3e75c7232f457e8032344c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
