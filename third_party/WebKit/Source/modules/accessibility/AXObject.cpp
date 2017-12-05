@@ -1941,8 +1941,23 @@ void AXObject::GetRelativeBounds(AXObject** out_container,
     if (container_layout_object && container_layout_object->IsBox() &&
         layout_object->IsDescendantOf(container_layout_object)) {
       if (container->IsScrollableContainer() ||
-          container_layout_object->HasLayer())
-        break;
+          container_layout_object->HasLayer()) {
+        if (layout_object->IsFixedPositioned()) {
+          // If it's a fixed position element, the container should be
+          // the root web area.
+          if (container->IsWebArea())
+            break;
+        } else if (layout_object->IsAbsolutePositioned()) {
+          // If it's absolutely positioned, the container must be the
+          // nearest positioned container, or the root.
+          if (container->IsWebArea())
+            break;
+          if (container_layout_object->IsPositioned())
+            break;
+        } else {
+          break;
+        }
+      }
     }
 
     container = container->ParentObjectUnignored();
