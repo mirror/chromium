@@ -123,6 +123,63 @@
     },
     {
       "key": {
+        "uuid": "c9b30abd_c6000828",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImplBase.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "module_script-\u003eDCheckSettingsObject(this) if you want.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12da42e0_d55a4d50",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "modulator-\u003eGetExecutionContext()-\u003eCanExecuteScripts(kAboutToExecuteScript)",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a7fc1e_67f6c73d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "reformat err",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17e45c95_3421a2b6",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 20
@@ -140,6 +197,41 @@
     },
     {
       "key": {
+        "uuid": "6b12ae61_b7a5d30d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "I\u0027m ok simply removing this DCHECK",
+      "parentUuid": "17e45c95_3421a2b6",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4892af2b_a650d364",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "DCHECK(FindFirstParseError().IsEmpty()) then?",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c0720e7_33fa5068",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
         "patchSetId": 20
@@ -151,6 +243,24 @@
       "writtenOn": "2017-12-01T01:28:07Z",
       "side": 1,
       "message": "I changed this to a parse error (from instantiation error), because MTL is basically no longer affected by instantiation errors.",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bc956f_c82d7447",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-05T19:29:37Z",
+      "side": 1,
+      "message": "Should this be a generic Error or does this need to be a specific type of error?",
+      "parentUuid": "9c0720e7_33fa5068",
       "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
