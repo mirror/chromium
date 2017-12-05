@@ -46,6 +46,30 @@
       "revId": "6466a17994812dbbd3becbd3dc6e7fe29d5efc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cbf39f_9054d75a",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-05T12:31:28Z",
+      "side": 1,
+      "message": "Does \"subtlety\" mean |this_contents| may not be found in the for-loop below, and it\u0027s timing-depend? If so, it\u0027s fine to rename the method.\n\nBut shall we put this information as a comment here? |others_contents !\u003d this_contents| is misleading, and people who read this would assume |this_contents| appears in this for-loop.",
+      "parentUuid": "b312c188_ea6e6600",
+      "range": {
+        "startLine": 134,
+        "startChar": 44,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "6466a17994812dbbd3becbd3dc6e7fe29d5efc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
