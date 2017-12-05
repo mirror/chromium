@@ -63,6 +63,7 @@ class CORE_EXPORT SerializedScriptValue
     : public ThreadSafeRefCounted<SerializedScriptValue> {
  public:
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
+  using SharedArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
   using ImageBitmapContentsArray = Vector<scoped_refptr<StaticBitmapImage>, 1>;
   using TransferredWasmModulesArray =
       WTF::Vector<v8::WasmCompiledModule::TransferrableModule>;
@@ -225,6 +226,9 @@ class CORE_EXPORT SerializedScriptValue
 
   TransferredWasmModulesArray& WasmModules() { return wasm_modules_; }
   BlobDataHandleMap& BlobDataHandles() { return blob_data_handles_; }
+  SharedArrayBufferContentsArray* SharedArrayBuffers() {
+    return shared_array_buffer_contents_array_;
+  }
 
  private:
   friend class ScriptValueSerializer;
@@ -255,7 +259,9 @@ class CORE_EXPORT SerializedScriptValue
   void TransferOffscreenCanvas(v8::Isolate*,
                                const OffscreenCanvasArray&,
                                ExceptionState&);
-
+  void CloneSharedArrayBuffers(v8::Isolate*,
+                               SharedArrayBufferArray&,
+                               ExceptionState&);
   DataBufferPtr data_buffer_;
   size_t data_buffer_size_ = 0;
 
@@ -263,6 +269,8 @@ class CORE_EXPORT SerializedScriptValue
   // UnpackedSerializedScriptValue thereafter.
   ArrayBufferContentsArray array_buffer_contents_array_;
   ImageBitmapContentsArray image_bitmap_contents_array_;
+  SharedArrayBufferContentsArray* shared_array_buffer_contents_array_ =
+      new SharedArrayBufferContentsArray();
 
   // These do not have one-use transferred contents, like the above.
   TransferredWasmModulesArray wasm_modules_;
