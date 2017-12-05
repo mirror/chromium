@@ -32,7 +32,11 @@ _CONFIG = [
             # //base constructs that are allowed everywhere
             'base::AdoptRef',
             'base::MakeRefCounted',
+            'base::OnceCallback',
+            'base::OnceClosure',
             'base::Optional',
+            'base::RepeatingCallback',
+            'base::RepeatingClosure',
             'base::SingleThreadTaskRunner',
             'base::UnguessableToken',
             'base::WeakPtr',
