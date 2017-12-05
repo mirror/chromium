@@ -151,40 +151,14 @@ void RecordElapsedTimeHistogram(ElapsedTimeHistogramType type,
 }  // anonymous namespace
 
 CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
-    DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
-    const String& mime_type,
-    const IntSize& size,
-    V8BlobCallback* callback,
-    double start_time,
-    ExecutionContext* context) {
-  return new CanvasAsyncBlobCreator(unpremultiplied_rgba_image_data, nullptr,
-                                    ConvertMimeTypeStringToEnum(mime_type),
-                                    size, callback, start_time, context,
-                                    nullptr);
-}
-
-CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
-    DOMUint8ClampedArray* unpremultiplied_rgba_image_data,
-    const String& mime_type,
-    const IntSize& size,
-    double start_time,
-    ExecutionContext* context,
-    ScriptPromiseResolver* resolver) {
-  return new CanvasAsyncBlobCreator(unpremultiplied_rgba_image_data, nullptr,
-                                    ConvertMimeTypeStringToEnum(mime_type),
-                                    size, nullptr, start_time, context,
-                                    resolver);
-}
-
-CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
     scoped_refptr<StaticBitmapImage> image,
     const String& mime_type,
     V8BlobCallback* callback,
     double start_time,
     ExecutionContext* context) {
-  return new CanvasAsyncBlobCreator(
-      nullptr, image, ConvertMimeTypeStringToEnum(mime_type), IntSize(0, 0),
-      callback, start_time, context, nullptr);
+  return new CanvasAsyncBlobCreator(image,
+                                    ConvertMimeTypeStringToEnum(mime_type),
+                                    callback, start_time, context, nullptr);
 }
 
 CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
@@ -193,45 +167,32 @@ CanvasAsyncBlobCreator* CanvasAsyncBlobCreator::Create(
     double start_time,
     ExecutionContext* context,
     ScriptPromiseResolver* resolver) {
-  return new CanvasAsyncBlobCreator(
-      nullptr, image, ConvertMimeTypeStringToEnum(mime_type), IntSize(0, 0),
-      nullptr, start_time, context, resolver);
+  return new CanvasAsyncBlobCreator(image,
+                                    ConvertMimeTypeStringToEnum(mime_type),
+                                    nullptr, start_time, context, resolver);
 }
 
 CanvasAsyncBlobCreator::CanvasAsyncBlobCreator(
-    DOMUint8ClampedArray* data,
     scoped_refptr<StaticBitmapImage> image,
     MimeType mime_type,
-    const IntSize& size,
     V8BlobCallback* callback,
     double start_time,
     ExecutionContext* context,
     ScriptPromiseResolver* resolver)
-    : data_(data),
-      image_(image),
+    : image_(image),
       context_(context),
       mime_type_(mime_type),
       start_time_(start_time),
       static_bitmap_image_loaded_(false),
       callback_(callback),
       script_promise_resolver_(resolver) {
-  if (data_) {
-    size_t rowBytes = size.Width() * 4;
-    DCHECK(data_->length() == (unsigned)(size.Height() * rowBytes));
-    SkImageInfo info =
-        SkImageInfo::Make(size.Width(), size.Height(), kRGBA_8888_SkColorType,
-                          kUnpremul_SkAlphaType, nullptr);
-    src_data_.reset(info, data_->Data(), rowBytes);
-  } else {
-    DCHECK(image);
-    sk_sp<SkImage> skia_image =
-        image_->PaintImageForCurrentFrame().GetSkImage();
-    DCHECK(skia_image);
-    if (skia_image->peekPixels(&src_data_))
-      static_bitmap_image_loaded_ = true;
-    else
-      LoadStaticBitmapImage();
-  }
+  DCHECK(image);
+  sk_sp<SkImage> skia_image = image_->PaintImageForCurrentFrame().GetSkImage();
+  DCHECK(skia_image);
+  if (skia_image->peekPixels(&src_data_))
+    static_bitmap_image_loaded_ = true;
+  else
+    LoadStaticBitmapImage();
 
   idle_task_status_ = kIdleTaskNotSupported;
   num_rows_completed_ = 0;
@@ -251,7 +212,6 @@ CanvasAsyncBlobCreator::~CanvasAsyncBlobCreator() {}
 void CanvasAsyncBlobCreator::Dispose() {
   // Eagerly let go of references to prevent retention of these
   // resources while any remaining posted tasks are queued.
-  data_.Clear();
   context_.Clear();
   parent_frame_task_runner_.Clear();
   callback_.Clear();
@@ -259,18 +219,12 @@ void CanvasAsyncBlobCreator::Dispose() {
 }
 
 bool CanvasAsyncBlobCreator::EncodeImage(const double& quality) {
-  if (image_) {
     return ImageDataBuffer(src_data_).EncodeImage("image/webp", quality,
                                                   &encoded_image_);
-  }
-  DCHECK(data_);
-  IntSize size(src_data_.width(), src_data_.height());
-  return ImageDataBuffer(size, data_->Data())
-      .EncodeImage("image/webp", quality, &encoded_image_);
 }
 
 void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
-  if (image_ && !static_bitmap_image_loaded_) {
+  if (!static_bitmap_image_loaded_) {
     context_->GetTaskRunner(TaskType::kCanvasBlobSerialization)
         ->PostTask(BLINK_FROM_HERE,
                    WTF::Bind(&CanvasAsyncBlobCreator::CreateNullAndReturnResult,
@@ -593,7 +547,6 @@ void CanvasAsyncBlobCreator::PostDelayedTaskToCurrentThread(
 
 void CanvasAsyncBlobCreator::Trace(blink::Visitor* visitor) {
   visitor->Trace(context_);
-  visitor->Trace(data_);
   visitor->Trace(parent_frame_task_runner_);
   visitor->Trace(script_promise_resolver_);
 }
