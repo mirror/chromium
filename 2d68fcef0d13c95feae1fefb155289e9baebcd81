@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c70809e_7007eae6",
+        "filename": "base/files/file_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-05T05:57:57Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to do this, but we don\u0027t use temp_long_path at all? Also, shouldn\u0027t we actually be returning false here?",
+      "revId": "2d68fcef0d13c95feae1fefb155289e9baebcd81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
