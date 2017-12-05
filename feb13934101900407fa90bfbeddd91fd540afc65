@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd717396_c0cc2009",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T15:39:04Z",
+      "side": 1,
+      "message": "Good catch of course... sigh. Done. I decided to keep things consistent with existing code and put it in the constructor, reverted the change to SiteInstanceImpl too.",
+      "parentUuid": "7c0a1092_2dd261a2",
+      "revId": "feb13934101900407fa90bfbeddd91fd540afc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0d20cb2_affb80c0",
         "filename": "content/browser/site_instance_impl.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "feb13934101900407fa90bfbeddd91fd540afc65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca1ab11_bfcc6e9f",
+        "filename": "content/browser/site_instance_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-05T15:39:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d20cb2_affb80c0",
+      "revId": "feb13934101900407fa90bfbeddd91fd540afc65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
