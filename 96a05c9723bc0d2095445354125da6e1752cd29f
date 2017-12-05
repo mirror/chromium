@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0908d784_bc69ecdf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 3
+      },
+      "lineNbr": 5474,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-05T19:09:46Z",
+      "side": 1,
+      "message": "I think this should be somehow retrievable from the stream handle then.",
+      "revId": "96a05c9723bc0d2095445354125da6e1752cd29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
