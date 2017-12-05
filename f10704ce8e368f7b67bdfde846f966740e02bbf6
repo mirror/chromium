@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de6d8e1e_0aee3ba3",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-12-05T17:49:58Z",
+      "side": 1,
+      "message": "Why do you need to get the page outside of WriteBarrierBody? It seems like that on all it\u0027s call sites you can do it within WriteBarrierBody.\n\nCan you change it to WriteBarrierBody(const void* value) ?",
+      "revId": "f10704ce8e368f7b67bdfde846f966740e02bbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
