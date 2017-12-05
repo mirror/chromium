@@ -16,6 +16,13 @@
 
 namespace blink {
 
+namespace {
+bool CodePointCompareLessThan(const StylePropertyMap::StylePropertyMapEntry a,
+                              const StylePropertyMap::StylePropertyMapEntry b) {
+  return WTF::CodePointCompareLessThan(a.first, b.first);
+}
+};  // namespace
+
 const CSSValue* InlineStylePropertyMap::GetProperty(CSSPropertyID property_id) {
   return owner_element_->EnsureMutableInlineStyle().GetPropertyCSSValue(
       property_id);
@@ -57,8 +64,8 @@ void InlineStylePropertyMap::RemoveProperty(CSSPropertyID property_id) {
 
 HeapVector<StylePropertyMap::StylePropertyMapEntry>
 InlineStylePropertyMap::GetIterationEntries() {
-  // TODO(779841): Needs to be sorted.
   HeapVector<StylePropertyMap::StylePropertyMapEntry> result;
+  HeapVector<StylePropertyMap::StylePropertyMapEntry> custom;
   CSSPropertyValueSet& inline_style_set =
       owner_element_->EnsureMutableInlineStyle();
   for (unsigned i = 0; i < inline_style_set.PropertyCount(); i++) {
@@ -77,6 +84,7 @@ InlineStylePropertyMap::GetIterationEntries() {
       // TODO(779477): Should these return CSSUnparsedValues?
       value.SetCSSStyleValue(
           CSSUnsupportedStyleValue::Create(custom_declaration.CustomCSSText()));
+      custom.push_back(std::make_pair(name, value));
     } else {
       name = getPropertyNameString(property_id);
       CSSStyleValueVector style_value_vector =
@@ -86,9 +94,12 @@ InlineStylePropertyMap::GetIterationEntries() {
         value.SetCSSStyleValue(style_value_vector[0]);
       else
         value.SetCSSStyleValueSequence(style_value_vector);
+      result.push_back(std::make_pair(name, value));
     }
-    result.push_back(std::make_pair(name, value));
   }
+  std::sort(result.begin(), result.end(), CodePointCompareLessThan);
+  std::sort(custom.begin(), custom.end(), CodePointCompareLessThan);
+  result.AppendVector(custom);
   return result;
 }
 
