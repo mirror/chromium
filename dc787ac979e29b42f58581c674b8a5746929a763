@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2af096_1158b829",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwAutofillProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-12-05T00:02:29Z",
+      "side": 1,
+      "message": "Would a URL direct (30x and JS) still cause cancel()? I\u0027m asking because I don\u0027t see a point of making this change if that is the case.",
+      "range": {
+        "startLine": 364,
+        "startChar": 12,
+        "endLine": 364,
+        "endChar": 46
+      },
+      "revId": "dc787ac979e29b42f58581c674b8a5746929a763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
