@@ -16,6 +16,24 @@
       "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10260eb_17ed3593",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-12-05T15:22:55Z",
+      "side": 0,
+      "message": "\u003e Wouldn\u0027t it be easier to read and understand if we called X86:Vsma here (a new function) that then dispatched to the appropriate sse and avx code?\n\nDone. I also split out frames_to_process splitting logic to a new function so that the same logic and comments do not have to be repeated in each function.\n\n\u003e You\u0027d have to benchmark what, if any, degradation in performance we get by doing this.  I\u0027m assuming it\u0027s very small.\n\nWell, it is an anonymous function with one call site thus the performance degradation should be zero in release builds.",
+      "parentUuid": "b5b029dd_e2498494",
+      "revId": "4ec5ddcde9f3989ff6df80c6dbb00ee529b85fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
