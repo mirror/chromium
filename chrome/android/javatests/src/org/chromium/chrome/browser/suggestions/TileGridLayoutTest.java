@@ -33,9 +33,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -168,8 +166,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome.Enable
     public void testModernTileGridAppearance_Full() throws IOException, InterruptedException {
@@ -190,8 +187,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome.Disable
     public void testTileGridAppearance_Full() throws IOException, InterruptedException {
@@ -212,9 +208,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
-    @RetryOnFailure
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome.Enable
     public void testModernTileGridAppearance_Two() throws IOException, InterruptedException {
@@ -228,9 +222,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
-    @RetryOnFailure
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome.Disable
     public void testTileGridAppearance_Two() throws IOException, InterruptedException {
