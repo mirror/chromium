@@ -22,6 +22,30 @@
       "revId": "bf33fa5e12d795586b7acded82b2436d893e3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a102ad2d_04f63028",
+        "filename": "ios/net/cookies/system_cookie_store.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-05T22:11:03Z",
+      "side": 1,
+      "message": "There no guard on the function that prevents the caller from sending null as context\nBut this specifically for the weakptr value provided in the wkhttpsystemcookiestore",
+      "parentUuid": "80b0a399_52db99fc",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "bf33fa5e12d795586b7acded82b2436d893e3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
