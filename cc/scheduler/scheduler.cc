@@ -212,6 +212,9 @@ base::TimeTicks Scheduler::LastBeginImplFrameTime() {
 void Scheduler::BeginMainFrameNotExpectedUntil(base::TimeTicks time) {
   TRACE_EVENT1("cc", "Scheduler::BeginMainFrameNotExpectedUntil",
                "remaining_time", (time - Now()).InMillisecondsF());
+
+  DCHECK(!inside_scheduled_action_);
+  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
   client_->ScheduledActionBeginMainFrameNotExpectedUntil(time);
 }
 
@@ -222,6 +225,8 @@ void Scheduler::BeginImplFrameNotExpectedSoon() {
   // false negatives, but we want to avoid running long idle tasks when
   // we are actually active.
   if (state_machine_.wants_begin_main_frame_not_expected_messages()) {
+    DCHECK(!inside_scheduled_action_);
+    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
     client_->SendBeginMainFrameNotExpectedSoon();
   }
 }
@@ -458,7 +463,11 @@ void Scheduler::FinishImplFrame() {
   state_machine_.OnBeginImplFrameIdle();
   ProcessScheduledActions();
 
-  client_->DidFinishImplFrame();
+  DCHECK(!inside_scheduled_action_);
+  {
+    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+    client_->DidFinishImplFrame();
+  }
   SendBeginFrameAck(begin_main_frame_args_, kBeginFrameFinished);
   begin_impl_frame_tracker_.Finish();
 }
@@ -470,6 +479,8 @@ void Scheduler::SendBeginFrameAck(const viz::BeginFrameArgs& args,
     did_submit = state_machine_.did_submit_in_last_frame();
 
   if (!did_submit) {
+    DCHECK(!inside_scheduled_action_);
+    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
     client_->DidNotProduceFrame(
         viz::BeginFrameAck(args.source_id, args.sequence_number, did_submit));
   }
@@ -488,12 +499,17 @@ void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
   DCHECK(begin_impl_frame_deadline_task_.IsCancelled());
   DCHECK(state_machine_.HasInitializedLayerTreeFrameSink());
 
-  begin_impl_frame_tracker_.Start(args);
-  state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
-  devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
-  compositor_timing_history_->WillBeginImplFrame(
-      state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
-  client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+  {
+    DCHECK(!inside_scheduled_action_);
+    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+
+    begin_impl_frame_tracker_.Start(args);
+    state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
+    devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
+    compositor_timing_history_->WillBeginImplFrame(
+        state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
+    client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
+  }
 
   ProcessScheduledActions();
 }
@@ -582,6 +598,8 @@ void Scheduler::OnBeginImplFrameDeadline() {
 }
 
 void Scheduler::DrawIfPossible() {
+  DCHECK(!inside_scheduled_action_);
+  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
   bool drawing_with_new_active_tree =
       state_machine_.active_tree_needs_first_draw() &&
       !state_machine_.previous_pending_tree_was_impl_side();
@@ -598,6 +616,8 @@ void Scheduler::DrawIfPossible() {
 }
 
 void Scheduler::DrawForced() {
+  DCHECK(!inside_scheduled_action_);
+  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
   bool drawing_with_new_active_tree =
       state_machine_.active_tree_needs_first_draw() &&
       !state_machine_.previous_pending_tree_was_impl_side();
@@ -632,7 +652,7 @@ void Scheduler::ProcessScheduledActions() {
 
   // We do not allow ProcessScheduledActions to be recursive.
   // The top-level call will iteratively execute the next action for us anyway.
-  if (inside_process_scheduled_actions_)
+  if (inside_process_scheduled_actions_ || inside_scheduled_action_)
     return;
 
   base::AutoReset<bool> mark_inside(&inside_process_scheduled_actions_, true);
