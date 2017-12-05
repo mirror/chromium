@@ -16,6 +16,24 @@
       "revId": "f4ec5736070ad3e4fc6fb5258e11cb06b8293398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01a0e6b_b6f462da",
+        "filename": "extensions/browser/content_hash_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-05T16:42:19Z",
+      "side": 1,
+      "message": "We could indeed move the check up the execution flow. For example, we could avoid creating the ContentVerifyJob for empty relative_path_.\n\nHowever, the unit tests for content_verify_job are way better than the alternatives, so I\u0027m leaning towards this solution for the quick fix. We can revisit a more permanent solution in a follow-up CL.",
+      "parentUuid": "e4f31137_4bf340ed",
+      "revId": "f4ec5736070ad3e4fc6fb5258e11cb06b8293398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
