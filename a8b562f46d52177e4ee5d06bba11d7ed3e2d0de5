@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75528c24_eb40734a",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-05T18:25:52Z",
+      "side": 1,
+      "message": "Use mojo::UnwrapPlatformFile instead (mojo/public/cpp/system/platform_handle.h)",
+      "revId": "a8b562f46d52177e4ee5d06bba11d7ed3e2d0de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95be7529_82953478",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-05T18:25:52Z",
+      "side": 1,
+      "message": "Use mojo::WrapPlatformFile instead (mojo/public/cpp/system/platform_handle.h)",
+      "revId": "a8b562f46d52177e4ee5d06bba11d7ed3e2d0de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5db462_80adfb3f",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-05T18:25:52Z",
+      "side": 1,
+      "message": "You need to *move* the expiration_fd, otherwise when the ArcTimerRequest is destroyed the FD will be closed. That is the only potential issue I can see here. The reason you don\u0027t see it in production is probably that the FD is duped across the wire immediately, whereas in a unit-test with no IPC, the FD is never actually duped since that would be redundant.",
+      "revId": "a8b562f46d52177e4ee5d06bba11d7ed3e2d0de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
