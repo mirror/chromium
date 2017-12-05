@@ -552,8 +552,8 @@
                 "href": "/extensions/content_scripts"
               },
               {
-                "title": "activeTab Permission",
-                "href": "/extensions/activeTab"
+                "title": "Stay Secure",
+                "href": "/extensions/security"
               },
               {
                 "title": "What's New?",
@@ -576,6 +576,10 @@
               {
                 "title": "Accessibility",
                 "href": "/extensions/a11y"
+              },
+              {
+                "title": "activeTab Permission",
+                "href": "/extensions/activeTab"
               },
               {
                 "title": "Content Security Policy",
