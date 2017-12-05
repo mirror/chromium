@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "30fdfe3a_d10f5502",
+        "filename": "third_party/WebKit/Source/core/dom/LayoutTreeBuilder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bbc7db_a261b348",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29278d7a_7460df8d",
         "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-12-04T21:10:34Z",
       "side": 1,
       "message": "The first check here looks unnecessary to me. We only seem to want to enter if inherited properties differ.",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc5e4e6_73cfa70d",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "It\u0027s an attempt at making the condition cheaper. In the common case (no display:contents) new_style and layout_parent_style will be pointer-equal and we\u0027ll skip the InheritedEqual test. Looking at the InheritedEqual() implementation it seems we would end up doing heaps of comparisons for the common case.",
+      "parentUuid": "29278d7a_7460df8d",
       "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "47666d20_b8fd27e8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609f805d_44fb30e0",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ecf684_ddca7fa6",
         "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
         "patchSetId": 2
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "12620a51_6a1f9814",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutInline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ecf684_ddca7fa6",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d359f7_c75d6c92",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
         "patchSetId": 2
@@ -119,6 +191,24 @@
       "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d92480a_f3b45d3c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d359f7_c75d6c92",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +261,24 @@
       "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b2945a_570a4b62",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-05T08:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65588b78_1d4aff1a",
+      "revId": "b3b44a4abe8c12870aaacc1db62a998599ca1875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
