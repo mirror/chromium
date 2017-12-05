@@ -78,6 +78,7 @@ class GpuMemoryBufferManager;
 
 namespace service_manager {
 class Connector;
+class InterfaceProvider;
 }
 
 namespace url {
@@ -689,7 +690,8 @@ class BLINK_PLATFORM_EXPORT Platform {
   // with the current usage and quota information for the partition. When
   // an error occurs WebStorageQuotaCallbacks::DidFail is called with an
   // error code.
-  virtual void QueryStorageUsageAndQuota(const url::Origin& storage_partition,
+  virtual void QueryStorageUsageAndQuota(service_manager::InterfaceProvider*,
+                                         const url::Origin& storage_partition,
                                          WebStorageQuotaType,
                                          WebStorageQuotaCallbacks) {}
 

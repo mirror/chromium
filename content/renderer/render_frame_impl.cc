@@ -4889,6 +4889,7 @@ void RenderFrameImpl::ReportFindInPageSelection(
 }
 
 void RenderFrameImpl::RequestStorageQuota(
+    service_manager::InterfaceProvider* interface_provider,
     blink::WebStorageQuotaType type,
     unsigned long long requested_size,
     blink::WebStorageQuotaCallbacks callbacks) {
@@ -4899,8 +4900,8 @@ void RenderFrameImpl::RequestStorageQuota(
     return;
   }
   RenderThreadImpl::current()->quota_dispatcher()->RequestStorageQuota(
-      routing_id_, url::Origin(origin), static_cast<storage::StorageType>(type),
-      requested_size,
+      interface_provider, routing_id_, url::Origin(origin),
+      static_cast<storage::StorageType>(type), requested_size,
       QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(callbacks));
 }
 

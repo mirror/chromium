@@ -14,6 +14,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaCallbacks.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaType.h"
 #include "url/origin.h"
@@ -59,27 +60,12 @@ int CurrentWorkerId() {
   return WorkerThread::GetCurrentId();
 }
 
-void BindConnectorOnMainThread(mojom::QuotaDispatcherHostRequest request) {
-  DCHECK(RenderThread::Get());
-  RenderThread::Get()->GetConnector()->BindInterface(mojom::kBrowserServiceName,
-                                                     std::move(request));
-}
-
 }  // namespace
 
 QuotaDispatcher::QuotaDispatcher(
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner)
     : main_thread_task_runner_(main_thread_task_runner) {
   g_quota_dispatcher_tls.Pointer()->Set(this);
-
-  auto request = mojo::MakeRequest(&quota_host_);
-  if (main_thread_task_runner_->BelongsToCurrentThread()) {
-    BindConnectorOnMainThread(std::move(request));
-  } else {
-    main_thread_task_runner->PostTask(
-        FROM_HERE,
-        base::BindOnce(&BindConnectorOnMainThread, std::move(request)));
-  }
 }
 
 QuotaDispatcher::~QuotaDispatcher() {
@@ -109,26 +95,31 @@ void QuotaDispatcher::WillStopCurrentWorkerThread() {
 }
 
 void QuotaDispatcher::QueryStorageUsageAndQuota(
+    service_manager::InterfaceProvider* interface_provider,
     const url::Origin& origin,
     StorageType type,
     std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   int request_id = pending_quota_callbacks_.Add(std::move(callback));
+  interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
   quota_host_->QueryStorageUsageAndQuota(
       origin, type,
       base::BindOnce(&QuotaDispatcher::DidQueryStorageUsageAndQuota,
                      base::Unretained(this), request_id));
 }
 
-void QuotaDispatcher::RequestStorageQuota(int render_frame_id,
-                                          const url::Origin& origin,
-                                          StorageType type,
-                                          int64_t requested_size,
-                                          std::unique_ptr<Callback> callback) {
+void QuotaDispatcher::RequestStorageQuota(
+    service_manager::InterfaceProvider* interface_provider,
+    int render_frame_id,
+    const url::Origin& origin,
+    StorageType type,
+    int64_t requested_size,
+    std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   DCHECK_EQ(CurrentWorkerId(), 0)
       << "Requests may show permission UI and are not allowed from workers.";
   int request_id = pending_quota_callbacks_.Add(std::move(callback));
+  interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
   quota_host_->RequestStorageQuota(
       render_frame_id, origin, type, requested_size,
       base::BindOnce(&QuotaDispatcher::DidGrantStorageQuota,

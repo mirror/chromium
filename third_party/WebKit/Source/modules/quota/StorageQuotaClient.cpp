@@ -64,8 +64,9 @@ void StorageQuotaClient::RequestQuota(ScriptState* script_state,
   StorageQuotaCallbacks* callbacks =
       DeprecatedStorageQuotaCallbacksImpl::Create(success_callback,
                                                   error_callback);
-  web_frame->Client()->RequestStorageQuota(storage_type, new_quota_in_bytes,
-                                           callbacks);
+  web_frame->Client()->RequestStorageQuota(
+      execution_context->GetInterfaceProvider(), storage_type,
+      new_quota_in_bytes, callbacks);
 }
 
 const char* StorageQuotaClient::SupplementName() {
