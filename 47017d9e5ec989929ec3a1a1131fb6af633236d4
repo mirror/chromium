@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e92cf2ab_88cfe169",
+        "filename": "chromeos/components/tether/ble_scanner_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-12-05T22:52:26Z",
+      "side": 1,
+      "message": "Is this really this simplest way to remove an item from a vector? C++, man... Is there nothing with std::remove or std::find that\u0027s cleaner?",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "47017d9e5ec989929ec3a1a1131fb6af633236d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
