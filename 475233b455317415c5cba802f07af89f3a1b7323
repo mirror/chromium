@@ -34,6 +34,24 @@
       "revId": "475233b455317415c5cba802f07af89f3a1b7323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5108dd_030fec83",
+        "filename": "net/cert/signed_tree_head.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-05T02:17:45Z",
+      "side": 1,
+      "message": "moving it to a test-only file sgtm",
+      "parentUuid": "b2c4b71c_14e2ea13",
+      "revId": "475233b455317415c5cba802f07af89f3a1b7323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
