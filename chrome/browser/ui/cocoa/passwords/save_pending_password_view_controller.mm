@@ -132,6 +132,8 @@ NSButton* EyeIcon(id target, SEL action) {
   if (!self.model)
     return;  // The view will be destroyed soon.
   bool visible = [passwordViewButton_ state] == NSOnState;
+  if (!visible && !self.model->TryToViewPasswords())
+    return;
   const autofill::PasswordForm& form = self.model->pending_password();
   if (passwordSelectionField_) {
     NSInteger index = [passwordSelectionField_ indexOfSelectedItem];
@@ -198,11 +200,16 @@ NSButton* EyeIcon(id target, SEL action) {
       if (form.all_possible_passwords.size() > 1) {
         passwordSelectionField_.reset(
             [[NSPopUpButton alloc] initWithFrame:NSZeroRect pullsDown:NO]);
-        FillPasswordPopup(form, false, passwordSelectionField_.get());
+        FillPasswordPopup(form, self.model->PasswordIsRevealedByDefault(),
+                          passwordSelectionField_.get());
         [passwordSelectionField_ sizeToFit];
       } else {
-        passwordStaticField_.reset([Label(
-            base::string16(form.password_value.length(), kBulletChar)) retain]);
+        if (self.model->PasswordIsRevealedByDefault()) {
+          passwordStaticField_.reset([Label(base::string16(
+              form.password_value.length(), kBulletChar)) retain]);
+        } else {
+          passwordStaticField_.reset([Label(form.password_value) retain]);
+        }
         // Overwrite the height of the password field because it's higher in the
         // editable mode.
         [passwordStaticField_
@@ -212,11 +219,9 @@ NSButton* EyeIcon(id target, SEL action) {
                                       NSHeight([EditableField(
                                           form.password_value) frame])))];
       }
-      if (!self.model->hide_eye_icon()) {
-        passwordViewButton_.reset(
-            [EyeIcon(self, @selector(onEyeClicked:)) retain]);
-        [container addSubview:passwordViewButton_];
-      }
+      passwordViewButton_.reset(
+          [EyeIcon(self, @selector(onEyeClicked:)) retain]);
+      [container addSubview:passwordViewButton_];
     } else {
       passwordStaticField_.reset([PasswordLabel(form.password_value) retain]);
     }
