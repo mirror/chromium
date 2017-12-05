@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "674b9dc7_3b10c60d",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-05T20:11:36Z",
+      "side": 1,
+      "message": "I would prefer keeping the css preloader stuff weak as long as it doesn\u0027t expose an infinite recursion issue. I think it should be fine though. Otherwise the current approach seems OK to me.",
+      "parentUuid": "b1512e3e_d7f6fa31",
+      "revId": "5031bf857bf78604ce5571bab7226051789241b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "536576c8_f4c5d7f8",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLResourcePreloader.cpp",
         "patchSetId": 2
