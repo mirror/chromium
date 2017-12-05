@@ -176,6 +176,24 @@
       "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418ee91e_6dcef30d",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-05T22:22:38Z",
+      "side": 1,
+      "message": "Do you think it is too late for M64? I guess the earlier the better. Personally I prefer to not let this bug be out there for too long. \n\nI agree. My hope is that the spec will say: \"Set target to be the element that contains the start of the visible selection in document order, or the body element if there is no visible selection or cursor.\" That wording works for this CL.",
+      "parentUuid": "b0181982_449f8734",
+      "revId": "468ff5fc0809e27195274e3a9dcea6468680cf2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
