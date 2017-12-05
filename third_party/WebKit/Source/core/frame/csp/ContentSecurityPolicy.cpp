@@ -49,6 +49,7 @@
 #include "core/loader/PingLoader.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkletGlobalScope.h"
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -1377,7 +1378,7 @@ void ContentSecurityPolicy::DispatchViolationEvents(
   // If the context is detached or closed (thus clearing its event queue)
   // between the violation occuring and this event dispatch, exit early.
   EventQueue* queue = execution_context_->GetEventQueue();
-  if (!queue)
+  if (!queue || execution_context_->IsWorkletGlobalScope())
     return;
 
   SecurityPolicyViolationEvent* event = SecurityPolicyViolationEvent::Create(
