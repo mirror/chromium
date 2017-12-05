@@ -24,7 +24,11 @@ MediaRouterAndroidBridge::MediaRouterAndroidBridge(MediaRouterAndroid* router)
       Java_ChromeMediaRouter_create(env, reinterpret_cast<jlong>(this)));
 }
 
-MediaRouterAndroidBridge::~MediaRouterAndroidBridge() = default;
+MediaRouterAndroidBridge::~MediaRouterAndroidBridge() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  // Signal to the Java counterpart that it can't call back into native.
+  Java_ChromeMediaRouter_teardown(env, java_media_router_);
+}
 
 void MediaRouterAndroidBridge::CreateRoute(const MediaSource::Id& source_id,
                                            const MediaSink::Id& sink_id,
