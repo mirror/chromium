@@ -18,6 +18,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/histogram_tester.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/loader/mock_resource_loader.h"
 #include "content/browser/loader/resource_controller.h"
@@ -33,6 +34,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -541,6 +543,7 @@ TEST_P(CrossSiteDocumentResourceHandlerTest, ResponseBlocking) {
   // TODO(nick): Set origin header.
   Initialize(scenario.target_url, scenario.resource_type,
              scenario.initiator_origin);
+  base::HistogramTester histograms;
 
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnWillStart(request_->url()));
@@ -627,6 +630,83 @@ TEST_P(CrossSiteDocumentResourceHandlerTest, ResponseBlocking) {
               mock_loader_->OnResponseCompleted(
                   net::URLRequestStatus::FromError(net::OK)));
   }
+
+  // Verify that histograms are correctly incremented.
+  base::HistogramTester::CountsMap expected_counts;
+  std::string histogram_base = "SiteIsolation.XSD.Browser";
+  std::string bucket;
+  switch (scenario.canonical_mime_type) {
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_HTML:
+      bucket = "HTML";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_XML:
+      bucket = "XML";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_JSON:
+      bucket = "JSON";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN:
+      bucket = "Plain";
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS:
+      EXPECT_FALSE(should_be_blocked);
+      bucket = "Others";
+      break;
+    default:
+      NOTREACHED();
+  }
+  int start_action = static_cast<int>(
+      CrossSiteDocumentResourceHandler::Action::kResponseStarted);
+  int end_action = -1;
+  switch (scenario.verdict) {
+    case Verdict::kBlockWithoutSniffing:
+      end_action = static_cast<int>(
+          CrossSiteDocumentResourceHandler::Action::kBlockedWithoutSniffing);
+      break;
+    case Verdict::kBlockAfterSniffing:
+      end_action = static_cast<int>(
+          CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing);
+      break;
+    case Verdict::kAllowWithoutSniffing:
+      end_action = static_cast<int>(
+          CrossSiteDocumentResourceHandler::Action::kAllowedWithoutSniffing);
+      break;
+    case Verdict::kAllowAfterSniffing:
+      end_action = static_cast<int>(
+          CrossSiteDocumentResourceHandler::Action::kAllowedAfterSniffing);
+      break;
+    default:
+      NOTREACHED();
+  }
+  // Expecting two actions: ResponseStarted and one of the outcomes.
+  expected_counts[histogram_base + ".Action"] = 2;
+  EXPECT_THAT(histograms.GetAllSamples(histogram_base + ".Action"),
+              testing::ElementsAre(base::Bucket(start_action, 1),
+                                   base::Bucket(end_action, 1)))
+      << "Should have incremented the right actions.";
+  // Expect to hear the number of bytes in the first read when sniffing is
+  // required.
+  if (expected_to_sniff) {
+    std::string first_chunk = scenario.first_chunk;
+    expected_counts[histogram_base + ".BytesReadForSniffing"] = 1;
+    EXPECT_EQ(
+        1, histograms.GetBucketCount(histogram_base + ".BytesReadForSniffing",
+                                     first_chunk.size()));
+  }
+  if (should_be_blocked) {
+    expected_counts[histogram_base + ".Blocked"] = 1;
+    expected_counts[histogram_base + ".Blocked." + bucket] = 1;
+    EXPECT_THAT(histograms.GetAllSamples(histogram_base + ".Blocked"),
+                testing::ElementsAre(base::Bucket(scenario.resource_type, 1)))
+        << "Should have incremented aggregate blocking.";
+    EXPECT_THAT(histograms.GetAllSamples(histogram_base + ".Blocked." + bucket),
+                testing::ElementsAre(base::Bucket(scenario.resource_type, 1)))
+        << "Should have incremented blocking for resource type.";
+  }
+  // Make sure that the expected metrics, and only those metrics, were
+  // incremented.
+  EXPECT_THAT(histograms.GetTotalCountsForPrefix("SiteIsolation.XSD.Browser"),
+              testing::ContainerEq(expected_counts));
 }
 
 // Similar to the ResponseBlocking test above, but simulates the case that the
