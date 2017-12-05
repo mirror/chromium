@@ -5,7 +5,7 @@
 #ifndef ASH_WALLPAPER_WALLPAPER_DECODER_H_
 #define ASH_WALLPAPER_WALLPAPER_DECODER_H_
 
-#include "ash/ash_export.h"
+//#include "ash/ash_export.h"
 #include "base/callback_forward.h"
 #include "base/memory/scoped_refptr.h"
 
@@ -20,8 +20,8 @@ using OnWallpaperDecoded = base::OnceCallback<void(
 
 // Do an async wallpaper decode; |on_decoded| is run on the calling thread when
 // the decode has finished.
-ASH_EXPORT void DecodeWallpaper(std::unique_ptr<std::string> image_data,
-                                OnWallpaperDecoded callback);
+void DecodeWallpaper(std::unique_ptr<std::string> image_data,
+                     OnWallpaperDecoded callback);
 
 }  // namespace ash
 

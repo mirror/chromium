@@ -37,6 +37,13 @@ void DecodeWallpaper(std::unique_ptr<std::string> image_data,
                      OnWallpaperDecoded callback) {
   std::vector<uint8_t> image_bytes(image_data.get()->begin(),
                                    image_data.get()->end());
+  SkBitmap map;
+  // if (!Shell::Get()->shell_delegate()->GetShellConnector()) {
+  //    // GetShellConnector() is null in unit tests. Run the callback with an
+  //    // empty image.
+  //     ConvertToUserImage(std::move(callback), std::move(map));
+  //     return;
+  // }
   data_decoder::DecodeImage(
       Shell::Get()->shell_delegate()->GetShellConnector(),
       std::move(image_bytes), data_decoder::mojom::ImageCodec::ROBUST_JPEG,

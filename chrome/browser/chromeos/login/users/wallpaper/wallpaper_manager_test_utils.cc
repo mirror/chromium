@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_controller.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -65,57 +67,16 @@ class TestWallpaperObserverPendingListEmpty
 
 namespace wallpaper_manager_test_utils {
 
-const SkColor kLargeDefaultWallpaperColor = SK_ColorRED;
-const SkColor kSmallDefaultWallpaperColor = SK_ColorGREEN;
-const SkColor kLargeGuestWallpaperColor = SK_ColorBLUE;
-const SkColor kSmallGuestWallpaperColor = SK_ColorYELLOW;
-const SkColor kLargeChildWallpaperColor = SK_ColorCYAN;
-const SkColor kSmallChildWallpaperColor = SK_ColorMAGENTA;
-
-const SkColor kCustomWallpaperColor = SK_ColorMAGENTA;
+const SkColor kLargeCustomWallpaperColor = SK_ColorDKGRAY;
+const SkColor kSmallCustomWallpaperColor = SK_ColorLTGRAY;
 
 const int kWallpaperSize = 2;
-
-bool CreateJPEGImage(int width,
-                     int height,
-                     SkColor color,
-                     std::vector<unsigned char>* output) {
-  SkBitmap bitmap;
-  bitmap.allocN32Pixels(width, height);
-  bitmap.eraseColor(color);
-
-  constexpr int kQuality = 80;
-  if (!gfx::JPEGCodec::Encode(bitmap, kQuality, output)) {
-    LOG(ERROR) << "Unable to encode " << width << "x" << height << " bitmap";
-    return false;
-  }
-  return true;
-}
 
 gfx::ImageSkia CreateTestImage(int width, int height, SkColor color) {
   SkBitmap bitmap;
   bitmap.allocN32Pixels(width, height);
   bitmap.eraseColor(color);
   return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
-}
-
-bool WriteJPEGFile(const base::FilePath& path,
-                   int width,
-                   int height,
-                   SkColor color) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
-  std::vector<unsigned char> output;
-  if (!CreateJPEGImage(width, height, color, &output))
-    return false;
-
-  size_t bytes_written = base::WriteFile(
-      path, reinterpret_cast<const char*>(&output[0]), output.size());
-  if (bytes_written != output.size()) {
-    LOG(ERROR) << "Wrote " << bytes_written << " byte(s) instead of "
-               << output.size() << " to " << path.value();
-    return false;
-  }
-  return true;
 }
 
 bool ImageIsNearColor(gfx::ImageSkia image, SkColor expected_color) {
@@ -153,62 +114,6 @@ bool ImageIsNearColor(gfx::ImageSkia image, SkColor expected_color) {
 void WaitAsyncWallpaperLoadFinished() {
   TestWallpaperObserverPendingListEmpty observer(WallpaperManager::Get());
   observer.WaitForPendingListEmpty();
-}
-
-void CreateCmdlineWallpapers(const base::ScopedTempDir& dir,
-                             std::unique_ptr<base::CommandLine>* command_line) {
-  std::vector<std::string> options;
-  options.push_back(std::string("WM_Test_cmdline"));
-  const base::FilePath small_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("small.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kDefaultWallpaperSmall + "=" +
-                    small_file.value());
-  const base::FilePath large_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("large.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kDefaultWallpaperLarge + "=" +
-                    large_file.value());
-
-  const base::FilePath guest_small_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("guest_small.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kGuestWallpaperSmall + "=" +
-                    guest_small_file.value());
-  const base::FilePath guest_large_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("guest_large.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kGuestWallpaperLarge + "=" +
-                    guest_large_file.value());
-
-  const base::FilePath child_small_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("child_small.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kChildWallpaperSmall + "=" +
-                    child_small_file.value());
-  const base::FilePath child_large_file =
-      dir.GetPath().Append(FILE_PATH_LITERAL("child_large.jpg"));
-  options.push_back(std::string("--") +
-                    chromeos::switches::kChildWallpaperLarge + "=" +
-                    child_large_file.value());
-
-  ASSERT_TRUE(WriteJPEGFile(small_file, kWallpaperSize, kWallpaperSize,
-                            kSmallDefaultWallpaperColor));
-  ASSERT_TRUE(WriteJPEGFile(large_file, kWallpaperSize, kWallpaperSize,
-                            kLargeDefaultWallpaperColor));
-
-  ASSERT_TRUE(WriteJPEGFile(guest_small_file, kWallpaperSize, kWallpaperSize,
-                            kSmallGuestWallpaperColor));
-  ASSERT_TRUE(WriteJPEGFile(guest_large_file, kWallpaperSize, kWallpaperSize,
-                            kLargeGuestWallpaperColor));
-
-  ASSERT_TRUE(WriteJPEGFile(child_small_file, kWallpaperSize, kWallpaperSize,
-                            kSmallChildWallpaperColor));
-  ASSERT_TRUE(WriteJPEGFile(child_large_file, kWallpaperSize, kWallpaperSize,
-                            kLargeChildWallpaperColor));
-
-  command_line->reset(new base::CommandLine(options));
-  WallpaperManager::Get()->SetCommandLineForTesting(command_line->get());
 }
 
 }  // namespace wallpaper_manager_test_utils
