@@ -363,8 +363,10 @@
               aria-labelledby="optionLabel" actionable></button>
         </div>
         <div class="section block">
-          <div class="section-title">$i18n{itemSource}</div>
-          <div id="source" class="section-content">
+          <div id="sourceLabel" class="section-title"
+              aria-hidden="true">$i18n{itemSource}</div>
+          <div id="source" class="section-content"
+              aria-describedby="sourceLabel">
             [[computeSourceString_(data.*)]]
           </div>
           <div id="load-path" class="section-content"
