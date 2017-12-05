@@ -661,6 +661,30 @@
       "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a4128_d93ed98e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-05T10:34:02Z",
+      "side": 1,
+      "message": "I\u0027ve just checked history.\nResourceLoadOption\u0027s security origin was introduced by https://chromium.googlesource.com/chromium/src/+/384b3ddb8ddaef32cf356488bc172bff198ac000 at May/26/2011 to support CORS in isolated worlds. At this moment, ResourceRequest didn\u0027t have security origin yet.\nResourceRequest origin was introduced by https://chromium.googlesource.com/chromium/src/+/b391cc8bd9fed9df12ad47223ccc208635d5d98b at May/12/2015. This patch was by Mike West and Mike and Takeshi know CORS code well. So they can alarm if something is wrong :)",
+      "parentUuid": "be3a46d5_6aabf1e5",
+      "range": {
+        "startLine": 612,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 25
+      },
+      "revId": "31fcc987202bf2c3498252a8448f79dd163f501d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
