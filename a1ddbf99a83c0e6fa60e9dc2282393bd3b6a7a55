@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59743503_91eb9de5",
+        "filename": "components/signin/ios/browser/wait_for_network_callback_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-05T03:20:31Z",
+      "side": 1,
+      "message": "Hey Mihai, this line used to be:\ntype \u003e\u003d net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE\n\nThis is different from IsOffline(), which just checks if type \u003d\u003d CONNECTION_NONE.\n\nIt seems IsOffline() is what we actually want here, but let me know if this isn\u0027t the case.",
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
