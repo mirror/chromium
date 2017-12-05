@@ -152,14 +152,14 @@ class HistoryService::BackendDelegate : public HistoryBackend::Delegate {
                               history_service_, changed_urls));
   }
 
-  void NotifyURLsDeleted(const DeletionTimeRange& time_range,
+  void NotifyURLsDeleted(bool all_history,
                          bool expired,
                          const URLRows& deleted_rows,
                          const std::set<GURL>& favicon_urls) override {
     service_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&HistoryService::NotifyURLsDeleted, history_service_,
-                   time_range, expired, deleted_rows, favicon_urls));
+                   all_history, expired, deleted_rows, favicon_urls));
   }
 
   void NotifyKeywordSearchTermUpdated(const URLRow& row,
@@ -1163,7 +1163,7 @@ void HistoryService::NotifyURLsModified(const URLRows& changed_urls) {
     observer.OnURLsModified(this, changed_urls);
 }
 
-void HistoryService::NotifyURLsDeleted(const DeletionTimeRange& time_range,
+void HistoryService::NotifyURLsDeleted(bool all_history,
                                        bool expired,
                                        const URLRows& deleted_rows,
                                        const std::set<GURL>& favicon_urls) {
@@ -1180,7 +1180,7 @@ void HistoryService::NotifyURLsDeleted(const DeletionTimeRange& time_range,
   // respectful of privacy and never tell the user something is gone when it
   // isn't. Therefore, we update the delete URLs after the fact.
   if (visit_delegate_) {
-    if (time_range.IsAllTime()) {
+    if (all_history) {
       visit_delegate_->DeleteAllURLs();
     } else {
       std::vector<GURL> urls;
@@ -1192,9 +1192,7 @@ void HistoryService::NotifyURLsDeleted(const DeletionTimeRange& time_range,
   }
 
   for (HistoryServiceObserver& observer : observers_) {
-    observer.OnURLsDeleted(this, time_range.IsAllTime(), expired, deleted_rows,
-                           favicon_urls);
-    observer.OnURLsDeleted(this, time_range, expired, deleted_rows,
+    observer.OnURLsDeleted(this, all_history, expired, deleted_rows,
                            favicon_urls);
   }
 }

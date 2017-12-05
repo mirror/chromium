@@ -48,7 +48,7 @@ class BackendDelegate : public HistoryBackend::Delegate {
                         const RedirectList& redirects,
                         base::Time visit_time) override {}
   void NotifyURLsModified(const URLRows& changed_urls) override {}
-  void NotifyURLsDeleted(const DeletionTimeRange& time_range,
+  void NotifyURLsDeleted(bool all_history,
                          bool expired,
                          const URLRows& deleted_rows,
                          const std::set<GURL>& favicon_urls) override {}
