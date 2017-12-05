@@ -105,8 +105,8 @@ TEST_F(NGLengthUtilsTest, testResolveInlineLength) {
   EXPECT_EQ(LayoutUnit(200),
             ResolveInlineLength(Length(kFitContent),
                                 LengthResolveType::kContentSize, sizes));
-#ifndef NDEBUG
-  // This should fail a DCHECK.
+#if DCHECK_IS_ON()
+  // This should cause a DCHECK to fail.
   EXPECT_DEATH(ResolveInlineLength(Length(kFitContent)), "Check failed");
 #endif
 }
