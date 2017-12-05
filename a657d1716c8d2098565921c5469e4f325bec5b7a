@@ -93,6 +93,30 @@
       "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33d65109_3ef53404",
+        "filename": "chrome/browser/chromeos/arc/arc_migration_guide_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-05T19:24:47Z",
+      "side": 1,
+      "message": "Looks like Notification is made copy-able by design? If so, we can eliminate the unique_ptr (don\u0027t have to be in this CL).",
+      "parentUuid": "dbd9cc27_abda2203",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 17
+      },
+      "revId": "a657d1716c8d2098565921c5469e4f325bec5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
