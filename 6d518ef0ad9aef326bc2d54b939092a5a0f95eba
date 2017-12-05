@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a23ec7f7_8022bf4d",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T18:22:24Z",
+      "side": 1,
+      "message": "nit: unused ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32711342_74c6c5c9",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.cc",
         "patchSetId": 3
@@ -138,6 +161,40 @@
     },
     {
       "key": {
+        "uuid": "60071632_47eeb92f",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T18:22:24Z",
+      "side": 1,
+      "message": "nit: move this to cc since BacklightsForcedOffSetter is forward declared",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb27fd5_0bc18f9e",
+        "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T18:22:24Z",
+      "side": 1,
+      "message": "nit: unused ?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd2f188_43ec9aea",
         "filename": "ash/lock_screen_action/lock_screen_note_display_state_handler.h",
         "patchSetId": 3
@@ -166,6 +223,23 @@
       "writtenOn": "2017-12-05T07:05:17Z",
       "side": 1,
       "message": "can this be const as well?",
+      "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f05c7e_bc0b2700",
+        "filename": "ash/tray_action/tray_action.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-05T18:22:24Z",
+      "side": 1,
+      "message": "nit: const pointer",
       "revId": "6d518ef0ad9aef326bc2d54b939092a5a0f95eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
