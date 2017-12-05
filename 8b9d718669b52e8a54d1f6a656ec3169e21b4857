@@ -22,6 +22,30 @@
       "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fa3038_bd00f52d",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-05T23:26:15Z",
+      "side": 1,
+      "message": "The enum would be\n{ OFF_THE_RECORD, ON_RECORD_NOT_SIGNED_IN, ON_RECORD_SIGNED_IN }\n?\n\nI\u0027m not actually sure if this is a good move.  This may often push ternary ?: logic into each caller, which may be more error prone.\n\nLet me know if you still would prefer this.",
+      "parentUuid": "89a4ded6_8e12681b",
+      "range": {
+        "startLine": 509,
+        "startChar": 25,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
