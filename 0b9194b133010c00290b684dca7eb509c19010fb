@@ -129,6 +129,132 @@
     },
     {
       "key": {
+        "uuid": "bf6fe821_d93cc27e",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "Is handling display orientation something android-specific, or something we\u0027ll have to do on other platforms?",
+      "range": {
+        "startLine": 190,
+        "startChar": 36,
+        "endLine": 190,
+        "endChar": 46
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8a5efd_43b327f5",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure why you are both swapping/negating x/y and also multiplying by another rotation.  I\u0027d prefer keeping all logic in higher-level constructs like the last line, but if you have to swap/negate, you could do everything that way.",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7053d9_2b6b2e6e",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "nit: vertical",
+      "range": {
+        "startLine": 205,
+        "startChar": 48,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c321f513_96b738f6",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "Is that always invalid?",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a3e7ee_faacc0cd",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "We should probably handling the case where w/y are close to zero, so we get stable/predictable results when looking up/down.\n\nI\u0027m a bit on the fence for just zeroing out components - I like to deal with higher-level primitives rather than quaternions directly.  Rotating a vector and projecting onto the horizontal plane seems simpler to me.  However, if you think you\u0027ll understand this in 6 months feel free to keep as-is.",
+      "range": {
+        "startLine": 223,
+        "startChar": 3,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16df083d_f8183989",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-05T22:11:51Z",
+      "side": 1,
+      "message": "Can we move NOTIMPLEMENTED into the base, still call the callback with false, and remove the implementation here?  It seems like any device that supports presentation will have a custom implementation of this.",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 16
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189daf9f_f8c21904",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 11
