@@ -16,6 +16,24 @@
       "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6f2e30_450308b3",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-05T18:11:10Z",
+      "side": 1,
+      "message": "Presentation is a concept established in the WebVR API that refers to actively displaying imagery on a VR headset.",
+      "parentUuid": "2e1f5adf_8971c0dd",
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
