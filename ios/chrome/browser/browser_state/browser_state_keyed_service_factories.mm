@@ -14,7 +14,6 @@
 #include "ios/chrome/browser/content_settings/cookie_settings_factory.h"
 #include "ios/chrome/browser/desktop_promotion/desktop_promotion_sync_service_factory.h"
 #include "ios/chrome/browser/dom_distiller/dom_distiller_service_factory.h"
-#include "ios/chrome/browser/download/browser_download_service_factory.h"
 #include "ios/chrome/browser/favicon/favicon_service_factory.h"
 #include "ios/chrome/browser/favicon/ios_chrome_favicon_loader_factory.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_cache_factory.h"
@@ -123,7 +122,6 @@ void EnsureBrowserStateKeyedServiceFactoriesBuilt() {
   TabRestoreServiceDelegateImplIOSFactory::GetInstance();
   TranslateAcceptLanguagesFactory::GetInstance();
   UrlLanguageHistogramFactory::GetInstance();
-  BrowserDownloadServiceFactory::GetInstance();
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     FullscreenControllerFactory::GetInstance();
   }

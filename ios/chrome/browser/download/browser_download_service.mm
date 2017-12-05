@@ -5,6 +5,7 @@
 #include "ios/chrome/browser/download/browser_download_service.h"
 
 #include "base/feature_list.h"
+#include "ios/chrome/browser/download/pass_kit_mime_type.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
 #import "ios/web/public/download/download_controller.h"
 #import "ios/web/public/download/download_task.h"
@@ -32,7 +33,7 @@ void BrowserDownloadService::OnDownloadCreated(
     web::DownloadController* download_controller,
     web::WebState* web_state,
     std::unique_ptr<web::DownloadTask> task) {
-  if (task->GetMimeType() == "application/vnd.apple.pkpass") {
+  if (task->GetMimeType() == kPkPassMimeType) {
     if (base::FeatureList::IsEnabled(web::features::kNewPassKitDownload)) {
       PassKitTabHelper* tab_helper = PassKitTabHelper::FromWebState(web_state);
       if (tab_helper) {
@@ -47,4 +48,8 @@ void BrowserDownloadService::OnDownloadControllerDestroyed(
   DCHECK_EQ(this, download_controller->GetDelegate());
   download_controller->SetDelegate(nullptr);
   download_controller_ = nullptr;
+}
+
+bool BrowserDownloadService::ServiceIsCreatedWithBrowserState() const {
+  return true;
 }

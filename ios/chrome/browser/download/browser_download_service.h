@@ -32,6 +32,9 @@ class BrowserDownloadService : public KeyedService,
                          std::unique_ptr<web::DownloadTask>) override;
   void OnDownloadControllerDestroyed(web::DownloadController*) override;
 
+  // KeyedService overrides:
+  bool ServiceIsCreatedWithBrowserState() const override;
+
   web::DownloadController* download_controller_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserDownloadService);

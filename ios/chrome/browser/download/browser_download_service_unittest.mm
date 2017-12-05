@@ -8,6 +8,7 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
+#include "ios/chrome/browser/download/pass_kit_mime_type.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
 #import "ios/web/public/download/download_controller.h"
 #import "ios/web/public/download/download_task.h"
@@ -24,7 +25,6 @@
 
 namespace {
 char kUrl[] = "https://test.test/";
-char kMimeType[] = "application/vnd.apple.pkpass";
 
 // Fake Tab Helper that substitutes real PassKitTabHelper for testing.
 class StubPassKitTabHelper : public PassKitTabHelper {
@@ -44,8 +44,9 @@ class StubPassKitTabHelper : public PassKitTabHelper {
   const DownloadTasks& tasks() const { return tasks_; }
 
  private:
-  StubPassKitTabHelper(web::WebState* web_state)
-      : PassKitTabHelper(web_state, /*delegate=*/nil) {}
+  StubPassKitTabHelper(web::WebState* web_state,
+                       id<PassKitTabHelperDelegate> delegate)
+      : PassKitTabHelper(web_state, delegate) {}
 
   DownloadTasks tasks_;
 };
@@ -83,7 +84,8 @@ class BrowserDownloadServiceTest : public PlatformTest {
 // PassKitTabHelper.
 TEST_F(BrowserDownloadServiceTest, PassKitMimeType) {
   ASSERT_TRUE(download_controller()->GetDelegate());
-  auto task = std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kMimeType);
+  auto task =
+      std::make_unique<web::FakeDownloadTask>(GURL(kUrl), kPkPassMimeType);
   web::DownloadTask* task_ptr = task.get();
   download_controller()->GetDelegate()->OnDownloadCreated(
       download_controller(), &web_state_, std::move(task));
