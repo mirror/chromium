@@ -301,3 +301,24 @@ source_set("keyboard_extension_protocol") {
 
   public_configs = [ ":keyboard_extension_protocol_config" ]
 }
+
+config("text_input_protocol_config") {
+  include_dirs = [ "include/protocol" ]
+}
+
+source_set("text_input_protocol") {
+  sources = [
+    "include/protocol/text-input-unstable-v1-client-protocol.h",
+    "include/protocol/text-input-unstable-v1-server-protocol.h",
+    "protocol/text-input-protocol-v1.c",
+  ]
+
+  deps = [
+    "//third_party/wayland:wayland_util",
+  ]
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  public_configs = [ ":text_input_protocol_config" ]
+}
