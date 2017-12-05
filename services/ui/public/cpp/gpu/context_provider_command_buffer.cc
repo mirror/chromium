@@ -15,6 +15,7 @@
 #include "base/command_line.h"
 #include "base/optional.h"
 #include "base/strings/stringprintf.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
@@ -375,7 +376,8 @@ class GrContext* ContextProviderCommandBuffer::GrContext() {
     return gr_context_->get();
 
   gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(
-      ContextGL(), ContextCapabilities()));
+      ContextGL(), ContextCapabilities(),
+      base::SysInfo::AmountOfPhysicalMemory()));
   cache_controller_->SetGrContext(gr_context_->get());
 
   // If GlContext is already lost, also abandon the new GrContext.
