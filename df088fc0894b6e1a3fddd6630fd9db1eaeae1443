@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b1072a9_b079c894",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "I think you a word here (\"default\"?)",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e95ab1b_7c0510e9",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "Doesn\u0027t it? I think the /ddljson requests are authenticated, so they should return birthday doodles on the proper day.",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b25a0cb_f1104133",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "nit: capitalize \"Doodle\" for consistency",
+      "range": {
+        "startLine": 93,
+        "startChar": 43,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2175fa_4145f66f",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "Out of curiosity: Does \"calc(..)\" also work? E.g. \"calc(100% - 40px)\" to get 20px of margin on each side.",
+      "range": {
+        "startLine": 98,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c649a25_b449aa63",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "nitpicking: The NTP doesn\u0027t move the text, it moves the focus. Once you click the fakebox, the Omnibox gets invisible focus, which becomes visible once you start typing.",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf9dc6c_a0e77b98",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-05T18:26:09Z",
+      "side": 1,
+      "message": "Not sure that\u0027s the most typical use case...",
+      "range": {
+        "startLine": 131,
+        "startChar": 26,
+        "endLine": 131,
+        "endChar": 54
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
