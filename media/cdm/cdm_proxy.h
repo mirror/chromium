@@ -11,7 +11,6 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "media/base/media_export.h"
 
 namespace media {
 
@@ -19,7 +18,7 @@ namespace media {
 // In general, the interpretation of the method and callback parameters are
 // protocol dependent. For enum parameters, values outside the enum range may
 // not work.
-class MEDIA_EXPORT CdmProxy {
+class CdmProxy {
  public:
   // Client of the proxy.
   class Client {
