@@ -34,6 +34,24 @@
       "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9b2250_ea7bfe0f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-05T21:40:08Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s why I asked. The only thing from gen/printing/features/features.h and build/buildflag.h that seems to be used is the BUILDFLAG(...) macro from build/buildflag.h",
+      "parentUuid": "5ee3ddd0_44bff0fb",
+      "revId": "41a91260294d5e66126fb78db37cf0ae8754bfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
