@@ -131,9 +131,10 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
 
   if (!success || !message) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
+
   // Channel allocation response is defined as:
   // 0: 8 byte nonce
   // 8: 4 byte channel id
@@ -145,15 +146,19 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   std::vector<uint8_t> payload = message->GetMessagePayload();
   if (payload.size() != 17) {
     state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+    Transition(nullptr, std::move(callback));
     return;
   }
 
-  std::vector<uint8_t> received_nonce(std::begin(payload),
-                                      std::begin(payload) + 8);
-  if (nonce != received_nonce) {
-    state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+  auto received_nonce = base::span<uint8_t>(payload).first(8);
+
+  // Received a broadcast message for a different client. Disregard and continue
+  // reading.
+  if (base::span<uint8_t>(nonce) != received_nonce) {
+    ArmTimeout(callback);
+    ReadMessage(base::BindOnce(&U2fHidDevice::OnAllocateChannel,
+                               weak_factory_.GetWeakPtr(), nonce,
+                               std::move(command), std::move(callback)));
     return;
   }
 
@@ -165,7 +170,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
   capabilities_ = payload[16];
 
   state_ = State::IDLE;
-  Transition(std::move(command), callback);
+  Transition(std::move(command), std::move(callback));
 }
 
 void U2fHidDevice::WriteMessage(std::unique_ptr<U2fMessage> message,
