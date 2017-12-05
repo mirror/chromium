@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3938ae9c_2c5a9e22",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T22:35:10Z",
+      "side": 1,
+      "message": "can\u0027t really ensure this never happen here. it depends on how mInternalsHolder is implemented..",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e4af27_0be05baa",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T22:35:10Z",
+      "side": 1,
+      "message": "this should be on the impl type? makes it impossible for embedder to accidentally insert the interface type into webcontents",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6b85bd_90c51905",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T22:35:10Z",
+      "side": 1,
+      "message": "visibility of this class should be the same as the get/set methods on WebContents. either expose both, or hide both. right now embedder can inherit this, but can\u0027t use it for anything, which is just super odd",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939778ba_26166c8b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-05T22:35:10Z",
+      "side": 1,
+      "message": "\u003e So WebContentsUserData saves from WebContentsUserData-inherited classes from having to define their own |CreateForWebContents|, |FromWebContents| by handling them in itself via templated static methods talking to WebContents\u0027 |Get/SetUserData|. \n\u003e \n\u003e I don\u0027t think it is possible in Java because generic type T is not usable in non-static context. Static helper methods like |GestureListenerManager.fromWebContents| can\u0027t benefit from generic.  For now, only WebContentsImpl (not WebContents) has get/set, which is not too bad.\n\nSo according to this: https://stackoverflow.com/questions/4409100/how-to-make-a-java-generic-method-static It is possible to make static method generic, it just doesn\u0027t necessarily match the generic type of the class.\n\nSo.. we can still have generic fromWebContents(Impl?). And we want\n1) only the subclass to call this method, with its own class. We don\u0027t want external other classes to call this method. Looks like default methods on interfaces can\u0027t be protected in java 8. We can sort of fix this with composition instead of using inheritance (so GestureListenerManager has a UserData, not inherits from UserData)\n2) subclass to only pass in its own class. Can\u0027t be enforced at all. Just document this well I guess..\n\nAlso we\u0027ll have to figure out a way actually pass in a thing that creates an instance of the subclass if there isn\u0027t one already, which is a lot of bloat.\n\nMeh, maybe this is ok.",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
