@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e171079_5d6c12d1",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T13:09:18Z",
+      "side": 1,
+      "message": "I would like to use it for params.document_sequence_number as well.\nCan you rename it \"GenerateSequenceNumber\"?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "d684bce933d4bc9ee89fb6e2ff3fdf671159c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d401041_aa060a2c",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T13:09:18Z",
+      "side": 1,
+      "message": "It will take several years to reach int64_t::max. I think we can safely remove these 3 lines and the \u003climits\u003e header.\n\n2^63/(3 Ghz)/(3600*24*365 seconds/years) \u003d 97 years.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "d684bce933d4bc9ee89fb6e2ff3fdf671159c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f35d34e_b24d8d92",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-05T13:09:18Z",
+      "side": 1,
+      "message": "You can also use GenerateItemSequenceNumber() here.\nparams.document_sequence_number \u003d GenerateItemSequenceNumber().\n\nCan you do the same thing below.",
+      "range": {
+        "startLine": 454,
+        "startChar": 68,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "d684bce933d4bc9ee89fb6e2ff3fdf671159c9ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
