@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a39874_2b7ed3fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "Nit: LazyHolder for good measure?\n\n  private static final class LazyHolder {\n    private static final PasswordManagerHandlerProvider INSTANCE \u003d new PasswordManagerHandlerProvider();\n  }\n\nYou can access it lazily with: LazyHolder.INSTANCE :-)",
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e592c4_5b2092e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "Nit: mPasswordManagerHandler",
+      "range": {
+        "startLine": 37,
+        "startChar": 57,
+        "endLine": 37,
+        "endChar": 80
+      },
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c784ed_63f17098",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "Nit: Could we call this something like mTestPasswordManagerHandler?",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cd7024_a665e61a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "Nit: final",
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa06b8d_95fa3ce5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "Nit: setPasswordManagerHandlerForTest?",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96dfaab_7b071da9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordManagerHandlerProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-05T02:10:42Z",
+      "side": 1,
+      "message": "This class doesn\u0027t look threadsafe. Should we assert that all public methods are invoked on the UI thread?",
+      "revId": "936ec816ea8de293eec27516aebcd96266d50e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
