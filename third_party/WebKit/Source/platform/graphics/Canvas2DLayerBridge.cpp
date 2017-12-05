@@ -433,7 +433,8 @@ void Canvas2DLayerBridge::SetIsHidden(bool hidden) {
     } else {
       Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
           BLINK_FROM_HERE,
-          WTF::Bind(&HibernateWrapper, weak_ptr_factory_.GetWeakPtr()));
+          ConvertToBaseCallback(
+              WTF::Bind(&HibernateWrapper, weak_ptr_factory_.GetWeakPtr())));
     }
   }
   if (!IsHidden() && software_rendering_while_hidden_) {

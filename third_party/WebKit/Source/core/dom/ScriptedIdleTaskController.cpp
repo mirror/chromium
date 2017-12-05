@@ -159,9 +159,9 @@ void ScriptedIdleTaskController::ScheduleCallback(
     scoped_refptr<internal::IdleRequestCallbackWrapper> callback_wrapper,
     long long timeout_millis) {
   scheduler_->PostIdleTask(
-      BLINK_FROM_HERE,
-      WTF::Bind(&internal::IdleRequestCallbackWrapper::IdleTaskFired,
-                callback_wrapper));
+      BLINK_FROM_HERE, ConvertToBaseCallback(WTF::Bind(
+                           &internal::IdleRequestCallbackWrapper::IdleTaskFired,
+                           callback_wrapper)));
   if (timeout_millis > 0) {
     GetExecutionContext()
         ->GetTaskRunner(TaskType::kIdleTask)
@@ -266,8 +266,9 @@ void ScriptedIdleTaskController::Unpause() {
         internal::IdleRequestCallbackWrapper::Create(idle_task.key, this);
     scheduler_->PostIdleTask(
         BLINK_FROM_HERE,
-        WTF::Bind(&internal::IdleRequestCallbackWrapper::IdleTaskFired,
-                  callback_wrapper));
+        ConvertToBaseCallback(
+            WTF::Bind(&internal::IdleRequestCallbackWrapper::IdleTaskFired,
+                      callback_wrapper)));
   }
 }
 
