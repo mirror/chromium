@@ -264,8 +264,9 @@ void CanvasAsyncBlobCreator::ScheduleAsyncBlobCreation(const double& quality) {
 void CanvasAsyncBlobCreator::ScheduleInitiateEncoding(double quality) {
   schedule_idle_task_start_time_ = WTF::MonotonicallyIncreasingTime();
   Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
-      BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::InitiateEncoding,
-                                 WrapPersistent(this), quality));
+      BLINK_FROM_HERE,
+      ConvertToBaseCallback(WTF::Bind(&CanvasAsyncBlobCreator::InitiateEncoding,
+                                      WrapPersistent(this), quality)));
 }
 
 void CanvasAsyncBlobCreator::InitiateEncoding(double quality,
@@ -299,8 +300,9 @@ void CanvasAsyncBlobCreator::IdleEncodeRows(double deadline_seconds) {
     if (IsDeadlineNearOrPassed(deadline_seconds)) {
       num_rows_completed_ = y;
       Platform::Current()->CurrentThread()->Scheduler()->PostIdleTask(
-          BLINK_FROM_HERE, WTF::Bind(&CanvasAsyncBlobCreator::IdleEncodeRows,
-                                     WrapPersistent(this)));
+          BLINK_FROM_HERE,
+          ConvertToBaseCallback(WTF::Bind(
+              &CanvasAsyncBlobCreator::IdleEncodeRows, WrapPersistent(this))));
       return;
     }
 
