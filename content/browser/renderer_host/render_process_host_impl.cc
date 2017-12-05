@@ -111,7 +111,6 @@
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_host_impl.h"
 #include "content/browser/renderer_host/file_utilities_host_impl.h"
-#include "content/browser/renderer_host/media/audio_input_renderer_host.h"
 #include "content/browser/renderer_host/media/audio_renderer_host.h"
 #include "content/browser/renderer_host/media/media_stream_dispatcher_host.h"
 #include "content/browser/renderer_host/media/media_stream_manager.h"
@@ -1717,15 +1716,11 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 
   AddFilter(resource_message_filter_.get());
 
-  media::AudioManager* audio_manager =
-      BrowserMainLoop::GetInstance()->audio_manager();
-  MediaStreamManager* media_stream_manager =
-      BrowserMainLoop::GetInstance()->media_stream_manager();
-  AddFilter(new AudioInputRendererHost(
-      GetID(), audio_manager, media_stream_manager,
-      AudioMirroringManager::GetInstance(),
-      BrowserMainLoop::GetInstance()->user_input_monitor()));
   if (!RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
+    media::AudioManager* audio_manager =
+        BrowserMainLoop::GetInstance()->audio_manager();
+    MediaStreamManager* media_stream_manager =
+        BrowserMainLoop::GetInstance()->media_stream_manager();
     AddFilter(base::MakeRefCounted<AudioRendererHost>(
                   GetID(), audio_manager,
                   BrowserMainLoop::GetInstance()->audio_system(),
