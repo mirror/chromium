@@ -138,6 +138,10 @@ void EmitRendererMemoryMetrics(
   builder.SetBlinkGC(pmd->chrome_dump->blink_gc_total_kb / 1024);
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
   builder.SetNumberOfExtensions(number_of_extensions);
+  builder.SetNumberOfDocuments(pmd->chrome_dump->number_of_documents);
+  builder.SetNumberOfFrames(pmd->chrome_dump->number_of_frames);
+  builder.SetNumberOfLayoutObjects(pmd->chrome_dump->number_of_layout_objects);
+  builder.SetNumberOfNodes(pmd->chrome_dump->number_of_nodes);
 
   if (!page_info.is_null()) {
     builder.SetIsVisible(page_info->is_visible);

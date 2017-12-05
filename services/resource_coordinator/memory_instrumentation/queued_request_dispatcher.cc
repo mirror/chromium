@@ -75,6 +75,16 @@ uint32_t GetDumpsSumKb(const std::string& pattern,
   return sum / 1024;
 }
 
+uint32_t GetDumpsSum(const std::string& pattern,
+                     const base::trace_event::ProcessMemoryDump& pmd) {
+  uint64_t sum = 0;
+  for (const auto& kv : pmd.allocator_dumps()) {
+    if (base::MatchPattern(kv.first /* name */, pattern))
+      sum += kv.second->GetObjectCountInternal();
+  }
+  return sum;
+}
+
 mojom::ChromeMemDumpPtr CreateDumpSummary(
     const base::trace_event::ProcessMemoryDump& process_memory_dump) {
   mojom::ChromeMemDumpPtr result = mojom::ChromeMemDump::New();
@@ -94,6 +104,14 @@ mojom::ChromeMemDumpPtr CreateDumpSummary(
   result->partition_alloc_total_kb =
       GetDumpsSumKb("partition_alloc/partitions/*", process_memory_dump);
   result->blink_gc_total_kb = GetDumpsSumKb("blink_gc", process_memory_dump);
+  result->number_of_documents =
+      GetDumpsSum("blink_objects/Document/object_count", process_memory_dump);
+  result->number_of_frames =
+      GetDumpsSum("blink_objects/Frame/object_count", process_memory_dump);
+  result->number_of_layout_objects = GetDumpsSum(
+      "blink_objects/LayoutObject/object_count", process_memory_dump);
+  result->number_of_nodes =
+      GetDumpsSum("blink_objects/Node/object_count", process_memory_dump);
   return result;
 }
 

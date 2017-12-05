@@ -147,6 +147,10 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
       metrics_mb["PartitionAlloc"] * 1024;
   pmd->chrome_dump->blink_gc_total_kb = metrics_mb["BlinkGC"] * 1024;
   pmd->chrome_dump->v8_total_kb = metrics_mb["V8"] * 1024;
+  pmd->chrome_dump->number_of_documents = 1;
+  pmd->chrome_dump->number_of_frames = 1;
+  pmd->chrome_dump->number_of_layout_objects = 5;
+  pmd->chrome_dump->number_of_nodes = 3;
   OSMemDumpPtr os_dump =
       GetFakeOSMemDump(metrics_mb["Resident"] * 1024,
                        metrics_mb["PrivateMemoryFootprint"] * 1024,
