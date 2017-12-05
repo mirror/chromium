@@ -113,6 +113,11 @@ class LogSourceAccessManager {
       const ReadLogSourceCallback& callback,
       std::unique_ptr<system_logs::SystemLogsResponse> response);
 
+  // Anonymizes the strings in |result| before passing it to |callback|.
+  void AnonymizeResultsAndRespond(
+      const ReadLogSourceCallback& callback,
+      std::unique_ptr<api::feedback_private::ReadLogSourceResult> result) const;
+
   // Removes an existing log source handle indicated by |id| from
   // |open_handles_|.
   void RemoveHandle(ResourceId id);

@@ -10,6 +10,8 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
+#include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/default_tick_clock.h"
 #include "extensions/browser/api/api_resource_manager.h"
 #include "extensions/browser/api/extensions_api_client.h"
@@ -111,28 +113,41 @@ bool LogSourceAccessManager::FetchFromSource(
   return true;
 }
 
+void LogSourceAccessManager::AnonymizeResultsAndRespond(
+    const ReadLogSourceCallback& callback,
+    std::unique_ptr<ReadLogSourceResult> result) const {
+  for (std::string& line : result->log_lines)
+    line = anonymizer_->Anonymize(line);
+
+  callback.Run(*result);
+}
+
 void LogSourceAccessManager::OnFetchComplete(
     const std::string& extension_id,
     ResourceId resource_id,
     bool delete_resource,
     const ReadLogSourceCallback& callback,
     std::unique_ptr<SystemLogsResponse> response) {
-  ReadLogSourceResult result;
+  std::unique_ptr<ReadLogSourceResult> result =
+      std::make_unique<ReadLogSourceResult>();
+
   // Always return invalid resource ID if there is a cleanup.
-  result.reader_id = delete_resource ? kInvalidResourceId : resource_id;
+  result->reader_id = delete_resource ? kInvalidResourceId : resource_id;
+  GetLogLinesFromSystemLogsResponse(*response, &result->log_lines);
 
-  GetLogLinesFromSystemLogsResponse(*response, &result.log_lines);
-
-  for (std::string& line : result.log_lines)
-    line = anonymizer_->Anonymize(line);
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::Bind(&LogSourceAccessManager::AnonymizeResultsAndRespond,
+                 weak_factory_.GetWeakPtr(), callback,
+                 base::Passed(std::move(result))));
 
   if (delete_resource) {
     // This should also remove the entry from |sources_|.
     ApiResourceManager<LogSourceResource>::Get(context_)->Remove(extension_id,
                                                                  resource_id);
   }
-
-  callback.Run(result);
 }
 
 void LogSourceAccessManager::RemoveHandle(ResourceId id) {
