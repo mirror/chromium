@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52d534cb_2c930125",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "\u003e bucket should never be \"Other\" here, can we assert it?\n\nSure.  I put it in the checks above, similar to the browser test.",
+      "parentUuid": "8f701584_45d95a70",
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b866053_2e728f89",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da18564_a0636868",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b866053_2e728f89",
+      "range": {
+        "startLine": 113,
+        "startChar": 52,
+        "endLine": 113,
+        "endChar": 69
+      },
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "13c3de4d_98307557",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a262a9a2_29a2dc9b",
+      "range": {
+        "startLine": 168,
+        "startChar": 34,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84617802_57c115f8",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7719d7_0d5276c1",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84617802_57c115f8",
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "94e1d63e_c23fb276",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ebe6fef_69ef7b88",
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a57c018_a454c993",
         "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
         "patchSetId": 5
@@ -113,6 +215,24 @@
       "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db43d6ec_c7222650",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-05T22:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a57c018_a454c993",
+      "revId": "39b148c640299269b1b57e2ddb1ca37ab17f19e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
