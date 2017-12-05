@@ -106,6 +106,24 @@
       "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f46600_c965d2ff",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-05T23:43:01Z",
+      "side": 1,
+      "message": "Thanks for comments, I was unaware that in this CL |frame| is not used in other locations :)",
+      "parentUuid": "71c6c15e_6c270e1f",
+      "revId": "b3c1591699c2c4b7c2a9b352578690836a21a441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
