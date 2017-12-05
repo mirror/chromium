@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dcf9e10_c8ee9217",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_fragment_iterator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-05T07:54:54Z",
+      "side": 1,
+      "message": "I love this idea. (^_^)b\nIt makes us to implement \"Culled InlineBox\" easier.",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "ca10da7f97ae7931485c77cdfc97256e32f49229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
