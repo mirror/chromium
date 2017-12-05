@@ -29,6 +29,13 @@ static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()
 static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
   {% endif %}
 {% endfor %}
+{% for _, property_id, classname, superclass in alias_classes_by_property_id %}
+  {% if superclass != None %}
+static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
+  {% else %}
+static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
+  {% endif %}
+{% endfor %}
 
 const CSSProperty& GetProperty(CSSPropertyID id) {
   static constexpr const CSSProperty* const property_classes[] = {
@@ -37,6 +44,17 @@ const CSSProperty& GetProperty(CSSPropertyID id) {
     &property_{{property_class_data.property_id.lower()}},  // {{property_class_data.property_id}}
     {% endfor %}
   };
+  if (id > {{last_property_id}}) {  // last_property_id
+    switch (id) {
+    {% for property_class_data in alias_classes_by_property_id %}
+      case {{property_class_data.property_id}}:
+        return property_{{property_class_data.property_id.lower()}};
+    {% endfor %}
+      default:
+        NOTREACHED();
+    }
+  }
+  DCHECK_LE(id, {{last_property_id}});  // last_property_id
   // Subtract 1 because CSSPropertyInvalid does not appear in the array.
   return *property_classes[id - 1];
 }
@@ -51,10 +69,15 @@ const CSSProperty& Get{{property_class_data.property_id}}() {
   return property_{{property_class_data.property_id.lower()}};
 }
 {% endfor %}
+{% for property_class_data in alias_classes_by_property_id %}
+const CSSProperty& Get{{property_class_data.property_id}}() {
+  return property_{{property_class_data.property_id.lower()}};
+}
+{% endfor %}
 
 const CSSProperty& CSSProperty::Get(CSSPropertyID id) {
   DCHECK_NE(id, CSSPropertyInvalid);
-  DCHECK_LE(id, {{last_property_id}});  // last_property_id
+  DCHECK_LE(id, {{last_unresolved_property_id}});  // last_unresolved_property_id
   return GetProperty(id);
 }
 
