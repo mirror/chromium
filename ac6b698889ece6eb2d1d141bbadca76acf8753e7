@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231782cf_9ef7a08c",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-05T23:01:24Z",
+      "side": 1,
+      "message": "I suspect any existing code that relies on BeginMainFrameStartToCommitDurationEstimate is incorrect.\n\nIs it possible to get rid of BeginMainFrameStartToCommit* and change this to BeginMainFrameStartToNotifyReadyToCommit*?\n\nThen BeginMainFrameQueueDurationCritical + BeginMainFrameStartToNotifyReadyToCommit \u003d\u003e BeginMainFrameSentToReadyToCommit*.",
+      "revId": "ac6b698889ece6eb2d1d141bbadca76acf8753e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67e9e01_2b144356",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-05T23:01:24Z",
+      "side": 1,
+      "message": "Can you also update the tests that call DidCommit so that they also call NotifyReadyToCommit?",
+      "revId": "ac6b698889ece6eb2d1d141bbadca76acf8753e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2239b703_18861979",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-05T23:01:24Z",
+      "side": 1,
+      "message": "\"to block\"",
+      "range": {
+        "startLine": 411,
+        "startChar": 53,
+        "endLine": 411,
+        "endChar": 61
+      },
+      "revId": "ac6b698889ece6eb2d1d141bbadca76acf8753e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab465465_a6898443",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-05T23:01:24Z",
+      "side": 1,
+      "message": "|| this inline above?",
+      "range": {
+        "startLine": 426,
+        "startChar": 6,
+        "endLine": 426,
+        "endChar": 48
+      },
+      "revId": "ac6b698889ece6eb2d1d141bbadca76acf8753e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
