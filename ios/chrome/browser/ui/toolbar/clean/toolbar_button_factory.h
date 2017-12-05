@@ -9,12 +9,15 @@
 
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_style.h"
 
+@protocol ApplicationCommands;
+@protocol BrowserCommands;
 @class ToolbarButton;
 @class ToolbarToolsMenuButton;
 @class ToolbarConfiguration;
 
 // ToolbarButton Factory protocol to create ToolbarButton objects with certain
 // style and configuration, depending of the implementation.
+// A dispatcher is used to send the commands associated with the buttons.
 @interface ToolbarButtonFactory : NSObject
 
 - (instancetype)initWithStyle:(ToolbarStyle)style NS_DESIGNATED_INITIALIZER;
@@ -27,27 +30,38 @@
     ToolbarConfiguration* toolbarConfiguration;
 
 // Back ToolbarButton.
-- (ToolbarButton*)backToolbarButton;
+- (ToolbarButton*)backButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Forward ToolbarButton.
-- (ToolbarButton*)forwardToolbarButton;
+- (ToolbarButton*)forwardButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Tab Switcher Strip ToolbarButton.
-- (ToolbarButton*)tabSwitcherStripToolbarButton;
+- (ToolbarButton*)tabSwitcherStripButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Tab Switcher Grid ToolbarButton.
-- (ToolbarButton*)tabSwitcherGridToolbarButton;
+- (ToolbarButton*)tabSwitcherGridButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Tools Menu ToolbarButton.
-- (ToolbarToolsMenuButton*)toolsMenuToolbarButton;
+- (ToolbarToolsMenuButton*)toolsMenuButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Share ToolbarButton.
-- (ToolbarButton*)shareToolbarButton;
+- (ToolbarButton*)shareButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Reload ToolbarButton.
-- (ToolbarButton*)reloadToolbarButton;
+- (ToolbarButton*)reloadButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Stop ToolbarButton.
-- (ToolbarButton*)stopToolbarButton;
+- (ToolbarButton*)stopButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // Bookmark ToolbarButton.
-- (ToolbarButton*)bookmarkToolbarButton;
+- (ToolbarButton*)bookmarkButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // VoiceSearch ToolbarButton.
-- (ToolbarButton*)voiceSearchButton;
+- (ToolbarButton*)voiceSearchButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 // ContractToolbar ToolbarButton.
-- (ToolbarButton*)contractToolbarButton;
+- (ToolbarButton*)contractButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher;
 
 // Returns images for Voice Search in an array representing the NORMAL/PRESSED
 // state

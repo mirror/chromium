@@ -5,6 +5,8 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h"
 
 #include "components/strings/grit/components_strings.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h"
@@ -51,7 +53,8 @@ const int styleCount = 2;
 
 #pragma mark - Buttons
 
-- (ToolbarButton*)backToolbarButton {
+- (ToolbarButton*)backButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int backButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(BACK);
   ToolbarButton* backButton = [ToolbarButton
@@ -68,10 +71,18 @@ const int styleCount = 2;
                                                                [DISABLED],
                                                YES)];
   backButton.accessibilityLabel = l10n_util::GetNSString(IDS_ACCNAME_BACK);
+  backButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
+                              ToolbarComponentVisibilityRegularWidth;
+  [backButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [backButton addTarget:dispatcher
+                 action:@selector(goBack)
+       forControlEvents:UIControlEventTouchUpInside];
   return backButton;
 }
 
-- (ToolbarButton*)forwardToolbarButton {
+- (ToolbarButton*)forwardButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int forwardButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(FORWARD);
   ToolbarButton* forwardButton = [ToolbarButton
@@ -89,10 +100,19 @@ const int styleCount = 2;
                                                YES)];
   forwardButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_ACCNAME_FORWARD);
+  forwardButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidthOnlyWhenEnabled |
+      ToolbarComponentVisibilityRegularWidth;
+  [forwardButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [forwardButton addTarget:dispatcher
+                    action:@selector(goForward)
+          forControlEvents:UIControlEventTouchUpInside];
   return forwardButton;
 }
 
-- (ToolbarButton*)tabSwitcherStripToolbarButton {
+- (ToolbarButton*)tabSwitcherStripButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int tabSwitcherButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(OVERVIEW);
   ToolbarButton* tabSwitcherStripButton = [ToolbarButton
@@ -111,10 +131,21 @@ const int styleCount = 2;
   [tabSwitcherStripButton
       setTitleColor:[self.toolbarConfiguration buttonTitleHighlightedColor]
            forState:UIControlStateHighlighted];
+  tabSwitcherStripButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidth |
+      ToolbarComponentVisibilityRegularWidth;
+  [tabSwitcherStripButton.widthAnchor
+      constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [tabSwitcherStripButton addTarget:dispatcher
+                             action:@selector(displayTabSwitcher)
+                   forControlEvents:UIControlEventTouchUpInside];
+
   return tabSwitcherStripButton;
 }
 
-- (ToolbarButton*)tabSwitcherGridToolbarButton {
+- (ToolbarButton*)tabSwitcherGridButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   ToolbarButton* tabSwitcherGridButton =
       [ToolbarButton toolbarButtonWithImageForNormalState:
                          [UIImage imageNamed:@"tabswitcher_tab_switcher_button"]
@@ -125,7 +156,8 @@ const int styleCount = 2;
   return tabSwitcherGridButton;
 }
 
-- (ToolbarToolsMenuButton*)toolsMenuToolbarButton {
+- (ToolbarToolsMenuButton*)toolsMenuButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   ToolbarControllerStyle style = self.style == NORMAL
                                      ? ToolbarControllerStyleLightMode
                                      : ToolbarControllerStyleIncognitoMode;
@@ -136,10 +168,19 @@ const int styleCount = 2;
 
   toolsMenuButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_SETTINGS);
+  toolsMenuButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
+                                   ToolbarComponentVisibilityRegularWidth;
+  [toolsMenuButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [toolsMenuButton addTarget:dispatcher
+                      action:@selector(showToolsMenu)
+            forControlEvents:UIControlEventTouchUpInside];
+
   return toolsMenuButton;
 }
 
-- (ToolbarButton*)shareToolbarButton {
+- (ToolbarButton*)shareButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int shareButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(SHARE);
   ToolbarButton* shareButton = [ToolbarButton
@@ -154,10 +195,18 @@ const int styleCount = 2;
                                                                 [DISABLED])];
   shareButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_TOOLS_MENU_SHARE);
+  shareButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [shareButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  shareButton.titleLabel.text = @"Share";
+  [shareButton addTarget:dispatcher
+                  action:@selector(sharePage)
+        forControlEvents:UIControlEventTouchUpInside];
   return shareButton;
 }
 
-- (ToolbarButton*)reloadToolbarButton {
+- (ToolbarButton*)reloadButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int reloadButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(RELOAD);
   ToolbarButton* reloadButton = [ToolbarButton
@@ -175,10 +224,17 @@ const int styleCount = 2;
                                                YES)];
   reloadButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_ACCNAME_RELOAD);
+  reloadButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [reloadButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [reloadButton addTarget:dispatcher
+                   action:@selector(reload)
+         forControlEvents:UIControlEventTouchUpInside];
   return reloadButton;
 }
 
-- (ToolbarButton*)stopToolbarButton {
+- (ToolbarButton*)stopButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int stopButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_THREE_STATE(STOP);
   ToolbarButton* stopButton = [ToolbarButton
@@ -192,10 +248,17 @@ const int styleCount = 2;
                                                stopButtonImages[self.style]
                                                                [DISABLED])];
   stopButton.accessibilityLabel = l10n_util::GetNSString(IDS_IOS_ACCNAME_STOP);
+  stopButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [stopButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [stopButton addTarget:dispatcher
+                 action:@selector(stopLoading)
+       forControlEvents:UIControlEventTouchUpInside];
   return stopButton;
 }
 
-- (ToolbarButton*)bookmarkToolbarButton {
+- (ToolbarButton*)bookmarkButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   int bookmarkButtonImages[styleCount][TOOLBAR_STATE_COUNT] =
       TOOLBAR_IDR_TWO_STATE(STAR);
   ToolbarButton* bookmarkButton = [ToolbarButton
@@ -211,10 +274,18 @@ const int styleCount = 2;
       setImage:NativeImage(bookmarkButtonImages[self.style][PRESSED])
       forState:UIControlStateSelected];
   bookmarkButton.accessibilityLabel = l10n_util::GetNSString(IDS_TOOLTIP_STAR);
+  bookmarkButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [bookmarkButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [bookmarkButton addTarget:dispatcher
+                     action:@selector(bookmarkPage)
+           forControlEvents:UIControlEventTouchUpInside];
+
   return bookmarkButton;
 }
 
-- (ToolbarButton*)voiceSearchButton {
+- (ToolbarButton*)voiceSearchButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   NSArray<UIImage*>* images = [self voiceSearchImages];
   ToolbarButton* voiceSearchButton =
       [ToolbarButton toolbarButtonWithImageForNormalState:images[0]
@@ -222,20 +293,35 @@ const int styleCount = 2;
                                     imageForDisabledState:nil];
   voiceSearchButton.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_ACCNAME_VOICE_SEARCH);
+  voiceSearchButton.visibilityMask = ToolbarComponentVisibilityRegularWidth;
+  [voiceSearchButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  voiceSearchButton.enabled = NO;
   return voiceSearchButton;
 }
 
-- (ToolbarButton*)contractToolbarButton {
+- (ToolbarButton*)contractButtonWithDispatcher:
+    (id<ApplicationCommands, BrowserCommands>)dispatcher {
   NSString* collapseName = _style ? @"collapse_incognito" : @"collapse";
   NSString* collapsePressedName =
       _style ? @"collapse_pressed_incognito" : @"collapse_pressed";
-  ToolbarButton* contractToolbarButton = [ToolbarButton
+  ToolbarButton* contractButton = [ToolbarButton
       toolbarButtonWithImageForNormalState:[UIImage imageNamed:collapseName]
                   imageForHighlightedState:[UIImage
                                                imageNamed:collapsePressedName]
                      imageForDisabledState:nil];
-  contractToolbarButton.accessibilityLabel = l10n_util::GetNSString(IDS_CANCEL);
-  return contractToolbarButton;
+  contractButton.accessibilityLabel = l10n_util::GetNSString(IDS_CANCEL);
+  contractButton.visibilityMask = ToolbarComponentVisibilityCompactWidth |
+                                  ToolbarComponentVisibilityRegularWidth;
+  contractButton.alpha = 0;
+  contractButton.hidden = YES;
+  [contractButton.widthAnchor constraintEqualToConstant:kToolbarButtonWidth]
+      .active = YES;
+  [contractButton addTarget:dispatcher
+                     action:@selector(contractToolbar)
+           forControlEvents:UIControlEventTouchUpInside];
+
+  return contractButton;
 }
 
 #pragma mark - Helpers
