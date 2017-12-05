@@ -18,6 +18,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
+#include "chrome/browser/browsing_data/navigation_entry_remover.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
 #include "chrome/browser/engagement/site_engagement_metrics.h"
@@ -573,7 +574,7 @@ bool SiteEngagementService::IsLastEngagementStale() const {
 
 void SiteEngagementService::OnURLsDeleted(
     history::HistoryService* history_service,
-    bool all_history,
+    const history::DeletionTimeRange& time_range,
     bool expired,
     const history::URLRows& deleted_rows,
     const std::set<GURL>& favicon_urls) {
@@ -588,6 +589,9 @@ void SiteEngagementService::OnURLsDeleted(
       base::Bind(
           &SiteEngagementService::GetCountsAndLastVisitForOriginsComplete,
           weak_factory_.GetWeakPtr(), hs, origins, expired));
+  // Move to its own HistoryServiceObserver
+  if (!expired)
+    browsing_data::RemoveNavigationEntries(profile_, time_range, deleted_rows);
 }
 
 SiteEngagementScore SiteEngagementService::CreateEngagementScore(
