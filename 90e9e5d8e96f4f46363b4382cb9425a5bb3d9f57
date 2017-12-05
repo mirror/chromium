@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bbed023_bddae5f0",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "pass by const ref",
+      "range": {
+        "startLine": 198,
+        "startChar": 25,
+        "endLine": 198,
+        "endChar": 40
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34915dc_f50fe73d",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "nit: change to std::make_unique",
+      "range": {
+        "startLine": 207,
+        "startChar": 20,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8187d8ba_cb201ccc",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "Can we file a bug and refer to it here?",
+      "range": {
+        "startLine": 833,
+        "startChar": 10,
+        "endLine": 833,
+        "endChar": 16
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cf21f9_240da8fa",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "Add a comment that this is bad because version has to be a string.",
+      "range": {
+        "startLine": 750,
+        "startChar": 22,
+        "endLine": 750,
+        "endChar": 23
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d66e92_6eb5887f",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "Just use ChromeTestExtensionLoader? To be explicit, you can use set_pack_extension(false).",
+      "range": {
+        "startLine": 771,
+        "startChar": 8,
+        "endLine": 771,
+        "endChar": 25
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac178ce_373be8c9",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "nit: Does base::MakeRefCounted work? Here and below.",
+      "range": {
+        "startLine": 785,
+        "startChar": 45,
+        "endLine": 785,
+        "endChar": 53
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ee8b04_95542f69",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we wait on the reload to complete by waiting on unload and then load?",
+      "range": {
+        "startLine": 789,
+        "startChar": 4,
+        "endLine": 789,
+        "endChar": 15
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e7b3e4_2df87f62",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "nit: Use a raw literal string here as well, for consistency.",
+      "range": {
+        "startLine": 822,
+        "startChar": 53,
+        "endLine": 822,
+        "endChar": 54
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f258862_b2c551bd",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "loadUnpackedHelper_ also checks for lastError, is that also necessary for us?",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 28
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74febae6_115a78d8",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-05T00:23:25Z",
+      "side": 1,
+      "message": "For my own knowledge, what utility do these extern files provide? Why do we provide them for some extension APIs and not others?",
+      "range": {
+        "startLine": 647,
+        "startChar": 11,
+        "endLine": 647,
+        "endChar": 19
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
