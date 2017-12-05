@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746a0f5d_daff7b22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-12-05T12:50:51Z",
+      "side": 1,
+      "message": "\u0027file the\u0027. The first sentence doesn\u0027t make sense otherwise.",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 52
+      },
+      "revId": "3591bff7d1b56fd42c0a94dc1dbf248c736c955a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb72647_b10f51b1",
+        "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-12-05T12:50:51Z",
+      "side": 1,
+      "message": "So this means that the test only fails if the particular OS you\u0027re running on is not supported anymore? Wouldn\u0027t this mean that if you develop on Linux and you change the lifetime of a Windows-only policy in policy_templates.json, you wouldn\u0027t see the test fail?\n\nSame holds for policies where the test is official_only. You wouldn\u0027t see the fail if you develop with a non-official build. Do try builds use official builds at all?\n\nMaybe this particular check would be better implemented in syntax_check_policy_template_json.py (or a separate py script in a similar location). You could then check policy_templates.json \u003c-\u003e policy_test_cases.json lifetime mismatches for all OSses.",
+      "range": {
+        "startLine": 457,
+        "startChar": 1,
+        "endLine": 474,
+        "endChar": 0
+      },
+      "revId": "3591bff7d1b56fd42c0a94dc1dbf248c736c955a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
