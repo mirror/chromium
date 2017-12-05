@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "052d2891_4a12b472",
+        "filename": "content/renderer/media/rtc_certificate_generator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-12-05T10:29:54Z",
+      "side": 1,
+      "message": "keep this (and below) as it was",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "3808cd45e3b494ede93058bbadefe8202ddbc2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
