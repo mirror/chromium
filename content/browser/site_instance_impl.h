@@ -103,8 +103,15 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // chosen existing process is reused because of the process limit, the process
   // will be tracked as having an unmatched service worker until reused by
   // another SiteInstance from the same site.
-  void set_is_for_service_worker() { is_for_service_worker_ = true; }
+  void set_is_for_service_worker(StoragePartitionImpl* storage_partition) {
+    is_for_service_worker_ = true;
+    storage_partition_for_service_worker_ = storage_partition;
+  }
   bool is_for_service_worker() const { return is_for_service_worker_; }
+  StoragePartitionImpl* storage_partition_for_service_worker() const {
+    DCHECK(is_for_service_worker_);
+    return storage_partition_for_service_worker_;
+  }
 
   // Returns the URL which was used to set the |site_| for this SiteInstance.
   // May be empty if this SiteInstance does not have a |site_|.
@@ -255,7 +262,9 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   ProcessReusePolicy process_reuse_policy_;
 
   // Whether the SiteInstance was created for a service worker.
-  bool is_for_service_worker_;
+  bool is_for_service_worker_ = false;
+  // May be null even when |is_for_service_worker_| is true in tests.
+  StoragePartitionImpl* storage_partition_for_service_worker_ = nullptr;
 
   base::ObserverList<Observer, true> observers_;
 

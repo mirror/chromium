@@ -12,6 +12,7 @@
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/site_instance_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -207,7 +208,7 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   // SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE.
   scoped_refptr<SiteInstanceImpl> site_instance =
       SiteInstanceImpl::CreateForURL(browser_context_, script_url);
-  site_instance->set_is_for_service_worker();
+  site_instance->set_is_for_service_worker(storage_partition_);
   DCHECK(site_instance->process_reuse_policy() ==
              SiteInstanceImpl::ProcessReusePolicy::DEFAULT ||
          site_instance->process_reuse_policy() ==
@@ -218,6 +219,9 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   }
 
   RenderProcessHost* rph = site_instance->GetProcess();
+  DCHECK(!storage_partition_ ||
+         rph->InSameStoragePartition(storage_partition_));
+
   ServiceWorkerMetrics::StartSituation start_situation;
   if (!rph->HasConnection()) {
     // HasConnection() is false means that Init() has not been called or the
