@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f97a62_6a2319d6",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-12-05T17:00:46Z",
+      "side": 1,
+      "message": "I think we want this to be a bit more general. It\u0027s not necessarily just for low-ram devices anymore - it\u0027s closer to the {{{raw_intent_filters}}} parameter where a larger variety of things could be stuck in there.\n\nMaybe something like {{{raw_manifest_tags}}}? I\u0027m not really sure what a good name would be.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "894f9c400f7058b771f9db84c13163db83b183a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
