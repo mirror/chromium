@@ -7,6 +7,7 @@
 #include "chrome/browser/ui/views/frame/desktop_linux_browser_frame_view_layout.h"
 #include "chrome/browser/ui/views/nav_button_provider.h"
 #include "ui/views/controls/button/image_button.h"
+#include "ui/views/linux_ui/linux_ui.h"
 
 DesktopLinuxBrowserFrameView::DesktopLinuxBrowserFrameView(
     BrowserFrame* frame,
@@ -19,6 +20,43 @@ DesktopLinuxBrowserFrameView::DesktopLinuxBrowserFrameView(
 }
 
 DesktopLinuxBrowserFrameView::~DesktopLinuxBrowserFrameView() {}
+
+void DesktopLinuxBrowserFrameView::OnMouseEvent(ui::MouseEvent* event) {
+  if (event->type() != ui::ET_MOUSE_PRESSED)
+    return;
+
+  views::LinuxUI* linux_ui = views::LinuxUI::instance();
+  if (!linux_ui)
+    return;
+
+  views::LinuxUI::NonClientWindowFrameAction action =
+      views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
+
+  if (event->IsOnlyRightMouseButton()) {
+    action = linux_ui->GetNonClientWindowFrameAction(
+        views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_RIGHT_CLICK);
+  } else if (event->IsOnlyMiddleMouseButton()) {
+    action = linux_ui->GetNonClientWindowFrameAction(
+        views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK);
+  } else if (event->IsOnlyLeftMouseButton() &&
+             event->flags() & ui::EF_IS_DOUBLE_CLICK) {
+    action = linux_ui->GetNonClientWindowFrameAction(
+        views::LinuxUI::WINDOW_FRAME_ACTION_SOURCE_DOUBLE_CLICK);
+  } else {
+    return;
+  }
+
+  if (action == views::LinuxUI::WINDOW_FRAME_ACTION_MENU) {
+    gfx::Point location(event->location());
+    ConvertPointToScreen(this, &location);
+    parent()->ShowContextMenu(location, ui::MENU_SOURCE_MOUSE);
+  } else {
+    // The other cases are handled by WindowEventFilter.
+    NOTREACHED();
+  }
+
+  event->SetHandled();
+}
 
 void DesktopLinuxBrowserFrameView::MaybeRedrawFrameButtons() {
   nav_button_provider_->RedrawImages(
