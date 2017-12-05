@@ -46,6 +46,30 @@
       "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6896042_737ee8b8",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-05T23:49:42Z",
+      "side": 1,
+      "message": "No, I mean separate enums for each param.\n\nSo this call would be:\n\nvariations::AppendVariationHeaders(\n        request-\u003eurl(),\n        is_off_the_record ? INCOGNITO_ON : ICNOGNITO_OFF,\n        is_signed_in ? SIGNED_IN : SIGNED_OUT,\n        \u0026headers);\n\nMore verbose, but clear that the params are being used correctly.",
+      "parentUuid": "d3fa3038_bd00f52d",
+      "range": {
+        "startLine": 509,
+        "startChar": 25,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
