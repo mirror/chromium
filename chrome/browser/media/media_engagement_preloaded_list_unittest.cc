@@ -9,6 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/test/histogram_tester.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/test/base/testing_profile.h"
@@ -30,6 +31,9 @@ const base::FilePath kBadFormatFilePath =
     kTestDataPath.AppendASCII("bad_format.pb");
 
 const base::FilePath kEmptyFilePath = kTestDataPath.AppendASCII("empty.pb");
+
+const base::FilePath kFileReadFailedPath =
+    base::FilePath(FILE_PATH_LITERAL(".."));
 
 base::FilePath GetModulePath() {
   base::FilePath module_dir;
@@ -71,8 +75,70 @@ class MediaEngagementPreloadedListTest : public ::testing::Test {
 
   bool IsEmpty() { return preloaded_list_->IsEmpty(); }
 
+  void ExpectCheckResultFoundCount(int count) {
+    ExpectCheckResultCount(MediaEngagementPreloadedList::CheckResult::FOUND,
+                           count);
+  }
+
+  void ExpectCheckResultNotFoundCount(int count) {
+    ExpectCheckResultCount(MediaEngagementPreloadedList::CheckResult::NOT_FOUND,
+                           count);
+  }
+
+  void ExpectCheckResultNotLoadedCount(int count) {
+    ExpectCheckResultCount(
+        MediaEngagementPreloadedList::CheckResult::LIST_NOT_LOADED, count);
+  }
+
+  void ExpectCheckResultIsEmptyCount(int count) {
+    ExpectCheckResultCount(
+        MediaEngagementPreloadedList::CheckResult::LIST_IS_EMPTY, count);
+  }
+
+  void ExpectCheckResultTotal(int total) {
+    histogram_tester_.ExpectTotalCount(
+        MediaEngagementPreloadedList::kHistogramCheckResultName, total);
+  }
+
+  void ExpectLoadResultLoaded() {
+    ExpectLoadResult(MediaEngagementPreloadedList::LoadResult::LOADED);
+  }
+
+  void ExpectLoadResultFileNotFound() {
+    ExpectLoadResult(MediaEngagementPreloadedList::LoadResult::FILE_NOT_FOUND);
+  }
+
+  void ExpectLoadResultFileReadFailed() {
+    ExpectLoadResult(
+        MediaEngagementPreloadedList::LoadResult::FILE_READ_FAILED);
+  }
+
+  void ExpectLoadResultParseProtoFailed() {
+    ExpectLoadResult(
+        MediaEngagementPreloadedList::LoadResult::PARSE_PROTO_FAILED);
+  }
+
  protected:
+  void ExpectLoadResult(MediaEngagementPreloadedList::LoadResult result) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementPreloadedList::kHistogramLoadResultName,
+        static_cast<int>(result), 1);
+
+    // Ensure not other results were logged.
+    histogram_tester_.ExpectTotalCount(
+        MediaEngagementPreloadedList::kHistogramLoadResultName, 1);
+  }
+
+  void ExpectCheckResultCount(MediaEngagementPreloadedList::CheckResult result,
+                              int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementPreloadedList::kHistogramCheckResultName,
+        static_cast<int>(result), count);
+  }
+
   std::unique_ptr<MediaEngagementPreloadedList> preloaded_list_;
+
+  base::HistogramTester histogram_tester_;
 };
 
 TEST_F(MediaEngagementPreloadedListTest, CheckOriginIsPresent) {
@@ -80,14 +146,28 @@ TEST_F(MediaEngagementPreloadedListTest, CheckOriginIsPresent) {
   EXPECT_TRUE(IsLoaded());
   EXPECT_FALSE(IsEmpty());
 
+  // Check the load result was recorded on the histogram.
+  ExpectLoadResultLoaded();
+
+  // Check some origins that are not in the list.
+  ExpectCheckResultTotal(0);
   EXPECT_TRUE(CheckOriginIsPresent(GURL("https://example.com")));
   EXPECT_TRUE(CheckOriginIsPresent(GURL("https://example.org:1234")));
   EXPECT_TRUE(CheckOriginIsPresent(GURL("https://test--3ya.com")));
   EXPECT_TRUE(CheckOriginIsPresent(GURL("http://123.123.123.123")));
 
+  // Check they were recorded on the histogram.
+  ExpectCheckResultTotal(4);
+  ExpectCheckResultFoundCount(4);
+
+  // Check some origins that are not in the list.
   EXPECT_FALSE(CheckOriginIsPresent(GURL("https://example.org")));
   EXPECT_FALSE(CheckOriginIsPresent(GURL("http://example.com")));
   EXPECT_FALSE(CheckOriginIsPresent(GURL("http://123.123.123.124")));
+
+  // Check they were recorded on the histogram.
+  ExpectCheckResultTotal(7);
+  ExpectCheckResultNotFoundCount(3);
 
   // Make sure only the full origin matches.
   EXPECT_FALSE(CheckStringIsPresent("123"));
@@ -99,19 +179,58 @@ TEST_F(MediaEngagementPreloadedListTest, LoadMissingFile) {
   ASSERT_FALSE(LoadFromFile(GetFilePathRelativeToModule(kMissingFilePath)));
   EXPECT_FALSE(IsLoaded());
   EXPECT_TRUE(IsEmpty());
+
+  // Check the load result was recorded on the histogram.
+  ExpectLoadResultFileNotFound();
+
+  // Test checking an origin and make sure the result is recorded to the
+  // histogram.
   EXPECT_FALSE(CheckOriginIsPresent(GURL("https://example.com")));
+  ExpectCheckResultTotal(1);
+  ExpectCheckResultNotLoadedCount(1);
+}
+
+TEST_F(MediaEngagementPreloadedListTest, LoadFileReadFailed) {
+  ASSERT_FALSE(LoadFromFile(kFileReadFailedPath));
+  EXPECT_FALSE(IsLoaded());
+  EXPECT_TRUE(IsEmpty());
+
+  // Check the load result was recorded on the histogram.
+  ExpectLoadResultFileReadFailed();
+
+  // Test checking an origin and make sure the result is recorded to the
+  // histogram.
+  EXPECT_FALSE(CheckOriginIsPresent(GURL("https://example.com")));
+  ExpectCheckResultTotal(1);
+  ExpectCheckResultNotLoadedCount(1);
 }
 
 TEST_F(MediaEngagementPreloadedListTest, LoadBadFormatFile) {
   ASSERT_FALSE(LoadFromFile(GetFilePathRelativeToModule(kBadFormatFilePath)));
   EXPECT_FALSE(IsLoaded());
   EXPECT_TRUE(IsEmpty());
+
+  // Check the load result was recorded on the histogram.
+  ExpectLoadResultParseProtoFailed();
+
+  // Test checking an origin and make sure the result is recorded to the
+  // histogram.
   EXPECT_FALSE(CheckOriginIsPresent(GURL("https://example.com")));
+  ExpectCheckResultTotal(1);
+  ExpectCheckResultNotLoadedCount(1);
 }
 
 TEST_F(MediaEngagementPreloadedListTest, LoadEmptyFile) {
   ASSERT_TRUE(LoadFromFile(GetFilePathRelativeToModule(kEmptyFilePath)));
   EXPECT_TRUE(IsLoaded());
   EXPECT_TRUE(IsEmpty());
+
+  // Check the load result was recorded on the histogram.
+  ExpectLoadResultLoaded();
+
+  // Test checking an origin and make sure the result is recorded to the
+  // histogram.
   EXPECT_FALSE(CheckOriginIsPresent(GURL("https://example.com")));
+  ExpectCheckResultTotal(1);
+  ExpectCheckResultIsEmptyCount(1);
 }
