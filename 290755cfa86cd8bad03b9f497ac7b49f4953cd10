@@ -34,6 +34,24 @@
       "revId": "290755cfa86cd8bad03b9f497ac7b49f4953cd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3d819d_76d47b4e",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-05T19:57:30Z",
+      "side": 1,
+      "message": "btw, add a test coverage for it for your note launching CL.",
+      "parentUuid": "f5d9f94c_29011cd6",
+      "revId": "290755cfa86cd8bad03b9f497ac7b49f4953cd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
