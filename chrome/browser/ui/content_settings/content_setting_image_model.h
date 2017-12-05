@@ -28,6 +28,28 @@ struct VectorIcon;
 // that are displayed in the location bar.
 class ContentSettingImageModel {
  public:
+  // The type of the content setting image model. This enum is used in
+  // histograms and thus is append-only.
+  enum ContentSettingImageType {
+    TYPE_COOKIES = 0,
+    TYPE_IMAGES = 1,
+    TYPE_JAVASCRIPT = 2,
+    TYPE_PPAPI_BROKER = 3,
+    TYPE_PLUGINS = 4,
+    TYPE_POPUPS = 5,
+    TYPE_GEOLOCATION = 6,
+    TYPE_MIXEDSCRIPT = 7,
+    TYPE_PROTOCOL_HANDLERS = 8,
+    TYPE_MEDIASTREAM = 9,
+    TYPE_ADS = 10,
+    TYPE_AUTOMATIC_DOWNLOADS = 11,
+    TYPE_MIDI_SYSEX = 12,
+    TYPE_SOUND = 13,
+    TYPE_FRAMEBUST = 14,
+
+    NUM_TYPES
+  };
+
   virtual ~ContentSettingImageModel() {}
 
   // Generates a vector of all image models to be used within one window.
@@ -37,7 +59,11 @@ class ContentSettingImageModel {
   // Returns the corresponding index into the above vector for the given
   // ContentSettingsType. For testing.
   static size_t GetContentSettingImageModelIndexForTesting(
-      ContentSettingsType content_type);
+      ContentSettingImageType image_type);
+
+  // Factory method.
+  static std::unique_ptr<ContentSettingImageModel> CreateForContentType(
+      ContentSettingImageType image_type);
 
   // Notifies this model that its setting might have changed and it may need to
   // update its visibility, icon and tooltip.
@@ -72,8 +98,10 @@ class ContentSettingImageModel {
   int explanatory_string_id() const { return explanatory_string_id_; }
   const base::string16& get_tooltip() const { return tooltip_; }
 
+  ContentSettingImageType image_type() { return image_type_; }
+
  protected:
-  ContentSettingImageModel();
+  explicit ContentSettingImageModel(ContentSettingImageType type);
 
   void set_icon(const gfx::VectorIcon& icon, const gfx::VectorIcon& badge) {
     icon_ = &icon;
@@ -93,6 +121,7 @@ class ContentSettingImageModel {
   const gfx::VectorIcon* icon_badge_;
   int explanatory_string_id_;
   base::string16 tooltip_;
+  ContentSettingImageType image_type_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingImageModel);
 };
@@ -100,7 +129,8 @@ class ContentSettingImageModel {
 // A subclass for an image model tied to a single content type.
 class ContentSettingSimpleImageModel : public ContentSettingImageModel {
  public:
-  explicit ContentSettingSimpleImageModel(ContentSettingsType content_type);
+  explicit ContentSettingSimpleImageModel(ContentSettingImageType type,
+                                          ContentSettingsType content_type);
 
   // ContentSettingImageModel implementation.
   ContentSettingBubbleModel* CreateBubbleModel(
@@ -110,11 +140,6 @@ class ContentSettingSimpleImageModel : public ContentSettingImageModel {
   bool ShouldRunAnimation(content::WebContents* web_contents) override;
   void SetAnimationHasRun(content::WebContents* web_contents) override;
 
-  // Factory method. Used only for testing.
-  static std::unique_ptr<ContentSettingImageModel>
-  CreateForContentTypeForTesting(ContentSettingsType content_type);
-
- protected:
   ContentSettingsType content_type() { return content_type_; }
 
  private:
