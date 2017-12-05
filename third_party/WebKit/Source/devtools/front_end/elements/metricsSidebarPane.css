@@ -16,6 +16,11 @@
     -webkit-justify-content: center;
 }
 
+:host {
+    height: 190px;
+    contain: strict;
+}
+
 :host-context(.-theme-with-dark-background) .metrics {
     color: #222;
 }
