@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37e8684_5e19df1b",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-05T08:38:24Z",
+      "side": 0,
+      "message": "notifyElementValueChanged does not send focus/blur at the moment, because it is not exactly an event related to the input (it is related to focusing/unfocusing the field).\nShould we add it?",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 21
+      },
+      "revId": "71c74265c31325bdbcecefb9b4e4ae088c3fb382",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
