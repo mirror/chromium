@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c497c681_7d8b0aaa",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T21:34:27Z",
+      "side": 1,
+      "message": "I guess what happens below in this case is fine?",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201f19c6_6786dc93",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T21:34:27Z",
+      "side": 1,
+      "message": "why is this check needed? do we need to support multiple Bind calls?",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 32
+      },
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fe6167_8d9221d5",
+        "filename": "components/discardable_memory/service/discardable_shared_memory_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-05T21:34:27Z",
+      "side": 1,
+      "message": "can we avoid duplication of this code?",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 38
+      },
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
