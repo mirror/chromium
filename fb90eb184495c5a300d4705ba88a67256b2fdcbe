@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37c831f4_7b819807",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "In fact, the iron-icon is hidden if isWaitingForResult_ is true, and the paper-spinner is hidden if isWaitingForResult_ is false. Changed the order of active and hidden for the paper-spinner to make it easier to notice the difference by inspection.",
+      "parentUuid": "a47f6b59_a4139f32",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a815224_8cf90b58",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b657026a_cd0ccc9b",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a815224_8cf90b58",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0157ab13_e7315e20",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "parentUuid": "d4b59cab_5e8b8c8e",
+      "range": {
+        "startLine": 478,
+        "startChar": 43,
+        "endLine": 478,
+        "endChar": 61
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58c94f3d_4dcf9f77",
         "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c3578e_30158324",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Left-over. No longer needed.",
+      "parentUuid": "58c94f3d_4dcf9f77",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 28
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "497b7b2f_3f32328f",
+        "filename": "chrome/browser/resources/settings/reset_page/reset_page.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Left-over. No longer needed.",
+      "parentUuid": "2d4cb569_3e65b38f",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "039e9626_8023b711",
         "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
         "patchSetId": 18
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "964c028a_2c06130a",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "base::Bind will be deprecated soon and will need to be replaced with base::BindRepeated. There is a presubmit rule requiring all new calls to base::Bind to be either base::BindOnce or base::BindRepeated. Since I was adding a new one, I found it reasonable to fix all occurrences here for consistency.",
+      "parentUuid": "039e9626_8023b711",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5b536ea_578695dc",
         "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
         "patchSetId": 18
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "ba53fff5_50851f33",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "d5b536ea_578695dc",
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31fd077a_3b4ba490",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 18
@@ -171,6 +333,24 @@
       "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4cb237_54c9c334",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "We will also use IDS_SETTINGS_RESET if the feature is disabled.",
+      "parentUuid": "31fd077a_3b4ba490",
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "98e18d5b_20d1d7b0",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67c405da_e82c99d0",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 69
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c005af32_24d87997",
         "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
         "patchSetId": 18
@@ -217,6 +421,30 @@
       "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f80737_d267c68e",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-05T20:18:02Z",
+      "side": 1,
+      "message": "Some tests only make sense when then feature is enabled, so I didn\u0027t move the corresponding test code to a function. Once the feature is enabled by default, code cleanup will be much easier.",
+      "parentUuid": "c005af32_24d87997",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "fb90eb184495c5a300d4705ba88a67256b2fdcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
