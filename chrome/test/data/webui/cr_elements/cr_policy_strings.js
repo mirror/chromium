@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /** @fileoverview Sets up strings used by policy indicator elements. */
-var CrPolicyStrings = CrPolicyStrings || {
+const CrPolicyStrings = CrPolicyStrings || {
   controlledSettingPolicy: 'policy',
   controlledSettingRecommendedMatches: 'matches',
   controlledSettingRecommendedDiffers: 'differs',
