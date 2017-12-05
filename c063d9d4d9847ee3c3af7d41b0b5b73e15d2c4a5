@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68646d09_8afc6a40",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-05T23:50:37Z",
+      "side": 1,
+      "message": "nit: This branch should only be hit if !tile-\u003eraster_task_ so I think you can assign directly to it and check, but up to you.",
+      "range": {
+        "startLine": 787,
+        "startChar": 6,
+        "endLine": 787,
+        "endChar": 22
+      },
+      "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3943d1c_0b799cf0",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-05T23:50:37Z",
+      "side": 1,
+      "message": "According to https://english.stackexchange.com/questions/9192/cancelled-or-canceled\ncanceled is proper American English :)",
+      "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b7b3ae_81ae227a",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-05T23:50:37Z",
+      "side": 1,
+      "message": "nit: leave a comment describing what \"extra\" means here, please.",
+      "revId": "c063d9d4d9847ee3c3af7d41b0b5b73e15d2c4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
