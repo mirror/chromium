@@ -16,6 +16,24 @@
       "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6b4020_d5490443",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-12-05T18:13:40Z",
+      "side": 1,
+      "message": "This function is not used in computing the min/max preferred width. I\u0027m not sure if that answers your question?",
+      "parentUuid": "a03521e1_d7f400c5",
+      "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
