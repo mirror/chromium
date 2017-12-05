@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce8e6402_67b0cf99",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-12-05T00:51:17Z",
+      "side": 1,
+      "message": "I\u0027m assuming you meant to comment on upload_artifacts, and not upload_directory_to_gs.\n\nI split out two small functions in upload_artifacts. Still need to write individual unit tests for them.",
+      "parentUuid": "af261723_63d70e28",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3edd6a73_9b8cc33b",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 14
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Per the comment for the flag, doesn\u0027t this need to be the rewritten version of the data, and hence not the original `data` at all? I.e., isn\u0027t copying the data wrong?",
       "parentUuid": "87e7b773_f7f47df6",
+      "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89af581d_b37aa630",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-12-05T00:51:17Z",
+      "side": 1,
+      "message": "I removed the deepcopy here.\n\nThe result of this function call should be used in line 206. It isn\u0027t right now, but I fixed that.",
+      "parentUuid": "651c3b10_6a82b568",
       "revId": "67976499f51dd1296c61e8d7e540779542d79f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
