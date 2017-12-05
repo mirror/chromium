@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "41187fae_fcb6dc36",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T11:16:18Z",
+      "side": 1,
+      "message": "Reverted to original version with auto\u0026 instead of const auto\u0026 in order to be able to use move assignment. The new comment addresses the original concern.",
+      "parentUuid": "26972945_d63f3064",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d73da0d_b9f81e03",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 5
@@ -122,6 +140,24 @@
       "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c427c7b_39bc4e21",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T11:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd34c1b_28745752",
+      "revId": "6d7294c0e780e617ce1b74e7afc50bf6fcb8ce46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

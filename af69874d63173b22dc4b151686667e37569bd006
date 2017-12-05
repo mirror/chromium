@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a29a425_4b3d1b59",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T11:16:18Z",
+      "side": 1,
+      "message": "Oops. I forgot that\u0027s why it had the copies in the original patchset. Reverted and also added some fixes/improvements :)\nIt was working for the wrong reason (|name| was a const ref instead of ref, so the assignment to |device_name| was copy assigment and not move assigment, which was the original intent.",
+      "parentUuid": "e366c6db_f0d3265c",
+      "revId": "af69874d63173b22dc4b151686667e37569bd006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fac41d_4d4efce4",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T07:12:51Z",
       "side": 1,
       "message": "Are these special device entries explained anywhere?",
+      "revId": "af69874d63173b22dc4b151686667e37569bd006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22539ac_e9ef7919",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-05T11:16:18Z",
+      "side": 1,
+      "message": "Removed the \"special\" terminology and replaced with default/communications, which is longer, but used in many places including the AudioManager and AudioDeviceDescription. I don\u0027t think it needs extra explanation here.",
+      "parentUuid": "80fac41d_4d4efce4",
       "revId": "af69874d63173b22dc4b151686667e37569bd006",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
