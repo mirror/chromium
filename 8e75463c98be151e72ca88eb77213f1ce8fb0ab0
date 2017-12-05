@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3b4d362_ff68f2a9",
+        "filename": "device/vr/oculus/oculus_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-05T19:04:51Z",
+      "side": 1,
+      "message": "Please add at least a TODO here. This ID should be used when establishing the render loop context to ensure we\u0027re on the right graphics adapter.",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d61c51_84d2d345",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-05T19:04:51Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of my previous bindings (this code is much easier to read, thanks!) but since this is expected to be temporary and people have already built content againts the gamepad layout from the experimental builds we should make an effort to stick with them.\n\nMore generally, the gamepad API has had a preference for a while of expressing triggers as buttons (using value to indicate the analog axis reading.) So we should expose the grip and index triggers as buttons as well.",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
