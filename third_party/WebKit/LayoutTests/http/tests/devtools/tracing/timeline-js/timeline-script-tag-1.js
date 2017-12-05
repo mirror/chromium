@@ -17,17 +17,13 @@
   `);
 
   UI.panels.timeline._disableCaptureJSProfileSetting.set(true);
-  PerformanceTestRunner.startTimeline(step1);
-  function step1() {
-    ConsoleTestRunner.addConsoleSniffer(step2);
-    TestRunner.evaluateInPage('performActions()');
-  }
+  await PerformanceTestRunner.startTimeline();
+  ConsoleTestRunner.addConsoleSniffer(step2);
+  TestRunner.evaluateInPage('performActions()');
 
-  function step2() {
-    PerformanceTestRunner.stopTimeline(step3);
-  }
+  async function step2() {
+    await PerformanceTestRunner.stopTimeline();
 
-  function step3() {
     PerformanceTestRunner.timelineModel().mainThreadEvents().forEach(event => {
       if (event.name === TimelineModel.TimelineModel.RecordType.EvaluateScript) {
         PerformanceTestRunner.printTraceEventProperties(event);

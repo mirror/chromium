@@ -29,13 +29,15 @@
   source += '\n//# sourceURL=performActions.js';
   TestRunner.evaluateInPage(source, startTimeline);
 
-  function startTimeline() {
-    PerformanceTestRunner.invokeAsyncWithTimeline('performActions', finish);
+  async function startTimeline() {
+    await PerformanceTestRunner.invokeAsyncWithTimeline('performActions');
+    PerformanceTestRunner.walkTimelineEventTree(formatter);
+    TestRunner.completeTest();
   }
 
   var linkifier = new Components.Linkifier();
-
   var recordTypes = new Set(['TimerInstall', 'TimerRemove', 'FunctionCall']);
+
   function formatter(event) {
     if (!recordTypes.has(event.name))
       return;
@@ -50,10 +52,5 @@
       return;
     TestRunner.addResult(
         'details.textContent for ' + event.name + ' event: \'' + details.textContent.replace(/VM[\d]+/, 'VM') + '\'');
-  }
-
-  function finish() {
-    PerformanceTestRunner.walkTimelineEventTree(formatter);
-    TestRunner.completeTest();
   }
 })();
