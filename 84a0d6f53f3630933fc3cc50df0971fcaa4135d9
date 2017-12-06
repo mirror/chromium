@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5edc1743_ac595911",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T19:23:50Z",
+      "side": 1,
+      "message": "Sending to the OuputSurface seems the simplest path to me.",
+      "parentUuid": "c2bda924_1fc8ccb7",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f9b40d_0b4048ef",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
