@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7da642a_2362d816",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T22:30:56Z",
+      "side": 1,
+      "message": "sorry, missed this nit last pass, but this is unnecessary",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "ce81901bba6ae4d9c7769055677c74e4604455fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b35be8_91e74321",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T22:30:56Z",
+      "side": 1,
+      "message": "Can you add a Quaternion.Length() function to quaternion.h/cc? (And make Quaternion::Normalized() use it)",
+      "range": {
+        "startLine": 184,
+        "startChar": 48,
+        "endLine": 184,
+        "endChar": 54
+      },
+      "revId": "ce81901bba6ae4d9c7769055677c74e4604455fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c4555b_8302dcca",
+        "filename": "device/vr/test/fake_orientation_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T22:30:56Z",
+      "side": 1,
+      "message": "nit: space before braces. Actually, use \u003d default; instead.",
+      "range": {
+        "startLine": 16,
+        "startChar": 47,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "ce81901bba6ae4d9c7769055677c74e4604455fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bbe49e_2e749c6b",
+        "filename": "device/vr/test/fake_orientation_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T22:30:56Z",
+      "side": 1,
+      "message": "nit: comments should always end in periods per style guide, but I don\u0027t think we should have either this comment or the below one at all, as they\u0027re not super helpful and likely to become stale.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "ce81901bba6ae4d9c7769055677c74e4604455fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
