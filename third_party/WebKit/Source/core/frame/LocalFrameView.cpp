@@ -135,6 +135,9 @@
 #include "public/platform/WebDisplayItemList.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebRemoteScrollProperties.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/common/page/page_visibility_state.mojom-blink.h"
 
 // Used to check for dirty layouts violating document lifecycle rules.
@@ -3333,6 +3336,7 @@ void LocalFrameView::PrePaint() {
   {
     SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
     PrePaintTreeWalk().Walk(*this);
+    RecordUkmPerformanceMetric("PrePaint", timer.ElapsedTime());
   }
 
   ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
@@ -3404,6 +3408,7 @@ void LocalFrameView::PaintTree() {
     if (!layout_view_item.IsNull())
       layout_view_item.Layer()->ClearNeedsRepaintRecursively();
   });
+  RecordUkmPerformanceMetric("Paint", timer.ElapsedTime());
 }
 
 void LocalFrameView::PushPaintArtifactToCompositor(
@@ -3430,6 +3435,7 @@ void LocalFrameView::PushPaintArtifactToCompositor(
 
   paint_artifact_compositor_->Update(paint_controller_->GetPaintArtifact(),
                                      composited_element_ids);
+  RecordUkmPerformanceMetric("Compositing", timer.ElapsedTime());
 }
 
 std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
@@ -3443,6 +3449,7 @@ std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
 void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursive() {
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.StyleAndLayout.UpdateTime");
   UpdateStyleAndLayoutIfNeededRecursiveInternal();
+  RecordUkmPerformanceMetric("StyleAndLayout", timer.ElapsedTime());
 }
 
 void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
@@ -5731,4 +5738,13 @@ ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
   return page->GetScrollbarTheme();
 }
 
+void LocalFrameView::RecordUkmPerformanceMetric(const char* metric,
+                                                int64_t value) {
+  ukm::UkmRecorder* ukm_recorder = frame_->GetDocument()->UkmRecorder();
+  DCHECK(ukm_recorder);
+
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      frame_->GetDocument()->UkmSourceID(), "Blink.UpdateTime");
+  builder->AddMetric(metric, value);
+}
 }  // namespace blink

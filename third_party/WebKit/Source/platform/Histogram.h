@@ -69,9 +69,9 @@ class PLATFORM_EXPORT ScopedUsHistogramTimer {
                                   base::TickClock* clock = nullptr)
       : clock_for_testing_(clock), start_time_(Now()), counter_(counter) {}
 
-  ~ScopedUsHistogramTimer() {
-    counter_.Count((Now() - start_time_).InMicroseconds());
-  }
+  ~ScopedUsHistogramTimer() { counter_.Count(ElapsedTime()); }
+
+  int64_t ElapsedTime() const { return (Now() - start_time_).InMicroseconds(); }
 
  private:
   TimeTicks Now() const {
