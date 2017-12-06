@@ -43,6 +43,11 @@ public final class PasswordUIView implements PasswordManagerHandler {
         mObserver.passwordExceptionListAvailable(count);
     }
 
+    @CalledByNative
+    private void serializedPasswordsAvailable(String serializedPasswords) {
+        mObserver.serializedPasswordsAvailable(serializedPasswords);
+    }
+
     // Calls native to refresh password and exception lists. The native code calls back into
     // passwordListAvailable and passwordExceptionListAvailable.
     @Override
@@ -68,6 +73,11 @@ public final class PasswordUIView implements PasswordManagerHandler {
     @Override
     public void removeSavedPasswordException(int index) {
         nativeHandleRemoveSavedPasswordException(mNativePasswordUIViewAndroid, index);
+    }
+
+    @Override
+    public void serializePasswords() {
+        nativeHandleSerializePasswords(mNativePasswordUIViewAndroid);
     }
 
     /**
@@ -111,4 +121,5 @@ public final class PasswordUIView implements PasswordManagerHandler {
 
     private native void nativeDestroy(long nativePasswordUIViewAndroid);
 
+    private native void nativeHandleSerializePasswords(long nativePasswordUIViewAndroid);
 }

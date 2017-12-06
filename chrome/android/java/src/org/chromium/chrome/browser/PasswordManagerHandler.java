@@ -25,6 +25,12 @@ public interface PasswordManagerHandler {
          * @param count Number of entries in the password exception list.
          */
         void passwordExceptionListAvailable(int count);
+
+        /**
+         * Called when passwords have been serialized into CSV.
+         * @param serializedPasswords The string with the CSV representation of the passwords.
+         */
+        void serializedPasswordsAvailable(String serializedPasswords);
     }
 
     /**
@@ -61,4 +67,10 @@ public interface PasswordManagerHandler {
      * @param index of exception entry.
      */
     public void removeSavedPasswordException(int index);
+
+    /**
+     * Trigger serializing the saved passwords in the background. Once completed,
+     * serializedPasswordsAvailable will be called.
+     */
+    public void serializePasswords();
 }

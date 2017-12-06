@@ -114,4 +114,12 @@ public class PasswordManagerHandlerProvider implements PasswordManagerHandler.Pa
             observer.passwordExceptionListAvailable(count);
         }
     }
+
+    @Override
+    public void serializedPasswordsAvailable(String serializedPasswords) {
+        ThreadUtils.assertOnUiThread();
+        for (PasswordManagerHandler.PasswordListObserver observer : mObservers) {
+            observer.serializedPasswordsAvailable(serializedPasswords);
+        }
+    }
 }
