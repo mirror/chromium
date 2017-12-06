@@ -136,6 +136,8 @@ enum class SwReporterInvocationResult {
   kNotScheduled,
   // The reporter process timed-out while running.
   kTimedOut,
+  // Couldn't find a reporter component available for running.
+  kComponentNotAvailable,
   // The reporter failed to start.
   kProcessFailedToLaunch,
   // The reporter ended with a failure.
