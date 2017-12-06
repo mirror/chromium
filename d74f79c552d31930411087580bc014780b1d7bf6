@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adc74b3_f1500899",
+        "filename": "testing/buildbot/filters/fuchsia.net_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T22:18:14Z",
+      "side": 0,
+      "message": "We should also add a test to cert_verify_proc_unittest.cc, so this gets tested at the CertVerifyProc layer on all platforms (and not just indirectly by way of the url_request_unittests.cc as today).\n\nIf you want to tackle that great!\n\nOtherwise you can leave the testing as is in this CL, and I will follow-up with the additional tests I am envisioning.",
+      "revId": "d74f79c552d31930411087580bc014780b1d7bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
