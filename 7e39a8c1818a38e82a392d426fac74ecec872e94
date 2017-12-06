@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3920eafd_cf916bc3",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-06T01:26:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be in the while loop. Just put it above this whole section - if layout_object-\u003eIsFixedPositioned(), set container to AXObjectCache().GetOrCreate(GetDocument()) which will be the WebArea, and then return.",
+      "revId": "7e39a8c1818a38e82a392d426fac74ecec872e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
