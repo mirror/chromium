@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e980b45d_13ade91e",
+        "filename": "chromecast/browser/cast_browser_main_parts_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1204574
+      },
+      "writtenOn": "2017-12-06T17:43:59Z",
+      "side": 1,
+      "message": "Make this a std::unique_ptr instead.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "d4456d4b133749c39a1323ea53c830769a6ee3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
