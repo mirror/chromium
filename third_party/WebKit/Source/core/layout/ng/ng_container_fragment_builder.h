@@ -107,6 +107,29 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
 
+  // Inline containing block geometry is defined by two fragments:
+  // start and end. FragmentPair holds the information needed to compute
+  // inline containing block geometry wrt enclosing container block.
+  //
+  // start_fragment is the start fragment of inline containing block.
+  // start_fragment_offset is offset wrt start_linebox_fragment
+  // start_linebox_offset is offset of linebox from inline-cb
+  // end_fragment/linebox are complementary properties for end fragment.
+  struct FragmentPair {
+    scoped_refptr<const NGPhysicalFragment> start_linebox_fragment;
+    NGLogicalOffset start_linebox_offset;
+    scoped_refptr<const NGPhysicalFragment> start_fragment;
+    NGPhysicalOffset start_fragment_offset;
+    scoped_refptr<const NGPhysicalFragment> end_linebox_fragment;
+    NGLogicalOffset end_linebox_offset;
+    scoped_refptr<const NGPhysicalFragment> end_fragment;
+    NGPhysicalOffset end_fragment_offset;
+  };
+
+  void ComputeInlineContainerFragments(
+      HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments,
+      NGLogicalSize* container_size);
+
 #ifndef NDEBUG
   String ToString() const;
 #endif
