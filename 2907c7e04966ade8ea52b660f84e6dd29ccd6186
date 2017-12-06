@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "231386f4_1d3bd4dc",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-06T17:39:36Z",
+      "side": 1,
+      "message": "I do not think turning on xvfb will break any of the other platforms. So while I think this should be the goal for X11 tests, it\u0027s not necessarily blocking.\n\nMaking the X11 tests self contained might require some larger steps like checking xvfb itself into //third_party.",
+      "parentUuid": "d5c9a9cb_69d05b2f",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20c1ea32_1eb93ceb",
         "filename": "ui/events/BUILD.gn",
         "patchSetId": 17
