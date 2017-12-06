@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ee34f62_5a7e4ac2",
+        "filename": "services/audio/audio_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T15:13:24Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaac1d3e_cf6b90d7",
+        "filename": "services/audio/in_process_audio_manager_accessor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T15:13:24Z",
+      "side": 1,
+      "message": "No ; after {}. Maybe add a comment that |audio_manager_| is expected to be shut down by its owner.",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d738d67d_d02f6e37",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T15:13:24Z",
+      "side": 1,
+      "message": "Why are they public? If they are used from elsewhere, don\u0027t they need an EXPORT macro?",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc82684_3e517126",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T15:13:24Z",
+      "side": 1,
+      "message": "Taking the address of this function is a bit problematic, it may break if overloads are added in the future AFAICT. How about having a helper function in an unnamed namespace instead?",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
