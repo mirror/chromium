@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2ca159a8_b7378d69",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T21:46:17Z",
+      "side": 1,
+      "message": "The comment looks fine, the CL looks fine, it\u0027s already +1\u0027d.\n\nI guess what I\u0027m tring to say is that if there are dependencies outside the scope of the test (i.e. this subclass), then a class level setter (e.g. NetworkPortalDetectorImplBrowserTest::SetupDisplayService()) seems more clear to me.\n\nIt also seems like it would be reasonable to always initialize display_service_ for the class, since SigninErrorNotifier() is constructed implictly; i.e. NotificationDisplayServiceTester is a required component for some of the tests in the class, the specifics of which are not interesting to the individual tests.\n\nAgain, this lgtm as-is.",
+      "parentUuid": "c7283c66_f8f41be0",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f5170d_8fb80033",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 5
