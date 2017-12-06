@@ -217,6 +217,8 @@ class CORE_EXPORT DocumentLoader
   std::unique_ptr<SourceLocation> CopySourceLocation() const;
   void SetSourceLocation(std::unique_ptr<SourceLocation>);
 
+  void PreloadResource(const ResourceRequest&);
+
   void LoadFailed(const ResourceError&);
 
   void Trace(blink::Visitor*) override;

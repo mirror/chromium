@@ -84,6 +84,7 @@ class CORE_EXPORT WebDocumentLoaderImpl final : public DocumentLoader,
   WebServiceWorkerNetworkProvider* GetServiceWorkerNetworkProvider() override;
   void SetSourceLocation(const WebSourceLocation&) override;
   void ResetSourceLocation() override;
+  void PreloadResource(const WebURLRequest&) override;
 
   static WebNavigationType ToWebNavigationType(NavigationType);
 

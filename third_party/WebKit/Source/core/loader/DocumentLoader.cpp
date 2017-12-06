@@ -29,6 +29,7 @@
 
 #include "core/loader/DocumentLoader.h"
 
+#include "base/files/file_path.h"
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
@@ -1171,6 +1172,36 @@ void DocumentLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   // Append() might lead to a detach.
   if (parser_)
     parser_->Finish();
+}
+
+void DocumentLoader::PreloadResource(const ResourceRequest& request) {
+  String path = request.GetPath();
+  int index = path.ReverseFind('.');
+  if (index == -1)
+    return;
+  String mime_type = MIMETypeRegistry::GetMIMETypeForExtension(
+      path.Substring(index + 1));
+  Optional<ResourceType> resource_type = WTF::nullopt;
+  if (MIMETypeRegistry::IsSupportedImagePrefixedMIMEType(mime_type))
+    resource_type = Resource::kImage;
+  else if (MIMETypeRegistry::IsSupportedFontMIMEType(mime_type))
+    resource_type = Resource::kScript;
+  else if (MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type))
+    resource_type = Resource::kCSSStyleSheet;
+  else if (MIMETypeRegistry::IsSupportedMediaMIMEType(mime_type, String()))
+    resource_type = Resource::kMedia;
+  else
+    return;
+  ResourceRequest resource_request(request);
+  resource_request.SetRequestContext(ResourceFetcher::DetermineRequestContext(
+          resource_type.value(), ResourceFetcher::kImageNotImageSet, false));
+  Document& document = *frame_->GetDocument();
+  ResourceLoaderOptions options;
+  options.initiator_info.name = FetchInitiatorTypeNames::link;
+  FetchParameters fetch_params(resource_request, options);
+  fetch_params.SetCharset(document.GetDocument()->Encoding());
+  fetch_params.SetLinkPreload(true);  // Just for now.
+  return StartPreload(resource_type.value(), fetch_params);
 }
 
 DEFINE_WEAK_IDENTIFIER_MAP(DocumentLoader);
