@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "034ab2d4_e591c714",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-12-06T01:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57e693e_e763ce75",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "7837128cf54680195432ecfb363bb2879d2c719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02499a3f_7e42bbfb",
         "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d22da76e_76cad775",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-12-06T01:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02499a3f_7e42bbfb",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "7837128cf54680195432ecfb363bb2879d2c719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd2dd5d1_8a00e33f",
         "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "7837128cf54680195432ecfb363bb2879d2c719e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740b30eb_e73df8cd",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-12-06T01:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2dd5d1_8a00e33f",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "7837128cf54680195432ecfb363bb2879d2c719e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
