@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56b08dc0_9ae615b0",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-06T21:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bdccfa8_42257678",
+      "revId": "c22e273127b0b04d75eac75c238a7dac25668038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f656c9_dc5a2d03",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreatorTest.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "c22e273127b0b04d75eac75c238a7dac25668038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac50c85_bad61c7a",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasAsyncBlobCreatorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-06T21:04:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f656c9_dc5a2d03",
+      "revId": "c22e273127b0b04d75eac75c238a7dac25668038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
