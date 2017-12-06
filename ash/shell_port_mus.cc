@@ -39,6 +39,7 @@
 #include "ui/aura/mus/window_tree_host_mus.h"
 #include "ui/aura/mus/window_tree_host_mus_init_params.h"
 #include "ui/aura/window.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/forwarding_display_delegate.h"
 #include "ui/display/types/native_display_delegate.h"
@@ -183,6 +184,7 @@ void ShellPortMus::CreatePointerWatcherAdapter() {
 
 std::unique_ptr<AshWindowTreeHost> ShellPortMus::CreateAshWindowTreeHost(
     const AshWindowTreeHostInitParams& init_params) {
+  LOG(ERROR) << "MSW ShellPortMus::CreateAshWindowTreeHost A initial_bounds:" << init_params.initial_bounds.ToString(); 
   std::unique_ptr<aura::DisplayInitParams> display_params =
       std::make_unique<aura::DisplayInitParams>();
   display_params->viewport_metrics.bounds_in_pixels =
@@ -194,6 +196,7 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMus::CreateAshWindowTreeHost(
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
   display::Display mirrored_display =
       display_manager->GetMirroringDisplayById(init_params.display_id);
+  LOG(ERROR) << "MSW ShellPortMus::CreateAshWindowTreeHost B mirrored_display: " << mirrored_display.is_valid(); 
   if (mirrored_display.is_valid()) {
     display_params->display =
         std::make_unique<display::Display>(mirrored_display);
@@ -205,6 +208,8 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMus::CreateAshWindowTreeHost(
   aura_init_params.display_id = init_params.display_id;
   aura_init_params.display_init_params = std::move(display_params);
   aura_init_params.use_classic_ime = !Shell::ShouldUseIMEService();
+  aura_init_params.uses_real_accelerated_widget =
+      !::switches::IsMusHostingViz();
   return std::make_unique<AshWindowTreeHostMus>(std::move(aura_init_params));
 }
 

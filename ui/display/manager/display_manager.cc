@@ -818,6 +818,7 @@ void DisplayManager::UpdateDisplays() {
 
 void DisplayManager::UpdateDisplaysWith(
     const DisplayInfoList& updated_display_info_list) {
+  LOG(ERROR) << "MSW DisplayManager::UpdateDisplaysWith A: " << updated_display_info_list.size(); 
   BeginEndNotifier notifier(this);
 
 #if defined(OS_WIN)
@@ -847,6 +848,7 @@ void DisplayManager::UpdateDisplaysWith(
     multi_display_mode_ = current_default_multi_display_mode_;
 
   CreateSoftwareMirroringDisplayInfo(&new_display_info_list);
+  LOG(ERROR) << "MSW DisplayManager::UpdateDisplaysWith B: " << new_display_info_list.size(); 
 
   // Close the mirroring window if any here to avoid creating two compositor on
   // one display.
@@ -968,11 +970,13 @@ void DisplayManager::UpdateDisplaysWith(
   is_updating_display_list_ = true;
   // Temporarily add displays to be removed because display object
   // being removed are accessed during shutting down the root.
+  LOG(ERROR) << "MSW DisplayManager::UpdateDisplaysWith C removed_displays: " << removed_displays.size() << " added_display_indices: " << added_display_indices.size(); 
   active_display_list_.insert(active_display_list_.end(),
                               removed_displays.begin(), removed_displays.end());
 
-  for (const auto& display : removed_displays)
+  for (const auto& display : removed_displays) {
     NotifyDisplayRemoved(display);
+  }
 
   for (size_t index : added_display_indices)
     NotifyDisplayAdded(active_display_list_[index]);
@@ -1391,6 +1395,7 @@ bool DisplayManager::UpdateDisplayBounds(int64_t display_id,
 }
 
 void DisplayManager::CreateMirrorWindowAsyncIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowAsyncIfAny"; 
   // Do not post a task if the software mirroring doesn't exist, or
   // during initialization when compositor's init task isn't posted yet.
   // ash::Shell::Init() will call this after the compositor is initialized.
@@ -1846,6 +1851,7 @@ void DisplayManager::UpdateNonPrimaryDisplayBoundsForLayout(
 }
 
 void DisplayManager::CreateMirrorWindowIfAny() {
+  LOG(ERROR) << "MSW CreateMirrorWindowIfAny software_mirroring_display_list_:" << software_mirroring_display_list_.size(); 
   if (software_mirroring_display_list_.empty() || !delegate_) {
     if (!created_mirror_window_.is_null())
       base::ResetAndReturn(&created_mirror_window_).Run();

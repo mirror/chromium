@@ -654,11 +654,13 @@ WindowTree* WindowServer::GetCurrentDragLoopInitiator() {
 }
 
 void WindowServer::OnDisplayReady(Display* display, bool is_first) {
+  LOG(ERROR) << "MSW WindowServer::OnDisplayReady A"; 
   if (is_first)
     delegate_->OnFirstDisplayReady();
   bool wm_is_hosting_viz = !gpu_host_;
   if (wm_is_hosting_viz) {
     // Notify WM about the AcceleratedWidget if it is hosting viz.
+    LOG(ERROR) << "MSW WindowServer::OnDisplayReady B"; 
     for (auto& pair : tree_map_) {
       if (pair.second->window_manager_state()) {
         auto& wm_tree = pair.second;
@@ -666,6 +668,7 @@ void WindowServer::OnDisplayReady(Display* display, bool is_first) {
       }
     }
   } else {
+    LOG(ERROR) << "MSW WindowServer::OnDisplayReady C"; 
     gpu_host_->OnAcceleratedWidgetAvailable(
         display->platform_display()->GetAcceleratedWidget());
   }

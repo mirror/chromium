@@ -147,6 +147,7 @@ void MirrorWindowController::UpdateWindow(
   for (const display::ManagedDisplayInfo& display_info : display_info_list) {
     std::unique_ptr<RootWindowTransformer> transformer;
     if (display_manager->IsInMirrorMode()) {
+      LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow CreateRootWindowTransformerForMirroredDisplay"; 
       transformer.reset(CreateRootWindowTransformerForMirroredDisplay(
           source_display_info, display_info));
     } else if (display_manager->IsInUnifiedMode()) {
@@ -168,10 +169,13 @@ void MirrorWindowController::UpdateWindow(
       init_params.device_scale_factor = display_info.device_scale_factor();
       init_params.ui_scale_factor = display_info.configured_ui_scale();
       MirroringHostInfo* host_info = new MirroringHostInfo;
+      LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow calling AshWindowTreeHost::Create "; 
+      // TODO(msw): should this (and elsewhere) be using ShellPort::CreateAshWindowTreeHost? 
       host_info->ash_host = AshWindowTreeHost::Create(init_params);
       mirroring_host_info_map_[display_info.id()] = host_info;
 
       aura::WindowTreeHost* host = host_info->ash_host->AsWindowTreeHost();
+      LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow host: " << host << " aw: " << host->GetAcceleratedWidget();
       // TODO: Config::MUS should not install an InputMethod.
       // http://crbug.com/706913
       if (!host->has_input_method()) {
@@ -213,20 +217,24 @@ void MirrorWindowController::UpdateWindow(
       mirror_window->SetBounds(host->window()->bounds());
       mirror_window->Show();
       if (reflector_) {
+        LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow using reflector"; 
         reflector_->AddMirroringLayer(mirror_window->layer());
       } else if (aura::Env::GetInstance()->context_factory_private()) {
-        reflector_ =
-            aura::Env::GetInstance()
-                ->context_factory_private()
-                ->CreateReflector(
-                    Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
-                    mirror_window->layer());
+        LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow creating reflector"; 
+        // reflector_ =
+        //     aura::Env::GetInstance()
+        //         ->context_factory_private()
+        //         ->CreateReflector(
+        //             Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+        //             mirror_window->layer());
       } else {
+        LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow MUS NEEDS reflector"; 
         // TODO: Config::MUS needs to support reflector.
         // http://crbug.com/601869.
         NOTIMPLEMENTED();
       }
     } else {
+      LOG(ERROR) << "MSW MirrorWindowController::UpdateWindow mirroring_host_info_map_ found"; 
       AshWindowTreeHost* ash_host =
           mirroring_host_info_map_[display_info.id()]->ash_host.get();
       aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();
@@ -276,6 +284,7 @@ void MirrorWindowController::UpdateWindow() {
 void MirrorWindowController::CloseIfNotNecessary() {
   display::DisplayManager::MultiDisplayMode new_mode =
       GetCurrentMultiDisplayMode();
+  LOG(ERROR) << "MSW MirrorWindowController::CloseIfNotNecessary mode: " << multi_display_mode_ << " -> " << new_mode; 
   if (multi_display_mode_ != new_mode) {
     Close(true);
     multi_display_mode_ = new_mode;
@@ -285,6 +294,7 @@ void MirrorWindowController::CloseIfNotNecessary() {
 }
 
 void MirrorWindowController::Close(bool delay_host_deletion) {
+  LOG(ERROR) << "MSW MirrorWindowController::Close mirroring_host_info_map_: " << mirroring_host_info_map_.size(); 
   for (auto& info : mirroring_host_info_map_)
     CloseAndDeleteHost(info.second, delay_host_deletion);
 
@@ -318,6 +328,17 @@ void MirrorWindowController::OnHostResized(aura::WindowTreeHost* host) {
   }
 }
 
+void MirrorWindowController::OnAcceleratedWidgetAvailable(aura::WindowTreeHost* host) {
+  LOG(ERROR) << "MSW MirrorWindowController::OnAcceleratedWidgetAvailable host: " << host << " aw: " << host->GetAcceleratedWidget();
+  MirroringHostInfo* info = mirroring_host_info_map_[host->GetDisplayId()];
+  reflector_ =
+    aura::Env::GetInstance()
+        ->context_factory_private()
+        ->CreateReflector(
+            Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+            info->mirror_window->layer());
+}
+
 display::Display MirrorWindowController::GetDisplayForRootWindow(
     const aura::Window* root) const {
   for (const auto& pair : mirroring_host_info_map_) {
@@ -335,7 +356,9 @@ display::Display MirrorWindowController::GetDisplayForRootWindow(
 
 AshWindowTreeHost* MirrorWindowController::GetAshWindowTreeHostForDisplayId(
     int64_t id) {
-  CHECK_EQ(1u, mirroring_host_info_map_.count(id));
+  // CHECK_EQ(1u, mirroring_host_info_map_.count(id));
+  if (mirroring_host_info_map_.count(id) == 0)
+    return nullptr;
   return mirroring_host_info_map_[id]->ash_host.get();
 }
 

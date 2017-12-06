@@ -182,6 +182,7 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
 }
 
 void WindowTree::OnAcceleratedWidgetAvailableForDisplay(Display* display) {
+  LOG(ERROR) << "MSW WindowTree::OnAcceleratedWidgetAvailableForDisplay"; 
   DCHECK(window_manager_internal_);
   // TODO(sad): Use GpuSurfaceTracker on platforms where a gpu::SurfaceHandle is
   // not the same as a gfx::AcceleratedWidget.

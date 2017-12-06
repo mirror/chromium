@@ -704,6 +704,7 @@ void GpuProcessTransportFactory::DisableGpuCompositing(
 std::unique_ptr<ui::Reflector> GpuProcessTransportFactory::CreateReflector(
     ui::Compositor* source_compositor,
     ui::Layer* target_layer) {
+  LOG(ERROR) << "MSW GpuProcessTransportFactory::CreateReflector!!!"; 
   PerCompositorData* source_data =
       per_compositor_data_[source_compositor].get();
   DCHECK(source_data);

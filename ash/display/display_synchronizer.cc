@@ -4,11 +4,14 @@
 
 #include "ash/display/display_synchronizer.h"
 
+#include "ash/display/mirror_window_controller.h"
 #include "ash/host/ash_window_tree_host.h"
+#include "ash/public/cpp/config.h"
 #include "ash/shell.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
+#include "ui/base/ui_base_switches_util.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 
@@ -60,13 +63,28 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
     displays.push_back(display_manager->GetDisplayAt(i));
     metrics.push_back(GetMetricsForDisplay(displays[i].id()));
   }
-  const std::vector<display::Display>& mirrors =
+  std::vector<display::Display> mirrors =
       display_manager->software_mirroring_display_list();
-  for (size_t i = 0; i < mirrors.size(); ++i)
-    metrics.push_back(GetMetricsForDisplay(mirrors[i].id()));
+  std::vector<display::Display> mirrors_with_hosts;
+  for (const auto& mirror : mirrors) {
+    MirrorWindowController* mirror_window_controller =
+        Shell::Get()->window_tree_host_manager()->mirror_window_controller();
+    if (mirror_window_controller->GetAshWindowTreeHostForDisplayId(mirror.id()))
+      mirrors_with_hosts.push_back(mirror);
+  }
+  LOG(ERROR) << "MSW DisplaySynchronizer::SendDisplayConfigurationToServer displays:" << displays.size() << " mirrors:" << mirrors.size() << " mirrors_with_hosts:" << mirrors_with_hosts.size(); 
+  for (const auto& mirror : mirrors_with_hosts)
+    metrics.push_back(GetMetricsForDisplay(mirror.id()));
+  // Mus only handles mirrors specially when it hosts viz.
+  if (!::switches::IsMusHostingViz() && Shell::GetAshConfig() != Config::MASH) {
+    for (const auto& mirror : mirrors_with_hosts)
+      displays.push_back(mirror);
+    mirrors_with_hosts.clear();
+  }
+
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
-      WindowTreeHostManager::GetPrimaryDisplayId(), mirrors);
+      WindowTreeHostManager::GetPrimaryDisplayId(), mirrors_with_hosts);
 
   sent_initial_config_ = true;
 }
