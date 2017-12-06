@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d5c9a9cb_69d05b2f",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-06T11:22:21Z",
+      "side": 1,
+      "message": "I see. Ok. I will work on this then. Thank you.",
+      "parentUuid": "1f499011_4167a599",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20c1ea32_1eb93ceb",
         "filename": "ui/events/BUILD.gn",
         "patchSetId": 17
