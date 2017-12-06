@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e49a5801_ae78609b",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-06T18:13:10Z",
+      "side": 1,
+      "message": "Suggestion: raw string literals are our friends here.",
+      "revId": "3f0aa799e226b11eda0570e1cffcc5443d675c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
