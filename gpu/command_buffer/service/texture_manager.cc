@@ -3543,6 +3543,8 @@ GLenum TextureManager::ExtractFormatFromStorageFormat(GLenum internalformat) {
     case GL_R16F:
     case GL_R32F:
       return GL_RED;
+    case GL_R16_EXT:
+      return GL_R16_EXT;
     case GL_R8UI:
     case GL_R8I:
     case GL_R16UI:
@@ -3690,6 +3692,8 @@ GLenum TextureManager::ExtractTypeFromStorageFormat(GLenum internalformat) {
       return GL_UNSIGNED_SHORT;
     case GL_R16I:
       return GL_SHORT;
+    case GL_R16_EXT:
+      return GL_UNSIGNED_SHORT;
     case GL_R32UI:
       return GL_UNSIGNED_INT;
     case GL_R32I:
