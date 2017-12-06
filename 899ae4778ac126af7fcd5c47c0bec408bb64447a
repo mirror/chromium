@@ -45,6 +45,29 @@
       "revId": "899ae4778ac126af7fcd5c47c0bec408bb64447a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1da03de_affa8ebe",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-06T18:25:48Z",
+      "side": 1,
+      "message": "nit: should we add docs for this?",
+      "range": {
+        "startLine": 1080,
+        "startChar": 8,
+        "endLine": 1080,
+        "endChar": 16
+      },
+      "revId": "899ae4778ac126af7fcd5c47c0bec408bb64447a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
