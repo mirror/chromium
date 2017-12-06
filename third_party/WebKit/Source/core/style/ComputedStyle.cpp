@@ -267,8 +267,8 @@ StyleSelfAlignmentData ComputedStyle::ResolvedJustifySelf(
 StyleContentAlignmentData ResolvedContentAlignment(
     const StyleContentAlignmentData& value,
     const StyleContentAlignmentData& normal_behaviour) {
-  return (value.GetPosition() == kContentPositionNormal &&
-          value.Distribution() == kContentDistributionDefault)
+  return (value.GetPosition() == ContentPosition::kNormal &&
+          value.Distribution() == ContentDistributionType::kDefault)
              ? normal_behaviour
              : value;
 }
@@ -290,8 +290,8 @@ StyleContentAlignmentData ComputedStyle::ResolvedJustifyContent(
 static inline ContentPosition ResolvedContentAlignmentPosition(
     const StyleContentAlignmentData& value,
     const StyleContentAlignmentData& normal_value_behavior) {
-  return (value.GetPosition() == kContentPositionNormal &&
-          value.Distribution() == kContentDistributionDefault)
+  return (value.GetPosition() == ContentPosition::kNormal &&
+          value.Distribution() == ContentDistributionType::kDefault)
              ? normal_value_behavior.GetPosition()
              : value.GetPosition();
 }
@@ -299,8 +299,8 @@ static inline ContentPosition ResolvedContentAlignmentPosition(
 static inline ContentDistributionType ResolvedContentAlignmentDistribution(
     const StyleContentAlignmentData& value,
     const StyleContentAlignmentData& normal_value_behavior) {
-  return (value.GetPosition() == kContentPositionNormal &&
-          value.Distribution() == kContentDistributionDefault)
+  return (value.GetPosition() == ContentPosition::kNormal &&
+          value.Distribution() == ContentDistributionType::kDefault)
              ? normal_value_behavior.Distribution()
              : value.Distribution();
 }
