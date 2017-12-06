@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4555d1_e061cd40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T17:00:00Z",
+      "side": 1,
+      "message": "I think a better way to do this is ensuring that the toolbar\u0027s #isLocationBarShownInNTP check returns true when the toolbar is translated for the NTP, rather than exposing the toolbar background method. Then the toolbar code can handle updating its background accordingly.",
+      "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
