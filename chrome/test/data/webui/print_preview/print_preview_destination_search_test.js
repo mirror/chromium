@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var ROOT_PATH = '../../../../../';
+const ROOT_PATH = '../../../../../';
 
 GEN_INCLUDE(
         [ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js']);
@@ -31,17 +31,15 @@ PrintPreviewDestinationSearchTest.prototype = {
 
 };
 
-TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
-  var self = this;
-
+TEST_F('PrintPreviewDestinationSearchTest', 'Select', function(){
   suite('DestinationSearchTest', function() {
-    var root_;
+    let root_;
 
-    var destinationSearch_;
-    var nativeLayer_;
-    var invitationStore_;
-    var destinationStore_;
-    var userInfo_;
+    let destinationSearch_;
+    let nativeLayer_;
+    let invitationStore_;
+    let destinationStore_;
+    let userInfo_;
 
     function getCaps() {
       return {
@@ -93,7 +91,7 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
 
     function waitForEvent(element, eventName) {
       return new Promise(function(resolve) {
-        var listener = function(e) {
+        const listener = function(e) {
           resolve();
           element.removeEventListener(eventName, listener);
         };
@@ -103,10 +101,10 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     }
 
     function requestSetup(destId, destinationSearch) {
-      var origin = cr.isChromeOS ? print_preview.DestinationOrigin.CROS :
+      const origin = cr.isChromeOS ? print_preview.DestinationOrigin.CROS :
                                    print_preview.DestinationOrigin.LOCAL;
 
-      var dest = new print_preview.Destination(destId,
+      const dest = new print_preview.Destination(destId,
           print_preview.DestinationType.LOCAL,
           origin,
           "displayName",
@@ -128,17 +126,17 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
       print_preview.NativeLayer.setInstance(nativeLayer_);
       invitationStore_ = new print_preview.InvitationStore();
       destinationStore_ = new print_preview.DestinationStore(
-          new print_preview.UserInfo(), new print_preview.AppState(),
-          new WebUIListenerTracker());
+          new print_preview.UserInfo(), new WebUIListenerTracker());
       userInfo_ = new print_preview.UserInfo();
 
       destinationSearch_ = new print_preview.DestinationSearch(
-          destinationStore_, invitationStore_, userInfo_);
+          destinationStore_, invitationStore_, userInfo_,
+          new print_preview.AppState(destinationStore_));
       destinationSearch_.decorate($('destination-search'));
     });
 
     test('ResolutionFails', function() {
-      var destId = "001122DEADBEEF";
+      const destId = "001122DEADBEEF";
       if (cr.isChromeOS) {
         nativeLayer_.setSetupPrinterResponse(true, {printerId: destId,
                                                     success: false,});
@@ -150,7 +148,8 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
                                                      true);
       }
       requestSetup(destId, destinationSearch_);
-      var callback = cr.isChromeOS ? 'setupPrinter' : 'getPrinterCapabilities';
+      const callback =
+          cr.isChromeOS ? 'setupPrinter' : 'getPrinterCapabilities';
       return nativeLayer_.whenCalled(callback).then(
           function(actualDestId) {
             assertEquals(destId, actualDestId);
@@ -158,8 +157,8 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     });
 
     test('ReceiveSuccessfulSetup', function() {
-      var destId = "00112233DEADBEEF";
-      var response = {
+      const destId = "00112233DEADBEEF";
+      const response = {
         printerId: destId,
         capabilities: getCaps(),
         success: true,
@@ -172,11 +171,12 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
                                                       },
                                                       capabilities: getCaps()});
 
-      var waiter = waitForEvent(
+      const waiter = waitForEvent(
           destinationStore_,
           print_preview.DestinationStore.EventType.DESTINATION_SELECT);
       requestSetup(destId, destinationSearch_);
-      var callback = cr.isChromeOS ? 'setupPrinter' : 'getPrinterCapabilities';
+      const callback =
+          cr.isChromeOS ? 'setupPrinter' : 'getPrinterCapabilities';
       return Promise.all([nativeLayer_.whenCalled(callback), waiter]).then(
           function(results) {
             assertEquals(destId, results[0]);
@@ -189,8 +189,8 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     if (cr.isChromeOS) {
       // The 'ResolutionFails' test covers this case for non-CrOS.
       test('ReceiveFailedSetup', function() {
-        var destId = '00112233DEADBEEF';
-        var response = {
+        const destId = '00112233DEADBEEF';
+        const response = {
           printerId: destId,
           capabilities: getCaps(),
           success: false,
@@ -207,10 +207,10 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
     }
 
     test('CloudKioskPrinter', function() {
-      var printerId = 'cloud-printer-id';
+      const printerId = 'cloud-printer-id';
 
       // Create cloud destination.
-      var cloudDest = new print_preview.Destination(printerId,
+      const cloudDest = new print_preview.Destination(printerId,
           print_preview.DestinationType.GOOGLE,
           print_preview.DestinationOrigin.DEVICE,
           "displayName",
@@ -219,7 +219,7 @@ TEST_F('PrintPreviewDestinationSearchTest', 'Select', function() {
 
       // Place destination in the local list as happens for Kiosk printers.
       destinationSearch_.printList_.updateDestinations([cloudDest]);
-      var dest = destinationSearch_.printList_.getDestinationItem(printerId);
+      const dest = destinationSearch_.printList_.getDestinationItem(printerId);
       // Simulate a click.
       dest.onActivate_();
 
