@@ -86,6 +86,24 @@
       "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f9ad46_ff308c6d",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T23:26:15Z",
+      "side": 1,
+      "message": "Grep suggests that it is not used elsewhere, just this line and line 637 above. Anyway, minor cleanup at best, I\u0027ll save it for a rany day :)",
+      "parentUuid": "34374543_827cad25",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
