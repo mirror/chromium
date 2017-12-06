@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5727e95_1ff0e16e",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T03:09:16Z",
+      "side": 1,
+      "message": "Since there\u0027ll be one SpeechRecognitionDispatcherHost instance per RenderView, this will cancel too many requests. AbortAllSessionsForRenderView() does what you want but you\u0027ll need to keep track of which RenderView connected (and lock a SpeechRecognitionDispatcherHost instance to the first render_view_id provided).\n\nSorry for not noticing this earlier.",
+      "revId": "30a072393ff4981cae9cc1344c22944dd212c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
