@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2c56123_31e7d946",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T02:27:24Z",
+      "side": 1,
+      "message": "I filed crbug.com/792311 which you can refer to in TODO comments related to the hack.",
+      "parentUuid": "4fa05ad9_93639836",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b8f6b7_9242c07b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
