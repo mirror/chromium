@@ -825,6 +825,10 @@
       name: "PrintBrowser",
     },
     {
+      name: "PseudoAnyLink",
+      status: "experimental",
+    },
+    {
       name: "PushMessaging",
       status: "stable",
     },

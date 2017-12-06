@@ -203,7 +203,10 @@ void HTMLAnchorElement::ParseAttribute(
     if (was_link || IsLink()) {
       PseudoStateChanged(CSSSelector::kPseudoLink);
       PseudoStateChanged(CSSSelector::kPseudoVisited);
-      PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      PseudoStateChanged(CSSSelector::kPseudoWebkitAnyLink);
+      if (RuntimeEnabledFeatures::PseudoAnyLinkEnabled()) {
+        PseudoStateChanged(CSSSelector::kPseudoAnyLink);
+      }
     }
     if (IsLink()) {
       String parsed_url = StripLeadingAndTrailingHTMLSpaces(params.new_value);
