@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57d982a_8253d2c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T23:08:42Z",
+      "side": 1,
+      "message": "It turns out this doesn\u0027t work at all on JellyBean -- after the URL text is removed, nothing shows in the UrlBar. Since we\u0027re not yet sure whether we\u0027ll keep URL clearing long-term, I think skipping it on JB is the best path to get this into experimentation sooner.",
+      "range": {
+        "startLine": 291,
+        "startChar": 20,
+        "endLine": 291,
+        "endChar": 70
+      },
+      "revId": "e58339f598f0395d50cd92c00f8c95b9af8f6063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
