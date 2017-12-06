@@ -199,6 +199,7 @@ void SlotAssignment::ResolveAssignmentNg() {
   for (Member<HTMLSlotElement> slot : Slots())
     slot->ClearAssignedNodes();
 
+  // TODO(kochi): add logic for UA shadow
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
     if (!child.IsSlotable())
       continue;
@@ -207,11 +208,40 @@ void SlotAssignment::ResolveAssignmentNg() {
   }
 }
 
+HTMLSlotElement* SlotAssignment::FindUserAgentDefaultSlot() const {
+  return FindSlotByName("");
+}
+
+HTMLSlotElement* SlotAssignment::FindUserAgentRestSlot() const {
+  return FindSlotByName("rest");
+}
+
 void SlotAssignment::ResolveAssignment() {
   DCHECK(!RuntimeEnabledFeatures::IncrementalShadowDOMEnabled());
 
   for (Member<HTMLSlotElement> slot : Slots())
     slot->SaveAndClearDistribution();
+
+  if (owner_->IsUserAgent()) {
+    HTMLSlotElement* default_slot = FindUserAgentDefaultSlot();
+    HTMLSlotElement* rest_slot = FindUserAgentRestSlot();
+    for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
+      if (!default_slot || !child.IsSlotable()) {
+        child.LazyReattachIfAttached();
+        continue;
+      }
+      if (default_slot->Filter(child)) {
+        default_slot->AppendAssignedNode(child);
+        continue;
+      }
+      if (rest_slot) {
+        rest_slot->AppendAssignedNode(child);
+        continue;
+      }
+      child.LazyReattachIfAttached();
+    }
+    return;
+  }
 
   for (Node& child : NodeTraversal::ChildrenOf(owner_->host())) {
     if (!child.IsSlotable()) {
@@ -249,11 +279,20 @@ const HeapVector<Member<HTMLSlotElement>>& SlotAssignment::Slots() {
   return slots_;
 }
 
-HTMLSlotElement* SlotAssignment::FindSlot(const Node& node) {
-  return node.IsSlotable() ? FindSlotByName(node.SlotName()) : nullptr;
+HTMLSlotElement* SlotAssignment::FindSlot(const Node& node) const {
+  if (!owner_->IsUserAgent())
+    return node.IsSlotable() ? FindSlotByName(node.SlotName()) : nullptr;
+
+  HTMLSlotElement* default_slot = FindUserAgentDefaultSlot();
+  if (!default_slot || !node.IsSlotable())
+    return nullptr;
+  if (default_slot->Filter(node))
+    return default_slot;
+  return FindUserAgentRestSlot();
 }
 
-HTMLSlotElement* SlotAssignment::FindSlotByName(const AtomicString& slot_name) {
+HTMLSlotElement* SlotAssignment::FindSlotByName(
+    const AtomicString& slot_name) const {
   return slot_map_->GetSlotByName(slot_name, *owner_);
 }
 

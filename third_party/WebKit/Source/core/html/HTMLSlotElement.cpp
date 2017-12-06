@@ -53,13 +53,17 @@ namespace {
 constexpr size_t kLCSTableSizeLimit = 16;
 }
 
-inline HTMLSlotElement::HTMLSlotElement(Document& document)
-    : HTMLElement(slotTag, document) {
+HTMLSlotElement* HTMLSlotElement::Create(Document& document,
+                                         AssignmentFilter* filter) {
+  return new HTMLSlotElement(document, filter);
+}
+
+inline HTMLSlotElement::HTMLSlotElement(Document& document,
+                                        AssignmentFilter* filter)
+    : HTMLElement(slotTag, document), filter_(filter) {
   UseCounter::Count(document, WebFeature::kHTMLSlotElement);
   SetHasCustomStyleCallbacks();
 }
-
-DEFINE_NODE_FACTORY(HTMLSlotElement);
 
 // static
 AtomicString HTMLSlotElement::NormalizeSlotName(const AtomicString& name) {
@@ -98,6 +102,11 @@ const HeapVector<Member<Node>>& HTMLSlotElement::GetDistributedNodes() {
 void HTMLSlotElement::AppendAssignedNode(Node& host_child) {
   DCHECK(host_child.IsSlotable());
   assigned_nodes_.push_back(&host_child);
+}
+
+bool HTMLSlotElement::Filter(const Node& host_child) {
+  DCHECK(host_child.IsSlotable());
+  return !HasFilter() || filter_->CanAssign(host_child);
 }
 
 void HTMLSlotElement::ResolveDistributedNodes() {
@@ -489,6 +498,7 @@ void HTMLSlotElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(distributed_nodes_);
   visitor->Trace(old_distributed_nodes_);
   visitor->Trace(distributed_indices_);
+  visitor->Trace(filter_);
   HTMLElement::Trace(visitor);
 }
 
