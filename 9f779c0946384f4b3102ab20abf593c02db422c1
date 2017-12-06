@@ -22,6 +22,30 @@
       "revId": "9f779c0946384f4b3102ab20abf593c02db422c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353d939e_a34cf4c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-06T03:20:04Z",
+      "side": 1,
+      "message": "In volume_reader.h, it is not clearly stated what type of errors should be reported.\n  // Tries to seek to offset from whence. Returns the resulting offset location\n  // or -1 in case of errors. Similar to\n  // http://www.cplusplus.com/reference/cstdio/fseek/\n  virtual int64_t Seek(int64_t offset, int whence) \u003d 0;\nThough it says it\u0027s similar to fseek. So I think it\u0027s better to return error at Seek() as well.\n\nCurrently VolumeReaderJavaScriptStream::Seek returns error only for invalid arguments that would result in a negative offset. It only updates the class object\u0027s field, to be used by Read().\nAFAIK the error of inaccessible file is only detected by Read() via the RequestFileChunk request posting Javascript message.\nSo I don\u0027t think there\u0027s a handy way to detect error upon VolumeReaderJavaScriptStream::Seek().",
+      "parentUuid": "04d8cdf9_f01a029a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "9f779c0946384f4b3102ab20abf593c02db422c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
