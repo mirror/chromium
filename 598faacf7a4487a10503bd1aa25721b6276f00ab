@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a7ec2c_a27fa886",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkServiceImplWrapper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-06T15:07:54Z",
+      "side": 1,
+      "message": "you\u0027re only modifying the local builder variable right now. You still need to call .build() and pass the modified notification to delegateNotifyNotification.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 99
+      },
+      "revId": "598faacf7a4487a10503bd1aa25721b6276f00ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
