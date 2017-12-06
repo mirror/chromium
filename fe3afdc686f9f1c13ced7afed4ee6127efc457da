@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b52516be_4b142d8c",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T17:07:32Z",
+      "side": 1,
+      "message": "wait, is it actually lower left? I thought it was upper left.",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b92da94_fc6b1bb8",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T17:07:32Z",
+      "side": 1,
+      "message": "On further thought, I don\u0027t think this change is correct. I think it looks like the problem here is that focus changing is not dirtying the scene and is causing visual changes (eg cursor moving). Can we not somehow ensure that changing focus can dirty the scene?",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
