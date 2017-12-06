@@ -1433,6 +1433,12 @@ static void SetNeedsPaintPropertyUpdateIfNeeded(const LayoutObject& object) {
       box.StyleRef().HasTransform() || box.StyleRef().HasPerspective() ||
       box_generates_property_nodes_for_mask_and_clip_path)
     box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+
+  // The filter generated for reflection depends on box size.
+  if (box.HasReflection()) {
+    box.Layer()->SetFilterOnEffectNodeDirty();
+    box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
+  }
 }
 
 void FragmentPaintPropertyTreeBuilder::UpdateForObjectLocationAndSize(
