@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "20114444_5000f9d5",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T19:19:55Z",
+      "side": 1,
+      "message": "Sure, the class sounds like a good idea.\n\nAbout the ScopedImageFlags regression, that boggled me too. The ctor would do an early return if no override was required (https://chromium.googlesource.com/chromium/src/+/aa65368bea63683028ef4820306d36c4cdf6061d%5E%21/#F3) and it would keep a reference to the original flags. May be it was just the construction of this object unnecessarily for every op..?",
+      "parentUuid": "acd51fa2_07e04d23",
+      "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b2d066f_3cad5a4e",
         "filename": "cc/paint/skia_paint_canvas.cc",
         "patchSetId": 4
