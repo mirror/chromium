@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7294b25a_cc5157e9",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T23:22:15Z",
+      "side": 1,
+      "message": "@implements {PDFMetrics}",
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc70a8e0_934d9ee3",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T23:22:15Z",
+      "side": 1,
+      "message": "@override (here and elsewhere)",
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e470d5b_a9c7a753",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T23:22:15Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to extend the interface (you are already not extending it for the PDFMetricsDummy case). The interface is purely a closure compiler concept, has no value at runtime anyway.",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bf0a52_d521e7d9",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T23:22:15Z",
+      "side": 1,
+      "message": "Not necessary when using ES6 classes.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935aaa68_72a629b5",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T23:22:15Z",
+      "side": 1,
+      "message": "/** @private {!Set} */",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 12
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
