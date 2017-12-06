@@ -8,7 +8,12 @@
 #include "core/dom/Text.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
+#include "core/editing/VisibleUnits.h"
+#include "core/layout/ng/geometry/ng_physical_offset_rect.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_physical_box_fragment.h"
 
 namespace blink {
 

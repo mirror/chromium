@@ -397,6 +397,20 @@ InlineBoxPosition ComputeInlineBoxPositionTemplate(
       position, PrimaryDirectionOf(*position.AnchorNode()));
 }
 
+template <typename Strategy>
+void AssertSamePrimaryDirectionAlgorithm(
+    const PositionWithAffinityTemplate<Strategy>& position1,
+    const PositionWithAffinityTemplate<Strategy>& position2) {
+#if DCHECK_IS_ON()
+  if (position1.IsNull())
+    return;
+  if (position2.IsNull())
+    return;
+  DCHECK_EQ(PrimaryDirectionOf(*position1.AnchorNode()),
+            PrimaryDirectionOf(*position2.AnchorNode()));
+#endif
+}
+
 }  // namespace
 
 // TODO(xiaochengh): Migrate current callers of ComputeInlineBoxPosition to
@@ -469,6 +483,17 @@ InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
     TextDirection primary_direction) {
   return ComputeInlineBoxPositionForInlineAdjustedPositionAlgorithm(
       position, primary_direction);
+}
+
+void AssertSamePrimaryDirection(const PositionWithAffinity& position1,
+                                const PositionWithAffinity& position2) {
+  AssertSamePrimaryDirectionAlgorithm(position1, position2);
+}
+
+void AssertSamePrimaryDirection(
+    const PositionInFlatTreeWithAffinity& position1,
+    const PositionInFlatTreeWithAffinity& position2) {
+  AssertSamePrimaryDirectionAlgorithm(position1, position2);
 }
 
 }  // namespace blink

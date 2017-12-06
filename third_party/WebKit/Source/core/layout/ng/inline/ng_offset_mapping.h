@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
