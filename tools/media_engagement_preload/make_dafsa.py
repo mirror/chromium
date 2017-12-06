@@ -5,6 +5,14 @@
 
 import array
 import json
+import sys
+import os
+
+SOURCE_ROOT = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
+
+sys.path.insert(
+    0, os.path.join(SOURCE_ROOT, "third_party", "protobuf", "python"))
 
 import media_engagement_preload_pb2
 
@@ -197,7 +205,6 @@ The bytes in the generated array has the following meaning:
 10: 0x82 <return_value> 0x82 & 0x0F -> return 2
 """
 
-import sys
 
 class InputError(Exception):
   """Exception raised for errors in the input file."""
