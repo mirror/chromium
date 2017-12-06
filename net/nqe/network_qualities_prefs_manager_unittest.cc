@@ -74,7 +74,9 @@ class TestPrefDelegate : public NetworkQualitiesPrefsManager::PrefDelegate {
 };
 
 TEST(NetworkQualitiesPrefManager, Write) {
-  TestNetworkQualityEstimator estimator;
+  std::map<std::string, std::string> variation_params;
+  variation_params["force_effective_connection_type"] = "Slow-2G";
+  TestNetworkQualityEstimator estimator(variation_params);
 
   std::unique_ptr<TestPrefDelegate> prefs_delegate(new TestPrefDelegate());
   TestPrefDelegate* prefs_delegate_ptr = prefs_delegate.get();
@@ -90,6 +92,8 @@ TEST(NetworkQualitiesPrefManager, Write) {
       NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
   EXPECT_EQ(1u, prefs_delegate_ptr->write_count());
   // Network quality generated from the default observation must be written.
+  // Network quality generated from the default observation should not be
+  // written.
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(3u, prefs_delegate_ptr->write_count());
 
@@ -114,8 +118,10 @@ TEST(NetworkQualitiesPrefManager, Write) {
 }
 
 TEST(NetworkQualitiesPrefManager, WriteAndReadWithMultipleNetworkIDs) {
-  static const size_t kMaxCacheSize = 10u;
-  TestNetworkQualityEstimator estimator;
+  static const size_t kMaxCacheSize = 20u;
+  std::map<std::string, std::string> variation_params;
+  variation_params["force_effective_connection_type"] = "Slow-2G";
+  TestNetworkQualityEstimator estimator(variation_params);
 
   std::unique_ptr<TestPrefDelegate> prefs_delegate(new TestPrefDelegate());
 
@@ -196,7 +202,7 @@ TEST(NetworkQualitiesPrefManager, ClearPrefs) {
   estimator.SimulateNetworkChange(
       NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
 
-  EXPECT_EQ(1u, manager.ForceReadPrefsForTesting().size());
+  EXPECT_EQ(0u, manager.ForceReadPrefsForTesting().size());
 
   estimator.set_recent_effective_connection_type(
       EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
@@ -206,7 +212,7 @@ TEST(NetworkQualitiesPrefManager, ClearPrefs) {
   base::RunLoop().RunUntilIdle();
   // Verify that the observer was notified, and the updated network quality was
   // written to the prefs.
-  EXPECT_EQ(2u, manager.ForceReadPrefsForTesting().size());
+  EXPECT_EQ(1u, manager.ForceReadPrefsForTesting().size());
 
   // Prefs must be completely cleared.
   manager.ClearPrefs();
