@@ -88,6 +88,7 @@ class StoragePartitionImpl;
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 class MediaStreamDispatcherHost;
+class MediaStreamTrackMetricsHost;
 class P2PSocketDispatcherHost;
 #endif
 
@@ -519,6 +520,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void CreateMediaStreamDispatcherHost(
       MediaStreamManager* media_stream_manager,
       mojom::MediaStreamDispatcherHostRequest request);
+  void CreateMediaStreamTrackMetricsHost(
+      mojom::MediaStreamTrackMetricsHostRequest request);
+
   void OnRegisterAecDumpConsumer(int id);
   void OnUnregisterAecDumpConsumer(int id);
   void RegisterAecDumpConsumerOnUIThread(int id);
@@ -719,6 +723,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   std::unique_ptr<MediaStreamDispatcherHost, BrowserThread::DeleteOnIOThread>
       media_stream_dispatcher_host_;
+  std::unique_ptr<MediaStreamTrackMetricsHost, BrowserThread::DeleteOnIOThread>
+      media_stream_track_metrics_host_;
 #endif
 
   // Forwards messages between WebRTCInternals in the browser process

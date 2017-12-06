@@ -17,9 +17,7 @@
 
 namespace content {
 
-MediaStreamTrackMetricsHost::MediaStreamTrackMetricsHost()
-    : BrowserMessageFilter(MediaStreamTrackMetricsHostMsgStart) {
-}
+MediaStreamTrackMetricsHost::MediaStreamTrackMetricsHost() {}
 
 MediaStreamTrackMetricsHost::~MediaStreamTrackMetricsHost() {
   // Our render process has exited. We won't receive any more IPC
@@ -31,24 +29,18 @@ MediaStreamTrackMetricsHost::~MediaStreamTrackMetricsHost() {
     ReportDuration(info);
   }
   tracks_.clear();
+
+  bindings_.CloseAllBindings();
 }
 
-bool MediaStreamTrackMetricsHost::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-
-  IPC_BEGIN_MESSAGE_MAP(MediaStreamTrackMetricsHost, message)
-    IPC_MESSAGE_HANDLER(MediaStreamTrackMetricsHost_AddTrack, OnAddTrack)
-    IPC_MESSAGE_HANDLER(MediaStreamTrackMetricsHost_RemoveTrack, OnRemoveTrack)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  return handled;
+void MediaStreamTrackMetricsHost::BindRequest(
+    mojom::MediaStreamTrackMetricsHostRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
-void MediaStreamTrackMetricsHost::OnAddTrack(uint64_t id,
-                                             bool is_audio,
-                                             bool is_remote) {
+void MediaStreamTrackMetricsHost::AddTrack(uint64_t id,
+                                           bool is_audio,
+                                           bool is_remote) {
   if (tracks_.find(id) != tracks_.end())
     return;
 
@@ -56,7 +48,7 @@ void MediaStreamTrackMetricsHost::OnAddTrack(uint64_t id,
   tracks_[id] = info;
 }
 
-void MediaStreamTrackMetricsHost::OnRemoveTrack(uint64_t id) {
+void MediaStreamTrackMetricsHost::RemoveTrack(uint64_t id) {
   if (tracks_.find(id) == tracks_.end())
     return;
 
