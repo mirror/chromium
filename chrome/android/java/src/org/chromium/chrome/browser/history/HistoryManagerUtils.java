@@ -30,7 +30,8 @@ public class HistoryManagerUtils {
     public static void showHistoryManager(ChromeActivity activity, Tab tab) {
         Context appContext = ContextUtils.getApplicationContext();
         if (activity.getBottomSheet() != null) {
-            activity.getBottomSheetContentController().showContentAndOpenSheet(R.id.action_history);
+            activity.getBottomSheetContentController().showContentAndOpenSheet(
+                    R.id.action_history, true);
         } else if (DeviceFormFactor.isTablet()) {
             // History shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.NATIVE_HISTORY_URL);

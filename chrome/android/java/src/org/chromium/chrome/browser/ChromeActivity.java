@@ -45,6 +45,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.SysUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
@@ -135,6 +136,7 @@ import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.webapps.AddToHomescreenManager;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
+import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
@@ -1886,7 +1888,11 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_HISTORY_MANAGER);
             }
             RecordUserAction.record("MobileMenuHistory");
-            HistoryManagerUtils.showHistoryManager(this, currentTab);
+            if (getBottomSheet() != null) {
+                openBottomSheetForMenuItem(R.id.action_history);
+            } else {
+                HistoryManagerUtils.showHistoryManager(this, currentTab);
+            }
             StartupMetrics.getInstance().recordOpenedHistory();
         } else if (id == R.id.share_menu_id || id == R.id.direct_share_menu_id) {
             onShareMenuItemSelected(id == R.id.direct_share_menu_id,
@@ -1939,6 +1945,30 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             return false;
         }
         return true;
+    }
+
+    /**
+     * Record a menu item click and open the bottom sheet to the specified content. This method
+     * assumes that Chrome Home is enabled.
+     * @param navId The bottom sheet navigation id to open.
+     */
+    protected void openBottomSheetForMenuItem(int navId) {
+        try (StrictModeContext unused = StrictModeContext.allowAllVmPolicies()) {
+            ChromePreferenceManager.getInstance().incrementChromeHomeMenuItemClickCount();
+        }
+        final View highlightedView = findViewById(navId);
+        ViewHighlighter.turnOnHighlight(highlightedView, false);
+        getBottomSheetContentController().showContentAndOpenSheet(navId, false);
+
+        mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
+            @Override
+            public void onSheetContentChanged(BottomSheet.BottomSheetContent newContent) {
+                highlightedView.post(() -> {
+                    ViewHighlighter.turnOffHighlight(highlightedView);
+                    mBottomSheet.removeObserver(this);
+                });
+            }
+        });
     }
 
     /**
