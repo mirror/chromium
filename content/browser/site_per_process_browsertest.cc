@@ -6326,6 +6326,7 @@ class SitePerProcessMouseWheelBrowserTest : public SitePerProcessBrowserTest {
     {
       MainThreadFrameObserver observer(rfh->GetRenderWidgetHost());
       observer.Wait();
+      observer.Wait();
     }
   }
 

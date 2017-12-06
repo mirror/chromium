@@ -322,6 +322,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
       hit_testable_without_draws_content_;
   layer->non_fast_scrollable_region_ = non_fast_scrollable_region_;
   layer->touch_action_region_ = touch_action_region_;
+  layer->wheel_event_handler_region_ = wheel_event_handler_region_;
   layer->background_color_ = background_color_;
   layer->safe_opaque_background_color_ = safe_opaque_background_color_;
   layer->position_ = position_;
@@ -417,6 +418,11 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
     std::unique_ptr<base::Value> region =
         touch_action_region_.region().AsValue();
     result->Set("TouchRegion", std::move(region));
+  }
+
+  if (!wheel_event_handler_region_.IsEmpty()) {
+    std::unique_ptr<base::Value> region = wheel_event_handler_region_.AsValue();
+    result->Set("WheelRegion", std::move(region));
   }
 
   return result;
@@ -758,6 +764,9 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
     state->BeginArray("touch_action_region_region");
     touch_action_region_.region().AsValueInto(state);
     state->EndArray();
+  }
+  if (!wheel_event_handler_region_.IsEmpty()) {
+    wheel_event_handler_region_.AsValueInto(state);
   }
   if (!non_fast_scrollable_region_.IsEmpty()) {
     state->BeginArray("non_fast_scrollable_region");
