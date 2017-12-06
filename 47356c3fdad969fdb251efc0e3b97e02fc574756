@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b62455d_afa3f872",
+        "filename": "components/policy/content/policy_blacklist_navigation_throttle.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-06T16:18:19Z",
+      "side": 1,
+      "message": "nit: update",
+      "revId": "47356c3fdad969fdb251efc0e3b97e02fc574756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929fd5f4_addf5495",
+        "filename": "components/policy/content/policy_blacklist_navigation_throttle.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-06T16:18:19Z",
+      "side": 1,
+      "message": "nit: no need to list this separately; this should be as part of the headers below",
+      "revId": "47356c3fdad969fdb251efc0e3b97e02fc574756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e2bf1e_acf14f01",
+        "filename": "components/policy/content/policy_blacklist_navigation_throttle.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-06T16:18:19Z",
+      "side": 1,
+      "message": "nit: document",
+      "revId": "47356c3fdad969fdb251efc0e3b97e02fc574756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26bc20b_5bbb6ee6",
+        "filename": "components/policy/content/policy_blacklist_navigation_throttle.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-06T16:18:19Z",
+      "side": 1,
+      "message": "nit: generally the parameter names are listed in the header as well",
+      "revId": "47356c3fdad969fdb251efc0e3b97e02fc574756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
