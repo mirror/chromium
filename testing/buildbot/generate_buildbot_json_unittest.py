@@ -192,6 +192,7 @@ ANDROID_WATERFALL = """\
           ],
         },
         'os_type': 'android',
+        'skip_device_recovery': True,
         'test_suites': {
           'gtest_tests': 'foo_tests',
         },
@@ -360,6 +361,22 @@ FOO_TEST_MODIFICATIONS = """\
 }
 """
 
+FOO_TEST_BAD_MODIFICATIONS = """\
+{
+  'foo_test': {
+    'modifications': {
+      'Fake Tester': {
+        'swarming': {
+          'dimension_sets': [  # This should be a dict.
+            'integrity:high',
+          ],
+        },
+      },
+    },
+  }
+}
+"""
+
 ANDROID_TEST_EXCEPTIONS = """\
 {
   'foo_test': {
@@ -368,6 +385,14 @@ ANDROID_TEST_EXCEPTIONS = """\
         'merge',
       ],
     },
+    'modifications': {
+      'Fake Android L Tester': {
+        'args': [
+          '--foo-arg',
+          '--bar-arg',
+        ],
+      }
+    }
   },
 }
 """
@@ -626,6 +651,11 @@ ANDROID_WATERFALL_OUTPUT = """\
   "Fake Android L Tester": {
     "gtest_tests": [
       {
+        "args": [
+          "--recover-devices",
+          "--foo-arg",
+          "--bar-arg"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -750,6 +780,15 @@ class UnitTest(unittest.TestCase):
                     FOO_TEST_MODIFICATIONS)
     fbb.files['chromium.test.json'] = MODIFIED_OUTPUT
     fbb.check_output_file_consistency(verbose=True)
+
+  def test_test_bad_modifications(self):
+    fbb = FakeBBGen(FOO_GTESTS_WATERFALL,
+                    FOO_TEST_SUITE,
+                    FOO_TEST_BAD_MODIFICATIONS)
+    fbb.files['chromium.test.json'] = MODIFIED_OUTPUT
+    self.assertRaisesRegexp(generate_buildbot_json.BBGenErr,
+                            'Error merging .* Both lists must be all .*',
+                            fbb.check_output_file_consistency)
 
   def test_isolated_script_tests(self):
     fbb = FakeBBGen(FOO_ISOLATED_SCRIPTS_WATERFALL,

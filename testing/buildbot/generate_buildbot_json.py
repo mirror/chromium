@@ -11,6 +11,7 @@ import argparse
 import ast
 import collections
 import copy
+import itertools
 import json
 import os
 import string
@@ -240,23 +241,31 @@ class BBJSONGenerator(object):
         elif a[key] == b[key]:
           pass # same leaf value
         elif isinstance(a[key], list) and isinstance(b[key], list):
-          # TODO(kbr): this only works properly if the two arrays are
-          # the same length, which is currently always the case in the
-          # swarming dimension_sets that we have to merge. It will fail
+          # TODO(kbr): if the lists are of dicts, this only works properly
+          # if they are the same length, which is currently always the case in
+          # the swarming dimension_sets that we have to merge. It will fail
           # to merge / override 'args' arrays which are different
           # length.
           #
           # Fundamentally we want different behavior for arrays of
           # dictionaries vs. arrays of strings.
-          for idx in xrange(len(b[key])):
-            try:
-              a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
-                                                  path + [str(key), str(idx)],
-                                                  update=update)
-            except (IndexError, TypeError): # pragma: no cover
-              raise BBGenErr('Error merging list keys ' + str(key) +
-                              ' and indices ' + str(idx) + ' between ' +
-                              str(a) + ' and ' + str(b)) # pragma: no cover
+          if all(isinstance(s, basestring) for s in itertools.chain(a[key],
+                                                                    b[key])):
+            a[key].extend(b[key])
+          elif all(isinstance(d, dict) for d in itertools.chain(a[key],
+                                                                b[key])):
+            for idx in xrange(len(b[key])):
+              try:
+                a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
+                                                    path + [str(key), str(idx)],
+                                                    update=update)
+              except (IndexError, TypeError): # pragma: no cover
+                raise BBGenErr('Error merging list keys ' + str(key) +
+                                ' and indices ' + str(idx) + ' between ' +
+                                str(a) + ' and ' + str(b)) # pragma: no cover
+          else:
+            raise BBGenErr('Error merging %s and %s. Both lists must be all '
+                           'dicts or all strings.' % (str(a[key]), str(b[key])))
         elif update: # pragma: no cover
           a[key] = b[key] # pragma: no cover
         else:
@@ -354,6 +363,9 @@ class BBJSONGenerator(object):
             'name': 'shard #${SHARD_INDEX} logcats',
           },
         ]
+      if not tester_config.get('skip_device_recovery', False):
+        result['args'] = result.get('args', []) + ['--recover-devices']
+
     result = self.update_and_cleanup_test(result, test_name, tester_name)
     return result
 
