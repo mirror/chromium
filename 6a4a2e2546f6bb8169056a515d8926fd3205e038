@@ -16,6 +16,24 @@
       "revId": "6a4a2e2546f6bb8169056a515d8926fd3205e038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd245ec_baacc58e",
+        "filename": "third_party/WebKit/Source/core/frame/DOMVisualViewport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-06T01:11:35Z",
+      "side": 1,
+      "message": "The only reason would be because with root layer scrolls, the Frame\u0027s LayoutView\u0027s PaintLayer\u0027s (phew) ScrollableArea is the LayoutViewportScrollableArea. Since the LayoutObjects and PaintLayers aren\u0027t created until layout, we might need to do layout to get a layout viewport - is that what your concern is?\n\nI dug into it a little since I that was my initial though when I saw your comment but it seems that we always get a LayoutView with a PaintLayer when we install a new Document via DocumentLoader::InstallNewDocument -\u003e Document::Initialize -\u003e SetStyle. We detach the layout tree without needing a layout (for e.g. if we remove an iframe from the DOM). So I think this is correct (I\u0027ve rewritten the test as a SimTest and added some checks before a layout\u0027s been done to ensure we don\u0027t hit these 0 returns).\n\nFor non-root-layer-scrolls, the LayoutViewportScrollableArea is the view and that\u0027s created at navigation commit so it will always be around before the first layout.\n\nWDYT?",
+      "parentUuid": "d49c4db5_a40daff4",
+      "revId": "6a4a2e2546f6bb8169056a515d8926fd3205e038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
