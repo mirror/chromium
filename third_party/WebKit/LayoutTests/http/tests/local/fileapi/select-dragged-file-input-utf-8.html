@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Select UTF-8-named files in a file input</title>
+<link rel="help"
+      href="https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file)">
+<link rel="author" title="Benjamin C. Wiley Sittler"
+      href="mailto:bsittler@chromium.org">
+<script src="../../../../resources/testharness.js"></script>
+<script src="../../../../resources/testharnessreport.js"></script>
+<script src="resources/select-dragged-file-input-helper.js"></script>
+<!--
+
+ NOTE: Blink renderer crashes are expected on non-Windows hosts using
+ filenames containing characters from outside ASCII. Use a UTF-8
+ locale to prevent this, e.g. with:
+
+ bash$ export LC_ALL=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
+
+ Any other locale should work too provided it uses UTF-8 character
+ encoding.
+
+ Test failures are expected on Windows when using any system "ANSI"
+ codepage other than windows-1252. To fix this, upgrade your system's
+ Win32.pm Perl module to the latest version.
+
+  -->
+<script>
+'use strict';
+
+fileInputTest({
+  fileNameSource: 'ASCII',
+  fileBaseName: 'file-for-drag-to-send3.txt',
+});
+
+fileInputTest({
+  fileNameSource: 'x-user-defined',
+  fileBaseName: 'file-for-drag-to-send3-\uF7F0\uF793\uF783\uF7A0.txt',
+});
+
+fileInputTest({
+  fileNameSource: 'windows-1252',
+  fileBaseName: 'file-for-drag-to-send3-â˜ºðŸ˜‚.txt',
+});
+
+fileInputTest({
+  fileNameSource: 'JIS X 0201 and JIS X 0208',
+  fileBaseName: 'file-for-drag-to-send3-★星★.txt',
+});
+
+fileInputTest({
+  fileNameSource: 'Unicode',
+  fileBaseName: 'file-for-drag-to-send3-☺😂.txt',
+});
+
+// Rationale for this particular test character sequence, which is
+// used in filenames and also in file contents:
+//
+// - ABC~ ensures the string starts with something we can read to
+//   ensure it is from the correct source; ~ is used because even
+//   some 1-byte otherwise-ASCII-like parts of ISO-2022-JP
+//   interpret it differently.
+// - ‾¥ are inside a single-byte range of ISO-2022-JP and help
+//   diagnose problems due to filesystem encoding or locale
+// - ≈ is inside IBM437 and helps diagnose problems due to filesystem
+//   encoding or locale
+// - ¤ is inside Latin-1 and helps diagnose problems due to
+//   filesystem encoding or locale; it is also the "simplest" case
+//   needing substitution in ISO-2022-JP
+// - ･ is inside a single-byte range of ISO-2022-JP in some variants
+//   and helps diagnose problems due to filesystem encoding or locale;
+//   on the web it is distinct when decoding but unified when encoding
+// - ・ is inside a double-byte range of ISO-2022-JP and helps
+//   diagnose problems due to filesystem encoding or locale
+// - • is inside Windows-1252 and helps diagnose problems due to
+//   filesystem encoding or locale and also ensures these aren't
+//   accidentally turned into e.g. control codes
+// - ∙ is inside IBM437 and helps diagnose problems due to filesystem
+//   encoding or locale
+// - · is inside Latin-1 and helps diagnose problems due to
+//   filesystem encoding or locale
+// - ☼ is inside IBM437 shadowing C0 and helps diagnose problems due to
+//   filesystem encoding or locale and also ensures these aren't
+//   accidentally turned into e.g. control codes
+// - ★ is inside ISO-2022-JP on a non-Kanji page and makes correct
+//   output easier to spot
+// - 星 is inside ISO-2022-JP on a Kanji page and makes correct
+//   output easier to spot
+// - 🌟 is outside the BMP and makes incorrect surrogate pair
+//   substitution detectable and ensures substitutions work
+//   correctly immediately after Kanji 2-byte ISO-2022-JP
+// - 星 repeated here ensures the correct codec state is used
+//   after a non-BMP substitution
+// - ★ repeated here also makes correct output easier to spot
+// - ☼ is inside IBM437 shadowing C0 and helps diagnose problems due to
+//   filesystem encoding or locale and also ensures these aren't
+//   accidentally turned into e.g. control codes and also ensures
+//   substitutions work correctly immediately after non-Kanji
+//   2-byte ISO-2022-JP
+// - · is inside Latin-1 and helps diagnose problems due to
+//   filesystem encoding or locale
+// - ∙ is inside IBM437 and helps diagnose problems due to filesystem
+//   encoding or locale
+// - • is inside Windows-1252 and again helps diagnose problems
+//   due to filesystem encoding or locale
+// - ・ is inside a double-byte range of ISO-2022-JP and helps
+//   diagnose problems due to filesystem encoding or locale
+// - ･ is inside a single-byte range of ISO-2022-JP in some variants
+//   and helps diagnose problems due to filesystem encoding or locale;
+//   on the web it is distinct when decoding but unified when encoding
+// - ¤ is inside Latin-1 and helps diagnose problems due to
+//   filesystem encoding or locale; again it is a "simple"
+//   substitution case and also ensures
+// - ≈ is inside IBM437 and helps diagnose problems due to filesystem
+//   encoding or locale
+// - ¥‾ are inside a single-byte range of ISO-2022-JP and help
+//   diagnose problems due to filesystem encoding or locale
+// - ~XYZ ensures earlier errors don't lead to misencoding of
+//   simple ASCII
+//
+// Overall the near-symmetry makes common I18N mistakes like
+// off-by-1-after-non-BMP easier to spot. All the characters
+// are also allowed in Windows Unicode filenames.
+const kTestChars = 'ABC~‾¥≈¤･・•∙·☼★星🌟星★☼·∙•・･¤≈¥‾~XYZ';
+
+fileInputTest({
+  fileNameSource: 'Unicode',
+  fileBaseName: `file-for-drag-to-send3-${kTestChars}.txt`,
+});
+
+</script>
