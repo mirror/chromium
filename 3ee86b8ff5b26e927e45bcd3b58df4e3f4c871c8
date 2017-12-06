@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ade602_99aa9ccc",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T19:47:42Z",
+      "side": 1,
+      "message": "RequiresDedicatedProcess() will return true for:\n- everything in --site-per-process\n- all isolated origins (making this a superset of the previous check)\n- CWS (I think this shouldn\u0027t matter for CWS subframes - those should never occur on other sites)\n- extensions (excluding hosted apps). \n\nThe extensions case is worth thinking through, as that should still use process-per-site.  Since we check that new_instance_impl does not have a process here, we will later call GetProcess() on new_instance_impl, and the very first thing this will do is check if process-per-site is needed, and if so, overwriting process_reuse_policy_ accordingly.  So whatever we set here shouldn\u0027t matter for that case, and process-per-site should take precedence.\n\nIt\u0027s also possible that we\u0027ve set the process-per-site policy as part of SetSite() and will overwrite it here in the case that the SI has no process.  It should be fine since as I mention above, we\u0027ll overwrite it again as part of GetProcess(), but as a general sanity check, we could also check and set the process reuse policy here only if there isn\u0027t one already set on new_instance_impl.  WDYT?",
+      "range": {
+        "startLine": 1235,
+        "startChar": 6,
+        "endLine": 1235,
+        "endChar": 51
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eae4260_2dc72ef4",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12581,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T19:47:42Z",
+      "side": 1,
+      "message": "Should be \"bar\", will fix in next PS.",
+      "range": {
+        "startLine": 12581,
+        "startChar": 49,
+        "endLine": 12581,
+        "endChar": 64
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5d29ad_8ccaf123",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12601,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T19:47:42Z",
+      "side": 1,
+      "message": "Similarly stale comment, will fix in next PS.",
+      "range": {
+        "startLine": 12599,
+        "startChar": 1,
+        "endLine": 12601,
+        "endChar": 15
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

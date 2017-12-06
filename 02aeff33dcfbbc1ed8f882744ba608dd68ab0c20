@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61cfc73d_9a95514c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T19:47:42Z",
+      "side": 0,
+      "message": "RequiresDedicatedProcess() returns false first-thing if there\u0027s no site, so this can be removed.",
+      "range": {
+        "startLine": 1236,
+        "startChar": 6,
+        "endLine": 1236,
+        "endChar": 34
+      },
+      "revId": "02aeff33dcfbbc1ed8f882744ba608dd68ab0c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
