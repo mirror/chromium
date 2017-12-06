@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "79d9c5b9_d89ab848",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T16:34:56Z",
+      "side": 1,
+      "message": "Plz add a comment as to why this format operation is here.",
+      "revId": "f0a9f38281d60e869fc445c1d20219bf4bb17231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40c63181_a43c633f",
         "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
         "patchSetId": 5
@@ -48,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "3727d19a_8d01f8ce",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T16:34:56Z",
+      "side": 1,
+      "message": "should address_validator_ \u003d\u003d nullptr before line 249 executes? Add a DCHECK?",
+      "revId": "f0a9f38281d60e869fc445c1d20219bf4bb17231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f3a9a1d_7261746d",
         "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
         "patchSetId": 5
@@ -88,6 +122,23 @@
         "endLine": 279,
         "endChar": 43
       },
+      "revId": "f0a9f38281d60e869fc445c1d20219bf4bb17231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fec3c0_a2328745",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T16:34:56Z",
+      "side": 1,
+      "message": "plz add a sequence checker here and assert that each of AddressNormalizerImpl\u0027s methods is running on the right sequence.",
       "revId": "f0a9f38281d60e869fc445c1d20219bf4bb17231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
