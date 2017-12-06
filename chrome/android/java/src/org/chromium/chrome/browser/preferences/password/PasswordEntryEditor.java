@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -124,6 +126,9 @@ public class PasswordEntryEditor extends Fragment {
         View urlRowsView = mView.findViewById(R.id.url_row);
         TextView dataView = urlRowsView.findViewById(R.id.password_entry_editor_row_data);
         dataView.setText(url);
+        ImageView copy_url = urlRowsView.findViewById(R.id.password_entry_editor_copy);
+        copy_url.setImageDrawable(AppCompatResources.getDrawable(
+                getActivity().getApplicationContext(), R.drawable.ic_content_copy_black));
 
         hookupCopySiteButton(urlRowsView);
         if (!mException) {
@@ -132,6 +137,10 @@ public class PasswordEntryEditor extends Fragment {
                     usernameView.findViewById(R.id.password_entry_editor_row_data);
             usernameDataView.setText(name);
             hookupCopyUsernameButton(usernameView);
+            ImageView copy_username = usernameView.findViewById(R.id.password_entry_editor_copy);
+            copy_username.setImageDrawable(AppCompatResources.getDrawable(
+                    getActivity().getApplicationContext(), R.drawable.ic_content_copy_black));
+
             mKeyguardManager =
                     (KeyguardManager) getActivity().getApplicationContext().getSystemService(
                             Context.KEYGUARD_SERVICE);
@@ -308,6 +317,9 @@ public class PasswordEntryEditor extends Fragment {
                 (ImageButton) mView.findViewById(R.id.password_entry_editor_view_password);
         passwordView.setText(mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_PASSWORD));
         passwordView.setInputType(inputType);
+        ImageView copy_password = passwordView.findViewById(R.id.password_entry_editor_password);
+        copy_password.setImageDrawable(AppCompatResources.getDrawable(
+                getActivity().getApplicationContext(), visibilityIcon));
         viewPasswordButton.setImageResource(visibilityIcon);
         viewPasswordButton.setContentDescription(getActivity().getString(annotation));
     }
