@@ -29,6 +29,12 @@ class SystemCookieStore {
   typedef base::OnceCallback<void(NSArray<NSHTTPCookie*>*)>
       SystemCookieCallbackForCookies;
 
+  // Each implementation should add identifier to this enum.
+  enum class SystemCookieStoreType {
+    kNSHTTPSystemCookieStore,
+    kWKHTTPSystemCookieStore
+  };
+
   SystemCookieStore();
   virtual ~SystemCookieStore();
 
@@ -66,6 +72,9 @@ class SystemCookieStore {
 
   // Returns the Cookie Accept policy for the internal cookie store.
   virtual NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() = 0;
+
+  // Returns the receiving class type.
+  virtual SystemCookieStoreType GetCookieStoreType() const = 0;
 
   // Returns the creation time of a specific cookie
   base::Time GetCookieCreationTime(NSHTTPCookie* cookie);
