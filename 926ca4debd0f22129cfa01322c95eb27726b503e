@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a4ec7a_9c3d1394",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-06T03:29:42Z",
+      "side": 1,
+      "message": "nit: Already -\u003e Inflight ...?\n\n(Feeling slight confusing on what this means between \u0027already loaded\u0027 and \u0027currently loading\u0027)",
+      "revId": "926ca4debd0f22129cfa01322c95eb27726b503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da48f35_1b9e42c7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56869,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-06T03:29:42Z",
+      "side": 1,
+      "message": "nit: Records the number of tabs with inflight loading activities ...",
+      "revId": "926ca4debd0f22129cfa01322c95eb27726b503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
