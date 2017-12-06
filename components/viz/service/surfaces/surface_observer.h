@@ -22,9 +22,6 @@ class SurfaceObserver {
   // Called when a CompositorFrame within |surface| activates.
   virtual void OnSurfaceActivated(const SurfaceId& surface_id) = 0;
 
-  // Called when a Surface was marked to be destroyed.
-  virtual void OnSurfaceDestroyed(const SurfaceId& surface_id) = 0;
-
   // Called when a Surface is modified, e.g. when a CompositorFrame is
   // activated, its producer confirms that no CompositorFrame will be submitted
   // in response to a BeginFrame, or a CopyOutputRequest is issued.

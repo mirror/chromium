@@ -180,6 +180,10 @@ viz::FrameSinkManagerImpl* GetFrameSinkManager() {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   if (!factory)
     return nullptr;
+
+  if (!factory->GetContextFactoryPrivate())
+    return nullptr;
+
   return factory->GetContextFactoryPrivate()->GetFrameSinkManager();
 #endif
 }

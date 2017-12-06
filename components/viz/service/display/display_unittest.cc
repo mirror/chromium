@@ -105,7 +105,7 @@ class DisplayTest : public testing::Test {
                                                true /* needs_sync_points */)),
         task_runner_(new base::NullTaskRunner) {}
 
-  ~DisplayTest() override { support_->EvictCurrentSurface(); }
+  ~DisplayTest() override = default;
 
   void SetUpDisplay(const RendererSettings& settings,
                     std::unique_ptr<cc::TestWebGraphicsContext3D> context) {
@@ -2510,7 +2510,6 @@ TEST_F(DisplayTest, CompositorFrameWithPresentationToken) {
     RunAllPendingInMessageLoop();
   }
 
-  sub_support->EvictCurrentSurface();
   TearDownDisplay();
 }
 
