@@ -2693,7 +2693,7 @@ void AppsGridView::StopIgnoringScrollEvents() {
 bool AppsGridView::EnableFolderDragDropUI() {
   // Enable drag and drop folder UI only if it is at the app list root level
   // and the switch is on.
-  return model_->folders_enabled() && !folder_delegate_;
+  return !folder_delegate_;
 }
 
 AppsGridView::Index AppsGridView::GetNearestTileIndexForPoint(
