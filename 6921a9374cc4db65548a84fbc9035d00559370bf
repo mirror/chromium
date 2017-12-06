@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c27b4ad5_61ba7b7b",
+        "filename": "gpu/command_buffer/service/memory_tracking.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:04:41Z",
+      "side": 1,
+      "message": "nit: could you remove this?",
+      "revId": "6921a9374cc4db65548a84fbc9035d00559370bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
