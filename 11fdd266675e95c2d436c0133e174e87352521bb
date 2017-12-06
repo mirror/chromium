@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9f2263_eb856af0",
+        "filename": "chrome/common/extensions/api/_api_features.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T23:43:19Z",
+      "side": 0,
+      "message": "We should also be able to remove this manifest feature, right?",
+      "revId": "11fdd266675e95c2d436c0133e174e87352521bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
