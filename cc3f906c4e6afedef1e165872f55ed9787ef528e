@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790e676d_9fbb80f9",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "nit: May want to add a comment why do we need this method.",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd049bd8_198b9eae",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 38
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "// static",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 6
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f93521_28713a7c",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 38
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "// static",
+      "range": {
+        "startLine": 194,
+        "startChar": 48,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a527fec3_84f8ad72",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 38
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "nit: this is NOT platform task metrics, is it?",
+      "range": {
+        "startLine": 358,
+        "startChar": 29,
+        "endLine": 358,
+        "endChar": 50
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8159c0e8_27ef3bd1",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "nit: I don\u0027t like mention of Cronet here, as this seems to invert dependency. Could you rephrase it?",
+      "range": {
+        "startLine": 63,
+        "startChar": 73,
+        "endLine": 63,
+        "endChar": 79
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eea370c_f8506139",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 38
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "Should we remove this method?",
+      "range": {
+        "startLine": 916,
+        "startChar": 10,
+        "endLine": 916,
+        "endChar": 28
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93421687_df1ef8b8",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 38
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-06T21:54:31Z",
+      "side": 1,
+      "message": "nit: canInitWithTask",
+      "range": {
+        "startLine": 923,
+        "startChar": 15,
+        "endLine": 923,
+        "endChar": 33
+      },
+      "revId": "cc3f906c4e6afedef1e165872f55ed9787ef528e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
