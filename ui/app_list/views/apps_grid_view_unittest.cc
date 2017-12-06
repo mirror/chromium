@@ -359,7 +359,6 @@ TEST_F(AppsGridViewTest, RemoveSelectedLastApp) {
 }
 
 TEST_F(AppsGridViewTest, MouseDragWithFolderDisabled) {
-  model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
@@ -715,38 +714,6 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   EXPECT_EQ(0, GetPaginationModel()->selected_page());
 
   apps_grid_view_->EndDrag(true);
-}
-
-TEST_F(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
-  model_->SetFoldersEnabled(false);
-  const int kTotalItems = 4;
-  model_->PopulateApps(kTotalItems);
-  EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
-            model_->GetModelContent());
-
-  gfx::Point mouse_from = GetItemRectOnCurrentPageAt(0, 0).CenterPoint();
-  gfx::Point mouse_to = GetItemRectOnCurrentPageAt(0, 1).CenterPoint();
-
-  gfx::Point touch_from = GetItemRectOnCurrentPageAt(0, 2).CenterPoint();
-  gfx::Point touch_to = GetItemRectOnCurrentPageAt(0, 3).CenterPoint();
-
-  // Starts a mouse drag first then a touch drag.
-  SimulateDrag(AppsGridView::MOUSE, mouse_from, mouse_to);
-  SimulateDrag(AppsGridView::TOUCH, touch_from, touch_to);
-  // Finishes the drag and mouse drag wins.
-  apps_grid_view_->EndDrag(false);
-  EXPECT_EQ(std::string("Item 1,Item 0,Item 2,Item 3"),
-            model_->GetModelContent());
-  test_api_->LayoutToIdealBounds();
-
-  // Starts a touch drag first then a mouse drag.
-  SimulateDrag(AppsGridView::TOUCH, touch_from, touch_to);
-  SimulateDrag(AppsGridView::MOUSE, mouse_from, mouse_to);
-  // Finishes the drag and touch drag wins.
-  apps_grid_view_->EndDrag(false);
-  EXPECT_EQ(std::string("Item 1,Item 0,Item 3,Item 2"),
-            model_->GetModelContent());
-  test_api_->LayoutToIdealBounds();
 }
 
 TEST_F(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
