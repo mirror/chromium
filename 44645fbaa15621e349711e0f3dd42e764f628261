@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d371ffb8_9f19e791",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-06T17:07:52Z",
+      "side": 1,
+      "message": "The problem is that IgnoreAutoplayRestrictionsForTests will block any existing flag from taking effect. It\u0027s on by default and since it is a switch there is no way to disable it (unless we maybe convert it to a feature?)",
+      "parentUuid": "9e7577be_fbef633e",
+      "range": {
+        "startLine": 603,
+        "startChar": 14,
+        "endLine": 603,
+        "endChar": 59
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcaccf2e_bd0c89ca",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
         "patchSetId": 1
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "Similarly, this would mean that the framed content navigates internally to a page at a different origin, so that the origin of the src attribute and the origin of the loaded content no longer match.\n\n(These terms are also used in other feature policy tests, so we should change all of them if we\u0027re changing them here)",
       "parentUuid": "1041a5b6_a4ffdeaa",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a19a212_a2db9f9e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-06T17:07:52Z",
+      "side": 1,
+      "message": "Yes I just used the other feature policy tests as a template.",
+      "parentUuid": "bfa8adf5_aed3278d",
       "range": {
         "startLine": 33,
         "startChar": 39,
