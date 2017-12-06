@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "d72e67d9_54889774",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:46:00Z",
+      "side": 1,
+      "message": "I wonder if it would be worthwhile to introduce a trial group (or sub-trial) to use to experiment with these consolidation strategies. The precise effects on the process count may or may not be easy to see just by comparing dashboards across versions -- you\u0027ll need a way to cancel out the uptime effects, for example.",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ade602_99aa9ccc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
