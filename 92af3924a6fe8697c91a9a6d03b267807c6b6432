@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fec4d8e_d1e246b5",
+        "filename": "content/renderer/loader/site_isolation_stats_gatherer_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T02:08:05Z",
+      "side": 1,
+      "message": "Just fixing this metric name in the test, which was stale after a suggestion in review.",
+      "revId": "92af3924a6fe8697c91a9a6d03b267807c6b6432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
