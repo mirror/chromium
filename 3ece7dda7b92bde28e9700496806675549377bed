@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99a839ab_92aa8eac",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-06T15:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3064df4b_22764115",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 34
+      },
+      "revId": "3ece7dda7b92bde28e9700496806675549377bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649a8fbd_d3754c7d",
         "filename": "ui/native_theme/native_theme.h",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "3ece7dda7b92bde28e9700496806675549377bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85f3ece_13787cb0",
+        "filename": "ui/native_theme/native_theme.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-06T15:18:22Z",
+      "side": 1,
+      "message": "Okay, I got back to this now that I have a Windows machine.",
+      "parentUuid": "f3b78a28_6d30d65f",
+      "range": {
+        "startLine": 425,
+        "startChar": 6,
+        "endLine": 425,
+        "endChar": 78
+      },
+      "revId": "3ece7dda7b92bde28e9700496806675549377bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
