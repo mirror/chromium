@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "667305ce_7b44e935",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "Is this needed? Isn\u0027t this the default?",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bfeb78d_9819e093",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -439,6 +462,46 @@
     },
     {
       "key": {
+        "uuid": "68e01598_6a30b29f",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "Timer (here and elsewhere)",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3f44ec_8b5d9a1d",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "nit: can you add a blank line between L32 and 33?",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f38aa35_08701585",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 20
@@ -501,6 +564,76 @@
         "startChar": 3,
         "endLine": 27,
         "endChar": 46
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da84b5ba_f2e0d239",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "UI ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1f0245_d3363d92",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "FYI DCHECK_CURRENTLY_ON(BrowserThread::UI); is usable in components/arc/ now.",
+      "parentUuid": "ddcd1c61_5e254a96",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a76be3_b71585d2",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "Is this allowed? \u0027const auto\u0026\u0027 maybe?",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 11
       },
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -571,6 +704,86 @@
         "endLine": 37,
         "endChar": 44
       },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1672a89f_a701d459",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "Please put everything in an anonymous namespace to avoid accidental name collisions:\n\nnamespace arc {\nnamespace {\n\nclass ... {\n\n};\n\nTEST_F() {\n...\n}\n\n}  // namespace\n}  // namespace arc",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c197011_6281990d",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "Please match the file name with this.\n\narc_timer_bridge_unittest.cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8098271b_e63be164",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "nit: Can you instantiate the bridge via the factory you wrote? That improves the test coverage. Also, initializing the bridge with null context is unusual (in production that never happens.)\n\nDoing so is easy. You can do the same as components/arc/metrics/arc_metrics_service_unittest.cc.\n\n1. Add ArcMetricsService::GetFactory().\n2. Add GetArcMetricsService() helper function in this file.\n3. Add some member functions\n\n  content::TestBrowserThreadBundle thread_bundle_;\n  std::unique_ptr\u003cArcServiceManager\u003e arc_service_manager_;\n  std::unique_ptr\u003cTestBrowserContext\u003e context_;\n\nand update the constructor. That\u0027s it.",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99f94ec_5ac29d88",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "This is automatically done. Please remove.",
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -685,6 +898,63 @@
         "startChar": 30,
         "endLine": 43,
         "endChar": 54
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada0992a_c0e3b776",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "same, remove",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372ab28e_8082cd69",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "You can remove |bridge_service_| then (and use ArcServiceManager::Get()-\u003earc_bridge_service() instead.)",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409bd3af_9f1febe6",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-06T21:34:55Z",
+      "side": 1,
+      "message": "I\u0027d make all the member variables private: and add a protected getter only for timer_instance_.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 48
       },
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
