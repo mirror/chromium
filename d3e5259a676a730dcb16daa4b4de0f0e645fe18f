@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "36f50cd0_9f85d669",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T22:22:31Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll give the polymorphic solution a try. Will resolve when done.",
+      "parentUuid": "aa5152c9_2a23bcf0",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa76d99f_d29eafef",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -381,6 +399,30 @@
       "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c8bb0c_2c2138aa",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T22:22:31Z",
+      "side": 1,
+      "message": "Doh, I read the error wrong and it was actually the enum declaration before the class definition that was breaking. Done.",
+      "parentUuid": "9c787be5_b165a556",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
