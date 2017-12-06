@@ -16,6 +16,24 @@
       "revId": "bc65eb62576dfc324492fc1b246ef3da42e3ab9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fb8821_fff02e86",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-06T00:47:39Z",
+      "side": 1,
+      "message": "Yes, the URL gets recorded by SourceUrlRecorderWebContentsObserver.",
+      "parentUuid": "12516ef0_6d8bada6",
+      "revId": "bc65eb62576dfc324492fc1b246ef3da42e3ab9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
