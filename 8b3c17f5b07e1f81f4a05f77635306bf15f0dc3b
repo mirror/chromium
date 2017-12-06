@@ -139,6 +139,24 @@
       "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a330baff_ef512f1f",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:04:38Z",
+      "side": 1,
+      "message": "Does it make sense to #ifdef ANDROID_NATIVE_FENCE_SYNC so it\u0027s only used in Android builds?\n\nI\u0027m assuming this entire file isn\u0027t android-specific, due to the fact that we might implement a CrOS version as well down the road?",
+      "parentUuid": "c5b87f97_b9853ee9",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

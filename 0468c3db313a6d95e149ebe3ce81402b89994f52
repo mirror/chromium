@@ -46,6 +46,30 @@
       "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d279b4ff_d9da9ddb",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 68
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:04:38Z",
+      "side": 1,
+      "message": "AdaptCallbackForRepeating isn\u0027t free though--it instantiates extra templates and causes extra allocations. Dispatching the callback invocation requires an extra trampoline jump now as well. If you feel that it\u0027d be useful to have BindRepeatingWillBeOnce, we could debate whether or not that\u0027s worth adding. But I don\u0027t think we should be using this pattern generally in the code.",
+      "parentUuid": "f3dbbfd6_07d73eae",
+      "range": {
+        "startLine": 981,
+        "startChar": 19,
+        "endLine": 981,
+        "endChar": 65
+      },
+      "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
