@@ -117,7 +117,6 @@ class NetworkPortalNotificationControllerDelegate
         controller_(controller) {}
 
   // Overridden from message_center::NotificationDelegate:
-  void Display() override;
   void Close(bool by_user) override;
   void Click() override;
   void ButtonClick(int button_click) override;
@@ -138,13 +137,6 @@ class NetworkPortalNotificationControllerDelegate
 
   DISALLOW_COPY_AND_ASSIGN(NetworkPortalNotificationControllerDelegate);
 };
-
-void NetworkPortalNotificationControllerDelegate::Display() {
-  UMA_HISTOGRAM_ENUMERATION(
-      NetworkPortalNotificationController::kNotificationMetric,
-      NetworkPortalNotificationController::NOTIFICATION_METRIC_DISPLAYED,
-      NetworkPortalNotificationController::NOTIFICATION_METRIC_COUNT);
-}
 
 void NetworkPortalNotificationControllerDelegate::Close(bool by_user) {
   if (clicked_)
