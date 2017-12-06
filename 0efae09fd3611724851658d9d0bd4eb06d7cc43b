@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf253c94_854f0a97",
+        "filename": "ios/chrome/browser/download/browser_download_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "s/approprivate/the appropriate",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da15a709_b2d9a703",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "This does not own the service, BrowserState does. This creates the service.",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a401b9b_960f1f0d",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 22,
+        "startChar": 64,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04aad14_b81953e0",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "There is an implicit dependency here on DownloadController. I see that we lazily create DownloadController here when FromBrowserState is called. \n\nI am wondering if we should to turn DownloadController into a KeyedService, and explicitly depend on it.",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323a6550_9b8328a5",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "Do you need to override GetBrowserStateToUse?\n\nThe default behavior is to return null for browser state if the browser state is off the record.",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f4cd4d_bf66bf65",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "Why do you need TestWebThreadBundle for this unit test?",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d67abb0_b04c07d4",
+        "filename": "ios/chrome/browser/download/browser_download_service_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce165292_f80d44b5",
+        "filename": "ios/chrome/browser/download/browser_download_service_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T00:41:50Z",
+      "side": 1,
+      "message": "Worth testing the DownloadControllerDestroyed case?",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
