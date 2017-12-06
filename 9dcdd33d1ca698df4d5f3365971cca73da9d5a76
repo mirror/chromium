@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc6b1861_a5b3bba0",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this renaming, since |FrameSelection| implies selection.",
+      "range": {
+        "startLine": 153,
+        "startChar": 7,
+        "endLine": 153,
+        "endChar": 29
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7672745_8fb43682",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "Same here, |is_directional_| is good enough.",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 32
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936f1b12_6f67d0e4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "We should put parameter name here for better clarity.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a0fc33_ad0c52bc",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 70
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024a861d_79e1bfdd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "Should be |SelectionIsDirectional()|",
+      "range": {
+        "startLine": 814,
+        "startChar": 39,
+        "endLine": 814,
+        "endChar": 72
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eeb111a_63554063",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:21:39Z",
+      "side": 1,
+      "message": "Should be |SelectionIsDirectional()|",
+      "range": {
+        "startLine": 990,
+        "startChar": 39,
+        "endLine": 990,
+        "endChar": 72
+      },
+      "revId": "9dcdd33d1ca698df4d5f3365971cca73da9d5a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
