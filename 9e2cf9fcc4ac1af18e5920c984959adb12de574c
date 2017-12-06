@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d4db69_31842b82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T17:21:38Z",
+      "side": 1,
+      "message": "nit: I think \u0027final\u0027 isn\u0027t needed.",
+      "revId": "9e2cf9fcc4ac1af18e5920c984959adb12de574c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
