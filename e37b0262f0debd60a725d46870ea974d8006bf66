@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31873a52_e7f8fd03",
+        "filename": "cc/test/fake_paint_image_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "It currently does, since some tests allocate very large images for the sake of testing discoverability among other things. These aren\u0027t backed by real memory. This also acts as a nice \"failed to decode\" signal.",
+      "parentUuid": "506d1e7d_9ee034d3",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64fd5f68_54b04f52",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7a5d31b_7961193f",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64fd5f68_54b04f52",
+      "range": {
+        "startLine": 281,
+        "startChar": 32,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1152e0_9dc0bedb",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-27T18:37:04Z",
       "side": 1,
       "message": "nit: It\u0027s like 10% weird to me to have an unref function but not a ref function. Probably fine for now, but it seems saner to make all ref count changes go through common functions and not modify the variable directly.",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 26
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27ece1b_05e90f41",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Yeah, the only reason for this is that Unref has to do special things when we reach 0 refs. Ref would just do this anyway. I\u0027m going to leave it for now, but we can refactor more as a follow-up",
+      "parentUuid": "0e1152e0_9dc0bedb",
       "range": {
         "startLine": 282,
         "startChar": 17,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "36bec93d_c98c464a",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a104c3d4_437cfc78",
+      "range": {
+        "startLine": 294,
+        "startChar": 30,
+        "endLine": 294,
+        "endChar": 34
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f077bc2_e7d6edd7",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f131e0e_4a3f9bcd",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f077bc2_e7d6edd7",
+      "range": {
+        "startLine": 407,
+        "startChar": 21,
+        "endLine": 408,
+        "endChar": 27
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "683d4f0a_4ae6c120",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221d1ff7_75cf6c95",
+      "range": {
+        "startLine": 425,
+        "startChar": 62,
+        "endLine": 425,
+        "endChar": 80
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b927425_060ac9e9",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -186,6 +330,30 @@
       "writtenOn": "2017-11-27T21:02:03Z",
       "side": 1,
       "message": "I was hoping we could avoid making a recursive call to GetDecodedImageForDrawInternal, if this key was always can_use_original_decode but that may not necessarily be true. May be an enum for the possible states a decode can be in on the key (mentioned below), and an assert here with the expected state would be sufficient too.",
+      "range": {
+        "startLine": 464,
+        "startChar": 6,
+        "endLine": 466,
+        "endChar": 67
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820c61db_acfd2c1d",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "Do you mind if we do this as a follow-up?",
+      "parentUuid": "8b927425_060ac9e9",
       "range": {
         "startLine": 464,
         "startChar": 6,
@@ -280,6 +448,30 @@
       "writtenOn": "2017-11-27T18:37:04Z",
       "side": 1,
       "message": "I\u0027m like 10% confused by this, as it leaves the ref counts etc... but as far as I can tell the object becomes invalid. Can we take a \u0026\u0026 to it and force the caller to std::move(*entry), which makes it really clear you can\u0027t use the entry after this.",
+      "range": {
+        "startLine": 974,
+        "startChar": 43,
+        "endLine": 974,
+        "endChar": 60
+      },
+      "revId": "e37b0262f0debd60a725d46870ea974d8006bf66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7daedc_51afca24",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-06T00:25:30Z",
+      "side": 1,
+      "message": "|entry| here is the thing that will live on, it\u0027s |this| that won\u0027t. We can overload on \u0026\u0026, but unfortunately that\u0027s not allowed in the style guide. Even if I flip this over, it\u0027s technically not allowed to take a \u0026\u0026 ref unless for forwarding or in move ctor/assignment...",
+      "parentUuid": "7ad88119_57a90683",
       "range": {
         "startLine": 974,
         "startChar": 43,
