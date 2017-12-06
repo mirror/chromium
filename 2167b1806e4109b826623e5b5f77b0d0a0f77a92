@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b029845_1c20a4e9",
+        "filename": "chrome/browser/experiments/memory_ablation_experiment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-06T00:45:23Z",
+      "side": 1,
+      "message": "Hm. I wonder if zram ever attempts to do compression on multiple pages [in which compression would once again be very efficient.]. Not sure...probably not.\n\nprimiano?",
+      "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
