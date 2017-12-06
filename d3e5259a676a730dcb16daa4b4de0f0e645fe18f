@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "aa5152c9_2a23bcf0",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T21:46:46Z",
+      "side": 1,
+      "message": "Checking whether chrome.metricsPrivate API exists, without actually using it, would not qualify as a dependency IMO. But even if you do consider it a dependency, you could create a factory method to eliminate that dependency by adding a helper static\n\nPDFMetrics.getInstance() method, which would internally check for chrome.metricsPrivate existence and return the dummy or the real implementation accordingly.\n\nPersonally I think the current approach, even though it reduces the number of chrome.metricsPrivate API checks to two, is still sub-optimal. Work is done, to be thrown away at a deeper layer, instead of pruning the work in the first place at a higher layer. Take for example the onFitTo() method. It does comparisons that lead to calling logFirstAndTotal_() with the appropriate params, even when it does not matter. Basically this design choice introduces an unnecessary codepath within this class, \"constructed but basically defunct\", instead of having a single \"constructed and fully functional\" codepath.\n\nIntroducing an interface and two implementations, is a cleaner solution IMO, but I don\u0027t feel that strongly given that I am not a direct OWNER of pdf/, so up to you.",
+      "parentUuid": "b0830015_386b5fc7",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa76d99f_d29eafef",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -330,6 +348,30 @@
       "side": 1,
       "message": "Tried to convert it but I couldn\u0027t find to assign an ES6 style class to window.PDFMetrics so it\u0027s visible outside the wrapper function. Is that possible?",
       "parentUuid": "2d99281a_f53fc57f",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c787be5_b165a556",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T21:46:46Z",
+      "side": 1,
+      "message": "What did you try? I think the following would work\n\nwindow.PDFMetricts \u003d class {\n  ...\n};",
+      "parentUuid": "8d6651ad_19442df2",
       "range": {
         "startLine": 47,
         "startChar": 0,

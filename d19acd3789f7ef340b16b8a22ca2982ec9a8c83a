@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da873bf5_cd03f7e2",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T21:46:46Z",
+      "side": 1,
+      "message": "Can you add type annotation? Also should this be private?",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "d19acd3789f7ef340b16b8a22ca2982ec9a8c83a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
