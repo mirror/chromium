@@ -20,11 +20,11 @@ namespace content {
 AppCacheDispatcherHost::AppCacheDispatcherHost(
     ChromeAppCacheService* appcache_service,
     int process_id,
-    base::WeakPtr<IPC::Sender> sender)
+    RenderProcessHost* render_process_host)
     : appcache_service_(appcache_service),
-      frontend_proxy_(this),
+      frontend_proxy_(render_process_host),
       process_id_(process_id),
-      sender_(std::move(sender)),
+      // sender_(std::move(sender)),
       weak_factory_(this) {}
 
 void AppCacheDispatcherHost::InitBackend() {
@@ -39,24 +39,15 @@ AppCacheDispatcherHost::~AppCacheDispatcherHost() {}
 
 void AppCacheDispatcherHost::Create(ChromeAppCacheService* appcache_service,
                                     int process_id,
-                                    base::WeakPtr<IPC::Sender> sender,
+                                    RenderProcessHost* render_process_host,
                                     mojom::AppCacheHostRequest request) {
   auto appcache_dispatcher_host = std::make_unique<AppCacheDispatcherHost>(
-      appcache_service, process_id, std::move(sender));
+      appcache_service, process_id, render_process_host);
 
   appcache_dispatcher_host->InitBackend();
 
   mojo::MakeStrongBinding(std::move(appcache_dispatcher_host),
                           std::move(request));
-}
-
-bool AppCacheDispatcherHost::Send(IPC::Message* msg) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(base::IgnoreResult(&IPC::Sender::Send), sender_, msg));
-  // The callers of this send method are ignoring the result anyway.
-  return true;
 }
 
 void AppCacheDispatcherHost::RegisterHost(int32_t host_id) {

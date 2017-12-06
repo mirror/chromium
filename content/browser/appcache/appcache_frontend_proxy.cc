@@ -4,60 +4,72 @@
 
 #include "content/browser/appcache/appcache_frontend_proxy.h"
 
-#include "content/common/appcache_messages.h"
+#include "content/common/appcache.mojom.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/common/bind_interface_helpers.h"
 
 namespace content {
 
-AppCacheFrontendProxy::AppCacheFrontendProxy(IPC::Sender* sender)
-    : sender_(sender) {
+AppCacheFrontendProxy::AppCacheFrontendProxy(
+    RenderProcessHost* render_process_host)
+    : render_process_host_(render_process_host) {}
+
+AppCacheFrontendProxy::~AppCacheFrontendProxy() {}
+
+mojom::AppCacheRenderer* AppCacheFrontendProxy::GetAppCacheRenderer() {
+  if (!app_cache_renderer_ptr_) {
+    BindInterface(render_process_host_, &app_cache_renderer_ptr_);
+  }
+  return app_cache_renderer_ptr_.get();
 }
 
 void AppCacheFrontendProxy::OnCacheSelected(
     int host_id, const AppCacheInfo& info) {
-  sender_->Send(new AppCacheMsg_CacheSelected(host_id, info));
+  GetAppCacheRenderer()->CacheSelected(host_id, info.Clone());
 }
 
 void AppCacheFrontendProxy::OnStatusChanged(const std::vector<int>& host_ids,
                                             AppCacheStatus status) {
-  sender_->Send(new AppCacheMsg_StatusChanged(host_ids, status));
+  GetAppCacheRenderer()->StatusChanged(host_ids, status);
 }
 
 void AppCacheFrontendProxy::OnEventRaised(const std::vector<int>& host_ids,
                                           AppCacheEventID event_id) {
   DCHECK_NE(AppCacheEventID::APPCACHE_PROGRESS_EVENT,
             event_id);  // See OnProgressEventRaised.
-  sender_->Send(new AppCacheMsg_EventRaised(host_ids, event_id));
+  GetAppCacheRenderer()->EventRaised(host_ids, event_id);
 }
 
 void AppCacheFrontendProxy::OnProgressEventRaised(
     const std::vector<int>& host_ids,
     const GURL& url, int num_total, int num_complete) {
-  sender_->Send(new AppCacheMsg_ProgressEventRaised(
-      host_ids, url, num_total, num_complete));
+  GetAppCacheRenderer()->ProgressEventRaised(host_ids, url, num_total,
+                                             num_complete);
 }
 
 void AppCacheFrontendProxy::OnErrorEventRaised(
     const std::vector<int>& host_ids,
     const AppCacheErrorDetails& details) {
-  sender_->Send(new AppCacheMsg_ErrorEventRaised(host_ids, details));
+  GetAppCacheRenderer()->ErrorEventRaised(host_ids, details.Clone());
 }
 
 void AppCacheFrontendProxy::OnLogMessage(int host_id,
                                          AppCacheLogLevel log_level,
                                          const std::string& message) {
-  sender_->Send(new AppCacheMsg_LogMessage(host_id, log_level, message));
+  GetAppCacheRenderer()->LogMessage(host_id, log_level, message);
 }
 
 void AppCacheFrontendProxy::OnContentBlocked(int host_id,
                                              const GURL& manifest_url) {
-  sender_->Send(new AppCacheMsg_ContentBlocked(host_id, manifest_url));
+  GetAppCacheRenderer()->ContentBlocked(host_id, manifest_url);
 }
 
 void AppCacheFrontendProxy::OnSetSubresourceFactory(
     int host_id,
-    mojo::MessagePipeHandle loader_factory_pipe_handle) {
-  sender_->Send(new AppCacheMsg_SetSubresourceFactory(
-      host_id, loader_factory_pipe_handle));
+    mojom::URLLoaderFactoryPtr url_loader_factory) {
+  GetAppCacheRenderer()->SetSubresourceFactory(host_id,
+                                               std::move(url_loader_factory));
 }
 
 }  // namespace content
