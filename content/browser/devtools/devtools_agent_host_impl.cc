@@ -61,6 +61,16 @@ bool DevToolsAgentHost::IsSupportedProtocolVersion(const std::string& version) {
 }
 
 // static
+DevToolsAgentHost::List DevToolsAgentHost::GetBrowserAgentHosts() {
+  List result;
+  for (const auto& id_host : g_devtools_instances.Get()) {
+    if (id_host.second->GetType() == kTypeBrowser)
+      result.push_back(id_host.second);
+  }
+  return result;
+}
+
+// static
 DevToolsAgentHost::List DevToolsAgentHost::GetOrCreateAll() {
   List result;
   SharedWorkerDevToolsAgentHost::List shared_list;

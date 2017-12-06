@@ -87,7 +87,10 @@ class CONTENT_EXPORT DevToolsAgentHost
 
   using List = std::vector<scoped_refptr<DevToolsAgentHost>>;
 
-  // Returns all DevToolsAgentHosts content is aware of.
+  // Returns a list of all active hosts on browser targets.
+  static List GetBrowserAgentHosts();
+
+  // Returns all non-browser target DevToolsAgentHosts content is aware of.
   static List GetOrCreateAll();
 
   // Starts remote debugging.
