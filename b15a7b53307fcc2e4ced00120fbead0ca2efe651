@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d644887c_80f8d4b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-06T23:44:38Z",
+      "side": 1,
+      "message": "Suggest changing this title and description - labeling with Print Preview implies this CL is modifying the Print Preview UI rather than just modifying the template for PDF generation on the printing side.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "b15a7b53307fcc2e4ced00120fbead0ca2efe651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
