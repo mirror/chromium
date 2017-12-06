@@ -34,7 +34,7 @@ bool GLFence::IsSupported() {
 #if defined(OS_MACOSX)
          g_current_gl_driver->ext.b_GL_APPLE_fence ||
 #else
-         g_driver_egl.ext.b_EGL_KHR_fence_sync ||
+         g_driver_egl->ext.b_EGL_KHR_fence_sync ||
 #endif
          g_current_gl_driver->ext.b_GL_NV_fence;
 }
@@ -45,8 +45,8 @@ GLFence* GLFence::Create() {
 
   std::unique_ptr<GLFence> fence;
 #if !defined(OS_MACOSX)
-  if (g_driver_egl.ext.b_EGL_KHR_fence_sync &&
-      g_driver_egl.ext.b_EGL_KHR_wait_sync) {
+  if (g_driver_egl->ext.b_EGL_KHR_fence_sync &&
+      g_driver_egl->ext.b_EGL_KHR_wait_sync) {
     // Prefer GLFenceEGL which doesn't require GL context switching.
     fence.reset(new GLFenceEGL);
   } else
@@ -60,8 +60,8 @@ GLFence* GLFence::Create() {
   } else if (g_current_gl_driver->ext.b_GL_APPLE_fence) {
     fence.reset(new GLFenceAPPLE);
 #else
-  } else if (g_driver_egl.ext.b_EGL_KHR_fence_sync) {
-    fence.reset(new GLFenceEGL);
+      } else if (g_driver_egl->ext.b_EGL_KHR_fence_sync) {
+        fence.reset(new GLFenceEGL);
 #endif
   } else if (g_current_gl_driver->ext.b_GL_NV_fence) {
     fence.reset(new GLFenceNV);
