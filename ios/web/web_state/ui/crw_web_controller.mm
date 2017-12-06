@@ -4872,6 +4872,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
+  web::NavigationContextImpl* existingContext =
+      [self contextForPendingNavigationWithURL:webViewURL];
+
   if (!navigationWasCommitted && ![_pendingNavigationInfo cancelled]) {
     // A fast back-forward navigation does not call |didCommitNavigation:|, so
     // signal page change explicitly.
@@ -4881,14 +4884,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
     [self setDocumentURL:webViewURL];
     [self webPageChanged];
 
-    web::NavigationContextImpl* existingContext =
-        [self contextForPendingNavigationWithURL:webViewURL];
     if (!existingContext) {
       // This URL was not seen before, so register new load request.
       std::unique_ptr<web::NavigationContextImpl> newContext =
           [self registerLoadRequestForURL:webViewURL
                    sameDocumentNavigation:isSameDocumentNavigation];
       _webStateImpl->OnNavigationFinished(newContext.get());
+      // TODO(crbug.com/792515): It is OK, but very brittle, to call
+      // |didFinishNavigation:| here because the gating condition is mutually
+      // exclusive with the condition below. Refactor this method afte
+      // deprecating _pendingNavigationInfo.
+      if (newContext->IsFastBackForwardNavigation()) {
+        [self didFinishNavigation:nil];
+      }
     } else {
       // Same document navigation does not contain response headers.
       net::HttpResponseHeaders* headers =
@@ -4904,7 +4912,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Fast back forward navigation may not call |didFinishNavigation:|, so
   // signal did finish navigation explicitly.
-  if (_lastRegisteredRequestURL == _documentURL) {
+  if (existingContext && existingContext->IsFastBackForwardNavigation()) {
     [self didFinishNavigation:nil];
   }
 }
