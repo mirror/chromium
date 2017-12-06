@@ -31,6 +31,11 @@ namespace media {
 // does nothing internally on any other thread.
 class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
  public:
+  enum class Result {
+    kFailed,
+    kOk,
+    kTryAgain,
+  };
   class MEDIA_GPU_EXPORT H264Accelerator {
    public:
     H264Accelerator();
@@ -54,13 +59,14 @@ class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
     // is expected to follow this call with one or more SubmitSlice() calls
     // before calling SubmitDecode().
     // Return true if successful.
-    virtual bool SubmitFrameMetadata(const H264SPS* sps,
-                                     const H264PPS* pps,
-                                     const H264DPB& dpb,
-                                     const H264Picture::Vector& ref_pic_listp0,
-                                     const H264Picture::Vector& ref_pic_listb0,
-                                     const H264Picture::Vector& ref_pic_listb1,
-                                     const scoped_refptr<H264Picture>& pic) = 0;
+    virtual Result SubmitFrameMetadata(
+        const H264SPS* sps,
+        const H264PPS* pps,
+        const H264DPB& dpb,
+        const H264Picture::Vector& ref_pic_listp0,
+        const H264Picture::Vector& ref_pic_listb0,
+        const H264Picture::Vector& ref_pic_listb1,
+        const scoped_refptr<H264Picture>& pic) = 0;
 
     // Submit one slice for the current frame, passing the current |pps| and
     // |pic| (same as in SubmitFrameMetadata()), the parsed header for the
@@ -95,7 +101,7 @@ class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
 
     // Reset any current state that may be cached in the accelerator, dropping
     // any cached parameters/slices that have not been committed yet.
-    virtual void Reset() = 0;
+    virtual bool Reset() = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(H264Accelerator);
@@ -106,7 +112,7 @@ class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
 
   // AcceleratedVideoDecoder implementation.
   bool Flush() override WARN_UNUSED_RESULT;
-  void Reset() override;
+  bool Reset() override;
   void SetStream(const uint8_t* ptr, size_t size) override;
   DecodeResult Decode() override WARN_UNUSED_RESULT;
   gfx::Size GetPicSize() const override;
@@ -196,7 +202,7 @@ class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
   bool HandleFrameNumGap(int frame_num);
 
   // Start processing a new frame.
-  bool StartNewFrame(const H264SliceHeader* slice_hdr);
+  Result StartNewFrame(const H264SliceHeader* slice_hdr);
 
   // All data for a frame received, process it and decode.
   bool FinishPrevFrameIfPresent();
