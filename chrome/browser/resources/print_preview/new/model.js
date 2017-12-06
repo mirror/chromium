@@ -25,6 +25,59 @@ print_preview_new.Setting;
  */
 print_preview_new.State;
 
+/**
+ * @typedef {{id: string,
+ *            origin: print_preview.DestinationOrigin,
+ *            account: string,
+ *            capabilities: ?print_preview.Cdd,
+ *            displayName: string,
+ *            extensionId: string,
+ *            extensionName: string}}
+ */
+print_preview_new.RecentDestination;
+
+/**
+ * Must be kept in sync with the C++ MarginType enum in
+ * printing/print_job_constants.h.
+ * @enum {number}
+ */
+print_preview_new.MarginsTypeValue = {
+  DEFAULT: 0,
+  NO_MARGINS: 1,
+  MINIMUM: 2,
+  CUSTOM: 3
+};
+
+/**
+ * @typedef {{
+ *    version: string,
+ *    recentDestinations: (!Array<!print_preview_new.RecentDestination> |
+ *                         undefined),
+ *    dpi: ({horizontal_dpi: number,
+ *           vertical_dpi: number,
+ *           is_default: (boolean | undefined)} | undefined),
+ *    mediaSize: ({height_microns: number,
+ *                 width_microns: number,
+ *                 custom_display_name: (string | undefined),
+ *                 is_default: (boolean | undefined)} | undefined),
+ *    marginsType: (print_preview_new.MarginsTypeValue | undefined),
+ *    customMargins: ({marginTop: number,
+ *                     marginBottom: number,
+ *                     marginLeft: number,
+ *                     marginRight: number} | undefined),
+ *    isColorEnabled: (boolean | undefined),
+ *    isDuplexEnabled: (boolean | undefined),
+ *    isHeaderFooterEnabled: (boolean | undefined),
+ *    isLandscapeEnabled: (boolean | undefined),
+ *    isCollateEnabled: (boolean | undefined),
+ *    isFitToPageEnabled: (boolean | undefined),
+ *    isCssBackgroundEnabled: (boolean | undefined),
+ *    scaling: (string | undefined),
+ *    vendor_options: (Object | undefined)
+ * }}
+ */
+print_preview_new.SerializedSettings;
+
 Polymer({
   is: 'print-preview-model',
 
@@ -57,7 +110,7 @@ Polymer({
       notify: true,
       value: {
         pages: {
-          value: [1, 2, 3, 4, 5],
+          value: [1],
           valid: true,
           available: true,
           updatesPreview: true,
@@ -233,13 +286,7 @@ Polymer({
     documentInfo: {
       type: Object,
       notify: true,
-      value: function() {
-        const info = new print_preview.DocumentInfo();
-        info.init(false, 'DocumentTitle', true);
-        info.updatePageCount(5);
-        info.fitToPageScaling_ = 94;
-        return info;
-      },
+      value: new print_preview.DocumentInfo(),
     },
 
     /** @type {!print_preview_new.State} */
@@ -253,6 +300,14 @@ Polymer({
         privetExtensionError: '',
         invalidSettings: false,
       },
+    },
+
+    /** @type {!print_preview.MeasurementSystem} */
+    measurementSystem: {
+      type: Object,
+      notify: true,
+      value: new print_preview.MeasurementSystem(
+          ',', '.', print_preview.MeasurementSystemUnitType.IMPERIAL),
     },
   },
 
@@ -287,7 +342,58 @@ Polymer({
    * @private
    */
   onInitialSettingsSet_: function(settings) {
-    // Do nothing here for now.
+    this.documentInfo.init(
+        settings.previewModifiable, settings.documentTitle,
+        settings.documentHasSelection);
+    this.documentInfo.updatePageCount(5);
+    this.notifyPath('documentInfo.isModifiable');
+    this.notifyPath('documentInfo.hasSelection');
+    this.notifyPath('documentInfo.title');
+    this.notifyPath('documentInfo.pageCount');
+    this.updateSettingsWithState_(settings.serializedAppStateStr);
+    this.measurementSystem.setSystem(
+        settings.thousandsDelimeter, settings.decimalDelimeter,
+        settings.unitType);
+    this.notifyPath('measurementSystem');
+    this.set('settings.selectionOnly.value', settings.shouldPrintSelectionOnly);
+    // TODO(rbpotter): add destination store initialization.
+  },
+
+  /**
+   * @param {?string} savedSettingsStr The sticky settings from native layer
+   * @private
+   */
+  updateSettingsWithState_(savedSettingsStr) {
+    if (!savedSettingsStr)
+      return;
+    const savedSettings = /** @type {print_preview_new.SerializedSettings} */ (
+        JSON.parse(savedSettingsStr));
+    if (!savedSettings)
+      return;
+    if (savedSettings.dpi != undefined)
+      this.set('settings.dpi.value', savedSettings.dpi);
+    if (savedSettings.mediaSize != undefined)
+      this.set('settings.mediaSize.value', savedSettings.mediaSize);
+    if (savedSettings.marginsType != undefined)
+      this.set('settings.marginsType.value', savedSettings.marginsType);
+    if (savedSettings.isColorEnabled != undefined)
+      this.set('settings.color.value', savedSettings.isColorEnabled);
+    if (savedSettings.isHeaderFooterEnabled != undefined) {
+      this.set(
+          'settings.headerFooter.value', savedSettings.isHeaderFooterEnabled);
+    }
+    if (savedSettings.isLandscapeEnabled != undefined)
+      this.set('settings.layout.value', savedSettings.isLandscapeEnabled);
+    if (savedSettings.isCollateEnabled != undefined)
+      this.set('settings.collate.value', savedSettings.isCollateEnabled);
+    if (savedSettings.isFitToPageEnabled != undefined)
+      this.set('settings.fitToPage.value', savedSettings.isFitToPageEnabled);
+    if (savedSettings.isCssBackgroundEnabled != undefined) {
+      this.set(
+          'settings.cssBackground.value', savedSettings.isCssBackgroundEnabled);
+    }
+    if (savedSettings.scaling != undefined)
+      this.set('settings.scaling.value', savedSettings.scaling);
   },
 
   /**

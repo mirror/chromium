@@ -129,6 +129,7 @@
         '../compiled_resources2.gyp:native_layer',
         '../data/compiled_resources2.gyp:destination',
         '../data/compiled_resources2.gyp:document_info',
+        '../data/compiled_resources2.gyp:measurement_system',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     }

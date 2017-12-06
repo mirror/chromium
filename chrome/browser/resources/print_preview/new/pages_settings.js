@@ -54,7 +54,7 @@ Polymer({
     /** @private {!PagesInputErrorState} */
     errorState_: {
       type: Number,
-      computed: 'computeErrorState_(pagesToPrint_)',
+      computed: 'computeErrorState_(documentInfo.pageCount, pagesToPrint_)',
     },
 
   },
@@ -133,7 +133,7 @@ Polymer({
    * @private
    */
   computeErrorState_: function() {
-    if (this.pagesToPrint_.length == 0)
+    if (this.pagesToPrint_.length == 0 && this.documentInfo.pageCount > 0)
       return PagesInputErrorState.INVALID_SYNTAX;
     if (this.pagesToPrint_[0] == -1)
       return PagesInputErrorState.OUT_OF_BOUNDS;
