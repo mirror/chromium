@@ -129,12 +129,6 @@ class FaviconChangeObserver : public bookmarks::BookmarkModelObserver {
   DISALLOW_COPY_AND_ASSIGN(FaviconChangeObserver);
 };
 
-// A collection of URLs for which we have added favicons. Since loading a
-// favicon is an asynchronous operation and doesn't necessarily invoke a
-// callback, this collection is used to determine if we must wait for a URL's
-// favicon to load or not.
-std::set<GURL>* urls_with_favicons_ = nullptr;
-
 // Returns the number of nodes of node type |node_type| in |model| whose
 // titles match the string |title|.
 int CountNodesWithTitlesMatching(BookmarkModel* model,
@@ -213,14 +207,8 @@ struct FaviconData {
 // nullopt if the favicon is still loading.
 base::Optional<FaviconData> GetFaviconData(BookmarkModel* model,
                                            const BookmarkNode* node) {
-  // If a favicon wasn't explicitly set for a particular URL, simply return its
-  // blank favicon.
-  if (!urls_with_favicons_ ||
-      urls_with_favicons_->find(node->url()) == urls_with_favicons_->end()) {
-    return FaviconData();
-  }
-  // If a favicon was explicitly set, we may need to wait for it to be loaded
-  // via BookmarkModel::GetFavicon(), which is an asynchronous operation.
+  // We may need to wait for the favicon to be loaded via
+  // BookmarkModel::GetFavicon(), which is an asynchronous operation.
   if (!node->is_favicon_loaded()) {
     model->GetFavicon(node);
     // Favicon still loading, no data available just yet.
@@ -311,10 +299,6 @@ void DeleteFaviconMappingsImpl(Profile* profile,
 // profiles to complete and any notifications sent to the UI thread to have
 // finished processing.
 void WaitForHistoryToProcessPendingTasks() {
-  // Skip waiting for history to complete for tests without favicons.
-  if (!urls_with_favicons_)
-    return;
-
   std::vector<Profile*> profiles_which_need_to_wait;
   if (sync_datatype_helper::test()->use_verifier())
     profiles_which_need_to_wait.push_back(
@@ -611,9 +595,6 @@ void SetFavicon(int profile,
       << "Profile " << profile;
   ASSERT_EQ(BookmarkNode::URL, node->type()) << "Node " << node->GetTitle()
                                              << " must be a url.";
-  if (urls_with_favicons_ == nullptr)
-    urls_with_favicons_ = new std::set<GURL>();
-  urls_with_favicons_->insert(node->url());
   if (sync_datatype_helper::test()->use_verifier()) {
     const BookmarkNode* v_node = nullptr;
     FindNodeInVerifier(model, node, &v_node);
@@ -637,7 +618,6 @@ void ExpireFavicon(int profile, const BookmarkNode* node) {
       << "Profile " << profile;
   ASSERT_EQ(BookmarkNode::URL, node->type()) << "Node " << node->GetTitle()
                                              << " must be a url.";
-  ASSERT_EQ(1u, urls_with_favicons_->count(node->url()));
 
   if (sync_datatype_helper::test()->use_verifier()) {
     const BookmarkNode* v_node = nullptr;
