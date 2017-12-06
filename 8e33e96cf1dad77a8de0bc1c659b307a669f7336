@@ -341,6 +341,30 @@
       "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2807bfd_b116ad8c",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T17:01:37Z",
+      "side": 1,
+      "message": "Done. crbug.com/792506",
+      "parentUuid": "44ae5dae_6c120dfa",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
