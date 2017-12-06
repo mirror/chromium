@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a57c04a9_07ca0979",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "This is so that we don\u0027t set focusable to true after creating this element. That would break hit-testing pretty bad :)",
+      "parentUuid": "3ab8ac9a_9cda0ecc",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab583a01_92d14bbc",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T15:34:32Z",
       "side": 1,
       "message": "We\u0027ll have to talk this through.  I think this is right, but ultimately we want this TextInput element to be able to move the cursor on click, which feels more like the Text element should be the hittable element (independent of focus).  Can go either way, but we should chat about it.",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df77f03b_f334f9ef",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "This would be wrong if we untied focus and hittesting. We would have to set this to true, bubble up the focused event from here to the field, and have it be handled in InputText.",
+      "parentUuid": "ab583a01_92d14bbc",
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "243fbd93_e0240094",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "Spoke about this offline. Concluded that it doesn\u0027t matter which way we go either way. Decided to go with the following: make the TextInput\u0027s child Text hittestable, this event gets bubbled up to TextInput, which then request focus. TextInput could or could not be hittestable, but going with not-hitestable because there\u0027s no good reason to make it hittestable for now (since it doesn\u0027t draw).",
+      "parentUuid": "21bbe89c_869705b1",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a44d6009_cb52153e",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f792a27_afb42b52",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "It\u0027s not special, just to make sure that if we change something (e.g. related to event bubbling and such), we don\u0027t break this.",
+      "parentUuid": "a44d6009_cb52153e",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "965a4b58_742212ca",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a091222_b1fd7b0b",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ccc3ef_2fbe59b5",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c64fb2_c5bd89f4",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "Absolutely, happened to me too.",
+      "parentUuid": "44ccc3ef_2fbe59b5",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b638a968_5ffbb92d",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83e5af96_4e70db57",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f725a7ce_d26d5156",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-06T15:34:32Z",
       "side": 1,
       "message": "Do you actually need this on a strict mock?  If OnFocus is called once, won\u0027t it catch it?",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67432fe3_a041ad01",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:05:40Z",
+      "side": 1,
+      "message": "It will, but IMO, this makes the purpose of the test more explicit.",
+      "parentUuid": "f725a7ce_d26d5156",
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
