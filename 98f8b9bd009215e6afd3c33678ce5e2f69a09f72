@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8118e08f_919156dc",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBTestHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T19:16:19Z",
+      "side": 1,
+      "message": "Having TakeXXX() assigned to a reference looks really strange. See comment below about this method.",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e6aa3f_e95ca654",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T19:16:19Z",
+      "side": 1,
+      "message": "Awesome, thanks for adding.",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7665b9_05d2c20e",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T19:16:19Z",
+      "side": 1,
+      "message": "Since ownership is transferred (\"Take...\"), should this be returning a reference? Should this be std::move()ing the vector out, or does it need to be retained? And if so, that\u0027s confusing.",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba98afc_7c4b59c6",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T19:16:19Z",
+      "side": 1,
+      "message": "nit: You can use __func__ now which is less shouty.",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a230f99_31bad838",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T19:16:19Z",
+      "side": 1,
+      "message": "nit: add blank line before this",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
