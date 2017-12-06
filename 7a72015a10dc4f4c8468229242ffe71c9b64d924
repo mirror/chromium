@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cda37feb_d42bb5b4",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "Let\u0027s add a test for this. We should at least test:\n\nvalid ip4\ninvalid ip4 (if regex isn\u0027t strict on this it\u0027s ok to accept it since it\u0027s a known limitation)\nvalid ipv6\ninvalid ipv6\nvalid hostname\nhostname w/ subdomain\ninvalid hostname (what you\u0027re guarding against)",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d4f0eb_08a75599",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "nit: can we move this to the comment section at line 193?",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 19
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d53e67_9b4ced7a",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "Here and elsewhere let\u0027s only use lower case. We can make the regex ignore case with an option. This will make the patterns easier to read.",
+      "range": {
+        "startLine": 211,
+        "startChar": 14,
+        "endLine": 211,
+        "endChar": 17
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5a1769_74216113",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "nit: \u0027(:\\\\d+)?\u0027 here and elsewhere",
+      "range": {
+        "startLine": 218,
+        "startChar": 26,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c571a5_5461afe5",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "this might be a good candidate to use a template literal:\n\n   var hostnameRegex \u003d new  RegExp(\n       `^${hostnamePrefixPattern}${hostnameSuffixPattern}${portPattern}$`, \u0027i\u0027);\n\nThe \u0027i\u0027 at the end makes the regex ignore case.",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004d2b44_ee72169b",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-06T18:25:42Z",
+      "side": 1,
+      "message": "This could be done with a template literal too, but I would recommend shortening the variable names so you don\u0027t need to deal with line wrapping:\n\n    var ipv6AddressRegex \u003d new RegExp([\n        `^(${ipv6Full}|${ipv6Prefix}|${ipv6Suffix})${portPattern}$`, \u0027i\u0027);",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 51
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
