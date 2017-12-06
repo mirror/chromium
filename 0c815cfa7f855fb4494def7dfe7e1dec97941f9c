@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e46a7f06_96a5194c",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-06T23:07:27Z",
+      "side": 0,
+      "message": "This seems to be unnecessary, as \"symbol_visibility_hidden\" config itself has a special branch for AIX case.",
+      "range": {
+        "startLine": 549,
+        "startChar": 2,
+        "endLine": 549,
+        "endChar": 28
+      },
+      "revId": "0c815cfa7f855fb4494def7dfe7e1dec97941f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
