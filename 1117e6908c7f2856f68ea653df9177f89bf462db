@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a93ecfec_76731ae1",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "These three lines can technically be all on one line. I\u0027m not sure if it helps readability or makes it worse though...",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e77cab3d_53420ea6",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 6
@@ -13,6 +30,92 @@
       "writtenOn": "2017-12-06T02:03:37Z",
       "side": 1,
       "message": "Can you please add a note here about what \u0027Parent\u0027 refers to?",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da162715_84314ae8",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e77cab3d_53420ea6",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3652b8_b2b291e1",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "nit: ParentLocalSurfaceIdAllocator \u003d default;",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2c89b1_025d1866",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "nit: ~ParentLocalSurfaceIdAllocator() \u003d default;",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e182de9c_03a1c33b",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "I\u0027ve noticed that LocalSurfaceIdAllocator always has a local_surface_id_ next to it to store the allocated ID. It seems like a nice (future) cleanup to simply track the last allocated Id in here too.",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c4edd6_37ec0ba0",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-06T04:34:21Z",
+      "side": 1,
+      "message": "nit: uint32_t next_id_ \u003d 1u;",
       "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
