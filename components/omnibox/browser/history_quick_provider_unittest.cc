@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
@@ -745,6 +746,44 @@ TEST_F(HistoryQuickProviderTest, DoesNotProvideMatchesOnFocus) {
   input.set_from_omnibox_focus(true);
   provider().Start(input, false);
   EXPECT_TRUE(provider().matches().empty());
+}
+
+TEST_F(HistoryQuickProviderTest, HttpSchemeMatch) {
+  AutocompleteInput input(ASCIIToUTF16("http://face"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  provider().Start(input, false);
+  history::URLRow row(GURL("http://www.facebook.com"));
+  String16Vector terms;
+  terms.push_back(ASCIIToUTF16(""));
+  WordStarts word_starts;
+  word_starts.push_back(0);
+  ScoredHistoryMatch history_match(row, VisitInfoVector(), ASCIIToUTF16(""),
+                                   terms, word_starts, RowWordStarts(), false,
+                                   0, base::Time());
+  AutocompleteMatch match = provider().QuickMatchToACMatch(history_match, 100);
+  EXPECT_EQ(ASCIIToUTF16("http://www.facebook.com"), match.contents);
+}
+
+TEST_F(HistoryQuickProviderTest, HttpsSchemeMatch) {
+  auto feature_list = std::make_unique<base::test::ScopedFeatureList>();
+  feature_list->InitAndEnableFeature(
+      omnibox::kUIExperimentHideSuggestionUrlScheme);
+
+  AutocompleteInput input(ASCIIToUTF16("https://face"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  provider().Start(input, false);
+  history::URLRow row(GURL("https://www.facebook.com"));
+  String16Vector terms;
+  terms.push_back(ASCIIToUTF16(""));
+  WordStarts word_starts;
+  word_starts.push_back(0);
+  ScoredHistoryMatch history_match(row, VisitInfoVector(), ASCIIToUTF16(""),
+                                   terms, word_starts, RowWordStarts(), false,
+                                   0, base::Time());
+  AutocompleteMatch match = provider().QuickMatchToACMatch(history_match, 100);
+  EXPECT_EQ(ASCIIToUTF16("https://www.facebook.com"), match.contents);
 }
 
 // HQPOrderingTest -------------------------------------------------------------

@@ -2788,6 +2788,40 @@ TEST_F(SearchProviderTest, NavigationInlineSchemeSubstring) {
   EXPECT_EQ(url, match_prevent.contents);
 }
 
+TEST_F(SearchProviderTest, HttpSchemeMatch) {
+  const base::string16 input(ASCIIToUTF16("http://face book"));
+  const base::string16 url(ASCIIToUTF16("http://www.facebook.com"));
+  SearchSuggestionParser::NavigationResult result(
+      ChromeAutocompleteSchemeClassifier(&profile_), GURL(url),
+      AutocompleteMatchType::NAVSUGGEST, 0, base::string16(), std::string(),
+      false, 0, false, input);
+  result.set_received_after_last_keystroke(false);
+
+  // Check the offset and strings when inline autocompletion is allowed.
+  QueryForInput(input, false, false);
+  AutocompleteMatch match_inline(provider_->NavigationToMatch(result));
+  EXPECT_EQ(url, match_inline.contents);
+}
+
+TEST_F(SearchProviderTest, HttpsSchemeMatch) {
+  auto feature_list = std::make_unique<base::test::ScopedFeatureList>();
+  feature_list->InitAndEnableFeature(
+      omnibox::kUIExperimentHideSuggestionUrlScheme);
+
+  const base::string16 input(ASCIIToUTF16("https://face book"));
+  const base::string16 url(ASCIIToUTF16("https://www.facebook.com"));
+  SearchSuggestionParser::NavigationResult result(
+      ChromeAutocompleteSchemeClassifier(&profile_), GURL(url),
+      AutocompleteMatchType::NAVSUGGEST, 0, base::string16(), std::string(),
+      false, 0, false, input);
+  result.set_received_after_last_keystroke(false);
+
+  // Check the offset and strings when inline autocompletion is allowed.
+  QueryForInput(input, false, false);
+  AutocompleteMatch match_inline(provider_->NavigationToMatch(result));
+  EXPECT_EQ(url, match_inline.contents);
+}
+
 // Verifies that input "w" marks a more significant domain label than "www.".
 TEST_F(SearchProviderTest, NavigationInlineDomainClassify) {
   QueryForInput(ASCIIToUTF16("w"), false, false);
