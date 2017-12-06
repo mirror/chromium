@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e6e4d5_3565c843",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T04:30:34Z",
+      "side": 1,
+      "message": "Don\u0027t DCHECK that untrusted data is valid.\n\nThis should be\nif (render_view_id_ \u003d\u003d IPC::MSG_ROUTING_NONE) {\n  render_view_id_ \u003d params-\u003erender_view_id;\n} else if (render_view_id_ !\u003d params-\u003erender_view_id) {\n  mojo::ReportBadMessage(\"...\");\n  return;\n}\nIt could be extracted out to a helper to avoid duplication.",
+      "revId": "36782bb5113ab13de0458b6e65d215b579c9d547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
