@@ -83,7 +83,8 @@ class CONTENT_EXPORT SimpleURLLoader {
 
   // Creates a SimpleURLLoader for |resource_request|. The request can be
   // started by calling any one of the Download methods once. The loader may not
-  // be reused.
+  // be reused. If |resource_request| includes a base::File, it will be deleted
+  // on another thread.
   static std::unique_ptr<SimpleURLLoader> Create(
       std::unique_ptr<ResourceRequest> resource_request,
       const net::NetworkTrafficAnnotationTag& annotation_tag);
@@ -170,6 +171,16 @@ class CONTENT_EXPORT SimpleURLLoader {
   // Defaults to false.
   // TODO(mmenke): Consider adding a new error code for this.
   virtual void SetAllowHttpErrorResults(bool allow_http_error_results) = 0;
+
+  // Attaches the specified file as the upload body. The file will be opened in
+  // in the current process, on another thread. May only be called once, and
+  // only if ResourceRequest passed to the constructor had a null
+  // |request_body|.
+  //
+  // |content_type| will overwrite any Content-Type header in the
+  // ResourceRequest passed to Create().
+  virtual void AttachFileForUpload(const base::FilePath& upload_file_path,
+                                   const std::string& upload_content_type) = 0;
 
   // Sets the when to try and the max number of times to retry a request, if
   // any. |max_retries| is the number of times to retry the request, not
