@@ -321,13 +321,11 @@ ShellSurface::ScopedAnimationsDisabled::~ScopedAnimationsDisabled() {
 // ShellSurface, public:
 
 ShellSurface::ShellSurface(Surface* surface,
-                           BoundsMode bounds_mode,
                            const gfx::Point& origin,
                            bool activatable,
                            bool can_minimize,
                            int container)
     : SurfaceTreeHost("ExoShellSurfaceHost"),
-      bounds_mode_(bounds_mode),
       origin_(origin),
       container_(container),
       activatable_(activatable),
@@ -341,7 +339,6 @@ ShellSurface::ShellSurface(Surface* surface,
 
 ShellSurface::ShellSurface(Surface* surface)
     : ShellSurface(surface,
-                   BoundsMode::SHELL,
                    gfx::Point(),
                    true,
                    true,
@@ -519,10 +516,6 @@ void ShellSurface::UpdateSystemModal() {
       system_modal_ ? ui::MODAL_TYPE_SYSTEM : ui::MODAL_TYPE_NONE);
 }
 
-float ShellSurface::GetScale() const {
-  return 1.f;
-}
-
 // static
 void ShellSurface::SetApplicationId(aura::Window* window,
                                     const std::string& id) {
@@ -548,17 +541,7 @@ void ShellSurface::Move() {
   if (!widget_)
     return;
 
-  switch (bounds_mode_) {
-    case BoundsMode::SHELL:
-      AttemptToStartDrag(HTCAPTION);
-      return;
-    case BoundsMode::FIXED:
-      return;
-    case BoundsMode::CLIENT:
-      break;
-  }
-
-  NOTREACHED();
+  AttemptToStartDrag(HTCAPTION);
 }
 
 void ShellSurface::Resize(int component) {
@@ -567,16 +550,7 @@ void ShellSurface::Resize(int component) {
   if (!widget_)
     return;
 
-  switch (bounds_mode_) {
-    case BoundsMode::SHELL:
-      AttemptToStartDrag(component);
-      return;
-    case BoundsMode::CLIENT:
-    case BoundsMode::FIXED:
-      return;
-  }
-
-  NOTREACHED();
+  AttemptToStartDrag(component);
 }
 
 void ShellSurface::Close() {
@@ -824,7 +798,7 @@ void ShellSurface::OnSurfaceDestroying(Surface* surface) {
 // views::WidgetDelegate overrides:
 
 bool ShellSurface::CanResize() const {
-  return bounds_mode_ == BoundsMode::SHELL;
+  return !is_popup_;
 }
 
 bool ShellSurface::CanMaximize() const {
@@ -927,16 +901,9 @@ void ShellSurface::OnPreWindowStateTypeChange(
 
   if (ash::IsMaximizedOrFullscreenOrPinnedWindowStateType(old_type) ||
       ash::IsMaximizedOrFullscreenOrPinnedWindowStateType(new_type)) {
-    // When transitioning in/out of maximized or fullscreen mode we need to
-    // make sure we have a configure callback before we allow the default
-    // cross-fade animations. The configure callback provides a mechanism for
-    // the client to inform us that a frame has taken the state change into
-    // account and without this cross-fade animations are unreliable.
-    // TODO(domlaskowski): For BoundsMode::CLIENT, the configure callback does
-    // not yet support window state changes. See crbug.com/699746.
-    if (configure_callback_.is_null() || bounds_mode_ == BoundsMode::CLIENT) {
-      scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
-    } else if (widget_) {
+    if (AnimationsEnabled()) {
+      if (!widget_)
+        return;
       // Give client a chance to produce a frame that takes state change into
       // account by acquiring a compositor lock.
       ui::Compositor* compositor =
@@ -944,6 +911,8 @@ void ShellSurface::OnPreWindowStateTypeChange(
       configure_compositor_lock_ = compositor->GetCompositorLock(
           nullptr, base::TimeDelta::FromMilliseconds(
                        kMaximizedOrFullscreenOrPinnedLockTimeoutMs));
+    } else {
+      scoped_animations_disabled_.reset(new ScopedAnimationsDisabled(this));
     }
   }
 }
@@ -976,7 +945,6 @@ void ShellSurface::OnWindowBoundsChanged(aura::Window* window,
                                          const gfx::Rect& old_bounds,
                                          const gfx::Rect& new_bounds,
                                          ui::PropertyChangeReason reason) {
-  DCHECK_NE(bounds_mode_, BoundsMode::CLIENT);
   if (!widget_ || !root_surface() || ignore_window_bounds_changes_)
     return;
 
@@ -1037,9 +1005,9 @@ void ShellSurface::OnKeyEvent(ui::KeyEvent* event) {
     return;
   }
 
-  // TODO(domlaskowski): For BoundsMode::CLIENT, synchronize the revert with the
-  // client, instead of having the client destroy the window on VKEY_ESCAPE. See
-  // crbug.com/699746.
+  // TODO(domlaskowski): For ClientControlledShellSurface, synchronize the
+  // revert with the client, instead of having the client destroy the window on
+  // VKEY_ESCAPE. See crbug.com/699746.
   if (event->type() == ui::ET_KEY_PRESSED &&
       event->key_code() == ui::VKEY_ESCAPE) {
     EndDrag(true /* revert */);
@@ -1072,16 +1040,8 @@ void ShellSurface::OnMouseEvent(ui::MouseEvent* event) {
 
   switch (event->type()) {
     case ui::ET_MOUSE_DRAGGED: {
-      if (bounds_mode_ == BoundsMode::CLIENT)
-        break;
-
-      gfx::Point location(event->location());
-      aura::Window::ConvertPointToTarget(widget_->GetNativeWindow(),
-                                         widget_->GetNativeWindow()->parent(),
-                                         &location);
-      ScopedConfigure scoped_configure(this, false);
-      resizer_->Drag(location, event->flags());
-      event->StopPropagation();
+      if (OnMouseDragged(*event))
+        event->StopPropagation();
       break;
     }
     case ui::ET_MOUSE_RELEASED: {
@@ -1111,8 +1071,8 @@ void ShellSurface::OnGestureEvent(ui::GestureEvent* event) {
   if (event->handled())
     return;
 
-  // TODO(domlaskowski): Handle touch dragging/resizing for BoundsMode::SHELL.
-  // See crbug.com/738606.
+  // TODO(domlaskowski): Handle touch dragging/resizing for shell surfaces whose
+  // type is not ClientControlledShellSurface. See crbug.com/738606.
   switch (event->type()) {
     case ui::ET_GESTURE_END: {
       ScopedConfigure scoped_configure(this, false);
@@ -1289,121 +1249,6 @@ void ShellSurface::Configure() {
       << pending_configs_.size();
 }
 
-aura::Window* ShellSurface::GetDragWindow() {
-  switch (bounds_mode_) {
-    case BoundsMode::SHELL:
-      return widget_->GetNativeWindow();
-
-    case BoundsMode::CLIENT:
-      return root_surface() ? root_surface()->window() : nullptr;
-
-    case BoundsMode::FIXED:
-      return nullptr;
-  }
-
-  NOTREACHED();
-  return nullptr;
-}
-
-void ShellSurface::AttemptToStartDrag(int component) {
-  DCHECK(widget_);
-
-  // Cannot start another drag if one is already taking place.
-  if (resizer_)
-    return;
-
-  aura::Window* window = GetDragWindow();
-  if (!window || window->HasCapture())
-    return;
-
-  DCHECK_EQ(bounds_mode_, BoundsMode::SHELL);
-
-  // Set the cursor before calling CreateWindowResizer(), as that will
-  // eventually call LockCursor() and prevent the cursor from changing.
-  aura::client::CursorClient* cursor_client =
-      aura::client::GetCursorClient(window->GetRootWindow());
-  if (!cursor_client)
-    return;
-
-  switch (component) {
-    case HTCAPTION:
-      cursor_client->SetCursor(ui::CursorType::kPointer);
-      break;
-    case HTTOP:
-      cursor_client->SetCursor(ui::CursorType::kNorthResize);
-      break;
-    case HTTOPRIGHT:
-      cursor_client->SetCursor(ui::CursorType::kNorthEastResize);
-      break;
-    case HTRIGHT:
-      cursor_client->SetCursor(ui::CursorType::kEastResize);
-      break;
-    case HTBOTTOMRIGHT:
-      cursor_client->SetCursor(ui::CursorType::kSouthEastResize);
-      break;
-    case HTBOTTOM:
-      cursor_client->SetCursor(ui::CursorType::kSouthResize);
-      break;
-    case HTBOTTOMLEFT:
-      cursor_client->SetCursor(ui::CursorType::kSouthWestResize);
-      break;
-    case HTLEFT:
-      cursor_client->SetCursor(ui::CursorType::kWestResize);
-      break;
-    case HTTOPLEFT:
-      cursor_client->SetCursor(ui::CursorType::kNorthWestResize);
-      break;
-    default:
-      NOTREACHED();
-      break;
-  }
-
-  resizer_ = ash::CreateWindowResizer(window, GetMouseLocation(), component,
-                                      wm::WINDOW_MOVE_SOURCE_MOUSE);
-  if (!resizer_)
-    return;
-
-  // Apply pending origin offsets and resize direction before starting a
-  // new resize operation. These can still be pending if the client has
-  // acknowledged the configure request but not yet called Commit().
-  origin_offset_ += pending_origin_offset_;
-  pending_origin_offset_ = gfx::Vector2d();
-  resize_component_ = pending_resize_component_;
-
-  WMHelper::GetInstance()->AddPreTargetHandler(this);
-  window->SetCapture();
-
-  // Notify client that resizing state has changed.
-  if (IsResizing())
-    Configure();
-}
-
-void ShellSurface::EndDrag(bool revert) {
-  DCHECK(widget_);
-  DCHECK(resizer_);
-
-  aura::Window* window = GetDragWindow();
-  DCHECK(window);
-  DCHECK(window->HasCapture());
-
-  bool was_resizing = IsResizing();
-
-  if (revert)
-    resizer_->RevertDrag();
-  else
-    resizer_->CompleteDrag();
-
-  WMHelper::GetInstance()->RemovePreTargetHandler(this);
-  window->ReleaseCapture();
-  resizer_.reset();
-
-  // Notify client that resizing state has changed.
-  if (was_resizing)
-    Configure();
-
-  UpdateWidgetBounds();
-}
-
 bool ShellSurface::IsResizing() const {
   ash::wm::WindowState* window_state =
       ash::wm::GetWindowState(widget_->GetNativeWindow());
@@ -1439,63 +1284,20 @@ void ShellSurface::UpdateWidgetBounds() {
   gfx::Rect new_widget_bounds =
       widget_->non_client_view()->GetWindowBoundsForClientBounds(
           visible_bounds);
-
-  switch (bounds_mode_) {
-    case BoundsMode::FIXED:
-      new_widget_bounds.set_origin(origin_);
-      break;
-    case BoundsMode::CLIENT:
-      new_widget_bounds.set_origin(origin_ -
-                                   GetSurfaceOrigin().OffsetFromOrigin());
-      break;
-    case BoundsMode::SHELL:
-      // Update widget origin using the surface origin if the current location
-      // of surface is being anchored to one side of the widget as a result of a
-      // resize operation.
-      if (resize_component_ != HTCAPTION) {
-        gfx::Point widget_origin =
-            GetSurfaceOrigin() + visible_bounds.OffsetFromOrigin();
-        wm::ConvertPointToScreen(widget_->GetNativeWindow(), &widget_origin);
-        new_widget_bounds.set_origin(widget_origin);
-      } else {
-        // Preserve widget position.
-        new_widget_bounds.set_origin(
-            widget_->GetWindowBoundsInScreen().origin());
-      }
-      break;
-  }
+  new_widget_bounds.set_origin(GetWidgetOrigin());
 
   // Set |ignore_window_bounds_changes_| as this change to window bounds
   // should not result in a configure request.
   DCHECK(!ignore_window_bounds_changes_);
   ignore_window_bounds_changes_ = true;
-  const gfx::Rect widget_bounds = widget_->GetWindowBoundsInScreen();
-  if (widget_bounds != new_widget_bounds) {
-    if (bounds_mode_ != BoundsMode::CLIENT || !resizer_) {
-      widget_->SetBounds(new_widget_bounds);
-      UpdateSurfaceBounds();
-    } else {
-      // TODO(domlaskowski): Synchronize window state transitions with the
-      // client, and abort client-side dragging on transition to fullscreen. See
-      // crbug.com/699746.
-      DLOG_IF(ERROR, widget_bounds.size() != new_widget_bounds.size())
-          << "Window size changed during client-driven drag";
-
-      // Convert from screen to display coordinates.
-      gfx::Point origin = new_widget_bounds.origin();
-      wm::ConvertPointFromScreen(widget_->GetNativeWindow()->parent(), &origin);
-      new_widget_bounds.set_origin(origin);
-
-      // Move the window relative to the current display.
-      widget_->GetNativeWindow()->SetBounds(new_widget_bounds);
-      UpdateSurfaceBounds();
-
-      // Render phantom windows when beyond the current display.
-      resizer_->Drag(GetMouseLocation(), 0);
-    }
-  }
-
+  if (new_widget_bounds != widget_->GetWindowBoundsInScreen())
+    SetWidgetBounds(new_widget_bounds);
   ignore_window_bounds_changes_ = false;
+}
+
+void ShellSurface::SetWidgetBounds(const gfx::Rect& bounds) {
+  widget_->SetBounds(bounds);
+  UpdateSurfaceBounds();
 }
 
 void ShellSurface::UpdateSurfaceBounds() {
@@ -1553,7 +1355,14 @@ void ShellSurface::UpdateShadow() {
   }
 }
 
-void ShellSurface::UpdateBackdrop() {}
+gfx::Rect ShellSurface::GetVisibleBounds() const {
+  // Use |geometry_| if set, otherwise use the visual bounds of the surface.
+  if (!geometry_.IsEmpty())
+    return geometry_;
+
+  return root_surface() ? gfx::Rect(root_surface()->content_size())
+                        : gfx::Rect();
+}
 
 gfx::Point ShellSurface::GetMouseLocation() const {
   aura::Window* const root_window = widget_->GetNativeWindow()->GetRootWindow();
@@ -1564,39 +1373,179 @@ gfx::Point ShellSurface::GetMouseLocation() const {
   return location;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// ShellSurface, private:
+
 void ShellSurface::InitializeWindowState(ash::wm::WindowState* window_state) {
-  // Allow the client to request bounds that do not fill the entire work area
-  // when maximized, or the entire display when fullscreen.
   window_state->set_allow_set_bounds_direct(false);
-  // Disable movement if bounds are controlled by the client or fixed.
-  bool movement_disabled = bounds_mode_ != BoundsMode::SHELL;
+  // Disable movement for popups.
+  bool movement_disabled = is_popup_;
   widget_->set_movement_disabled(movement_disabled);
   window_state->set_ignore_keyboard_bounds_change(movement_disabled);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// ShellSurface, private:
+void ShellSurface::UpdateBackdrop() {}
 
-gfx::Rect ShellSurface::GetVisibleBounds() const {
-  // Use |geometry_| if set, otherwise use the visual bounds of the surface.
-  if (!geometry_.IsEmpty())
-    return geometry_;
+float ShellSurface::GetScale() const {
+  return 1.f;
+}
 
-  return root_surface() ? gfx::Rect(root_surface()->content_size())
-                        : gfx::Rect();
+bool ShellSurface::AnimationsEnabled() const {
+  // When transitioning in/out of maximized or fullscreen mode, we need to
+  // make sure we have a configure callback before we allow the default
+  // cross-fade animations. The configure callback provides a mechanism for
+  // the client to inform us that a frame has taken the state change into
+  // account, and without this cross-fade animations are unreliable.
+  return !configure_callback_.is_null();
+}
+
+aura::Window* ShellSurface::GetDragWindow() {
+  return is_popup_ ? nullptr : widget_->GetNativeWindow();
+}
+
+std::unique_ptr<ash::WindowResizer> ShellSurface::CreateWindowResizer(
+    aura::Window* window,
+    int component) {
+  // Set the cursor before calling CreateWindowResizer, as that will
+  // eventually call LockCursor and prevent the cursor from changing.
+  aura::client::CursorClient* cursor_client =
+      aura::client::GetCursorClient(window->GetRootWindow());
+  if (!cursor_client)
+    return nullptr;
+
+  switch (component) {
+    case HTCAPTION:
+      cursor_client->SetCursor(ui::CursorType::kPointer);
+      break;
+    case HTTOP:
+      cursor_client->SetCursor(ui::CursorType::kNorthResize);
+      break;
+    case HTTOPRIGHT:
+      cursor_client->SetCursor(ui::CursorType::kNorthEastResize);
+      break;
+    case HTRIGHT:
+      cursor_client->SetCursor(ui::CursorType::kEastResize);
+      break;
+    case HTBOTTOMRIGHT:
+      cursor_client->SetCursor(ui::CursorType::kSouthEastResize);
+      break;
+    case HTBOTTOM:
+      cursor_client->SetCursor(ui::CursorType::kSouthResize);
+      break;
+    case HTBOTTOMLEFT:
+      cursor_client->SetCursor(ui::CursorType::kSouthWestResize);
+      break;
+    case HTLEFT:
+      cursor_client->SetCursor(ui::CursorType::kWestResize);
+      break;
+    case HTTOPLEFT:
+      cursor_client->SetCursor(ui::CursorType::kNorthWestResize);
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+
+  std::unique_ptr<ash::WindowResizer> resizer = ash::CreateWindowResizer(
+      window, GetMouseLocation(), component, wm::WINDOW_MOVE_SOURCE_MOUSE);
+
+  if (!resizer)
+    return nullptr;
+
+  // Apply pending origin offsets and resize direction before starting a
+  // new resize operation. These can still be pending if the client has
+  // acknowledged the configure request but has not yet committed.
+  origin_offset_ += pending_origin_offset_;
+  pending_origin_offset_ = gfx::Vector2d();
+  resize_component_ = pending_resize_component_;
+
+  return resizer;
+}
+
+bool ShellSurface::OnMouseDragged(const ui::MouseEvent& event) {
+  gfx::Point location(event.location());
+  aura::Window::ConvertPointToTarget(widget_->GetNativeWindow(),
+                                     widget_->GetNativeWindow()->parent(),
+                                     &location);
+  ScopedConfigure scoped_configure(this, false);
+  resizer_->Drag(location, event.flags());
+  return true;
+}
+
+void ShellSurface::AttemptToStartDrag(int component) {
+  DCHECK(widget_);
+
+  // Cannot start another drag if one is already taking place.
+  if (resizer_)
+    return;
+
+  aura::Window* window = GetDragWindow();
+  if (!window || window->HasCapture())
+    return;
+
+  resizer_ = CreateWindowResizer(window, component);
+  if (!resizer_)
+    return;
+
+  WMHelper::GetInstance()->AddPreTargetHandler(this);
+  window->SetCapture();
+
+  // Notify client that resizing state has changed.
+  if (IsResizing())
+    Configure();
+}
+
+void ShellSurface::EndDrag(bool revert) {
+  DCHECK(widget_);
+  DCHECK(resizer_);
+
+  aura::Window* window = GetDragWindow();
+  DCHECK(window);
+  DCHECK(window->HasCapture());
+
+  bool was_resizing = IsResizing();
+
+  if (revert)
+    resizer_->RevertDrag();
+  else
+    resizer_->CompleteDrag();
+
+  WMHelper::GetInstance()->RemovePreTargetHandler(this);
+  window->ReleaseCapture();
+  resizer_.reset();
+
+  // Notify client that resizing state has changed.
+  if (was_resizing)
+    Configure();
+
+  UpdateWidgetBounds();
+}
+
+gfx::Point ShellSurface::GetWidgetOrigin() const {
+  if (is_popup_)
+    return origin_;
+
+  // Preserve widget position.
+  if (resize_component_ == HTCAPTION)
+    return widget_->GetWindowBoundsInScreen().origin();
+
+  // Compute widget origin using surface origin if the current location of
+  // surface is being anchored to one side of the widget as a result of a
+  // resize operation.
+  gfx::Rect visible_bounds = GetVisibleBounds();
+  gfx::Point origin = GetSurfaceOrigin() + visible_bounds.OffsetFromOrigin();
+  wm::ConvertPointToScreen(widget_->GetNativeWindow(), &origin);
+  return origin;
 }
 
 gfx::Point ShellSurface::GetSurfaceOrigin() const {
-  DCHECK(bounds_mode_ == BoundsMode::SHELL || resize_component_ == HTCAPTION);
+  DCHECK(!is_popup_ || resize_component_ == HTCAPTION);
 
   gfx::Rect visible_bounds = GetVisibleBounds();
   gfx::Rect client_bounds =
       widget_->non_client_view()->frame_view()->GetBoundsForClientView();
   switch (resize_component_) {
     case HTCAPTION:
-      if (bounds_mode_ == BoundsMode::CLIENT)
-        return origin_ + origin_offset_ - visible_bounds.OffsetFromOrigin();
-
       return gfx::Point() + origin_offset_ - visible_bounds.OffsetFromOrigin();
     case HTBOTTOM:
     case HTRIGHT:
