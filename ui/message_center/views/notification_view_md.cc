@@ -639,7 +639,7 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
       Layout();
       SchedulePaint();
     } else {
-      delegate()->ClickOnNotificationButton(id, i);
+      MessageCenter::Get()->ClickOnNotificationButton(id, i);
     }
     return;
   }
@@ -647,7 +647,7 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
 
 void NotificationViewMD::OnNotificationInputSubmit(size_t index,
                                                    const base::string16& text) {
-  delegate()->ClickOnNotificationButtonWithReply(notification_id(), index,
+  MessageCenter::Get()->ClickOnNotificationButtonWithReply(notification_id(), index,
                                                  text);
 }
 
