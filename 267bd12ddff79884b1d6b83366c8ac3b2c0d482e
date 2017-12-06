@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ac64a3a_a85b3bfc",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-06T02:39:54Z",
+      "side": 1,
+      "message": "You want set(filter) - set(test_filter):\n\n\u003e\u003e\u003e a \u003d set([1, 2, 3])\n\u003e\u003e\u003e b \u003d set([3, 4, 5])\n\u003e\u003e\u003e a ^ b\nset([1, 2, 4, 5])\n\u003e\u003e\u003e a - b\nset([1, 2])",
+      "range": {
+        "startLine": 891,
+        "startChar": 26,
+        "endLine": 891,
+        "endChar": 55
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1646262_28a1de84",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-06T02:39:54Z",
+      "side": 1,
+      "message": "Please sort filter (e.g. add filter.sort() after this), to keep tests deterministic. Otherwise list(set()) will give you random order, potentially different every time, making the tests flaky.",
+      "range": {
+        "startLine": 891,
+        "startChar": 10,
+        "endLine": 891,
+        "endChar": 16
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
