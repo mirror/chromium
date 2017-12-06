@@ -93,6 +93,75 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4ad4b3_7510ebe8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-06T17:27:40Z",
+      "side": 1,
+      "message": "is this a new logic or should this be a copy of\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm?q\u003dupdateToolbarForSideSwipeSnapshot\u0026dr\u003dC\u0026l\u003d615 ?\nIf this is a new logic, can you in two lines explain what (and why) it changes?",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7737e26c_de84f0a2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-06T17:27:40Z",
+      "side": 1,
+      "message": "so is the if needed?\ncan we do \nself.backButton.hiddenInCurrentState \u003d !self.forwardButton.enabled; ?",
+      "range": {
+        "startLine": 160,
+        "startChar": 45,
+        "endLine": 160,
+        "endChar": 48
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6670253d_6a8e8972",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-06T17:27:40Z",
+      "side": 1,
+      "message": "Why don\u0027t we set back the value for the current webState?",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
