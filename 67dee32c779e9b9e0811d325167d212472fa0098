@@ -16,6 +16,24 @@
       "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "891cf4ff_598013ce",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-06T00:55:53Z",
+      "side": 0,
+      "message": "I don\u0027t think that\u0027s correct. This sets the selection that we later convert to the composition range. SetEditableSelectionOffsets() actually selects what we want to have end up as the selection.",
+      "parentUuid": "729783b7_678e720d",
+      "revId": "67dee32c779e9b9e0811d325167d212472fa0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
