@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6323f5ad_6b148ae8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10832576_4a27c43a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197bcd5a_e912695a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "Do we need to worry about the call in CancelPending as well, or does that not have this problem?",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60225f6f_b269188e",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "This test file is more about simulating exploited renderer processes (which send bad IPCs) than tests for all security bugs.  I think this new test probably belongs in render_frame_host_manager_browsertest.cc.  It could go near the RenderFrameHostManagerSpoofingTest tests, though probably not in that particular subclass (since it doesn\u0027t depend on those modifications).",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a65d4a0_215966a6",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "Please include a comment with bug number, like:\nEnsure that a pending navigation\u0027s URL is no longer visible after the speculative RFH is discarded due to a concurrent renderer-initiated navigation.  See https://crbug.com/760342.",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df06e373_a6b7049b",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "I\u0027m finding it a little hard to understand which is the attacker URL and which is the victim URL given these variable names and site names.  That means it\u0027s hard to tell if the bug is fixed or not by looking at the expectations.\n\nIf I\u0027m following correctly, kSpoofingPageURL (b.com) is the attacker\u0027s page and kSlowToCommitURL (a.com) is the victim\u0027s page?  Maybe renaming them with attacker/victim terminology would help?",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2703a1a8_a8dae868",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "Clarify that this is a browser-initiated navigation and thus the pending URL will be displayed.",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a412261_3c15d957",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "nit: Drop s\n\nAlso clarify that this is the attacker navigating to a 204 while the victim page hasn\u0027t committed yet.",
+      "range": {
+        "startLine": 764,
+        "startChar": 42,
+        "endLine": 764,
+        "endChar": 43
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cdf912_0b6888d2",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-06T08:51:07Z",
+      "side": 1,
+      "message": "Can you add a comment here clarifying that the victim\u0027s URL should no longer be visible, now that its speculative RFH has been discarded?",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
