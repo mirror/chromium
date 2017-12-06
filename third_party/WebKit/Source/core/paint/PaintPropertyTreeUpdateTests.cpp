@@ -1023,4 +1023,49 @@ TEST_P(PaintPropertyTreeUpdateTest, WillTransformChangeAboveFixed) {
             fixed->FirstFragment().LocalBorderBoxProperties()->Transform());
 }
 
+TEST_P(PaintPropertyTreeUpdateTest, CompositingReasonForAnimation) {
+  ScopedSlimmingPaintV2ForTest v2(false);
+  ScopedSlimmingPaintV175ForTest v175(true);
+
+  SetBodyInnerHTML(R"HTML(
+    <style>
+      #target {
+        transition: 100s;
+        opacity: 0.2;
+        transform: translateX(10px);
+        position: relative;
+      }
+    </style>
+    <div id='target'>TARGET</div>
+  )HTML");
+
+  auto* target = GetDocument().getElementById("target");
+  auto* transform =
+      target->GetLayoutObject()->FirstFragment().PaintProperties()->Transform();
+  ASSERT_TRUE(transform);
+  EXPECT_FALSE(transform->HasDirectCompositingReasons());
+
+  auto* effect =
+      target->GetLayoutObject()->FirstFragment().PaintProperties()->Effect();
+  ASSERT_TRUE(effect);
+  EXPECT_FALSE(effect->HasDirectCompositingReasons());
+
+  target->setAttribute(HTMLNames::styleAttr, "transform: translateX(11px)");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  EXPECT_TRUE(transform->HasDirectCompositingReasons());
+  EXPECT_TRUE(transform->RequiresCompositingForAnimation());
+  EXPECT_FALSE(effect->HasDirectCompositingReasons());
+
+  target->setAttribute(HTMLNames::styleAttr,
+                       "transform: translateX(11px); opacity: 0.3");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  // The transform animation still continues.
+  EXPECT_TRUE(transform->HasDirectCompositingReasons());
+  EXPECT_TRUE(transform->RequiresCompositingForAnimation());
+  // The effect node should have correct direct compositing reasons, not
+  // shadowed by the transform animation.
+  EXPECT_TRUE(effect->HasDirectCompositingReasons());
+  EXPECT_TRUE(effect->RequiresCompositingForAnimation());
+}
+
 }  // namespace blink
