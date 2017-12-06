@@ -627,7 +627,7 @@ TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
   }
 }
 
-TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
+TEST_F(ManagePasswordsBubbleModelTest, EyeIcon_PasswordsViewingingIsLocked) {
   for (bool is_manual_fallback_for_saving : {false, true}) {
     for (bool form_has_autofilled_value : {false, true}) {
       for (ManagePasswordsBubbleModel::DisplayReason display_reason :
@@ -664,7 +664,7 @@ TEST_F(ManagePasswordsBubbleModelTest, EyeIcon) {
             is_manual_fallback_for_saving
                 ? form_has_autofilled_value
                 : display_reason == ManagePasswordsBubbleModel::USER_ACTION,
-            model()->hide_eye_icon());
+            model()->passwords_viewing_is_locked());
 
         DestroyModel();
         // Flush async calls on password store.
