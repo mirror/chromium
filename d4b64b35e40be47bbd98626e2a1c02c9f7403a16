@@ -34,6 +34,70 @@
       "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86670bfd_f6b2c16b",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:18:13Z",
+      "side": 1,
+      "message": "What about using a sparse histogram, and recording the value scaled by 100?  (Scaling just to convert into integer space.)",
+      "parentUuid": "145a32b4_d10bffc1",
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9e49a0_0faf0cb9",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:18:13Z",
+      "side": 1,
+      "message": "If you prefer to keep the dense enumeration representation, then we\u0027ll want to update this value to be 8 rather than 7.  (There are 7 buckets actively used, plus the overflow bucket.)",
+      "range": {
+        "startLine": 711,
+        "startChar": 59,
+        "endLine": 711,
+        "endChar": 0
+      },
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a87b54_984c8cd2",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:18:13Z",
+      "side": 1,
+      "message": "Could I talk you into extending the metricsPrivate API to include a recordBoolean function, and using that here?  And, for extra communal goodness, maybe a recordEnumeratedValue function as well?  It\u0027s terribly easy as-is to pass the wrong values for the bucket min/max/buckets params.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 37
+      },
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
