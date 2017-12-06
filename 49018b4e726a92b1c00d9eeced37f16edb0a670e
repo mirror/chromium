@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "232062f6_67a1c4a5",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-06T21:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94f92bc_79f3245a",
+      "revId": "49018b4e726a92b1c00d9eeced37f16edb0a670e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23dde6ab_8a7f45bc",
         "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "49018b4e726a92b1c00d9eeced37f16edb0a670e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664e814c_90b56b8d",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-06T21:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23dde6ab_8a7f45bc",
+      "revId": "49018b4e726a92b1c00d9eeced37f16edb0a670e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
