@@ -149,6 +149,9 @@ void VrTestContext::HandleInput(ui::Event* event) {
       case ui::DomCode::US_R:
         ui_->OnWebVrFrameAvailable();
         break;
+      case ui::DomCode::US_E:
+        model_->exiting_vr = !model_->exiting_vr;
+        break;
       default:
         break;
     }
