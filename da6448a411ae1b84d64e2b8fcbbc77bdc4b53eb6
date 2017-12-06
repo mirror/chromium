@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f5abe0d8_8a99957c",
+        "filename": "content/browser/interface_provider_filtering.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "OK, I\u0027ll leave this as it is now, but filed crbug.com/792407 to track cleaning this up.",
+      "parentUuid": "3e991e78_6f65e842",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc5d933_4abdab09",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 35
@@ -208,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "2885da8c_99d40f12",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d22076_d88d841b",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5722d93_031144bf",
         "filename": "content/public/test/render_view_test.cc",
         "patchSetId": 35
@@ -240,6 +276,24 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb73a3fd_d4b533a2",
+        "filename": "content/public/test/render_view_test.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "Actually, I\u0027ll keep them here for now.",
+      "parentUuid": "793eb6a0_da1fd40d",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +347,24 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9591d27d_dc7c2227",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 4060,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d29b83_6ba15932",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -563,6 +635,30 @@
       "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "403c8de3_642eb127",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "Added reference to a bug to track this work.",
+      "parentUuid": "a7134983_b42f1084",
+      "range": {
+        "startLine": 1024,
+        "startChar": 0,
+        "endLine": 1034,
+        "endChar": 37
+      },
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

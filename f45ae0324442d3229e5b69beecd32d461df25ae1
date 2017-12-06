@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "28fc542f_58fc2118",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-06T12:00:36Z",
+      "side": 1,
+      "message": "Added comment explaining that this is less than ideal, and linked the bug tracking the work on rationalizing callbacks.",
+      "parentUuid": "0b365230_a4751b3e",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfe7bbfb_e00508c7",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
