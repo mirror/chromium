@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d49d688_8752dfc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T22:00:09Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "5c54537e_115c4b87",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1a067d6_d896b635",
         "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
         "patchSetId": 3
@@ -68,6 +92,54 @@
       "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf446d0_c9f4b3d7",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a067d6_d896b635",
+      "range": {
+        "startLine": 414,
+        "startChar": 46,
+        "endLine": 414,
+        "endChar": 52
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01fc8cc9_5db4e40e",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T22:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec9f926_259f5b85",
+      "range": {
+        "startLine": 413,
+        "startChar": 65,
+        "endLine": 414,
+        "endChar": 9
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
