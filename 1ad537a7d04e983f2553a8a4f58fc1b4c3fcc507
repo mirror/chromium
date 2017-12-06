@@ -22,6 +22,30 @@
       "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb37844_5043566c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T07:11:57Z",
+      "side": 1,
+      "message": "I think \"inline formatting context\" is the exact accurate term here, which comes from CSS visual formatting model:\n\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model\n\nIt also appears in the comments in ng_offset_mapping.h\n\n\"EnclosingNGBlockFlow\" isn\u0027t an accurate term here, because this function returns non-null only if the enclosing ng block flow has inline children, which means it\u0027s an inline formatting context.",
+      "parentUuid": "07b43686_e17f5b77",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
