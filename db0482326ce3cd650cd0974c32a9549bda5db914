@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "5da719c6_335a4992",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-06T12:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a546cf35_9354f58e",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b77aafec_10c217a1",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
         "patchSetId": 3
