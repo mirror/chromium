@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c060f69a_12316393",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-06T12:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2bb95c6_5e507497",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 52
+      },
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b27998_060a02dd",
         "filename": "media/audio/audio_debug_recording_writer.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4f9d72_3616b07f",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-06T12:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b27998_060a02dd",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "8a67be84_dfd51810",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-06T12:54:24Z",
+      "side": 1,
+      "message": "This should only be called from AudioDebugRecordingManager\u0027s sequence, since AudioDebugRecordingManager now makes a direct call to AudioDebugRecordingWriter::StartRecording, it no longer calls AudioDebugRecordingHelper that posts a task with AudioDebugRecordingFileWriter::Start.",
+      "parentUuid": "00e64f85_1f39bd50",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d69341c_f7dfcbba",
         "filename": "media/audio/audio_debug_recording_writer.cc",
         "patchSetId": 6
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "ae77a666_e591bae5",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-06T12:54:24Z",
+      "side": 1,
+      "message": "That shouldn\u0027t happen, based on line 292 comment.",
+      "parentUuid": "8d69341c_f7dfcbba",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49cc5a0d_21737ccb",
         "filename": "media/audio/audio_debug_recording_writer.cc",
         "patchSetId": 6
@@ -104,6 +182,24 @@
       "writtenOn": "2017-12-06T12:10:57Z",
       "side": 1,
       "message": "Is this still valid with the sequence check removed?",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036d88e0_5b441330",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-06T12:54:24Z",
+      "side": 1,
+      "message": "I think so, for the same reasons from line 292.",
+      "parentUuid": "49cc5a0d_21737ccb",
       "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
