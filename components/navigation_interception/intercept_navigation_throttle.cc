@@ -4,6 +4,9 @@
 
 #include "components/navigation_interception/intercept_navigation_throttle.h"
 
+#include "base/metrics/histogram_macros.h"
+#include "base/time/time.h"
+#include "base/timer/elapsed_timer.h"
 #include "components/navigation_interception/navigation_params.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
@@ -22,8 +25,13 @@ InterceptNavigationThrottle::~InterceptNavigationThrottle() {}
 
 content::NavigationThrottle::ThrottleCheckResult
 InterceptNavigationThrottle::WillStartRequest() {
+  base::ElapsedTimer timer;
+
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return CheckIfShouldIgnoreNavigation(false);
+  auto result = CheckIfShouldIgnoreNavigation(false);
+  UMA_HISTOGRAM_COUNTS_10M("Navigation.Intercept.WillStart",
+                           timer.Elapsed().InMicroseconds());
+  return result;
 }
 
 content::NavigationThrottle::ThrottleCheckResult
