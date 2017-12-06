@@ -23,6 +23,12 @@ DiceTabHelper::DiceTabHelper(content::WebContents* web_contents)
 
 DiceTabHelper::~DiceTabHelper() {}
 
+void DiceTabHelper::Reset() {
+  signin_access_point_ = signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN;
+  signin_reason_ = signin_metrics::Reason::REASON_UNKNOWN_REASON;
+  should_start_sync_after_web_signin_ = true;
+}
+
 void DiceTabHelper::SetSigninAccessPoint(
     signin_metrics::AccessPoint access_point) {
   DCHECK_EQ(signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN,

@@ -28,10 +28,14 @@ class DiceTabHelper : public content::WebContentsUserData<DiceTabHelper>,
     return should_start_sync_after_web_signin_;
   }
 
-  // Sets the sign-in access point. Should be called only once.
+  // Resets the DiceTabHelper to its starting state. Should be called when a new
+  // signin begins in a tab where a signin was already in progress.
+  void Reset();
+
+  // Sets the sign-in access point. Should be called only once per signin flow.
   void SetSigninAccessPoint(signin_metrics::AccessPoint access_point);
 
-  // Sets the sign-in reason. Should be called only once.
+  // Sets the sign-in reason. Should be called only once per signin flow.
   void SetSigninReason(signin_metrics::Reason reason);
 
   // content::WebContentsObserver:
