@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cd58e5e_191dd63a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T17:01:54Z",
+      "side": 1,
+      "message": "The NTP background color is also used on incognito NTP when scrolling the content up and down. So only the non-incognito NTP background is only used in snapshots (as you can see in the ToolbarViewController changes.\nSo I don\u0027t think passing the NTP background color when generating the snapshot is a good idea.",
+      "parentUuid": "0dc02709_d5a87831",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5edd1004_aeeeceab",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T14:21:33Z",
       "side": 1,
       "message": "The caller of this method should probably put the snapshot on top of an appropriately colored view and snapshot their composition.",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85d57e1_e9e00b7e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T17:01:54Z",
+      "side": 1,
+      "message": "I think this is a good idea if we did not need the specific handling |onNTP| for the location bar container and back button.\nAs we already have it, I think it is fine to only update the alpha of the background view.\nAlso, I don\u0027t want the coordinator to pass colors around.",
+      "parentUuid": "5edd1004_aeeeceab",
       "range": {
         "startLine": 153,
         "startChar": 8,
