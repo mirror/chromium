@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb837e58_5c2805fa",
+        "filename": "ui/views/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T11:15:06Z",
+      "side": 1,
+      "message": "this is done in ui/aura and src/ash so hopefully not controversial ;)",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
