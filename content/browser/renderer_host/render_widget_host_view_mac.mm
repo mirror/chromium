@@ -1810,6 +1810,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   UpdateBackingStoreProperties();
 }
 
+Class GetRenderWidgetHostViewCocoaClassForTesting() {
+  return [RenderWidgetHostViewCocoa class];
+}
+
 }  // namespace content
 
 // RenderWidgetHostViewCocoa ---------------------------------------------------
@@ -3715,4 +3719,7 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
   return YES;
 }
 
+- (void)willRemoveSubview:(NSView*)view {
+  NSLog(@"Will remove a view soon.");
+}
 @end
