@@ -4394,6 +4394,30 @@ void RenderFrameImpl::DidChangeSelection(bool is_empty_selection) {
   if (is_empty_selection)
     selection_text_.clear();
 
+  LOG(INFO) << "DidChangeSelection";
+
+  blink::WebInputMethodController* inputMethodController =
+      frame_->GetInputMethodController();
+  blink::WebTextInputInfo textInfo = inputMethodController->TextInputInfo();
+  if (inputMethodController->TextInputType() == blink::kWebTextInputTypeText ||
+      inputMethodController->TextInputType() ==
+          blink::kWebTextInputTypeSearch ||
+      inputMethodController->TextInputType() ==
+          blink::kWebTextInputTypeContentEditable) {
+
+    if (textInfo.value.IsEmpty()) {
+      LOG(INFO) << "Suggestion for: " << textInfo.value.Utf16();
+    } else {
+      LOG(INFO) << "Suggestion for: " <<
+          inputMethodController->WordBeforeCaret().Utf16();
+
+    }
+
+    // Get the selected value here!
+  } else {
+    LOG(INFO) << "Some other kind of input: " << textInfo.value.Utf8();
+  }
+
   // UpdateTextInputState should be called before SyncSelectionIfRequired.
   // UpdateTextInputState may send TextInputStateChanged to notify the focus
   // was changed, and SyncSelectionIfRequired may send SelectionChanged
