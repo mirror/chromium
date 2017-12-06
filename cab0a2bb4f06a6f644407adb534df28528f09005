@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ef37f9c5_f59b12f5",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "I am not yet sure about this. I can add this check in a separate CL.",
+      "parentUuid": "9b122016_9cdb6d46",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4405e5c_159269ac",
         "filename": "components/user_manager/user_manager.cc",
         "patchSetId": 20
@@ -103,6 +121,24 @@
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4b4f40_5baa5510",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4405e5c_159269ac",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e7dcdce8_e3d589be",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a38e94_2b24d913",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645ac8d0_63a64b04",
         "filename": "components/user_manager/user_manager_base.cc",
         "patchSetId": 20
@@ -172,6 +226,24 @@
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb5805a_88e2af90",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "645ac8d0_63a64b04",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "96e03afc_4bbe903f",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0bbbe6_3fccb30d",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6c503f_ac4278a7",
         "filename": "components/user_manager/user_manager_base.cc",
         "patchSetId": 20
@@ -206,6 +296,24 @@
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7518c02b_cb384629",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6c503f_ac4278a7",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +363,24 @@
       "writtenOn": "2017-12-05T20:17:28Z",
       "side": 1,
       "message": "Isn\u0027t this equivalent:\nif (!prefs_user_types-\u003eGetIntegerWithoutPathExpansion(it-\u003eGetAccountIdKey(), \u0026user_type)\n  user_type \u003d USER_TYPE_REGULAR;\nuser \u003d User::CreateRegularUser(*it, user_type);\n\nGetIntegerWithoutPathExpansion is apparently deprecated - do we want to continue to use this?",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61421585_5a77261f",
+        "filename": "components/user_manager/user_manager_base.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T01:07:59Z",
+      "side": 1,
+      "message": "It does not match the previous code, but I think it\u0027s OK.",
+      "parentUuid": "4f1f280e_de8c8c58",
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
