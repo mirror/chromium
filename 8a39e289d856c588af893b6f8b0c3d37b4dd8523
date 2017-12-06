@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f7525a7_38dd982a",
+        "filename": "chrome/browser/ui/webui/md_downloads/md_downloads_dom_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T01:49:43Z",
+      "side": 1,
+      "message": "Nit: I\u0027m a big fan of in-declaration initializers, but not so much when they\u0027re applied inconsistently.  Can you either do this in-definition or else move the other initializers here too?  (Note that |weak_ptr_factory_| can be initialized in-declaration, I think you\u0027ll just need to use {} to do it.)",
+      "revId": "8a39e289d856c588af893b6f8b0c3d37b4dd8523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
