@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7e9fa06_9c36a535",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "You can\u0027t access fields of AppCacheDispatcherHost on the UI thread (since it might have been deleted). Bind |sender_| into the posted callback. Make this a free function too.",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abe1a8b_77708fdb",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "These look movable if |p| wasn\u0027t const.",
+      "range": {
+        "startLine": 151,
+        "startChar": 23,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c297322_cc26ec20",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "I think you still need to call the callback.",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555eabd8_45c85d5b",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "The existing AppCacheHost class has a different meaning. This is more like AppCacheBackend.",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137a2f18_107d1f79",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "Double space.",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48172f2f_f19befce",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06153a3c_08f4c9ef",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "This suggests that this interface should be channel-associated.",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba52ac9_f5c413d6",
+        "filename": "content/renderer/appcache/appcache_backend_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e63518e_3b59b456",
+        "filename": "content/renderer/appcache/appcache_backend_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T07:15:13Z",
+      "side": 1,
+      "message": "Is this still used anywhere?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
