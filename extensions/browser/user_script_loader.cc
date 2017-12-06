@@ -336,6 +336,11 @@ std::unique_ptr<base::SharedMemory> UserScriptLoader::Serialize(
   if (!readonly_handle.IsValid())
     return std::unique_ptr<base::SharedMemory>();
 
+#if defined(OS_ANDROID)
+  // Seal the region read-only now. http://crbug.com/789959
+  readonly_handle.SetRegionReadOnly();
+#endif
+
   return std::make_unique<base::SharedMemory>(readonly_handle,
                                               /*read_only=*/true);
 }
