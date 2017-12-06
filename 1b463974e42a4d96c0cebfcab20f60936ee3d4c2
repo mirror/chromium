@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "7f24985c_dba252ad",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T14:10:25Z",
+      "side": 1,
+      "message": "OK, then let\u0027s keep the sequence checker. Or was there another reason for removing it?",
+      "parentUuid": "8a67be84_dfd51810",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d69341c_f7dfcbba",
         "filename": "media/audio/audio_debug_recording_writer.cc",
         "patchSetId": 6
@@ -189,6 +207,41 @@
     },
     {
       "key": {
+        "uuid": "37b6f836_82aff60c",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T14:10:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae77a666_e591bae5",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40292f63_d98ad4c3",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T14:10:25Z",
+      "side": 1,
+      "message": "OnData() is called from the soundcard thread so |file_writer_| can\u0027t be accessed here safely.",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49cc5a0d_21737ccb",
         "filename": "media/audio/audio_debug_recording_writer.cc",
         "patchSetId": 6
@@ -218,6 +271,41 @@
       "side": 1,
       "message": "I think so, for the same reasons from line 292.",
       "parentUuid": "49cc5a0d_21737ccb",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec2349b_ce10d3a4",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T14:10:25Z",
+      "side": 1,
+      "message": "Oh, sorry, this is not affected at all since |file_writer_| is the of the inner class, and it\u0027s deleted on the same task runner.",
+      "parentUuid": "036d88e0_5b441330",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3d35d3b_2bf68312",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T14:10:25Z",
+      "side": 1,
+      "message": "Here, |file_write_| we could get a valid pointer, but if there\u0027s a context switch between that and posting the task, and StopRecording() is run in its entirety before continuing here, the delete task will be posted before this task and we have a use after free when this task is finally run.\n\nI\u0027m not sure how to solve this easily from the top of my head, maybe it\u0027s not possible to remove the extra thread hop without introducing a lock. We can look at it more closely offline.",
       "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
