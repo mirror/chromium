@@ -352,6 +352,7 @@ void ChromeCleanerControllerImpl::OnReporterSequenceDone(
       return;
 
     case SwReporterInvocationResult::kTimedOut:
+    case SwReporterInvocationResult::kComponentNotAvailable:
     case SwReporterInvocationResult::kProcessFailedToLaunch:
     case SwReporterInvocationResult::kGeneralFailure:
       idle_reason_ = IdleReason::kReporterFailed;

@@ -210,13 +210,12 @@ void ChromeCleanupHandler::HandleStartScanning(const base::ListValue* args) {
   // The state is propagated to all open tabs and should be consistent.
   DCHECK_EQ(controller_->logs_enabled(), allow_logs_upload);
 
-  // TODO(crbug.com/776538): Force an on-demand update of the component.
-  component_updater::RegisterSwReporterComponentWithParams(
+  component_updater::OnDemandUpdateAndRunSwReporterComponent(
       allow_logs_upload ? safe_browsing::SwReporterInvocationType::
                               kUserInitiatedWithLogsAllowed
                         : safe_browsing::SwReporterInvocationType::
                               kUserInitiatedWithLogsDisallowed,
-      g_browser_process->component_updater());
+      controller_, g_browser_process->component_updater());
 
   base::RecordAction(
       base::UserMetricsAction("SoftwareReporter.CleanupWebui_StartScanning"));
