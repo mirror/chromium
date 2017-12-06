@@ -18,7 +18,7 @@
 #include "build/build_config.h"
 #include "sandbox/linux/syscall_broker/broker_channel.h"
 #include "sandbox/linux/syscall_broker/broker_command.h"
-#include "sandbox/linux/syscall_broker/broker_policy.h"
+#include "sandbox/linux/syscall_broker/broker_permission_list.h"
 
 #if defined(OS_ANDROID) && !defined(MSG_CMSG_CLOEXEC)
 #define MSG_CMSG_CLOEXEC 0x40000000
@@ -27,7 +27,7 @@
 namespace sandbox {
 namespace syscall_broker {
 
-BrokerClient::BrokerClient(const BrokerPolicy& broker_policy,
+BrokerClient::BrokerClient(const BrokerPermissionList& broker_policy,
                            BrokerChannel::EndPoint ipc_channel,
                            const BrokerCommandSet& allowed_command_set,
                            bool fast_check_in_client,

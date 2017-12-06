@@ -13,7 +13,7 @@ namespace sandbox {
 
 namespace syscall_broker {
 
-class BrokerPolicy;
+class BrokerPermissionList;
 
 // The BrokerHost class should be embedded in a (presumably not sandboxed)
 // process. It will honor IPC requests from a BrokerClient sent over
@@ -22,7 +22,7 @@ class BrokerHost {
  public:
   enum class RequestStatus { LOST_CLIENT = 0, SUCCESS, FAILURE };
 
-  BrokerHost(const BrokerPolicy& broker_policy,
+  BrokerHost(const BrokerPermissionList& broker_policy,
              const BrokerCommandSet& allowed_command_set,
              BrokerChannel::EndPoint ipc_channel);
   ~BrokerHost();
@@ -30,7 +30,7 @@ class BrokerHost {
   RequestStatus HandleRequest() const;
 
  private:
-  const BrokerPolicy& broker_policy_;
+  const BrokerPermissionList& broker_policy_;
   const BrokerCommandSet allowed_command_set_;
   const BrokerChannel::EndPoint ipc_channel_;
 
