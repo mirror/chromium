@@ -716,6 +716,8 @@ void WindowTreeHostManager::PostDisplayConfigurationChange() {
                               ? list[0]
                               : layout.primary_id);
     }
+
+    display_manager->UpdateStoredMirrorModes();
   }
 
   for (const display::Display& display :
