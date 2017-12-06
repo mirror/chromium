@@ -95,6 +95,7 @@ IN_PROC_BROWSER_TEST_F(PDFToPWGRasterBrowserTest, TestSuccess) {
   pwg_settings.odd_page_transform = PwgRasterTransformType::TRANSFORM_NORMAL;
   pwg_settings.rotate_all_pages = false;
   pwg_settings.reverse_page_order = false;
+  pwg_settings.use_color = true;
 
   base::FilePath temp_file;
   Convert(pdf_data.get(), pdf_settings, pwg_settings,
