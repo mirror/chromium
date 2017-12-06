@@ -62,6 +62,11 @@ namespace url {
 class Origin;
 }
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}
+
 class ChromeContentBrowserClient : public content::ContentBrowserClient {
  public:
   ChromeContentBrowserClient();
@@ -392,6 +397,9 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::NavigationUIData* navigation_ui_data) override;
   bool ShouldForceDownloadResource(const GURL& url,
                                    const std::string& mime_type) override;
+
+  void PictureInPicture(content::RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);

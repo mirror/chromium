@@ -125,6 +125,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
+  void PictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -769,6 +770,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Owns the weblayer and obtains/maintains SurfaceIds for
   // kUseSurfaceLayerForVideo feature.
   std::unique_ptr<blink::WebSurfaceLayerBridge> bridge_;
+  std::unique_ptr<blink::WebSurfaceLayerBridge> pip_bridge_;
 
   // The maximum video keyframe distance that allows triggering background
   // playback optimizations (non-MSE).
@@ -845,6 +847,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  blink::WebLayerTreeView* layer_tree_view_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };

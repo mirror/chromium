@@ -298,8 +298,11 @@ void Surface::ActivateFrame(FrameData frame_data) {
   UnrefFrameResourcesAndRunCallbacks(std::move(previous_frame_data));
 
   if (!seen_first_frame_activation_) {
+    LOG(ERROR) << "no first frame activation yet";
     seen_first_frame_activation_ = true;
     surface_manager_->FirstSurfaceActivation(surface_info_);
+  } else {
+    // LOG(ERROR) << "already had first frame activation!";
   }
 
   if (surface_client_)

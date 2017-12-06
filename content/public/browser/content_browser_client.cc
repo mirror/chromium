@@ -31,6 +31,8 @@
 #include "ui/shell_dialogs/select_file_policy.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 namespace content {
 
@@ -598,6 +600,11 @@ bool ContentBrowserClient::ShouldForceDownloadResource(
     const GURL& url,
     const std::string& mime_type) {
   return false;
+}
+
+void ContentBrowserClient::PictureInPicture(RenderFrameHost* frame_host,
+  viz::FrameSinkId frame_sink_id) {
+  // LOG(ERROR) << "ContentBrowserClient::PictureInPicture";
 }
 
 }  // namespace content

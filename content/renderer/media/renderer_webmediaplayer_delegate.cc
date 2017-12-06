@@ -18,6 +18,8 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
 #include "ui/gfx/geometry/size.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
@@ -111,6 +113,12 @@ void RendererWebMediaPlayerDelegate::DidPlayerMutedStatusChange(int delegate_id,
                                                                 bool muted) {
   Send(new MediaPlayerDelegateHostMsg_OnMutedStatusChanged(routing_id(),
                                                            delegate_id, muted));
+}
+
+void RendererWebMediaPlayerDelegate::PictureInPicture(viz::FrameSinkId frame_sink_id) {
+  LOG(ERROR) << "RendererWebMediaPlayerDelegate::PictureInPicture";
+
+  Send(new MediaPlayerDelegateHostMsg_OnPictureInPicture(routing_id(), frame_sink_id));
 }
 
 void RendererWebMediaPlayerDelegate::DidPause(int player_id) {

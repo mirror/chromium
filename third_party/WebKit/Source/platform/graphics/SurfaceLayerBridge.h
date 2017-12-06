@@ -37,6 +37,7 @@ class PLATFORM_EXPORT SurfaceLayerBridge
   SurfaceLayerBridge(WebLayerTreeView*, WebSurfaceLayerBridgeObserver*);
   virtual ~SurfaceLayerBridge();
 
+  void CreateOffscreenCanvasSurface();
   void CreateSolidColorLayer();
 
   // Implementation of blink::mojom::blink::OffscreenCanvasSurfaceClient
@@ -49,6 +50,10 @@ class PLATFORM_EXPORT SurfaceLayerBridge
 
   const viz::FrameSinkId& GetFrameSinkId() const override {
     return frame_sink_id_;
+  }
+
+  viz::SurfaceId GetCurrentSurfaceId() override {
+    return current_surface_id_;
   }
 
  private:

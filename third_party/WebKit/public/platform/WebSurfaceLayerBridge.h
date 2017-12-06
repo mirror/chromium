@@ -11,6 +11,7 @@
 
 namespace viz {
 class FrameSinkId;
+class SurfaceId;
 }
 
 namespace blink {
@@ -35,6 +36,7 @@ class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridge {
   virtual ~WebSurfaceLayerBridge();
   virtual WebLayer* GetWebLayer() const = 0;
   virtual const viz::FrameSinkId& GetFrameSinkId() const = 0;
+  virtual viz::SurfaceId GetCurrentSurfaceId() = 0;
 };
 
 }  // namespace blink

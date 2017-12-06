@@ -245,21 +245,22 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       overlay_routing_token_(OverlayInfo::RoutingToken()),
       watch_time_recorder_provider_(params->watch_time_recorder_provider()),
       create_decode_stats_recorder_cb_(
-          params->create_capabilities_recorder_cb()) {
+          params->create_capabilities_recorder_cb()),
+      layer_tree_view_(params->layer_tree_view()) {
   DVLOG(1) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
   DCHECK(renderer_factory_selector_);
   DCHECK(client_);
   DCHECK(delegate_);
 
-  if (surface_layer_for_video_enabled_)
-    bridge_ = params->create_bridge_callback().Run(this);
-
   if (surface_layer_for_video_enabled_) {
+    bridge_ = params->create_bridge_callback().Run(this);
     vfc_task_runner_->PostTask(
         FROM_HERE, base::Bind(&VideoFrameCompositor::EnableSubmission,
                               base::Unretained(compositor_.get()),
                               bridge_->GetFrameSinkId()));
+
+    // ??? set up pip bridge here?
   }
 
   // If we're supposed to force video overlays, then make sure that they're
@@ -360,9 +361,12 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
 void WebMediaPlayerImpl::OnWebLayerUpdated() {}
 
 void WebMediaPlayerImpl::RegisterContentsLayer(blink::WebLayer* web_layer) {
+  // This happens after OnFirstSurfaceActivation.
+  LOG(ERROR) << "WebMediaPlayerImpl::RegisterContentsLayer -- bridge";
   DCHECK(bridge_);
   bridge_->GetWebLayer()->CcLayer()->SetContentsOpaque(opaque_);
   bridge_->GetWebLayer()->SetContentsOpaqueIsFixed(true);
+
   // TODO(lethalantidote): Figure out how to pass along rotation information.
   // https://crbug/750313.
   client_->SetWebLayer(web_layer);
@@ -734,6 +738,57 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   // The play state is updated because the player might have left the autoplay
   // muted state.
   UpdatePlayState();
+}
+
+void WebMediaPlayerImpl::PictureInPicture() {
+  LOG(ERROR) << "WebMediaPlayerImpl::PictureInPicture";
+
+  // ----------------- not used ----------------
+  viz::FrameSinkId original_frame_sink_id(
+      bridge_->GetFrameSinkId().client_id(),
+      bridge_->GetFrameSinkId().sink_id());
+  LOG(ERROR) << "original frame sink id: " << original_frame_sink_id;
+  // -----------------
+
+  // bridge_ = nullptr;
+
+  pip_bridge_ =
+      blink::WebSurfaceLayerBridge::Create(layer_tree_view_, this);
+  viz::FrameSinkId frame_sink_id(
+      pip_bridge_->GetFrameSinkId().client_id(),
+      pip_bridge_->GetFrameSinkId().sink_id());
+  LOG(ERROR) << "pip frame sink id: " << frame_sink_id;
+
+  // SET UP FOR PIP BRIDGE
+  // Do this sometime beforehand so we don't have to wait for VFC to
+  // respond?
+  vfc_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VideoFrameCompositor::EnableSubmission,
+                            base::Unretained(compositor_.get()),
+                            pip_bridge_->GetFrameSinkId()));
+
+  // TRIGGER PIP
+  delegate_->PictureInPicture(frame_sink_id);
+
+  // TRIGGER PLAYBACK NOT BACKGROUNDED
+  delegate_->SetIdle(delegate_id_, false);
+  pipeline_controller_.SetPlaybackRate(playback_rate_);
+
+  bool is_remote = false;
+  bool can_auto_suspend = !disable_pipeline_auto_suspend_;
+  if (IsStreaming()) {
+    bool at_beginning =
+        ready_state_ == WebMediaPlayer::kReadyStateHaveNothing ||
+        CurrentTime() == 0.0;
+    if (!at_beginning || GetPipelineMediaDuration() == kInfiniteDuration)
+      can_auto_suspend = false;
+  }
+
+  bool is_suspended = pipeline_controller_.IsSuspended();
+  bool is_backgrounded = IsBackgroundedSuspendEnabled() && IsHidden();
+  PlayState state = UpdatePlayState_ComputePlayState(
+      is_remote, can_auto_suspend, is_suspended, is_backgrounded);
+  SetDelegateState(state.delegate_state, state.is_idle);
 }
 
 void WebMediaPlayerImpl::SetSinkId(

@@ -112,6 +112,11 @@ namespace storage {
 class FileSystemBackend;
 }
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}
+
 namespace content {
 
 enum class PermissionType;
@@ -988,6 +993,9 @@ class CONTENT_EXPORT ContentBrowserClient {
   // render MHTML page from http/https URLs.
   virtual bool ShouldForceDownloadResource(const GURL& url,
                                            const std::string& mime_type);
+
+  virtual void PictureInPicture(RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id);
 };
 
 }  // namespace content

@@ -355,6 +355,7 @@ bool FrameSinkManagerImpl::ChildContains(
 
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     const SurfaceInfo& surface_info) {
+  LOG(ERROR) << "FrameSinkManagerImpl::OnFirstSurfaceActivation";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
@@ -363,8 +364,15 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
   // be necessary, because a surface reference might already exist and no
   // temporary reference was created. It could be useful to let |client_| know
   // if it should find an owner.
-  if (client_)
+  //
+  //
+  // blink::mojom::blink::OffscreenCanvasSurfaceClient
+  if (client_) { // This is the (Web)SurfaceLayerBridge.
+    LOG(ERROR) << "has client";
     client_->OnFirstSurfaceActivation(surface_info);
+  } else {
+    LOG(ERROR) << "no client";
+  }
 }
 
 void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}
