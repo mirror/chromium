@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d110b49_7666a4b1",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T18:55:01Z",
+      "side": 0,
+      "message": "Could you keep these two parameters, so that this patch has no logic change?",
+      "range": {
+        "startLine": 347,
+        "startChar": 38,
+        "endLine": 347,
+        "endChar": 49
+      },
+      "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
