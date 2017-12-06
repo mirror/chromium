@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01ce477e_45a7c2db",
+        "filename": "ios/chrome/app/startup_tasks.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "This is perfect. Done.",
+      "parentUuid": "632fde40_198930bd",
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1aa847c_7542b1ef",
         "filename": "ios/chrome/browser/download/browser_download_service.mm",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3847b379_687118ee",
+        "filename": "ios/chrome/browser/download/browser_download_service.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Done in a separate CL: crrev.com/c/809289",
+      "parentUuid": "f1aa847c_7542b1ef",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa9f5beb_b45ca96c",
         "filename": "ios/chrome/browser/download/browser_download_service.mm",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-05T09:24:45Z",
       "side": 1,
       "message": "I\u0027ve not seen the call to PassKitTabHelper::CreateForWebState() and from its prototype I don\u0027t think it can go into AttachTabHelpers, thus it is possible for PassKitTabHelper::FromWebState() to return null.\n\nThus I think you need to check for that a handle this case. Or add a DCHECK to ensure this code cannot be invoked if the PassKitTabHelper is not attached.\n\nLooking at CL 3/4 I see that the tab helper is created when the tab is inserted into the TabModel (i.e. in BVC -installDelegatesForTab). This mean that this tab helper will be null for pre-rendering tabs for example, so I think the right thing to do is to handle a null return value here.\n\nNote that ios/ tab helpers design is based on content/ and thus the same documentation can be used (https://chromium.googlesource.com/chromium/src/+/master/docs/tab_helpers.md). Documentation states that \"Not every WebStates [WebContents] has every tab helper\".",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 47
+      },
+      "revId": "e3c7d7dac918aa977173417f22c3e38095c3ac51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93a587f_de76b5cc",
+        "filename": "ios/chrome/browser/download/browser_download_service.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "That\u0027s a great catch. Done.",
+      "parentUuid": "aa9f5beb_b45ca96c",
       "range": {
         "startLine": 37,
         "startChar": 6,

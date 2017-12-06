@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08ae738f_ef1a2a71",
+        "filename": "ios/chrome/browser/download/browser_download_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf253c94_854f0a97",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da15a709_b2d9a703",
         "filename": "ios/chrome/browser/download/browser_download_service_factory.h",
         "patchSetId": 10
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "1e9428b0_3b60f50c",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Good point. Every BrowserStateKeyedServiceFactory has the same comment. Fixed here.",
+      "parentUuid": "da15a709_b2d9a703",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 49
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c7d9e24_b85d70ed",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a401b9b_960f1f0d",
+      "range": {
+        "startLine": 22,
+        "startChar": 64,
+        "endLine": 22,
+        "endChar": 69
+      },
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04aad14_b81953e0",
         "filename": "ios/chrome/browser/download/browser_download_service_factory.mm",
         "patchSetId": 10
@@ -85,6 +157,24 @@
       "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa19d456_5cc626d0",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Keyed service is components concept. DownloadController is ios/web concept. ios/web can not depend on components.",
+      "parentUuid": "a04aad14_b81953e0",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "099f080f_2e967f5f",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323a6550_9b8328a5",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f4cd4d_bf66bf65",
         "filename": "ios/chrome/browser/download/browser_download_service_factory_unittest.mm",
         "patchSetId": 10
@@ -119,6 +227,24 @@
       "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4d1959_7961b3bd",
+        "filename": "ios/chrome/browser/download/browser_download_service_factory_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "ChromeBrowserState needs thread. Explained that in the comment.",
+      "parentUuid": "97f4cd4d_bf66bf65",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "a4d9a69a_3dd4576b",
+        "filename": "ios/chrome/browser/download/browser_download_service_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d67abb0_b04c07d4",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce165292_f80d44b5",
         "filename": "ios/chrome/browser/download/browser_download_service_unittest.mm",
         "patchSetId": 10
@@ -153,6 +297,24 @@
       "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a762cfc_59a3abd4",
+        "filename": "ios/chrome/browser/download/browser_download_service_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T01:25:03Z",
+      "side": 1,
+      "message": "It tested indirectly. There is a DCHECKs which fire if BrowserDownloadService::OnDownloadControllerDestroyed does not remove the delegate from DownloadController.",
+      "parentUuid": "ce165292_f80d44b5",
+      "revId": "0efae09fd3611724851658d9d0bd4eb06d7cc43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
