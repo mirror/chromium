@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c54537e_115c4b87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T21:53:46Z",
+      "side": 1,
+      "message": "Hmm, isn\u0027t this basically working around that we can\u0027t clear the resolved filters within GetFilter?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a067d6_d896b635",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T21:53:46Z",
+      "side": 1,
+      "message": "Nit: opposed",
+      "range": {
+        "startLine": 414,
+        "startChar": 46,
+        "endLine": 414,
+        "endChar": 52
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec9f926_259f5b85",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T21:53:46Z",
+      "side": 1,
+      "message": "Nit: double such",
+      "range": {
+        "startLine": 413,
+        "startChar": 65,
+        "endLine": 414,
+        "endChar": 9
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d2f03d_ce232abe",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T21:53:46Z",
+      "side": 1,
+      "message": "I think this should be cleared on Reset() (like the origin_clean_ flag in the host/HTMLCanvasElement - preferably all this state would be in the host.)",
+      "range": {
+        "startLine": 420,
+        "startChar": 7,
+        "endLine": 420,
+        "endChar": 34
+      },
+      "revId": "e6a4793606386bea779a402989b8b7ad2e8434dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
