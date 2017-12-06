@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6c4eec_3f9b842a",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "The downside of what I mentioned regarding NSS\u0027s caching behaviour is that there\u0027s no guarantee this test won\u0027t be flakey.\n\nIf NSS has cached in memory (e.g. from a previous verification) this certificate, this test will fail, although not for it being wrong.\n\nUnfortunately, I don\u0027t have a good suggestion on how to deflake this - there\u0027s no way to force-clear that cache to gain deterministic behaviour, short of ensuring dedicated process launches. The test runner \u0027should\u0027 do this, but it\u0027s somewhat gross to depend on.\n\nI mention this for two reasons:\n- If it flakes, now you know why\n- Wondering if a future design (code cleanup rather than feature blocking) would be to supply the ONC certs to the ClientCertStore, now that we have that, and then have the tests check that the ClientCertStore had the ONC policies made available to them.\n\nThis avoids the complications of the original plan (importing into the NSS trust database and segmenting them), and allows greater future flexibility, while also not being potentially-flaky.\n\nNote the same applies for the *Known test below :)",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461fd2e8_64d7d1ce",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "just \nDCHECK(certificate)",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09403b6_984412b6",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "Should this be a LOG(ERROR)? I\u0027m not sure the ChromeOS policies around logging, but normally I\u0027d push back on shipping this sort of log statement to the user, especially if ONC files are created by the server.\n\nMy $.02",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011953c0_ace3c4d8",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "s/\"\"/std::string()/",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ccc351_a68250e7",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "Seems spammy - remove?",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e910c69_311e2453",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-06T22:19:31Z",
+      "side": 1,
+      "message": "push_back(std::move()) has the same performance characteristics here, and has the clarity of avoiding confusion over emplace_back\u0027s potential conversions",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
