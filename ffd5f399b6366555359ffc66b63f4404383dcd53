@@ -181,6 +181,24 @@
       "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cde96cb_986e19ff",
+        "filename": "content/browser/ppapi_plugin_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-06T01:39:37Z",
+      "side": 1,
+      "message": "Filed an issue for this problem. I will consider how to address issue.",
+      "parentUuid": "0ff4c6fc_99455859",
+      "revId": "ffd5f399b6366555359ffc66b63f4404383dcd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
