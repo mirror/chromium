@@ -471,6 +471,30 @@
       "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23890939_6369fc80",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-12-06T00:19:26Z",
+      "side": 1,
+      "message": "It just occurred to me that I control both ends, so I can just have it call OnIconRequestDone with the relative URL, which is a known constant.",
+      "parentUuid": "f31c6940_9dca1505",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "ba413741f0d72e241e9bad0d56c73c01cedbef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
