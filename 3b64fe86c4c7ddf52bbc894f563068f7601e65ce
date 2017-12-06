@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ddfb93_168a908b",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-06T01:26:24Z",
+      "side": 1,
+      "message": "If you have SetIsReportforUpload(bool) return the previous value, you don\u0027t need to double take the lock here. :)",
+      "revId": "3b64fe86c4c7ddf52bbc894f563068f7601e65ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
