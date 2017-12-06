@@ -209,7 +209,8 @@ class MojoAsyncResourceHandlerWithStubOperations
                                  rdh,
                                  std::move(mojo_request),
                                  std::move(url_loader_client),
-                                 RESOURCE_TYPE_MAIN_FRAME),
+                                 RESOURCE_TYPE_MAIN_FRAME,
+                                 false),  // defer_on_response_started.
         task_runner_(new base::TestSimpleTaskRunner) {}
   ~MojoAsyncResourceHandlerWithStubOperations() override {}
 

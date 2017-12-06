@@ -109,6 +109,10 @@ void AppCacheURLLoaderJob::FollowRedirect() {
   NOTREACHED() << "appcache never produces redirects";
 }
 
+void AppCacheURLLoaderJob::ProceedWithResponse() {
+  NOTREACHED();
+}
+
 void AppCacheURLLoaderJob::SetPriority(net::RequestPriority priority,
                                        int32_t intra_priority_value) {}
 void AppCacheURLLoaderJob::PauseReadingBodyFromNet() {}
