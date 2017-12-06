@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "405aa946_19cc1598",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-06T23:01:32Z",
+      "side": 1,
+      "message": "I guess what you\u0027re saying is that the compositor\u0027s task runner will belong to the same thread but it might be a different one e.g. nested message loop for resize. I\u0027ll change this to take in a task runner too.",
+      "parentUuid": "053b3abd_a57f6202",
+      "revId": "34400c0db70fe0a37c1a14d9cce5c92facc6b278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40e2b0d1_c65c9f6a",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 4
