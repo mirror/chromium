@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e08726b6_032ee3cc",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Should we put this outside of the closure?  As-is, we\u0027re just going to hang of the result isn\u0027t net::OK.  Admittedly, does mean we need to pass in another pointer, but I think we can live with that.  Same for the next one.",
+      "range": {
+        "startLine": 497,
+        "startChar": 14,
+        "endLine": 497,
+        "endChar": 23
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca8145fa_47fe3ee6",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 15
@@ -110,6 +133,328 @@
         "startChar": 23,
         "endLine": 50,
         "endChar": 37
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2621512a_5b4967c3",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Just use \"\u003d default;\"?  Do we even need to explicitly declare this?",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 57
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267c256b_97ebb985",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "DCHECK_LE(results_.size(), count)?\nDCHECK_EQ(0, expected_receive_count_)?",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99a0e48_a784e480",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "I think this should be \u003e\u003d 0.  For UDP, 0-byte payloads are reasonable, and I believe recvfrom will return 0 for them (i.e., 0 does not mean graceful close).  I\u0027d also like a test for that.",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71241e5_6f5d3618",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Any reason to prefer this over ASSERT_TRUE(data)?  Optional has a conversion to bool operator.",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fac939_a5f0c925",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Suggestion:  Make result a net::Error (i.e., net::OK on success) instead of a net::Error or size.  I think that makes life simpler on consumers, and gives us one less way to provide that can be internally inconsistent (Admittedly, we could still send an error and a vector, or net::OK and no vector).",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3244699c_3c086c8b",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Per above, 0 and no vector is invalid, and different from 0 and a vector.  Suggest either making this an optional, or if result \u003c 0 ASSERTing that there\u0027s no vector (And if it is equal, ASSERTING there is, per earlier comment).",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe0746e_603d8452",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "This needs to be exported, I believe.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa6aacb_9b218947",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "ReceivedResults?  ReceiveResults sounds like an action.",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ffaa85_fbc59f01",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "nit:  blank line between methods and values.",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a86799_1b90f82a",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "include IPEndPoint header.",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b4f779_fbbe8c4e",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "include stdint.h",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f728ab3c_b488a0c0",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "... results() const { ...",
+      "range": {
+        "startLine": 37,
+        "startChar": 46,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f9541b_01a10011",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "Nit:  Per above, WaitForReceivedResults.  Or maybe just WaitForResults.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006731da_015b0eb9",
+        "filename": "services/network/udp_socket_test_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:28:01Z",
+      "side": 1,
+      "message": "include \u003cmemory\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 22
       },
       "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
