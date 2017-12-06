@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "101afcb9_a90db38e",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:24:57Z",
+      "side": 1,
+      "message": "Would you mind updating the docs on this?  I have no idea what it does, or what the return value means.  It looks like the return value is added to \"result_\", \"offset_\", and subtracted from \"buff_len_\", but I can\u0027t make any sense of that, given that this returns child_len_ if child_ is false.  We seem to just be claiming we wrote data without actually doing so in that case, which is weird.",
+      "range": {
+        "startLine": 768,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 17
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaebdf67_e8c9bd36",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:24:57Z",
+      "side": 1,
+      "message": "Can you document these, and maybe rename them foo_block?  Sorry to ask for more comments, but this code is fairly obscure.\n\nIf I\u0027m understanding things, block size is 2^10, and we\u0027re dealing with things in increments of block size.  last_bit is the block containing the final byte (The child_offset_ + child_len_ - 1 byte), but may be partially populated.\n\nstart is the first block the child contains.",
+      "range": {
+        "startLine": 785,
+        "startChar": 47,
+        "endLine": 785,
+        "endChar": 58
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82009c3_aebf2685",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:24:57Z",
+      "side": 1,
+      "message": "What\u0027s this?  I would have thought it was the full range of the child, but I guess not?",
+      "range": {
+        "startLine": 790,
+        "startChar": 44,
+        "endLine": 790,
+        "endChar": 58
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ac915a_bc681e0b",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:24:57Z",
+      "side": 1,
+      "message": "What\u0027s last_write_range, and what\u0027s bits_range.",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7db7bba_81afe9ce",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:24:57Z",
+      "side": 1,
+      "message": "nit:  use braces.",
+      "range": {
+        "startLine": 796,
+        "startChar": 41,
+        "endLine": 796,
+        "endChar": 0
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
