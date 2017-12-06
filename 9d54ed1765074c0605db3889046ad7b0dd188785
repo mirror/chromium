@@ -57,6 +57,24 @@
       "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b081c881_3815a4a7",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-06T23:40:22Z",
+      "side": 1,
+      "message": "I initially misread the code - it needs to return when a message is received or else it will pointlessly keep looping.\n\nClearing wait_flags is unnecessary since it goes out of scope immediately after you zero it. That suggests that you could remove that variable and just pass MWMO_INPUTAVAILABLE directly.\n\nI suspect that the loop is now unneeded (since MsgWaitForMultipleObjectsEx will return when a message appears or the timeout expires, and either way we\u0027re done) but I can\u0027t prove that. It would be good to test whether the loop ever runs a second time, and if so why.",
+      "parentUuid": "94021f84_3ffd262d",
+      "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
