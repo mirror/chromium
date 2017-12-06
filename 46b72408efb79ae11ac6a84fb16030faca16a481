@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b4931c5_94b116c3",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-06T16:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bab813c_e7d4f97f",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21b1278f_cf17784c",
         "filename": "tools/binary_size/libsupersize/archive.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b97bbb_8bd33a78",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-06T16:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b1278f_cf17784c",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd31c6b3_26938786",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-06T16:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cea1a04_684f7a7a",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe62f821_fcea6b59",
         "filename": "tools/binary_size/libsupersize/archive.py",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3fba475f_71375006",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-06T16:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe62f821_fcea6b59",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d80b399_a9b12839",
         "filename": "tools/binary_size/libsupersize/archive.py",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8afd770_dfe8fbef",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-06T16:58:37Z",
+      "side": 1,
+      "message": "Opps, that was just for debugging. Removed. :)",
+      "parentUuid": "8d80b399_a9b12839",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
