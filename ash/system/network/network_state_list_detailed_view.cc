@@ -308,7 +308,7 @@ void NetworkStateListDetailedView::ToggleInfoBubble() {
 }
 
 bool NetworkStateListDetailedView::ResetInfoBubble() {
-  if (!info_bubble_)
+  if (!info_bubble_ || !info_bubble_->GetWidget())
     return false;
 
   info_bubble_->GetWidget()->Close();
