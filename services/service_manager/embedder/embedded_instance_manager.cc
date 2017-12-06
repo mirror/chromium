@@ -118,6 +118,7 @@ void EmbeddedInstanceManager::QuitOnServiceSequence() {
 
 void EmbeddedInstanceManager::QuitOnRunnerThread() {
   DCHECK_CALLED_ON_VALID_THREAD(runner_thread_checker_);
+  base::ScopedAllowBlocking allow_join_thread;
   if (thread_) {
     thread_.reset();
     service_task_runner_ = nullptr;
