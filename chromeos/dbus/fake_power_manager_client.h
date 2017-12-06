@@ -5,6 +5,7 @@
 #ifndef CHROMEOS_DBUS_FAKE_POWER_MANAGER_CLIENT_H_
 #define CHROMEOS_DBUS_FAKE_POWER_MANAGER_CLIENT_H_
 
+#include <queue>
 #include <string>
 
 #include "base/callback_forward.h"
@@ -47,6 +48,12 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   bool backlights_forced_off() const { return backlights_forced_off_; }
   int num_set_backlights_forced_off_calls() const {
     return num_set_backlights_forced_off_calls_;
+  }
+  void set_enqueue_brightness_changes_on_backlights_forced_off(bool enqueue) {
+    enqueue_brightness_changes_on_backlights_forced_off_ = enqueue;
+  }
+  const std::queue<double>& pending_brightness_changes() const {
+    return pending_brightness_changes_;
   }
 
   // PowerManagerClient overrides:
@@ -117,6 +124,12 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   // lock has been created.
   void SetPowerPolicyQuitClosure(base::OnceClosure quit_closure);
 
+  // Updates screen brightness to the first pending value in
+  // |pending_brightness_changes_|.
+  // Returns whether the screen brightness change was applied - this will
+  // return false if there are no pending brightness changes.
+  bool ApplyPendingBrightnessChange();
+
   // Sets the screen brightness percent to be returned.
   // The nullopt |percent| means an error. In case of success,
   // |percent| must be in the range of [0, 100].
@@ -153,12 +166,33 @@ class CHROMEOS_EXPORT FakePowerManagerClient : public PowerManagerClient {
   // The ratio of the screen brightness.
   base::Optional<double> screen_brightness_percent_;
 
+  // Explicitly set ratio of the screen brightness. This is set using
+  // |SetScreenBrightnessPercent()|. Unlike |screen_brightness_percent_|, this
+  // value will not be changed by |NotifyUserActivity()| and
+  // |SetBacklightsForcedOff()| methods, i.e. methods that implicitly change
+  // screen brightness.
+  base::Optional<double> undimmed_brightness_percent_;
+
   // Last projecting state set in SetIsProjecting().
   bool is_projecting_ = false;
 
   // Display and keyboard backlights (if present) forced off state set in
   // SetBacklightsForcedOff().
   bool backlights_forced_off_ = false;
+
+  // Whether screen brightness changes in |SetBacklightsForcedOff()| should be
+  // enqueued.
+  // If not set, |SetBacklightsForcedOff()| will update current screen
+  // brightness and send a brightness change event (provided undimmed
+  // brightness percent is set).
+  // If not set, brightness changes will be enqueued to
+  // |pending_brightness_changes_|, and will have to be applied explicitly by
+  // calling |ApplyPendingBrightnessChange()|.
+  bool enqueue_brightness_changes_on_backlights_forced_off_ = false;
+
+  // Pending brightness changes caused by |SetBacklightsForcedOff()|.
+  // |ApplyPendingBrightnessChange()| applies the first pending change.
+  std::queue<double> pending_brightness_changes_;
 
   // States returned by GetSwitchStates().
   LidState lid_state_ = LidState::OPEN;

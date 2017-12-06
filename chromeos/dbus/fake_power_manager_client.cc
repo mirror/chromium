@@ -59,6 +59,8 @@ void FakePowerManagerClient::IncreaseScreenBrightness() {}
 void FakePowerManagerClient::SetScreenBrightnessPercent(double percent,
                                                         bool gradual) {
   screen_brightness_percent_ = percent;
+  undimmed_brightness_percent_ = percent;
+  SendBrightnessChanged(percent, true);
 }
 
 void FakePowerManagerClient::GetScreenBrightnessPercent(
@@ -96,7 +98,17 @@ void FakePowerManagerClient::RequestShutdown(
 }
 
 void FakePowerManagerClient::NotifyUserActivity(
-    power_manager::UserActivityType type) {}
+    power_manager::UserActivityType type) {
+  if (backlights_forced_off_)
+    return;
+
+  if (undimmed_brightness_percent_.has_value() &&
+      screen_brightness_percent_.has_value() &&
+      screen_brightness_percent_.value() == 0) {
+    screen_brightness_percent_ = undimmed_brightness_percent_;
+    SendBrightnessChanged(screen_brightness_percent_.value(), false);
+  }
+}
 
 void FakePowerManagerClient::NotifyVideoActivity(bool is_fullscreen) {
   video_activity_reports_.push_back(is_fullscreen);
@@ -136,6 +148,19 @@ void FakePowerManagerClient::SetPowerSource(const std::string& id) {
 void FakePowerManagerClient::SetBacklightsForcedOff(bool forced_off) {
   backlights_forced_off_ = forced_off;
   ++num_set_backlights_forced_off_calls_;
+
+  // Update the brightness percent only if the undimmed brightness is available.
+  if (!undimmed_brightness_percent_.has_value())
+    return;
+
+  double target_brightness =
+      forced_off ? 0 : undimmed_brightness_percent_.value();
+  if (enqueue_brightness_changes_on_backlights_forced_off_) {
+    pending_brightness_changes_.push(target_brightness);
+  } else {
+    screen_brightness_percent_ = target_brightness;
+    SendBrightnessChanged(screen_brightness_percent_.value(), false);
+  }
 }
 
 void FakePowerManagerClient::GetBacklightsForcedOff(
@@ -250,6 +275,20 @@ void FakePowerManagerClient::HandleSuspendReadiness() {
 void FakePowerManagerClient::SetPowerPolicyQuitClosure(
     base::OnceClosure quit_closure) {
   power_policy_quit_closure_ = std::move(quit_closure);
+}
+
+bool FakePowerManagerClient::ApplyPendingBrightnessChange() {
+  if (pending_brightness_changes_.empty())
+    return false;
+  double brightness = pending_brightness_changes_.front();
+  pending_brightness_changes_.pop();
+
+  DCHECK(undimmed_brightness_percent_.has_value());
+  DCHECK(brightness == 0 || brightness == undimmed_brightness_percent_.value());
+
+  screen_brightness_percent_ = brightness;
+  SendBrightnessChanged(brightness, false);
+  return true;
 }
 
 }  // namespace chromeos
