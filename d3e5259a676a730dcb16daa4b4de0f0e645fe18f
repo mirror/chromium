@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "000e0196_883cac70",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "As I understand it, viewer-toolbar-dropdown is a generic class, and we only have one instance of it but theoretically could have more. I don\u0027t want to add bookmarks specific code to it like the first solution, and the second would only pass \"viewer-toolbar-dropdown\" as the payload, which isn\u0027t specific. I\u0027m thinking of dropping the payload and just assume that any \"dropdown-opened\" is a \"bookmarks-opened\" for logging purposes, but I still think having an identifier for \"which dropdown this is\" is the best solution. If I added another parameter to viewer-toolbar-dropdown besides the id, also with the value \"bookmarks\", would that be acceptable?",
+      "parentUuid": "b33be7c8_decde1f2",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 42
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afafed3c_a17bac14",
         "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d3ffec_37ec803d",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afafed3c_a17bac14",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "33e01ef5_48f64eb4",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2711da45_84efd797",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94dd6454_f1bf6a77",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-05T23:55:12Z",
       "side": 1,
       "message": "Instead of repeating this check in multiple places in this file, how about using polymorphism?\n\n1) Within this file, define an PDFMetrics interafce\n2) Rename PDFMetrics to PDFMetricsImpl and make it implement the interface\n3) Define a new PDFMetricsDummy that implements the interface but does nothing.\n4) Changed pdf.js to perform the if (chrome.metricsPrivate) {...} check once and instantiate the respective class.\n\nThoughts?",
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0830015_386b5fc7",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "My goal was to keep all references to chrome.metricsPrivate out of pdf.js as not to bloat it with additional direct dependencies. I don\u0027t think the additional maintenance of a dummy class is worth it either, since the PDFMetrics has a wide public API.\n\nI changed things around to have a single chrome.metricsPrivate.recordValue() call in metrics.js, this should relegate the check to two places forever (constructor and the method) and I think that addresses your concern.",
+      "parentUuid": "94dd6454_f1bf6a77",
       "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "6d8c8e9b_d40ecb2b",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "When in print preview, metricsPrivate is not available, I\u0027m guessing because we\u0027re not in a plugin.",
+      "parentUuid": "aa76d99f_d29eafef",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d6f105_c96e7c92",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -110,6 +212,30 @@
       "writtenOn": "2017-12-06T00:03:59Z",
       "side": 1,
       "message": "I believe that these values are all off-by-1, and should each be 1 larger.  (In fact, I\u0027m a bit surprised that you don\u0027t get a DCHECK triggered for setting a max of 0.  Are you running in a build with DCHECKs enabled?)\n\nIt would be great to update the metricsPrivate API to support recording enumerated histograms directly, so that JS code can use the same API conventions as C++ code.  Is that feasible to implement as part of this CL or as a precursor to landing this CL?  I don\u0027t want to delay your work unnecessarily; but if you have a bit of time to add this common utility, I think it will pay off a lot in terms of safety.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a75fc1_7fcc5674",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "I\u0027m confused, don\u0027t enum buckets start at 0 typically? Also, max isn\u0027t 0, min is 0. Max is 12.",
+      "parentUuid": "42d6f105_c96e7c92",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "342ba650_9232cf27",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a37b741_80aff695",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d99281a_f53fc57f",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -156,6 +306,30 @@
       "writtenOn": "2017-12-05T23:55:12Z",
       "side": 1,
       "message": "Can you use an ES6 class definition instead? It is allowed by the Es6 stylguide, see https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Classes.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6651ad_19442df2",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "Tried to convert it but I couldn\u0027t find to assign an ES6 style class to window.PDFMetrics so it\u0027s visible outside the wrapper function. Is that possible?",
+      "parentUuid": "2d99281a_f53fc57f",
       "range": {
         "startLine": 47,
         "startChar": 0,
@@ -188,6 +362,30 @@
       "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff1a031_9a6483c5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 60044,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-06T20:40:22Z",
+      "side": 1,
+      "message": "Done. You\u0027re correct, those are for calculating the % of docs in which the action was performed at least once.",
+      "parentUuid": "797a2c9a_c34de966",
+      "range": {
+        "startLine": 60042,
+        "startChar": 0,
+        "endLine": 60044,
+        "endChar": 58
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
