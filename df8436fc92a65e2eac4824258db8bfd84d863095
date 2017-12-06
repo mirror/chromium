@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abba08b2_4f98ce47",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T17:35:46Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "0162e09b_3e8e9cfa",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 14
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435877b6_c79a9dc9",
         "filename": "chrome/browser/notifications/chrome_ash_message_center_client.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T17:34:19Z",
       "side": 1,
       "message": "does it make sense to remove the param from this now so we have a single source of truth (bridge-\u003eIsReady())?",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de95323_7b0e97cc",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T17:35:46Z",
+      "side": 1,
+      "message": "That means we\u0027d have to poll, since init can be async.",
+      "parentUuid": "435877b6_c79a9dc9",
       "range": {
         "startLine": 42,
         "startChar": 24,
