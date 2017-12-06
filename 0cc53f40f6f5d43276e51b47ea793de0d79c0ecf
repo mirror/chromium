@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "40985cf3_8331db7b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-12-06T14:53:44Z",
+      "side": 1,
+      "message": "Yes, there is some duplication between the helper for common fields and only_fill_when_focused\nfields. The issue I had was they are not exactly the same, the same predicted_type vs actual_type scenario can be logged differently depending on if it\u0027s a common field or not.\n\nI found the current implementation is better for readers because it keeps the logic for common\nfields and un-common ones separate, so I prefer to keep it.\n\nWDYT?",
+      "parentUuid": "0dea2498_ccc2bfa1",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efe94a47_d5e78911",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8
@@ -80,6 +98,24 @@
       "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59edd91a_3bfdb91d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-12-06T14:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe94a47_d5e78911",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "81e790df_19158f0f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-12-06T14:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e29249b_79ad29a2",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ded54f87_9f3e3988",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -114,6 +168,24 @@
       "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34675037_904a81bb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 5650,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-12-06T14:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded54f87_9f3e3988",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
