@@ -22,6 +22,30 @@
       "revId": "f163e3ef9e4e775f7ca8e74d5f50f2f3b35d224e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feec17c_cd3ceb6a",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T03:50:29Z",
+      "side": 1,
+      "message": "Don\u0027t worry, there\u0027s a bug to fix it! https://crbug.com/598424\n\n:^)",
+      "parentUuid": "cad1ca56_9d0d24d5",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "f163e3ef9e4e775f7ca8e74d5f50f2f3b35d224e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
