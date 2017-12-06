@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "58925305_36cad23c",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T19:34:26Z",
+      "side": 1,
+      "message": "This is missing a * kBlockSize, BTW...",
+      "range": {
+        "startLine": 778,
+        "startChar": 30,
+        "endLine": 778,
+        "endChar": 40
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaebdf67_e8c9bd36",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
@@ -226,6 +249,30 @@
       "side": 1,
       "message": "Oops...We\u0027re intercepting 3 ranges?  There\u0027s the range from child_offset_ to child_len_, the map, and child_data_.header.  Why aren\u0027t those all just the same?",
       "parentUuid": "f59e1ebf_6ffba993",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4540d91d_38dfacfa",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T19:34:26Z",
+      "side": 1,
+      "message": "bits_range -\u003e bytes_defined_per_bitmap_range ? \nlast_write_range -\u003e bytes_defined_per_last_write_range?\n(maybe drop _range?)\n\nI was also thinking changing header_.last_block and last_block_len\n\nThe child_offset_ to child_len_ comes from the client\u0027s arguments to GetAvailableRange, restricted to this child --- it\u0027s asking \"how much of this range do you have\" --- hence\nme putting it into \"to_find\"\n\nI guess what also makes it somewhat confusing is that bits_range is already intersected, so some of the intersection I do below are likely redundant, I just find it easier to reason that way.",
+      "parentUuid": "f3c038eb_bb0294d1",
       "range": {
         "startLine": 795,
         "startChar": 21,
