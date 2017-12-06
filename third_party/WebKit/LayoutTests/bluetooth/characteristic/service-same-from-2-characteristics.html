@@ -6,17 +6,20 @@
 <script src="../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
+const test_desc = "Same parent service returned from multiple characteristics.";
+
+bluetooth_test(() => getHealthThermometerDevice()
     .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: ['heart_rate']}]}))
+      filters: [{services: ['health_thermometer']}]}))
     .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService('heart_rate'))
+    .then(gattServer => gattServer.getPrimaryService('health_thermometer'))
     .then(service => {
-      return Promise.all([service.getCharacteristic('body_sensor_location'),
-                          service.getCharacteristic('heart_rate_measurement')]);
-    }).then(characteristics => {
+      return Promise.all([
+          service.getCharacteristic('measurement_interval'),
+          service.getCharacteristic('temperature_measurement')
+      ]);
+    })
+    .then(characteristics => {
       assert_equals(characteristics[0].service, characteristics[1].service);
-    });
-}, "Same parent service returned from multiple characteristics.");
+}), test_desc);
 </script>
