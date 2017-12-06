@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78412827_af902462",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "s/contracted/expanded/",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f4e2dd_79dd5238",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "Can\u0027t we modify the stack view directly here and below?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70261b93_ab2fb100",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "You are missing the buttons inside the location bar container (voice search and bookmarks).",
+      "range": {
+        "startLine": 705,
+        "startChar": 2,
+        "endLine": 705,
+        "endChar": 3
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f7c542_d63b49b1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "Factor this into a method as you are sharing it with the trailing stack view.",
+      "range": {
+        "startLine": 712,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 60
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce463c05_1e1fdf17",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "Can\u0027t you directly set the alpha of the leading/trailing stack view instead?",
+      "range": {
+        "startLine": 845,
+        "startChar": 8,
+        "endLine": 845,
+        "endChar": 42
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf24f5f_ea01f9f1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-06T10:09:42Z",
+      "side": 1,
+      "message": "I am really not fond of modifying the frame of objects positioned with autolayout. Can\u0027t we use something like translate instead?",
+      "range": {
+        "startLine": 859,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 62
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
