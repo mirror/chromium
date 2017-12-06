@@ -40,6 +40,7 @@ class ProviderId {
   static ProviderId CreateFromExtensionId(
       const extensions::ExtensionId& extension_id);
   static ProviderId CreateFromNativeId(const std::string& native_id);
+  static ProviderId FromString(const std::string& provider_id);
 
   const std::string& GetIdUnsafe() const;
   const extensions::ExtensionId& GetExtensionId() const;
