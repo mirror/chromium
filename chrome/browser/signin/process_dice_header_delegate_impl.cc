@@ -5,6 +5,7 @@
 #include "chrome/browser/signin/process_dice_header_delegate_impl.h"
 
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/about_signin_internals_factory.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/dice_tab_helper.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
@@ -13,6 +14,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 #include "chrome/common/webui_url_constants.h"
+#include "components/signin/core/browser/about_signin_internals.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -91,7 +93,6 @@ void ProcessDiceHeaderDelegateImpl::EnableSync(const std::string& account_id) {
   Browser* browser = nullptr;
   if (web_contents) {
     browser = chrome::FindBrowserWithWebContents(web_contents);
-
     // After signing in to Chrome, the user should be redirected to the NTP.
     RedirectToNtp(web_contents);
   }
@@ -101,4 +102,25 @@ void ProcessDiceHeaderDelegateImpl::EnableSync(const std::string& account_id) {
   VLOG(1) << "Start sync after web sign-in.";
   new DiceTurnSyncOnHelper(profile_, browser, signin_access_point_,
                            signin_reason_, account_id);
+}
+
+void ProcessDiceHeaderDelegateImpl::HandleTokenExchangeFailure(
+    const GoogleServiceAuthError& error) {
+  bool should_enable_sync = ShouldEnableSync();
+  content::WebContents* web_contents = this->web_contents();
+
+  if (should_enable_sync ||
+      signin::IsDiceEnabledForProfile(profile_->GetPrefs())) {
+    Browser* browser = nullptr;
+    if (web_contents) {
+      browser = chrome::FindBrowserWithWebContents(web_contents);
+      browser->signin_view_controller()->ShowModalSigninErrorDialog(browser);
+    }
+  }
+  if (should_enable_sync) {
+    if (web_contents)
+      RedirectToNtp(web_contents);
+    AboutSigninInternalsFactory::GetForProfile(profile_)
+        ->OnRefreshTokenReceived("Failure");
+  }
 }
