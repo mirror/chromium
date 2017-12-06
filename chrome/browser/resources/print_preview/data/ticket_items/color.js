@@ -49,6 +49,12 @@ cr.define('print_preview.ticket_items', function() {
           null;
     }
 
+    /** @return {Object} Printer's default color option. */
+    defaultColorOption() {
+      const capability = this.capability;
+      return capability ? this.getDefaultColorOption_(capability.option) : null;
+    }
+
     /** @return {Object} Color option corresponding to the current value. */
     getSelectedOption() {
       const capability = this.capability;
