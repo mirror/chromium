@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/tabs/browser_activity_watcher.h"
 #include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "content/public/browser/web_contents.h"
@@ -61,7 +62,12 @@ int GetSiteEngagementScore(const content::WebContents* web_contents) {
 
 }  // namespace
 
-TabMetricsLoggerImpl::TabMetricsLoggerImpl() = default;
+TabMetricsLoggerImpl::TabMetricsLoggerImpl() {
+  // Tab activity UKMs reference browser window UKMs, so ensure the
+  // BrowserActivityWatcher is initialized.
+  BrowserActivityWatcher::GetInstance();
+}
+
 TabMetricsLoggerImpl::~TabMetricsLoggerImpl() = default;
 
 void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
@@ -87,6 +93,10 @@ void TabMetricsLoggerImpl::LogBackgroundTab(ukm::SourceId ukm_source_id,
   DCHECK_NE(index, TabStripModel::kNoTab);
 
   ukm::builders::TabManager_TabMetrics entry(ukm_source_id);
+
+  // The browser window logs its own usage UKMs with its session ID.
+  entry.SetWindowId(browser->session_id().id());
+
   entry.SetKeyEventCount(tab_metrics.page_metrics.key_event_count)
       .SetMouseEventCount(tab_metrics.page_metrics.mouse_event_count)
       .SetTouchEventCount(tab_metrics.page_metrics.touch_event_count);
