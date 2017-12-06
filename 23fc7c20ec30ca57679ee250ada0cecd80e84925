@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8c86371_b2702b63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1dc97af_b811856c",
+      "range": {
+        "startLine": 874,
+        "startChar": 12,
+        "endLine": 875,
+        "endChar": 65
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f1b762_b74fb510",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "bd6a3669_818fd2f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4f1b762_b74fb510",
+      "range": {
+        "startLine": 17,
+        "startChar": 50,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c23b9f02_929b57d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b067f6b_1a9757c4",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6aa128_ed122b0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ec1a96_bb3439da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "A call to onChange is made after this finishes, where the attributes are set.",
+      "parentUuid": "6b6aa128_ed122b0b",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d18afd63_8c997595",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef4ea64a_47350073",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 72
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0d9b7b4_210b1d8a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2d6780_f55b07b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d9b7b4_210b1d8a",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 86
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b55d69ab_38820f05",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac47be38_45a2448a",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e1ccfe_f3585f58",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "b316748d_e42bb726",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e1ccfe_f3585f58",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6114aa_be96e244",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483ef45f_c37d9ef6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelIncognitoObserver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-06T23:25:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6114aa_be96e244",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "23fc7c20ec30ca57679ee250ada0cecd80e84925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
