@@ -141,6 +141,7 @@ class DevToolsAgent;
 class DocumentState;
 class ExternalPopupMenu;
 class HistoryEntry;
+class InputTargetClientImpl;
 class ManifestManager;
 class MediaPermissionDispatcher;
 class MediaStreamDispatcher;
@@ -1575,6 +1576,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Callbacks that we should call when we get a routing token.
   std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
+
+  std::unique_ptr<InputTargetClientImpl> input_target_client_impl_;
 
   RenderThreadImpl::RendererMemoryMetrics peak_memory_metrics_;
 

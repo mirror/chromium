@@ -3193,6 +3193,8 @@ HitTestResult WebViewImpl::CoreHitTestResultAt(
   LocalFrameView* view = MainFrameImpl()->GetFrameView();
   LayoutPoint point_in_root_frame = view->ContentsToFrame(
       view->ViewportToContents(LayoutPoint(point_in_viewport)));
+  point_in_root_frame.Scale(view->InputEventsScaleFactor(),
+                            view->InputEventsScaleFactor());
   return HitTestResultForRootFramePos(point_in_root_frame);
 }
 
