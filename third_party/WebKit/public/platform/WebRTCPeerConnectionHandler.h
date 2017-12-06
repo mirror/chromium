@@ -108,6 +108,7 @@ class WebRTCPeerConnectionHandler {
   // Removes the sender, returning whether successful. On success, the sender's
   // track must have been set to null.
   virtual bool RemoveTrack(WebRTCRtpSender*) = 0;
+  virtual bool ReplaceTrack(WebRTCRtpSender*, const WebMediaStreamTrack&) = 0;
   virtual WebRTCDTMFSenderHandler* CreateDTMFSender(
       const WebMediaStreamTrack&) = 0;
   virtual void Stop() = 0;

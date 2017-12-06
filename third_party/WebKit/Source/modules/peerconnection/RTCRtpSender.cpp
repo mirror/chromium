@@ -5,6 +5,7 @@
 #include "modules/peerconnection/RTCRtpSender.h"
 
 #include "modules/mediastream/MediaStreamTrack.h"
+#include "modules/peerconnection/RTCPeerConnection.h"
 
 namespace blink {
 
@@ -19,9 +20,11 @@ bool TrackEquals(MediaStreamTrack* track,
 
 }  // namespace
 
-RTCRtpSender::RTCRtpSender(std::unique_ptr<WebRTCRtpSender> sender,
+RTCRtpSender::RTCRtpSender(RTCPeerConnection* pc,
+                           std::unique_ptr<WebRTCRtpSender> sender,
                            MediaStreamTrack* track)
-    : sender_(std::move(sender)), track_(track) {
+    : pc_(pc), sender_(std::move(sender)), track_(track) {
+  DCHECK(pc_);
   DCHECK(sender_);
   DCHECK(track_);
 }
@@ -29,6 +32,11 @@ RTCRtpSender::RTCRtpSender(std::unique_ptr<WebRTCRtpSender> sender,
 MediaStreamTrack* RTCRtpSender::track() {
   DCHECK(TrackEquals(track_, sender_->Track()));
   return track_;
+}
+
+ScriptPromise RTCRtpSender::replaceTrack(ScriptState* script_state,
+                                         MediaStreamTrack* with_track) {
+  return pc_->ReplaceTrack(script_state, this, with_track);
 }
 
 WebRTCRtpSender* RTCRtpSender::web_sender() {
@@ -41,6 +49,7 @@ void RTCRtpSender::SetTrack(MediaStreamTrack* track) {
 }
 
 void RTCRtpSender::Trace(blink::Visitor* visitor) {
+  visitor->Trace(pc_);
   visitor->Trace(track_);
   ScriptWrappable::Trace(visitor);
 }

@@ -86,6 +86,11 @@ bool MockWebRTCPeerConnectionHandler::RemoveTrack(WebRTCRtpSender*) {
   return false;
 }
 
+bool MockWebRTCPeerConnectionHandler::ReplaceTrack(WebRTCRtpSender*,
+                                                   const WebMediaStreamTrack&) {
+  return false;
+}
+
 WebRTCDataChannelHandler* MockWebRTCPeerConnectionHandler::CreateDataChannel(
     const WebString& label,
     const WebRTCDataChannelInit&) {

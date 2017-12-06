@@ -1244,7 +1244,7 @@ HeapVector<Member<RTCRtpSender>> RTCPeerConnection::getSenders() {
         DCHECK(track);
       }
       RTCRtpSender* rtp_sender =
-          new RTCRtpSender(std::move(web_rtp_senders[i]), track);
+          new RTCRtpSender(this, std::move(web_rtp_senders[i]), track);
       rtp_senders_.insert(id, rtp_sender);
       rtp_senders[i] = rtp_sender;
     }
@@ -1294,7 +1294,8 @@ RTCRtpSender* RTCPeerConnection::addTrack(MediaStreamTrack* track,
 
   uintptr_t id = web_rtp_sender->Id();
   DCHECK(rtp_senders_.find(id) == rtp_senders_.end());
-  RTCRtpSender* rtp_sender = new RTCRtpSender(std::move(web_rtp_sender), track);
+  RTCRtpSender* rtp_sender =
+      new RTCRtpSender(this, std::move(web_rtp_sender), track);
   tracks_.insert(track->Component(), track);
   rtp_senders_.insert(id, rtp_sender);
   return rtp_sender;
@@ -1327,6 +1328,25 @@ void RTCPeerConnection::removeTrack(RTCRtpSender* sender,
   // TODO(hbos): When |addStream| and |removeStream| are implemented using
   // |addTrack| and |removeTrack|, we should remove |sender| from |rtp_senders_|
   // here. https://crbug.com/738929
+}
+
+ScriptPromise RTCPeerConnection::ReplaceTrack(ScriptState* script_state,
+                                              RTCRtpSender* sender,
+                                              MediaStreamTrack* with_track) {
+  DCHECK(sender);
+  // TODO: if closed, abort
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  WebMediaStreamTrack web_track;
+  if (with_track) {
+    // Insert if not already present.
+    tracks_.insert(with_track->Component(), with_track);
+    web_track = with_track->Component();
+  }
+  if (peer_handler_->ReplaceTrack(sender->web_sender(), web_track))
+    resolver->Resolve();
+  else
+    resolver->Reject();
+  return resolver->Promise();
 }
 
 RTCDataChannel* RTCPeerConnection::createDataChannel(

@@ -49,6 +49,8 @@ class CONTENT_EXPORT RTCRtpSender : public blink::WebRTCRtpSender {
 
   webrtc::RtpSenderInterface* webrtc_sender() const;
   const webrtc::MediaStreamTrackInterface* webrtc_track() const;
+  bool ReplaceTrack(
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref);
   bool RemoveFromPeerConnection(webrtc::PeerConnectionInterface* pc);
 
  private:

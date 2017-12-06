@@ -40,6 +40,16 @@ class RTCRtpSender::RTCRtpSenderInternal
     return stream_ref_copies;
   }
 
+  bool ReplaceTrack(
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref) {
+    if (!webrtc_sender_->SetTrack(track_ref ? track_ref->webrtc_track()
+                                            : nullptr)) {
+      return false;
+    }
+    track_ref_ = std::move(track_ref);
+    return true;
+  }
+
   bool RemoveFromPeerConnection(webrtc::PeerConnectionInterface* pc) {
     if (!pc->RemoveTrack(webrtc_sender_))
       return false;
@@ -118,6 +128,11 @@ webrtc::RtpSenderInterface* RTCRtpSender::webrtc_sender() const {
 const webrtc::MediaStreamTrackInterface* RTCRtpSender::webrtc_track() const {
   auto track_ref = internal_->track_ref();
   return track_ref ? track_ref->webrtc_track() : nullptr;
+}
+
+bool RTCRtpSender::ReplaceTrack(
+    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref) {
+  return internal_->ReplaceTrack(std::move(track_ref));
 }
 
 bool RTCRtpSender::RemoveFromPeerConnection(
