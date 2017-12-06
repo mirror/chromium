@@ -1735,8 +1735,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   }
   AddFilter(
       new MidiHost(GetID(), BrowserMainLoop::GetInstance()->midi_service()));
-  AddFilter(new AppCacheDispatcherHost(
-      storage_partition_impl_->GetAppCacheService(), GetID()));
   AddFilter(new DOMStorageMessageFilter(
       storage_partition_impl_->GetDOMStorageContext()));
 
@@ -1932,6 +1930,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
+
+  registry->AddInterface(base::BindRepeating(
+      &AppCacheDispatcherHost::Create,
+      base::Unretained(storage_partition_impl_->GetAppCacheService()), GetID(),
+      instance_weak_factory_->GetWeakPtr()));
 
   AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
 
