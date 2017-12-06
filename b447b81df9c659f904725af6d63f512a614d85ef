@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4b82b0a_75aac31e",
+        "filename": "media/audio/mock_audio_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d8eabe_d69f860b",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf508edb_298c2133",
         "filename": "services/audio/README.md",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd7d628_39eb481d",
+        "filename": "services/audio/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf508edb_298c2133",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b7ccf21_2f8729c9",
+        "filename": "services/audio/audio_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8db7f76a_fa774d04",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d47ed41_544e2f3a",
         "filename": "services/audio/audio_service.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T14:14:50Z",
       "side": 1,
       "message": "Seems like naming it just \"Service\" is a bit unusual. Going through services so far:\nService: ui, viz\nServiceImpl: video_capture\nRepetitionService: data_decoder, device, file, identity, metrics, proxy_resolver, resource_coordinator, shape_detection\nPrefStoreManagerImpl: prefs\n\nI still prefer the name without repetition though :).",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebd7acb_f313ae89",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "I can rename it to audio::Service if reviewers prefer so. Will do a batch rename when all the names are settled.",
+      "parentUuid": "1d47ed41_544e2f3a",
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "e9dbb30c_31805ad5",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Then I need to declare each method as override anyways.",
+      "parentUuid": "c45c9e54_8824886f",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a33e2a0d_6542dbd9",
         "filename": "services/audio/public/cpp/audio_device_description_struct_traits.h",
         "patchSetId": 4
@@ -104,6 +200,24 @@
       "writtenOn": "2017-11-30T14:14:50Z",
       "side": 1,
       "message": "Should this be in media, since AudioDeviceDescription is in media?",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c6a17c_2a6b96d8",
+        "filename": "services/audio/public/cpp/audio_device_description_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "My thoughts were that there is no point in this typemap when there is no audio service; also, our long-term plan is to move audio-related media stuff to audio::.\nI\u0027m still looking into moving it to //media: gn dependencies are pretty messed up now",
+      "parentUuid": "a33e2a0d_6542dbd9",
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "2eb21058_6c479643",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a1dda2_cb85e2bb",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8df4ed_d2d24f22",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8113ee36_63b38f3a",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8df4ed_d2d24f22",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "edfa2f0b_8df576a5",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "As we figured out offline - it\u0027s not reset automatically.",
+      "parentUuid": "a7a6b2cc_23c1431e",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9918203_0f8d8cfa",
         "filename": "services/audio/public/interfaces/audio_device_description.mojom",
         "patchSetId": 4
@@ -172,6 +340,24 @@
       "writtenOn": "2017-11-30T14:14:50Z",
       "side": 1,
       "message": "Move to media?",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a683ed_cad66813",
+        "filename": "services/audio/public/interfaces/audio_device_description.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "See above",
+      "parentUuid": "f9918203_0f8d8cfa",
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +378,24 @@
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567f2a9f_ccd266f3",
+        "filename": "services/audio/public/interfaces/audio_system_info.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b409558_1b5179dc",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "8dec31bf_f5b3bf9b",
+        "filename": "services/audio/test/in_process_audio_service_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c27ea6a6_2fc7793d",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea576685_da4ce419",
         "filename": "services/audio/test/in_process_audio_service_test.cc",
         "patchSetId": 4
@@ -232,6 +460,24 @@
       "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb689a28_86dd5188",
+        "filename": "services/audio/test/in_process_audio_service_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T14:01:36Z",
+      "side": 1,
+      "message": "Right?! :)",
+      "parentUuid": "ea576685_da4ce419",
+      "revId": "b447b81df9c659f904725af6d63f512a614d85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
