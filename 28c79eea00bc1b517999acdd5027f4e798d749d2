@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "8be81ec2_2b16d334",
+        "filename": "testing/buildbot/chromium.chromiumos.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "I hit this on basically all of the waterfalls because manage.py didn\u0027t guarantee the order of the entries to the degree this new generator script does. The only reason I re-sorted the input JSON first was so I could prove that the generator script worked. Agree that that isn\u0027t necessary this time.",
+      "parentUuid": "49fee066_bbd09d3c",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d620609_cdc6c6c6",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "Here and below, I recommend adding a comment above these additions that says these are for the chromium.chromiumos waterfall. Even just:\n  # chromium.chromiumos\nIf the same exclusions go on a bunch of tests, it can be useful to write in the comment which bot(s) they actually do run on so that one doesn\u0027t have to go digging through waterfalls.pyl to figure it out later. But that\u0027s a minor thing.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2551e20f_99441d5f",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 3
@@ -30,6 +65,24 @@
       "writtenOn": "2017-12-06T04:04:08Z",
       "side": 1,
       "message": "There seem to be a fairly broad set of tests that more-or-less fit this exclusion list. I bet we can clean this up, but I didn\u0027t want to tackle that as part of this change.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf810963_784214ba",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "Acknowledged. We can figure out better ways to de-duplicate these going forward, learning from what we had to do to autogenerate various waterfalls.",
+      "parentUuid": "2551e20f_99441d5f",
       "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +106,41 @@
     },
     {
       "key": {
+        "uuid": "dfadaddf_1ba43b07",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "Yes, I agree basically every exception should have to have an explanation and there\u0027s not much point indicating why things are unclear. When doing the initial conversions I had no clue about why bots behaved differently so felt I had to say something. At a minimum I\u0027d add a comment (as mentioned above) indicating what waterfall these bots are on, though.",
+      "parentUuid": "88f2cc4b_46f42407",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c895ab0_248a7ba9",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "Are these run on any bot on chromium.chromiumos? If so, suggest adjusting this comment. Same comment in a couple of places below.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cccec86f_25b3031a",
         "filename": "testing/buildbot/test_suites.pyl",
         "patchSetId": 3
@@ -64,6 +152,24 @@
       "writtenOn": "2017-12-06T04:04:08Z",
       "side": 1,
       "message": "This feels a bit strange - this is a test suite that is only run on the one bot. \n\nI could combine this w/ linux_chromeos_specific_gtests, but then I\u0027d have to exclude ~15 tests from the debug bots.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5d3ee0_794c1a07",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "It seems okay. One or two of these tests (like angle_unittests) might eventually be factored out into a more general test suite. But there\u0027s not much other duplication between this test suite and others in the file, so people can still easily make a decision, based on other tests which are in the suite, about which bot(s) they want to add a new test to.",
+      "parentUuid": "cccec86f_25b3031a",
       "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "f864e914_8d68a01c",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "If the composite suites are getting out of hand then maybe it\u0027s time to relax the restriction that they can\u0027t refer to other composite suites, before converting other waterfalls. I can implement that, just needs a little care to detect cycles and report errors.",
+      "parentUuid": "9abe9115_e8684011",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f92d9e2a_c5b6ecd3",
         "filename": "testing/buildbot/test_suites.pyl",
         "patchSetId": 3
@@ -98,6 +222,24 @@
       "writtenOn": "2017-12-06T04:04:08Z",
       "side": 1,
       "message": "I\u0027m not sure if this is better to define a new suite here, or use a more generic isolated_scripts rule + remove entries and modify things ...",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11732d8a_58f71eef",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T06:19:37Z",
+      "side": 1,
+      "message": "It looks like this suite is reused verbatim on chromium.fyi, so when that waterfall\u0027s converted it can just be renamed. Defining the new suite seems fine.\n\nPlease though move it higher up in the file to where the non-composition test suites are alphabetically organized.",
+      "parentUuid": "f92d9e2a_c5b6ecd3",
       "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
