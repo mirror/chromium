@@ -50,7 +50,15 @@ CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
     surface_manager_->RemoveSurfaceReferences({reference});
   }
 
-  EvictCurrentSurface();
+  // For display root surfaces the surface is no longer going to be visible.
+  // Make it unreachable from the top-level root.
+  if (referenced_local_surface_id_.has_value()) {
+    auto reference = MakeTopLevelRootReference(
+        SurfaceId(frame_sink_id_, referenced_local_surface_id_.value()));
+    surface_manager_->RemoveSurfaceReferences({reference});
+    referenced_local_surface_id_.reset();
+  }
+
   frame_sink_manager_->UnregisterFrameSinkManagerClient(frame_sink_id_);
 }
 
@@ -114,21 +122,15 @@ void CompositorFrameSinkSupport::SetBeginFrameSource(
 }
 
 void CompositorFrameSinkSupport::EvictCurrentSurface() {
+  if (true)
+    return;
+
   if (!current_surface_id_.is_valid())
     return;
 
   SurfaceId to_destroy_surface_id = current_surface_id_;
   current_surface_id_ = SurfaceId();
   surface_manager_->DestroySurface(to_destroy_surface_id);
-
-  // For display root surfaces the surface is no longer going to be visible.
-  // Make it unreachable from the top-level root.
-  if (referenced_local_surface_id_.has_value()) {
-    auto reference = MakeTopLevelRootReference(
-        SurfaceId(frame_sink_id_, referenced_local_surface_id_.value()));
-    surface_manager_->RemoveSurfaceReferences({reference});
-    referenced_local_surface_id_.reset();
-  }
 }
 
 void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
@@ -203,7 +205,7 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     // LocalSurfaceIds should be monotonically increasing. This ID is used
     // to determine the freshness of a surface at aggregation time.
     bool monotonically_increasing_id =
-        local_surface_id.parent_id() >
+        local_surface_id.parent_id() >=
         current_surface_id_.local_surface_id().parent_id();
 
     if (!surface_info.is_valid() || !monotonically_increasing_id) {

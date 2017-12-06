@@ -59,7 +59,8 @@ class StubOffscreenCanvasSurfaceClient
 
  private:
   // blink::mojom::OffscreenCanvasSurfaceClient:
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override {
+  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info,
+                                const viz::SurfaceSequence& seq) override {
     last_surface_info_ = surface_info;
   }
 

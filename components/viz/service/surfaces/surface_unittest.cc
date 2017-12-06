@@ -80,11 +80,6 @@ TEST(SurfaceTest, PresentationCallback) {
     EXPECT_CALL(client, DidDiscardCompositorFrame(4)).Times(1);
     support->SubmitCompositorFrame(local_surface_id, std::move(frame));
   }
-
-  // The frame with token 2 will be discarded when the surface is destroyed.
-  EXPECT_CALL(client, DidDiscardCompositorFrame(2)).Times(1);
-  support->EvictCurrentSurface();
-  frame_sink_manager.surface_manager()->GarbageCollectSurfaces();
 }
 
 TEST(SurfaceTest, SurfaceLifetime) {
@@ -100,7 +95,7 @@ TEST(SurfaceTest, SurfaceLifetime) {
   support->SubmitCompositorFrame(local_surface_id,
                                  MakeDefaultCompositorFrame());
   EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
-  support->EvictCurrentSurface();
+  support.reset();
   frame_sink_manager.surface_manager()->GarbageCollectSurfaces();
 
   EXPECT_EQ(nullptr, surface_manager->GetSurfaceForId(surface_id));
