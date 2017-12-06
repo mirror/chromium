@@ -18224,6 +18224,11 @@ Called by update_net_error_codes.py.-->
   <int value="5" label="GNOME failure"/>
 </enum>
 
+<enum name="FramebustInterventionOutcome">
+  <int value="0" label="Accepted"/>
+  <int value="1" label="Declined and navigated"/>
+</enum>
+
 <enum name="FramebustPermissions">
   <int value="0" label="Only permitted for framebusting, no user gesture"/>
   <int value="1" label="Only permitted for framebusting, user gesture"/>

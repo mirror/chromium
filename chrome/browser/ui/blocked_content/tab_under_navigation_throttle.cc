@@ -49,13 +49,17 @@ void LogAction(TabUnderNavigationThrottle::Action action) {
 typedef FramebustBlockMessageDelegate::InterventionOutcome InterventionOutcome;
 
 void LogOutcome(InterventionOutcome outcome) {
-  TabUnderNavigationThrottle::Action action;
+  TabUnderNavigationThrottle::Action action =
+      TabUnderNavigationThrottle::Action::kCount;
   switch (outcome) {
     case InterventionOutcome::kAccepted:
       action = TabUnderNavigationThrottle::Action::kAcceptedIntervention;
       break;
     case InterventionOutcome::kDeclinedAndNavigated:
       action = TabUnderNavigationThrottle::Action::kClickedThrough;
+      break;
+    case InterventionOutcome::kCount:
+      NOTREACHED();
       break;
   }
   LogAction(action);
