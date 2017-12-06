@@ -1644,8 +1644,10 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
       [tabController
           setIconImage:[self iconImageForContents:contents atIndex:modelIndex]];
     }
-  } else if (newState == kTabDone || oldState != newState ||
-             oldHasIcon != newHasIcon) {
+    wasHidingThrobberMap_[contents] = YES;
+  } else if (wasHidingThrobberMap_[contents] || newState == kTabDone ||
+             oldState != newState || oldHasIcon != newHasIcon) {
+    wasHidingThrobberMap_[contents] = NO;
     if (newHasIcon) {
       if (newState == kTabDone) {
         [tabController setIconImage:[self iconImageForContents:contents
