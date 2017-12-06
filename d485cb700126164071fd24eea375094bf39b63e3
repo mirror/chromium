@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b67f45_dd593c13",
+        "filename": "ios/web/web_state/js/page_script_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "the main frame of the web view",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cae49c7_5d01ef39",
+        "filename": "ios/web/web_state/js/page_script_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "Can we name this GetEarlyPageScriptForMainFrame ? Or something similar to mirror the next method?",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe82e96d_65855613",
+        "filename": "ios/web/web_state/js/page_script_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "What do you think about GetEarlyPageScriptForAllFrames ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1193748a_73ad22ac",
+        "filename": "ios/web/web_state/js/page_script_util.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "main_frame_web_bundle ?",
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7884bb0c_5031c00a",
+        "filename": "ios/web/web_state/js/resources/all_frames_web_bundle.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ee3c66_29f5ad77",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "TODO(crbug.com/792642):",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f384eb00_1df0f31c",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "Can we rename this method to mirror the next one?",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fe89c7_6972552f",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T22:05:15Z",
+      "side": 1,
+      "message": "What do you think about InternalGetEarlyPageScriptForAllFrames ?",
+      "revId": "d485cb700126164071fd24eea375094bf39b63e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
