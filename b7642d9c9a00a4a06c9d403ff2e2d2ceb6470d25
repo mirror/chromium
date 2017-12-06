@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8091994_6d03a5ea",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-06T22:17:20Z",
+      "side": 1,
+      "message": "FILE_ERROR_EXISTS",
+      "revId": "b7642d9c9a00a4a06c9d403ff2e2d2ceb6470d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9274115d_7943a066",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-06T22:17:20Z",
+      "side": 1,
+      "message": "should we return after this?",
+      "revId": "b7642d9c9a00a4a06c9d403ff2e2d2ceb6470d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
