@@ -93,6 +93,30 @@
       "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8342189a_ab648e5b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T14:52:22Z",
+      "side": 1,
+      "message": "The algorithmic steps is what you should be implementing - _not_ the syntax section (in general there shouldn\u0027t even be a need to read the syntax section. It only discusses well-formed content.)\n\nThis should be one region block.",
+      "parentUuid": "ab3b866d_c918fcf3",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
