@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0770ffbd_14a63230",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-06T22:39:17Z",
+      "side": 1,
+      "message": "You can remove this one now.",
+      "revId": "9b5c3288acb701f6eaef16e0aca7cfefa36f8bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
