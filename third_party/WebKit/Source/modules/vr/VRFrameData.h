@@ -43,6 +43,11 @@ class VRFrameData final : public ScriptWrappable {
               float depth_near,
               float depth_far);
 
+  // Populates the data with default eye params.
+  bool Update(const device::mojom::blink::VRPosePtr&,
+              float depth_near,
+              float depth_far);
+
   void Trace(blink::Visitor*) override;
 
  private:
