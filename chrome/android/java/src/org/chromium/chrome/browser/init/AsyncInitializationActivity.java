@@ -519,8 +519,8 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     public void onNewIntentWithNative(Intent intent) { }
 
     @Override
-    public Intent getInitialIntent() {
-        return getIntent();
+    public Activity getActivity() {
+        return this;
     }
 
     /**
