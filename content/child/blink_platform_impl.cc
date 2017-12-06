@@ -212,6 +212,8 @@ static int ToMessageID(WebLocalizedString::Name name) {
       return IDS_MEDIA_OVERFLOW_MENU_PLAY;
     case WebLocalizedString::kOverflowMenuPause:
       return IDS_MEDIA_OVERFLOW_MENU_PAUSE;
+    case WebLocalizedString::kOverflowMenuPictureInPicture:
+      return IDS_MEDIA_OVERFLOW_MENU_PICTURE_IN_PICTURE;
     case WebLocalizedString::kOverflowMenuDownload:
       return IDS_MEDIA_OVERFLOW_MENU_DOWNLOAD;
     case WebLocalizedString::kPlaceholderForDayOfMonthField:

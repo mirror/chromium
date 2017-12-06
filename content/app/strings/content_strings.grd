@@ -809,6 +809,9 @@ below:
       <message name="IDS_MEDIA_OVERFLOW_MENU_PAUSE" desc="Media controls overflow menu item label for a pause button.">
         Pause
       </message>
+      <message name="IDS_MEDIA_OVERFLOW_MENU_PICTURE_IN_PICTURE" desc="Media controls overflow menu item label for a picture in picture button.">
+        Picture in Picture
+      </message>
       <message name="IDS_MEDIA_OVERFLOW_MENU_DOWNLOAD" desc="Media controls overflow menu item label for a download button.">
        Download
       </message>
