@@ -108,8 +108,6 @@ bool StandardManagementPolicyProvider::UserMayLoad(
         return ReturnLoadError(extension, error);
       break;
     }
-    case Manifest::NUM_LOAD_TYPES:
-      NOTREACHED();
   }
 
   if (installation_mode == ExtensionManagement::INSTALLATION_BLOCKED)

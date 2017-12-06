@@ -145,10 +145,8 @@ ExtensionInstallProto::Type GetType(Manifest::Type type) {
       return ExtensionInstallProto::PLATFORM_APP;
     case Manifest::TYPE_SHARED_MODULE:
       return ExtensionInstallProto::SHARED_MODULE;
-    case Manifest::NUM_LOAD_TYPES:
-      NOTREACHED();
-      // Fall through.
   }
+  NOTREACHED();
   return ExtensionInstallProto::UNKNOWN_TYPE;
 }
 

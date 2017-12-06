@@ -463,8 +463,7 @@ void InstalledLoader::RecordExtensionsMetrics() {
     // Using an enumeration shows us the total installed ratio across all users.
     // Using the totals per user at each startup tells us the distribution of
     // usage for each user (e.g. 40% of users have at least one app installed).
-    UMA_HISTOGRAM_ENUMERATION(
-        "Extensions.LoadType", type, Manifest::NUM_LOAD_TYPES);
+    UMA_HISTOGRAM_ENUMERATION("Extensions.LoadType", type, Manifest::TYPE_MAX);
     switch (type) {
       case Manifest::TYPE_THEME:
         ++theme_count;
