@@ -549,12 +549,18 @@ void CompositedLayerMapping::UpdateAfterPartResize() {
                    PaintLayerCompositor::FrameContentsCompositor(
                        ToLayoutEmbeddedContent(GetLayoutObject()))) {
       inner_compositor->FrameViewDidChangeSize();
-      // We can floor this point because our frameviews are always aligned to
-      // pixel boundaries.
+      // Assert our frameviews are always aligned to pixel boundaries.
       DCHECK(composited_bounds_.Location() ==
              FlooredIntPoint(composited_bounds_.Location()));
-      inner_compositor->FrameViewDidChangeLocation(
-          FlooredIntPoint(ContentsBox().Location()));
+      if (child_containment_layer_) {
+        FloatSize offset = FloatPoint(ContentsBox().Location()) -
+                           child_containment_layer_->GetPosition();
+        inner_compositor->FrameViewDidChangeLocation(
+            FloatPoint(offset.Width(), offset.Height()));
+      } else {
+        inner_compositor->FrameViewDidChangeLocation(
+            FloatPoint(ContentsBox().Location()));
+      }
     }
   }
 }
@@ -1506,16 +1512,30 @@ void CompositedLayerMapping::UpdateChildContainmentLayerGeometry() {
     return;
   DCHECK(GetLayoutObject().IsBox());
 
-  IntRect clipping_box = PixelSnappedIntRect(
-      ToLayoutBox(GetLayoutObject())
-          .ClippingRect(LayoutPoint(SubpixelAccumulation())));
-  child_containment_layer_->SetSize(FloatSize(clipping_box.Size()));
-  child_containment_layer_->SetOffsetFromLayoutObject(
-      ToIntSize(clipping_box.Location()));
-  IntPoint parent_location(
-      child_containment_layer_->Parent()->OffsetFromLayoutObject());
-  child_containment_layer_->SetPosition(
-      IntPoint(clipping_box.Location() - parent_location));
+  if (GetLayoutObject().IsLayoutEmbeddedContent()) {
+    // Embedded content layers do not have a clipping rect defined,
+    // so use the PaddingBoxRect.
+    IntRect clipping_box =
+        PixelSnappedIntRect(ToLayoutBox(GetLayoutObject()).PaddingBoxRect());
+    child_containment_layer_->SetSize(FloatSize(clipping_box.Size()));
+    child_containment_layer_->SetOffsetFromLayoutObject(
+        ToIntSize(clipping_box.Location()));
+    IntPoint parent_location(
+        child_containment_layer_->Parent()->OffsetFromLayoutObject());
+    child_containment_layer_->SetPosition(
+        IntPoint(clipping_box.Location() - parent_location));
+  } else {
+    IntRect clipping_box = PixelSnappedIntRect(
+        ToLayoutBox(GetLayoutObject())
+            .ClippingRect(LayoutPoint(SubpixelAccumulation())));
+    child_containment_layer_->SetSize(FloatSize(clipping_box.Size()));
+    child_containment_layer_->SetOffsetFromLayoutObject(
+        ToIntSize(clipping_box.Location()));
+    IntPoint parent_location(
+        child_containment_layer_->Parent()->OffsetFromLayoutObject());
+    child_containment_layer_->SetPosition(
+        IntPoint(clipping_box.Location() - parent_location));
+  }
 
   if (child_clipping_mask_layer_ && !scrolling_layer_ &&
       !GetLayoutObject().Style()->ClipPath()) {
