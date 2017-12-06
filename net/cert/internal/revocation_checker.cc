@@ -8,6 +8,7 @@
 
 #include "base/strings/string_piece.h"
 #include "crypto/sha2.h"
+#include "net/cert/asn1_util.h"
 #include "net/cert/cert_net_fetcher.h"
 #include "net/cert/internal/common_cert_errors.h"
 #include "net/cert/internal/ocsp.h"
@@ -241,6 +242,15 @@ CRLSet::Result CheckChainRevocationUsingCRLSet(
     std::string spki_hash =
         crypto::SHA256HashString(cert->tbs().spki_tlv.AsStringPiece());
     CRLSet::Result result = crl_set->CheckSPKI(spki_hash);
+
+    // Check for revocation using the certificate's Subject.
+    if (result != CRLSet::REVOKED) {
+      base::StringPiece subject;
+      if (!asn1::ExtractSubjectFromDERCert(cert->der_cert().AsStringPiece(),
+                                           &subject))
+        continue;
+      result = crl_set->CheckSubject(subject, spki_hash);
+    }
 
     // Check for revocation using the certificate's serial number and issuer's
     // SPKI.
