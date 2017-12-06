@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464ebe1a_551f415f",
+        "filename": "device/u2f/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T09:38:14Z",
+      "side": 1,
+      "message": "While you\u0027re here can you add this line:\n\n# COMPONENT: Blink\u003eWebAuthentication",
+      "revId": "625445b57dd33db52c2eebe80d69b015f95e1d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
