@@ -68,6 +68,7 @@ class EVENTS_DEVICES_EXPORT DeviceDataManager
       const std::vector<InputDevice>& devices) override;
   void SetTouchscreenDevicesForTesting(
       const std::vector<TouchscreenDevice>& devices) override;
+  void NotifyStylusStateChangedForTesting(StylusState stylus_state) override;
 
  protected:
   DeviceDataManager();

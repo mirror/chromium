@@ -48,6 +48,7 @@ class InputDeviceClient : public mojom::InputDeviceObserverMojo,
       const std::vector<InputDevice>& devices) override;
   void SetTouchscreenDevicesForTesting(
       const std::vector<TouchscreenDevice>& devices) override;
+  void NotifyStylusStateChangedForTesting(StylusState stylus_state) override;
 
  protected:
   // Default constructor registers as InputDeviceManager. Can be subclassed in

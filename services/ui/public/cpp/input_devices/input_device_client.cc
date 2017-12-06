@@ -71,6 +71,11 @@ void InputDeviceClient::SetTouchscreenDevicesForTesting(
   OnTouchscreenDeviceConfigurationChanged(devices, false);
 }
 
+void InputDeviceClient::NotifyStylusStateChangedForTesting(
+    StylusState stylus_state) {
+  OnStylusStateChanged(stylus_state);
+}
+
 InputDeviceClient::InputDeviceClient(bool is_input_device_manager)
     : binding_(this), is_input_device_manager_(is_input_device_manager) {
   if (is_input_device_manager_)

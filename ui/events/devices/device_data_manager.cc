@@ -263,6 +263,11 @@ void DeviceDataManager::SetTouchscreenDevicesForTesting(
   OnTouchscreenDevicesUpdated(devices);
 }
 
+void DeviceDataManager::NotifyStylusStateChangedForTesting(
+    StylusState stylus_state) {
+  OnStylusStateChanged(stylus_state);
+}
+
 void DeviceDataManager::SetTouchscreensEnabled(bool enabled) {
   touch_screens_enabled_ = enabled;
 }
