@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "build/build_config.h"
+
 namespace media {
 
 MojoAudioOutputStreamProvider::MojoAudioOutputStreamProvider(
@@ -36,6 +38,15 @@ void MojoAudioOutputStreamProvider::Acquire(
     const AudioParameters& params,
     AcquireCallback callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+#if !defined(OS_ANDROID)
+  if (params.IsBitstreamFormat()) {
+    // Bitstream streams are only supported on Android.
+    binding_.Unbind();
+    observer_binding_.Unbind();
+    std::move(deleter_callback_).Run(this);  // deletes |this|.
+    return;
+  }
+#endif
   if (audio_output_) {
     LOG(ERROR) << "Output acquired twice.";
     binding_.Unbind();

@@ -169,6 +169,12 @@ void AudioInputRendererHost::DoCreateStream(
     return;
   }
 
+  if (config.params.IsBitstreamFormat()) {
+    // Bitstream streams are not supported for input.
+    Send(new AudioInputMsg_NotifyStreamError(stream_id));
+    return;
+  }
+
   std::unique_ptr<media::AudioInputDelegate> delegate =
       AudioInputDelegateImpl::Create(
           audio_manager_, audio_mirroring_manager_, user_input_monitor_,
