@@ -22,6 +22,30 @@
       "revId": "174f0400019ea5ce60cdb161f58f177b9ee0bed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0550a0_e9dbe4a8",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4430,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-06T21:00:12Z",
+      "side": 1,
+      "message": "It is. Because StentinelEmptyRect is essentially (0,0, -1,-1) so if overflow happens, suv_rect could end up with width\u003d-1 and height\u003d-1 and therefore satisfy the condition falsely.",
+      "parentUuid": "6eb418b9_c18b862a",
+      "range": {
+        "startLine": 4430,
+        "startChar": 6,
+        "endLine": 4430,
+        "endChar": 14
+      },
+      "revId": "174f0400019ea5ce60cdb161f58f177b9ee0bed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
