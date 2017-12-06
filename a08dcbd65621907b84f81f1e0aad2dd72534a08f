@@ -88,6 +88,24 @@
       "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abd4a81_fc5b833c",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-06T00:39:25Z",
+      "side": 0,
+      "message": "Logs in #103 are from net_log. We logged state here: [1]. It should be fairly enough though. Another caller could be [2] but we don\u0027t log \"Restarting portal detection due to auth change\". I don\u0027t know why there are no more chrome attempts logged...\n\nBtw, this log is the only log that having captive portal detection behave abnormally among the many logs in this bug. Portal detection might be not the root cause.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/net/network_portal_detector_impl.cc?type\u003dcs\u0026q\u003dnetwork_portal_detector_im\u0026sq\u003dpackage:chromium\u0026l\u003d376\n[2] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/net/network_portal_detector_impl.cc?type\u003dcs\u0026q\u003dnetwork_portal_detector_im\u0026sq\u003dpackage:chromium\u0026l\u003d613",
+      "parentUuid": "eb2d3e78_e24db9e7",
+      "revId": "a08dcbd65621907b84f81f1e0aad2dd72534a08f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
