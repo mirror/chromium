@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156c88a6_8f63aa76",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-06T14:54:25Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this? I think we can revert http_cache_writers.cc/h to master.",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 38
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da98dbe4_0f49d39f",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-06T14:54:25Z",
+      "side": 1,
+      "message": "argument no longer used, please remove and update comment",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
