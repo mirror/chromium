@@ -105,7 +105,6 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   void DisableLocalEventLogRecordings();
 
   bool IsEventLogRecordingsEnabled() const;
-  const base::FilePath& GetEventLogFilePath() const;
 
   int num_open_connections() const { return num_open_connections_; }
 
@@ -152,10 +151,6 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   // Enables diagnostic audio recordings on all render process hosts using
   // |audio_debug_recordings_file_path_|.
   void EnableAudioDebugRecordingsOnAllRenderProcessHosts();
-
-  // Enables local WebRTC event log recordings on all render process hosts using
-  // |event_log_recordings_file_path_|.
-  void EnableLocalEventLogRecordingsOnAllRenderProcessHosts();
 #endif
 
   // Updates the number of open PeerConnections. Called when a PeerConnection
