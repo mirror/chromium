@@ -193,51 +193,6 @@ TEST_F(TransferCacheTest, RawMemoryTransfer) {
   EXPECT_EQ(data, service_data);
 }
 
-TEST_F(TransferCacheTest, ImageMemoryTransfer) {
-// TODO(ericrk): This test doesn't work on Android. crbug.com/777628
-#if defined(OS_ANDROID)
-  return;
-#endif
-
-  auto* client_cache = ClientTransferCache();
-  auto* service_cache = ServiceTransferCache();
-  auto* gl = Gl();
-  auto* command_buffer = CommandBuffer();
-
-  // Create a 10x10 image.
-  SkImageInfo info = SkImageInfo::MakeN32Premul(10, 10);
-  std::vector<uint8_t> data;
-  data.resize(info.width() * info.height() * 4);
-  for (size_t i = 0; i < data.size(); ++i) {
-    data[i] = i;
-  }
-  SkPixmap pixmap(info, data.data(), info.minRowBytes());
-
-  // Add the entry to the transfer cache
-  ClientImageTransferCacheEntry client_entry(&pixmap, nullptr);
-  gpu::TransferCacheEntryId id =
-      client_cache->CreateCacheEntry(gl, command_buffer, client_entry);
-  EXPECT_FALSE(id.is_null());
-  gpu::ClientDiscardableHandle handle =
-      client_cache->DiscardableManagerForTesting()->GetHandle(id);
-  EXPECT_TRUE(handle.IsLockedForTesting());
-  gl->Finish();
-
-  // Validate service-side data matches.
-  ServiceTransferCacheEntry* service_entry = service_cache->GetEntry(id);
-  EXPECT_EQ(service_entry->Type(), client_entry.Type());
-  sk_sp<SkImage> service_image =
-      static_cast<ServiceImageTransferCacheEntry*>(service_entry)->image();
-  EXPECT_TRUE(service_image->isTextureBacked());
-
-  std::vector<uint8_t> service_data;
-  service_data.resize(data.size());
-  service_image->readPixels(info, service_data.data(), info.minRowBytes(), 0,
-                            0);
-
-  EXPECT_EQ(data, service_data);
-}
-
 // A TransferCacheEntry that intentionally constructs on invalid
 // TransferCacheEntryType.
 class InvalidIdTransferCacheEntry : public ClientTransferCacheEntry {

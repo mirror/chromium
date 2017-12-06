@@ -19,11 +19,10 @@ namespace cc {
 //    your new type.
 //  - Update ServiceTransferCacheEntry::Create and ServiceTransferCacheEntry::
 //    DeduceType in transfer_cache_entry.cc.
-enum class TransferCacheEntryType {
+enum class TransferCacheEntryType : uint32_t {
   kRawMemory,
-  kImage,
   // Add new entries above this line, make sure to update kLast.
-  kLast = kImage,
+  kLast = kRawMemory,
 };
 
 // An interface used on the client to serialize a transfer cache entry
@@ -42,6 +41,9 @@ class CC_PAINT_EXPORT ServiceTransferCacheEntry {
  public:
   static std::unique_ptr<ServiceTransferCacheEntry> Create(
       TransferCacheEntryType type);
+
+  template <typename T>
+  static TransferCacheEntryType DeduceType();
 
   // Checks that |raw_type| represents a valid TransferCacheEntryType and
   // populates |type|. If |raw_type| is not valid, the function returns false
