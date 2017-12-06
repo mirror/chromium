@@ -403,7 +403,7 @@ void TypingCommand::InsertText(
     if (last_typing_command->EndingVisibleSelection() !=
         selection_for_insertion) {
       const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-          SelectionForUndoStep::From(selection_for_insertion.AsSelection());
+          SelectionForUndoStep::From(passed_selection_for_insertion);
       last_typing_command->SetStartingSelection(
           selection_for_insertion_as_undo_step);
       last_typing_command->SetEndingSelection(
@@ -428,12 +428,10 @@ void TypingCommand::InsertText(
   TypingCommand* command = TypingCommand::Create(
       document, kInsertText, new_text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
-  if (change_selection) {
-    const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-        SelectionForUndoStep::From(selection_for_insertion.AsSelection());
-    command->SetStartingSelection(selection_for_insertion_as_undo_step);
-    command->SetEndingSelection(selection_for_insertion_as_undo_step);
-  }
+  const SelectionForUndoStep& selection_for_insertion_as_undo_step =
+      SelectionForUndoStep::From(passed_selection_for_insertion);
+  command->SetStartingSelection(selection_for_insertion_as_undo_step);
+  command->SetEndingSelection(selection_for_insertion_as_undo_step);
   command->is_incremental_insertion_ = is_incremental_insertion;
   command->selection_start_ = selection_start;
   command->input_type_ = input_type;
