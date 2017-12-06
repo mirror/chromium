@@ -285,7 +285,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   bool HasFocus() const override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
+  Visibility GetVisibility() const override;
   void WasUnOccluded() override;
   void WasOccluded() override;
   gfx::Rect GetViewBounds() const override;
