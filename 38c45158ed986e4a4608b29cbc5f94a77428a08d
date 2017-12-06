@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75365c44_394fd584",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:44:37Z",
+      "side": 1,
+      "message": "Please out of line this to the .cc, since it\u0027s not a cheap getter.\n\nIdeally, this would be typemapped using struct traits as well: https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Use-StructTraits\n\nIs that something we could do here? Sorry \u003d(",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
