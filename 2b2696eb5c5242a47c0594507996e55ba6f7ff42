@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "386359be_6329141f",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T01:58:09Z",
+      "side": 1,
+      "message": "I would either not make this a member or add a helper function to the test class; using protected variables in tests is kind of confusing.",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f5170d_8fb80033",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T01:58:09Z",
+      "side": 1,
+      "message": "nit: In theory this could happen during shutdown (or some future condition could prevent the notification from displaying), but we probably don\u0027t care too much about that? We might consider having Display() return a bool that we could test as to whether the notification will actually be shown.",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
