@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea4f0f0e_4404bdc0",
+        "filename": "components/offline_pages/core/stub_offline_page_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-12-06T23:44:42Z",
+      "side": 1,
+      "message": "missed this - i don\u0027t think we need this now?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "835382a1ac28769f8d5966e5d4d7b6d5dd9a2f09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
