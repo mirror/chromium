@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5ded94b3_272d10c2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-06T01:41:25Z",
+      "side": 1,
+      "message": "Yeah, agreed.\n\nPassing ExecutionContext to Worklet\u0027s constructor would make things clearer.\n\nYes, the behavior after the frame detach is not well defined in the spec in general. I\u0027m fine as long as the code is architectured so that it doesn\u0027t crash.",
+      "parentUuid": "445f7433_fbacaa18",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec4847e_9879b5ca",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
