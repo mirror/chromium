@@ -317,6 +317,7 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
 }
 
 Node::~Node() {
+  DCHECK(!GetNonAttachedStyle());
   if (!HasRareData() && !data_.node_layout_data_->IsSharedEmptyData())
     delete data_.node_layout_data_;
   InstanceCounters::DecrementCounter(InstanceCounters::kNodeCounter);
@@ -1055,6 +1056,8 @@ void Node::ReattachLayoutTree(AttachContext& context) {
   if (GetStyleChangeType() < kNeedsReattachStyleChange)
     DetachLayoutTree(context);
   AttachLayoutTree(context);
+  DCHECK(!NeedsReattachLayoutTree());
+  DCHECK(!GetNonAttachedStyle());
 }
 
 void Node::AttachLayoutTree(AttachContext& context) {
