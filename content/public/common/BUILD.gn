@@ -364,6 +364,7 @@ mojom("interfaces") {
     "network_service_test.mojom",
     "proxy_config.mojom",
     "push_messaging_status.mojom",
+    "speech_recognition_grammar.mojom",
     "url_loader.mojom",
     "url_loader_factory.mojom",
     "webplugininfo.mojom",
