@@ -296,9 +296,9 @@ WebViewImpl* WebViewHelper::InitializeAndLoad(
   Initialize(web_frame_client, web_view_client, web_widget_client,
              update_settings_func);
 
-  LoadFrame(WebView()->MainFrameImpl(), url);
+  LoadFrame(GetWebView()->MainFrameImpl(), url);
 
-  return WebView();
+  return GetWebView();
 }
 
 WebViewImpl* WebViewHelper::InitializeRemote(
@@ -352,13 +352,13 @@ void WebViewHelper::SetViewportSize(const WebSize& viewport_size) {
 
 void WebViewHelper::Resize(WebSize size) {
   test_web_view_client_->ClearAnimationScheduled();
-  WebView()->Resize(size);
+  GetWebView()->Resize(size);
   EXPECT_FALSE(test_web_view_client_->AnimationScheduled());
   test_web_view_client_->ClearAnimationScheduled();
 }
 
 void WebViewHelper::InitializeWebView(TestWebViewClient* web_view_client,
-                                      class WebView* opener) {
+                                      WebView* opener) {
   owned_test_web_view_client_ = CreateDefaultClientIfNeeded(web_view_client);
   web_view_ = static_cast<WebViewImpl*>(WebView::Create(
       web_view_client, mojom::PageVisibilityState::kVisible, opener));

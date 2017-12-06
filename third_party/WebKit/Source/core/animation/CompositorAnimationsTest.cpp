@@ -325,7 +325,7 @@ class AnimationCompositorAnimationsTest : public RenderingTest {
     WebURL url = URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing_path,
         WebString::FromUTF8(file_name));
-    FrameTestHelpers::LoadFrame(helper_.WebView()->MainFrameImpl(),
+    FrameTestHelpers::LoadFrame(helper_.GetWebView()->MainFrameImpl(),
                                 base_url_ + file_name);
     ForceFullCompositingUpdate();
     URLTestHelpers::RegisterMockedURLUnregister(url);
@@ -334,7 +334,7 @@ class AnimationCompositorAnimationsTest : public RenderingTest {
   LocalFrame* GetFrame() const { return helper_.LocalMainFrame()->GetFrame(); }
 
   void ForceFullCompositingUpdate() {
-    helper_.WebView()->UpdateAllLifecyclePhases();
+    helper_.GetWebView()->UpdateAllLifecyclePhases();
   }
 
  private:

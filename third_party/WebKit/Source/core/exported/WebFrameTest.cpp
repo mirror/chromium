@@ -253,7 +253,7 @@ class WebFrameTest : public ::testing::Test {
       const std::string& url,
       FrameTestHelpers::WebViewHelper* web_view_helper) {
     web_view_helper->InitializeAndLoad(url);
-    web_view_helper->WebView()->GetSettings()->SetDefaultFontSize(12);
+    web_view_helper->GetWebView()->GetSettings()->SetDefaultFontSize(12);
     web_view_helper->Resize(WebSize(640, 480));
   }
 
@@ -264,7 +264,7 @@ class WebFrameTest : public ::testing::Test {
     web_view_helper->InitializeAndLoad(base_url_ + "nodeimage.html");
     web_view_helper->Resize(WebSize(640, 480));
     LocalFrame* frame =
-        ToLocalFrame(web_view_helper->WebView()->GetPage()->MainFrame());
+        ToLocalFrame(web_view_helper->GetWebView()->GetPage()->MainFrame());
     DCHECK(frame);
     Element* element = frame->GetDocument()->getElementById(testcase.c_str());
     return DataTransfer::NodeImage(*frame, *element);
@@ -355,9 +355,9 @@ TEST_P(ParameterizedWebFrameTest, ContentText) {
   web_view_helper.InitializeAndLoad(base_url_ + "iframes_test.html");
 
   // Now retrieve the frames text and test it only includes visible elements.
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_NE(std::string::npos, content.find(" visible paragraph"));
   EXPECT_NE(std::string::npos, content.find(" visible iframe"));
   EXPECT_EQ(std::string::npos, content.find(" invisible pararaph"));
@@ -375,12 +375,12 @@ TEST_P(ParameterizedWebFrameTest, FrameForEnteredContext) {
   web_view_helper.InitializeAndLoad(base_url_ + "iframes_test.html");
 
   v8::HandleScope scope(v8::Isolate::GetCurrent());
-  EXPECT_EQ(web_view_helper.WebView()->MainFrame(),
-            WebLocalFrame::FrameForContext(web_view_helper.WebView()
+  EXPECT_EQ(web_view_helper.GetWebView()->MainFrame(),
+            WebLocalFrame::FrameForContext(web_view_helper.GetWebView()
                                                ->MainFrameImpl()
                                                ->MainWorldScriptContext()));
-  EXPECT_EQ(web_view_helper.WebView()->MainFrame()->FirstChild(),
-            WebLocalFrame::FrameForContext(web_view_helper.WebView()
+  EXPECT_EQ(web_view_helper.GetWebView()->MainFrame()->FirstChild(),
+            WebLocalFrame::FrameForContext(web_view_helper.GetWebView()
                                                ->MainFrame()
                                                ->FirstChild()
                                                ->ToWebLocalFrame()
@@ -426,7 +426,7 @@ TEST_P(ParameterizedWebFrameTest, RequestExecuteScript) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
   ScriptExecutionCallbackHelper callback_helper(
       web_view_helper.LocalMainFrame()->MainWorldScriptContext());
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->RequestExecuteScriptAndReturnValue(
           WebScriptSource(WebString("'hello';")), false, &callback_helper);
@@ -447,12 +447,12 @@ TEST_P(ParameterizedWebFrameTest, SuspendedRequestExecuteScript) {
       web_view_helper.LocalMainFrame()->MainWorldScriptContext());
 
   // Suspend scheduled tasks so the script doesn't run.
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->GetFrame()
       ->GetDocument()
       ->PauseScheduledTasks();
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->RequestExecuteScriptAndReturnValue(
           WebScriptSource(WebString("'hello';")), false, &callback_helper);
@@ -461,7 +461,7 @@ TEST_P(ParameterizedWebFrameTest, SuspendedRequestExecuteScript) {
 
   // If the frame navigates, pending scripts should be removed, but the callback
   // should always be ran.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "bar.html");
   EXPECT_TRUE(callback_helper.DidComplete());
   EXPECT_EQ(String(), callback_helper.StringValue());
@@ -483,7 +483,7 @@ TEST_P(ParameterizedWebFrameTest, RequestExecuteV8Function) {
   ScriptExecutionCallbackHelper callback_helper(context);
   v8::Local<v8::Function> function =
       v8::Function::New(context, callback).ToLocalChecked();
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrame()
       ->ToWebLocalFrame()
       ->RequestExecuteV8Function(context, function,
@@ -575,7 +575,7 @@ TEST_P(ParameterizedWebFrameTest, IframeScriptRemovesSelf) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
   ScriptExecutionCallbackHelper callback_helper(
       web_view_helper.LocalMainFrame()->MainWorldScriptContext());
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrame()
       ->FirstChild()
       ->ToWebLocalFrame()
@@ -613,15 +613,15 @@ TEST_P(ParameterizedWebFrameTest, ChromePageJavascript) {
   web_view_helper.InitializeAndLoad(chrome_url_ + "history.html");
 
   // Try to run JS against the chrome-style URL.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Clobbered'))");
 
   // Now retrieve the frame's text and ensure it was modified by running
   // javascript.
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_NE(std::string::npos, content.find("Clobbered"));
 }
 
@@ -633,15 +633,15 @@ TEST_P(ParameterizedWebFrameTest, ChromePageNoJavascript) {
 
   // Try to run JS against the chrome-style URL after prohibiting it.
   WebSecurityPolicy::RegisterURLSchemeAsNotAllowingJavascriptURLs("chrome");
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Clobbered'))");
 
   // Now retrieve the frame's text and ensure it wasn't modified by running
   // javascript.
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_EQ(std::string::npos, content.find("Clobbered"));
 }
 
@@ -655,16 +655,16 @@ TEST_P(ParameterizedWebFrameTest, LocationSetHostWithMissingPort) {
 
   // Setting host to "hostname:" should be treated as "hostname:0".
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.GetWebView()->MainFrameImpl(),
       "javascript:location.host = 'internal.test:'; void 0;");
 
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.GetWebView()->MainFrameImpl(),
       "javascript:document.body.textContent = location.href; void 0;");
 
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_EQ("http://internal.test:0/" + file_name, content);
 }
 
@@ -676,16 +676,16 @@ TEST_P(ParameterizedWebFrameTest, LocationSetEmptyPort) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + file_name);
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               "javascript:location.port = ''; void 0;");
 
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.GetWebView()->MainFrameImpl(),
       "javascript:document.body.textContent = location.href; void 0;");
 
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_EQ("http://internal.test:0/" + file_name, content);
 }
 
@@ -1025,21 +1025,21 @@ TEST_P(ParameterizedWebFrameTest, DispatchMessageEventWithOriginCheck) {
   WebDocument document = web_view_helper.LocalMainFrame()->GetDocument();
   WebSerializedScriptValue data(WebSerializedScriptValue::CreateInvalid());
   WebDOMMessageEvent message(data, "http://origin.com");
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->DispatchMessageEventWithOriginCheck(correct_origin, message);
 
   // Send another message with incorrect origin.
   WebSecurityOrigin incorrect_origin(
       WebSecurityOrigin::Create(ToKURL(chrome_url_)));
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->DispatchMessageEventWithOriginCheck(incorrect_origin, message);
 
   // Verify that only the first addition is in the body of the page.
-  std::string content =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 1024)
-          .Utf8();
+  std::string content = WebFrameContentDumper::DumpWebViewAsText(
+                            web_view_helper.GetWebView(), 1024)
+                            .Utf8();
   EXPECT_NE(std::string::npos, content.find("Message 1."));
   EXPECT_EQ(std::string::npos, content.find("Message 2."));
 }
@@ -1065,7 +1065,7 @@ TEST_P(ParameterizedWebFrameTest, PostMessageThenDetach) {
   web_view_helper.InitializeAndLoad("about:blank");
 
   LocalFrame* frame =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame());
   NonThrowableExceptionState exception_state;
   scoped_refptr<SerializedScriptValue> message =
       SerializeString("message", ToScriptStateForMainWorld(frame));
@@ -1138,7 +1138,7 @@ TEST_P(ParameterizedWebFrameTest,
                                     &client, nullptr, ConfigureAndroid);
 
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   document->GetSettings()->SetTextAutosizingEnabled(true);
   EXPECT_TRUE(document->GetSettings()->TextAutosizingEnabled());
@@ -1151,7 +1151,8 @@ TEST_P(ParameterizedWebFrameTest,
   // document.
   description.min_width = Length(100, blink::kFixed);
   description.max_width = Length(100, blink::kFixed);
-  web_view_helper.WebView()->UpdatePageDefinedViewportConstraints(description);
+  web_view_helper.GetWebView()->UpdatePageDefinedViewportConstraints(
+      description);
 
   EXPECT_TRUE(CheckTextAutosizingMultiplier(document, 1));
 }
@@ -1168,7 +1169,7 @@ TEST_P(ParameterizedWebFrameTest,
                                     nullptr, ConfigureAndroid);
 
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   document->GetSettings()->SetTextAutosizingEnabled(true);
   EXPECT_TRUE(document->GetSettings()->TextAutosizingEnabled());
@@ -1193,7 +1194,7 @@ TEST_P(ParameterizedWebFrameTest,
                                     &client, nullptr, ConfigureAndroid);
 
   LocalFrame* main_frame =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame());
   Document* document = main_frame->GetDocument();
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
   document->GetSettings()->SetTextAutosizingEnabled(true);
@@ -1237,12 +1238,12 @@ TEST_P(ParameterizedWebFrameTest, ZeroHeightPositiveWidthNotIgnored) {
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->GetLayoutSize()
                                 .Width());
-  EXPECT_EQ(viewport_height, web_view_helper.WebView()
+  EXPECT_EQ(viewport_height, web_view_helper.GetWebView()
                                  ->MainFrameImpl()
                                  ->GetFrameView()
                                  ->GetLayoutSize()
@@ -1266,16 +1267,17 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(
-      2, web_view_helper.WebView()->GetPage()->DeviceScaleFactorDeprecated());
+      2,
+      web_view_helper.GetWebView()->GetPage()->DeviceScaleFactorDeprecated());
 
   // Device scale factor should be independent of page scale.
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(1, 2);
-  web_view_helper.WebView()->SetPageScaleFactor(0.5);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(1, web_view_helper.WebView()->PageScaleFactor());
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(1, 2);
+  web_view_helper.GetWebView()->SetPageScaleFactor(0.5);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(1, web_view_helper.GetWebView()->PageScaleFactor());
 
   // Force the layout to happen before leaving the test.
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 }
 
 TEST_P(ParameterizedWebFrameTest, FixedLayoutInitializeAtMinimumScale) {
@@ -1290,8 +1292,8 @@ TEST_P(ParameterizedWebFrameTest, FixedLayoutInitializeAtMinimumScale) {
   // only becomes available after the load begins.
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "fixed_layout.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -1299,25 +1301,26 @@ TEST_P(ParameterizedWebFrameTest, FixedLayoutInitializeAtMinimumScale) {
   float minimum_page_scale_factor =
       viewport_width / (float)default_fixed_layout_width;
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->MinimumPageScaleFactor());
+            web_view_helper.GetWebView()->MinimumPageScaleFactor());
 
   // Assume the user has pinch zoomed to page scale factor 2.
   float user_pinch_page_scale_factor = 2;
-  web_view_helper.WebView()->SetPageScaleFactor(user_pinch_page_scale_factor);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetPageScaleFactor(
+      user_pinch_page_scale_factor);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   // Make sure we don't reset to initial scale if the page continues to load.
-  web_view_helper.WebView()->DidCommitLoad(false, false);
-  web_view_helper.WebView()->DidChangeContentsSize();
+  web_view_helper.GetWebView()->DidCommitLoad(false, false);
+  web_view_helper.GetWebView()->DidChangeContentsSize();
   EXPECT_EQ(user_pinch_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 
   // Make sure we don't reset to initial scale if the viewport size changes.
   web_view_helper.Resize(WebSize(viewport_width, viewport_height + 100));
   EXPECT_EQ(user_pinch_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, WideDocumentInitializeAtMinimumScale) {
@@ -1332,33 +1335,34 @@ TEST_P(ParameterizedWebFrameTest, WideDocumentInitializeAtMinimumScale) {
   // only becomes available after the load begins.
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "wide_document.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   int wide_document_width = 1500;
   float minimum_page_scale_factor = viewport_width / (float)wide_document_width;
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->MinimumPageScaleFactor());
+            web_view_helper.GetWebView()->MinimumPageScaleFactor());
 
   // Assume the user has pinch zoomed to page scale factor 2.
   float user_pinch_page_scale_factor = 2;
-  web_view_helper.WebView()->SetPageScaleFactor(user_pinch_page_scale_factor);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetPageScaleFactor(
+      user_pinch_page_scale_factor);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   // Make sure we don't reset to initial scale if the page continues to load.
-  web_view_helper.WebView()->DidCommitLoad(false, false);
-  web_view_helper.WebView()->DidChangeContentsSize();
+  web_view_helper.GetWebView()->DidCommitLoad(false, false);
+  web_view_helper.GetWebView()->DidChangeContentsSize();
   EXPECT_EQ(user_pinch_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 
   // Make sure we don't reset to initial scale if the viewport size changes.
   web_view_helper.Resize(WebSize(viewport_width, viewport_height + 100));
   EXPECT_EQ(user_pinch_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, DelayedViewportInitialScale) {
@@ -1375,16 +1379,16 @@ TEST_P(ParameterizedWebFrameTest, DelayedViewportInitialScale) {
       ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(0.25f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(0.25f, web_view_helper.GetWebView()->PageScaleFactor());
 
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   ViewportDescription description = document->GetViewportDescription();
   description.zoom = 2;
   document->SetViewportDescription(description);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(2, web_view_helper.WebView()->PageScaleFactor());
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(2, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, setLoadWithOverviewModeToFalse) {
@@ -1399,12 +1403,13 @@ TEST_P(ParameterizedWebFrameTest, setLoadWithOverviewModeToFalse) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-auto-initial-scale.html", nullptr, &client, nullptr,
       ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   // The page must be displayed at 100% zoom.
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1419,14 +1424,15 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "large-div.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   // The page must be displayed at 100% zoom, despite that it hosts a wide div
   // element.
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, NoWideViewportIgnoresPageViewportWidth) {
@@ -1441,18 +1447,19 @@ TEST_P(ParameterizedWebFrameTest, NoWideViewportIgnoresPageViewportWidth) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-auto-initial-scale.html", nullptr, &client, nullptr,
       ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   // The page sets viewport width to 3000, but with UseWideViewport == false is
   // must be ignored.
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->ContentsSize()
                                 .Width());
-  EXPECT_EQ(viewport_height, web_view_helper.WebView()
+  EXPECT_EQ(viewport_height, web_view_helper.GetWebView()
                                  ->MainFrameImpl()
                                  ->GetFrameView()
                                  ->ContentsSize()
@@ -1472,19 +1479,20 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-wide-2x-initial-scale.html", nullptr, &client,
       nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   // The page sets viewport width to 3000, but with UseWideViewport == false it
   // must be ignored while the initial scale specified by the page must be
   // accounted.
-  EXPECT_EQ(viewport_width / 2, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width / 2, web_view_helper.GetWebView()
                                     ->MainFrameImpl()
                                     ->GetFrameView()
                                     ->ContentsSize()
                                     .Width());
-  EXPECT_EQ(viewport_height / 2, web_view_helper.WebView()
+  EXPECT_EQ(viewport_height / 2, web_view_helper.GetWebView()
                                      ->MainFrameImpl()
                                      ->GetFrameView()
                                      ->ContentsSize()
@@ -1502,18 +1510,19 @@ TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithoutViewportTag) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "no_viewport_tag.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(980, web_view_helper.WebView()
+  EXPECT_EQ(980, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->LayoutViewportScrollableArea()
                      ->ContentsSize()
                      .Width());
   EXPECT_EQ(980.0 / viewport_width * viewport_height,
-            web_view_helper.WebView()
+            web_view_helper.GetWebView()
                 ->MainFrameImpl()
                 ->GetFrameView()
                 ->LayoutViewportScrollableArea()
@@ -1531,19 +1540,20 @@ TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithXhtmlMp) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.GetWebView()->MainFrameImpl(),
       base_url_ + "viewport/viewport-legacy-xhtmlmp.html");
 
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->ContentsSize()
                                 .Width());
-  EXPECT_EQ(viewport_height, web_view_helper.WebView()
+  EXPECT_EQ(viewport_height, web_view_helper.GetWebView()
                                  ->MainFrameImpl()
                                  ->GetFrameView()
                                  ->ContentsSize()
@@ -1562,11 +1572,12 @@ TEST_P(ParameterizedWebFrameTest, NoWideViewportAndHeightInMeta) {
   web_view_helper.InitializeAndLoad(base_url_ + "viewport-height-1000.html",
                                     nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->ContentsSize()
@@ -1585,20 +1596,22 @@ TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithAutoWidth) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-2x-initial-scale.html", nullptr, &client, nullptr,
       ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(980, web_view_helper.WebView()
+  EXPECT_EQ(980, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->ContentsSize()
                      .Width());
-  EXPECT_EQ(980.0 / viewport_width * viewport_height, web_view_helper.WebView()
-                                                          ->MainFrameImpl()
-                                                          ->GetFrameView()
-                                                          ->ContentsSize()
-                                                          .Height());
+  EXPECT_EQ(980.0 / viewport_width * viewport_height,
+            web_view_helper.GetWebView()
+                ->MainFrameImpl()
+                ->GetFrameView()
+                ->ContentsSize()
+                .Height());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1614,12 +1627,12 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-wide-2x-initial-scale.html", nullptr, &client,
       nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   // The page must be displayed at 200% zoom, as specified in its viewport meta
   // tag.
-  EXPECT_EQ(2.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(2.0f, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, setInitialPageScaleFactorPermanently) {
@@ -1632,25 +1645,26 @@ TEST_P(ParameterizedWebFrameTest, setInitialPageScaleFactorPermanently) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "fixed_layout.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(
       enforced_page_scale_factor);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(enforced_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 
   int viewport_width = 640;
   int viewport_height = 480;
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(enforced_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 
-  web_view_helper.WebView()->SetInitialPageScaleOverride(-1);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(1.0, web_view_helper.WebView()->PageScaleFactor());
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(-1);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(1.0, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1667,13 +1681,13 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-auto-initial-scale.html", nullptr, &client, nullptr,
       ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(
       enforced_page_scale_factor);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(enforced_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1690,12 +1704,12 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-wide-2x-initial-scale.html", nullptr, &client,
       nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(
       enforced_page_scale_factor);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(enforced_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1723,10 +1737,10 @@ TEST_P(ParameterizedWebFrameTest,
       FrameTestHelpers::WebViewHelper web_view_helper;
       web_view_helper.InitializeAndLoad(base_url_ + pages[i], nullptr, &client,
                                         nullptr, ConfigureAndroid);
-      web_view_helper.WebView()
+      web_view_helper.GetWebView()
           ->GetSettings()
           ->SetClobberUserAgentInitialScaleQuirk(quirk_enabled);
-      web_view_helper.WebView()->SetInitialPageScaleOverride(
+      web_view_helper.GetWebView()->SetInitialPageScaleOverride(
           enforced_page_scale_factor);
       web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -1735,7 +1749,7 @@ TEST_P(ParameterizedWebFrameTest,
               ? page_scale_factors[i]
               : enforced_page_scale_factor;
       EXPECT_EQ(expected_page_scale_factor,
-                web_view_helper.WebView()->PageScaleFactor());
+                web_view_helper.GetWebView()->PageScaleFactor());
     }
   }
 }
@@ -1751,21 +1765,22 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(false);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(false);
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(
       enforced_page_scale_factor);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(viewport_width / enforced_page_scale_factor,
-            web_view_helper.WebView()
+            web_view_helper.GetWebView()
                 ->MainFrameImpl()
                 ->GetFrameView()
                 ->ContentsSize()
                 .Width());
   EXPECT_EQ(enforced_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -1781,7 +1796,7 @@ TEST_P(ParameterizedWebFrameTest,
 
   web_view_helper.InitializeAndLoad(base_url_ + "0-by-0.html", nullptr, &client,
                                     nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   LocalFrame* frame = web_view_helper.LocalMainFrame()->GetFrame();
@@ -1803,20 +1818,20 @@ TEST_P(ParameterizedWebFrameTest,
 
   web_view_helper.InitializeAndLoad(base_url_ + "0-by-0.html", nullptr, &client,
                                     nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  PaintLayerCompositor* compositor = web_view_helper.WebView()->Compositor();
+  PaintLayerCompositor* compositor = web_view_helper.GetWebView()->Compositor();
   GraphicsLayer* scroll_container = compositor->ContainerLayer();
   if (!scroll_container)
     scroll_container = compositor->RootGraphicsLayer();
 
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Width());
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
@@ -1825,12 +1840,12 @@ TEST_P(ParameterizedWebFrameTest,
   EXPECT_EQ(0.0, scroll_container->Size().Height());
 
   web_view_helper.Resize(WebSize(viewport_width, 0));
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->GetLayoutSize()
                                 .Width());
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
@@ -1843,16 +1858,16 @@ TEST_P(ParameterizedWebFrameTest,
   // LayerCompositor). The height of the visualViewport, however, is not
   // affected.
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  EXPECT_FALSE(web_view_helper.WebView()
+  EXPECT_FALSE(web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->NeedsLayout());
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->GetLayoutSize()
                                 .Width());
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
@@ -1882,43 +1897,43 @@ TEST_P(ParameterizedWebFrameTest, SetForceZeroLayoutHeight) {
                                     &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_LE(viewport_height, web_view_helper.WebView()
+  EXPECT_LE(viewport_height, web_view_helper.GetWebView()
                                  ->MainFrameImpl()
                                  ->GetFrameView()
                                  ->GetLayoutSize()
                                  .Height());
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
-  EXPECT_TRUE(web_view_helper.WebView()
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  EXPECT_TRUE(web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->NeedsLayout());
 
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
 
   web_view_helper.Resize(WebSize(viewport_width, viewport_height * 2));
-  EXPECT_FALSE(web_view_helper.WebView()
+  EXPECT_FALSE(web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->NeedsLayout());
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
 
   web_view_helper.Resize(WebSize(viewport_width * 2, viewport_height));
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
                    .Height());
 
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(false);
-  EXPECT_LE(viewport_height, web_view_helper.WebView()
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(false);
+  EXPECT_LE(viewport_height, web_view_helper.GetWebView()
                                  ->MainFrameImpl()
                                  ->GetFrameView()
                                  ->GetLayoutSize()
@@ -1936,7 +1951,7 @@ TEST_P(ParameterizedWebFrameTest, ToggleViewportMetaOnOff) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "viewport-device-width.html",
                                     nullptr, &client);
-  WebSettings* settings = web_view_helper.WebView()->GetSettings();
+  WebSettings* settings = web_view_helper.GetWebView()->GetSettings();
   settings->SetViewportMetaEnabled(false);
   settings->SetViewportEnabled(true);
   settings->SetMainFrameResizesAreOrientationChanges(true);
@@ -1944,7 +1959,7 @@ TEST_P(ParameterizedWebFrameTest, ToggleViewportMetaOnOff) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   EXPECT_FALSE(document->GetViewportDescription().IsLegacyViewportType());
 
@@ -1979,7 +1994,7 @@ TEST_P(ParameterizedWebFrameTest,
   // (as in not hit content included in the view)
   web_view_helper.Resize(WebSize(viewport_width, 0));
 
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   IntPoint hit_point = IntPoint(30, 30);  // button size is 100x100
@@ -1998,7 +2013,7 @@ TEST_P(ParameterizedWebFrameTest,
   gesture_event.x = gesture_event.global_x = hit_point.X();
   gesture_event.y = gesture_event.global_y = hit_point.Y();
   gesture_event.source_device = kWebGestureDeviceTouchscreen;
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->GetFrame()
       ->GetEventHandler()
@@ -2081,14 +2096,14 @@ TEST_P(ParameterizedWebFrameTest,
 
   web_view_helper.InitializeAndLoad(base_url_ + "200-by-300.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "large-div.html");
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
@@ -2108,12 +2123,13 @@ TEST_P(ParameterizedWebFrameTest,
 
   web_view_helper.InitializeAndLoad(base_url_ + "200-by-300.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
-  web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetForceZeroLayoutHeight(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(0, web_view_helper.WebView()
+  EXPECT_EQ(0, web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->GetLayoutSize()
@@ -2132,22 +2148,23 @@ TEST_P(ParameterizedWebFrameTest, WideViewportAndWideContentWithInitialScale) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "wide_document_width_viewport.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   int wide_document_width = 800;
   float minimum_page_scale_factor = viewport_width / (float)wide_document_width;
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
   EXPECT_EQ(minimum_page_scale_factor,
-            web_view_helper.WebView()->MinimumPageScaleFactor());
+            web_view_helper.GetWebView()->MinimumPageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, WideViewportQuirkClobbersHeight) {
@@ -2161,22 +2178,23 @@ TEST_P(ParameterizedWebFrameTest, WideViewportQuirkClobbersHeight) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport-height-1000.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(800, web_view_helper.WebView()
+  EXPECT_EQ(800, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
                      .Height());
-  EXPECT_EQ(1, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
@@ -2190,39 +2208,40 @@ TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport/viewport-30.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(600, web_view_helper.WebView()
+  EXPECT_EQ(600, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
                      .Width());
-  EXPECT_EQ(800, web_view_helper.WebView()
+  EXPECT_EQ(800, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
                      .Height());
-  EXPECT_EQ(1, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1, web_view_helper.GetWebView()->PageScaleFactor());
 
   // The magic number to snap to device-width is 320, so test that 321 is
   // respected.
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   ViewportDescription description = document->GetViewportDescription();
   description.min_width = Length(321, blink::kFixed);
   description.max_width = Length(321, blink::kFixed);
   document->SetViewportDescription(description);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(321, web_view_helper.WebView()
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(321, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
@@ -2231,8 +2250,8 @@ TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
   description.min_width = Length(320, blink::kFixed);
   description.max_width = Length(320, blink::kFixed);
   document->SetViewportDescription(description);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(600, web_view_helper.WebView()
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(600, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
@@ -2241,8 +2260,8 @@ TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
   description = document->GetViewportDescription();
   description.max_height = Length(1000, blink::kFixed);
   document->SetViewportDescription(description);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(1000, web_view_helper.WebView()
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(1000, web_view_helper.GetWebView()
                       ->MainFrameImpl()
                       ->GetFrameView()
                       ->GetLayoutSize()
@@ -2250,8 +2269,8 @@ TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
 
   description.max_height = Length(320, blink::kFixed);
   document->SetViewportDescription(description);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(800, web_view_helper.WebView()
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(800, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->GetLayoutSize()
@@ -2268,30 +2287,31 @@ TEST_P(ParameterizedWebFrameTest, ZeroValuesQuirk) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaZeroValuesQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaZeroValuesQuirk(
       true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
       true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
+      true);
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport-zero-values.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->GetLayoutSize()
                                 .Width());
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(viewport_width, web_view_helper.WebView()
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  EXPECT_EQ(viewport_width, web_view_helper.GetWebView()
                                 ->MainFrameImpl()
                                 ->GetFrameView()
                                 ->GetLayoutSize()
                                 .Width());
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, OverflowHiddenDisablesScrolling) {
@@ -2304,7 +2324,7 @@ TEST_P(ParameterizedWebFrameTest, OverflowHiddenDisablesScrolling) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "body-overflow-hidden.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2324,7 +2344,7 @@ TEST_P(ParameterizedWebFrameTest,
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "body-overflow-hidden-short.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2347,10 +2367,10 @@ TEST_P(ParameterizedWebFrameTest, IgnoreOverflowHiddenQuirk) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetIgnoreMainFrameOverflowHiddenQuirk(true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "body-overflow-hidden.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2370,32 +2390,33 @@ TEST_P(ParameterizedWebFrameTest, NonZeroValuesNoQuirk) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaZeroValuesQuirk(
+  web_view_helper.GetWebView()->GetSettings()->SetViewportMetaZeroValuesQuirk(
       true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport-nonzero-values.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_EQ(viewport_width / expected_page_scale_factor,
-            web_view_helper.WebView()
+            web_view_helper.GetWebView()
                 ->MainFrameImpl()
                 ->GetFrameView()
                 ->GetLayoutSize()
                 .Width());
   EXPECT_EQ(expected_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   EXPECT_EQ(viewport_width / expected_page_scale_factor,
-            web_view_helper.WebView()
+            web_view_helper.GetWebView()
                 ->MainFrameImpl()
                 ->GetFrameView()
                 ->GetLayoutSize()
                 .Width());
   EXPECT_EQ(expected_page_scale_factor,
-            web_view_helper.WebView()->PageScaleFactor());
+            web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, setPageScaleFactorDoesNotLayout) {
@@ -2414,12 +2435,12 @@ TEST_P(ParameterizedWebFrameTest, setPageScaleFactorDoesNotLayout) {
 
   int prev_layout_count =
       web_view_helper.LocalMainFrame()->GetFrameView()->LayoutCount();
-  web_view_helper.WebView()->SetPageScaleFactor(3);
-  EXPECT_FALSE(web_view_helper.WebView()
+  web_view_helper.GetWebView()->SetPageScaleFactor(3);
+  EXPECT_FALSE(web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->NeedsLayout());
-  EXPECT_EQ(prev_layout_count, web_view_helper.WebView()
+  EXPECT_EQ(prev_layout_count, web_view_helper.GetWebView()
                                    ->MainFrameImpl()
                                    ->GetFrameView()
                                    ->LayoutCount());
@@ -2441,12 +2462,12 @@ TEST_P(ParameterizedWebFrameTest,
 
   int prev_layout_count =
       web_view_helper.LocalMainFrame()->GetFrameView()->LayoutCount();
-  web_view_helper.WebView()->SetPageScaleFactor(30);
-  EXPECT_FALSE(web_view_helper.WebView()
+  web_view_helper.GetWebView()->SetPageScaleFactor(30);
+  EXPECT_FALSE(web_view_helper.GetWebView()
                    ->MainFrameImpl()
                    ->GetFrameView()
                    ->NeedsLayout());
-  EXPECT_EQ(prev_layout_count, web_view_helper.WebView()
+  EXPECT_EQ(prev_layout_count, web_view_helper.GetWebView()
                                    ->MainFrameImpl()
                                    ->GetFrameView()
                                    ->LayoutCount());
@@ -2465,13 +2486,14 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorWrittenToHistoryItem) {
                                     &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  web_view_helper.WebView()->SetPageScaleFactor(3);
-  EXPECT_EQ(3, ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
-                   ->Loader()
-                   .GetDocumentLoader()
-                   ->GetHistoryItem()
-                   ->GetViewState()
-                   ->page_scale_factor_);
+  web_view_helper.GetWebView()->SetPageScaleFactor(3);
+  EXPECT_EQ(3,
+            ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
+                ->Loader()
+                .GetDocumentLoader()
+                ->GetHistoryItem()
+                ->GetViewState()
+                ->page_scale_factor_);
 }
 
 TEST_P(ParameterizedWebFrameTest, initialScaleWrittenToHistoryItem) {
@@ -2484,8 +2506,8 @@ TEST_P(ParameterizedWebFrameTest, initialScaleWrittenToHistoryItem) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "fixed_layout.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2493,7 +2515,7 @@ TEST_P(ParameterizedWebFrameTest, initialScaleWrittenToHistoryItem) {
   float minimum_page_scale_factor =
       viewport_width / (float)default_fixed_layout_width;
   EXPECT_EQ(minimum_page_scale_factor,
-            ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+            ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
                 ->Loader()
                 .GetDocumentLoader()
                 ->GetHistoryItem()
@@ -2527,7 +2549,7 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorDoesntShrinkFrameView) {
       !view->HorizontalScrollbar()->IsOverlayScrollbar())
     viewport_height_minus_scrollbar -= 15;
 
-  web_view_helper.WebView()->SetPageScaleFactor(2);
+  web_view_helper.GetWebView()->SetPageScaleFactor(2);
 
   IntSize unscaled_size = view->VisibleContentSize(kIncludeScrollbars);
   EXPECT_EQ(viewport_width, unscaled_size.Width());
@@ -2558,13 +2580,14 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorDoesNotApplyCssTransform) {
                                     &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  web_view_helper.WebView()->SetPageScaleFactor(2);
+  web_view_helper.GetWebView()->SetPageScaleFactor(2);
 
-  EXPECT_EQ(980, ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
-                     ->ContentLayoutItem()
-                     .DocumentRect()
-                     .Width());
-  EXPECT_EQ(980, web_view_helper.WebView()
+  EXPECT_EQ(980,
+            ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
+                ->ContentLayoutItem()
+                .DocumentRect()
+                .Width());
+  EXPECT_EQ(980, web_view_helper.GetWebView()
                      ->MainFrameImpl()
                      ->GetFrameView()
                      ->LayoutViewportScrollableArea()
@@ -2591,8 +2614,9 @@ TEST_P(ParameterizedWebFrameTest, targetDensityDpiHigh) {
     web_view_helper.InitializeAndLoad(
         base_url_ + "viewport-target-densitydpi-high.html", nullptr, &client,
         nullptr, ConfigureAndroid);
-    web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-    web_view_helper.WebView()
+    web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+        true);
+    web_view_helper.GetWebView()
         ->GetSettings()
         ->SetSupportDeprecatedTargetDensityDPI(true);
     web_view_helper.Resize(WebSize(viewport_width, viewport_height));
@@ -2602,21 +2626,21 @@ TEST_P(ParameterizedWebFrameTest, targetDensityDpiHigh) {
     float density_dpi_scale_ratio =
         device_scale_factor * target_dpi / device_dpi;
     EXPECT_NEAR(viewport_width * density_dpi_scale_ratio,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Width(),
                 1.0f);
     EXPECT_NEAR(viewport_height * density_dpi_scale_ratio,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Height(),
                 1.0f);
     EXPECT_NEAR(1.0f / density_dpi_scale_ratio,
-                web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+                web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
   }
 }
 
@@ -2636,28 +2660,29 @@ TEST_P(ParameterizedWebFrameTest, targetDensityDpiDevice) {
     web_view_helper.InitializeAndLoad(
         base_url_ + "viewport-target-densitydpi-device.html", nullptr, &client,
         nullptr, ConfigureAndroid);
-    web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-    web_view_helper.WebView()
+    web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+        true);
+    web_view_helper.GetWebView()
         ->GetSettings()
         ->SetSupportDeprecatedTargetDensityDPI(true);
     web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
     EXPECT_NEAR(viewport_width * client.screen_info_.device_scale_factor,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Width(),
                 1.0f);
     EXPECT_NEAR(viewport_height * client.screen_info_.device_scale_factor,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Height(),
                 1.0f);
     EXPECT_NEAR(1.0f / client.screen_info_.device_scale_factor,
-                web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+                web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
   }
 }
 
@@ -2678,28 +2703,29 @@ TEST_P(ParameterizedWebFrameTest, targetDensityDpiDeviceAndFixedWidth) {
     web_view_helper.InitializeAndLoad(
         base_url_ + "viewport-target-densitydpi-device-and-fixed-width.html",
         nullptr, &client, nullptr, ConfigureAndroid);
-    web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-    web_view_helper.WebView()
+    web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+        true);
+    web_view_helper.GetWebView()
         ->GetSettings()
         ->SetSupportDeprecatedTargetDensityDPI(true);
-    web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+    web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
     web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
     EXPECT_NEAR(viewport_width,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Width(),
                 1.0f);
     EXPECT_NEAR(viewport_height,
-                web_view_helper.WebView()
+                web_view_helper.GetWebView()
                     ->MainFrameImpl()
                     ->GetFrameView()
                     ->GetLayoutSize()
                     .Height(),
                 1.0f);
-    EXPECT_NEAR(1.0f, web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+    EXPECT_NEAR(1.0f, web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
   }
 }
 
@@ -2715,29 +2741,30 @@ TEST_P(ParameterizedWebFrameTest, NoWideViewportAndScaleLessThanOne) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-initial-scale-less-than-1.html", nullptr, &client,
       nullptr, ConfigureAndroid);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetSupportDeprecatedTargetDensityDPI(true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_NEAR(viewport_width * client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Width(),
               1.0f);
   EXPECT_NEAR(viewport_height * client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Height(),
               1.0f);
   EXPECT_NEAR(1.0f / client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+              web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -2754,17 +2781,18 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-initial-scale-less-than-1-device-width.html",
       nullptr, &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetSupportDeprecatedTargetDensityDPI(true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   const float kPageZoom = 0.25f;
   EXPECT_NEAR(
       viewport_width * client.screen_info_.device_scale_factor / kPageZoom,
-      web_view_helper.WebView()
+      web_view_helper.GetWebView()
           ->MainFrameImpl()
           ->GetFrameView()
           ->GetLayoutSize()
@@ -2772,14 +2800,14 @@ TEST_P(ParameterizedWebFrameTest,
       1.0f);
   EXPECT_NEAR(
       viewport_height * client.screen_info_.device_scale_factor / kPageZoom,
-      web_view_helper.WebView()
+      web_view_helper.GetWebView()
           ->MainFrameImpl()
           ->GetFrameView()
           ->GetLayoutSize()
           .Height(),
       1.0f);
   EXPECT_NEAR(1.0f / client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+              web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -2794,29 +2822,30 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "large-div.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(
       enforced_page_scale_factor);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_NEAR(viewport_width / enforced_page_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Width(),
               1.0f);
   EXPECT_NEAR(viewport_height / enforced_page_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Height(),
               1.0f);
   EXPECT_NEAR(enforced_page_scale_factor,
-              web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+              web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest, NoUserScalableQuirkIgnoresViewportScale) {
@@ -2830,25 +2859,26 @@ TEST_P(ParameterizedWebFrameTest, NoUserScalableQuirkIgnoresViewportScale) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-initial-scale-and-user-scalable-no.html", nullptr,
       &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaNonUserScalableQuirk(
-      true);
+  web_view_helper.GetWebView()
+      ->GetSettings()
+      ->SetViewportMetaNonUserScalableQuirk(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_NEAR(viewport_width,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Width(),
               1.0f);
   EXPECT_NEAR(viewport_height,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Height(),
               1.0f);
-  EXPECT_NEAR(1.0f, web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+  EXPECT_NEAR(1.0f, web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -2864,31 +2894,33 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-initial-scale-and-user-scalable-no.html", nullptr,
       &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetSupportDeprecatedTargetDensityDPI(true);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaNonUserScalableQuirk(
+  web_view_helper.GetWebView()
+      ->GetSettings()
+      ->SetViewportMetaNonUserScalableQuirk(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
       true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_NEAR(viewport_width * client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Width(),
               1.0f);
   EXPECT_NEAR(viewport_height * client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Height(),
               1.0f);
   EXPECT_NEAR(1.0f / client.screen_info_.device_scale_factor,
-              web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+              web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -2903,27 +2935,29 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.InitializeAndLoad(
       base_url_ + "viewport-2x-initial-scale-non-user-scalable.html", nullptr,
       &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->GetSettings()->SetViewportMetaNonUserScalableQuirk(
+  web_view_helper.GetWebView()
+      ->GetSettings()
+      ->SetViewportMetaNonUserScalableQuirk(true);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
       true);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   EXPECT_NEAR(viewport_width,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Width(),
               1.0f);
   EXPECT_NEAR(viewport_height,
-              web_view_helper.WebView()
+              web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetFrameView()
                   ->GetLayoutSize()
                   .Height(),
               1.0f);
-  EXPECT_NEAR(1.0f, web_view_helper.WebView()->PageScaleFactor(), 0.01f);
+  EXPECT_NEAR(1.0f, web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -2937,14 +2971,17 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "no_viewport_tag.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(false);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_NEAR(1.0f, web_view_helper.WebView()->PageScaleFactor(), 0.01f);
-  EXPECT_NEAR(1.0f, web_view_helper.WebView()->MinimumPageScaleFactor(), 0.01f);
-  EXPECT_NEAR(5.0f, web_view_helper.WebView()->MaximumPageScaleFactor(), 0.01f);
+  EXPECT_NEAR(1.0f, web_view_helper.GetWebView()->PageScaleFactor(), 0.01f);
+  EXPECT_NEAR(1.0f, web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+              0.01f);
+  EXPECT_NEAR(5.0f, web_view_helper.GetWebView()->MaximumPageScaleFactor(),
+              0.01f);
 }
 
 TEST_P(ParameterizedWebFrameTest, AtViewportInsideAtMediaInitialViewport) {
@@ -2957,7 +2994,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportInsideAtMediaInitialViewport) {
                                     ConfigureAndroid);
   web_view_helper.Resize(WebSize(640, 480));
 
-  EXPECT_EQ(2000, web_view_helper.WebView()
+  EXPECT_EQ(2000, web_view_helper.GetWebView()
                       ->MainFrameImpl()
                       ->GetFrameView()
                       ->GetLayoutSize()
@@ -2965,7 +3002,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportInsideAtMediaInitialViewport) {
 
   web_view_helper.Resize(WebSize(1200, 480));
 
-  EXPECT_EQ(1200, web_view_helper.WebView()
+  EXPECT_EQ(1200, web_view_helper.GetWebView()
                       ->MainFrameImpl()
                       ->GetFrameView()
                       ->GetLayoutSize()
@@ -2979,12 +3016,12 @@ TEST_P(ParameterizedWebFrameTest, AtViewportAffectingAtMediaRecalcCount) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(640, 480));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport-and-media.html");
 
   Document* document =
       web_view_helper.LocalMainFrame()->GetFrame()->GetDocument();
-  EXPECT_EQ(2000, web_view_helper.WebView()
+  EXPECT_EQ(2000, web_view_helper.GetWebView()
                       ->MainFrameImpl()
                       ->GetFrameView()
                       ->GetLayoutSize()
@@ -3005,7 +3042,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportWithViewportLengths) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(800, 600));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "viewport-lengths.html");
 
   LocalFrameView* view = web_view_helper.LocalMainFrame()->GetFrameView();
@@ -3042,23 +3079,24 @@ class WebFrameResizeTest : public ParameterizedWebFrameTest {
     FrameTestHelpers::WebViewHelper web_view_helper;
     web_view_helper.InitializeAndLoad(base_url_ + url, nullptr, nullptr,
                                       nullptr, ConfigureAndroid);
-    web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
+    web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
 
     // Origin scrollOffsets preserved under resize.
     {
       web_view_helper.Resize(
           WebSize(viewport_size.width, viewport_size.height));
-      web_view_helper.WebView()->SetPageScaleFactor(initial_page_scale_factor);
-      ASSERT_EQ(viewport_size, web_view_helper.WebView()->Size());
+      web_view_helper.GetWebView()->SetPageScaleFactor(
+          initial_page_scale_factor);
+      ASSERT_EQ(viewport_size, web_view_helper.GetWebView()->Size());
       ASSERT_EQ(initial_page_scale_factor,
-                web_view_helper.WebView()->PageScaleFactor());
+                web_view_helper.GetWebView()->PageScaleFactor());
       web_view_helper.Resize(
           WebSize(viewport_size.height, viewport_size.width));
       float expected_page_scale_factor =
           initial_page_scale_factor *
           (should_scale_relative_to_viewport_width ? 1 / aspect_ratio : 1);
       EXPECT_NEAR(expected_page_scale_factor,
-                  web_view_helper.WebView()->PageScaleFactor(), 0.05f);
+                  web_view_helper.GetWebView()->PageScaleFactor(), 0.05f);
       EXPECT_EQ(WebSize(), web_view_helper.LocalMainFrame()->GetScrollOffset());
     }
 
@@ -3067,21 +3105,22 @@ class WebFrameResizeTest : public ParameterizedWebFrameTest {
     {
       web_view_helper.Resize(
           WebSize(viewport_size.width, viewport_size.height));
-      web_view_helper.WebView()->SetPageScaleFactor(initial_page_scale_factor);
+      web_view_helper.GetWebView()->SetPageScaleFactor(
+          initial_page_scale_factor);
       web_view_helper.LocalMainFrame()->SetScrollOffset(scroll_offset);
-      web_view_helper.WebView()->UpdateAllLifecyclePhases();
+      web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
       const WebSize expected_scroll_offset =
           web_view_helper.LocalMainFrame()->GetScrollOffset();
       web_view_helper.Resize(
           WebSize(viewport_size.width, viewport_size.height * 0.8f));
       EXPECT_EQ(initial_page_scale_factor,
-                web_view_helper.WebView()->PageScaleFactor());
+                web_view_helper.GetWebView()->PageScaleFactor());
       EXPECT_EQ(expected_scroll_offset,
                 web_view_helper.LocalMainFrame()->GetScrollOffset());
       web_view_helper.Resize(
           WebSize(viewport_size.width, viewport_size.height * 0.8f));
       EXPECT_EQ(initial_page_scale_factor,
-                web_view_helper.WebView()->PageScaleFactor());
+                web_view_helper.GetWebView()->PageScaleFactor());
       EXPECT_EQ(expected_scroll_offset,
                 web_view_helper.LocalMainFrame()->GetScrollOffset());
     }
@@ -3171,7 +3210,7 @@ TEST_P(ParameterizedWebFrameTest, pageScaleFactorUpdatesScrollbars) {
             scrollable_area->ContentsSize().Height() -
                 view->VisibleContentRect().Height());
 
-  web_view_helper.WebView()->SetPageScaleFactor(10);
+  web_view_helper.GetWebView()->SetPageScaleFactor(10);
 
   EXPECT_EQ(scrollable_area->ScrollSize(kHorizontalScrollbar),
             scrollable_area->ContentsSize().Width() -
@@ -3193,23 +3232,23 @@ TEST_P(ParameterizedWebFrameTest, CanOverrideScaleLimits) {
   web_view_helper.InitializeAndLoad(base_url_ + "no_scale_for_you.html",
                                     nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 5);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  EXPECT_EQ(2.0f, web_view_helper.WebView()->MinimumPageScaleFactor());
-  EXPECT_EQ(2.0f, web_view_helper.WebView()->MaximumPageScaleFactor());
+  EXPECT_EQ(2.0f, web_view_helper.GetWebView()->MinimumPageScaleFactor());
+  EXPECT_EQ(2.0f, web_view_helper.GetWebView()->MaximumPageScaleFactor());
 
-  web_view_helper.WebView()->SetIgnoreViewportTagScaleLimits(true);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetIgnoreViewportTagScaleLimits(true);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->MinimumPageScaleFactor());
-  EXPECT_EQ(5.0f, web_view_helper.WebView()->MaximumPageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->MinimumPageScaleFactor());
+  EXPECT_EQ(5.0f, web_view_helper.GetWebView()->MaximumPageScaleFactor());
 
-  web_view_helper.WebView()->SetIgnoreViewportTagScaleLimits(false);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetIgnoreViewportTagScaleLimits(false);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(2.0f, web_view_helper.WebView()->MinimumPageScaleFactor());
-  EXPECT_EQ(2.0f, web_view_helper.WebView()->MaximumPageScaleFactor());
+  EXPECT_EQ(2.0f, web_view_helper.GetWebView()->MinimumPageScaleFactor());
+  EXPECT_EQ(2.0f, web_view_helper.GetWebView()->MaximumPageScaleFactor());
 }
 
 // Android doesn't have scrollbars on the main LocalFrameView
@@ -3232,10 +3271,10 @@ TEST_P(ParameterizedWebFrameTest, updateOverlayScrollbarLayers)
                              nullptr, &ConfigureCompositingWebView);
 
   web_view_helper.Resize(WebSize(view_width, view_height));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "large-div.html");
 
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   LocalFrameView* view = web_view_helper.LocalMainFrame()->GetFrameView();
   EXPECT_TRUE(
       view->LayoutViewportScrollableArea()->LayerForHorizontalScrollbar());
@@ -3296,9 +3335,9 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomParamsTest) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "get_scale_for_auto_zoom_into_div_test.html", nullptr,
       nullptr, nullptr, ConfigureAndroid);
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.01f, 4);
-  web_view_helper.WebView()->SetPageScaleFactor(0.5f);
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.01f, 4);
+  web_view_helper.GetWebView()->SetPageScaleFactor(0.5f);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   WebRect wide_div(200, 100, 400, 150);
@@ -3309,13 +3348,13 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomParamsTest) {
   WebPoint scroll;
 
   float double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
 
   // Test double-tap zooming into wide div.
-  WebRect wide_block_bound = web_view_helper.WebView()->ComputeBlockBound(
+  WebRect wide_block_bound = web_view_helper.GetWebView()->ComputeBlockBound(
       double_tap_point_wide, false);
-  web_view_helper.WebView()->ComputeScaleAndScrollForBlockRect(
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForBlockRect(
       WebPoint(double_tap_point_wide.x, double_tap_point_wide.y),
       wide_block_bound, kTouchPointPadding,
       double_tap_zoom_already_legible_scale, scale, scroll);
@@ -3325,24 +3364,25 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomParamsTest) {
   EXPECT_NEAR(wide_div.x, scroll.x, 20);
   EXPECT_EQ(0, scroll.y);
 
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), scroll, scale);
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), scroll, scale);
 
   // Test zoom out back to minimum scale.
-  wide_block_bound = web_view_helper.WebView()->ComputeBlockBound(
+  wide_block_bound = web_view_helper.GetWebView()->ComputeBlockBound(
       double_tap_point_wide, false);
-  web_view_helper.WebView()->ComputeScaleAndScrollForBlockRect(
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForBlockRect(
       WebPoint(double_tap_point_wide.x, double_tap_point_wide.y),
       wide_block_bound, kTouchPointPadding,
       double_tap_zoom_already_legible_scale, scale, scroll);
   // FIXME: Looks like we are missing EXPECTs here.
 
-  scale = web_view_helper.WebView()->MinimumPageScaleFactor();
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0), scale);
+  scale = web_view_helper.GetWebView()->MinimumPageScaleFactor();
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
+                             scale);
 
   // Test double-tap zooming into tall div.
-  WebRect tall_block_bound = web_view_helper.WebView()->ComputeBlockBound(
+  WebRect tall_block_bound = web_view_helper.GetWebView()->ComputeBlockBound(
       double_tap_point_tall, false);
-  web_view_helper.WebView()->ComputeScaleAndScrollForBlockRect(
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForBlockRect(
       WebPoint(double_tap_point_tall.x, double_tap_point_tall.y),
       tall_block_bound, kTouchPointPadding,
       double_tap_zoom_already_legible_scale, scale, scroll);
@@ -3364,28 +3404,29 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomWideDivTest) {
       base_url_ + "get_wide_div_for_auto_zoom_test.html", nullptr, nullptr,
       nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetPageScaleFactor(1.0f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
+  web_view_helper.GetWebView()->SetPageScaleFactor(1.0f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   float double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
 
   WebRect div(0, 100, viewport_width, 150);
   WebPoint point(div.x + 50, div.y + 50);
   float scale;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
 
-  SimulateDoubleTap(web_view_helper.WebView(), point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
 }
 
 TEST_P(ParameterizedWebFrameTest, DivAutoZoomVeryTallTest) {
@@ -3401,9 +3442,9 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomVeryTallTest) {
   web_view_helper.InitializeAndLoad(base_url_ + "very_tall_div.html", nullptr,
                                     nullptr, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetPageScaleFactor(1.0f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
+  web_view_helper.GetWebView()->SetPageScaleFactor(1.0f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   WebRect div(200, 300, 400, 5000);
   WebPoint point(div.x + 50, div.y + 3000);
@@ -3411,8 +3452,8 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomVeryTallTest) {
   WebPoint scroll;
 
   WebRect block_bound =
-      web_view_helper.WebView()->ComputeBlockBound(point, true);
-  web_view_helper.WebView()->ComputeScaleAndScrollForBlockRect(
+      web_view_helper.GetWebView()->ComputeBlockBound(point, true);
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForBlockRect(
       point, block_bound, 0, 1.0f, scale, scroll);
   EXPECT_EQ(scale, 1.0f);
   EXPECT_EQ(scroll.y, 2660);
@@ -3430,13 +3471,13 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomMultipleDivsTest) {
       base_url_ + "get_multiple_divs_for_auto_zoom_test.html", nullptr, nullptr,
       nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetPageScaleFactor(0.5f);
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.5f, 4);
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
+  web_view_helper.GetWebView()->SetPageScaleFactor(0.5f);
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(1.f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   WebRect top_div(200, 100, 200, 150);
   WebRect bottom_div(200, 300, 200, 150);
@@ -3444,37 +3485,40 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomMultipleDivsTest) {
   WebPoint bottom_point(bottom_div.x + 50, bottom_div.y + 50);
   float scale;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
 
   // Test double tap on two different divs.  After first zoom, we should go back
   // to minimum page scale with a second double tap.
-  SimulateDoubleTap(web_view_helper.WebView(), top_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), top_point, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), bottom_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), bottom_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
 
   // If the user pinch zooms after double tap, a second double tap should zoom
   // back to the div.
-  SimulateDoubleTap(web_view_helper.WebView(), top_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), top_point, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 0.6f, 0);
-  SimulateDoubleTap(web_view_helper.WebView(), bottom_point, scale);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 0.6f, 0);
+  SimulateDoubleTap(web_view_helper.GetWebView(), bottom_point, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), bottom_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), bottom_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
 
   // If we didn't yet get an auto-zoom update and a second double-tap arrives,
   // should go back to minimum scale.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
-  web_view_helper.WebView()->AnimateDoubleTapZoom(top_point);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->AnimateDoubleTapZoom(top_point);
   EXPECT_TRUE(
-      web_view_helper.WebView()->FakeDoubleTapAnimationPendingForTesting());
-  SimulateDoubleTap(web_view_helper.WebView(), bottom_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
+      web_view_helper.GetWebView()->FakeDoubleTapAnimationPendingForTesting());
+  SimulateDoubleTap(web_view_helper.GetWebView(), bottom_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
 }
 
 TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleBoundsTest) {
@@ -3488,11 +3532,11 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleBoundsTest) {
       base_url_ + "get_scale_bounds_check_for_auto_zoom_test.html", nullptr,
       nullptr, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDeviceScaleFactor(1.5f);
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(1.5f);
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(1.f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   WebRect div(200, 100, 200, 150);
   WebPoint double_tap_point(div.x + 50, div.y + 50);
@@ -3500,60 +3544,63 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleBoundsTest) {
 
   // Test double tap scale bounds.
   // minimumPageScale < doubleTapZoomAlreadyLegibleScale < 1
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.5f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   float double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(1, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // 1 < minimumPageScale < doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(1.1f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(1.1f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // minimumPageScale < 1 < doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.95f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.95f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 }
 
@@ -3569,13 +3616,15 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleLegibleScaleTest) {
       base_url_ + "get_scale_bounds_check_for_auto_zoom_test.html", nullptr,
       nullptr, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetMaximumLegibleScale(
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(
       maximum_legible_scale_factor);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(true);
 
   WebRect div(200, 100, 200, 150);
   WebPoint double_tap_point(div.x + 50, div.y + 50);
@@ -3586,82 +3635,86 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleLegibleScaleTest) {
   //     maximumLegibleScaleFactor
   float legible_scale = maximum_legible_scale_factor;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
   float double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.5f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // 1 < maximumLegibleScaleFactor < minimumPageScale <
   //     doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(1.0f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(1.0f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // minimumPageScale < 1 < maximumLegibleScaleFactor <
   //     doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.95f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.95f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // minimumPageScale < 1 < doubleTapZoomAlreadyLegibleScale <
   //     maximumLegibleScaleFactor
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.9f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.9f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
 }
 
@@ -3677,13 +3730,15 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleFontScaleFactorTest) {
       base_url_ + "get_scale_bounds_check_for_auto_zoom_test.html", nullptr,
       nullptr, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(1.f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      true);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(true);
+  web_view_helper.GetWebView()
       ->GetPage()
       ->GetSettings()
       .SetAccessibilityFontScaleFactor(accessibility_font_scale_factor);
@@ -3697,82 +3752,86 @@ TEST_P(ParameterizedWebFrameTest, DivAutoZoomScaleFontScaleFactorTest) {
   //     accessibilityFontScaleFactor
   float legible_scale = accessibility_font_scale_factor;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
   float double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.5f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // 1 < accessibilityFontScaleFactor < minimumPageScale <
   //     doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(1.0f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(1.0f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // minimumPageScale < 1 < accessibilityFontScaleFactor <
   //     doubleTapZoomAlreadyLegibleScale
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.95f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.95f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(double_tap_zoom_already_legible_scale, scale);
 
   // Zoom in to reset double_tap_zoom_in_effect flag.
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.1f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.1f, 0);
   // minimumPageScale < 1 < doubleTapZoomAlreadyLegibleScale <
   //     accessibilityFontScaleFactor
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.9f, 4);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.9f, 4);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   double_tap_zoom_already_legible_scale =
-      web_view_helper.WebView()->MinimumPageScaleFactor() *
+      web_view_helper.GetWebView()->MinimumPageScaleFactor() *
       double_tap_zoom_already_legible_ratio;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
-  EXPECT_FLOAT_EQ(web_view_helper.WebView()->MinimumPageScaleFactor(), scale);
-  SimulateDoubleTap(web_view_helper.WebView(), double_tap_point, scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
+  EXPECT_FLOAT_EQ(web_view_helper.GetWebView()->MinimumPageScaleFactor(),
+                  scale);
+  SimulateDoubleTap(web_view_helper.GetWebView(), double_tap_point, scale);
   EXPECT_FLOAT_EQ(legible_scale, scale);
 }
 
@@ -3790,31 +3849,31 @@ TEST_P(ParameterizedWebFrameTest, BlockBoundTest) {
   IntRect block_bound;
 
   block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(9, 9), true));
+      web_view_helper.GetWebView()->ComputeBlockBound(WebPoint(9, 9), true));
   EXPECT_EQ(rect_back, block_bound);
 
   block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(10, 10), true));
+      web_view_helper.GetWebView()->ComputeBlockBound(WebPoint(10, 10), true));
   EXPECT_EQ(rect_left_top, block_bound);
 
   block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(50, 50), true));
+      web_view_helper.GetWebView()->ComputeBlockBound(WebPoint(50, 50), true));
   EXPECT_EQ(rect_left_top, block_bound);
 
   block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(89, 89), true));
+      web_view_helper.GetWebView()->ComputeBlockBound(WebPoint(89, 89), true));
   EXPECT_EQ(rect_left_top, block_bound);
 
   block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(90, 90), true));
+      web_view_helper.GetWebView()->ComputeBlockBound(WebPoint(90, 90), true));
   EXPECT_EQ(rect_back, block_bound);
 
-  block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(109, 109), true));
+  block_bound = IntRect(web_view_helper.GetWebView()->ComputeBlockBound(
+      WebPoint(109, 109), true));
   EXPECT_EQ(rect_back, block_bound);
 
-  block_bound = IntRect(
-      web_view_helper.WebView()->ComputeBlockBound(WebPoint(110, 110), true));
+  block_bound = IntRect(web_view_helper.GetWebView()->ComputeBlockBound(
+      WebPoint(110, 110), true));
   EXPECT_EQ(rect_right_bottom, block_bound);
 }
 
@@ -3829,32 +3888,32 @@ TEST_P(ParameterizedWebFrameTest, DivMultipleTargetZoomMultipleDivsTest) {
   web_view_helper.InitializeAndLoad(
       base_url_ + "get_multiple_divs_for_auto_zoom_test.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetPageScaleFactor(0.5f);
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.5f, 4);
+  web_view_helper.GetWebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
+  web_view_helper.GetWebView()->SetPageScaleFactor(0.5f);
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(1.f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   WebRect viewport_rect(0, 0, viewport_width, viewport_height);
   WebRect top_div(200, 100, 200, 150);
   WebRect bottom_div(200, 300, 200, 150);
   float scale;
   SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
+      web_view_helper.GetWebView(), WebPoint(0, 0),
+      (web_view_helper.GetWebView()->MinimumPageScaleFactor()) *
           (1 + double_tap_zoom_already_legible_ratio) / 2);
 
-  SimulateMultiTargetZoom(web_view_helper.WebView(), top_div, scale);
+  SimulateMultiTargetZoom(web_view_helper.GetWebView(), top_div, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  SimulateMultiTargetZoom(web_view_helper.WebView(), bottom_div, scale);
+  SimulateMultiTargetZoom(web_view_helper.GetWebView(), bottom_div, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  SimulateMultiTargetZoom(web_view_helper.WebView(), viewport_rect, scale);
+  SimulateMultiTargetZoom(web_view_helper.GetWebView(), viewport_rect, scale);
   EXPECT_FLOAT_EQ(1, scale);
-  web_view_helper.WebView()->SetPageScaleFactor(
-      web_view_helper.WebView()->MinimumPageScaleFactor());
-  SimulateMultiTargetZoom(web_view_helper.WebView(), top_div, scale);
+  web_view_helper.GetWebView()->SetPageScaleFactor(
+      web_view_helper.GetWebView()->MinimumPageScaleFactor());
+  SimulateMultiTargetZoom(web_view_helper.GetWebView(), top_div, scale);
   EXPECT_FLOAT_EQ(1, scale);
 }
 
@@ -3866,48 +3925,50 @@ TEST_P(ParameterizedWebFrameTest, DontZoomInOnFocusedInTouchAction) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "textbox_in_touch_action.html");
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 4);
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      false);
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 4);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(false);
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetAutoZoomFocusedNodeToLegibleScale(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  float initial_scale = web_view_helper.WebView()->PageScaleFactor();
+  float initial_scale = web_view_helper.GetWebView()->PageScaleFactor();
 
   // Focus the first textbox that's in a touch-action: pan-x ancestor, this
   // shouldn't cause an autozoom since pan-x disables pinch-zoom.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_EQ(
-      web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
+      web_view_helper.GetWebView()->FakePageScaleAnimationPageScaleForTesting(),
       0);
 
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
-  ASSERT_EQ(initial_scale, web_view_helper.WebView()->PageScaleFactor());
+  ASSERT_EQ(initial_scale, web_view_helper.GetWebView()->PageScaleFactor());
 
   // Focus the second textbox that's in a touch-action: manipulation ancestor,
   // this should cause an autozoom since it allows pinch-zoom.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_GT(
-      web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
+      web_view_helper.GetWebView()->FakePageScaleAnimationPageScaleForTesting(),
       initial_scale);
 
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
-  ASSERT_EQ(initial_scale, web_view_helper.WebView()->PageScaleFactor());
+  ASSERT_EQ(initial_scale, web_view_helper.GetWebView()->PageScaleFactor());
 
   // Focus the third textbox that has a touch-action: pan-x ancestor, this
   // should cause an autozoom since it's seperated from the node with the
   // touch-action by an overflow:scroll element.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ScrollFocusedEditableElementIntoView();
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->ScrollFocusedEditableElementIntoView();
   EXPECT_GT(
-      web_view_helper.WebView()->FakePageScaleAnimationPageScaleForTesting(),
+      web_view_helper.GetWebView()->FakePageScaleAnimationPageScaleForTesting(),
       initial_scale);
 }
 
@@ -3923,40 +3984,42 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditableTest) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "get_scale_for_zoom_into_editable_test.html");
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      false);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 4);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 4);
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   WebRect edit_box_with_text(200, 200, 250, 20);
   WebRect edit_box_with_no_text(200, 250, 250, 20);
 
   // Test scrolling the focused node
   // The edit box is shorter and narrower than the viewport when legible.
-  web_view_helper.WebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->AdvanceFocus(false);
   // Set the caret to the end of the input box.
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->GetDocument()
       .GetElementById("EditBoxWithText")
       .To<WebInputElement>()
       .SetSelectionRange(1000, 1000);
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0), 1);
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0), 1);
   WebRect rect, caret;
-  web_view_helper.WebView()->SelectionBounds(caret, rect);
+  web_view_helper.GetWebView()->SelectionBounds(caret, rect);
 
   // Set the page scale to be smaller than the minimal readable scale.
   float initial_scale = min_readable_caret_height / caret.height * 0.5f;
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
 
   float scale;
   IntPoint scroll;
   bool need_animation;
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   EXPECT_TRUE(need_animation);
   // The edit box should be left aligned with a margin for possible label.
@@ -3971,10 +4034,10 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditableTest) {
   viewport_width = 200;
   viewport_height = 150;
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   EXPECT_TRUE(need_animation);
   // The caret should be right aligned since the caret would be offscreen when
@@ -3983,12 +4046,12 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditableTest) {
   EXPECT_NEAR(h_scroll, scroll.X(), 2);
   EXPECT_NEAR(min_readable_caret_height / caret.height, scale, 0.1);
 
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
   // Move focus to edit box with text.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   EXPECT_TRUE(need_animation);
   // The edit box should be left aligned.
@@ -4000,15 +4063,15 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditableTest) {
   EXPECT_NEAR(min_readable_caret_height / caret.height, scale, 0.1);
 
   // Move focus back to the first edit box.
-  web_view_helper.WebView()->AdvanceFocus(true);
+  web_view_helper.GetWebView()->AdvanceFocus(true);
   // Zoom out slightly.
   const float within_tolerance_scale = scale * 0.9f;
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), scroll,
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), scroll,
                              within_tolerance_scale);
   // Move focus back to the second edit box.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   // The scale should not be adjusted as the zoomed out scale was sufficiently
   // close to the previously focused scale.
@@ -4025,35 +4088,37 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditablePreservePageScaleTest) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "get_scale_for_zoom_into_editable_test.html");
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      false);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(false);
   web_view_helper.Resize(WebSize(kViewportWidth, kViewportHeight));
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   const WebRect edit_box_with_text(200, 200, 250, 20);
 
-  web_view_helper.WebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->AdvanceFocus(false);
   // Set the caret to the begining of the input box.
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->MainFrameImpl()
       ->GetDocument()
       .GetElementById("EditBoxWithText")
       .To<WebInputElement>()
       .SetSelectionRange(0, 0);
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0), 1);
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0), 1);
   WebRect rect, caret;
-  web_view_helper.WebView()->SelectionBounds(caret, rect);
+  web_view_helper.GetWebView()->SelectionBounds(caret, rect);
 
   // Set the page scale to be twice as large as the minimal readable scale.
   float new_scale = kMinReadableCaretHeight / caret.height * 2.0;
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              new_scale);
 
   float scale;
   IntPoint scroll;
   bool need_animation;
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   EXPECT_TRUE(need_animation);
   // Edit box and caret should be left alinged
@@ -4068,10 +4133,10 @@ TEST_P(ParameterizedWebFrameTest, DivScrollIntoEditablePreservePageScaleTest) {
   // Set page scale and scroll such that edit box will be under the screen
   new_scale = 3.0;
   h_scroll = 200;
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(h_scroll, 0),
-                             new_scale);
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(),
+                             WebPoint(h_scroll, 0), new_scale);
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
   EXPECT_TRUE(need_animation);
   // Horizontal scroll have to be the same
@@ -4097,12 +4162,14 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(
       base_url_ + "get_scale_for_zoom_into_editable_test.html");
-  web_view_helper.WebView()->GetPage()->GetSettings().SetTextAutosizingEnabled(
-      false);
+  web_view_helper.GetWebView()
+      ->GetPage()
+      ->GetSettings()
+      .SetTextAutosizingEnabled(false);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 4);
+  web_view_helper.GetWebView()->SetDefaultPageScaleLimits(0.25f, 4);
 
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
+  web_view_helper.GetWebView()->EnableFakePageScaleAnimationForTesting(true);
 
   WebRect edit_box_with_text(200, 200, 250, 20);
   WebRect edit_box_with_no_text(200, 250, 250, 20);
@@ -4113,19 +4180,19 @@ TEST_P(ParameterizedWebFrameTest,
   // auto-zoom setting is off.
 
   // Focus the second empty textbox.
-  web_view_helper.WebView()->AdvanceFocus(false);
-  web_view_helper.WebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->AdvanceFocus(false);
+  web_view_helper.GetWebView()->AdvanceFocus(false);
 
   // Set the page scale to be smaller than the minimal readable scale.
   float initial_scale = 0.25f;
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), WebPoint(0, 0),
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), WebPoint(0, 0),
                              initial_scale);
 
   float scale;
   IntPoint scroll;
   bool need_animation;
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
 
   // There should be no change in page scale.
@@ -4139,14 +4206,14 @@ TEST_P(ParameterizedWebFrameTest,
                  (viewport_height / scale - edit_box_with_no_text.height) / 2;
   EXPECT_NEAR(v_scroll, scroll.Y(), 2);
 
-  SetScaleAndScrollAndLayout(web_view_helper.WebView(), scroll, scale);
+  SetScaleAndScrollAndLayout(web_view_helper.GetWebView(), scroll, scale);
 
   // Select the first textbox.
-  web_view_helper.WebView()->AdvanceFocus(true);
+  web_view_helper.GetWebView()->AdvanceFocus(true);
   WebRect rect, caret;
-  web_view_helper.WebView()->SelectionBounds(caret, rect);
-  web_view_helper.WebView()->ComputeScaleAndScrollForFocusedNode(
-      web_view_helper.WebView()->FocusedElement(), kAutoZoomToLegibleScale,
+  web_view_helper.GetWebView()->SelectionBounds(caret, rect);
+  web_view_helper.GetWebView()->ComputeScaleAndScrollForFocusedNode(
+      web_view_helper.GetWebView()->FocusedElement(), kAutoZoomToLegibleScale,
       scale, scroll, need_animation);
 
   // There should be no change at all since the textbox is fully visible
@@ -4165,14 +4232,14 @@ TEST_P(ParameterizedWebFrameTest, CharacterIndexAtPointWithPinchZoom) {
 
   // Move the visual viewport to the start of the target div containing the
   // text.
-  web_view_helper.WebView()->SetPageScaleFactor(2);
-  web_view_helper.WebView()->SetVisualViewportOffset(WebFloatPoint(100, 50));
+  web_view_helper.GetWebView()->SetPageScaleFactor(2);
+  web_view_helper.GetWebView()->SetVisualViewportOffset(WebFloatPoint(100, 50));
 
   WebRect base_rect;
   WebRect extent_rect;
 
   WebLocalFrame* main_frame =
-      web_view_helper.WebView()->MainFrame()->ToWebLocalFrame();
+      web_view_helper.GetWebView()->MainFrame()->ToWebLocalFrame();
 
   // Since we're zoomed in to 2X, each char of Ahem is 20px wide/tall in
   // viewport space. We expect to hit the fifth char on the first line.
@@ -4196,8 +4263,8 @@ TEST_P(ParameterizedWebFrameTest, FirstRectForCharacterRangeWithPinchZoom) {
 
   WebFloatPoint visual_offset(100, 130);
   float scale = 2;
-  web_view_helper.WebView()->SetPageScaleFactor(scale);
-  web_view_helper.WebView()->SetVisualViewportOffset(visual_offset);
+  web_view_helper.GetWebView()->SetPageScaleFactor(scale);
+  web_view_helper.GetWebView()->SetVisualViewportOffset(visual_offset);
 
   WebRect base_rect;
   WebRect extent_rect;
@@ -4233,11 +4300,11 @@ TEST_P(ParameterizedWebFrameTest, ReloadDoesntSetRedirect) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "form.html", &web_frame_client);
 
-  web_view_helper.WebView()->MainFrameImpl()->Reload(
+  web_view_helper.GetWebView()->MainFrameImpl()->Reload(
       WebFrameLoadType::kReloadBypassingCache);
   // start another reload before request is delivered.
   FrameTestHelpers::ReloadFrameBypassingCache(
-      web_view_helper.WebView()->MainFrameImpl());
+      web_view_helper.GetWebView()->MainFrameImpl());
 }
 
 class ClearScrollStateOnCommitWebFrameClient
@@ -4271,34 +4338,34 @@ TEST_P(ParameterizedWebFrameTest, ReloadWithOverrideURLPreservesState) {
   web_view_helper.Resize(WebSize(kPageWidth, kPageHeight));
   web_view_helper.LocalMainFrame()->SetScrollOffset(
       WebSize(kPageWidth / 4, kPageHeight / 4));
-  web_view_helper.WebView()->SetPageScaleFactor(kPageScaleFactor);
+  web_view_helper.GetWebView()->SetPageScaleFactor(kPageScaleFactor);
 
   // Reload the page and end up at the same url. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.GetWebView()->MainFrameImpl()->ReloadWithOverrideURL(
       ToKURL(base_url_ + first_url), WebFrameLoadType::kReload);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().width);
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().height);
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 
   // Reload the page using the cache. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.GetWebView()->MainFrameImpl()->ReloadWithOverrideURL(
       ToKURL(base_url_ + second_url), WebFrameLoadType::kReload);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().width);
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().height);
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 
   // Reload the page while bypassing the cache. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.GetWebView()->MainFrameImpl()->ReloadWithOverrideURL(
       ToKURL(base_url_ + third_url), WebFrameLoadType::kReloadBypassingCache);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().width);
   EXPECT_EQ(0, web_view_helper.LocalMainFrame()->GetScrollOffset().height);
-  EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
+  EXPECT_EQ(1.0f, web_view_helper.GetWebView()->PageScaleFactor());
 }
 
 TEST_P(ParameterizedWebFrameTest, ReloadWhileProvisional) {
@@ -4309,10 +4376,10 @@ TEST_P(ParameterizedWebFrameTest, ReloadWhileProvisional) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize();
   WebURLRequest request(ToKURL(base_url_ + "fixed_layout.html"));
-  web_view_helper.WebView()->MainFrameImpl()->LoadRequest(request);
+  web_view_helper.GetWebView()->MainFrameImpl()->LoadRequest(request);
   // start reload before first request is delivered.
   FrameTestHelpers::ReloadFrameBypassingCache(
-      web_view_helper.WebView()->MainFrameImpl());
+      web_view_helper.GetWebView()->MainFrameImpl());
 
   WebDocumentLoader* document_loader =
       web_view_helper.LocalMainFrame()->GetDocumentLoader();
@@ -4349,7 +4416,7 @@ TEST_P(ParameterizedWebFrameTest, IframeRedirect) {
   // Pump pending requests one more time. The test page loads script that
   // navigates.
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
 
   WebFrame* iframe = web_view_helper.LocalMainFrame()->FindFrameByName(
       WebString::FromUTF8("ifr"));
@@ -4374,10 +4441,10 @@ TEST_P(ParameterizedWebFrameTest, ClearFocusedNodeTest) {
                                     "iframe_clear_focused_node_test.html");
 
   // Clear the focused node.
-  web_view_helper.WebView()->ClearFocusedElement();
+  web_view_helper.GetWebView()->ClearFocusedElement();
 
   // Now retrieve the FocusedNode and test it should be null.
-  EXPECT_EQ(nullptr, web_view_helper.WebView()->FocusedElement());
+  EXPECT_EQ(nullptr, web_view_helper.GetWebView()->FocusedElement());
 }
 
 class ChangedSelectionCounter : public FrameTestHelpers::TestWebFrameClient {
@@ -4572,7 +4639,7 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsReload) {
 
   // Refresh, we should get two release notifications and two more create
   // notifications.
-  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrameImpl());
+  FrameTestHelpers::ReloadFrame(web_view_helper.GetWebView()->MainFrameImpl());
   ASSERT_EQ(4u, create_notifications.size());
   ASSERT_EQ(2u, release_notifications.size());
 
@@ -4631,7 +4698,7 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsIsolatedWorlds) {
   ASSERT_EQ(1u, create_notifications.size());
   auto& notification = create_notifications[0];
   ASSERT_EQ(isolated_world_id, notification->world_id);
-  ASSERT_EQ(web_view_helper.WebView()->MainFrame(), notification->frame);
+  ASSERT_EQ(web_view_helper.GetWebView()->MainFrame(), notification->frame);
 
   // We don't have an API to enumarate isolated worlds for a frame, but we can
   // at least assert that the context we got is *not* the main world's context.
@@ -4737,12 +4804,12 @@ TEST_P(ParameterizedWebFrameTest, GetContentAsPlainText) {
   // Make sure it comes out OK.
   const std::string expected("Foo bar\nbaz");
   WebString text = WebFrameContentDumper::DumpWebViewAsText(
-      web_view_helper.WebView(), std::numeric_limits<size_t>::max());
+      web_view_helper.GetWebView(), std::numeric_limits<size_t>::max());
   EXPECT_EQ(expected, text.Utf8());
 
   // Try reading the same one with clipping of the text.
   const int kLength = 5;
-  text = WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(),
+  text = WebFrameContentDumper::DumpWebViewAsText(web_view_helper.GetWebView(),
                                                   kLength);
   EXPECT_EQ(expected.substr(0, kLength), text.Utf8());
 
@@ -4756,13 +4823,13 @@ TEST_P(ParameterizedWebFrameTest, GetContentAsPlainText) {
   FrameTestHelpers::LoadHTMLString(subframe, "sub<p>text", test_url);
 
   text = WebFrameContentDumper::DumpWebViewAsText(
-      web_view_helper.WebView(), std::numeric_limits<size_t>::max());
+      web_view_helper.GetWebView(), std::numeric_limits<size_t>::max());
   EXPECT_EQ("Hello world\n\nsub\n\ntext", text.Utf8());
 
   // Get the frame text where the subframe separator falls on the boundary of
   // what we'll take. There used to be a crash in this case.
-  text =
-      WebFrameContentDumper::DumpWebViewAsText(web_view_helper.WebView(), 12);
+  text = WebFrameContentDumper::DumpWebViewAsText(web_view_helper.GetWebView(),
+                                                  12);
   EXPECT_EQ("Hello world", text.Utf8());
 }
 
@@ -4777,7 +4844,7 @@ TEST_P(ParameterizedWebFrameTest, GetFullHtmlOfPage) {
   FrameTestHelpers::LoadHTMLString(frame, kSimpleSource, test_url);
 
   WebString text = WebFrameContentDumper::DumpWebViewAsText(
-      web_view_helper.WebView(), std::numeric_limits<size_t>::max());
+      web_view_helper.GetWebView(), std::numeric_limits<size_t>::max());
   EXPECT_EQ("Hello\n\nWorld", text.Utf8());
 
   const std::string html = WebFrameContentDumper::DumpAsMarkup(frame).Utf8();
@@ -4788,7 +4855,7 @@ TEST_P(ParameterizedWebFrameTest, GetFullHtmlOfPage) {
   EXPECT_EQ(html, WebFrameContentDumper::DumpAsMarkup(frame).Utf8());
 
   text = WebFrameContentDumper::DumpWebViewAsText(
-      web_view_helper.WebView(), std::numeric_limits<size_t>::max());
+      web_view_helper.GetWebView(), std::numeric_limits<size_t>::max());
   EXPECT_EQ("Hello\n\nWorld", text.Utf8());
 
   // Test selection check
@@ -4822,7 +4889,7 @@ TEST_P(ParameterizedWebFrameTest, ExecuteScriptDuringDidCreateScriptContext) {
   web_view_helper.InitializeAndLoad(base_url_ + "hello_world.html",
                                     &web_frame_client);
 
-  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrameImpl());
+  FrameTestHelpers::ReloadFrame(web_view_helper.GetWebView()->MainFrameImpl());
 }
 
 class FindUpdateWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
@@ -4862,8 +4929,8 @@ TEST_P(ParameterizedWebFrameTest, FindInPageMatchRects) {
   web_view_helper.InitializeAndLoad(base_url_ + "find_in_page_frame.html",
                                     &client);
   web_view_helper.Resize(WebSize(640, 480));
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetMaximumLegibleScale(1.f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
   // Note that the 'result 19' in the <select> element is not expected to
@@ -4932,7 +4999,7 @@ TEST_P(ParameterizedWebFrameTest, FindInPageActiveIndex) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "find_match_count.html",
                                     &client);
-  web_view_helper.WebView()->Resize(WebSize(640, 480));
+  web_view_helper.GetWebView()->Resize(WebSize(640, 480));
   RunPendingTasks();
 
   const char* kFindString = "a";
@@ -5275,7 +5342,7 @@ TEST_P(ParameterizedWebFrameTest, FindInPageJavaScriptUpdatesDOMProperOrdinal) {
   FrameTestHelpers::LoadHTMLString(frame, html,
                                    URLTestHelpers::ToKURL(base_url_));
   web_view_helper.Resize(WebSize(640, 480));
-  web_view_helper.WebView()->SetFocus(true);
+  web_view_helper.GetWebView()->SetFocus(true);
   RunPendingTasks();
 
   const int kFindIdentifier = 12345;
@@ -5378,7 +5445,7 @@ TEST_P(ParameterizedWebFrameTest, SelectRange) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("Some test text for testing.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->ExecuteCommand(WebString::FromUTF8("Unselect"));
   EXPECT_EQ("", SelectionAsString(frame));
   frame->SelectRange(TopLeft(start_web_rect),
@@ -5393,7 +5460,7 @@ TEST_P(ParameterizedWebFrameTest, SelectRange) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("Some offscreen test text for testing.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->ExecuteCommand(WebString::FromUTF8("Unselect"));
   EXPECT_EQ("", SelectionAsString(frame));
   frame->SelectRange(TopLeft(start_web_rect),
@@ -5487,10 +5554,10 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeInIframe) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   InitializeTextSelectionWebView(base_url_ + "select_range_iframe.html",
                                  &web_view_helper);
-  frame = web_view_helper.WebView()->MainFrame();
+  frame = web_view_helper.GetWebView()->MainFrame();
   WebLocalFrame* subframe = frame->FirstChild()->ToWebLocalFrame();
   EXPECT_EQ("Some test text for testing.", SelectionAsString(subframe));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   subframe->ExecuteCommand(WebString::FromUTF8("Unselect"));
   EXPECT_EQ("", SelectionAsString(subframe));
   subframe->SelectRange(TopLeft(start_web_rect),
@@ -5517,7 +5584,7 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeDivContentEditable) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   frame->SelectRange(BottomRightMinusOne(end_web_rect), WebPoint(0, 0));
   EXPECT_EQ("16-char header. This text is initially selected.",
@@ -5528,13 +5595,13 @@ TEST_P(ParameterizedWebFrameTest, SelectRangeDivContentEditable) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
 
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->SelectRange(TopLeft(start_web_rect),
                      BottomRightMinusOne(end_web_rect));
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->SelectRange(TopLeft(start_web_rect), WebPoint(640, 480));
   EXPECT_EQ("This text is initially selected. 16-char footer.",
             SelectionAsString(frame));
@@ -5558,7 +5625,7 @@ TEST_P(ParameterizedWebFrameTest, DISABLED_SelectRangeSpanContentEditable) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   frame->SelectRange(BottomRightMinusOne(end_web_rect), WebPoint(0, 0));
   EXPECT_EQ("16-char header. This text is initially selected.",
@@ -5569,14 +5636,14 @@ TEST_P(ParameterizedWebFrameTest, DISABLED_SelectRangeSpanContentEditable) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
 
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->SelectRange(TopLeft(start_web_rect),
                      BottomRightMinusOne(end_web_rect));
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
   frame->SelectRange(TopLeft(start_web_rect), WebPoint(640, 480));
   EXPECT_EQ("This text is initially selected. 16-char footer.",
             SelectionAsString(frame));
@@ -5706,7 +5773,7 @@ TEST_P(ParameterizedWebFrameTest, MoveRangeSelectionExtent) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   frame->MoveRangeSelectionExtent(WebPoint(640, 480));
   EXPECT_EQ("This text is initially selected. 16-char footer.",
@@ -5743,7 +5810,7 @@ TEST_P(ParameterizedWebFrameTest, MoveRangeSelectionExtentCannotCollapse) {
                                  &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   frame->MoveRangeSelectionExtent(BottomRightMinusOne(start_web_rect));
   EXPECT_EQ("This text is initially selected.", SelectionAsString(frame));
@@ -5770,7 +5837,7 @@ TEST_P(ParameterizedWebFrameTest, MoveRangeSelectionExtentScollsInputField) {
       &web_view_helper);
   frame = web_view_helper.LocalMainFrame();
   EXPECT_EQ("Length", SelectionAsString(frame));
-  web_view_helper.WebView()->SelectionBounds(start_web_rect, end_web_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_web_rect, end_web_rect);
 
   EXPECT_EQ(0, frame->GetFrame()
                    ->Selection()
@@ -5839,19 +5906,19 @@ TEST_P(ParameterizedWebFrameTest,
   WebRect end_rect;
 
   frame->ExecuteScript(WebScriptSource("selectRange();"));
-  web_view_helper.WebView()->SelectionBounds(initial_start_rect,
-                                             initial_end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(initial_start_rect,
+                                                initial_end_rect);
   WebPoint moved_start(TopLeft(initial_start_rect));
 
   moved_start.y += 40;
   frame->SelectRange(moved_start, BottomRightMinusOne(initial_end_rect));
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 
   moved_start.y -= 80;
   frame->SelectRange(moved_start, BottomRightMinusOne(initial_end_rect));
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 
@@ -5859,13 +5926,13 @@ TEST_P(ParameterizedWebFrameTest,
 
   moved_end.y += 40;
   frame->SelectRange(TopLeft(initial_start_rect), moved_end);
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 
   moved_end.y -= 80;
   frame->SelectRange(TopLeft(initial_start_rect), moved_end);
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 }
@@ -5877,7 +5944,7 @@ TEST_P(ParameterizedWebFrameTest, MoveCaretStaysHorizontallyAlignedWhenMoved) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   InitializeTextSelectionWebView(base_url_ + "move_caret.html",
                                  &web_view_helper);
-  frame = (WebLocalFrameImpl*)web_view_helper.WebView()->MainFrame();
+  frame = (WebLocalFrameImpl*)web_view_helper.GetWebView()->MainFrame();
 
   WebRect initial_start_rect;
   WebRect initial_end_rect;
@@ -5885,19 +5952,19 @@ TEST_P(ParameterizedWebFrameTest, MoveCaretStaysHorizontallyAlignedWhenMoved) {
   WebRect end_rect;
 
   frame->ExecuteScript(WebScriptSource("selectCaret();"));
-  web_view_helper.WebView()->SelectionBounds(initial_start_rect,
-                                             initial_end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(initial_start_rect,
+                                                initial_end_rect);
   WebPoint move_to(TopLeft(initial_start_rect));
 
   move_to.y += 40;
   frame->MoveCaretSelection(move_to);
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 
   move_to.y -= 80;
   frame->MoveCaretSelection(move_to);
-  web_view_helper.WebView()->SelectionBounds(start_rect, end_rect);
+  web_view_helper.GetWebView()->SelectionBounds(start_rect, end_rect);
   EXPECT_EQ(start_rect, initial_start_rect);
   EXPECT_EQ(end_rect, initial_end_rect);
 }
@@ -5963,17 +6030,17 @@ class CompositedSelectionBoundsTest
     RegisterMockedHttpURLLoad("Ahem.ttf");
 
     web_view_helper_.Initialize(nullptr, &fake_selection_web_view_client_);
-    web_view_helper_.WebView()->GetSettings()->SetDefaultFontSize(12);
-    web_view_helper_.WebView()->SetDefaultPageScaleLimits(1, 1);
+    web_view_helper_.GetWebView()->GetSettings()->SetDefaultFontSize(12);
+    web_view_helper_.GetWebView()->SetDefaultPageScaleLimits(1, 1);
     web_view_helper_.Resize(WebSize(640, 480));
   }
 
   void RunTestWithNoSelection(const char* test_file) {
     RegisterMockedHttpURLLoad(test_file);
-    web_view_helper_.WebView()->SetFocus(true);
-    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrameImpl(),
+    web_view_helper_.GetWebView()->SetFocus(true);
+    FrameTestHelpers::LoadFrame(web_view_helper_.GetWebView()->MainFrameImpl(),
                                 base_url_ + test_file);
-    web_view_helper_.WebView()->UpdateAllLifecyclePhases();
+    web_view_helper_.GetWebView()->UpdateAllLifecyclePhases();
 
     const WebSelection* selection = fake_selection_layer_tree_view_.Selection();
     const WebSelectionBound* select_start =
@@ -5987,14 +6054,14 @@ class CompositedSelectionBoundsTest
 
   void RunTest(const char* test_file) {
     RegisterMockedHttpURLLoad(test_file);
-    web_view_helper_.WebView()->SetFocus(true);
-    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrameImpl(),
+    web_view_helper_.GetWebView()->SetFocus(true);
+    FrameTestHelpers::LoadFrame(web_view_helper_.GetWebView()->MainFrameImpl(),
                                 base_url_ + test_file);
-    web_view_helper_.WebView()->UpdateAllLifecyclePhases();
+    web_view_helper_.GetWebView()->UpdateAllLifecyclePhases();
 
     v8::HandleScope handle_scope(v8::Isolate::GetCurrent());
     v8::Local<v8::Value> result =
-        web_view_helper_.WebView()
+        web_view_helper_.GetWebView()
             ->MainFrameImpl()
             ->ExecuteScriptAndReturnValue(WebScriptSource("expectedResult"));
     ASSERT_FALSE(result.IsEmpty() || (*result)->IsUndefined());
@@ -6070,7 +6137,7 @@ class CompositedSelectionBoundsTest
     gesture_event.y = gesture_event.global_y = hit_point.Y();
     gesture_event.source_device = kWebGestureDeviceTouchscreen;
 
-    web_view_helper_.WebView()
+    web_view_helper_.GetWebView()
         ->MainFrameImpl()
         ->GetFrame()
         ->GetEventHandler()
@@ -6264,16 +6331,17 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(200, 115, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(120, 230 + i * 5, kTapDiameter));
 
     int j = i % 10;
@@ -6285,7 +6353,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(10 + i * 5, 590, kTapDiameter));
 
     int j = i % 10;
@@ -6297,13 +6365,13 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
 
   // The same taps shouldn't trigger didTapMultipleTargets() after disabling the
   // notification for multi-target-tap.
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetMultiTargetTapNotificationEnabled(false);
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(10 + i * 5, 590, kTapDiameter));
     EXPECT_FALSE(client.Triggered());
   }
@@ -6323,7 +6391,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(50, 50, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(50, 50, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6342,23 +6410,24 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(200, 115, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(120, 230 + i * 5, kTapDiameter));
     EXPECT_FALSE(client.Triggered());
   }
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(10 + i * 5, 590, kTapDiameter));
     EXPECT_FALSE(client.Triggered());
   }
@@ -6379,23 +6448,24 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(200, 115, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(120, 230 + i * 5, kTapDiameter));
     EXPECT_FALSE(client.Triggered());
   }
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
+    web_view_helper.GetWebView()->HandleInputEvent(
         FatTap(10 + i * 5, 590, kTapDiameter));
     EXPECT_FALSE(client.Triggered());
   }
@@ -6412,7 +6482,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
   web_view_helper.InitializeAndLoad(base_url_ + html_file, nullptr, &client,
                                     nullptr, ConfigureAndroid);
 
-  WebViewImpl* web_view_impl = web_view_helper.WebView();
+  WebViewImpl* web_view_impl = web_view_helper.GetWebView();
   ASSERT_TRUE(web_view_impl);
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   ASSERT_TRUE(frame);
@@ -6433,7 +6503,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
 
   // Tap at the top: there is nothing there.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   // Scroll visual viewport to the bottom of the main frame.
@@ -6442,16 +6512,16 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
 
   // Now the tap with the same coordinates should hit two elements.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
   EXPECT_TRUE(client.Triggered());
 
   // The same tap shouldn't trigger didTapMultipleTargets() after disabling the
   // notification for multi-target-tap.
-  web_view_helper.WebView()
+  web_view_helper.GetWebView()
       ->GetSettings()
       ->SetMultiTargetTapNotificationEnabled(false);
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6473,21 +6543,21 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
 
   // Click somewhere where the popup shouldn't appear.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       FatTap(kViewportWidth / 2, 0, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 
   // Click directly in between two container divs with click handlers, with
   // children that don't handle clicks.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       FatTap(kViewportWidth / 2, kDivHeight, kTapDiameter));
   EXPECT_TRUE(client.Triggered());
 
   // The third div container should be blacklisted if you click on the link it
   // contains.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       FatTap(kViewportWidth / 2, kDivHeight * 3.25, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 }
@@ -6506,22 +6576,25 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupPageScale) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(80, 80, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(FatTap(80, 80, kTapDiameter));
   EXPECT_TRUE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(230, 190, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(230, 190, kTapDiameter));
   EXPECT_TRUE(client.Triggered());
 
-  web_view_helper.WebView()->SetPageScaleFactor(3.0f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->SetPageScaleFactor(3.0f);
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(240, 240, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(240, 240, kTapDiameter));
   EXPECT_TRUE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(690, 570, kTapDiameter));
+  web_view_helper.GetWebView()->HandleInputEvent(
+      FatTap(690, 570, kTapDiameter));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6556,7 +6629,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", &web_frame_client);
-  WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
+  WebLocalFrame* frame = web_view_helper.GetWebView()->MainFrameImpl();
 
   // Load a url as a history navigation that will return an error.
   // TestSubstituteDataWebFrameClient will start a SubstituteData load in
@@ -6580,7 +6653,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
                                     kWebHistoryDifferentDocumentLoad,
                                     mojom::FetchCacheMode::kDefault);
   WebString text = WebFrameContentDumper::DumpWebViewAsText(
-      web_view_helper.WebView(), std::numeric_limits<size_t>::max());
+      web_view_helper.GetWebView(), std::numeric_limits<size_t>::max());
   EXPECT_EQ("This should appear", text.Utf8());
   EXPECT_TRUE(web_frame_client.CommitCalled());
 }
@@ -6632,7 +6705,7 @@ TEST_P(ParameterizedWebFrameTest,
        MoveCaretSelectionTowardsWindowPointWithNoSelection) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank");
-  WebFrame* frame = web_view_helper.WebView()->MainFrame();
+  WebFrame* frame = web_view_helper.GetWebView()->MainFrame();
 
   // This test passes if this doesn't crash.
   frame->ToWebLocalFrame()->MoveCaretSelection(WebPoint(0, 0));
@@ -6674,7 +6747,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceMisspelledRange) {
   Document* document = frame->GetFrame()->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6702,10 +6775,10 @@ TEST_P(ParameterizedWebFrameTest, ReplaceMisspelledRange) {
                                  DocumentMarker::kSpelling));
 
   frame->ReplaceMisspelledRange("welcome");
-  EXPECT_EQ("_welcome_.",
-            WebFrameContentDumper::DumpWebViewAsText(
-                web_view_helper.WebView(), std::numeric_limits<size_t>::max())
-                .Utf8());
+  EXPECT_EQ("_welcome_.", WebFrameContentDumper::DumpWebViewAsText(
+                              web_view_helper.GetWebView(),
+                              std::numeric_limits<size_t>::max())
+                              .Utf8());
 }
 
 TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkers) {
@@ -6720,7 +6793,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkers) {
   Document* document = frame->GetFrame()->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6771,7 +6844,7 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
   Document* document = frame->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6849,7 +6922,7 @@ TEST_P(ParameterizedWebFrameTest, SlowSpellcheckMarkerPosition) {
   Document* document = frame->GetFrame()->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6883,7 +6956,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultErasesMarkers) {
   Document* document = frame->GetFrame()->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6919,7 +6992,7 @@ TEST_P(ParameterizedWebFrameTest, SpellcheckResultsSavedInDocument) {
   Document* document = frame->GetFrame()->GetDocument();
   Element* element = document->getElementById("data");
 
-  web_view_helper.WebView()->GetSettings()->SetEditingBehavior(
+  web_view_helper.GetWebView()->GetSettings()->SetEditingBehavior(
       WebSettings::kEditingBehaviorWin);
 
   element->focus();
@@ -6983,7 +7056,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentBody) {
   // Create another window that will try to access it.
   FrameTestHelpers::WebViewHelper new_web_view_helper;
   WebViewImpl* new_view = new_web_view_helper.InitializeWithOpener(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   RunPendingTasks();
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
@@ -7006,7 +7079,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentOpen) {
   // Create another window that will try to access it.
   FrameTestHelpers::WebViewHelper new_web_view_helper;
   WebViewImpl* new_view = new_web_view_helper.InitializeWithOpener(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   RunPendingTasks();
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
@@ -7030,7 +7103,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentNavigator) {
   // Create another window that will try to access it.
   FrameTestHelpers::WebViewHelper new_web_view_helper;
   WebViewImpl* new_view = new_web_view_helper.InitializeWithOpener(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   RunPendingTasks();
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
@@ -7051,7 +7124,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentViaJavascriptUrl) {
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
   // Access the initial document from a javascript: URL.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Modified'))");
   EXPECT_EQ(1, web_frame_client.did_access_initial_document_);
@@ -7070,7 +7143,7 @@ TEST_P(ParameterizedWebFrameTest,
   // Create another window that will try to access it.
   FrameTestHelpers::WebViewHelper new_web_view_helper;
   WebViewImpl* new_view = new_web_view_helper.InitializeWithOpener(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   RunPendingTasks();
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
@@ -7102,7 +7175,7 @@ TEST_P(ParameterizedWebFrameTest, DidWriteToInitialDocumentBeforeModalDialog) {
   // Create another window that will try to access it.
   FrameTestHelpers::WebViewHelper new_web_view_helper;
   WebViewImpl* new_view = new_web_view_helper.InitializeWithOpener(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   RunPendingTasks();
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
@@ -7177,8 +7250,8 @@ TEST_P(ParameterizedWebFrameTest, CompositorScrollIsUserScrollLongPage) {
 
   // Do a compositor scroll, verify that this is counted as a user scroll.
   scrollable_area->DidScroll(gfx::ScrollOffset(0, 1));
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.7f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.7f, 0);
   EXPECT_TRUE(client.WasFrameScrolled());
   EXPECT_TRUE(initial_scroll_state.was_scrolled_by_user);
 
@@ -7187,8 +7260,8 @@ TEST_P(ParameterizedWebFrameTest, CompositorScrollIsUserScrollLongPage) {
 
   // The page scale 1.0f and scroll.
   scrollable_area->DidScroll(gfx::ScrollOffset(0, 2));
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.0f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.0f, 0);
   EXPECT_TRUE(client.WasFrameScrolled());
   EXPECT_TRUE(initial_scroll_state.was_scrolled_by_user);
   client.Reset();
@@ -7196,16 +7269,16 @@ TEST_P(ParameterizedWebFrameTest, CompositorScrollIsUserScrollLongPage) {
 
   // No scroll event if there is no scroll delta.
   scrollable_area->DidScroll(gfx::ScrollOffset(0, 2));
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 1.0f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 1.0f, 0);
   EXPECT_FALSE(client.WasFrameScrolled());
   EXPECT_FALSE(initial_scroll_state.was_scrolled_by_user);
   client.Reset();
 
   // Non zero page scale and scroll.
   scrollable_area->DidScroll(gfx::ScrollOffset(9, 15));
-  web_view_helper.WebView()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
-                                                 WebFloatSize(), 0.6f, 0);
+  web_view_helper.GetWebView()->ApplyViewportDeltas(
+      WebFloatSize(), WebFloatSize(), WebFloatSize(), 0.6f, 0);
   EXPECT_TRUE(client.WasFrameScrolled());
   EXPECT_TRUE(initial_scroll_state.was_scrolled_by_user);
   client.Reset();
@@ -7244,7 +7317,7 @@ TEST_P(ParameterizedWebFrameTest, SiteForCookiesForRedirect) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "first_party_redirect.html");
-  EXPECT_TRUE(web_view_helper.WebView()
+  EXPECT_TRUE(web_view_helper.GetWebView()
                   ->MainFrameImpl()
                   ->GetDocument()
                   .SiteForCookies() == redirect_url);
@@ -7272,7 +7345,7 @@ TEST_P(ParameterizedWebFrameTest, SimulateFragmentAnchorMiddleClick) {
                                     &client);
 
   Document* document =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
           ->GetDocument();
   KURL destination = document->Url();
   destination.SetFragmentIdentifier("test");
@@ -7285,7 +7358,7 @@ TEST_P(ParameterizedWebFrameTest, SimulateFragmentAnchorMiddleClick) {
       MouseEvent::Create(nullptr, EventTypeNames::click, mouse_initializer);
   FrameLoadRequest frame_request(document, ResourceRequest(destination));
   frame_request.SetTriggeringEvent(event);
-  ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+  ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
       ->Loader()
       .Load(frame_request);
 }
@@ -7337,7 +7410,7 @@ TEST_P(ParameterizedWebFrameTest, ModifiedClickNewWindow) {
                                     &web_frame_client, &web_view_client);
 
   LocalFrame* frame =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame());
   Document* document = frame->GetDocument();
   KURL destination = ToKURL(base_url_ + "hello_world.html");
 
@@ -7353,11 +7426,11 @@ TEST_P(ParameterizedWebFrameTest, ModifiedClickNewWindow) {
   frame_request.SetTriggeringEvent(event);
   std::unique_ptr<UserGestureIndicator> gesture =
       Frame::NotifyUserActivation(frame);
-  ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+  ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
       ->Loader()
       .Load(frame_request);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
 
   // decidePolicyForNavigation should be called both for the original request
   // and the ctrl+click.
@@ -7429,12 +7502,12 @@ TEST_P(ParameterizedWebFrameTest, ReloadPost) {
   web_view_helper.InitializeAndLoad(base_url_ + "reload_post.html");
   WebLocalFrame* frame = web_view_helper.LocalMainFrame();
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               "javascript:document.forms[0].submit()");
   // Pump requests one more time after the javascript URL has executed to
   // trigger the actual POST load request.
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
   EXPECT_EQ(WebString::FromUTF8("POST"),
             frame->GetDocumentLoader()->GetRequest().HttpMethod());
 
@@ -7584,14 +7657,14 @@ TEST_P(ParameterizedWebFrameTest, NavigateToSame) {
   FrameLoadRequest frame_request(
       nullptr,
       ResourceRequest(
-          ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+          ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
               ->GetDocument()
               ->Url()));
-  ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame())
+  ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame())
       ->Loader()
       .Load(frame_request);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
-      web_view_helper.WebView()->MainFrame());
+      web_view_helper.GetWebView()->MainFrame());
 
   EXPECT_TRUE(client.FrameLoadTypeReloadSeen());
 }
@@ -7627,7 +7700,7 @@ TEST_P(ParameterizedWebFrameTest,
                                     &ConfigureLoadsImagesAutomatically);
 
   WebCache::Clear();
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "foo_with_image.html");
 
   // 2 images are requested, and each triggers 2 willSendRequest() calls,
@@ -7855,11 +7928,11 @@ TEST_P(ParameterizedWebFrameTest, overflowHiddenRewrite) {
                              nullptr, &ConfigureCompositingWebView);
 
   web_view_helper.Resize(WebSize(100, 100));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
                               base_url_ + "non-scrollable.html");
 
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-  PaintLayerCompositor* compositor = web_view_helper.WebView()->Compositor();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
+  PaintLayerCompositor* compositor = web_view_helper.GetWebView()->Compositor();
   GraphicsLayer* scroll_layer = compositor->ScrollLayer();
   ASSERT_TRUE(scroll_layer);
   WebLayer* web_scroll_layer = scroll_layer->PlatformLayer();
@@ -7871,7 +7944,7 @@ TEST_P(ParameterizedWebFrameTest, overflowHiddenRewrite) {
   // Call javascript to make the layer scrollable, and verify it.
   WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
   frame->ExecuteScript(WebScriptSource("allowScroll();"));
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   scroll_layer = compositor->ScrollLayer();
   web_scroll_layer = scroll_layer->PlatformLayer();
@@ -7887,7 +7960,7 @@ TEST_P(ParameterizedWebFrameTest, CurrentHistoryItem) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize();
-  WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
+  WebLocalFrame* frame = web_view_helper.GetWebView()->MainFrameImpl();
   const FrameLoader& main_frame_loader =
       web_view_helper.LocalMainFrame()->GetFrame()->Loader();
   WebURLRequest request(ToKURL(url));
@@ -7946,7 +8019,7 @@ TEST_P(ParameterizedWebFrameTest, fixedPositionInFixedViewport) {
       base_url_ + "fixed-position-in-fixed-viewport.html", nullptr, nullptr,
       nullptr, ConfigureAndroid);
 
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   web_view_helper.Resize(WebSize(100, 100));
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
@@ -7972,7 +8045,7 @@ TEST_P(ParameterizedWebFrameTest, FrameViewMoveWithSetFrameRect) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank");
   web_view_helper.Resize(WebSize(200, 200));
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
   EXPECT_EQ(IntRect(0, 0, 200, 200), frame_view->FrameRect());
@@ -7987,7 +8060,7 @@ TEST_P(ParameterizedWebFrameTest, FrameViewScrollAccountsForBrowserControls) {
   web_view_helper.InitializeAndLoad(base_url_ + "long_scroll.html", nullptr,
                                     &client, nullptr, ConfigureAndroid);
 
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
 
   float browser_controls_height = 40;
@@ -8073,12 +8146,13 @@ TEST_P(ParameterizedWebFrameTest, MaximumScrollPositionCanBeNegative) {
   web_view_helper.InitializeAndLoad(base_url_ + "rtl-overview-mode.html",
                                     nullptr, &client, nullptr,
                                     ConfigureAndroid);
-  web_view_helper.WebView()->SetInitialPageScaleOverride(-1);
-  web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  web_view_helper.WebView()->GetSettings()->SetLoadWithOverviewMode(true);
-  web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
+  web_view_helper.GetWebView()->SetInitialPageScaleOverride(-1);
+  web_view_helper.GetWebView()->GetSettings()->SetWideViewportQuirkEnabled(
+      true);
+  web_view_helper.GetWebView()->GetSettings()->SetLoadWithOverviewMode(true);
+  web_view_helper.GetWebView()->GetSettings()->SetUseWideViewport(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
 
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
   ScrollableArea* layout_viewport = frame_view->LayoutViewportScrollableArea();
@@ -8255,7 +8329,8 @@ TEST_P(ParameterizedWebFrameTest, FullscreenSubframe) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   LocalFrame* frame =
-      ToWebLocalFrameImpl(web_view_helper.WebView()->MainFrame()->FirstChild())
+      ToWebLocalFrameImpl(
+          web_view_helper.GetWebView()->MainFrame()->FirstChild())
           ->GetFrame();
   Document* document = frame->GetDocument();
   std::unique_ptr<UserGestureIndicator> gesture =
@@ -8343,7 +8418,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.WebView()
+  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
                                         ->MainFrameImpl()
                                         ->GetFrameView()
                                         ->GetLayoutViewItem();
@@ -8388,7 +8463,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenResizeWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.WebView()
+  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
                                         ->MainFrameImpl()
                                         ->GetFrameView()
                                         ->GetLayoutViewItem();
@@ -8445,7 +8520,7 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
   client.screen_info_.rect.height =
       screen_size_minus_status_bars_minus_url_bar.height;
   web_view_helper.Resize(screen_size_minus_status_bars_minus_url_bar);
-  LayoutViewItem layout_view_item = web_view_helper.WebView()
+  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
                                         ->MainFrameImpl()
                                         ->GetFrameView()
                                         ->GetLayoutViewItem();
@@ -8621,7 +8696,7 @@ TEST_P(ParameterizedWebFrameTest, LayoutBlockPercentHeightDescendants) {
   web_view_helper.InitializeAndLoad(base_url_ +
                                     "percent-height-descendants.html");
 
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   web_view_helper.Resize(WebSize(800, 800));
   web_view->UpdateAllLifecyclePhases();
 
@@ -8943,7 +9018,7 @@ class WebFrameSwapTest : public ParameterizedWebFrameTest {
 
   void Reset() { web_view_helper_.Reset(); }
   WebLocalFrame* MainFrame() const { return web_view_helper_.LocalMainFrame(); }
-  WebViewImpl* WebView() const { return web_view_helper_.WebView(); }
+  WebViewImpl* WebView() const { return web_view_helper_.GetWebView(); }
 
  private:
   FrameTestHelpers::WebViewHelper web_view_helper_;
@@ -9702,7 +9777,7 @@ TEST_P(ParameterizedWebFrameTest, FrameWidgetTest) {
       *helper.RemoteMainFrame(), WebString(), WebFrameOwnerProperties(),
       nullptr, nullptr, &child_widget_client);
 
-  helper.WebView()->Resize(WebSize(1000, 1000));
+  helper.GetWebView()->Resize(WebSize(1000, 1000));
 
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
                         WebInputEvent::kTimeStampForTesting);
@@ -9747,7 +9822,7 @@ TEST_P(ParameterizedWebFrameTest, LoaderOriginAccess) {
   RegisterMockedChromeURLLoad("test.pdf");
 
   LocalFrame* frame(
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame()));
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame()));
 
   MockDocumentThreadableLoaderClient client;
   ThreadableLoaderOptions options;
@@ -9807,7 +9882,7 @@ TEST_P(ParameterizedWebFrameTest, CrossDomainAccessErrorsUseCallingWindow) {
   TestConsoleMessageWebFrameClient popup_web_frame_client;
   WebViewImpl* popup_view = popup_web_view_helper.InitializeAndLoad(
       chrome_url_ + "hello_world.html", &popup_web_frame_client);
-  popup_view->MainFrame()->SetOpener(web_view_helper.WebView()->MainFrame());
+  popup_view->MainFrame()->SetOpener(web_view_helper.GetWebView()->MainFrame());
 
   // Attempt a blocked navigation of an opener's subframe, and ensure that
   // the error shows up on the popup (calling) window's console, rather than
@@ -9846,7 +9921,7 @@ TEST_P(ParameterizedWebFrameTest, ResizeInvalidatesDeviceMediaQueries) {
                                     nullptr, &client, nullptr,
                                     ConfigureAndroid);
   LocalFrame* frame =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame());
   Element* element = frame->GetDocument()->getElementById("test");
   ASSERT_TRUE(element);
 
@@ -9908,7 +9983,7 @@ class DeviceEmulationTest : public ParameterizedWebFrameTest {
     v8::HandleScope scope(v8::Isolate::GetCurrent());
     ScriptExecutionCallbackHelper callback_helper(
         web_view_helper_.LocalMainFrame()->MainWorldScriptContext());
-    web_view_helper_.WebView()
+    web_view_helper_.GetWebView()
         ->MainFrameImpl()
         ->RequestExecuteScriptAndReturnValue(WebScriptSource(WebString(code)),
                                              false, &callback_helper);
@@ -9926,7 +10001,7 @@ INSTANTIATE_TEST_CASE_P(All, DeviceEmulationTest, ::testing::Bool());
 TEST_P(DeviceEmulationTest, DeviceSizeInvalidatedOnResize) {
   WebDeviceEmulationParams params;
   params.screen_position = WebDeviceEmulationParams::kMobile;
-  web_view_helper_.WebView()->EnableDeviceEmulation(params);
+  web_view_helper_.GetWebView()->EnableDeviceEmulation(params);
 
   TestResize(WebSize(700, 500), "300x300");
   TestResize(WebSize(710, 500), "400x300");
@@ -9937,15 +10012,15 @@ TEST_P(DeviceEmulationTest, DeviceSizeInvalidatedOnResize) {
   TestResize(WebSize(690, 490), "200x200");
   TestResize(WebSize(800, 600), "400x400");
 
-  web_view_helper_.WebView()->DisableDeviceEmulation();
+  web_view_helper_.GetWebView()->DisableDeviceEmulation();
 }
 
 TEST_P(DeviceEmulationTest, PointerAndHoverTypes) {
-  web_view_helper_.WebView()
+  web_view_helper_.GetWebView()
       ->GetDevToolsEmulator()
       ->SetTouchEventEmulationEnabled(true, 1);
   EXPECT_EQ("20x20", DumpSize("pointer"));
-  web_view_helper_.WebView()
+  web_view_helper_.GetWebView()
       ->GetDevToolsEmulator()
       ->SetTouchEventEmulationEnabled(false, 1);
 }
@@ -10117,19 +10192,19 @@ class WebFrameOverscrollTest
   void ScrollBegin(FrameTestHelpers::WebViewHelper* web_view_helper,
                    float delta_x_hint,
                    float delta_y_hint) {
-    web_view_helper->WebView()->HandleInputEvent(GenerateEvent(
+    web_view_helper->GetWebView()->HandleInputEvent(GenerateEvent(
         WebInputEvent::kGestureScrollBegin, delta_x_hint, delta_y_hint));
   }
 
   void ScrollUpdate(FrameTestHelpers::WebViewHelper* web_view_helper,
                     float delta_x,
                     float delta_y) {
-    web_view_helper->WebView()->HandleInputEvent(
+    web_view_helper->GetWebView()->HandleInputEvent(
         GenerateEvent(WebInputEvent::kGestureScrollUpdate, delta_x, delta_y));
   }
 
   void ScrollEnd(FrameTestHelpers::WebViewHelper* web_view_helper) {
-    web_view_helper->WebView()->HandleInputEvent(
+    web_view_helper->GetWebView()->HandleInputEvent(
         GenerateEvent(WebInputEvent::kGestureScrollEnd));
   }
 };
@@ -10429,7 +10504,7 @@ TEST_P(WebFrameOverscrollTest, OverscrollBehaviorAffectsDidOverscroll) {
   web_view_helper.Resize(WebSize(200, 200));
 
   WebLocalFrame* mainFrame =
-      web_view_helper.WebView()->MainFrame()->ToWebLocalFrame();
+      web_view_helper.GetWebView()->MainFrame()->ToWebLocalFrame();
   mainFrame->ExecuteScript(
       WebScriptSource(WebString("document.body.style="
                                 "'overscroll-behavior: auto;'")));
@@ -10484,12 +10559,14 @@ TEST_P(WebFrameOverscrollTest, OnlyMainFrameOverscrollBehaviorHasEffect) {
   web_view_helper.Resize(WebSize(200, 200));
 
   WebLocalFrame* mainFrame =
-      web_view_helper.WebView()->MainFrame()->ToWebLocalFrame();
+      web_view_helper.GetWebView()->MainFrame()->ToWebLocalFrame();
   mainFrame->ExecuteScript(
       WebScriptSource(WebString("document.body.style="
                                 "'overscroll-behavior: auto;'")));
-  WebLocalFrame* subframe =
-      web_view_helper.WebView()->MainFrame()->FirstChild()->ToWebLocalFrame();
+  WebLocalFrame* subframe = web_view_helper.GetWebView()
+                                ->MainFrame()
+                                ->FirstChild()
+                                ->ToWebLocalFrame();
   subframe->ExecuteScript(
       WebScriptSource(WebString("document.body.style="
                                 "'overscroll-behavior: none;'")));
@@ -10550,7 +10627,7 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentLoadFinishTime) {
   RegisterMockedHttpURLLoadWithMimeType("white-1x1.png", "image/png");
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "white-1x1.png");
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
 
   EXPECT_TRUE(document);
@@ -10724,7 +10801,7 @@ TEST(WebFrameGlobalReuseTest, MainFrameWithOpener) {
   FrameTestHelpers::WebViewHelper opener_helper;
   opener_helper.Initialize();
   FrameTestHelpers::WebViewHelper helper;
-  helper.InitializeWithOpener(opener_helper.WebView()->MainFrame(), nullptr,
+  helper.InitializeWithOpener(opener_helper.GetWebView()->MainFrame(), nullptr,
                               nullptr, nullptr,
                               EnableGlobalReuseForUnownedMainFrames);
 
@@ -10946,7 +11023,7 @@ TEST_P(ParameterizedWebFrameTest, LoadJavascriptURLInNewFrame) {
   // Normally, the result of the JS url replaces the existing contents on the
   // Document. However, if the JS triggers a navigation, the contents should
   // not be replaced.
-  EXPECT_EQ("", ToLocalFrame(helper.WebView()->GetPage()->MainFrame())
+  EXPECT_EQ("", ToLocalFrame(helper.GetWebView()->GetPage()->MainFrame())
                     ->GetDocument()
                     ->documentElement()
                     ->innerText());
@@ -11008,11 +11085,11 @@ TEST_P(ParameterizedWebFrameTest, ChangeResourcePriority) {
   helper.Initialize(&client);
   helper.Resize(WebSize(640, 480));
   FrameTestHelpers::LoadFrame(
-      helper.WebView()->MainFrameImpl(),
+      helper.GetWebView()->MainFrameImpl(),
       base_url_ + "promote_img_in_viewport_priority.html");
 
   // Ensure the image in the viewport got promoted after the request was sent.
-  Resource* image = ToWebLocalFrameImpl(helper.WebView()->MainFrame())
+  Resource* image = ToWebLocalFrameImpl(helper.GetWebView()->MainFrame())
                         ->GetFrame()
                         ->GetDocument()
                         ->Fetcher()
@@ -11088,7 +11165,7 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentDecodeError) {
   Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
   Document* document =
-      ToLocalFrame(helper.WebView()->GetPage()->MainFrame())->GetDocument();
+      ToLocalFrame(helper.GetWebView()->GetPage()->MainFrame())->GetDocument();
   EXPECT_TRUE(document->IsImageDocument());
   EXPECT_EQ(ResourceStatus::kDecodeError,
             ToImageDocument(document)->CachedImage()->GetContentStatus());
@@ -11104,7 +11181,7 @@ TEST_P(ParameterizedWebFrameTest, RootLayerMinimumHeight) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, nullptr, nullptr, ConfigureAndroid);
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   web_view->ResizeWithBrowserControls(
       WebSize(kViewportWidth, kViewportHeight - kBrowserControlsHeight),
       kBrowserControlsHeight, 0, true);
@@ -11171,7 +11248,7 @@ TEST_P(ParameterizedWebFrameTest, ScrollBeforeLayoutDoesntCrash) {
   RegisterMockedHttpURLLoad("display-none.html");
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "display-none.html");
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
   web_view_helper.Resize(WebSize(640, 480));
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
@@ -11192,17 +11269,17 @@ TEST_P(ParameterizedWebFrameTest, ScrollBeforeLayoutDoesntCrash) {
 
   // Try GestureScrollEnd and GestureScrollUpdate first to make sure that not
   // seeing a Begin first doesn't break anything. (This currently happens).
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       WebCoalescedInputEvent(end_event));
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       WebCoalescedInputEvent(update_event));
 
   // Try a full Begin/Update/End cycle.
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       WebCoalescedInputEvent(begin_event));
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       WebCoalescedInputEvent(update_event));
-  web_view_helper.WebView()->HandleInputEvent(
+  web_view_helper.GetWebView()->HandleInputEvent(
       WebCoalescedInputEvent(end_event));
 }
 
@@ -11211,7 +11288,7 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
   web_view_helper.Initialize(nullptr, nullptr, nullptr,
                              [](WebSettings* settings) {});
   web_view_helper.Resize(WebSize(200, 200));
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
 
   InitializeWithHTML(
       *web_view->MainFrameImpl()->GetFrame(),
@@ -11591,7 +11668,7 @@ TEST_P(ParameterizedWebFrameTest, ClearClosedOpener) {
   FrameTestHelpers::WebViewHelper opener_helper;
   opener_helper.Initialize();
   FrameTestHelpers::WebViewHelper helper;
-  helper.InitializeWithOpener(opener_helper.WebView()->MainFrame());
+  helper.InitializeWithOpener(opener_helper.GetWebView()->MainFrame());
 
   opener_helper.Reset();
   EXPECT_EQ(nullptr, helper.LocalMainFrame()->Opener());
@@ -11869,7 +11946,7 @@ TEST_P(ParameterizedWebFrameTest, AltTextOnAboutBlankPage) {
   const char kSource[] =
       "<img id='foo' src='foo' alt='foo alt' width='200' height='200'>";
   FrameTestHelpers::LoadHTMLString(frame, kSource, ToKURL("about:blank"));
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
+  web_view_helper.GetWebView()->UpdateAllLifecyclePhases();
   RunPendingTasks();
 
   // Check LayoutText with alt text "foo alt"
@@ -11897,7 +11974,8 @@ TEST_F(WebFrameTest, NavigatorPluginsClearedWhenPluginsDisabled) {
       web_view_helper.LocalMainFrame()->ExecuteScriptAndReturnValue(
           WebScriptSource("navigator.plugins.length"));
   EXPECT_NE(0, result->Int32Value());
-  web_view_helper.WebView()->GetPage()->GetSettings().SetPluginsEnabled(false);
+  web_view_helper.GetWebView()->GetPage()->GetSettings().SetPluginsEnabled(
+      false);
   result = web_view_helper.LocalMainFrame()->ExecuteScriptAndReturnValue(
       WebScriptSource("navigator.plugins.length"));
   EXPECT_EQ(0, result->Int32Value());
@@ -11910,10 +11988,10 @@ TEST_F(WebFrameTest, RecordSameDocumentNavigationToHistogram) {
   HistogramTester tester;
   web_view_helper.InitializeAndLoad("about:blank");
   LocalFrame* frame =
-      ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
+      ToLocalFrame(web_view_helper.GetWebView()->GetPage()->MainFrame());
 
   FrameLoader& main_frame_loader =
-      web_view_helper.WebView()->MainFrameImpl()->GetFrame()->Loader();
+      web_view_helper.GetWebView()->MainFrameImpl()->GetFrame()->Loader();
   scoped_refptr<SerializedScriptValue> message =
       SerializeString("message", ToScriptStateForMainWorld(frame));
   tester.ExpectTotalCount(histogramName, 0);
@@ -11948,7 +12026,7 @@ TEST_P(ParameterizedWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize();
   web_view_helper.Resize(WebSize(200, 200));
-  WebViewImpl* web_view = web_view_helper.WebView();
+  WebViewImpl* web_view = web_view_helper.GetWebView();
 
   InitializeWithHTML(*web_view->MainFrameImpl()->GetFrame(),
                      "<style>"
@@ -12025,7 +12103,7 @@ class SlimmingPaintWebFrameTest : public PaintTestConfigurations,
     return web_view_helper_->LocalMainFrame()->GetFrameView();
   }
 
-  WebViewImpl* WebView() { return web_view_helper_->WebView(); }
+  WebViewImpl* WebView() { return web_view_helper_->GetWebView(); }
 
   size_t ContentLayerCount() {
     return paint_artifact_compositor()

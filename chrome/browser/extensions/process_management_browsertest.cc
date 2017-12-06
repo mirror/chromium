@@ -26,6 +26,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
+#include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_map.h"
@@ -269,6 +270,54 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ProcessOverflow) {
 
   // Extensions only share with each other.
   EXPECT_EQ(extension1_host, extension2_host);
+}
+
+// Test that unrelated browsing contexts cannot find each other's windows,
+// even when they end up using the same renderer process (e.g. because of
+// hitting a process limit).  See also https://crbug.com/718489.
+IN_PROC_BROWSER_TEST_F(ProcessManagementTest, ProcessReuseVsBrowsingInstance) {
+  // Set max renderers to 1 to force reusing a renderer process between two
+  // unrelated tabs.
+  content::RenderProcessHost::SetMaxRendererProcessCount(1);
+
+  // Navigate 2 tabs to a web page (regular web pages can share renderers
+  // among themselves without any restrictions, unlike extensions, apps, etc.).
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url1(embedded_test_server()->GetURL("/title1.html"));
+  GURL url2(embedded_test_server()->GetURL("/title2.html"));
+  ui_test_utils::NavigateToURL(browser(), url1);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url2, WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  content::RenderFrameHost* tab1 =
+      browser()->tab_strip_model()->GetWebContentsAt(0)->GetMainFrame();
+  content::RenderFrameHost* tab2 =
+      browser()->tab_strip_model()->GetWebContentsAt(1)->GetMainFrame();
+
+  // Sanity-check test setup: 2 frames share a renderer process, but are not in
+  // a related browsing instance.
+  if (!content::AreAllSitesIsolatedForTesting())
+    EXPECT_EQ(tab1->GetProcess(), tab2->GetProcess());
+  EXPECT_FALSE(
+      tab1->GetSiteInstance()->IsRelatedSiteInstance(tab2->GetSiteInstance()));
+
+  // Name the 2 frames.
+  EXPECT_TRUE(content::ExecuteScript(tab1, "window.name = 'tab1';"));
+  EXPECT_TRUE(content::ExecuteScript(tab2, "window.name = 'tab2';"));
+
+  // Verify that |tab1| cannot find named frames belonging to |tab2| (i.e. that
+  // window.open will end up creating a new tab rather than returning the old
+  // |tab2| tab).
+  content::WebContentsAddedObserver new_contents_observer;
+  std::string location_of_opened_window;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      tab1,
+      "var w = window.open('', 'tab2');\n"
+      "window.domAutomationController.send(w.location.href);",
+      &location_of_opened_window));
+  EXPECT_EQ(url::kAboutBlankURL, location_of_opened_window);
+  new_contents_observer.GetWebContents();
+  EXPECT_EQ(3, browser()->tab_strip_model()->count());
 }
 
 // See

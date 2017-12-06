@@ -262,7 +262,7 @@ class WebViewHelper {
 
   void Reset();
 
-  WebViewImpl* WebView() const { return web_view_; }
+  WebViewImpl* GetWebView() const { return web_view_; }
 
   WebLocalFrameImpl* LocalMainFrame() const;
   WebRemoteFrameImpl* RemoteMainFrame() const;
@@ -270,7 +270,7 @@ class WebViewHelper {
   void SetViewportSize(const WebSize&);
 
  private:
-  void InitializeWebView(TestWebViewClient*, class WebView* opener);
+  void InitializeWebView(TestWebViewClient*, WebView* opener);
 
   WebViewImpl* web_view_;
   UseMockScrollbarSettings mock_scrollbar_settings_;
