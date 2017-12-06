@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6610c54f_516642ca",
+        "filename": "base/test/histogram_tester.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T23:24:19Z",
+      "side": 1,
+      "message": "Good find!  Thanks for adding documentation for the future :)",
+      "revId": "1c20606c3c54922c46c7c5884ee03e0d12dc01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ad0068_8c7c4545",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T23:24:19Z",
+      "side": 1,
+      "message": "Hmm... shouldn\u0027t this be the result of GetExtensionFromFrame?  Which, from line 209, we know is equivalent to |extension|?",
+      "revId": "1c20606c3c54922c46c7c5884ee03e0d12dc01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
