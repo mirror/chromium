@@ -72,12 +72,12 @@ bool AccountSelectFillData::IsSuggestionsAvailable(
 std::vector<UsernameAndRealm> AccountSelectFillData::RetrieveSuggestions(
     const base::string16& form_name,
     const base::string16& field_name,
-    const base::string16& typed_value) const {
+    const base::string16& typed_value, bool is_password_field) const {
   last_requested_form_ = GetFormInfo(form_name, field_name);
-  DCHECK(last_requested_form_);
+  //DCHECK(last_requested_form_); // just for debug.
   std::vector<UsernameAndRealm> result;
   for (const Credential& credential : credentials_) {
-    if (base::StartsWith(credential.username, typed_value,
+    if (is_password_field || base::StartsWith(credential.username, typed_value,
                          base::CompareCase::SENSITIVE)) {
       result.push_back({credential.username, credential.realm});
     }

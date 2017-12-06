@@ -167,6 +167,7 @@ namespace {
 NSArray* BuildSuggestions(const AccountSelectFillData& fillData,
                           NSString* formName,
                           NSString* fieldName,
+                          bool is_password_field,
                           NSString* typedValue) {
   base::string16 form_name = base::SysNSStringToUTF16(formName);
   base::string16 field_name = base::SysNSStringToUTF16(fieldName);
@@ -174,10 +175,15 @@ NSArray* BuildSuggestions(const AccountSelectFillData& fillData,
 
   NSMutableArray* suggestions = [NSMutableArray array];
   std::vector<password_manager::UsernameAndRealm> username_and_realms_ =
-      fillData.RetrieveSuggestions(form_name, field_name, typed_value);
+      fillData.RetrieveSuggestions(form_name, field_name, typed_value, is_password_field);
   if (username_and_realms_.empty())
     return suggestions;
 
+    if (is_password_field)
+        [suggestions addObject:[FormSuggestion suggestionWithValue:@"Use password for:"
+                                                displayDescription:nil
+                                                              icon:nil
+                                                        identifier:0]];
   for (const auto& username_and_realm : username_and_realms_) {
     NSString* username = base::SysUTF16ToNSString(username_and_realm.username);
     NSString* origin = username_and_realm.realm.empty()
@@ -668,7 +674,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                                   webState:(web::WebState*)webState
                          completionHandler:
                              (SuggestionsAvailableCompletion)completion {
-  if (!sentRequestToStore_ && [type isEqual:@"focus"]) {
+  if (!sentRequestToStore_ && [fieldType isEqual:@"focus"]) {
     [self findPasswordFormsAndSendThemToPasswordStore];
     completion(NO);
     return;
@@ -678,6 +684,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     return;
   }
 
+    if ([fieldType isEqualToString:@"password"])
+        completion(YES);
   // Suggestions are available for the username field of the password form.
   completion(fillData_.IsSuggestionsAvailable(
       base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName)));
@@ -695,7 +703,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     completion(@[], nil);
     return;
   }
-  completion(BuildSuggestions(fillData_, formName, fieldName, typedValue),
+  completion(BuildSuggestions(fillData_, formName, fieldName, [fieldType isEqualToString:@"password"], typedValue),
              self);
 }
 
