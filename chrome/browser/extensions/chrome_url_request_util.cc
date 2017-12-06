@@ -174,6 +174,7 @@ net::URLRequestJob* MaybeCreateURLRequestResourceBundleJob(
                 directory_path, request_path, &resource_id)) {
       relative_path = relative_path.Append(request_path);
       relative_path = relative_path.NormalizePathSeparators();
+      DCHECK(false);
       return new URLRequestResourceBundleJob(request,
                                              network_delegate,
                                              relative_path,
