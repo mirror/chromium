@@ -157,7 +157,8 @@ class BlobURLLoader : public storage::MojoBlobReader::Delegate,
 
     // TODO(jam): some of this code can be shared with
     // content/network/url_loader.h
-    client_->OnReceiveResponse(response, base::nullopt, nullptr);
+    client_->OnReceiveResponse(response, base::nullopt, nullptr,
+                               mojom::URLLoaderNavigationDataPtr());
     sent_headers_ = true;
 
     if (metadata) {
@@ -183,7 +184,8 @@ class BlobURLLoader : public storage::MojoBlobReader::Delegate,
       ResourceResponseHead response;
       response.headers = storage::BlobURLRequestJob::GenerateHeaders(
           status_code, nullptr, nullptr, 0, 0);
-      client_->OnReceiveResponse(response, base::nullopt, nullptr);
+      client_->OnReceiveResponse(response, base::nullopt, nullptr,
+                                 mojom::URLLoaderNavigationDataPtr());
     }
     network::URLLoaderCompletionStatus status;
     // TODO(kinuko): We should probably set the error_code here,

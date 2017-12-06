@@ -99,7 +99,8 @@ class MockNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
       return;
     }
     client->OnReceiveResponse(response_head, base::nullopt /* ssl_info */,
-                              nullptr /* downloaded_file */);
+                              nullptr /* downloaded_file */,
+                              mojom::URLLoaderNavigationDataPtr());
 
     // Pass the response body to the client.
     uint32_t bytes_written = response.body.size();

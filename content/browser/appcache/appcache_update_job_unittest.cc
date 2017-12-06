@@ -628,7 +628,8 @@ class MockURLLoaderFactory : public mojom::URLLoaderFactory {
     response.headers = info.headers;
     response.headers->GetMimeType(&response.mime_type);
 
-    client->OnReceiveResponse(response, base::nullopt, nullptr);
+    client->OnReceiveResponse(response, base::nullopt, nullptr,
+                              mojom::URLLoaderNavigationDataPtr());
 
     mojo::DataPipe data_pipe;
 

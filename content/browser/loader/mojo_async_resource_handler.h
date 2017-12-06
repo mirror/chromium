@@ -133,6 +133,8 @@ class CONTENT_EXPORT MojoAsyncResourceHandler : public ResourceHandler,
   ResourceDispatcherHostImpl* rdh_;
   mojo::Binding<mojom::URLLoader> binding_;
 
+  ResourceType resource_type_;
+
   bool defer_on_response_started_;
 
   bool has_checked_for_sufficient_resources_ = false;

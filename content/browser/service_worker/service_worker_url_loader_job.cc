@@ -183,7 +183,8 @@ void ServiceWorkerURLLoaderJob::CommitResponseHeaders() {
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info_,
-                                        nullptr /* downloaded_file */);
+                                        nullptr /* downloaded_file */,
+                                        mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
@@ -367,7 +368,8 @@ void ServiceWorkerURLLoaderJob::ResumeReadingBodyFromNet() {}
 void ServiceWorkerURLLoaderJob::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   DCHECK_EQ(Status::kStarted, status_);
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
@@ -377,7 +379,8 @@ void ServiceWorkerURLLoaderJob::OnReceiveResponse(
     response_head_.headers = response_head.headers;
   }
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info,
-                                        std::move(downloaded_file));
+                                        std::move(downloaded_file),
+                                        mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerURLLoaderJob::OnReceiveRedirect(

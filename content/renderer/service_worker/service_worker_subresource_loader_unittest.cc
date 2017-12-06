@@ -53,7 +53,8 @@ class FakeNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
     ResourceResponseHead response;
     response.headers = info.headers;
     response.headers->GetMimeType(&response.mime_type);
-    client->OnReceiveResponse(response, base::nullopt, nullptr);
+    client->OnReceiveResponse(response, base::nullopt, nullptr,
+                              mojom::URLLoaderNavigationDataPtr());
 
     std::string body = "this body came from the network";
     uint32_t bytes_written = body.size();

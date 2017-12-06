@@ -174,7 +174,8 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
   void OnReceiveResponse(
       const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {
     DCHECK_EQ(Status::kStarted, status_);
     // Existing callers need URL and HTTP status code. URL is already set in
     // Start().
