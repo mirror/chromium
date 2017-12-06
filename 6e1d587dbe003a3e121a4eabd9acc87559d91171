@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e06ba4_aeafec28",
+        "filename": "content/public/browser/file_url_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "I would prefer that we didn\u0027t use inheritance here since it sort of leaks an implementation detail. Can we just duplicate OnBytesRead and OnDoneReading signatures here?",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111adfe3_9eb0f17a",
+        "filename": "extensions/browser/content_verify_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8fa4ca_cd784e85",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "Since we\u0027re using a thread-safe observer still, the FileSequenceState should indeed remain as the owner of the observer (sorry for the churn). FileSequenceState can out-live its FileDataPipeProducer and so shouldn\u0027t hold raw ptrs to anything owned by the latter.",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63e9f8f_9515dede",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "nit: Can you make this a public Observer class nested in FileDataPipeProducer?",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c7ea29_759a53ac",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "Can we instead make this once per successful read and get rid of the |read_result| arg? The use case we want this for shouldn\u0027t care whether an individual read fails, so it doesn\u0027t matter. We can always add it back if we want to later.",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52894f02_69183e17",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "Super nitty nit: Like 99% of all similar APIs we have in the codebase (and in various standard library signatures) have these two args (data address and size) in the other order.",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c797afe_66d1e7a7",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just make these pure virtual? Then no need for a ctor or DISALLOW_COPY_AND_ASSIGN",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08df5709_f1c2799b",
+        "filename": "mojo/public/cpp/system/tests/file_data_pipe_producer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T18:20:45Z",
+      "side": 1,
+      "message": "nit: could we just make num_read_errors etc public fields on this test object and not introduce DataPipeObserverData at all?",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
