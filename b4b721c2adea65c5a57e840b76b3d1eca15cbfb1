@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "199a330f_4d233698",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T00:14:27Z",
+      "side": 1,
+      "message": "Added note.",
+      "parentUuid": "a2ffcf73_4769f1cd",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37f8bed_2b5c6445",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 7
@@ -353,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "5278f0d5_9e29ad2b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T00:14:27Z",
+      "side": 1,
+      "message": "Oh sorry, min-size before this rule is applied is 50px. Then gets clamped down to 0px with this line.",
+      "parentUuid": "efe8dc13_6d0be7d7",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed9b4ab_f85d67a4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
         "patchSetId": 7
@@ -459,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "f7862a94_26426b3b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T00:14:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "34ada9b0_2a470fbc",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d783f9c_0a151287",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 7
@@ -559,6 +613,24 @@
       "side": 1,
       "message": "Not sure if the spec has anything to say about this? In my mind, even percentage widths could be treated more optimally than just resolving them to 0px. But yeah, not web compatible. :)",
       "parentUuid": "c2ef344b_8b2429b4",
+      "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aecba61a_38b17639",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T00:14:27Z",
+      "side": 1,
+      "message": "I think technically it\u0027s meant to be 10px in the example I gave, but nobody does this. :/",
+      "parentUuid": "86fa9e6b_9b6a944d",
       "revId": "b4b721c2adea65c5a57e840b76b3d1eca15cbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
