@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36dee206_20fd7d4a",
+        "filename": "components/autofill/core/common/autofill_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T21:52:38Z",
+      "side": 1,
+      "message": "is this used? Should SanitizedCreditCardValue be removed and calls to it replaced with calls to this? I notice that this removed internal whitespace, which the CC version does not.",
+      "revId": "72dd0eb1496a19ab3a1a3da2bd78ad971329e057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91385385_65219333",
+        "filename": "components/autofill/core/common/autofill_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T21:52:38Z",
+      "side": 1,
+      "message": "nit: these two Trim operations can be folded into the RemoveChars below if you include these chars in the strings..",
+      "revId": "72dd0eb1496a19ab3a1a3da2bd78ad971329e057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d43110_f1259c0a",
+        "filename": "components/autofill/core/common/autofill_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T21:52:38Z",
+      "side": 1,
+      "message": "nit: make this a named const char [] and refer to it here and below",
+      "range": {
+        "startLine": 201,
+        "startChar": 50,
+        "endLine": 201,
+        "endChar": 57
+      },
+      "revId": "72dd0eb1496a19ab3a1a3da2bd78ad971329e057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2cb105_49f69426",
+        "filename": "components/autofill/core/common/autofill_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T21:52:38Z",
+      "side": 1,
+      "message": "There\u0027s a constant for all whitespace chars in base::i18n",
+      "revId": "72dd0eb1496a19ab3a1a3da2bd78ad971329e057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
