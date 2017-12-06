@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1302931c_9cdf5b35",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T15:01:37Z",
+      "side": 1,
+      "message": "Offline we agreed to add it as a member",
+      "revId": "c1a50387fcc415bb6275d1a1912a997a521b5d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dcc473_debd37ab",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T15:01:37Z",
+      "side": 1,
+      "message": "Could you add a comment?",
+      "revId": "c1a50387fcc415bb6275d1a1912a997a521b5d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae18ff8_0d72bcbf",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-06T15:01:37Z",
+      "side": 1,
+      "message": "Could you rephrase it to explicitly explain why it is possible, so that the reader of the comment would not not need to connect dots.",
+      "revId": "c1a50387fcc415bb6275d1a1912a997a521b5d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
