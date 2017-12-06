@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64fb4c7_da9143df",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-06T17:12:09Z",
+      "side": 1,
+      "message": "I think we\u0027d probably prefer pixel tests to make up a fixed value here - and if anything run with different fixed values if they expect different results and want to test them. Less machine dependence for test outputs would be nice.",
+      "revId": "54939571a69093216e38c8372961c38ed44f911d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38dd97d_6119b7f6",
+        "filename": "cc/test/test_context_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-06T17:12:09Z",
+      "side": 1,
+      "message": "Hm so this change seems really good, but it does introduce a magic number, that is controlling branches inside the constructor. I had another thought.\n\nThe GrContextForGLES2Interface() really wants some cache sizes. What if we had the method take them as inputs directly. But then we need to compute them, so we could make computing the cache sizes a static method? Production code would use the static method to figure out the sizes, and pass them to the constructor. Test code would make up cache sizes that are less magical. WDYT? There are probably some other ways to avoid a magic constant here too if you have ideas?",
+      "revId": "54939571a69093216e38c8372961c38ed44f911d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
