@@ -22,6 +22,29 @@
       "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff1f53b_d72a5e14",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T19:34:59Z",
+      "side": 1,
+      "message": "I think by fast back-forward navigation we mean navigation which took the page from the cache. And it\u0027s not possible to tell if navigation was/is/will be fast back-forward navigation. Can we use a different name for this property? How about storing WKNavigationType?",
+      "range": {
+        "startLine": 1371,
+        "startChar": 13,
+        "endLine": 1371,
+        "endChar": 43
+      },
+      "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
