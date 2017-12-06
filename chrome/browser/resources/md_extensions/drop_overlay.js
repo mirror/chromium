@@ -18,6 +18,9 @@ Polymer({
     dragTarget.addEventListener('extension-drag-ended', () => {
       this.hidden = true;
     });
+    dragTarget.addEventListener('drag-and-drop-load-error', (e) => {
+      this.fire('load-error', e.detail);
+    });
     this.dragWrapper_ =
         new cr.ui.DragWrapper(dragTarget, this.dragWrapperHandler_);
   },

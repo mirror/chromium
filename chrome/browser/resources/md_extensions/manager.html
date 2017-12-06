@@ -54,7 +54,8 @@
         background: var(--md-toolbar-color);
       }
     </style>
-    <extensions-drop-overlay></extensions-drop-overlay>
+    <extensions-drop-overlay on-load-error="onLoadError_">
+    </extensions-drop-overlay>
     <extensions-toolbar is-guest="[[isGuest_]]" in-dev-mode="[[inDevMode]]"
         on-pack-tap="onPackTap_" delegate="[[delegate]]"
         on-cr-toolbar-menu-tap="onMenuButtonTap_"
