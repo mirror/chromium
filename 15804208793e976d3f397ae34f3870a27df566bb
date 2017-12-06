@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7216f7f8_198429c9",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-06T22:43:58Z",
+      "side": 1,
+      "message": "At first I wondered what the code\n  UpdateScrollParent(ScrollParent())\ndoes, then I found it updates ScrollParent of cc layers based on ScrollParent() which is from compositing inputs. So the code has no problem :)",
+      "parentUuid": "19e9f3e9_258be091",
+      "revId": "15804208793e976d3f397ae34f3870a27df566bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "198a6f13_5249d3d9",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T02:01:09Z",
       "side": 1,
       "message": "This statement is a little bit inaccurate. This is the clipping state our topmost GraphicsLayer in this CLM will inherit from cc layer hierarchy, after taking scroll parent and clip parent into consideration.\n\nThis clip state can be different from the inherited clip state as defined by CSS spec, those differences then need to be applied by ancestor_clipping_layer_.",
+      "revId": "15804208793e976d3f397ae34f3870a27df566bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5942adff_c7904cd7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-06T22:43:58Z",
+      "side": 1,
+      "message": "Updated the comment based on your suggestion.",
+      "parentUuid": "198a6f13_5249d3d9",
       "revId": "15804208793e976d3f397ae34f3870a27df566bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "15804208793e976d3f397ae34f3870a27df566bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24b9462_fd9b5048",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-06T22:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62396fd8_05f9d0c4",
+      "revId": "15804208793e976d3f397ae34f3870a27df566bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
