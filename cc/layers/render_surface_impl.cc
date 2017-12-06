@@ -559,7 +559,7 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
                      !layer_tree_impl_->settings().enable_edge_anti_aliasing);
       } break;
       case viz::DrawQuad::DEBUG_BORDER:
-        NOTIMPLEMENTED();
+        // NOTIMPLEMENTED();
         break;
       default:
         NOTREACHED();
