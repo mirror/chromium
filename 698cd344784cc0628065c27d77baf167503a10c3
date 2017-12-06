@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d7384815_abb0df32",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T20:31:42Z",
+      "side": 1,
+      "message": "\u003e Do we need to replace `RunUntilIdle()` calls with `FastForwardUntilNoTasksRemain()` when they happen from within a TearDown?\n\u003e \n\u003e 1) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_downloader_impl_unittest.cc?type\u003dcs\u0026q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d67\n\u003e \n\nDone. Addressed that one in base, which was a miss. I had to keep the method thou and add a new one.\n\n\u003e 2) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_gcm_app_handler_unittest.cc?q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d63\u0026dr\u003dC\n\u003e \n\nThis uses Simple test task runner, which means no change is needed.\n\n\u003e 3) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/suggested_articles_observer_unittest.cc?q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d60\u0026dr\u003dC\n\nThis uses Simple test task runner, which means no change is needed.",
+      "parentUuid": "53c1eab0_c10b3334",
+      "range": {
+        "startLine": 213,
+        "startChar": 16,
+        "endLine": 213,
+        "endChar": 45
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd1e68e_02be1827",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b3a6ac01_a96e1d44",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T20:31:42Z",
+      "side": 1,
+      "message": "Done. Good suggestion.",
+      "parentUuid": "7bd1e68e_02be1827",
+      "range": {
+        "startLine": 86,
+        "startChar": 26,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ceb627_c2a8e494",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
         "patchSetId": 2
@@ -115,6 +163,30 @@
       "revId": "698cd344784cc0628065c27d77baf167503a10c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e744d54a_0573e18c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T20:31:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ceb627_c2a8e494",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
