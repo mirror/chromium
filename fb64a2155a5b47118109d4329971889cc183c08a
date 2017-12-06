@@ -105,6 +105,30 @@
       "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36314d4c_9d67bc39",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T01:47:10Z",
+      "side": 1,
+      "message": "I wouldn\u0027t rely on that. Settings test coverage is decent these days, but by no means exhaustive, and a runtime console error could go unseen for quite a while (it\u0027s certainly happened more than once).\n\nsettings-main embeds settings-basic-page so it *should* be safe, but frankly if I moved those I\u0027m pretty sure I\u0027d want to reorg our super confusing page layout which would almost certainly break stuff :)\n\nThis isn\u0027t urgent, it\u0027s just a potential gotcha for future devs.",
+      "parentUuid": "5beac59e_8b73ef6b",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
