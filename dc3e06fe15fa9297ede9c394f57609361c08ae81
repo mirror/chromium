@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c6e4b46_86728b19",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T05:54:30Z",
+      "side": 1,
+      "message": "Does this TODO need to be updated at this point for the new code below?",
+      "revId": "dc3e06fe15fa9297ede9c394f57609361c08ae81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28af6019_bb848f29",
         "filename": "testing/buildbot/generate_buildbot_json.py",
         "patchSetId": 2
@@ -30,6 +47,23 @@
       "writtenOn": "2017-12-06T02:12:06Z",
       "side": 1,
       "message": "nit: might be a bit cleaner to do this as an else if that ensures that all keys in both are dicts.",
+      "revId": "dc3e06fe15fa9297ede9c394f57609361c08ae81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c59320_c8060907",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T05:54:30Z",
+      "side": 1,
+      "message": "Could you add a unittest which specifies skip_device_recovery for one tester?",
       "revId": "dc3e06fe15fa9297ede9c394f57609361c08ae81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
