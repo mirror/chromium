@@ -16,9 +16,9 @@ std::unique_ptr<ServiceTransferCacheEntry> ServiceTransferCacheEntry::Create(
     TransferCacheEntryType type) {
   switch (type) {
     case TransferCacheEntryType::kRawMemory:
-      return std::make_unique<ServiceRawMemoryTransferCacheEntry>();
+      return base::MakeUnique<ServiceRawMemoryTransferCacheEntry>();
     case TransferCacheEntryType::kImage:
-      return std::make_unique<ServiceImageTransferCacheEntry>();
+      return base::MakeUnique<ServiceImageTransferCacheEntry>();
   }
 
   NOTREACHED();
@@ -33,6 +33,18 @@ bool ServiceTransferCacheEntry::SafeConvertToType(
 
   *type = static_cast<TransferCacheEntryType>(raw_type);
   return true;
+}
+
+template <>
+TransferCacheEntryType
+ServiceTransferCacheEntry::DeduceType<ServiceRawMemoryTransferCacheEntry>() {
+  return TransferCacheEntryType::kRawMemory;
+}
+
+template <>
+TransferCacheEntryType
+ServiceTransferCacheEntry::DeduceType<ServiceImageTransferCacheEntry>() {
+  return TransferCacheEntryType::kImage;
 }
 
 }  // namespace cc
