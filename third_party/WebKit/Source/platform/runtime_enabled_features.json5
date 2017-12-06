@@ -1001,6 +1001,10 @@
       status: "experimental",
     },
     {
+      name: "StopInBackgroundExperimental",
+      status: "test",
+    },
+    {
       name: "StopLoadingInBackgroundAndroid",
       status: "test",
     },
