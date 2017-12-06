@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5b229304_cef9c274",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Using 0dp sounds good to me, thanks!",
+      "parentUuid": "bd4d8d17_e8e53213",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2799798d_a402789a",
         "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
         "patchSetId": 11
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "afe93706_fa0fbd5f",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80f96a0e_ae702bcf",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "206b70bf_b560aee6",
         "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
         "patchSetId": 11
@@ -128,6 +176,24 @@
       "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99416db1_f8d40f46",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "parentUuid": "57463882_3b73d4be",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +326,24 @@
     },
     {
       "key": {
+        "uuid": "c8632d86_8dccd9e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c129f17b_c9894d93",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0861b7b1_26fa107e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 11
@@ -292,6 +376,24 @@
       "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbc13f5_0cf5bcda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "That can definitely be done in a follow-up CL/",
+      "parentUuid": "2134bfea_eacfd07a",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -670,6 +772,30 @@
     },
     {
       "key": {
+        "uuid": "e9507257_f0e03bfb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "What if we insert a dummy view into main.xml to hold the insertion spot for the dialog container?",
+      "parentUuid": "dc133d07_7b7f053f",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a8acc99_ecba189a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
         "patchSetId": 11
@@ -869,6 +995,24 @@
     },
     {
       "key": {
+        "uuid": "fd1ed5a0_4bdce1c5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd6188b5_180bfbc9",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0757d492_5ba420de",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
         "patchSetId": 11
@@ -898,6 +1042,41 @@
       "side": 1,
       "message": "I think this test should check a combination of different types of dialogs and whether a correct presenter is selected. Modified the test to also check APP_MODAL.",
       "parentUuid": "0757d492_5ba420de",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628cfe61_589ebdba",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "That sounds good!",
+      "parentUuid": "ebdb7f5f_242054c0",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2ad58b2_a0fe5c20",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T19:44:01Z",
+      "side": 1,
+      "message": "Can we work these #isShowing() checks into some of the tests?",
       "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
