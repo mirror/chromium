@@ -123,6 +123,8 @@ _CONFIG = [
             'gfx::GpuMemoryBufferHandle',
             'gpu::gles2::GLES2Interface',
             'gpu::MailboxHolder',
+            'gpu::Mailbox',
+            'gpu::SyncToken',
         ],
     },
     {

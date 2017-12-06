@@ -120,6 +120,8 @@ void VRWebGLLayer::UpdateViewports() {
   long framebuffer_width = framebufferWidth();
   long framebuffer_height = framebufferHeight();
 
+  viewports_dirty_ = false;
+
   if (session()->exclusive()) {
     left_viewport_ =
         new VRViewport(0, 0, framebuffer_width * 0.5 * viewport_scale_,
@@ -128,20 +130,25 @@ void VRWebGLLayer::UpdateViewports() {
         new VRViewport(framebuffer_width * 0.5 * viewport_scale_, 0,
                        framebuffer_width * 0.5 * viewport_scale_,
                        framebuffer_height * viewport_scale_);
+
+    session()->device()->frameProvider()->UpdateWebGLLayerViewports(this);
   } else {
     left_viewport_ = new VRViewport(0, 0, framebuffer_width * viewport_scale_,
                                     framebuffer_height * viewport_scale_);
   }
-
-  viewports_dirty_ = false;
 }
 
 void VRWebGLLayer::OnFrameStart() {
-  drawing_buffer_->MarkFramebufferComplete(true);
+  drawing_buffer_->Activate();
 }
 
 void VRWebGLLayer::OnFrameEnd() {
-  drawing_buffer_->MarkFramebufferComplete(false);
+  bool changed = drawing_buffer_->Finish();
+
+  if (changed && session()->exclusive()) {
+    gpu::MailboxHolder mailbox_holder = drawing_buffer_->GetMailbox();
+    session()->device()->frameProvider()->SubmitFrame(mailbox_holder);
+  }
 }
 
 void VRWebGLLayer::Trace(blink::Visitor* visitor) {
