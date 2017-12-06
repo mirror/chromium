@@ -43,6 +43,9 @@ class CC_PAINT_EXPORT ServiceTransferCacheEntry {
   static std::unique_ptr<ServiceTransferCacheEntry> Create(
       TransferCacheEntryType type);
 
+  template <typename T>
+  static TransferCacheEntryType DeduceType();
+
   // Checks that |raw_type| represents a valid TransferCacheEntryType and
   // populates |type|. If |raw_type| is not valid, the function returns false
   // and |type| is not modified.

@@ -35,4 +35,16 @@ bool ServiceTransferCacheEntry::SafeConvertToType(
   return true;
 }
 
+template <>
+TransferCacheEntryType
+ServiceTransferCacheEntry::DeduceType<ServiceRawMemoryTransferCacheEntry>() {
+  return TransferCacheEntryType::kRawMemory;
+}
+
+template <>
+TransferCacheEntryType
+ServiceTransferCacheEntry::DeduceType<ServiceImageTransferCacheEntry>() {
+  return TransferCacheEntryType::kImage;
+}
+
 }  // namespace cc
