@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d85f0f42_c5b72c39",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-06T20:14:53Z",
+      "side": 1,
+      "message": "void OnSyncServiceInitialized() override {}\n\nwill fix your current crash",
+      "revId": "661df5087106895b968ee45a2f46d66679b5f5a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
