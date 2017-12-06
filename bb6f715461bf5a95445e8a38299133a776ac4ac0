@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de8576d7_8b6e33fe",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T04:48:14Z",
+      "side": 1,
+      "message": "Yeah. There was a raster regression when we started creating this object for every op (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d784377).",
+      "parentUuid": "71ee28c3_32872d81",
+      "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b2d066f_3cad5a4e",
         "filename": "cc/paint/skia_paint_canvas.cc",
         "patchSetId": 4
