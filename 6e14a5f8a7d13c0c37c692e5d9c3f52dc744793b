@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc1ffc5_eabbc3f6",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T02:37:29Z",
+      "side": 1,
+      "message": "Should we report small videos as audio only? Why do we filter small videos?",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b21bf2_04b31a73",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T02:37:29Z",
+      "side": 1,
+      "message": "Am I right that for each of these RECORD_WATCH_TIME would also do the correct thing? IIUC, you\u0027ve defined separate macros just as an assert that we don\u0027t report things like NativeControls status for background video?",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 399,
+        "endChar": 36
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f4da69_96e9aa10",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T02:37:29Z",
+      "side": 1,
+      "message": "maybe add a default: clause to catch anything that slips past",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf13132_d9b0a917",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T02:37:29Z",
+      "side": 1,
+      "message": "How do we reason about which metrics to include/exclude in UMA?",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9450e4_d15d1ab6",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T02:37:29Z",
+      "side": 1,
+      "message": "Just realizing how rough this calculation is. Have we considered more precise tracking of time between rebuffers? Does this match YT\u0027s approach?",
+      "range": {
+        "startLine": 204,
+        "startChar": 39,
+        "endLine": 204,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
