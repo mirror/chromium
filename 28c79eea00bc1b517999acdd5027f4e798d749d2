@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49fee066_bbd09d3c",
+        "filename": "testing/buildbot/chromium.chromiumos.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "I believe the diffs in this file are just due to sorting differences. kbr@, did you hit this and have some way around it, short of re-sorting the JSON first? I\u0027m not going to bother to do that.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2551e20f_99441d5f",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "There seem to be a fairly broad set of tests that more-or-less fit this exclusion list. I bet we can clean this up, but I didn\u0027t want to tackle that as part of this change.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f2cc4b_46f42407",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "I didn\u0027t add comments for the \"why aren\u0027t they running on X\" observations; I figure we should do that for almost every entry in the file and add comments for why they *are* here instead. Thoughts?",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccec86f_25b3031a",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "This feels a bit strange - this is a test suite that is only run on the one bot. \n\nI could combine this w/ linux_chromeos_specific_gtests, but then I\u0027d have to exclude ~15 tests from the debug bots.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abe9115_e8684011",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "This feels kinda clunky to have to definite composite suites that can neither include other composite suites nor define individual tests (MB would let you do both of these things, but it also wouldn\u0027t let you *subtract* things).\n\nI\u0027m not sure yet if we should implement the above or live with the restrictions, but I figured it would be better to convert everything and then figure out what we need as part of cleaning up the exceptions.",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92d9e2a_c5b6ecd3",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is better to define a new suite here, or use a more generic isolated_scripts rule + remove entries and modify things ...",
+      "revId": "28c79eea00bc1b517999acdd5027f4e798d749d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

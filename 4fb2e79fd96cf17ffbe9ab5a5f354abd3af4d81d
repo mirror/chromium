@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab5cb0d_7402b2e7",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-06T04:04:08Z",
+      "side": 0,
+      "message": "This is used for linux_specific and linux_chromium_specific, with two different sets of args, so I just got rid of this suite and rolled the test into those suites (duplicated).",
+      "revId": "4fb2e79fd96cf17ffbe9ab5a5f354abd3af4d81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
