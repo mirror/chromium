@@ -4,7 +4,10 @@
 
 #include <vector>
 
+#include "base/command_line.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
+#include "cc/paint/image_transfer_cache_entry.h"
 #include "cc/paint/raw_memory_transfer_cache_entry.h"
 #include "cc/paint/transfer_cache_entry.h"
 #include "cc/test/test_in_process_context_provider.h"
@@ -15,8 +18,10 @@
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/service_transfer_cache.h"
+#include "gpu/config/gpu_switches.h"
 #include "gpu/ipc/gl_in_process_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkImage.h"
 #include "ui/gl/gl_implementation.h"
 
 namespace cc {
@@ -36,6 +41,17 @@ class TransferCacheTest : public testing::Test {
     attribs.sample_buffers = 0;
     attribs.fail_if_major_perf_caveat = false;
     attribs.bind_generates_resource = false;
+    // Enable OOP rasterization.
+    attribs.enable_oop_rasterization = true;
+
+    // Add an OOP rasterization command line flag so that we set
+    // |chromium_raster_transport| features flag.
+    // TODO(vmpstr): Is there a better way to do this?
+    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableOOPRasterization)) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kEnableOOPRasterization);
+    }
 
     context_ = gpu::GLInProcessContext::CreateWithoutInit();
     auto result = context_->Initialize(
@@ -44,6 +60,7 @@ class TransferCacheTest : public testing::Test {
         &image_factory_, base::ThreadTaskRunnerHandle::Get());
 
     ASSERT_EQ(result, gpu::ContextResult::kSuccess);
+    ASSERT_TRUE(context_->GetCapabilities().supports_oop_raster);
   }
 
   void TearDown() override { context_.reset(); }

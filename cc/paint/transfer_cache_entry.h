@@ -9,6 +9,8 @@
 
 #include "cc/paint/paint_export.h"
 
+class GrContext;
+
 namespace cc {
 
 // To add a new transfer cache entry type:
@@ -40,6 +42,9 @@ class CC_PAINT_EXPORT ServiceTransferCacheEntry {
   static std::unique_ptr<ServiceTransferCacheEntry> Create(
       TransferCacheEntryType type);
 
+  template <typename T>
+  static TransferCacheEntryType DeduceType();
+
   // Checks that |raw_type| represents a valid TransferCacheEntryType and
   // populates |type|. If |raw_type| is not valid, the function returns false
   // and |type| is not modified.
@@ -49,7 +54,7 @@ class CC_PAINT_EXPORT ServiceTransferCacheEntry {
   virtual ~ServiceTransferCacheEntry() {}
   virtual TransferCacheEntryType Type() const = 0;
   virtual size_t Size() const = 0;
-  virtual bool Deserialize(size_t size, uint8_t* data) = 0;
+  virtual bool Deserialize(GrContext* context, size_t size, uint8_t* data) = 0;
 };
 
 };  // namespace cc

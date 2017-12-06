@@ -20329,6 +20329,22 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   texture_manager()->SetLevelCleared(texture_ref, texture->target(), 0, true);
 }
 
+class TransferCacheDeserializeHelperImpl
+    : public cc::TransferCacheDeserializeHelper {
+ public:
+  explicit TransferCacheDeserializeHelperImpl(
+      ServiceTransferCache* transfer_cache)
+      : transfer_cache_(transfer_cache) {}
+  ~TransferCacheDeserializeHelperImpl() override = default;
+
+ private:
+  cc::ServiceTransferCacheEntry* GetEntryInternal(uint64_t id) override {
+    CHECK(transfer_cache_);
+    return transfer_cache_->GetEntry(TransferCacheEntryId::FromUnsafeValue(id));
+  }
+  ServiceTransferCache* transfer_cache_;
+};
+
 error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
@@ -20350,6 +20366,8 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
   cc::PaintOp::DeserializeOptions options;
+  TransferCacheDeserializeHelperImpl impl(GetContextGroup()->transfer_cache());
+  options.transfer_cache = &impl;
 
   int op_idx = 0;
   while (size > 4) {
@@ -20421,6 +20439,10 @@ error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
   GLuint data_shm_offset = c.data_shm_offset;
   GLuint data_size = c.data_size;
 
+  if (!supports_oop_raster_)
+    return error::kInvalidArguments;
+  DCHECK(gr_context_);
+
   // Validate the type we are about to create.
   cc::TransferCacheEntryType type;
   if (!cc::ServiceTransferCacheEntry::SafeConvertToType(c.type, &type))
@@ -20440,7 +20462,7 @@ error::Error GLES2DecoderImpl::HandleCreateTransferCacheEntryCHROMIUM(
                                   handle_shm_id);
 
   if (!GetContextGroup()->transfer_cache()->CreateLockedEntry(
-          handle_id, handle, type, data_memory, data_size))
+          handle_id, handle, type, gr_context_.get(), data_memory, data_size))
     return error::kInvalidArguments;
 
   return error::kNoError;
