@@ -158,6 +158,9 @@ class WebContents;
   // added in fullscreen in 10.10+.
   base::scoped_nsobject<CustomWindowControlsView> customWindowControls_;
   base::scoped_nsobject<CrTrackingArea> customWindowControlsTrackingArea_;
+
+  // The map stores if the WebContents was hiding throbber.
+  std::map<content::WebContents*, BOOL> wasHidingThrobberMap_;
 }
 
 @property(nonatomic) CGFloat leadingIndentForControls;
