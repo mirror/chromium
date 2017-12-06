@@ -38,7 +38,8 @@ void FakeVoiceInteractionFrameworkInstance::ToggleVoiceInteractionSession(
 }
 
 void FakeVoiceInteractionFrameworkInstance::
-    StartVoiceInteractionSessionForRegion(const gfx::Rect& region) {
+    StartVoiceInteractionSessionForRegion(const gfx::Rect& region,
+                                          bool enable_assist_data_encryption) {
   start_session_for_region_count_++;
   selected_region_ = region;
 }

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 13
+// Next MinVersion: 14
 
 module arc.mojom;
 
@@ -22,7 +22,7 @@ enum VoiceInteractionState {
 };
 
 // Handles voice interaction queries from Android.
-// Next method ID: 6
+// Next method ID: 8
 // Deprecated method ID: 0, 4
 interface VoiceInteractionFrameworkHost {
   // Returns a fullscreen screenshot of the primary display.
@@ -37,6 +37,14 @@ interface VoiceInteractionFrameworkHost {
 
   // Notifies Chrome the state of voice interaction session.
   [MinVersion=8]SetVoiceInteractionState@5(VoiceInteractionState state);
+
+  // Returns a cropped screenshot of the primary display.
+  // |data| represents the image encoded in JPEG format.
+  // The position of the screenshot is determined by the Host side.
+  [MinVersio=13]CaptureScreenshot@6() => (array<uint8> data);
+
+  // Returns an assist data containing the encrypted screenshot information.
+  [MinVersion=13]GetAssistData@7() => (array<uint8> data);
 };
 
 // Indicates voice interaction configuration status.
@@ -67,7 +75,9 @@ interface VoiceInteractionFrameworkInstance {
 
   // Starts the voice interaction session in container, with a screen region
   // selected.
-  [MinVersion=1] StartVoiceInteractionSessionForRegion@2(Rect region);
+  // |enable_assist_data_encryption| is true if the AssistData Encryption feature is enabled.
+  // It is a temporary experiment flag which will be removed after the feature is stablized.
+  [MinVersion=1] StartVoiceInteractionSessionForRegion@2(Rect region, [MinVersion=13] bool enable_assist_data_encryption);
 
   // Shows/hides the metalayer in the container.
   [MinVersion=1] SetMetalayerVisibility@3([MinVersion=2] bool visible);
