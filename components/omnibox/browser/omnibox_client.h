@@ -67,7 +67,8 @@ class OmniboxClient {
   // Returns the favicon of the current page.
   virtual gfx::Image GetFavicon() const;
 
-  // Returns true if the visible entry is a New Tab Page rendered by Instant.
+  // Returns true if the current page is a New Tab Page rendered by Instant,
+  // see search::IsInstantNTP.
   virtual bool IsInstantNTP() const;
 
   // Returns true if the committed entry is a search results page.

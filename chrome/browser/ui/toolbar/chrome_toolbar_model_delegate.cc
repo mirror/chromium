@@ -83,9 +83,13 @@ bool ChromeToolbarModelDelegate::ShouldDisplayURL() const {
         url = virtual_url;
       return url.host() != chrome::kChromeUINewTabHost;
     }
+
+    Profile* profile = GetProfile();
+    if (profile)
+      return !search::IsInstantNTPURL(entry->GetURL(), profile);
   }
 
-  return !search::IsInstantNTP(GetActiveWebContents());
+  return true;
 }
 
 security_state::SecurityLevel ChromeToolbarModelDelegate::GetSecurityLevel()
