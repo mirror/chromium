@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada6d0e6_9189659c",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T01:22:24Z",
+      "side": 1,
+      "message": "FWIW, defining global variables to avoid using loadTimeData inside ui/webui/resources/cr_elements/policy seems like a hack we should eliminate with a better, less fragile mechanism. I stumbled upon related issue earlier today. See https://chromium-review.googlesource.com/c/chromium/src/+/807684/3/chrome/test/data/webui/cr_elements/cr_policy_strings.js, where I was not able to convert the \"var\" to let/const, because it is defined globally multiple times.",
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dfcbfbd_ce86c2e6",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T01:22:24Z",
+      "side": 1,
+      "message": "Can we fix the failing test by moving lines https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_ui/settings_ui.js?q\u003dsettings_ui.js\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d89-126 within settings_main.js instead? Do they need to be in settings_ui.js?",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
