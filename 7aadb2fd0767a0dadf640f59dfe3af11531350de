@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2b97cc2_8568fbb9",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-06T18:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88c282c_f0d55ee2",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60e10f9c_922fcb3e",
         "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T17:45:51Z",
       "side": 1,
       "message": "I think this should just be /echo?  It\u0027s kinda weird to use echoheader without asking for any particular header.  I\u0027m not sure what it actually returns (May be none, or may be a response with an empty body).",
+      "range": {
+        "startLine": 54,
+        "startChar": 52,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac5892d_aea33498",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-06T18:23:07Z",
+      "side": 1,
+      "message": "I have to use \u0027/echoheader\u0027 here to avoid the disk_cache bug (\u0027/echoheader\u0027 uses \u0027no-cache\u0027 thus won\u0027t hit DCHECK).\nAccording to \u0027default_handlers.cc::HandleEchoHeader()\u0027 there will be a response with an empty body.\n\nAdded comments to mention https://crbug.com/792255.",
+      "parentUuid": "60e10f9c_922fcb3e",
       "range": {
         "startLine": 54,
         "startChar": 52,
@@ -68,6 +116,30 @@
       "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae57421f_3409b614",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-06T18:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8704e41e_09ca5215",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
