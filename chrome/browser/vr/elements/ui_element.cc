@@ -190,10 +190,6 @@ bool UiElement::IsHitTestable() const {
   return IsVisible() && hit_testable_;
 }
 
-bool UiElement::IsEditable() {
-  return false;
-}
-
 void UiElement::SetSize(float width, float height) {
   animation_player_.TransitionSizeTo(last_frame_time_, BOUNDS, size_,
                                      gfx::SizeF(width, height));

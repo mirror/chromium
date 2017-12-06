@@ -12,6 +12,7 @@ namespace vr {
 
 Keyboard::Keyboard() {
   set_name(kKeyboard);
+  set_focusable(false);
   SetVisibleImmediately(false);
 }
 
@@ -68,6 +69,7 @@ void Keyboard::NotifyClientTransformOperationsAnimated(
 
 bool Keyboard::OnBeginFrame(const base::TimeTicks& time,
                             const gfx::Vector3dF& head_direction) {
+  DCHECK(!focusable());
   if (!delegate_)
     return false;
 
