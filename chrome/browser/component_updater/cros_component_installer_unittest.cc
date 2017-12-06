@@ -66,7 +66,9 @@ TEST_F(CrOSComponentInstallerTest, BPPPCompatibleCrOSComponent) {
   const base::FilePath kPath("/component/path/v0");
   bppp.SetCompatibleCrosComponentPath(kComponent, kPath);
   EXPECT_TRUE(bppp.IsCompatibleCrosComponent(kComponent));
-  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath("a"), kPath);
+  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath(kComponent), kPath);
+  bppp.UnsetCompatibleCrosComponentPath(kComponent);
+  EXPECT_FALSE(bppp.IsCompatibleCrosComponent(kComponent));
 }
 
 TEST_F(CrOSComponentInstallerTest, ComponentReadyCorrectManifest) {

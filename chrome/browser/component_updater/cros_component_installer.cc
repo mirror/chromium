@@ -101,7 +101,16 @@ CrOSComponentInstallerPolicy::OnCustomInstall(
   return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
 }
 
+static void LogCustomUninstall(base::Optional<bool> result) {}
+
 void CrOSComponentInstallerPolicy::OnCustomUninstall() {
+  g_browser_process->platform_part()->UnsetCompatibleCrosComponentPath(name);
+
+  chromeos::ImageLoaderClient* loader =
+      chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
+  if (loader) {
+    loader->UnmountComponent(name, base::BindOnce(&LogCustomUninstall));
+  }
 }
 
 void CrOSComponentInstallerPolicy::ComponentReady(
@@ -249,6 +258,29 @@ void CrOSComponent::LoadComponent(
   } else {
     // A compatible component is intalled, load it directly.
     LoadComponentInternal(name, std::move(load_callback));
+  }
+}
+
+void CrOSComponent::RemoveComponent(
+    const std::string& name,
+    base::OnceCallback<void(bool)> remove_callback) {
+  const ConfigMap components = CONFIG_MAP_CONTENT;
+  const auto it = components.find(name);
+  if (name.empty() || it == components.end()) {
+    // Component |name| does not exist.
+    base::PostTask(FROM_HERE,
+                   base::BindOnce(std::move(remove_callback), false));
+    return;
+  }
+  component_updater::ComponentUpdateService* updater =
+      g_browser_process->component_updater();
+  const std::string id = crx_file::id_util::GenerateIdFromHex(
+                             it->second.find("sha2hashstr")->second)
+                             .substr(0, 32);
+  if (!updater->UnregisterComponent(id)) {
+    PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), false));
+  } else {
+    PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), true));
   }
 }
 
