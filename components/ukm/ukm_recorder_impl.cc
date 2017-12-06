@@ -4,6 +4,10 @@
 
 #include "components/ukm/ukm_recorder_impl.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -55,6 +59,18 @@ size_t GetMaxEntries() {
       kUkmFeature, "MaxEntries", kDefaultMaxEntries));
 }
 
+// Returns whether |url| has one of the schemes supported for logging to UKM.
+// URLs with other schemes will not be logged.
+// Note: This currently excludes chrome-extension:// URLs as in order to log
+// them, UKM needs to take into account extension-sync consent, which is not
+// yet done.
+bool HasSupportedScheme(const GURL& url) {
+  // Note: kChromeUIScheme is defined in content, which this code can't
+  // depend on - since it's used by iOS too. So "chrome" is hardcoded here.
+  return url.SchemeIsHTTPOrHTTPS() || url.SchemeIs(url::kFtpScheme) ||
+         url.SchemeIs(url::kAboutScheme) || url.SchemeIs("chrome");
+}
+
 // True if we should record the initial_url field of the UKM Source proto.
 bool ShouldRecordInitialUrl() {
   return base::GetFieldTrialParamByFeatureAsBool(kUkmFeature,
@@ -66,6 +82,7 @@ enum class DroppedDataReason {
   RECORDING_DISABLED = 1,
   MAX_HIT = 2,
   NOT_WHITELISTED = 3,
+  UNSUPPORTED_URL_SCHEME = 4,
   NUM_DROPPED_DATA_REASONS
 };
 
@@ -186,6 +203,11 @@ void UkmRecorderImpl::UpdateSourceURL(SourceId source_id, const GURL& url) {
   if (ShouldRestrictToWhitelistedSourceIds() &&
       !IsWhitelistedSourceId(source_id)) {
     RecordDroppedSource(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  if (!HasSupportedScheme(url)) {
+    RecordDroppedSource(DroppedDataReason::UNSUPPORTED_URL_SCHEME);
     return;
   }
 
