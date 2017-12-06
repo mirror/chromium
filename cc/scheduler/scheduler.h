@@ -34,7 +34,8 @@ class CompositorTimingHistory;
 
 class SchedulerClient {
  public:
-  virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args) = 0;
+  // Returns true if the frame has damage.
+  virtual bool WillBeginImplFrame(const viz::BeginFrameArgs& args) = 0;
   virtual void ScheduledActionSendBeginMainFrame(
       const viz::BeginFrameArgs& args) = 0;
   virtual DrawResult ScheduledActionDrawIfPossible() = 0;
@@ -231,7 +232,7 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
   bool IsBeginMainFrameSentOrStarted() const;
   void BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args);
   void BeginImplFrameSynchronous(const viz::BeginFrameArgs& args);
-  void BeginImplFrame(const viz::BeginFrameArgs& args, base::TimeTicks now);
+  bool BeginImplFrame(const viz::BeginFrameArgs& args, base::TimeTicks now);
   void FinishImplFrame();
   enum BeginFrameResult { kBeginFrameSkipped, kBeginFrameFinished };
   void SendBeginFrameAck(const viz::BeginFrameArgs& args,

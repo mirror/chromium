@@ -441,7 +441,12 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
 
   skipped_last_frame_to_reduce_latency_ = false;
 
-  BeginImplFrame(adjusted_args, now);
+  bool has_damage = BeginImplFrame(adjusted_args, now);
+  if (!has_damage) {
+    state_machine_.AbortDraw();
+    compositor_timing_history_->DrawAborted();
+  }
+  ProcessScheduledActions();
 }
 
 void Scheduler::BeginImplFrameSynchronous(const viz::BeginFrameArgs& args) {
@@ -453,9 +458,16 @@ void Scheduler::BeginImplFrameSynchronous(const viz::BeginFrameArgs& args) {
   begin_main_frame_args_ = args;
   begin_main_frame_args_.on_critical_path = !ImplLatencyTakesPriority();
 
-  BeginImplFrame(args, Now());
-  compositor_timing_history_->WillFinishImplFrame(
-      state_machine_.needs_redraw());
+  bool has_damage = BeginImplFrame(args, Now());
+  if (has_damage) {
+    compositor_timing_history_->WillFinishImplFrame(
+        state_machine_.needs_redraw());
+  } else {
+    state_machine_.AbortDraw();
+    compositor_timing_history_->DrawAborted();
+  }
+
+  ProcessScheduledActions();
   FinishImplFrame();
 }
 
@@ -492,26 +504,21 @@ void Scheduler::SendBeginFrameAck(const viz::BeginFrameArgs& args,
 // BeginImplFrame starts a compositor frame that will wait up until a deadline
 // for a BeginMainFrame+activation to complete before it times out and draws
 // any asynchronous animation and scroll/pinch updates.
-void Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
+bool Scheduler::BeginImplFrame(const viz::BeginFrameArgs& args,
                                base::TimeTicks now) {
   DCHECK_EQ(state_machine_.begin_impl_frame_state(),
             SchedulerStateMachine::BEGIN_IMPL_FRAME_STATE_IDLE);
   DCHECK(begin_impl_frame_deadline_task_.IsCancelled());
   DCHECK(state_machine_.HasInitializedLayerTreeFrameSink());
+  DCHECK(!inside_scheduled_action_);
 
-  {
-    DCHECK(!inside_scheduled_action_);
-    base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
-
-    begin_impl_frame_tracker_.Start(args);
-    state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
-    devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
-    compositor_timing_history_->WillBeginImplFrame(
-        state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
-    client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
-  }
-
-  ProcessScheduledActions();
+  base::AutoReset<bool> mark_inside(&inside_scheduled_action_, true);
+  begin_impl_frame_tracker_.Start(args);
+  state_machine_.OnBeginImplFrame(args.source_id, args.sequence_number);
+  devtools_instrumentation::DidBeginFrame(layer_tree_host_id_);
+  compositor_timing_history_->WillBeginImplFrame(
+      state_machine_.NewActiveTreeLikely(), args.frame_time, args.type, now);
+  return client_->WillBeginImplFrame(begin_impl_frame_tracker_.Current());
 }
 
 void Scheduler::ScheduleBeginImplFrameDeadline() {
