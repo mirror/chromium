@@ -71,14 +71,11 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
   void SetStatusAreaVisible(bool visible) override;
   void StartWizard(OobeScreen first_screen) override;
   WizardController* GetWizardController() override;
-  AppLaunchController* GetAppLaunchController() override;
   void StartUserAdding(base::OnceClosure completion_callback) override;
   void CancelUserAdding() override;
   void OnStartSignInScreen(const LoginScreenContext& context) override;
   void OnPreferencesChanged() override;
-  void StartAppLaunch(const std::string& app_id,
-                      bool diagnostic_mode,
-                      bool auto_launch) override;
+  void OnStartAppLaunch() override;
   void StartArcKiosk(const AccountId& account_id) override;
   bool IsVoiceInteractionOobe() override;
   void StartVoiceInteractionOobe() override;
@@ -202,9 +199,6 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
 
   std::unique_ptr<SignInScreenController> signin_screen_controller_;
 
-  // App launch controller.
-  std::unique_ptr<AppLaunchController> app_launch_controller_;
-
   // ARC kiosk controller.
   std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
 
@@ -296,7 +290,6 @@ class LoginDisplayHostWebUI : public LoginDisplayHost,
 
   bool is_voice_interaction_oobe_ = false;
 
-  base::WeakPtrFactory<LoginDisplayHostWebUI> pointer_factory_;
   base::WeakPtrFactory<LoginDisplayHostWebUI> animation_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginDisplayHostWebUI);
