@@ -103,19 +103,24 @@ Resources.IDBDataView = class extends UI.SimpleView {
    * @param {!Resources.IndexedDBModel.DatabaseId} databaseId
    * @param {!Resources.IndexedDBModel.ObjectStore} objectStore
    * @param {?Resources.IndexedDBModel.Index} index
+   * @param {function()} refreshObjectStore
    */
-  constructor(model, databaseId, objectStore, index) {
+  constructor(model, databaseId, objectStore, index, refreshObjectStore) {
     super(Common.UIString('IDB'));
     this.registerRequiredCSS('resources/indexedDBViews.css');
 
     this._model = model;
     this._databaseId = databaseId;
     this._isIndex = !!index;
+    this._refreshObjectStore = refreshObjectStore;
 
     this.element.classList.add('indexed-db-data-view');
 
     this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this._refreshButtonClicked, this);
+
+    this._deleteSelectedButton = new UI.ToolbarButton(Common.UIString('Delete Selected'), 'largeicon-delete');
+    this._deleteSelectedButton.addEventListener(UI.ToolbarButton.Events.Click, () => this._deleteButtonClicked(null));
 
     this._clearButton = new UI.ToolbarButton(Common.UIString('Clear object store'), 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearButtonClicked, this);
@@ -152,7 +157,8 @@ Resources.IDBDataView = class extends UI.SimpleView {
     }
     columns.push({id: 'value', title: Common.UIString('Value'), sortable: false});
 
-    var dataGrid = new DataGrid.DataGrid(columns);
+    var dataGrid = new DataGrid.DataGrid(
+        columns, undefined, this._deleteButtonClicked.bind(this), this._updateData.bind(this, true));
     dataGrid.setStriped(true);
     return dataGrid;
   }
@@ -203,6 +209,7 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
     editorToolbar.appendToolbarItem(this._refreshButton);
     editorToolbar.appendToolbarItem(this._clearButton);
+    editorToolbar.appendToolbarItem(this._deleteSelectedButton);
 
     editorToolbar.appendToolbarItem(new UI.ToolbarSeparator());
 
@@ -244,6 +251,10 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
   _keyInputChanged() {
     window.setTimeout(this._updateData.bind(this, false), 0);
+  }
+
+  refreshData() {
+    this._updateData(true);
   }
 
   /**
@@ -339,7 +350,7 @@ Resources.IDBDataView = class extends UI.SimpleView {
   }
 
   /**
-   * @param {!Common.Event} event
+   * @param {?Common.Event} event
    */
   _refreshButtonClicked(event) {
     this._updateData(true);
@@ -359,6 +370,21 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._needsRefresh.setVisible(true);
   }
 
+  /**
+   * @param {?DataGrid.DataGridNode} node
+   */
+  async _deleteButtonClicked(node) {
+    if (!node) {
+      node = this._dataGrid.selectedNode;
+      if (!node)
+        return;
+    }
+    var key = /** @type {!SDK.RemoteObject} */ (this._isIndex ? node.data.primaryKey : node.data.key);
+    var keyValue = /** @type {!Array<?>|!Date|number|string} */ (key.value);
+    await this._model.deleteEntries(this._databaseId, this._objectStore.name, window.IDBKeyRange.only(keyValue));
+    this._refreshObjectStore();
+  }
+
   clear() {
     this._dataGrid.rootNode().removeChildren();
     this._entries = [];
@@ -374,7 +400,7 @@ Resources.IDBDataGridNode = class extends DataGrid.DataGridNode {
    */
   constructor(data) {
     super(data, false);
-    this.selectable = false;
+    this.selectable = true;
   }
 
   /**
