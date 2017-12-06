@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38354915_bc090ef6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T05:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f6fb19_d9b5c3c3",
+      "revId": "0c46a770671430838a936ebd1982ea97822294f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb2877a_03f43fdc",
         "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommandTest.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0c46a770671430838a936ebd1982ea97822294f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870a5f90_e0ddaff5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommandTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T05:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eb2877a_03f43fdc",
+      "revId": "0c46a770671430838a936ebd1982ea97822294f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "0c46a770671430838a936ebd1982ea97822294f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e042b6d_9c103ff9",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommandTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T05:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c609ba_71d9f894",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 72
+      },
+      "revId": "0c46a770671430838a936ebd1982ea97822294f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
