@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15c7f0c7_0ffc3073",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-06T05:03:10Z",
+      "side": 1,
+      "message": "Yes. Only ContentSettingSimpleImageModels have content types. I don\u0027t know a better way to get around this here except maybe using an AsContentSettingSimpleImageModel on ContentSettingImageModel.",
+      "parentUuid": "db88c2c8_63b0e4ee",
+      "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a81a7c4_8eb24a4f",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfaaa17_0548d1f6",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-06T05:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a81a7c4_8eb24a4f",
+      "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
