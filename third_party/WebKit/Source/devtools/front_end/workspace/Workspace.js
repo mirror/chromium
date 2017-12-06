@@ -393,6 +393,8 @@ Workspace.Workspace = class extends Common.Object {
    * @param {!Workspace.Project} project
    */
   addProject(project) {
+    console.log('addProject(project): ' + project);
+    console.trace();
     console.assert(!this._projects.has(project.id()), `A project with id ${project.id()} already exists!`);
     this._projects.set(project.id(), project);
     this.dispatchEventToListeners(Workspace.Workspace.Events.ProjectAdded, project);

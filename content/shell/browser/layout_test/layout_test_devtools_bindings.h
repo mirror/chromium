@@ -27,6 +27,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
                              bool new_harness);
 
   void EvaluateInFrontend(int call_id, const std::string& expression);
+  void Inspect();
 
   ~LayoutTestDevToolsBindings() override;
 
@@ -42,6 +43,7 @@ class LayoutTestDevToolsBindings : public ShellDevToolsBindings {
 
   void NavigateDevToolsFrontend();
 
+  bool has_inspected_ = false;
   bool ready_for_test_ = false;
   GURL frontend_url_;
   std::vector<std::pair<int, std::string>> pending_evaluations_;

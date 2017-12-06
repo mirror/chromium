@@ -46,6 +46,7 @@ class ShellDevToolsBindings : public WebContentsObserver,
                         ShellDevToolsDelegate* delegate);
 
   void InspectElementAt(int x, int y);
+  void Inspect();
 
   void CallClientFunction(const std::string& function_name,
                           const base::Value* arg1,
@@ -53,7 +54,10 @@ class ShellDevToolsBindings : public WebContentsObserver,
                           const base::Value* arg3);
   ~ShellDevToolsBindings() override;
 
+  base::DictionaryValue* preferences() { return &preferences_; }
   WebContents* inspected_contents() { return inspected_contents_; }
+
+  void SendMessageAck(int request_id, const base::Value* arg1);
 
  protected:
   // content::DevToolsAgentHostClient implementation.
@@ -67,13 +71,10 @@ class ShellDevToolsBindings : public WebContentsObserver,
  private:
   // WebContentsObserver overrides
   void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override;
-  void DocumentAvailableInMainFrame() override;
   void WebContentsDestroyed() override;
 
   // net::URLFetcherDelegate overrides.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
-
-  void SendMessageAck(int request_id, const base::Value* arg1);
 
   WebContents* inspected_contents_;
   ShellDevToolsDelegate* delegate_;
