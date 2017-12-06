@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "4e523e88_ba176c57",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T19:38:24Z",
+      "side": 1,
+      "message": "It seems like the most accurate thing is to report all videos of all sizes and do the filtering in the queries/dashboard.\n\n\u003e We want to avoid small ads or things animated emojis in video tags\n\nEmojis will be filtered out by duration. Why would metrics from small ads not be interesting?",
+      "parentUuid": "d446e04b_70c46a6f",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63b21bf2_04b31a73",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
@@ -128,6 +152,30 @@
       "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c5ab70_0744b0ca",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T19:38:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "596b14e5_5cd3b0d4",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 399,
+        "endChar": 36
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +226,30 @@
     },
     {
       "key": {
+        "uuid": "6276398a_48d1c0c4",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T19:38:24Z",
+      "side": 1,
+      "message": "How does that work? Does the compiler look for all values of an enum for any switch?",
+      "parentUuid": "a581f5eb_b57fa04b",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf13132_d9b0a917",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 1
@@ -213,6 +285,30 @@
       "side": 1,
       "message": "We don\u0027t have these currently and I\u0027m wary of adding 19 new UMA metrics we may not use... husain@ and I chatted about this before leaving and decided we\u0027re good with UKM for most new metrics for the time being to avoid exploding the UMA reporting too much. I\u0027ll double check with dahlke@ though to get his thoughts.",
       "parentUuid": "edf13132_d9b0a917",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1e82ff_52bd88d1",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T19:38:24Z",
+      "side": 1,
+      "message": "Do we think of UMA as needing more resources than UKM? I would guess the reverse, so favor putting experimental things in UMA instead?",
+      "parentUuid": "ceda97c5_84bbc371",
       "range": {
         "startLine": 23,
         "startChar": 9,
@@ -293,6 +389,30 @@
       "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30d0706_dc33a12b",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-06T19:38:24Z",
+      "side": 1,
+      "message": "(resolving)",
+      "parentUuid": "a02df74c_5c3e3eda",
+      "range": {
+        "startLine": 204,
+        "startChar": 39,
+        "endLine": 204,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
