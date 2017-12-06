@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cbd5baa_774459cb",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-06T07:05:50Z",
+      "side": 1,
+      "message": "I think we\u0027d better always put \u0027mojom\u0027 dependency as public_deps rather than deps. Also, \u0027interfaces:interfaces\u0027 could just be \u0027interfaces\u0027.",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
