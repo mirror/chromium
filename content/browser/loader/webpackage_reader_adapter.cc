@@ -166,6 +166,16 @@ void WebPackageReaderAdapter::StartPushResources(
   }
 }
 
+void WebPackageReaderAdapter::PopulateRequests(
+    mojom::WebPackageSubresourceInfo* subresource_info) {
+  subresource_info->requests.reserve(request_map_.size());
+  for (auto& r : request_map_) {
+    mojom::WebPackageResourceRequestPtr request =
+        mojom::WebPackageResourceRequest::New(r.first.first, r.first.second);
+    subresource_info->requests.push_back(std::move(request));
+  }
+}
+
 void WebPackageReaderAdapter::OnReadable(MojoResult unused) {
   while (true) {
     const void* buffer = nullptr;

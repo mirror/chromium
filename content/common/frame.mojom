@@ -64,7 +64,7 @@ interface FrameNavigationControl {
       handle<data_pipe_consumer>? body_data,
       URLLoaderFactoryBundle? subresource_loader_factories,
       mojo.common.mojom.UnguessableToken devtools_navigation_token,
-      WebPackageSubresourceManager&? webpackage_subresource_manager);
+      WebPackageSubresourceInfo? webpackage_subresource_info);
 };
 
 // Implemented by the frame (e.g. renderer processes).

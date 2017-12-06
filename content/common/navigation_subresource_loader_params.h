@@ -27,8 +27,7 @@ struct CONTENT_EXPORT SubresourceLoaderParams {
   // subresource loader in the renderer.
   mojom::URLLoaderFactoryPtrInfo loader_factory_info;
 
-  mojom::WebPackageSubresourceManagerRequest
-      webpackage_subresource_manager_request;
+  mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info;
 
   // TODO(kinuko): Add the controller interface ptr for the service worker.
 };

@@ -10,6 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/webpackage_response_handler.h"
+#include "content/common/webpackage_subresource_manager.mojom.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
@@ -95,6 +96,10 @@ class WebPackageReaderAdapter
   // This can also only be called when there're no more pending GetResource
   // requests.
   void StartPushResources(base::WeakPtr<PushObserver> observer);
+
+  // Populate requests with the ones that we have received so far.
+  // (May not be complete)
+  void PopulateRequests(mojom::WebPackageSubresourceInfo* subresource_info);
 
  private:
   const int kInvalidRequestId = -1;
