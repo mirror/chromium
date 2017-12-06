@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee97c136_09469a54",
+        "filename": "base/debug/crash_logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-12-06T16:53:36Z",
+      "side": 1,
+      "message": "The naming confused me briefly: seeing both “key” and “value” as arguments made me temporarily forget what CrashKeyString really was. It’s more than just a key in the generic key-value sense.\n\nElsewhere, you use crash_key for CrashKeyString* objects. Matching that might be better.\n\nSame for the member variable.",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "3ae841ac24c3724559b6aaa81fe39994ba5185d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
