@@ -339,6 +339,8 @@ void InstallableManager::Reset() {
   manifest_ = base::MakeUnique<ManifestProperty>();
   valid_manifest_ = base::MakeUnique<ValidManifestProperty>();
   worker_ = base::MakeUnique<ServiceWorkerProperty>();
+
+  OnResetData();
 }
 
 void InstallableManager::SetManifestDependentTasksComplete() {

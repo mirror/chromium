@@ -73,6 +73,7 @@ class InstallableManager
  protected:
   // For mocking in tests.
   virtual void OnWaitingForServiceWorker() {}
+  virtual void OnResetData() {}
 
  private:
   friend class AddToHomescreenDataFetcherTest;
@@ -87,6 +88,8 @@ class InstallableManager
                            CheckLazyServiceWorkerPassesWhenWaiting);
   FRIEND_TEST_ALL_PREFIXES(InstallableManagerBrowserTest,
                            CheckLazyServiceWorkerNoFetchHandlerFails);
+  FRIEND_TEST_ALL_PREFIXES(InstallableManagerBrowserTest,
+                           ManifestUrlChangeFlushesState);
 
   using IconPurpose = content::Manifest::Icon::IconPurpose;
 
