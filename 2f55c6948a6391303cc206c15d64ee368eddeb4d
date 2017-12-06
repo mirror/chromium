@@ -34,6 +34,23 @@
       "revId": "2f55c6948a6391303cc206c15d64ee368eddeb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d649531_d560a078",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T00:07:45Z",
+      "side": 1,
+      "message": "This name is a little unclear, given that this an ImageResource. Maybe is_referenced_from_ua_stylsheet_ ?",
+      "revId": "2f55c6948a6391303cc206c15d64ee368eddeb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
