@@ -168,7 +168,6 @@
             "className": "Timeline.TimelinePanel.ActionDelegate",
             "category": "Performance",
             "title": "Show recent timeline sessions",
-            "experiment": "timelineKeepHistory",
             "contextTypes": [
                 "Timeline.TimelinePanel"
             ],
