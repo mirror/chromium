@@ -18,9 +18,9 @@
 #include "media/audio/audio_logging.h"
 #include "media/audio/audio_thread.h"
 #include "media/base/audio_parameters.h"
+#include "media/mojo/interfaces/audio_debug_recording_file_provider.mojom.h"
 
 namespace base {
-class FilePath;
 class SingleThreadTaskRunner;
 }
 
@@ -175,7 +175,8 @@ class MEDIA_EXPORT AudioManager {
 
   // Enable debug recording. InitializeDebugRecording() must be called before
   // this function.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name) = 0;
+  virtual void EnableDebugRecording(
+      mojom::AudioDebugRecordingFileProviderPtr) = 0;
 
   // Disable debug recording.
   virtual void DisableDebugRecording() = 0;

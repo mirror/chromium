@@ -1,0 +1,13 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "mojo/common/file.mojom";
+import "mojo/common/file_path.mojom";
+
+interface AudioDebugRecordingFileProvider {
+  GetFileHandle(mojo.common.mojom.FilePath suffix) => (mojo.common.mojom.File file_handle);
+  IsValid(mojo.common.mojom.File file_handle) => (bool valid);
+};

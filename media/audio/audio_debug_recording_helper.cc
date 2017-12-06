@@ -28,6 +28,7 @@ AudioDebugRecordingHelper::~AudioDebugRecordingHelper() {
 }
 
 void AudioDebugRecordingHelper::EnableDebugRecording(
+    mojom::AudioDebugRecordingFileProviderPtr file_provider,
     const base::FilePath& file_name) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!debug_writer_);
@@ -35,6 +36,7 @@ void AudioDebugRecordingHelper::EnableDebugRecording(
 
   debug_writer_ = CreateAudioDebugFileWriter(params_);
   debug_writer_->Start(
+      std::move(file_provider),
       file_name.AddExtension(debug_writer_->GetFileNameExtension()));
 
   base::subtle::NoBarrier_Store(&recording_enabled_, 1);
