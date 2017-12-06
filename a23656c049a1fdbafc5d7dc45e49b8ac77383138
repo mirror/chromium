@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "4297bd90_82738b82",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-06T20:46:56Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t worry too much about sharing implementations. We can merge it if it\u0027s convenient, but otherwise not. It\u0027s only a few lines of relatively simple code.",
+      "parentUuid": "f441d190_66afb6b2",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
