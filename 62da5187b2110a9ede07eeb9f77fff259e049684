@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08018276_3d176bf0",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T20:20:59Z",
+      "side": 1,
+      "message": "It should be \u0027internal\u0027",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "62da5187b2110a9ede07eeb9f77fff259e049684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32411c2_4d0bec8d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T20:20:59Z",
+      "side": 1,
+      "message": "chrome://flags/#enable-overflow-icons-for-media-controls will show buttons on the overflow menu -- though, I\u0027m not sure this will help getting the right thing to show up (I think it\u0027s used for a11y).\n\nInstead, you can set the background-image to the pip image in legacyMediaControls.css (see \"video::-internal-media-controls-cast-button\").",
+      "revId": "62da5187b2110a9ede07eeb9f77fff259e049684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
