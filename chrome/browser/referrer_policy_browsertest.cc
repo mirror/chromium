@@ -32,7 +32,12 @@
 
 class ReferrerPolicyTest : public InProcessBrowserTest {
  public:
-  ReferrerPolicyTest() {}
+  ReferrerPolicyTest() : https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
+    https_server_.AddDefaultHandlers(
+        base::FilePath(FILE_PATH_LITERAL("chrome/test/data")));
+    EXPECT_TRUE(embedded_test_server()->Start());
+    EXPECT_TRUE(https_server_.Start());
+  }
   ~ReferrerPolicyTest() override {}
 
   void SetUpOnMainThread() override {
@@ -117,21 +122,6 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
     SERVER_REDIRECT_FROM_HTTP_TO_HTTPS
   };
 
-  std::string RedirectTypeToString(RedirectType redirect) {
-    switch (redirect) {
-      case NO_REDIRECT:
-        return "none";
-      case SERVER_REDIRECT_FROM_HTTPS_TO_HTTP:
-        return "https2http";
-      case SERVER_REDIRECT_FROM_HTTP_TO_HTTP:
-        return "http2http";
-      case SERVER_REDIRECT_FROM_HTTP_TO_HTTPS:
-        return "http2https";
-    }
-    NOTREACHED();
-    return "";
-  }
-
   // Navigates from a page with a given |referrer_policy| and checks that the
   // reported referrer matches the expectation.
   // Parameters:
@@ -155,17 +145,43 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
                        blink::WebMouseEvent::Button button,
                        ExpectedReferrer expected_referrer,
                        blink::WebReferrerPolicy expected_referrer_policy) {
+    GURL redirect_url;
+    switch (redirect) {
+      case NO_REDIRECT:
+        redirect_url = embedded_test_server()->GetURL(
+            "/referrer_policy/referrer-policy-log.html");
+      case SERVER_REDIRECT_FROM_HTTPS_TO_HTTP:
+        redirect_url = https_server_.GetURL(
+            std::string("/server-redirect?") +
+            embedded_test_server()
+                ->GetURL("/referrer_policy/referrer-policy-log.html")
+                .spec());
+      case SERVER_REDIRECT_FROM_HTTP_TO_HTTP:
+        redirect_url = embedded_test_server()->GetURL(
+            std::string("/server-redirect?") +
+            embedded_test_server()
+                ->GetURL("/referrer_policy/referrer-policy-log.html")
+                .spec());
+      case SERVER_REDIRECT_FROM_HTTP_TO_HTTPS:
+        redirect_url = embedded_test_server()->GetURL(
+            std::string("/server-redirect?") +
+            https_server_.GetURL("/referrer_policy/referrer-policy-log.html")
+                .spec());
+    }
+
+    // TODO: remove 4 files in test dir
+
     std::string relative_url =
-        std::string("referrer_policy/referrer-policy-start.html?") +
+        std::string("/referrer_policy/referrer-policy-start.html?") +
         "policy=" + ReferrerPolicyToString(referrer_policy) +
-        "&redirect=" + RedirectTypeToString(redirect) + "&link=" +
+        "&redirect=" + redirect_url.spec() + "&link=" +
         (button == blink::WebMouseEvent::Button::kNoButton ? "false" : "true") +
         "&target=" + (link_type == LINK_WITH_TARGET_BLANK ? "_blank" : "");
 
-    const GURL start_url =
-        (start_protocol == START_ON_HTTPS)
-            ? net::URLRequestMockHTTPJob::GetMockHttpsUrl(relative_url)
-            : net::URLRequestMockHTTPJob::GetMockUrl(relative_url);
+    auto* start_test_server = start_protocol == START_ON_HTTPS
+                                  ? &https_server_
+                                  : embedded_test_server();
+    const GURL start_url = start_test_server->GetURL(relative_url);
 
     ui_test_utils::WindowedTabAddedNotificationObserver tab_added_observer(
         content::NotificationService::AllSources());
@@ -225,6 +241,8 @@ class ReferrerPolicyTest : public InProcessBrowserTest {
                            disposition, button, expected_referrer,
                            referrer_policy);
   }
+
+  net::EmbeddedTestServer https_server_;
 };
 
 class ReferrerPolicyWithReduceReferrerGranularityFlagTest
@@ -544,8 +562,16 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
 
   // Load a page that loads an iframe.
   ui_test_utils::NavigateToURL(
-      browser(), net::URLRequestMockHTTPJob::GetMockHttpsUrl(std::string(
-                     "referrer_policy/referrer-policy-iframe.html")));
+      browser(),
+      https_server_.GetURL("/referrer_policy/referrer-policy-iframe.html"));
+  EXPECT_TRUE(content::ExecuteScript(
+      tab,
+      std::string("var frame = document.createElement('iframe');frame.src ='") +
+          embedded_test_server()
+              ->GetURL("/referrer_policy/referrer-policy-log.html")
+              .spec() +
+          "';frame.onload = function() { document.title = 'loaded'; };" +
+          "document.body.appendChild(frame)"));
   EXPECT_EQ(expected_title, title_watcher->WaitAndGetTitle());
 
   // Verify that the referrer policy was honored and the main page's origin was
@@ -557,10 +583,7 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
       frame,
       "window.domAutomationController.send(document.title)",
       &title));
-  EXPECT_EQ(
-      "Referrer is " +
-          net::URLRequestMockHTTPJob::GetMockHttpsUrl(std::string()).spec(),
-      title);
+  EXPECT_EQ("Referrer is " + https_server_.GetURL("/").spec(), title);
 
   // Reload the iframe.
   expected_title = base::ASCIIToUTF16("reset");
@@ -578,10 +601,11 @@ IN_PROC_BROWSER_TEST_F(ReferrerPolicyTest, IFrame) {
       frame,
       "window.domAutomationController.send(document.title)",
       &title));
-  EXPECT_EQ("Referrer is " +
-                net::URLRequestMockHTTPJob::GetMockUrl(
-                    "referrer_policy/referrer-policy-log.html").spec(),
-            title);
+  EXPECT_EQ(
+      "Referrer is " + embedded_test_server()
+                           ->GetURL("/referrer_policy/referrer-policy-log.html")
+                           .spec(),
+      title);
 }
 
 // Origin When Cross-Origin
