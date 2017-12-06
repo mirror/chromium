@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3475718c_7f9eee50",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T19:42:27Z",
+      "side": 1,
+      "message": "Did you want to switch this to using a set?",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 56
+      },
+      "revId": "7b8f46150877d594d6585d6f8f0c38b1df223f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1657ceac_8f9ccf55",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T19:42:27Z",
+      "side": 1,
+      "message": "Nit: The code SetMultiDisplayMode(cond1 || cond2 ? MIRRORING : EXTENDED); is a bit hard to read. Even though your operator precedence is correct here. Maybe add parentheses around (cond1 || cond2)?",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 725,
+        "endChar": 40
+      },
+      "revId": "7b8f46150877d594d6585d6f8f0c38b1df223f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f5f2cb_64a0bfb1",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T19:42:27Z",
+      "side": 1,
+      "message": "I would do this like the following:\n\n  if (IsInMirrorMode()) {\n    // Set doesn\u0027t allow duplicates, so who cares if it\u0027s already there.\n    stored_mirror_modes_.emplace(id);\n  } else {\n    // Erase if it exists.\n    stored_mirror_modes_.erase(id);\n  }\n\nWDYT? ;)",
+      "range": {
+        "startLine": 1111,
+        "startChar": 0,
+        "endLine": 1115,
+        "endChar": 39
+      },
+      "revId": "7b8f46150877d594d6585d6f8f0c38b1df223f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c749b3d_9b081fbc",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T19:42:27Z",
+      "side": 1,
+      "message": "Just \u0027one of the external displays\u0027.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 35,
+        "endLine": 1210,
+        "endChar": 66
+      },
+      "revId": "7b8f46150877d594d6585d6f8f0c38b1df223f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b71210d_23a430ee",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T19:42:27Z",
+      "side": 1,
+      "message": "kNotSet, kMirrorOn, kMirrorOff, https://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 15
+      },
+      "revId": "7b8f46150877d594d6585d6f8f0c38b1df223f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
