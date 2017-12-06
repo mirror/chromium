@@ -2280,6 +2280,8 @@ jumbo_source_set("browser") {
       "renderer_host/compositor_resize_lock.h",
       "renderer_host/delegated_frame_host.cc",
       "renderer_host/delegated_frame_host.h",
+      "renderer_host/render_widget_host_view_desktop_base.cc",
+      "renderer_host/render_widget_host_view_desktop_base.h",
     ]
     if (is_mac) {
       jumbo_excluded_sources = [
