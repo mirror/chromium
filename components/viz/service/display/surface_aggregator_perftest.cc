@@ -140,9 +140,6 @@ class SurfaceAggregatorPerfTest : public testing::Test {
 
     perf_test::PrintResult("aggregator_speed", "", name, timer_.LapsPerSecond(),
                            "runs/s", true);
-    for (int i = 0; i < num_surfaces; i++)
-      child_supports[i]->EvictCurrentSurface();
-    root_support->EvictCurrentSurface();
   }
 
  protected:

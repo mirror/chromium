@@ -147,7 +147,6 @@ void DelegatedFrameHostAndroid::DestroyDelegatedContent() {
 
   content_layer_->RemoveFromParent();
   content_layer_ = nullptr;
-  support_->EvictCurrentSurface();
   surface_info_ = viz::SurfaceInfo();
 }
 
