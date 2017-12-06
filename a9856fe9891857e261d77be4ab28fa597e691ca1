@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32adda06_f079de28",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-06T21:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da9050a_ec228c06",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66aba254_7328556d",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0719b9_71dfd53a",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-06T21:48:27Z",
+      "side": 1,
+      "message": "You\u0027re right. The logic here is off. Browser initiated navigation and renderer initiated with user gesture should both consume a user gesture. \nCorrected in the latest patch.",
+      "parentUuid": "66aba254_7328556d",
+      "range": {
+        "startLine": 462,
+        "startChar": 7,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d2d771d9_ace939c1",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-06T21:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cfb83a9_33b240ea",
+      "range": {
+        "startLine": 593,
+        "startChar": 14,
+        "endLine": 593,
+        "endChar": 16
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c29e237_7c53a46b",
         "filename": "components/safe_browsing/proto/csd.proto",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57973d5d_40030d95",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-06T21:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c29e237_7c53a46b",
+      "range": {
+        "startLine": 599,
+        "startChar": 35,
+        "endLine": 599,
+        "endChar": 45
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
