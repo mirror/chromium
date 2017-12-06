@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "74fe7c57_e23205ce",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T17:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2369d4c7_71a7a15f",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 29
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c818f0_31411e4c",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 33
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "9f8a04d4_ef110278",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T17:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04647ae6_b4a3ccbe",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 15
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b89972d4_7c7f1db4",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 33
@@ -114,6 +162,30 @@
       "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d704722c_7abe716e",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T17:12:41Z",
+      "side": 1,
+      "message": "Ah, thanks for this!",
+      "parentUuid": "b89972d4_7c7f1db4",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
