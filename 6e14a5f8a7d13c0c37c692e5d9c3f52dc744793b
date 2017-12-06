@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5011afb_0c0f3f63",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "This ensures we create one foreground reporter and one background reporter. Clients always call WatchTimeReporter with is_background \u003d false to get the foreground reporter, we then flip is_background to true for the cloned properties and create an \"inner\" reporter for background reporting.",
+      "parentUuid": "97b9ebc8_29d9fbce",
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc1ffc5_eabbc3f6",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d446e04b_70c46a6f",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "No, we want UKM reporting to be as accurate as possible. In a CL soon I\u0027ll introduce an abandonment metric which we can use for tracking upper bounds on what we throw away.\n\nThe second is a product decision. We want to avoid small ads or things animated emojis in video tags",
+      "parentUuid": "9dc1ffc5_eabbc3f6",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b21bf2_04b31a73",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-06T02:37:29Z",
       "side": 1,
       "message": "Am I right that for each of these RECORD_WATCH_TIME would also do the correct thing? IIUC, you\u0027ve defined separate macros just as an assert that we don\u0027t report things like NativeControls status for background video?",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 399,
+        "endChar": 36
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596b14e5_5cd3b0d4",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct.",
+      "parentUuid": "63b21bf2_04b31a73",
       "range": {
         "startLine": 399,
         "startChar": 8,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "a581f5eb_b57fa04b",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "No, we intentionally don\u0027t have default: so that missing keys are a compile error.",
+      "parentUuid": "a1f4da69_96e9aa10",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf13132_d9b0a917",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 1
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ceda97c5_84bbc371",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "We don\u0027t have these currently and I\u0027m wary of adding 19 new UMA metrics we may not use... husain@ and I chatted about this before leaving and decided we\u0027re good with UKM for most new metrics for the time being to avoid exploding the UMA reporting too much. I\u0027ll double check with dahlke@ though to get his thoughts.",
+      "parentUuid": "edf13132_d9b0a917",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf9450e4_d15d1ab6",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 1
@@ -122,6 +236,30 @@
       "writtenOn": "2017-12-06T02:37:29Z",
       "side": 1,
       "message": "Just realizing how rough this calculation is. Have we considered more precise tracking of time between rebuffers? Does this match YT\u0027s approach?",
+      "range": {
+        "startLine": 204,
+        "startChar": 39,
+        "endLine": 204,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c29e5b_adfb863c",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:38:37Z",
+      "side": 1,
+      "message": "What do you mean by rough? It\u0027s the same as YouTube\u0027s calculation. I\u0027ve e-mailed you the internal link with those details.",
+      "parentUuid": "bf9450e4_d15d1ab6",
       "range": {
         "startLine": 204,
         "startChar": 39,
