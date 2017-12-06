@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7bb97f6_3382d5a2",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-06T00:51:54Z",
+      "side": 1,
+      "message": "\"Keep track of even the small allocations in memlog.\"",
+      "revId": "f35e94d3d300ecfc0ee93ef7a0f130d71b3f8676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcbd271_5cb8ec04",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-06T00:51:54Z",
+      "side": 1,
+      "message": "Can you wrap this into 2 functions:\n\nbool IsReportForUpload() {\n base::AutoLock lock(is_report_for_upload_lock_);\n return is_report_for_upload_;\n}\n\n// Returns the previous value.\nbool SetIsReportForUpload(bool new_state) {\n  base::AutoLock lock(is_report_for_upload_lock_);\n  bool ret \u003d is_report_for_upload_;\n  is_report_for_upload_ \u003d new_state;\n  return ret;\n}\n\nAnd then use that instead of these extra scopes?",
+      "revId": "f35e94d3d300ecfc0ee93ef7a0f130d71b3f8676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba7f806_50f62bcc",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-06T00:51:54Z",
+      "side": 1,
+      "message": "Whether the instances -\u003e True if the instance",
+      "revId": "f35e94d3d300ecfc0ee93ef7a0f130d71b3f8676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e97ff9_c7e440c1",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-06T00:51:54Z",
+      "side": 1,
+      "message": "rename to is_report_for_upload_?",
+      "revId": "f35e94d3d300ecfc0ee93ef7a0f130d71b3f8676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
