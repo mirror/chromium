@@ -22,6 +22,30 @@
       "revId": "6e5661949e6c1564161fb6ace85e946d4d6a15ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b8d572_cd37c0d7",
+        "filename": "ios/web/web_state/navigation_context_impl_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-06T22:20:58Z",
+      "side": 1,
+      "message": "True. Removed.",
+      "parentUuid": "cf29554c_805d9255",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "6e5661949e6c1564161fb6ace85e946d4d6a15ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
