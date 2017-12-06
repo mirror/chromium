@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a913a43_8e774217",
+        "filename": "third_party/WebKit/Source/core/paint/FilterEffectBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T23:35:26Z",
+      "side": 1,
+      "message": "This should ensure that we don\u0027t add a null filter to cc FilterOperations.",
+      "range": {
+        "startLine": 326,
+        "startChar": 10,
+        "endLine": 327,
+        "endChar": 21
+      },
+      "revId": "8ae9aa3f3affbd5e0c81f1c078ff22eba82e66fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
