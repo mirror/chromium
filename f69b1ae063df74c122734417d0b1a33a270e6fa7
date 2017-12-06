@@ -307,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "812c9d0c_8f90155c",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-06T20:59:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ae2e36a_5584f26a",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2267658b_f7bb65e5",
         "filename": "content/browser/browser_side_navigation_browsertest.cc",
         "patchSetId": 47
@@ -336,6 +354,24 @@
       "side": 1,
       "message": "We say that the navigation commit when the renderer has received the first byte of the response\u0027s body and the document has changed.\nSo the navigation has already finished successfully. I want to check that the url_loader_client in the renderer is notified that its url_loader (in the browser process) has been canceled.\nIf it is not notified, the load will continue indefinitely.\n\nI updated the test to make it explicit.",
       "parentUuid": "2267658b_f7bb65e5",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50ed5792_311611b5",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-06T20:59:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ac6415e_b291de47",
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
