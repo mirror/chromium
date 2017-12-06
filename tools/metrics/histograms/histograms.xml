@@ -94636,6 +94636,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebCore.Framebust.ClickThroughPosition"
+    enum="ListItemPosition">
+  <owner>japhet@chromium.org</owner>
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The position of the URL in the framebust UI list (desktop only) when it is
+    clicked. Note that this UI surface is shared with the tab-under
+    intervention, so elements in the list could come from either features. This
+    metric will only be logged when a URL from the framebust (3p redirect)
+    intervention is clicked.
+  </summary>
+</histogram>
+
+<histogram name="WebCore.Framebust.InterventionOutcome"
+    enum="FramebustInterventionOutcome">
+  <owner>japhet@chromium.org</owner>
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The (android only) outcome of a particular framebust infobar. Recorded when
+    the user either closes the infobar or declines the intervention by clicking
+    the link.
+  </summary>
+</histogram>
+
 <histogram name="WebCore.IndexedDB.BackingStore.ConsistencyError"
     enum="IDBLevelDBBackingStoreInternalErrorType">
   <owner>dgrogan@chromium.org</owner>
