@@ -829,7 +829,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     @Override
-    protected void updateToolbarBackground(VisualState visualState) {
+    public void updateToolbarBackground(VisualState visualState) {
         if (visualState == VisualState.TAB_SWITCHER_NORMAL
                 || visualState == VisualState.TAB_SWITCHER_INCOGNITO) {
             // drawTabSwitcherFadeAnimation will handle the background color transition.

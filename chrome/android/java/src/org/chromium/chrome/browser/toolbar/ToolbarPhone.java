@@ -263,7 +263,7 @@ public class ToolbarPhone extends ToolbarLayout
     /**
      * Used to specify the visual state of the toolbar.
      */
-    protected enum VisualState {
+    public enum VisualState {
         TAB_SWITCHER_INCOGNITO,
         TAB_SWITCHER_NORMAL,
         NORMAL,
