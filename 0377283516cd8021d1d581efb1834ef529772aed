@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "32684f0a_c3a64102",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T22:52:38Z",
+      "side": 1,
+      "message": "Ah good tip! Done.",
+      "parentUuid": "8589fd5d_8cea22ac",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab583a01_92d14bbc",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 3
@@ -175,6 +193,24 @@
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bea214_beee4fdf",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T22:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25afa23f_bcfbece6",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
