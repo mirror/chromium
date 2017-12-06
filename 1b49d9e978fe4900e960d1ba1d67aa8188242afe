@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb332fce_ed051c31",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:56:50Z",
+      "side": 1,
+      "message": "nit: this comment needs to be updated",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55592c9_2b21974c",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:56:50Z",
+      "side": 1,
+      "message": "Hmm, this doesn\u0027t quite add up to me - should the kNumPermissionsShown \u003d 1 be moved outside the #ifdef?",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20786896_b8e2b34d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:56:50Z",
+      "side": 1,
+      "message": "nit: may want to add a comment here too",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
