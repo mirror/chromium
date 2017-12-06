@@ -69,6 +69,24 @@
       "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24501eb3_a4eb1d47",
+        "filename": "content/browser/service_worker/service_worker_storage_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-06T00:57:43Z",
+      "side": 1,
+      "message": "Yeah the name LazyInitialize no longer sounds right. Agree to renaming to Initialize. Let\u0027s just deal with it when removing ForTest though.",
+      "parentUuid": "4dfe02b8_e558c89e",
+      "revId": "e3643aa4e745c67ce4b180d135a1c8d63555afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
