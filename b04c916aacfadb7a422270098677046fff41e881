@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc8619f_ca5be39d",
+        "filename": "chrome/browser/vr/elements/url_bar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T16:36:45Z",
+      "side": 1,
+      "message": "nit: Would it be better for failure_callback to go in last?",
+      "range": {
+        "startLine": 30,
+        "startChar": 45,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "b04c916aacfadb7a422270098677046fff41e881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
