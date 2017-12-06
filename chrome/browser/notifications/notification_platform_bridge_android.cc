@@ -368,6 +368,11 @@ void NotificationPlatformBridgeAndroid::GetDisplayed(
                  false /* supports_synchronization */));
 }
 
+bool NotificationPlatformBridgeAndroid::IsReady() const {
+  // The Android notification system is always available.
+  return true;
+}
+
 void NotificationPlatformBridgeAndroid::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   std::move(callback).Run(true);

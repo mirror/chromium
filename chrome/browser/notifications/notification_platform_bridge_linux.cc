@@ -319,6 +319,11 @@ class NotificationPlatformBridgeLinuxImpl
         profile_id, incognito, callback));
   }
 
+  bool IsReady() const override {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    return connected_.has_value() && connected_.value();
+  }
+
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     if (connected_.has_value()) {
@@ -990,6 +995,10 @@ void NotificationPlatformBridgeLinux::GetDisplayed(
     bool incognito,
     const GetDisplayedNotificationsCallback& callback) const {
   impl_->GetDisplayed(profile_id, incognito, callback);
+}
+
+bool NotificationPlatformBridgeLinux::IsReady() const {
+  return impl_->IsReady();
 }
 
 void NotificationPlatformBridgeLinux::SetReadyCallback(

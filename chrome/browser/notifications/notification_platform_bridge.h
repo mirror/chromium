@@ -57,9 +57,11 @@ class NotificationPlatformBridge {
       bool incognito,
       const GetDisplayedNotificationsCallback& callback) const = 0;
 
-  // Calls |callback| once |this| is initialized. The argument is
-  // true if |this| is ready to be used and false if initialization
-  // failed. |callback| may be called directly or from a posted task.
+  // Returns whether the bridge has been initialized and is ready for operation.
+  virtual bool IsReady() const = 0;
+
+  // Invokes the |callback| once the bridge has been initialized. The |callback|
+  // includes a boolean to indicate whether initialization succeeded.
   virtual void SetReadyCallback(NotificationBridgeReadyCallback callback) = 0;
 
  protected:

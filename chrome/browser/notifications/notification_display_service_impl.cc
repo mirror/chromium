@@ -218,7 +218,7 @@ void NotificationDisplayServiceImpl::Display(
   if (notification_type == NotificationHandler::Type::TRANSIENT)
     DCHECK(notification.delegate());
 
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::Display,
                                  weak_factory_.GetWeakPtr(), notification_type,
                                  notification, std::move(metadata)));
@@ -243,7 +243,7 @@ void NotificationDisplayServiceImpl::Display(
 void NotificationDisplayServiceImpl::Close(
     NotificationHandler::Type notification_type,
     const std::string& notification_id) {
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::Close,
                                  weak_factory_.GetWeakPtr(), notification_type,
                                  notification_id));
@@ -261,7 +261,7 @@ void NotificationDisplayServiceImpl::Close(
 
 void NotificationDisplayServiceImpl::GetDisplayed(
     const DisplayedNotificationsCallback& callback) {
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::GetDisplayed,
                                  weak_factory_.GetWeakPtr(), callback));
     return;
@@ -284,8 +284,6 @@ void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady(
     DCHECK(message_center_bridge_);
     bridge_ = message_center_bridge_.get();
   }
-
-  bridge_initialized_ = true;
 
   // Flush any pending actions that have yet to execute.
   while (!actions_.empty()) {

@@ -154,6 +154,11 @@ void NotificationPlatformBridgeMessageCenter::GetDisplayed(
                      true /* supports_synchronization */));
 }
 
+bool NotificationPlatformBridgeMessageCenter::IsReady() const {
+  // The message center is always available.
+  return true;
+}
+
 void NotificationPlatformBridgeMessageCenter::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   std::move(callback).Run(true /* success */);

@@ -110,6 +110,11 @@ void ChromeAshMessageCenterClient::GetDisplayed(
   NOTIMPLEMENTED();
 }
 
+bool ChromeAshMessageCenterClient::IsReady() const {
+  // The message center is always available.
+  return true;
+}
+
 void ChromeAshMessageCenterClient::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   std::move(callback).Run(true);

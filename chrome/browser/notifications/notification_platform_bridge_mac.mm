@@ -352,6 +352,11 @@ void NotificationPlatformBridgeMac::GetDisplayed(
                             callback:callback];
 }
 
+bool NotificationPlatformBridgeMac::IsReady() const {
+  // The notification center on Mac OS is always available.
+  return true;
+}
+
 void NotificationPlatformBridgeMac::SetReadyCallback(
     NotificationBridgeReadyCallback callback) {
   std::move(callback).Run(true);
