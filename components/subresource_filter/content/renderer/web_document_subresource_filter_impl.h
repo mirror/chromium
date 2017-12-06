@@ -31,7 +31,8 @@ class WebDocumentSubresourceFilterImpl
     BuilderImpl(url::Origin document_origin,
                 ActivationState activation_state,
                 base::File ruleset_file,
-                base::OnceClosure first_disallowed_load_callback);
+                base::OnceClosure first_disallowed_load_callback,
+                scoped_refptr<base::SingleThreadTaskRunner> main_task_runner);
     ~BuilderImpl() override;
 
     std::unique_ptr<blink::WebDocumentSubresourceFilter> Build() override;

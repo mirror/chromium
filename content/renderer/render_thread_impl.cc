@@ -574,10 +574,8 @@ RenderThreadImpl* RenderThreadImpl::Create(
 
 // static
 RenderThreadImpl* RenderThreadImpl::Create(
-    std::unique_ptr<base::MessageLoop> main_message_loop,
     std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler) {
-  return new RenderThreadImpl(std::move(main_message_loop),
-                              std::move(renderer_scheduler));
+  return new RenderThreadImpl(std::move(renderer_scheduler));
 }
 
 // static
@@ -644,7 +642,6 @@ RenderThreadImpl::RenderThreadImpl(
 // When we run plugins in process, we actually run them on the render thread,
 // which means that we need to make the render thread pump UI events.
 RenderThreadImpl::RenderThreadImpl(
-    std::unique_ptr<base::MessageLoop> main_message_loop,
     std::unique_ptr<blink::scheduler::RendererScheduler> scheduler)
     : ChildThreadImpl(
           Options::Builder()
@@ -653,7 +650,6 @@ RenderThreadImpl::RenderThreadImpl(
               .IPCTaskRunner(scheduler ? scheduler->IPCTaskRunner() : nullptr)
               .Build()),
       renderer_scheduler_(std::move(scheduler)),
-      main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
       renderer_binding_(this),
@@ -681,7 +677,7 @@ void RenderThreadImpl::Init(
 #endif
 
   lazy_tls.Pointer()->Set(this);
-  g_main_task_runner.Get() = base::MessageLoop::current()->task_runner();
+  g_main_task_runner.Get() = renderer_scheduler_->DefaultTaskRunner();
 
   // Register this object as the main thread.
   ChildProcess::current()->set_main_thread(this);

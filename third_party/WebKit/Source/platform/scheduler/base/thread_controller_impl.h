@@ -14,6 +14,7 @@
 #include "base/run_loop.h"
 #include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "platform/PlatformExport.h"
 #include "platform/scheduler/base/sequence.h"
 
@@ -26,12 +27,13 @@ namespace blink {
 namespace scheduler {
 namespace internal {
 
-class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController {
+class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController,
+                                             public base::RunLoop::Delegate {
  public:
   ~ThreadControllerImpl() override;
 
   static std::unique_ptr<ThreadControllerImpl> Create(
-      base::MessageLoop* message_loop,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       std::unique_ptr<base::TickClock> time_source);
 
   // ThreadController:
@@ -43,21 +45,21 @@ class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController {
                            base::OnceClosure task) override;
   bool RunsTasksInCurrentSequence() override;
   base::TickClock* GetClock() override;
-  void SetDefaultTaskRunner(
-      scoped_refptr<base::SingleThreadTaskRunner>) override;
-  void RestoreDefaultTaskRunner() override;
   bool IsNested() override;
   void AddNestingObserver(base::RunLoop::NestingObserver* observer) override;
   void RemoveNestingObserver(base::RunLoop::NestingObserver* observer) override;
 
+  // base::Runloop::Delegate:
+  void Run(bool application_tasks_allowed) override;
+  void Quit() override;
+  void EnsureWorkScheduled() override;
+
  protected:
-  ThreadControllerImpl(base::MessageLoop* message_loop,
-                       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+  ThreadControllerImpl(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                        std::unique_ptr<base::TickClock> time_source);
 
   // TODO(altimin): Make these const. Blocked on removing
   // lazy initialisation support.
-  base::MessageLoop* message_loop_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
  private:
@@ -65,12 +67,13 @@ class PLATFORM_EXPORT ThreadControllerImpl : public ThreadController {
 
   SEQUENCE_CHECKER(sequence_checker_);
 
-  scoped_refptr<base::SingleThreadTaskRunner> message_loop_task_runner_;
+  std::unique_ptr<base::ThreadTaskRunnerHandle> thread_task_runner_handle_;
   std::unique_ptr<base::TickClock> time_source_;
   base::RepeatingClosure immediate_do_work_closure_;
   base::RepeatingClosure delayed_do_work_closure_;
   base::CancelableClosure cancelable_delayed_do_work_closure_;
   Sequence* sequence_ = nullptr;  // NOT OWNED
+  base::RunLoop::Delegate::Client* run_loop_client_; // NOT OWNED
   base::debug::TaskAnnotator task_annotator_;
 
   base::WeakPtrFactory<ThreadControllerImpl> weak_factory_;

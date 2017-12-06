@@ -5,7 +5,7 @@
 #ifndef MojoHelper_h
 #define MojoHelper_h
 
-#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
 
 namespace blink {
 
@@ -14,7 +14,7 @@ namespace blink {
 // TODO(leonhsl): http://crbug.com/660274 Remove this API by ensuring
 // a message loop before calling blink::initialize().
 inline bool CanInitializeMojo() {
-  return base::MessageLoop::current();
+  return base::RunLoop::IsRunningOnCurrentThread();
 }
 
 }  // namespace blink

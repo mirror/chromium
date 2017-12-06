@@ -203,6 +203,7 @@ std::unique_ptr<RenderProcess> RenderProcessImpl::Create() {
   if (!task_scheduler_init_params)
     task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
 
+  fprintf(stderr, ">>>  RenderProcessImpl::Create\n");
   return base::WrapUnique(
       new RenderProcessImpl(std::move(task_scheduler_init_params)));
 }

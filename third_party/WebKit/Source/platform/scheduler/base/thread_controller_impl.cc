@@ -16,15 +16,14 @@ namespace scheduler {
 namespace internal {
 
 ThreadControllerImpl::ThreadControllerImpl(
-    base::MessageLoop* message_loop,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     std::unique_ptr<base::TickClock> time_source)
-    : message_loop_(message_loop),
-      task_runner_(task_runner),
-      message_loop_task_runner_(message_loop ? message_loop->task_runner()
-                                             : nullptr),
+    : task_runner_(std::move(task_runner)),
+      thread_task_runner_handle_(new base::ThreadTaskRunnerHandle(task_runner_)),
       time_source_(std::move(time_source)),
+      run_loop_client_(base::RunLoop::RegisterDelegateForCurrentThread(this)),
       weak_factory_(this) {
+  DCHECK(base::ThreadTaskRunnerHandle::IsSet());
   immediate_do_work_closure_ = base::BindRepeating(
       &ThreadControllerImpl::DoWork, weak_factory_.GetWeakPtr(),
       Sequence::WorkType::kImmediate);
@@ -36,10 +35,11 @@ ThreadControllerImpl::ThreadControllerImpl(
 ThreadControllerImpl::~ThreadControllerImpl() {}
 
 std::unique_ptr<ThreadControllerImpl> ThreadControllerImpl::Create(
-    base::MessageLoop* message_loop,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     std::unique_ptr<base::TickClock> time_source) {
+  DCHECK(!base::ThreadTaskRunnerHandle::IsSet());
   return base::WrapUnique(new ThreadControllerImpl(
-      message_loop, message_loop->task_runner(), std::move(time_source)));
+      std::move(task_runner), std::move(time_source)));
 }
 
 void ThreadControllerImpl::SetSequence(Sequence* sequence) {
@@ -81,19 +81,6 @@ base::TickClock* ThreadControllerImpl::GetClock() {
   return time_source_.get();
 }
 
-void ThreadControllerImpl::SetDefaultTaskRunner(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  if (!message_loop_)
-    return;
-  message_loop_->SetTaskRunner(task_runner);
-}
-
-void ThreadControllerImpl::RestoreDefaultTaskRunner() {
-  if (!message_loop_)
-    return;
-  message_loop_->SetTaskRunner(message_loop_task_runner_);
-}
-
 bool ThreadControllerImpl::IsNested() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return base::RunLoop::IsNestedOnCurrentThread();
@@ -121,6 +108,15 @@ void ThreadControllerImpl::RemoveNestingObserver(
     base::RunLoop::NestingObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::RunLoop::RemoveNestingObserverOnCurrentThread(observer);
+}
+
+void ThreadControllerImpl::Run(bool application_tasks_allowed) {
+}
+
+void ThreadControllerImpl::Quit()  {
+}
+
+void ThreadControllerImpl::EnsureWorkScheduled() {
 }
 
 }  // namespace internal

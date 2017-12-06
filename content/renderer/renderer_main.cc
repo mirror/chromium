@@ -10,7 +10,6 @@
 #include "base/debug/debugger.h"
 #include "base/debug/leak_annotations.h"
 #include "base/i18n/rtl.h"
-#include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/pending_task.h"
@@ -152,18 +151,6 @@ int RendererMain(const MainFunctionParams& parameters) {
   HandleRendererErrorTestParameters(parsed_command_line);
 
   RendererMainPlatformDelegate platform(parameters);
-#if defined(OS_MACOSX)
-  // As long as scrollbars on Mac are painted with Cocoa, the message pump
-  // needs to be backed by a Foundation-level loop to process NSTimers. See
-  // http://crbug.com/306348#c24 for details.
-  std::unique_ptr<base::MessagePump> pump(new base::MessagePumpNSRunLoop());
-  std::unique_ptr<base::MessageLoop> main_message_loop(
-      new base::MessageLoop(std::move(pump)));
-#else
-  // The main message loop of the renderer services doesn't have IO or UI tasks.
-  std::unique_ptr<base::MessageLoop> main_message_loop(new base::MessageLoop());
-#endif
-
   base::PlatformThread::SetName("CrRendererMain");
 
   bool no_sandbox = parsed_command_line.HasSwitch(switches::kNoSandbox);
@@ -176,40 +163,38 @@ int RendererMain(const MainFunctionParams& parameters) {
   base::android::RecordLibraryLoaderRendererHistograms();
 #endif
 
-  std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler(
-      blink::scheduler::RendererScheduler::Create());
-
-  // PlatformInitialize uses FieldTrials, so this must happen later.
-  platform.PlatformInitialize();
-
-#if BUILDFLAG(ENABLE_PLUGINS)
-  // Load pepper plugins before engaging the sandbox.
-  PepperPluginRegistry::GetInstance();
-#endif
-#if BUILDFLAG(ENABLE_WEBRTC)
-  // Initialize WebRTC before engaging the sandbox.
-  // NOTE: On linux, this call could already have been made from
-  // zygote_main_linux.cc.  However, calling multiple times from the same thread
-  // is OK.
-  InitializeWebRtcModule();
-#endif
-
   {
 #if defined(OS_WIN) || defined(OS_MACOSX)
     // TODO(markus): Check if it is OK to unconditionally move this
     // instruction down.
     auto render_process = RenderProcessImpl::Create();
-    RenderThreadImpl::Create(std::move(main_message_loop),
-                             std::move(renderer_scheduler));
 #endif
     bool run_loop = true;
     if (!no_sandbox)
       run_loop = platform.EnableSandbox();
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
     auto render_process = RenderProcessImpl::Create();
-    RenderThreadImpl::Create(std::move(main_message_loop),
-                             std::move(renderer_scheduler));
 #endif
+
+    std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler(
+        blink::scheduler::RendererScheduler::Create());
+
+    // PlatformInitialize uses FieldTrials, so this must happen later.
+    platform.PlatformInitialize();
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  // Load pepper plugins before engaging the sandbox.
+    PepperPluginRegistry::GetInstance();
+#endif
+#if BUILDFLAG(ENABLE_WEBRTC)
+    // Initialize WebRTC before engaging the sandbox.
+    // NOTE: On linux, this call could already have been made from
+    // zygote_main_linux.cc.  However, calling multiple times from the same thread
+    // is OK.
+    InitializeWebRtcModule();
+#endif
+
+    RenderThreadImpl::Create(std::move(renderer_scheduler));
 
     base::HighResolutionTimerManager hi_res_timer_manager;
 

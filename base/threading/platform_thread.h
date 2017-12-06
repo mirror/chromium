@@ -72,7 +72,7 @@ class PlatformThreadRef {
   bool is_null() const {
     return id_ == 0;
   }
- private:
+ //private:
   RefType id_;
 };
 

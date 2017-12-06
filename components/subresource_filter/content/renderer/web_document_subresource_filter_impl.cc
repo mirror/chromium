@@ -151,13 +151,14 @@ WebDocumentSubresourceFilterImpl::BuilderImpl::BuilderImpl(
     url::Origin document_origin,
     ActivationState activation_state,
     base::File ruleset_file,
-    base::OnceClosure first_disallowed_load_callback)
+    base::OnceClosure first_disallowed_load_callback,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner)
     : document_origin_(std::move(document_origin)),
       activation_state_(std::move(activation_state)),
       ruleset_file_(std::move(ruleset_file)),
       first_disallowed_load_callback_(
           std::move(first_disallowed_load_callback)),
-      main_task_runner_(base::MessageLoop::current()->task_runner()) {}
+      main_task_runner_(std::move(main_task_runner)) {}
 
 WebDocumentSubresourceFilterImpl::BuilderImpl::~BuilderImpl() {}
 

@@ -78,7 +78,9 @@ class SubresourceFilterAgent
   void DidFailProvisionalLoad(const blink::WebURLError& error) override;
   void DidFinishLoad() override;
   bool OnMessageReceived(const IPC::Message& message) override;
-  void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) override;
+  void WillCreateWorkerFetchContext(
+      blink::WebWorkerFetchContext*,
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner) override;
 
   // Owned by the ChromeContentRendererClient and outlives us.
   UnverifiedRulesetDealer* ruleset_dealer_;

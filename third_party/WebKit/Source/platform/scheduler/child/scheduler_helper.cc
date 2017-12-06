@@ -22,9 +22,6 @@ void SchedulerHelper::InitDefaultQueues(
     scoped_refptr<TaskQueue> default_task_queue,
     scoped_refptr<TaskQueue> control_task_queue) {
   control_task_queue->SetQueuePriority(TaskQueue::kControlPriority);
-
-  DCHECK(task_queue_manager_);
-  task_queue_manager_->SetDefaultTaskRunner(default_task_queue);
 }
 
 SchedulerHelper::~SchedulerHelper() {

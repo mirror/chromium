@@ -60,10 +60,22 @@ class AtomicThreadRefChecker {
 
   void Set() {
     thread_ref_ = PlatformThread::CurrentRef();
+#ifndef USE_UDEV
+    fprintf(stderr, "AtomicThreadRefChecker::Set %p\n", thread_ref_.id_);
+#else
+    fprintf(stderr, "AtomicThreadRefChecker::Set %lu\n", thread_ref_.id_);
+#endif
     is_set_.Set();
   }
 
   bool IsCurrentThreadSameAsSetThread() {
+    if (!is_set_.IsSet() && thread_ref_ != PlatformThread::CurrentRef()) {
+#ifndef USE_UDEV
+    fprintf(stderr, "AtomicThreadRefChecker::IsCurrentThreadSameAsSetThread %p vs %p\n", thread_ref_.id_, PlatformThread::CurrentRef().id_);
+#else
+    fprintf(stderr, "AtomicThreadRefChecker::IsCurrentThreadSameAsSetThread %lu vs %lu\n", thread_ref_.id_, PlatformThread::CurrentRef().id_);
+#endif
+    }
     return is_set_.IsSet() && thread_ref_ == PlatformThread::CurrentRef();
   }
 

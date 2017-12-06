@@ -186,7 +186,6 @@ class CONTENT_EXPORT RenderThreadImpl
  public:
   static RenderThreadImpl* Create(const InProcessChildThreadParams& params);
   static RenderThreadImpl* Create(
-      std::unique_ptr<base::MessageLoop> main_message_loop,
       std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler);
   static RenderThreadImpl* current();
   static mojom::RenderMessageFilter* current_render_message_filter();
@@ -552,7 +551,6 @@ class CONTENT_EXPORT RenderThreadImpl
       std::unique_ptr<blink::scheduler::RendererScheduler> scheduler,
       const scoped_refptr<base::SingleThreadTaskRunner>& resource_task_queue);
   RenderThreadImpl(
-      std::unique_ptr<base::MessageLoop> main_message_loop,
       std::unique_ptr<blink::scheduler::RendererScheduler> scheduler);
 
  private:
@@ -721,11 +719,6 @@ class CONTENT_EXPORT RenderThreadImpl
   // resources given to the compositor or to the viz service should be
   // software-based.
   bool is_gpu_compositing_disabled_ = false;
-
-  // The message loop of the renderer main thread.
-  // This message loop should be destructed before the RenderThreadImpl
-  // shuts down Blink.
-  std::unique_ptr<base::MessageLoop> main_message_loop_;
 
   // May be null if overridden by ContentRendererClient.
   std::unique_ptr<blink::scheduler::WebThreadBase> compositor_thread_;

@@ -9,6 +9,7 @@
 #include <set>
 
 #include "base/bind.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/default_tick_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/trace_event/trace_event.h"
@@ -62,10 +63,6 @@ TaskQueueManager::~TaskQueueManager() {
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "TaskQueueManager",
       this);
 
-  // TODO(altimin): restore default task runner automatically when
-  // ThreadController is destroyed.
-  controller_->RestoreDefaultTaskRunner();
-
   for (internal::TaskQueueImpl* queue : active_queues_) {
     selector_.RemoveQueue(queue);
     queue->UnregisterTaskQueue();
@@ -84,7 +81,10 @@ TaskQueueManager::~TaskQueueManager() {
 std::unique_ptr<TaskQueueManager> TaskQueueManager::TakeOverCurrentThread() {
   return std::unique_ptr<TaskQueueManager>(
       new TaskQueueManager(internal::ThreadControllerImpl::Create(
-          base::MessageLoop::current(),
+          base::CreateSingleThreadTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+               base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
+          base::SingleThreadTaskRunnerThreadMode::DEDICATED),
           std::make_unique<base::DefaultTickClock>())));
 }
 
@@ -742,11 +742,6 @@ TaskQueueManager::GetGracefulQueueShutdownHelper() const {
 
 base::WeakPtr<TaskQueueManager> TaskQueueManager::GetWeakPtr() {
   return weak_factory_.GetWeakPtr();
-}
-
-void TaskQueueManager::SetDefaultTaskRunner(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  controller_->SetDefaultTaskRunner(task_runner);
 }
 
 base::TickClock* TaskQueueManager::GetClock() const {

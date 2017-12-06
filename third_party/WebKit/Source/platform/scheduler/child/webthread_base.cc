@@ -10,7 +10,6 @@
 #include <memory>
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/message_loop/message_loop.h"
 #include "base/pending_task.h"
 #include "base/threading/platform_thread.h"
 #include "platform/scheduler/child/compositor_worker_scheduler.h"
@@ -74,16 +73,6 @@ void WebThreadBase::AddTaskTimeObserver(TaskTimeObserver* task_time_observer) {
 void WebThreadBase::RemoveTaskTimeObserver(
     TaskTimeObserver* task_time_observer) {
   RemoveTaskTimeObserverInternal(task_time_observer);
-}
-
-void WebThreadBase::AddTaskObserverInternal(
-    base::MessageLoop::TaskObserver* observer) {
-  base::MessageLoop::current()->AddTaskObserver(observer);
-}
-
-void WebThreadBase::RemoveTaskObserverInternal(
-    base::MessageLoop::TaskObserver* observer) {
-  base::MessageLoop::current()->RemoveTaskObserver(observer);
 }
 
 // static

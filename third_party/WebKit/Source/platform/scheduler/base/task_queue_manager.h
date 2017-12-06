@@ -74,12 +74,6 @@ class PLATFORM_EXPORT TaskQueueManager
   // thread.
   static std::unique_ptr<TaskQueueManager> TakeOverCurrentThread();
 
-  // Sets the SingleThreadTaskRunner that will be returned by
-  // ThreadTaskRunnerHandle::Get and MessageLoop::current().task_runner() on the
-  // thread associated with this TaskQueueManager.
-  void SetDefaultTaskRunner(
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
-
   // Implementation of Sequence:
   base::Optional<base::PendingTask> TakeTask(WorkType work_type) override;
   bool DidRunTask() override;

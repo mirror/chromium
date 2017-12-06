@@ -137,7 +137,9 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   virtual void DraggableRegionsChanged() {}
 
   // Called when a worker fetch context will be created.
-  virtual void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) {}
+  virtual void WillCreateWorkerFetchContext(
+      blink::WebWorkerFetchContext*,
+      scoped_refptr<base::SingleThreadTaskRunner> main_task_runner) {}
 
   // Called to give the embedder an opportunity to bind an interface request
   // for a frame. If the request can be bound, |interface_pipe| will be taken.

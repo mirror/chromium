@@ -62,9 +62,9 @@ class BLINK_PLATFORM_EXPORT WebThreadBase : public WebThread {
   WebThreadBase();
 
   virtual void AddTaskObserverInternal(
-      base::MessageLoop::TaskObserver* observer);
+      base::MessageLoop::TaskObserver* observer) = 0;
   virtual void RemoveTaskObserverInternal(
-      base::MessageLoop::TaskObserver* observer);
+      base::MessageLoop::TaskObserver* observer) = 0;
 
   virtual void AddTaskTimeObserverInternal(TaskTimeObserver*) {}
   virtual void RemoveTaskTimeObserverInternal(TaskTimeObserver*) {}

@@ -3319,8 +3319,11 @@ RenderFrameImpl::CreateWorkerFetchContext() {
   {
     SCOPED_UMA_HISTOGRAM_TIMER(
         "RenderFrameObservers.WillCreateWorkerFetchContext");
-    for (auto& observer : observers_)
-      observer.WillCreateWorkerFetchContext(worker_fetch_context.get());
+    for (auto& observer : observers_) {
+      observer.WillCreateWorkerFetchContext(
+          worker_fetch_context.get(),
+          RenderThreadImpl::GetMainTaskRunner());
+    }
   }
   return std::move(worker_fetch_context);
 }

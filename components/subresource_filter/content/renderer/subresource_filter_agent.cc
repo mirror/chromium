@@ -227,7 +227,8 @@ bool SubresourceFilterAgent::OnMessageReceived(const IPC::Message& message) {
 }
 
 void SubresourceFilterAgent::WillCreateWorkerFetchContext(
-    blink::WebWorkerFetchContext* worker_fetch_context) {
+    blink::WebWorkerFetchContext* worker_fetch_context,
+    scoped_refptr<base::SingleThreadTaskRunner> main_task_runner) {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
   if (!filter_for_last_committed_load_)
     return;
@@ -243,7 +244,8 @@ void SubresourceFilterAgent::WillCreateWorkerFetchContext(
           std::move(ruleset_file),
           base::BindOnce(&SubresourceFilterAgent::
                              SignalFirstSubresourceDisallowedForCommittedLoad,
-                         AsWeakPtr())));
+                         AsWeakPtr()),
+          std::move(main_task_runner)));
 }
 
 }  // namespace subresource_filter

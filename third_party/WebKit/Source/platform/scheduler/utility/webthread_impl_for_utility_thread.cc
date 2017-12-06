@@ -37,5 +37,15 @@ WebThreadImplForUtilityThread::GetIdleTaskRunner() const {
 
 void WebThreadImplForUtilityThread::Init() {}
 
+void WebThreadImplForUtilityThread::AddTaskObserverInternal(
+    base::MessageLoop::TaskObserver* observer) {
+  NOTIMPLEMENTED();
+}
+
+void WebThreadImplForUtilityThread::RemoveTaskObserverInternal(
+    base::MessageLoop::TaskObserver* observer){
+  NOTIMPLEMENTED();
+}
+    
 }  // namespace scheduler
 }  // namespace blink
