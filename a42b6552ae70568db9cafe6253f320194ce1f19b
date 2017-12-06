@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc3a22a4_5c22bb81",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "If either of these fail, should you stop processing the input and return immediately? I wonder if further process might actually overwrite |error_code_| and result in a falsely-successful parse? In any case there\u0027s no point continuing to expend resources on a broken/possibly hostile input.\n\nRefactoring them to return bool or CBORDecoderError will allow you to check them and return here, and will also facilitate testing them as stand-alone units.",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298bfd11_9d038875",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "Ahh, so this refers to non-minimal CBOR encoding, not non-minimal UTF-8 encoding.\n\n(Does base::IsStringUTF8 check for non-minimal UTF-8 encoding? It might not, I\u0027m not sure.)",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987bf099_8e7c4eaf",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "Design nits: Either the \"CBOR_\" in CBOR_NO_ERROR is redundant, or the \"_ERROR\" in all of them is, or both. Arguably. Since the fully-qualified names will look like\n\n  CBORReader::CBORDecoderError::UNSUPPORTED_MAJOR_TYPE_ERROR\n\n, which seems pretty verbose, I\u0027d probably try to get something along the lines of\n\n  CBORReader::Error::UNSUPPORTED_MAJOR_TYPE\n\nif possible.",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6fe5b1_7d47feb6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "Does this refer to non-minimal UTF-8 encoding? If so, how is it different from INVALID_UTF8_ERROR?",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffad4149_676e803e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "It\u0027d be good to have a negative unit test for this check.",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b31879_94211f8a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "It\u0027d be good to unit-test this one too.",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8d5e19_5025ec6a",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:31:38Z",
+      "side": 1,
+      "message": "Are you skipping 1 intentionally? (Not sure it matters; just checking.)",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
