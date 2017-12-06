@@ -77,17 +77,19 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   ~ProgramKey();
 
   static ProgramKey DebugBorder();
-  static ProgramKey SolidColor(AAMode aa_mode);
+  static ProgramKey SolidColor(AAMode aa_mode, bool has_color_matrix);
   static ProgramKey Tile(TexCoordPrecision precision,
                          SamplerType sampler,
                          AAMode aa_mode,
                          SwizzleMode swizzle_mode,
-                         bool is_opaque);
+                         bool is_opaque,
+                         bool has_color_matrix);
   static ProgramKey Texture(TexCoordPrecision precision,
                             SamplerType sampler,
                             PremultipliedAlphaMode premultiplied_alpha,
                             bool has_background_color,
-                            bool has_tex_clamp_rect);
+                            bool has_tex_clamp_rect,
+                            bool has_color_matrix);
 
   // TODO(ccameron): Merge |mask_for_background| into MaskMode.
   static ProgramKey RenderPass(TexCoordPrecision precision,
@@ -101,7 +103,8 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   static ProgramKey YUVVideo(TexCoordPrecision precision,
                              SamplerType sampler,
                              YUVAlphaTextureMode yuv_alpha_texture_mode,
-                             UVTextureMode uv_texture_mode);
+                             UVTextureMode uv_texture_mode,
+                             bool has_color_matrix);
 
   bool operator==(const ProgramKey& other) const;
   bool operator!=(const ProgramKey& other) const;
@@ -317,6 +320,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
 #endif
 
     // Initialize fragment program.
+    fragment_shader_.has_color_matrix_ = key.has_color_matrix_;
     fragment_shader_.input_color_type_ = INPUT_COLOR_SOURCE_UNIFORM;
     fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_DEFAULT;
   }
@@ -339,7 +343,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
         fragment_shader_.frag_color_mode_ = FRAG_COLOR_MODE_APPLY_BLEND_MODE;
       fragment_shader_.has_uniform_alpha_ = true;
     }
-
+    fragment_shader_.has_color_matrix_ = key.has_color_matrix_;
     // AA changes the texture coordinate mode (affecting both shaders).
     if (key.aa_mode_ == USE_AA) {
       vertex_shader_.tex_coord_source_ = TEX_COORD_SOURCE_POSITION;
@@ -357,6 +361,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     vertex_shader_.use_uniform_arrays_ = !key.has_tex_clamp_rect_;
 
     // Initialize fragment program.
+    fragment_shader_.has_color_matrix_ = key.has_color_matrix_;
     fragment_shader_.has_varying_alpha_ = true;
     fragment_shader_.has_background_color_ = key.has_background_color_;
     fragment_shader_.has_tex_clamp_rect_ = key.has_tex_clamp_rect_;
@@ -401,6 +406,8 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     vertex_shader_.is_ya_uv_ = true;
 
     fragment_shader_.input_color_type_ = INPUT_COLOR_SOURCE_YUV_TEXTURES;
+    LOG(ERROR) << key.has_color_matrix_;
+    fragment_shader_.has_color_matrix_ = key.has_color_matrix_;
     fragment_shader_.has_uniform_alpha_ = true;
     fragment_shader_.yuv_alpha_texture_mode_ = key.yuv_alpha_texture_mode_;
     fragment_shader_.uv_texture_mode_ = key.uv_texture_mode_;
