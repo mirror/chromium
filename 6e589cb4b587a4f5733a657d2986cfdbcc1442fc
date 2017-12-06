@@ -22,6 +22,30 @@
       "revId": "6e589cb4b587a4f5733a657d2986cfdbcc1442fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc338fdf_6e196bd1",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T23:42:23Z",
+      "side": 1,
+      "message": "This is a small enough change for this to not matter. Feel free to land :)",
+      "parentUuid": "90a7426f_aed3e47d",
+      "range": {
+        "startLine": 1000,
+        "startChar": 14,
+        "endLine": 1000,
+        "endChar": 30
+      },
+      "revId": "6e589cb4b587a4f5733a657d2986cfdbcc1442fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
