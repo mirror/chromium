@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33377a17_cabac77c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-06T10:27:34Z",
+      "side": 1,
+      "message": "I still don\u0027t understand this, and I cannot reproduce it. I get 10px min_size and max_size.\n\nWhy won\u0027t negative margins affect min size in the same way as they affect max size?\n\nAt this point we\u0027ve found a min size, which, roughly speaking, is the smallest size you can have to avoid overflow (ignoring negative margins, wide children of children with specified width, and so on). Overwriting that value with something less can only cause trouble, as far as I can tell. If we want to do any clamping at all, I\u0027d say we should do the opposite: clamp max_size to be \u003e\u003d min_size (but I don\u0027t know if that\u0027s necessary either).",
+      "revId": "5ce0fef69de848346c451120ba4391bc211ac491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
