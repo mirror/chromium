@@ -88,6 +88,25 @@
       "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72778718_d77fe213",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T01:47:55Z",
+      "side": 1,
+      "message": "Sorry, meant to reply here and got busy...\n\nWhat I mean by authoritative is that in most places where we try to get a GpuChannelHost in RenderThreadImpl, we fail if we get a null channel (see e.g. RenderThreadImpl::GetGpuFactories, RenderThreadImpl::SharedMainThreadContextProvider, RenderThreadImpl::SharedCompositorWorkerContextProvider, etc.). RenderThreadImpl::RequestNewLayerTreeFrameSink is the exception (we let the compositor retry rather than fall back to software), but I\u0027m not even sure it\u0027s legitimate.\n\nThe race I\u0027m talking about is if the gpu process (hence the channel gets lost) dies as we create a context, depending on when it happens exactly, we may return a null context (i.e. fatal failure) as opposed to, say, a lost one. It\u0027s really a bug, but not exactly worth extensive complexity to fix because it\u0027s a very rare condition.\n\nBut this patch would cause one new cause of failure... if the GPU process dies there is a race between the renderer re-creating a channel and the browser detecting that the GPU process is dead. If the former happens before the latter we might reuse the \"old\" GpuProcessHost, and fail to establish the channel (the sync message is the first thing that will detect the GPU process failure). At that point we will return GPU_HOST_INVALID, and expect the client to retry. But if it doesn\u0027t (like with your patch), and report failure to the renderer, the renderer will fail to create things (and may never retry).",
+      "parentUuid": "c9c01329_8653fe58",
+      "tag": "mailMessageId\u003d\u003cCAMeTaZfh\u003dKhcoeEUMSwcVC98wF0zNJUdo1ZZkQa_KQ+tme1vmg@mail.gmail.com\u003e",
+      "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
