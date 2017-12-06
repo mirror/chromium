@@ -291,12 +291,15 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
-    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
-                         ? pending_password_.form_has_autofilled_value
-                         : display_reason == USER_ACTION;
+    password_revealing_requires_reauth_ =
+        delegate_->BubbleIsManualFallbackForSaving()
+            ? pending_password_.form_has_autofilled_value
+            : display_reason == USER_ACTION;
     enable_editing_ = delegate_->GetCredentialSource() !=
                       password_manager::metrics_util::CredentialSourceType::
                           kCredentialManagementAPI;
+    reveal_password_when_bubble_is_opened_ =
+        delegate_->IsPasswordRevealedWhenOpened();
 
     UpdatePendingStateTitle();
   } else if (state_ == password_manager::ui::CONFIRMATION_STATE) {
@@ -374,6 +377,9 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         NOTREACHED();
         break;
     }
+  }
+  if (reveal_password_when_bubble_is_opened_) {
+    display_disposition = metrics_util::REOPEN_AFTER_REAUTH;
   }
 
   if (metrics_recorder_) {
@@ -558,6 +564,15 @@ bool ManagePasswordsBubbleModel::ReplaceToShowPromotionIfNeeded() {
 void ManagePasswordsBubbleModel::SetClockForTesting(
     std::unique_ptr<base::Clock> clock) {
   interaction_keeper_->SetClockForTesting(std::move(clock));
+}
+
+bool ManagePasswordsBubbleModel::RevealPasswords() {
+  return !password_revealing_requires_reauth_ ||
+         (delegate_ && delegate_->AuthenticateUser());
+}
+
+bool ManagePasswordsBubbleModel::IsPasswordRevealedWhenOpened() {
+  return reveal_password_when_bubble_is_opened_;
 }
 
 void ManagePasswordsBubbleModel::UpdatePendingStateTitle() {
