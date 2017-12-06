@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cda16e0_473a4770",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/css3/filters/fedisplacementmap-tainted-expected.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e4dede_019da19a",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc32f879_97075dd4",
         "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/editing/selection/4975120-expected.png",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d6a66a_2a4e9d0e",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/editing/selection/4975120-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc32f879_97075dd4",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ce55bb02_37955499",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/editing/selection/4975120-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4de2a7_375be457",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc157e5c_c54f1453",
         "filename": "third_party/WebKit/LayoutTests/platform/win7/fast/reflections/reflection-with-zoom-expected.png",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd42edd4_d49eb155",
+        "filename": "third_party/WebKit/LayoutTests/platform/win7/fast/reflections/reflection-with-zoom-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc157e5c_c54f1453",
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3365c537_f21cf5f9",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ba20f4_1702352e",
+      "range": {
+        "startLine": 1319,
+        "startChar": 4,
+        "endLine": 1319,
+        "endChar": 43
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b647fa3a_73c0ec8e",
         "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
         "patchSetId": 10
@@ -110,6 +212,30 @@
       "writtenOn": "2017-11-30T11:54:53Z",
       "side": 1,
       "message": "Also taint here?",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52494167_6a8814af",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T00:29:09Z",
+      "side": 1,
+      "message": "I would like to leave that for a followup. OffscreenCanvas has not yet launched and\nhas special tests.This is built off of last_effect, which is tainted if necessary via\nBuildFilterEffect, right?",
+      "parentUuid": "b647fa3a_73c0ec8e",
       "range": {
         "startLine": 308,
         "startChar": 4,
