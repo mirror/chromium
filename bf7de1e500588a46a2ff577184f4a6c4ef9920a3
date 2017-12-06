@@ -22,6 +22,30 @@
       "revId": "bf7de1e500588a46a2ff577184f4a6c4ef9920a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f667f4d_d2276b1d",
+        "filename": "ui/aura/test/ui_controls_factory_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T17:11:39Z",
+      "side": 1,
+      "message": "Done.\n\nYes, a UIControlsAura is created for each display host if it wasn\u0027t created before: https://cs.chromium.org/chromium/src/ash/test/ui_controls_factory_ash.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d36",
+      "parentUuid": "37c0047e_9c49d7b2",
+      "range": {
+        "startLine": 233,
+        "startChar": 2,
+        "endLine": 233,
+        "endChar": 9
+      },
+      "revId": "bf7de1e500588a46a2ff577184f4a6c4ef9920a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
