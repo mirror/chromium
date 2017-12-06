@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a781d69_2a823d0e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T17:44:33Z",
+      "side": 1,
+      "message": "This is simply defensive programming.\nIf we hit this, we\u0027ll report this.",
+      "parentUuid": "4f0a1dea_ab1f13cc",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 61
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53c1eab0_c10b3334",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
         "patchSetId": 2
