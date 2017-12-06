@@ -11,12 +11,15 @@
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/media/media_player_delegate_messages.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message_macros.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "ui/gfx/geometry/size.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 namespace content {
 
@@ -110,6 +113,8 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                        OnPictureInPicture)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -334,6 +339,16 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
     bool muted) {
   const MediaPlayerId id(render_frame_host, delegate_id);
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
+}
+
+void MediaWebContentsObserver::OnPictureInPicture(
+    RenderFrameHost* render_frame_host,
+    viz::FrameSinkId frame_sink_id) {
+  LOG(ERROR) << "MediaWebContentsObserver::OnPictureInPicture";
+  LOG(ERROR) << "frame sink id: " << frame_sink_id;
+
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  browser_client->PictureInPicture(render_frame_host, frame_sink_id);
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(

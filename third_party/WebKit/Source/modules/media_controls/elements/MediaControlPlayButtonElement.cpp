@@ -18,6 +18,7 @@ MediaControlPlayButtonElement::MediaControlPlayButtonElement(
     : MediaControlInputElement(media_controls, kMediaPlayButton) {
   setType(InputTypeNames::button);
   SetShadowPseudoId(AtomicString("-webkit-media-controls-play-button"));
+  LOG(ERROR) << "MediaControlPlayButtonElement";
 }
 
 bool MediaControlPlayButtonElement::WillRespondToMouseClickEvents() {
@@ -49,7 +50,9 @@ const char* MediaControlPlayButtonElement::GetNameForHistograms() const {
 }
 
 void MediaControlPlayButtonElement::DefaultEventHandler(Event* event) {
+  // LOG(ERROR) << "MediaControlPlayButtonElement::DefaultEventHandler";
   if (event->type() == EventTypeNames::click) {
+    LOG(ERROR) << "MediaControlPlayButtonElement::DefaultEventHandler -> click";
     if (MediaElement().paused()) {
       Platform::Current()->RecordAction(
           UserMetricsAction("Media.Controls.Play"));

@@ -7,12 +7,20 @@
 
 #include "base/memory/weak_ptr.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 
 namespace content {
 class WebContents;
 }
 
+namespace viz {
+class FrameSinkId;
+class LocalSurfaceIdAllocator;
+class SurfaceId;
+}
+
 class OverlayWindow;
+class OverlaySurfaceEmbedder;
 
 // Class for Picture in Picture window controllers. This is currently tied to a
 // WebContents |initiator| and created when a Picture in Picture window is to
@@ -30,8 +38,10 @@ class PictureInPictureWindowController
   static PictureInPictureWindowController* GetOrCreateForWebContents(
       content::WebContents* initiator);
 
+  void Init();
   void Show();
   void Close();
+  void EmbedSurface(viz::FrameSinkId frame_sink_id);
 
  private:
   friend class content::WebContentsUserData<PictureInPictureWindowController>;
@@ -42,6 +52,8 @@ class PictureInPictureWindowController
 
   content::WebContents* const initiator_;
   std::unique_ptr<OverlayWindow> window_;
+  std::unique_ptr<OverlaySurfaceEmbedder> embedder_;
+  viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(PictureInPictureWindowController);
 };

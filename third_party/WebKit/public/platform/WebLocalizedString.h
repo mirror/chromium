@@ -108,6 +108,7 @@ struct WebLocalizedString {
     kOverflowMenuUnmute,
     kOverflowMenuPlay,
     kOverflowMenuPause,
+    kOverflowMenuPictureInPicture,
     kOverflowMenuDownload,
     // kPlaceholderForDayOfMonthField is for day placeholder text, e.g.
     // "dd", for date field used in multiple fields "date", "datetime", and
