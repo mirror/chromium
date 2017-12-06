@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb418b9_c18b862a",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4430,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T19:53:37Z",
+      "side": 1,
+      "message": "Is this IsValid check really needed here? The equality comparison to SentinelEmptyRect should be correct regardless of the validity of the input rectangle.\n\nInstead, it seems to me that we should be doing validity checking after potentially calling SafeGetImageSize. What do you think? Actually, since ValidateTexImageSubRectangle now does the validity check, it\u0027s not clear to me that this check is needed at all.",
+      "range": {
+        "startLine": 4430,
+        "startChar": 6,
+        "endLine": 4430,
+        "endChar": 14
+      },
+      "revId": "174f0400019ea5ce60cdb161f58f177b9ee0bed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
