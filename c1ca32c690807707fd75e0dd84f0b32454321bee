@@ -16,6 +16,24 @@
       "revId": "c1ca32c690807707fd75e0dd84f0b32454321bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccc724d_c007841d",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T22:18:17Z",
+      "side": 1,
+      "message": "The imageEdgeInsets are set to 0. The image is centered by a subclass of UIButton that centers the image in layoutSubviews.",
+      "parentUuid": "c5b1bb5a_ee133ecb",
+      "revId": "c1ca32c690807707fd75e0dd84f0b32454321bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
