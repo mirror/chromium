@@ -39,7 +39,7 @@ class SurfaceAggregatorPixelTest : public cc::RendererPixelTest<GLRenderer> {
                                                     kArbitraryRootFrameSinkId,
                                                     kIsRoot,
                                                     kNeedsSyncPoints)) {}
-  ~SurfaceAggregatorPixelTest() override { support_->EvictCurrentSurface(); }
+  ~SurfaceAggregatorPixelTest() override = default;
 
  protected:
   FrameSinkManagerImpl manager_;
@@ -169,8 +169,6 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleAggregatedFrame) {
   EXPECT_TRUE(RunPixelTest(pass_list,
                            base::FilePath(FILE_PATH_LITERAL("blue_yellow.png")),
                            pixel_comparator));
-
-  child_support->EvictCurrentSurface();
 }
 
 // Tests a surface quad that has a non-identity transform into its pass.
@@ -300,9 +298,6 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
       pass_list,
       base::FilePath(FILE_PATH_LITERAL("four_blue_green_checkers.png")),
       pixel_comparator));
-
-  left_support->EvictCurrentSurface();
-  right_support->EvictCurrentSurface();
 }
 
 }  // namespace

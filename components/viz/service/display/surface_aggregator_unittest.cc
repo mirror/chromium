@@ -112,7 +112,6 @@ class SurfaceAggregatorTest : public testing::Test {
 
   void TearDown() override {
     observer_.Reset();
-    support_->EvictCurrentSurface();
     testing::Test::TearDown();
   }
 
@@ -350,7 +349,6 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
   }
 
   void TearDown() override {
-    child_support_->EvictCurrentSurface();
     SurfaceAggregatorTest::TearDown();
   }
 
@@ -492,8 +490,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
   auto& shared_quad_state_list2 = render_pass_list[1]->shared_quad_state_list;
   ASSERT_EQ(1u, shared_quad_state_list2.size());
   EXPECT_EQ(.5f, shared_quad_state_list2.ElementAt(0)->opacity);
-
-  embedded_support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, MultiPassSimpleFrame) {
@@ -609,8 +605,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleSurfaceReference) {
   SurfaceId ids[] = {root_surface_id, embedded_surface_id};
   AggregateAndVerify(expected_passes, arraysize(expected_passes), ids,
                      arraysize(ids));
-
-  embedded_support->EvictCurrentSurface();
 }
 
 // This test verifies that in the absence of a primary Surface,
@@ -733,9 +727,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // for the primary surface.
   EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
   EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
-
-  primary_child_support->EvictCurrentSurface();
-  fallback_child_support->EvictCurrentSurface();
 }
 
 // This test verifies that the appropriate transform will be applied to a
@@ -877,9 +868,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReferenceWithPrimary) {
 
   // The size of the damage should be equal to the size of the primary surface.
   EXPECT_EQ(primary_size, aggregated_damage_result.last_damage_rect().size());
-
-  primary_child_support->EvictCurrentSurface();
-  fallback_child_support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, CopyRequest) {
@@ -938,8 +926,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, CopyRequest) {
         aggregator_.previous_contained_surfaces().find(surface_ids[i]) !=
         aggregator_.previous_contained_surfaces().end());
   }
-
-  embedded_support->EvictCurrentSurface();
 }
 
 // Root surface may contain copy requests.
@@ -1021,8 +1007,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, RootCopyRequest) {
   ASSERT_EQ(2u, original_pass_list.size());
   DCHECK(original_pass_list[0]->copy_requests.empty());
   DCHECK(original_pass_list[1]->copy_requests.empty());
-
-  embedded_support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
@@ -1117,9 +1101,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
         aggregator_.previous_contained_surfaces().find(surface_ids[i]) !=
         aggregator_.previous_contained_surfaces().end());
   }
-
-  embedded_support->EvictCurrentSurface();
-  parent_support->EvictCurrentSurface();
 }
 
 // This tests referencing a surface that has multiple render passes.
@@ -1651,10 +1632,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
     EXPECT_EQ(blend_modes[iter.index()], iter->shared_quad_state->blend_mode)
         << iter.index();
   }
-
-  grandchild_support->EvictCurrentSurface();
-  child_one_support->EvictCurrentSurface();
-  child_two_support->EvictCurrentSurface();
 }
 
 // This tests that when aggregating a frame with multiple render passes that we
@@ -1840,8 +1817,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateMultiplePassWithTransform) {
             aggregated_pass_list[1]
                 ->shared_quad_state_list.ElementAt(1)
                 ->clip_rect.ToString());
-
-  middle_support->EvictCurrentSurface();
 }
 
 // Tests that damage rects are aggregated correctly when surfaces change.
@@ -2012,8 +1987,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateDamageRect) {
     EXPECT_TRUE(aggregated_pass_list[1]->damage_rect.Contains(
         gfx::Rect(SurfaceSize())));
   }
-
-  parent_support->EvictCurrentSurface();
 }
 
 // Check that damage is correctly calculated for surfaces.
@@ -2518,8 +2491,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeResourcesOneSurface) {
   }
   EXPECT_THAT(returned_ids,
               testing::WhenSorted(testing::ElementsAreArray(ids)));
-
-  support->EvictCurrentSurface();
 }
 
 // This test verifies that when a CompositorFrame is submitted to a new surface
@@ -2559,8 +2530,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, ReturnResourcesAsSurfacesChange) {
   }
   EXPECT_THAT(returned_ids,
               testing::WhenSorted(testing::ElementsAreArray(ids)));
-
-  support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
@@ -2592,8 +2561,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
                                      support.get(), surface_id);
   ASSERT_EQ(1u, client.returned_resources().size());
   EXPECT_EQ(11u, client.returned_resources()[0].id);
-
-  support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TwoSurfaces) {
@@ -2634,9 +2601,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TwoSurfaces) {
   EXPECT_THAT(returned_ids,
               testing::WhenSorted(testing::ElementsAreArray(ids)));
   EXPECT_EQ(3u, resource_provider_->num_resources());
-
-  support1->EvictCurrentSurface();
-  support2->EvictCurrentSurface();
 }
 
 // Ensure that aggregator completely ignores Surfaces that reference invalid
@@ -2692,10 +2656,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, InvalidChildSurface) {
   ASSERT_EQ(1u, pass_list->size());
   EXPECT_EQ(3u, pass_list->back()->shared_quad_state_list.size());
   EXPECT_EQ(9u, pass_list->back()->quad_list.size());
-
-  root_support->EvictCurrentSurface();
-  middle_support->EvictCurrentSurface();
-  child_support->EvictCurrentSurface();
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
@@ -2758,9 +2718,6 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
 
   // Output is insecure, so texture should be drawn.
   EXPECT_EQ(DrawQuad::SOLID_COLOR, render_pass->quad_list.back()->material);
-
-  support1->EvictCurrentSurface();
-  support2->EvictCurrentSurface();
 }
 
 // Ensure that the render passes have correct color spaces.
@@ -2988,8 +2945,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest,
     EXPECT_FALSE(aggregated_frame.render_pass_list[0]
                      ->has_damage_from_contributing_content);
   }
-
-  grand_child_support->EvictCurrentSurface();
 }
 
 // Tests that has_damage_from_contributing_content is aggregated correctly from
