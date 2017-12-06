@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "33fb4411_c3afc1e1",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T16:48:41Z",
+      "side": 1,
+      "message": "+1, this looks like it can be reused for both CC and phone sanitization.",
+      "parentUuid": "1c9ed1f9_b3826b98",
+      "revId": "7de931ec33faba39572584e8b2fecd2a9a654f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c88adf2_1ba1bb8f",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-06T16:48:41Z",
+      "side": 1,
+      "message": "if you\u0027re replacing whitespace chars here then you don\u0027t need the Trim* calls above?\n\nAlso, RemoveChars intead of ReplaceChars.",
+      "revId": "7de931ec33faba39572584e8b2fecd2a9a654f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ff4003_21cde46b",
         "filename": "components/autofill/content/renderer/form_autofill_util.cc",
         "patchSetId": 7
