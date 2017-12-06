@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.metrics;
 
 import android.os.SystemClock;
 
-import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.metrics.RecordHistogram;
 
@@ -17,8 +16,6 @@ import java.util.concurrent.TimeUnit;
  */
 @JNINamespace("chrome::android")
 public class UmaUtils {
-    private static long sApplicationStartWallClockMs;
-
     private static boolean sRunningApplicationStart;
     private static long sApplicationStartTimeMs;
     private static long sForegroundStartTimeMs;
@@ -26,15 +23,10 @@ public class UmaUtils {
     private static long sFirstCommitTimeMs;
 
     /**
-     * Record the time at which the activity started. This should be called asap after
-     * the start of the activity's onCreate function.
+     * Record the time at which the Application is created. Serves as the starting point for other
+     * metrics.
      */
-    public static void recordMainEntryPointTime() {
-        // We can't simply pass this down through a JNI call, since the JNI for chrome
-        // isn't initialized until we start the native content browser component, and we
-        // then need the start time in the C++ side before we return to Java. As such we
-        // save it in a static that the C++ can fetch once it has initialized the JNI.
-        sApplicationStartWallClockMs = System.currentTimeMillis();
+    public static void recordApplicationStartTime() {
         sApplicationStartTimeMs = SystemClock.uptimeMillis();
     }
 
@@ -103,11 +95,6 @@ public class UmaUtils {
      */
     public static void recordMetricsReportingDefaultOptIn(boolean optIn) {
         nativeRecordMetricsReportingDefaultOptIn(optIn);
-    }
-
-    @CalledByNative
-    public static long getMainEntryPointWallTime() {
-        return sApplicationStartWallClockMs;
     }
 
     public static long getApplicationStartTimeMs() {
