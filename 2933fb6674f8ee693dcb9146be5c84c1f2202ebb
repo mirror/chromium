@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639cb99e_ba487e70",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "can we move this TODO to ClientControlledShellSurface somehow? ideally we\u0027d not have any references to derived classes in here..",
+      "range": {
+        "startLine": 1008,
+        "startChar": 2,
+        "endLine": 1010,
+        "endChar": 39
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46543fa1_d379035b",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "can derived classes just override OnMouseEvent instead of us having to add this virtual function? I\u0027d like to minimize the number of virtual functions that base class uses as that flow is always harder to follow compared to a virtual function called from outside but overridden by a derived class. if we can at least avoid calling virtual functions from within virtual functions would be nice.",
+      "range": {
+        "startLine": 1043,
+        "startChar": 10,
+        "endLine": 1043,
+        "endChar": 24
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d142a78_b43972cb",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "ditto: can we move this todo to ClientControlledShellSurface? maybe just add a ClientControlledShellSurface::OnGestureEvent that has this todo and calls ShellSurface::OnGestureEvent..",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 68
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedf2060_788e2303",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "Is the value of container_ not enough for base shell surface class? I\u0027d like to keep all popup related logic in Xdg derived classes.",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13324cbf_83eced50",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "hm, I don\u0027t think it makes sense with virtual functions that are private. can you make these public instead?",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358d011f_b1e26753",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T17:55:10Z",
+      "side": 1,
+      "message": "CanAnimateWindowStateTransitions?",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
