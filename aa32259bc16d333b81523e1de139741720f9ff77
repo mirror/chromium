@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "65262e33_328d0fde",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Added LoginScreenControllerTest.ShowLoginScreenRequiresLoginPrimarySessionState.",
+      "parentUuid": "0e35a835_2b28f966",
+      "revId": "aa32259bc16d333b81523e1de139741720f9ff77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccfb888d_5100ecb5",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
         "patchSetId": 8

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b7366af_4155c1bf",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb009397_d9b539f8",
+      "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31b1723f_e65fe3a6",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accf791d_f645a6c0",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31b1723f_e65fe3a6",
+      "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8dc19e65_827956ef",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd62761_17f0ebc5",
+      "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233628ad_b4190382",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5bed5803_efa2e27c",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Done. I\u0027ve changed AuthPrewarmer to use OnceClosure.",
+      "parentUuid": "233628ad_b4190382",
+      "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f25c0852_9e0f0e6b",
         "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-05T19:45:32Z",
       "side": 1,
       "message": "nit:  /*id\u003d*/",
+      "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea46f6ca_54352dac",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_views.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-06T17:45:54Z",
+      "side": 1,
+      "message": "Changed to /*id*/ (or did you want /*id\u003d*/?)",
+      "parentUuid": "f25c0852_9e0f0e6b",
       "revId": "ad4e9a6b1380651a565f3030e82d9a22c1bc1476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
