@@ -70,6 +70,30 @@
       "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a570c64d_0cf32778",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T08:32:00Z",
+      "side": 1,
+      "message": "Also, shorter name is better, I think. ;-)",
+      "parentUuid": "e1c65669_c53d9222",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
