@@ -57,7 +57,7 @@ Polymer({
       notify: true,
       value: {
         pages: {
-          value: [1, 2, 3, 4, 5],
+          value: [1],
           valid: true,
           available: true,
           updatesPreview: true,
@@ -233,13 +233,7 @@ Polymer({
     documentInfo: {
       type: Object,
       notify: true,
-      value: function() {
-        const info = new print_preview.DocumentInfo();
-        info.init(false, 'DocumentTitle', true);
-        info.updatePageCount(5);
-        info.fitToPageScaling_ = 94;
-        return info;
-      },
+      value: new print_preview.DocumentInfo(),
     },
 
     /** @type {!print_preview_new.State} */
@@ -253,6 +247,14 @@ Polymer({
         privetExtensionError: '',
         invalidSettings: false,
       },
+    },
+
+    /** @type {!print_preview.MeasurementSystem} */
+    measurementSystem: {
+      type: Object,
+      notify: true,
+      value: new print_preview.MeasurementSystem(
+          ',', '.', print_preview.MeasurementSystemUnitType.IMPERIAL),
     },
   },
 
@@ -287,7 +289,57 @@ Polymer({
    * @private
    */
   onInitialSettingsSet_: function(settings) {
-    // Do nothing here for now.
+    this.documentInfo.init(
+        settings.previewModifiable, settings.documentTitle,
+        settings.documentHasSelection);
+    this.documentInfo.updatePageCount(5);
+    this.notifyPath('documentInfo.isModifiable');
+    this.notifyPath('documentInfo.hasSelection');
+    this.notifyPath('documentInfo.title');
+    this.notifyPath('documentInfo.pageCount');
+    this.updateSettingsWithState_(settings.serializedAppStateStr);
+    this.measurementSystem.setSystem(
+        settings.thousandsDelimeter, settings.decimalDelimeter,
+        settings.unitType);
+    this.notifyPath('measurementSystem');
+    this.set('settings.selectionOnly.value', settings.shouldPrintSelectionOnly);
+    // TODO(rbpotter): add destination store initialization.
+  },
+
+  /**
+   * @param {?string} savedSettingsStr The sticky settings from native layer
+   * @private
+   */
+  updateSettingsWithState_(savedSettingsStr) {
+    if (!savedSettingsStr)
+      return;
+    const savedSettings = JSON.parse(savedSettingsStr);
+    if (!savedSettings)
+      return;
+    if (savedSettings.dpi != undefined)
+      this.set('settings.dpi.value', savedSettings.dpi);
+    if (savedSettings.mediaSize != undefined)
+      this.set('settings.mediaSize.value', savedSettings.mediaSize);
+    if (savedSettings.marginsType != undefined)
+      this.set('settings.marginsType.value', savedSettings.marginsType);
+    if (savedSettings.isColorEnabled != undefined)
+      this.set('settings.color.value', savedSettings.isColorEnabled);
+    if (savedSettings.isHeaderFooterEnabled != undefined) {
+      this.set(
+          'settings.headerFooter.value', savedSettings.isHeaderFooterEnabled);
+    }
+    if (savedSettings.isLandscapeEnabled != undefined)
+      this.set('settings.layout.value', savedSettings.isLandscapeEnabled);
+    if (savedSettings.isCollateEnabled != undefined)
+      this.set('settings.collate.value', savedSettings.isCollateEnabled);
+    if (savedSettings.isFitToPageEnabled != undefined)
+      this.set('settings.fitToPage.value', savedSettings.isFitToPageEnabled);
+    if (savedSettings.isCssBackgroundEnabled != undefined) {
+      this.set(
+          'settings.cssBackground.value', savedSettings.isCssBackgroundEnabled);
+    }
+    if (savedSettings.scaling != undefined)
+      this.set('settings.scaling.value', savedSettings.scaling);
   },
 
   /**
