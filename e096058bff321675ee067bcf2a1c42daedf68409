@@ -52,6 +52,24 @@
       "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e44106e_812bc7a6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-06T21:07:18Z",
+      "side": 1,
+      "message": "I can see the issue. Fixing it is a bit of work.\n\nRight now we assume that the PaintLayerCompositor for the IFrame content assumes that it\u0027s parent layer is the GraphicsLayer for the IFrame, and sets its offset accordingly. But with the child containment layer it is now parented off that, and has an incorrect position. I think the position can be fixed with some work once I manage to figure out how to detect the situation.",
+      "parentUuid": "673ee72d_3b9e605c",
+      "revId": "e096058bff321675ee067bcf2a1c42daedf68409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
