@@ -11,6 +11,7 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_observer.h"
 #include "chrome/browser/resource_coordinator/tab_lifecycle_unit_external.h"
+#include "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h"
 #include "chrome/browser/resource_coordinator/time.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_impl.h"
 #include "chrome/browser/ui/tabs/test_tab_strip_model_delegate.h"
@@ -73,8 +74,8 @@ class TabLifecycleUnitTest : public ChromeRenderViewHostTestHarness {
 
 TEST_F(TabLifecycleUnitTest, SetFocused) {
   test_clock_.Advance(kShortDelay);
-  TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents(),
-                                      tab_strip_model_.get());
+  TabLifecycleUnitSource::TabLifecycleUnit tab_lifecycle_unit(
+      &observers_, web_contents(), tab_strip_model_.get());
   EXPECT_EQ(base::TimeTicks(),
             tab_lifecycle_unit.GetSortKey().last_focused_time);
 
@@ -90,8 +91,8 @@ TEST_F(TabLifecycleUnitTest, SetFocused) {
 }
 
 TEST_F(TabLifecycleUnitTest, AutoDiscardable) {
-  TabLifecycleUnit tab_lifecycle_unit(&observers_, web_contents(),
-                                      tab_strip_model_.get());
+  TabLifecycleUnitSource::TabLifecycleUnit tab_lifecycle_unit(
+      &observers_, web_contents(), tab_strip_model_.get());
   EXPECT_TRUE(tab_lifecycle_unit.IsAutoDiscardable());
 
   EXPECT_CALL(observer_, OnAutoDiscardableStateChange(web_contents(), false));
