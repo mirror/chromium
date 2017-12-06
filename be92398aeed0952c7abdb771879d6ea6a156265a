@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1e1140_0c85c30d",
+        "filename": "chrome/browser/extensions/webstore_install_helper.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T20:53:43Z",
+      "side": 1,
+      "message": "Is this a no-op in terms of changing functionality? If it is, then I\u0027m fine giving extensions/ OWNERS approval.",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "be92398aeed0952c7abdb771879d6ea6a156265a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
