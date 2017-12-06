@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea4e4796_a637272d",
+        "filename": "ui/gfx/canvas_skia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T11:10:10Z",
+      "side": 1,
+      "message": "this is http://crrev.com/c/805516",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc5ad82_2def982c",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T11:10:10Z",
+      "side": 1,
+      "message": "This had a 3 pixel discrepancy :/ (old: 123 pixels, new: 126 pixels)",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
