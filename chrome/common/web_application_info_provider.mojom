@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module chrome.mojom;
+
+[Native]
+struct WebApplicationInfo;
+
+// Interface used to get web application information from renderer.
+interface WebApplicationInfoProvider {
+  // Browser requests web application info for the frame.
+  // The renderer responds back with application information.
+  GetWebApplicationInfo() => (WebApplicationInfo web_application_info);
+};
