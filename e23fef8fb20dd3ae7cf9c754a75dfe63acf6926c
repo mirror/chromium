@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7499fc_9cbeac00",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-06T03:14:29Z",
+      "side": 1,
+      "message": "This CL adds a property class for the property writing-mode, which causes a class identifier collision. Hence the need for a qualifier.",
+      "revId": "e23fef8fb20dd3ae7cf9c754a75dfe63acf6926c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

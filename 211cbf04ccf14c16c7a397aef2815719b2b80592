@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4707aef3_1e1e1184",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-06T03:14:29Z",
+      "side": 0,
+      "message": "I removed this because it seemed to be a typo. Please tell me if it was here for a reason.",
+      "revId": "211cbf04ccf14c16c7a397aef2815719b2b80592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
