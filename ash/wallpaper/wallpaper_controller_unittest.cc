@@ -166,6 +166,7 @@ class WallpaperControllerTest : public AshTestBase {
     wallpaper_delegate_ =
         static_cast<TestWallpaperDelegate*>(Shell::Get()->wallpaper_delegate());
     controller_->set_wallpaper_reload_delay_for_test(0);
+    controller_->InitializePathsForTesting();
   }
 
   WallpaperView* wallpaper_view() {
@@ -704,6 +705,46 @@ TEST_F(WallpaperControllerTest, MojoWallpaperObserverTest) {
   EXPECT_EQ(2, observer.wallpaper_colors_changed_count());
 }
 
+TEST_F(WallpaperControllerTest, SetCustomWallpaper) {
+  gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
+  const std::string file_name = "dummy_file_name";
+  const std::string wallpaper_files_id = "dummy_file_id";
+  const std::string user_email = "user@test.com";
+  const AccountId account_id = AccountId::FromUserEmail(user_email);
+  WallpaperLayout layout = WALLPAPER_LAYOUT_CENTER;
+  wallpaper::WallpaperType type = wallpaper::CUSTOMIZED;
+
+  SimulateUserLogin(user_email);
+
+  // Verify the wallpaper is set successfully and wallpaper info is updated.
+  controller_->SetCustomWallpaper(InitializeUser(account_id),
+                                  wallpaper_files_id, file_name, layout, type,
+                                  *image.bitmap(), true /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+  wallpaper::WallpaperInfo wallpaper_info;
+  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
+                                                true /* is_persistent */));
+  wallpaper::WallpaperInfo expected_wallpaper_info(
+      base::FilePath(wallpaper_files_id).Append(file_name).value(), layout,
+      type, base::Time::Now().LocalMidnight());
+  EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
+
+  // Verify that the wallpaper is not set when |show_wallpaper| is false, but
+  // wallpaper info is updated properly.
+  controller_->SetCustomWallpaper(InitializeUser(account_id),
+                                  wallpaper_files_id, file_name, layout, type,
+                                  *image.bitmap(), true /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(0, GetWallpaperCount());
+  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
+                                                true /* is_persistent */));
+  EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
+  // Remove the custom wallpaper directory that may be created.
+  controller_->RemoveUserWallpaper(InitializeUser(account_id),
+                                   wallpaper_files_id);
+}
+
 TEST_F(WallpaperControllerTest, SetOnlineWallpaper) {
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
   const std::string url = "dummy_url";
@@ -901,6 +942,18 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
   session->SwitchActiveUser(AccountId::FromUserEmail(kiosk_app));
   session->SetSessionState(SessionState::ACTIVE);
 
+  // Verify that |SetCustomWallpaper| doesn't set wallpaper in kiosk mode, and
+  // |account_id|'s wallpaper info is not updated.
+  controller_->SetCustomWallpaper(
+      InitializeUser(account_id), std::string() /* wallpaper_files_id */,
+      "dummy_file_name", WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED,
+      *image.bitmap(), true /* show_wallpaper */);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(0, GetWallpaperCount());
+  wallpaper::WallpaperInfo wallpaper_info;
+  EXPECT_FALSE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
+                                                 true /* is_persistent */));
+
   // Verify that |SetOnlineWallpaper| doesn't set wallpaper in kiosk mode, and
   // |account_id|'s wallpaper info is not updated.
   controller_->SetOnlineWallpaper(InitializeUser(account_id), *image.bitmap(),
@@ -908,7 +961,6 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
                                   true /* show_wallpaper */);
   RunAllTasksUntilIdle();
   EXPECT_EQ(0, GetWallpaperCount());
-  wallpaper::WallpaperInfo wallpaper_info;
   EXPECT_FALSE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
                                                  true /* is_persistent */));
 
@@ -929,6 +981,7 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
 
 TEST_F(WallpaperControllerTest, VerifyWallpaperCache) {
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
+  const std::string wallpaper_files_id = "dummy_file_id";
   const std::string user1 = "user1@test.com";
   const AccountId account_id1 = AccountId::FromUserEmail(user1);
 
@@ -960,24 +1013,25 @@ TEST_F(WallpaperControllerTest, VerifyWallpaperCache) {
 
   // Verify |SetDefaultWallpaper| clears wallpaper cache.
   controller_->SetDefaultWallpaper(InitializeUser(account_id1),
-                                   std::string() /* wallpaper_files_id */,
+                                   wallpaper_files_id,
                                    true /* show_wallpaper */);
   EXPECT_FALSE(
       controller_->GetWallpaperFromCache(account_id1, &cached_wallpaper));
   EXPECT_FALSE(controller_->GetPathFromCache(account_id1, &path));
 
-  // Verify |RemoveUserWallpaper| clears wallpaper cache. (Add wallpaper cache
-  // again first.)
-  controller_->SetOnlineWallpaper(
-      InitializeUser(account_id1), *image.bitmap(), "dummy_file_location",
-      WALLPAPER_LAYOUT_CENTER, true /* show_wallpaper */);
+  // Verify |SetCustomWallpaper| updates wallpaper cache for |user1|.
+  controller_->SetCustomWallpaper(
+      InitializeUser(account_id1), wallpaper_files_id, "dummy_file_name",
+      WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED, *image.bitmap(),
+      true /* show_wallpaper */);
   RunAllTasksUntilIdle();
   EXPECT_TRUE(
       controller_->GetWallpaperFromCache(account_id1, &cached_wallpaper));
   EXPECT_TRUE(controller_->GetPathFromCache(account_id1, &path));
 
+  // Verify |RemoveUserWallpaper| clears wallpaper cache.
   controller_->RemoveUserWallpaper(InitializeUser(account_id1),
-                                   std::string() /* wallpaper_files_id */);
+                                   wallpaper_files_id);
   EXPECT_FALSE(
       controller_->GetWallpaperFromCache(account_id1, &cached_wallpaper));
   EXPECT_FALSE(controller_->GetPathFromCache(account_id1, &path));
