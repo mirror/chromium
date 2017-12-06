@@ -9,4 +9,9 @@
    subject to change. Applications should only use zlib.h.
  */
 
-void ZLIB_INTERNAL inflate_fast_chunky OF((z_streamp strm, unsigned start));
+#ifndef INFFAST_CHUNK_H
+#define INFFAST_CHUNK_H
+
+void ZLIB_INTERNAL inflate_fast_chunk_ OF((z_streamp strm, unsigned start));
+
+#endif /* INFFAST_CHUNK_H */
