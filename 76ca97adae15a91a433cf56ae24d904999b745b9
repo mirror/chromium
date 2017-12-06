@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26ae7184_3e9e2d46",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T18:39:41Z",
+      "side": 1,
+      "message": "Added a test to confirm that these values are in fact nil, which I think resolves the issue here?",
+      "parentUuid": "5e978c7b_5bf6cf2b",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 21
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2369d4c7_71a7a15f",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 33
@@ -92,6 +116,30 @@
       "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c80c33e_bc84b655",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T18:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c818f0_31411e4c",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "76ca97adae15a91a433cf56ae24d904999b745b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
