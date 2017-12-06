@@ -46,6 +46,30 @@
       "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3601851c_3d9e2d24",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4558,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T23:13:58Z",
+      "side": 1,
+      "message": "Do you have iOS 10 device to repro this? The bug was filed for iOS9 and Chrome no longer supports iOS 9.\n\nWe can remove this patch and ask QA to retest with iOS 10.",
+      "parentUuid": "c566f9d2_0d764ed1",
+      "range": {
+        "startLine": 4558,
+        "startChar": 29,
+        "endLine": 4558,
+        "endChar": 0
+      },
+      "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
