@@ -1124,7 +1124,7 @@ void DrawIRectOp::RasterWithFlags(const DrawIRectOp* op,
                                   const PaintFlags* flags,
                                   SkCanvas* canvas,
                                   const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawIRect(op->rect, paint);
 }
 
@@ -1132,7 +1132,7 @@ void DrawLineOp::RasterWithFlags(const DrawLineOp* op,
                                  const PaintFlags* flags,
                                  SkCanvas* canvas,
                                  const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawLine(op->x0, op->y0, op->x1, op->y1, paint);
 }
 
@@ -1140,7 +1140,7 @@ void DrawOvalOp::RasterWithFlags(const DrawOvalOp* op,
                                  const PaintFlags* flags,
                                  SkCanvas* canvas,
                                  const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawOval(op->oval, paint);
 }
 
@@ -1148,7 +1148,7 @@ void DrawPathOp::RasterWithFlags(const DrawPathOp* op,
                                  const PaintFlags* flags,
                                  SkCanvas* canvas,
                                  const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawPath(op->path, paint);
 }
 
@@ -1163,7 +1163,7 @@ void DrawRectOp::RasterWithFlags(const DrawRectOp* op,
                                  const PaintFlags* flags,
                                  SkCanvas* canvas,
                                  const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawRect(op->rect, paint);
 }
 
@@ -1171,7 +1171,7 @@ void DrawRRectOp::RasterWithFlags(const DrawRRectOp* op,
                                   const PaintFlags* flags,
                                   SkCanvas* canvas,
                                   const PlaybackParams& params) {
-  SkPaint paint = flags->ToSkPaint();
+  SkPaint paint = flags->ToSkPaint(canvas);
   canvas->drawRRect(op->rrect, paint);
 }
 
