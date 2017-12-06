@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4de740a4_baec052e",
+        "filename": "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "is \"PageAction\" a good name? (it has an overloaded meaning for me, since extensions can have a \"page action\" or \"browser action\"). Maybe Icon/Image/DecorationPressed\"?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaa4270_f5a58127",
+        "filename": "chrome/browser/ui/cocoa/location_bar/content_setting_decoration.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s better here to invoke owner_-\u003eRecordContentSettingImageBubbleShown(model-\u003eimage_type())..\n\nthen we don\u0027t repeat the sites that reference \"ContentSettings.PageActionPressed\"\n\nnote RecordContentSettingImageBubbleShown() moves from LocationBarViews to LocationBar \n\nIs that possible without exploding dependencies?\n\n\nAlternatively, can ContentSettingImageModel::CreateBubbleModel() record the UMA?\n\n\nOtherwise, we should make \"ContentSettings.PageActionPressed\" a const char[] somewhere so that these are coupled together (since, they are coupled).",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092d5e51_f299cb07",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "return nullptr?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e909ca2_709e2769",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c8644e_72ab070e",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "0 is cookies - return models.size()?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80620128_b958ce2b",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "did you consider prefixing these with IMAGE_TYPE_?\n\nthen it\u0027s more balanced when they appear paired with CONTENT_SETTINGS_TYPE_, e.g.\n\nIMAGE_TYPE_GEOLOCATION,\nCONTENT_SETTINGS_TYPE_GEOLOCATION",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6d4bdc_63b9f324",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e9222c_a8e60b79",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9029db68_ec3742ce",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "explicit no longer needed",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06214500_879909cd",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "constexpr?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530cd232_e96c848b",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "auto model \u003d",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f78cbd_aee44fba",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "here - auto is more optional since the type isn\u0027t as obvious. However, it should definitely use \n\n?? bubble \u003d model-\u003eCreateBubbleModel(..) \n\n(unless CreateBubbleModel returns a raw pointer - I hope it doesn\u0027t! - but that\u0027s what\u0027s implied when using the constructor rather than assignment operator)",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518ae66c_309c50b1",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "check here whether the image_type() matches?",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb35b1de_ff23632a",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "auto model \u003d. more in unittest.cc",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edabca50_0839fa1d",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "ditto comment re: pageaction",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d80f5a_720a4be7",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:48:41Z",
+      "side": 1,
+      "message": "yeah... i reckon recording UMA inside CreateBubbleModel here is the best approach. then I think you can avoid updating the delegate interface as well.",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
