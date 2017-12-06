@@ -32,6 +32,15 @@ WKUserScript* InternalGetEarlyPageScript(BrowserState* browser_state) {
       forMainFrameOnly:YES];
 }
 
+// Returns an autoreleased instance of WKUserScript to be added to
+// configuration's userContentController.
+WKUserScript* InternalGetEarlyAllFramesPageScript(BrowserState* browser_state) {
+  return [[WKUserScript alloc]
+        initWithSource:GetEarlyAllFramesPageScript(browser_state)
+         injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+      forMainFrameOnly:NO];
+}
+
 }  // namespace
 
 // static
@@ -71,6 +80,8 @@ WKWebViewConfigurationProvider::GetWebViewConfiguration() {
     [[configuration_ preferences] setJavaScriptCanOpenWindowsAutomatically:YES];
     [[configuration_ userContentController]
         addUserScript:InternalGetEarlyPageScript(browser_state_)];
+    [[configuration_ userContentController]
+        addUserScript:InternalGetEarlyAllFramesPageScript(browser_state_)];
   }
   // Prevent callers from changing the internals of configuration.
   return [configuration_ copy];
