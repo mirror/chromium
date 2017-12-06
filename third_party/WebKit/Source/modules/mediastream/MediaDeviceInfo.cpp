@@ -28,44 +28,36 @@
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "platform/bindings/ScriptState.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-MediaDeviceInfo* MediaDeviceInfo::Create(
-    const WebMediaDeviceInfo& web_media_device_info) {
-  DCHECK(!web_media_device_info.IsNull());
-  return new MediaDeviceInfo(web_media_device_info);
+MediaDeviceInfo* MediaDeviceInfo::Create(const String& device_id,
+                                         const String& kind,
+                                         const String& label,
+                                         const String& group_id) {
+  return new MediaDeviceInfo(device_id, kind, label, group_id);
 }
 
-MediaDeviceInfo::MediaDeviceInfo(
-    const WebMediaDeviceInfo& web_media_device_info)
-    : web_media_device_info_(web_media_device_info) {}
+MediaDeviceInfo::MediaDeviceInfo(const String& device_id,
+                                 const String& kind,
+                                 const String& label,
+                                 const String& group_id)
+    : device_id_(device_id), kind_(kind), label_(label), group_id_(group_id) {}
 
 String MediaDeviceInfo::deviceId() const {
-  return web_media_device_info_.DeviceId();
+  return device_id_;
 }
 
 String MediaDeviceInfo::kind() const {
-  switch (web_media_device_info_.Kind()) {
-    case WebMediaDeviceInfo::kMediaDeviceKindAudioInput:
-      return "audioinput";
-    case WebMediaDeviceInfo::kMediaDeviceKindAudioOutput:
-      return "audiooutput";
-    case WebMediaDeviceInfo::kMediaDeviceKindVideoInput:
-      return "videoinput";
-  }
-
-  NOTREACHED();
-  return String();
+  return kind_;
 }
 
 String MediaDeviceInfo::label() const {
-  return web_media_device_info_.Label();
+  return label_;
 }
 
 String MediaDeviceInfo::groupId() const {
-  return web_media_device_info_.GroupId();
+  return group_id_;
 }
 
 ScriptValue MediaDeviceInfo::toJSONForBinding(ScriptState* script_state) {
