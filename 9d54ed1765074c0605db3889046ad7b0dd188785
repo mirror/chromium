@@ -39,6 +39,24 @@
       "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94021f84_3ffd262d",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-06T03:12:55Z",
+      "side": 1,
+      "message": "I re-read this method, it seems here try to slow the queue to prevent child receive too much message. If so the old implantation[1] should be better, since we break the loop and start event handle when receive input(mouse) so we can handle the input ASAP. WDYT?\n\n[1] https://chromium.googlesource.com/chromium/src/+/d9b76f0f70ec99842159e252e414a495377f0aec/base/message_loop/message_pump_win.cc",
+      "parentUuid": "234deb11_c49cb5a5",
+      "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
