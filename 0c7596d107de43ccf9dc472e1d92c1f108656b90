@@ -22,6 +22,30 @@
       "revId": "0c7596d107de43ccf9dc472e1d92c1f108656b90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4890abe9_a8b1924c",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-06T12:34:38Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "0d058167_c97ac2a6",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 19
+      },
+      "revId": "0c7596d107de43ccf9dc472e1d92c1f108656b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
