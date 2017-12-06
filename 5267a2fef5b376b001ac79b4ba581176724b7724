@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9681cad7_657ed2f2",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T21:07:05Z",
+      "side": 1,
+      "message": "Will this lead to a shutdown hang?\nHow can we make sure that there isn\u0027t a session which is stuck in a non-draining state? If that happens, we will have a shutdown hang which is probably worse than the current DCHECK.",
+      "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
