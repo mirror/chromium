@@ -70,15 +70,20 @@ bool SelectionModifier::ShouldAlwaysUseDirectionalSelection(LocalFrame* frame) {
 SelectionModifier::SelectionModifier(
     const LocalFrame& frame,
     const SelectionInDOMTree& selection,
-    LayoutUnit x_pos_for_vertical_arrow_navigation)
+    LayoutUnit x_pos_for_vertical_arrow_navigation,
+    bool is_directional)
     : frame_(const_cast<LocalFrame*>(&frame)),
       current_selection_(selection),
-      x_pos_for_vertical_arrow_navigation_(
-          x_pos_for_vertical_arrow_navigation) {}
+      x_pos_for_vertical_arrow_navigation_(x_pos_for_vertical_arrow_navigation),
+      selection_is_directional_(is_directional) {}
 
 SelectionModifier::SelectionModifier(const LocalFrame& frame,
-                                     const SelectionInDOMTree& selection)
-    : SelectionModifier(frame, selection, NoXPosForVerticalArrowNavigation()) {}
+                                     const SelectionInDOMTree& selection,
+                                     bool is_directional)
+    : SelectionModifier(frame,
+                        selection,
+                        NoXPosForVerticalArrowNavigation(),
+                        is_directional) {}
 
 VisibleSelection SelectionModifier::Selection() const {
   return CreateVisibleSelection(current_selection_);
@@ -126,8 +131,9 @@ TextDirection SelectionModifier::DirectionOfSelection() const {
 }
 
 static bool IsBaseStart(const VisibleSelection& visible_selection,
-                        SelectionModifyDirection direction) {
-  if (visible_selection.IsDirectional()) {
+                        SelectionModifyDirection direction,
+                        bool selection_is_directional) {
+  if (selection_is_directional) {
     // Make base and extent match start and end so we extend the user-visible
     // selection. This only matters for cases where base and extend point to
     // different positions than start and end (e.g. after a double-click to
@@ -155,11 +161,13 @@ static bool IsBaseStart(const VisibleSelection& visible_selection,
 // selection.
 static SelectionInDOMTree PrepareToExtendSelection(
     const SelectionInDOMTree& selection,
-    SelectionModifyDirection direction) {
+    SelectionModifyDirection direction,
+    bool selection_is_directional) {
   const VisibleSelection& visible_selection = CreateVisibleSelection(selection);
   if (visible_selection.Start().IsNull())
     return visible_selection.AsSelection();
-  const bool base_is_start = IsBaseStart(visible_selection, direction);
+  const bool base_is_start =
+      IsBaseStart(visible_selection, direction, selection_is_directional);
   return SelectionInDOMTree::Builder(visible_selection.AsSelection())
       .Collapse(base_is_start ? visible_selection.Start()
                               : visible_selection.End())
@@ -171,9 +179,11 @@ static SelectionInDOMTree PrepareToExtendSelection(
 static SelectionInDOMTree PrepareToModifySelection(
     const SelectionInDOMTree& selection,
     SelectionModifyAlteration alter,
-    SelectionModifyDirection direction) {
+    SelectionModifyDirection direction,
+    bool selection_is_directional) {
   return alter == SelectionModifyAlteration::kExtend
-             ? PrepareToExtendSelection(selection, direction)
+             ? PrepareToExtendSelection(selection, direction,
+                                        selection_is_directional)
              : CreateVisibleSelection(selection).AsSelection();
 }
 
@@ -609,8 +619,8 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  selection_ = CreateVisibleSelection(
-      PrepareToModifySelection(current_selection_, alter, direction));
+  selection_ = CreateVisibleSelection(PrepareToModifySelection(
+      current_selection_, alter, direction, selection_is_directional_));
 
   bool was_range = selection_.IsRange();
   VisiblePosition original_start_position = selection_.VisibleStart();
@@ -738,7 +748,8 @@ bool SelectionModifier::ModifyWithPageGranularity(
       current_selection_, alter,
       direction == SelectionModifyVerticalDirection::kUp
           ? SelectionModifyDirection::kBackward
-          : SelectionModifyDirection::kForward));
+          : SelectionModifyDirection::kForward,
+      selection_is_directional_));
 
   VisiblePosition pos;
   LayoutUnit x_pos;

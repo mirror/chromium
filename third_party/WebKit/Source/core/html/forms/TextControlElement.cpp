@@ -459,6 +459,7 @@ bool TextControlElement::SetSelectionRange(
           .SetShouldCloseTyping(true)
           .SetShouldClearTypingStyle(true)
           .SetDoNotSetFocus(true)
+          .SetIsDirectional(direction != kSelectionHasNoDirection)
           .Build());
   return did_change;
 }
@@ -592,7 +593,7 @@ TextFieldSelectionDirection TextControlElement::ComputeSelectionDirection()
   const SelectionInDOMTree& selection =
       frame->Selection().GetSelectionInDOMTree();
   const Position& start = selection.ComputeStartPosition();
-  return frame->Selection().IsDirectional()
+  return frame->Selection().SelectionIsDirectional()
              ? (selection.Base() == start ? kSelectionHasForwardDirection
                                           : kSelectionHasBackwardDirection)
              : kSelectionHasNoDirection;
