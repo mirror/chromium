@@ -796,6 +796,30 @@
     },
     {
       "key": {
+        "uuid": "496e848a_a30d7372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-06T21:52:53Z",
+      "side": 1,
+      "message": "I guess that\u0027s probably the safest way.",
+      "parentUuid": "e9507257_f0e03bfb",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a8acc99_ecba189a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
         "patchSetId": 11
@@ -1080,6 +1104,24 @@
       "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70021195_8b86a905",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/modaldialog/ModalDialogManagerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-06T21:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ad58b2_a0fe5c20",
+      "revId": "83a8e0ad049606c488141871ee1b68e4a96791a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
