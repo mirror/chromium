@@ -306,7 +306,6 @@ class WebContentsAccessibilityAndroid::Connector
  public:
   Connector(WebContents* web_contents,
             WebContentsAccessibilityAndroid* accessibility);
-  ~Connector() override;
 
   // RenderWidgetHostConnector:
   void UpdateRenderProcessConnection(
@@ -322,10 +321,6 @@ WebContentsAccessibilityAndroid::Connector::Connector(
     WebContentsAccessibilityAndroid* accessibility)
     : RenderWidgetHostConnector(web_contents), accessibility_(accessibility) {
   Initialize();
-}
-
-WebContentsAccessibilityAndroid::Connector::~Connector() {
-  accessibility_->UpdateEnabledState(false);
 }
 
 void WebContentsAccessibilityAndroid::Connector::UpdateRenderProcessConnection(
