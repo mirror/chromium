@@ -81,6 +81,30 @@
       "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5beac59e_8b73ef6b",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T01:37:38Z",
+      "side": 1,
+      "message": "I was hoping that our existing tests would verify/disprove this.",
+      "parentUuid": "d2ff364e_869325a9",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
