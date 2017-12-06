@@ -87,7 +87,7 @@ class ASH_EXPORT NetworkStateListDetailedView
   views::Button* settings_button_;
 
   // A small bubble for displaying network info.
-  views::BubbleDialogDelegateView* info_bubble_;
+  InfoBubble* info_bubble_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkStateListDetailedView);
 };
