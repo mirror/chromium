@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b8a51c3_22d0af32",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-06T11:08:48Z",
+      "side": 1,
+      "message": "nit: s/rest of the/the entire/ since we haven\u0027t run any stages yet (and won\u0027t).",
+      "range": {
+        "startLine": 147,
+        "startChar": 39,
+        "endLine": 147,
+        "endChar": 43
+      },
+      "revId": "6f82fbc8a9e74b8a9883cf49c97545990b18ef83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e958b0dd_3a5d7471",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-06T11:08:48Z",
+      "side": 1,
+      "message": "nit: Adding a bool default arg here is a little dangerous since |screenshot| is implicitly convertible to bool, but I assume you checked the call sites.",
+      "range": {
+        "startLine": 104,
+        "startChar": 18,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "6f82fbc8a9e74b8a9883cf49c97545990b18ef83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
