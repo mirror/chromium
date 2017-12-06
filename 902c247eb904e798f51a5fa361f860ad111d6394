@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5975e31_0f162552",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-06T00:11:28Z",
+      "side": 1,
+      "message": "As discussed in email, we don\u0027t recommend using fake bluetooth, but it can be done.  We recommend the mock_bluetooth* classes.",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a302b051_2c6b5dc3",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-06T00:11:28Z",
+      "side": 1,
+      "message": "Chrome is too big.  Let\u0027s avoid adding strings unless they\u0027re necessary or user facing.",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982c6ec2_8e4ffc3f",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-06T00:11:28Z",
+      "side": 1,
+      "message": "Chrome is too big.  Avoid adding strings by using DLOG.  Or, if we believe end users will need to report logs consider VLOG to not spam log files unless a user is intentionally dumping logs for that module.",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
