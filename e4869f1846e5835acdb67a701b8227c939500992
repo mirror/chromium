@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9c910f2_b6958984",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePreferenceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T00:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cbdd13_b4fe9512",
+      "range": {
+        "startLine": 221,
+        "startChar": 68,
+        "endLine": 221,
+        "endChar": 79
+      },
+      "revId": "e4869f1846e5835acdb67a701b8227c939500992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8340e05_0fed20ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePreferenceBridge.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e4869f1846e5835acdb67a701b8227c939500992",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78abd0c0_0543f9d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePreferenceBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T00:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8340e05_0fed20ba",
+      "range": {
+        "startLine": 225,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 15
+      },
+      "revId": "e4869f1846e5835acdb67a701b8227c939500992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
