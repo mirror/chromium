@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9260f38a_c1be5874",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6323f5ad_6b148ae8",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10832576_4a27c43a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9b571e60_5e6e73eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10832576_4a27c43a",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197bcd5a_e912695a",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-06T08:51:07Z",
       "side": 1,
       "message": "Do we need to worry about the call in CancelPending as well, or does that not have this problem?",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49402fb_3c72336b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "CancelPending doesn\u0027t cancel the speculative RFH, only the pending which is not used in PlzNavigate. I haven\u0027t investigated the non-PlzNavigate case, so I don\u0027t know if it\u0027s needed or not. Right now there are no Chrome platforms not using PlzNavigate - unless we revert Android WebView back to non PlzNavigate (which is unlikely). If all goes well, CancelPending will have disappeared in two weeks. I\u0027m thinking I will leave it as is.",
+      "parentUuid": "197bcd5a_e912695a",
       "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0232fea7_fb701646",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60225f6f_b269188e",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a65d4a0_215966a6",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad990fd_ef67cbf5",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done. I have also renamed the test to make it clearer what is happening.",
+      "parentUuid": "2a65d4a0_215966a6",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "e96032a8_eaafdb61",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done. I have renamed them kVictimURL, kAttackInitialURL, kAttackURL (since there are two different URLs for the attack).",
+      "parentUuid": "df06e373_a6b7049b",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2703a1a8_a8dae868",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 3
@@ -130,6 +250,24 @@
       "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b23adb_48d639ab",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2703a1a8_a8dae868",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "693247c7_d945a365",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a412261_3c15d957",
+      "range": {
+        "startLine": 764,
+        "startChar": 42,
+        "endLine": 764,
+        "endChar": 43
+      },
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58cdf912_0b6888d2",
         "filename": "content/browser/security_exploit_browsertest.cc",
         "patchSetId": 3
@@ -170,6 +332,24 @@
       "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b265e01f_b44b988e",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-06T13:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58cdf912_0b6888d2",
+      "revId": "ddbff83709e7da0e6d90d5e05659d8c448f60958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
