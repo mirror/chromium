@@ -5,6 +5,8 @@
 #include "chromeos/login/auth/authpolicy_login_helper.h"
 
 #include "base/files/file_util.h"
+#include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
 #include "chromeos/dbus/auth_policy_client.h"
@@ -43,6 +45,32 @@ void AuthCallbackDoNothing(
   // Do nothing.
 }
 
+bool ParseDomainAndOU(const std::string& distinguished_name,
+                      authpolicy::JoinDomainRequest* request) {
+  std::string machine_domain;
+  std::vector<std::string> split_dn =
+      base::SplitString(distinguished_name, ",", base::TRIM_WHITESPACE,
+                        base::SPLIT_WANT_NONEMPTY);
+  for (const std::string& str : split_dn) {
+    std::vector<std::string> split_str = base::SplitString(
+        str, "=", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+    if (split_str.size() != 2)
+      return false;
+    if (base::ToUpperASCII(split_str[0]) == "OU") {
+      request->add_machine_ou()->swap(split_str[1]);
+    } else if (base::ToUpperASCII(split_str[0]) == "DC") {
+      if (!machine_domain.empty())
+        machine_domain.append(".");
+      machine_domain.append(split_str[1]);
+    } else {
+      return false;
+    }
+  }
+  if (!machine_domain.empty())
+    request->set_machine_domain(machine_domain);
+  return true;
+}
+
 }  // namespace
 
 AuthPolicyLoginHelper::AuthPolicyLoginHelper() : weak_factory_(this) {}
@@ -76,24 +104,33 @@ bool AuthPolicyLoginHelper::IsAdLocked() {
 bool AuthPolicyLoginHelper::LockDeviceActiveDirectoryForTesting(
     const std::string& realm) {
   return cu::InstallAttributesSet("enterprise.owned", "true") &&
-         cu::InstallAttributesSet("enterprise.mode", "enterprise_ad") &&
+         cu::InstallAttributesSet(kAttrMode, kDeviceModeEnterpriseAD) &&
          cu::InstallAttributesSet("enterprise.realm", realm) &&
          cu::InstallAttributesFinalize();
 }
 
 void AuthPolicyLoginHelper::JoinAdDomain(const std::string& machine_name,
+                                         const std::string& distinguished_name,
                                          const std::string& username,
                                          const std::string& password,
                                          JoinCallback callback) {
   DCHECK(!IsAdLocked());
   DCHECK(!weak_factory_.HasWeakPtrs()) << "Another operation is in progress";
+
   authpolicy::JoinDomainRequest request;
-  request.set_machine_name(machine_name);
-  request.set_user_principal_name(username);
+  if (!ParseDomainAndOU(distinguished_name, &request)) {
+    DLOG(ERROR) << "Failed to parse computer distinguished name";
+    std::move(callback).Run(authpolicy::ERROR_INVALID_OU, std::string());
+    return;
+  }
+  if (!machine_name.empty())
+    request.set_machine_name(machine_name);
+  if (!username.empty())
+    request.set_user_principal_name(username);
   chromeos::DBusThreadManager::Get()->GetAuthPolicyClient()->JoinAdDomain(
       request, GetDataReadPipe(password).get(),
       base::BindOnce(&AuthPolicyLoginHelper::OnJoinCallback,
-                     weak_factory_.GetWeakPtr(), base::Passed(&callback)));
+                     weak_factory_.GetWeakPtr(), std::move(callback)));
 }
 
 void AuthPolicyLoginHelper::AuthenticateUser(const std::string& username,
@@ -116,21 +153,23 @@ void AuthPolicyLoginHelper::CancelRequestsAndRestart() {
 }
 
 void AuthPolicyLoginHelper::OnJoinCallback(JoinCallback callback,
-                                           authpolicy::ErrorType error) {
+                                           authpolicy::ErrorType error,
+                                           const std::string& machine_domain) {
   DCHECK(!IsAdLocked());
   if (error != authpolicy::ERROR_NONE) {
-    std::move(callback).Run(error);
+    std::move(callback).Run(error, machine_domain);
     return;
   }
   chromeos::DBusThreadManager::Get()
       ->GetAuthPolicyClient()
-      ->RefreshDevicePolicy(
-          base::BindOnce(&AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback,
-                         weak_factory_.GetWeakPtr(), base::Passed(&callback)));
+      ->RefreshDevicePolicy(base::BindOnce(
+          &AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback,
+          weak_factory_.GetWeakPtr(), base::Passed(&callback), machine_domain));
 }
 
 void AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback(
     JoinCallback callback,
+    const std::string& machine_domain,
     authpolicy::ErrorType error) {
   DCHECK(!IsAdLocked());
   // First policy refresh happens before device is locked. So policy store
@@ -139,7 +178,7 @@ void AuthPolicyLoginHelper::OnFirstPolicyRefreshCallback(
   DCHECK(error != authpolicy::ERROR_NONE);
   if (error == authpolicy::ERROR_DEVICE_POLICY_CACHED_BUT_NOT_SENT)
     error = authpolicy::ERROR_NONE;
-  std::move(callback).Run(error);
+  std::move(callback).Run(error, machine_domain);
 }
 
 void AuthPolicyLoginHelper::OnAuthCallback(
