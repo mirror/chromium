@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de2c285b_b462fdb6",
+        "filename": "content/browser/quota_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T01:10:31Z",
+      "side": 1,
+      "message": "Oh yeah, didn\u0027t think of this. Done.",
+      "parentUuid": "773ef2e5_3f3cfee9",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5624f48e_11113f59",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T04:26:45Z",
       "side": 1,
       "message": "Add this for workers too.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92302127_d4870a9d",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T01:10:31Z",
+      "side": 1,
+      "message": "Is this shared_worker? Added to the navigation:shared_worker section.",
+      "parentUuid": "5624f48e_11113f59",
       "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7f2324d_50db8309",
+        "filename": "content/renderer/quota_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T01:10:31Z",
+      "side": 1,
+      "message": "Done \u0026 moved to standalone function.",
+      "parentUuid": "c2452015_4f9a3416",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad316378_ea390879",
         "filename": "content/renderer/quota_dispatcher.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-05T04:26:45Z",
       "side": 1,
       "message": "You need to change the ownership of QuotaDispatcher to be per-ExecutionContext. The current thread-local ownership won\u0027t work for frames that all run on the main thread.",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c19b66d_6101ce9e",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T01:10:31Z",
+      "side": 1,
+      "message": "Thanks Sam; started to do this (see in-progress patch), but I\u0027m stuck on how to include ExecutionContext from content/renderer/quota_dispatcher.h?\n\nMaybe I should just onion soup this at the same time (which means moving quota_dispatcher.h to third_party/webkit/modules, correct?)",
+      "parentUuid": "ad316378_ea390879",
       "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
