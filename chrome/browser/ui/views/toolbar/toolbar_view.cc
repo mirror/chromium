@@ -347,8 +347,10 @@ bool ToolbarView::SetPaneFocus(views::View* initial_focus) {
 }
 
 void ToolbarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->role = ui::AX_ROLE_TOOLBAR;
-  node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_TOOLBAR));
+  // We used to expose a role of AX_ROLE_TOOLBAR and a name "main",
+  // but this resulted in unhelpully verbose announcements in
+  // screen readers.
+  node_data->role = ui::AX_ROLE_NONE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
