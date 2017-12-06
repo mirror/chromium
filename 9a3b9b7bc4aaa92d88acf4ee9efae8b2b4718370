@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa69b121_d05c8f68",
+        "filename": "gpu/command_buffer/service/gles2_cmd_validation_implementation_autogen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-12-06T17:03:22Z",
+      "side": 0,
+      "message": "This is an autogen file, changes to the input files are probably needed.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 8,
+        "endLine": 1210,
+        "endChar": 19
+      },
+      "revId": "9a3b9b7bc4aaa92d88acf4ee9efae8b2b4718370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

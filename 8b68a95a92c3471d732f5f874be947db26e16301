@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0d78b04_f2ee1afd",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-12-06T17:03:22Z",
+      "side": 1,
+      "message": "I can\u0027t seem to find this extension anywhere.  Desktop GL seems to add the same formats in GL_EXT_texture_snorm though.",
+      "range": {
+        "startLine": 1318,
+        "startChar": 37,
+        "endLine": 1318,
+        "endChar": 58
+      },
+      "revId": "8b68a95a92c3471d732f5f874be947db26e16301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
