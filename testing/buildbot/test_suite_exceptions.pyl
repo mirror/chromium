@@ -97,6 +97,21 @@
           'shards': 20,
         },
       },
+      'Linux ChromiumOS Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 20,
+        },
+      },
+      'linux-chromeos-dbg': {
+        'swarming': {
+          'shards': 20,
+        },
+      },
+      'linux-chromeos-rel': {
+        'swarming': {
+          'shards': 5,
+        },
+      },
       'Linux Tests': {
         'swarming': {
           'shards': 5,
@@ -117,6 +132,9 @@
       'Lollipop Tablet Tester',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
@@ -176,6 +194,9 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
       'Mac10.12 Tests',
     ],
@@ -190,6 +211,9 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
       'Mac10.12 Tests',
     ],
@@ -251,6 +275,9 @@
   },
   'cast_unittests': {
     'remove_from': [
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # Unclear why these largely aren't run on Android.
       # TODO(kbr): why are the cast unit tests not run on the Cast bots?!
       'Cast Audio Linux',
@@ -287,6 +314,11 @@
         },
       },
     },
+    'remove_from': [
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
+    ],
   },
   'checkbins': {
     'remove_from': [
@@ -398,6 +430,13 @@
       },
     },
   },
+  'chromedriver_unittests': {
+    'remove_from': [
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
+    ],
+  },
   'components_background_task_scheduler_junit_tests': {
     'remove_from': [
       # On chromium.android, unclear why these aren't run on all bots.
@@ -417,6 +456,9 @@
       'Cast Audio Linux',
       'Cast Linux',
       'Linux Tests (dbg)(1)(32)',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       'Win7 Tests (dbg)(1)',
     ],
     'modifications': {
@@ -503,6 +545,21 @@
         'swarming': {
           'hard_timeout': 1800,
           'shards': 6,
+        },
+      },
+      'Linux ChromiumOS Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'linux-chromeos-dbg': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
+      'linux-chromeos-rel': {
+        'swarming': {
+          'shards': 2,
         },
       },
       'Lollipop Phone Tester': {
@@ -769,6 +826,9 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -915,6 +975,21 @@
           'shards': 3,
         },
       },
+      'Linux ChromiumOS Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+      'linux-chromeos-dbg': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
+      'linux-chromeos-rel': {
+        'swarming': {
+          'shards': 3,
+        },
+      },
       # Unclear why this isn't swarmed.
       'Mac10.10 Tests': {
         'swarming': {
@@ -1010,6 +1085,9 @@
   },
   'libjingle_xmpp_unittests': {
     'remove_from': [
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Tablet Tester',
       'Lollipop Phone Tester',
@@ -1044,6 +1122,8 @@
   'media_service_unittests': {
     'remove_from': [
       'Linux Tests (dbg)(1)(32)',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
     ],
   },
   'media_unittests': {
@@ -1121,6 +1201,9 @@
       'Marshmallow 64 bit Tester',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1147,6 +1230,9 @@
       'Marshmallow 64 bit Tester',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1168,6 +1254,9 @@
       'Marshmallow 64 bit Tester',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1189,6 +1278,9 @@
       'Marshmallow 64 bit Tester',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1271,6 +1363,12 @@
       },
     },
   },
+  'printing_unittests': {
+    'remove_from': [
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+    ],
+  },
   'remoting_unittests': {
     'remove_from': [
       # On chromium.android, unclear why these aren't run.
@@ -1291,6 +1389,9 @@
     'remove_from': [
       # TODO(dpranke) - remove this exception.
       'Linux Tests SANDBOX',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1337,6 +1438,9 @@
     'remove_from': [
       # TODO(dpranke) - remove this exception.
       'Linux Tests SANDBOX',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1383,6 +1487,21 @@
           'hard_timeout': 60,
         },
       },
+      'Linux ChromiumOS Tests (dbg)(1)': {
+        'args': [
+          '--test-launcher-print-test-stdio=always',
+        ],
+      },
+      'linux-chromeos-dbg': {
+        'args': [
+          '--test-launcher-print-test-stdio=always',
+        ],
+      },
+      'linux-chromeos-rel': {
+        'args': [
+          '--test-launcher-print-test-stdio=always',
+        ],
+      },
       'Linux Tests (dbg)(1)': {
         'args': [
           '--test-launcher-print-test-stdio=always',
@@ -1412,6 +1531,9 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1524,6 +1646,10 @@
   },
   'snapshot_unittests': {
     'remove_from': [
+      # On chromium.chromiumos, unclear why these aren't run.
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.win, unclear why these aren't run.
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',
@@ -2048,6 +2174,10 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      # On chromium.chromiumos, unclear why these aren't run.
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
@@ -2115,6 +2245,10 @@
       'Marshmallow Phone Tester (rel)',
       'Marshmallow Tablet Tester',
       'Nougat Phone Tester',
+      # On chromium.chromiumos, unclear why these aren't run.
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
