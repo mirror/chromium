@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67a257ea_594896f4",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf56f4a_37e1460b",
+      "range": {
+        "startLine": 2330,
+        "startChar": 21,
+        "endLine": 2330,
+        "endChar": 71
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab65adb_c2fbdad2",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6a31fba9_0f118936",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "This seems to be better done together with storing layouts. I will add a function in display manager and call it here.",
+      "parentUuid": "eab65adb_c2fbdad2",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 727,
+        "endChar": 66
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d9e76f_fc9c58ae",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-05T22:41:39Z",
       "side": 1,
       "message": "How about DisplayManager::(Load/Store)DisplayMirrorModes(base::DictionaryValue*)?\n\n\nKeep what\u0027s internal to display manager internal.",
+      "range": {
+        "startLine": 346,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 68
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdd55e2_95bda905",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "I think it\u0027s better to do it here, because DisplayManager is already heavy and here is where the conversion of prefs to/from variables occurs, right?",
+      "parentUuid": "16d9e76f_fc9c58ae",
       "range": {
         "startLine": 346,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "28df2994_143e11aa",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "It is plural because this stores each previous mirror mode for each external display.\nIs it better to use kDisplayPreviousMirrorModes;",
+      "parentUuid": "515627fd_9217da75",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 37
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4e10c1_7546a80b",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0419a3c4_3f173e3a",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc4e10c1_7546a80b",
+      "range": {
+        "startLine": 162,
+        "startChar": 35,
+        "endLine": 162,
+        "endChar": 66
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a49c0d_772ee03c",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-05T22:41:39Z",
       "side": 1,
       "message": "You can also replace this by a call into the display manager, say WasDisplayMirrored(id) or something like that.",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 17
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34181e23_d45db864",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "I replace this along with the corresponding code in DisplayManager::OnNativeDisplaysChanged with a function DisplayManager::ShouldTurnOnMirrorMode();",
+      "parentUuid": "23a49c0d_772ee03c",
       "range": {
         "startLine": 171,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6af97998_c1c90441",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Now everything is in ShouldTurnOnMirrorMode();",
+      "parentUuid": "5e71d98c_5a9ce89b",
+      "range": {
+        "startLine": 726,
+        "startChar": 11,
+        "endLine": 726,
+        "endChar": 17
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd84ccaa_e8abc945",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "0431622618344b50f490b673b62ce71d2aff5662",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e627f59_8b49cdc0",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Pls refer to comment in display_manager.h.",
+      "parentUuid": "fd84ccaa_e8abc945",
+      "range": {
+        "startLine": 728,
+        "startChar": 8,
+        "endLine": 729,
+        "endChar": 64
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "b4ce8bb2_1d6cc39b",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Pls refer to comment in display_manager.h.",
+      "parentUuid": "367a2ab5_dc351829",
+      "range": {
+        "startLine": 731,
+        "startChar": 0,
+        "endLine": 732,
+        "endChar": 14
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c07b795_cffe170d",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -229,6 +445,30 @@
       "revId": "0431622618344b50f490b673b62ce71d2aff5662",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de665f02_62703656",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "Good to know, I would use enum class. Done.",
+      "parentUuid": "8c07b795_cffe170d",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 4
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "68866659_4830f1f5",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "mirror. Done.",
+      "parentUuid": "5631fdd5_ba686f7d",
+      "range": {
+        "startLine": 607,
+        "startChar": 9,
+        "endLine": 607,
+        "endChar": 21
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87085f8c_a5f63266",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 4
@@ -266,6 +530,30 @@
       "writtenOn": "2017-12-05T22:41:39Z",
       "side": 1,
       "message": "std::map\u003cint64_t, bool\u003e is basically a set. Use std::set\u003c\u003e instead. If ID is not in set, then its display wasn\u0027t mirrored.",
+      "range": {
+        "startLine": 642,
+        "startChar": 2,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe724da_6b1215f2",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T00:40:58Z",
+      "side": 1,
+      "message": "I think it would be better to keep it as map.\n\ne.g. the pref stores {A:0, B:1, C:0, D:1}. And currently, we have two connected displays A and B and they are extended. And we want to use |stored_mirror_modes_| to update the pref. So if we are using map\u003cint64_t, bool\u003e, |stored_mirror_modes_| is {A:0, B:0}, we could only update the A and B in the pref. But if we are using set\u003cint64_t\u003e, |stored_mirror_modes_| is empty, we don\u0027t know which display to update.",
+      "parentUuid": "87085f8c_a5f63266",
       "range": {
         "startLine": 642,
         "startChar": 2,
