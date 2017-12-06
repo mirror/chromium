@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27abd8f8_567ca453",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "nit: \"auto*\" since the type name is already spelled out in the cast.",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 31
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b217a30a_2c1b71f0",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "whaddya know, it\u0027s already there! :-)",
+      "range": {
+        "startLine": 180,
+        "startChar": 10,
+        "endLine": 180,
+        "endChar": 59
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc0bab0_b6727a94",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "does this somehow end up bouncing to the UI thread? i think it\u0027s appropriate to check g_browser_process-\u003eIsShuttingDown() (on the UI thread) before servicing the notification.",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2d6cdb_a16b8eea",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "nit: NotificationActivator is a class that implements an interface. as such, this should be CLSID_NotificationActivator rather than IID_IFoo. then again, i think this should just go away.",
+      "range": {
+        "startLine": 157,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 47
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303e9631_838d57e2",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "yes, this call would happen during dynamic initialization, which is too early in the process.",
+      "range": {
+        "startLine": 165,
+        "startChar": 41,
+        "endLine": 165,
+        "endChar": 70
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecace29f_67bd07e1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "this thing really needs some documentation. i\u0027m trying to figure it out by reading msdn, and i don\u0027t get it. what are the possible scenarios? the reason for all of this is to support activation of something in chrome when the user pokes a native notification, correct? so if there\u0027s a running browser process, COM machinery will create the activator and invoke its Activate method. if there is no browser process, COM will launch one for the purpose of getting the activator. if this is correct, i think more work is needed to make the browser process a proper COM server. for example, i don\u0027t see DllGetClassObject implemented anywhere. how does this work?",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5583bfe_1dd7ba85",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "nit: \" \u003d default;\"",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 24
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a98e03d_606f2673",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "https://docs.microsoft.com/en-us/cpp/windows/module-create-method says that there\u0027s a no-arg variant of Create. can you use that rather than provide an empty callback?",
+      "range": {
+        "startLine": 179,
+        "startChar": 42,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45b162e_745f8235",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "capture the return value from Create() and use it below rather than repeatedly calling GetModule()",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c4c903_4b39f85a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "to provide the clsid at runtime, i think you\u0027ll need to switch from RegisterObjects to calling RegisterCOMObject directly. maybe something like (a little hand-wavy here based on what i see in module.h):\n  IUnknown* factory \u003d nullptr;\n  unsigned int flags \u003d Microsoft::WRL::ModuleType::OutOfProc;\n  Microsoft::WRL::CreatorMap entry \u003d {\n    ::Microsoft::WRL::Details::CreateClassFactory\u003c::Microsoft::WRL::SimpleClassFactory\u003cNotificationActivator\u003e\u003e,\n    {install_static::GetToastActivatorClsid()},\n    nullptr,\n    \u0026factory_cache_,\n    nullptr};\n  IUnknown* factory \u003d nullptr;\n  HRESULT hr \u003d entry.factoryCreator(\u0026flags, \u0026entry, __uuidof(IClassFactory),\n                                    \u0026factory);\n\n  IID class_ids[] \u003d { *entry.activationId.clsid };\n  IClassFactory* class_factories[] \u003d\n      [ reinterpret_cast\u003cIClassFactory*\u003e(factory) ];\n  hr \u003d module.RegisterCOMObject(nullptr, class_ids, class_factories, cookies_,\n                                1);\n\nand then get rid of CoCreatableClass2 and friends. you\u0027ll need to implement Unregister as well.",
+      "range": {
+        "startLine": 181,
+        "startChar": 60,
+        "endLine": 181,
+        "endChar": 75
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3e4c10_7d7fdc6b",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "it turns out that this thread may not be needed after all. i\u0027m looking at the work done in https://crbug.com/706479, and see that all BACKGROUND threads are initialized into an MTA (maybe even all task scheduler threads). You may be able to simply post a bg task via the task scheduler. I\u0027m checking with Rob to see if this is correct.",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2fd108_b4d29fed",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-06T11:03:25Z",
+      "side": 1,
+      "message": "i think it makes sense to explicitly unregister the class sometime in BrowserProcessImpl::StartTearDown since we don\u0027t want chrome to service notifications once shutdown is underway, no?",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
