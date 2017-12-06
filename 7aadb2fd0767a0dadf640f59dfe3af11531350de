@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d88c282c_f0d55ee2",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:45:51Z",
+      "side": 1,
+      "message": "required -\u003e required to test?",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e10f9c_922fcb3e",
+        "filename": "chrome/browser/chrome_network_service_restart_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:45:51Z",
+      "side": 1,
+      "message": "I think this should just be /echo?  It\u0027s kinda weird to use echoheader without asking for any particular header.  I\u0027m not sure what it actually returns (May be none, or may be a response with an empty body).",
+      "range": {
+        "startLine": 54,
+        "startChar": 52,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8704e41e_09ca5215",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T17:45:51Z",
+      "side": 1,
+      "message": "include base/logging.h",
+      "range": {
+        "startLine": 50,
+        "startChar": 20,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "7aadb2fd0767a0dadf640f59dfe3af11531350de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
