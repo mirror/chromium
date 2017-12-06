@@ -117,4 +117,20 @@ TEST(HistoryQueryResult, ResultDeleteURL) {
   EXPECT_FALSE(results.MatchesForURL(url2, nullptr));
 }
 
+// Tests time ranges.
+TEST(HistoryQueryResult, DeletionTimeRange) {
+  auto invalid = DeletionTimeRange::Invalid();
+  auto some_hours = DeletionTimeRange(
+      base::Time::Now() - base::TimeDelta::FromHours(1), base::Time::Now());
+  auto all_time = DeletionTimeRange::AllTime();
+
+  EXPECT_FALSE(invalid.IsValid());
+  EXPECT_TRUE(some_hours.IsValid());
+  EXPECT_TRUE(all_time.IsValid());
+
+  EXPECT_FALSE(invalid.IsAllTime());
+  EXPECT_FALSE(some_hours.IsAllTime());
+  EXPECT_TRUE(all_time.IsAllTime());
+}
+
 }  // namespace history
