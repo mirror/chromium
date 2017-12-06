@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "061db891_db01663d",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e That\u0027s a strange piece of code. If !visible then you should just populate the field with ***. If it\u0027s visible then you call TryToViewPasswords\n\nRemoved \"!\" before |visible|.\n|visible| is new state. If a user tries to reveal the password and it is not allowed, then the password shouldn\u0027t be revealed.",
+      "parentUuid": "43a916c3_0ff021e7",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 11
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74bfa6b5_c27b5915",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e344f8_d60fe69f",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74bfa6b5_c27b5915",
+      "range": {
+        "startLine": 207,
+        "startChar": 8,
+        "endLine": 207,
+        "endChar": 54
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee6f48bd_547b3ae2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e This should also be true when PasswordIsRevealedByDefault() is true.\n\nDisagree. After timeout, password revealing should require re-auth again. So, this variable should be true. \n\nThe case is weird, but this variable defines whether revealing this password needs special treatment.",
+      "parentUuid": "f9ef7a14_71ed12b0",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b16d509_8acf6144",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-05T12:58:01Z",
       "side": 1,
       "message": "I would make it the task of this function to reveal the password instead of returning a boolean and delegating it to the caller. Otherwise, the password is revealed in case of a reauth but not if a reauth is not needed.",
+      "range": {
+        "startLine": 565,
+        "startChar": 9,
+        "endLine": 565,
+        "endChar": 38
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a558e45_fccd6d45",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e I would make it the task of this function to reveal the password instead of returning a boolean and delegating it to the caller. Otherwise, the password is revealed in case of a reauth but not if a reauth is not needed.\n\nNot sure I understand. Actual revealing happens in bubble_view. Do you propose to expose |password_viewing_is_locked_| to the bubble view?",
+      "parentUuid": "8b16d509_8acf6144",
       "range": {
         "startLine": 565,
         "startChar": 9,
@@ -211,6 +307,54 @@
     },
     {
       "key": {
+        "uuid": "64c4c131_ccd0e51b",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e That comment is confusing. It should return \u0027true\u0027 if the password can be shown right now. If it returns \u0027false\u0027 then the bubble and the model are already destroyed. It should be emphasized in the comment. I\u0027m fine with the name RevealPasswords().\n\nRenamed to RevealPasswords. Added a comment about the returned value.",
+      "parentUuid": "2ff2c0a7_7bf77389",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3306826b_27e1964e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e I wonder whether this should be really const.\n\nRemoved. It changes |delegate_|",
+      "parentUuid": "af33e968_5653e663",
+      "range": {
+        "startLine": 144,
+        "startChar": 28,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39a7ace9_439a6ba9",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
@@ -257,6 +401,54 @@
     },
     {
       "key": {
+        "uuid": "569775a2_a7f8e87c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e const\n\nDisagree. It calls non-const delegate_-\u003eIsPasswordRevealedWhenOpened. \n\ndelegate_-\u003eIsPasswordRevealedWhenOpened is non-const because the method should clear the flag. So, next opening wouldn\u0027t reveal the password value.",
+      "parentUuid": "39a7ace9_439a6ba9",
+      "range": {
+        "startLine": 147,
+        "startChar": 36,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97658499_57b89855",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae55b192_9771a9d9",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 34
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2979f6b5_18f3e367",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
@@ -280,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "3b811e5a_0f37ba1e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2979f6b5_18f3e367",
+      "range": {
+        "startLine": 184,
+        "startChar": 25,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51394c51_c5fcd378",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 18
@@ -300,6 +516,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888edf10_e9ccd727",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51394c51_c5fcd378",
+      "range": {
+        "startLine": 500,
+        "startChar": 5,
+        "endLine": 500,
+        "endChar": 57
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -444,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "88e9d34d_aa603329",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ac8730_480c8e98",
+      "range": {
+        "startLine": 217,
+        "startChar": 5,
+        "endLine": 217,
+        "endChar": 9
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaa6e66f_5b51f3e8",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
         "patchSetId": 18
@@ -503,6 +767,30 @@
       "side": 1,
       "message": "\u003e The name is confusing. It probably should be current bubble. Maybe we don\u0027t need this member at all.\n\nNot sure I understand how we can eliminate this field.",
       "parentUuid": "3b777722_7ca2400f",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12491085_2d9b290e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e \u003e The name is confusing. It probably should be current bubble. Maybe we don\u0027t need this member at all.\n\u003e \n\u003e Not sure I understand how we can eliminate this field.\n\nThe name means that when we create new save bubble, the password should be revealed when the bubble is opened first time.",
+      "parentUuid": "64c9e537_e17b3c6e",
       "range": {
         "startLine": 218,
         "startChar": 7,
@@ -609,6 +897,30 @@
     },
     {
       "key": {
+        "uuid": "7fcf0cca_4ab7c0c3",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "\u003e That\u0027s a dangerous interface. It may return true because the bubble should show the password right away. It may also return true 1 minute later when the bubble is already destroyed and should not attempt to access |this|.\n\nI agree. Any ideas what we can do instead?",
+      "parentUuid": "38f87e23_6816168b",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4647b896_39fada69",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -676,6 +988,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aec11c_798c04d9",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T16:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7c722b_2ac6f742",
+      "range": {
+        "startLine": 487,
+        "startChar": 6,
+        "endLine": 487,
+        "endChar": 23
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
