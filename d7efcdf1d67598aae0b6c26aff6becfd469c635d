@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d25c9a2f_c7935a0f",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T22:41:12Z",
+      "side": 1,
+      "message": "If possible I would replace the whole block with this:\nGraphicsLayer* parent \u003d ParentForSublayers();\nIntRect content_rect \u003d ContentsRect(GetLayoutObject());\ninner_compositor-\u003eFrameViewDidChangeLocation(content_rect.Location() - parent-\u003eOffsetFromLayoutObject());",
+      "revId": "d7efcdf1d67598aae0b6c26aff6becfd469c635d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29e8bea_15948b69",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T22:41:12Z",
+      "side": 1,
+      "message": "Can we pre-snap layer offset? Actually with the formula you used, the resulting offset would be always integer. Something went wrong if it weren\u0027t.",
+      "revId": "d7efcdf1d67598aae0b6c26aff6becfd469c635d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
