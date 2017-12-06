@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "2a809b78_9a95a265",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-06T19:04:38Z",
+      "side": 1,
+      "message": "(Marking resolved.)",
+      "parentUuid": "e49eeac1_55d0e065",
+      "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54f2526a_410410d6",
         "filename": "base/tools_sanity_unittest.cc",
         "patchSetId": 8
@@ -262,6 +280,24 @@
       "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207ebc10_d0aedbd7",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-06T19:04:38Z",
+      "side": 1,
+      "message": "Hmm, it seems that syzygy is a windows-specific tool, and MSVC-specific also:\nhttps://code.google.com/archive/p/syzygy/wikis/SyzygyDesign.wiki\n\nIIUC all windows builds have beem MSVC until recently, and the MSVC linker was still used in windows clang builds.  I guess either that explains it, or nobody or no bots currently test syzygy builds.\n\nI will ping Bruce Dawson about this in case he wants to follow up with a later task.",
+      "parentUuid": "77731f4a_6364aef8",
+      "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
