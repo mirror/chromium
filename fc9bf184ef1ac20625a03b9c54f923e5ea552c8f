@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6eb07b76_a899c4f7",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:43:01Z",
+      "side": 1,
+      "message": "nit: you can drop this Arc prefix.",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4688eb6_827eeaee",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:43:01Z",
+      "side": 1,
+      "message": "Same here, drop the prefix.",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 44
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0669a6_a264304c",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 20
