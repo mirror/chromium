@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb35d07_619c355f",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "if you want to do this in an automated fashion, you should post a task instead of calling this directly. in the real implementation, this makes an async d-bus call to powerd.",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62992a28_753bfe1c",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "i\u0027d prefer that you didn\u0027t change the brightness automatically in response to this, as that doesn\u0027t match what powerd does (i.e. the backlight may remain off for certain types of activity).\n\nhow about instead adding a base::RepeatingClosure user_activity_callback_ member that can be assigned via a setter? then your test can use that to get its desired behavior without it being hardcoded in this class.",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc8ec20_cbdfa3bf",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "i think that this doesn\u0027t match the real behavior; SetBacklightsForcedOff should change the brightness even if SetScreenBrightnessPercent wasn\u0027t called previously. how about instead initializing undimmed_... in the c\u0027tor?",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d502b2a3_0e00a7eb",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "\"ratio\" doesn\u0027t seem like the right word here. would something like \"Last screen brightness requested via SetScreenBrightnessPercent().\" be more accurate?",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45306cb2_adde0afb",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "nit: it\u0027s usually not necessary to put pipe characters around function names in comments -- SomethingLikeThis() is already obviously a function name. the pipes are more useful for lowercase variable names, because it\u0027s not clear when you see something like \"this\" whether it\u0027s referring to the variable |this| or if it\u0027s just the word \"this\". i think that most of chrome follows this logic.",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249a6cc3_44ff461b",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "\"undimmed\" has a special meaning when talking about screen brightness, as powerd dims the screen before turning it off when the user is inactive.\n\ni think that a name like \"requested_screen_brightness_percent_\" would be more accurate -- you\u0027re trying to preserve the last value that was requested before the backlights were forced off (resulting in a 0 brightness), right?",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9349f9d_f7449c53",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T22:45:56Z",
+      "side": 1,
+      "message": "If set",
+      "range": {
+        "startLine": 188,
+        "startChar": 5,
+        "endLine": 188,
+        "endChar": 15
+      },
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
