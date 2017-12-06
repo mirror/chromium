@@ -89,6 +89,10 @@ void SetCheckStatus(FormFieldData* form_field_data,
 std::vector<std::string> LowercaseAndTokenizeAttributeString(
     const std::string& attribute);
 
+// Sanitize a field value by removing characters that normally show the format
+// of a string, and are sometimes entered by the website and not the user.
+base::string16 SanitizeFieldValue(const base::string16& value);
+
 }  // namespace autofill
 
 #endif  // COMPONENTS_AUTOFILL_CORE_COMMON_AUTOFILL_UTIL_H_

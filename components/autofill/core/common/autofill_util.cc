@@ -188,4 +188,16 @@ std::vector<std::string> LowercaseAndTokenizeAttributeString(
                            base::SPLIT_WANT_NONEMPTY);
 }
 
+base::string16 SanitizeFieldValue(const base::string16& value) {
+  base::string16 sanitized;
+  // Remove whitespace as well as some invisible unicode characters.
+  base::TrimWhitespace(value, base::TRIM_ALL, &sanitized);
+  base::TrimString(sanitized,
+                   base::string16({base::i18n::kRightToLeftMark,
+                                   base::i18n::kLeftToRightMark}),
+                   &sanitized);
+  base::RemoveChars(sanitized, base::ASCIIToUTF16("-_() "), &sanitized);
+  return sanitized;
+}
+
 }  // namespace autofill
