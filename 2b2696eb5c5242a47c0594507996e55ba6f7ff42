@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a8c07b82_546d2f0c",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T19:02:51Z",
+      "side": 1,
+      "message": "I\u0027m still unclear why it\u0027s helpful to have this as a member, and I don\u0027t see the pattern often in chrome code, which is what gives me pause. There\u0027s nothing fundamentally incorrect about it though.",
+      "parentUuid": "90575104_0629452a",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f5170d_8fb80033",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e nit: In theory this could happen during shutdown (or some future condition could prevent the notification from displaying), but we probably don\u0027t care too much about that? We might consider having Display() return a bool that we could test as to whether the notification will actually be shown.\n\nThis deserves some explanation, sorry for leaving that out. Display() (which should probably be OnDisplay()) is called from the MC but it\u0027s only used in two places, and one is a test. So I plan to remove it. To continue supporting it, we\u0027d need to add it to the Ash Mojo API as well as the stub notification display service used for testing, and that\u0027s more complexity than I want to support for one notification\u0027s UMA. It\u0027s also redundant with MessageCenterObserver::OnNotificationDisplayed.\n\nI don\u0027t think that shutdown affects this UMA or would do so rarely enough we can just ignore it (this is only UMA, not mission critical behavior). What could affect this UMA is a notification blocker such as the fullscreen one, which would prevent immediate display, but in the vast majority of these cases it will still be shown anyway, just a little later.\n\ntl;dr imo for UMA, the tradeoff between precise technical accuracy and code complexity is skewed towards code simplification.",
       "parentUuid": "47f5170d_8fb80033",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ec2a30_d92affd7",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T19:02:51Z",
+      "side": 1,
+      "message": "I figured that the plan was to remove Display().\n\nI agree this is probably fine, just wanted to make sure it was considered. sgtm.",
+      "parentUuid": "c51fcac1_2682f38c",
       "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
