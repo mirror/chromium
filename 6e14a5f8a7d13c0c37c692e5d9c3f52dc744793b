@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "1045de0b_94c678b6",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T20:01:00Z",
+      "side": 1,
+      "message": "We can discuss this more off-CL and with the PMs, but regardless it\u0027s not something I\u0027ll change in this CL. The logic we\u0027re using is similar to YouTube\u0027s requirements. You can take a look at how they were defined here:\nhttps://docs.google.com/document/d/19mP_EVPkHkzN22QObhL0GYUMzyCAJDpRw3v8Mn3wf5s/edit\n\nThis isn\u0027t something we can filter on UMA, only UKM - so we need to apply a filter here. Emojis may not be filtered by duration. Things below a certain size are generally not things actively being watched, we\u0027re trying to primarily track engagement here.\n\nFeel free to file a bug or start an e-mail with dahlke@ and I if you think we should be doing otherwise.",
+      "parentUuid": "4e523e88_ba176c57",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 68
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b21bf2_04b31a73",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
@@ -250,6 +274,30 @@
     },
     {
       "key": {
+        "uuid": "147ae68c_f21d0c00",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T20:01:00Z",
+      "side": 1,
+      "message": "Essentially yes, http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#Warning-Options search for -Wswitch.",
+      "parentUuid": "6276398a_48d1c0c4",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf13132_d9b0a917",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 1
@@ -309,6 +357,30 @@
       "side": 1,
       "message": "Do we think of UMA as needing more resources than UKM? I would guess the reverse, so favor putting experimental things in UMA instead?",
       "parentUuid": "ceda97c5_84bbc371",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2314e147_433b03b5",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T20:01:00Z",
+      "side": 1,
+      "message": "+holte, I generally think yes, adding more UMA key+value pairs is more expensive then one new column in our UKM data. We\u0027re already the biggest UMA histogram_suffixes user, so like I said, I\u0027m wary of expanding it further.",
+      "parentUuid": "ad1e82ff_52bd88d1",
       "range": {
         "startLine": 23,
         "startChar": 9,
