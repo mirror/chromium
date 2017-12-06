@@ -188,4 +188,28 @@ std::vector<std::string> LowercaseAndTokenizeAttributeString(
                            base::SPLIT_WANT_NONEMPTY);
 }
 
+base::string16 SanitizeFieldValue(const base::string16& value) {
+  base::string16 sanitized;
+  // Remove whitespace as well as some invisible unicode characters.
+  base::TrimWhitespace(value, base::TRIM_ALL, &sanitized);
+  base::TrimString(sanitized,
+                   base::string16({base::i18n::kRightToLeftMark,
+                                   base::i18n::kLeftToRightMark}),
+                   &sanitized);
+  // Remove characters that normally show the format of a string, such as in
+  // (___)-___-____ for a phone field, or ____-____-____-____ for credit cards.
+  base::RemoveChars(sanitized, base::ASCIIToUTF16("-_() "), &sanitized);
+  return sanitized;
+}
+
+bool SanitizedFieldIsEmpty(const base::string16& value) {
+  // Some sites enter values such as ____-____-____-____ or (___)-___-____ in
+  // their fields. Check if the field value is empty after the removal of the
+  // formatting characters.
+  static base::string16 formatting =
+      base::ASCIIToUTF16("-_() ") + base::char16(base::i18n::kRightToLeftMark) +
+      base::char16(base::i18n::kLeftToRightMark);
+  return (value.find_first_not_of(formatting) == base::StringPiece::npos);
+}
+
 }  // namespace autofill
