@@ -10,7 +10,6 @@
 #include "content/browser/appcache/appcache_navigation_handle_core.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/bad_message.h"
-#include "content/common/appcache_messages.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -20,11 +19,10 @@ namespace content {
 AppCacheDispatcherHost::AppCacheDispatcherHost(
     ChromeAppCacheService* appcache_service,
     int process_id,
-    base::WeakPtr<IPC::Sender> sender)
+    RenderProcessHost* render_process_host)
     : appcache_service_(appcache_service),
-      frontend_proxy_(this),
+      frontend_proxy_(render_process_host),
       process_id_(process_id),
-      sender_(std::move(sender)),
       weak_factory_(this) {}
 
 void AppCacheDispatcherHost::InitBackend() {
@@ -39,31 +37,15 @@ AppCacheDispatcherHost::~AppCacheDispatcherHost() {}
 
 void AppCacheDispatcherHost::Create(ChromeAppCacheService* appcache_service,
                                     int process_id,
-                                    base::WeakPtr<IPC::Sender> sender,
+                                    RenderProcessHost* render_process_host,
                                     mojom::AppCacheHostRequest request) {
   auto appcache_dispatcher_host = std::make_unique<AppCacheDispatcherHost>(
-      appcache_service, process_id, std::move(sender));
+      appcache_service, process_id, render_process_host);
 
   appcache_dispatcher_host->InitBackend();
 
   mojo::MakeStrongBinding(std::move(appcache_dispatcher_host),
                           std::move(request));
-}
-
-bool AppCacheDispatcherHost::Send(IPC::Message* msg) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&AppCacheDispatcherHost::SendOnUIThread,
-                     base::Unretained(this), base::WrapUnique(msg)));
-  // The callers of this send method are ignoring the result anyway.
-  return true;
-}
-
-void AppCacheDispatcherHost::SendOnUIThread(std::unique_ptr<IPC::Message> msg) {
-  if (sender_) {
-    sender_->Send(msg.release());
-  }
 }
 
 void AppCacheDispatcherHost::RegisterHost(int32_t host_id) {

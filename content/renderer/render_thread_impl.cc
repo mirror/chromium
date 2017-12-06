@@ -730,6 +730,10 @@ void RenderThreadImpl::Init(
 
   appcache_dispatcher_.reset(
       new AppCacheDispatcher(Get(), new AppCacheFrontendImpl()));
+  registry->AddInterface(
+      base::BindRepeating(&AppCacheDispatcher::Bind,
+                          base::Unretained(appcache_dispatcher())),
+      GetMainTaskRunner());
   dom_storage_dispatcher_.reset(new DomStorageDispatcher());
   main_thread_indexed_db_dispatcher_.reset(new IndexedDBDispatcher());
   main_thread_cache_storage_dispatcher_.reset(
@@ -1754,8 +1758,7 @@ bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   }
 
   // Some messages are handled by delegates.
-  if (appcache_dispatcher_->OnMessageReceived(msg) ||
-      dom_storage_dispatcher_->OnMessageReceived(msg)) {
+  if (dom_storage_dispatcher_->OnMessageReceived(msg)) {
     return true;
   }
   return false;
