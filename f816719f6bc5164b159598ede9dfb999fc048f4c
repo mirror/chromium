@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3df37081_7ddd8e56",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ea8a95_e9931925",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a697882e_8ae0a1d0",
         "filename": "chrome/browser/ui/permission_bubble/permission_bubble_browser_test_util.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e4d7db_c111533f",
+        "filename": "chrome/browser/ui/permission_bubble/permission_bubble_browser_test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a697882e_8ae0a1d0",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e11cf2e9_501ae8e6",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4fa77a_16fa3731",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ac8c0c3_72c0144b",
         "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2d753b_3037d87c",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac8c0c3_72c0144b",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "94e09b97_864c0d86",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea42a1ba_0492ffbc",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f673b68e_e7e2629b",
         "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-06T03:21:25Z",
       "side": 1,
       "message": "Should this just be a DisplayOrigin object rather than the two separate members?",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bad340a_b5658397",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:55:13Z",
+      "side": 1,
+      "message": "Done, though I did think this was a bit uglier naming-wise. WDYT?",
+      "parentUuid": "f673b68e_e7e2629b",
       "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
