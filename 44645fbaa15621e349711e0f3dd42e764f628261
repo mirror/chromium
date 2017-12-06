@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7577be_fbef633e",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:30:25Z",
+      "side": 1,
+      "message": "Instead of creating a new flag, could we simply re-use one of the existing ones?",
+      "range": {
+        "startLine": 603,
+        "startChar": 14,
+        "endLine": 603,
+        "endChar": 59
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaccf2e_bd0c89ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:30:25Z",
+      "side": 1,
+      "message": "wdym?",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1041a5b6_a4ffdeaa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:30:25Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eba8719_e339d158",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/autoplay.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:30:25Z",
+      "side": 1,
+      "message": "FWIW, I think resolving with a boolean would be easier to read.",
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
