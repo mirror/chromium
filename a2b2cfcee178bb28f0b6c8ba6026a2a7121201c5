@@ -22,6 +22,30 @@
       "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b3408f_9facf32f",
+        "filename": "chrome/app/android/chrome_main_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-06T18:21:11Z",
+      "side": 0,
+      "message": "do you refer to this change as \u0027now\u0027?\n\nSorry, it was rushed and probably annoying. Now I see telemetry_perf_unittests failing on CQ with this patch. I did not know these metrics are used somewhere, let me take a closer look.\n\nMy point is that these metrics sound not trustworthy. StartupTimeToTimeTicks() subtracts one base::Time::Now() from another and then corrects timeticks with this delta. On Android it mixes a Java clock with a native one, which is extra broken. I am not sure how bad it is on Windows, maybe not too bad, so I don\u0027t want to touch it on this platform just yet.\n\nSpecifically on Android we never look at \u0027Startup.*\u0027 UMA, so recording them sounds unnecessary. Would it SGTY if recording based on g_browser_main_entry_point_ticks in startup_metric_utils.cc would be under if(!g_browser_main_entry_point_ticks.Get().is_null()) ?\n\nAnother way would be to record these metrics by taking the entry point(s) from java-side uptimeMillis/elapsedRealtime, but does not seem worth it to me.",
+      "parentUuid": "40724609_a1e631c4",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
