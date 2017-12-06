@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48659011_2d0fd0b5",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-06T18:40:18Z",
+      "side": 1,
+      "message": "note: I\u0027m moving away from the GetTypeForTesting() strategy in favor of looking for keywords on the page to make sure the right type of interstitial is showing. I like it better as a testing strategy because it makes sure the right thing is actually shown on the page.",
+      "range": {
+        "startLine": 463,
+        "startChar": 5,
+        "endLine": 463,
+        "endChar": 36
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71d1f697_1d563681",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-06T18:40:18Z",
+      "side": 1,
+      "message": "This file could probably use some close scrutiny. In the old world, content::InterstitialPage owned the blocking page. In committed interstitials world, we don\u0027t use content::InterstitialPage, so it\u0027s the job of this class to own the blocking page and manage its lifetime. It takes ownership of the blocking page when it\u0027s constructed when a navigation fails (when AssociateBlockingPage is called). DidFinishNavigation() is then supposed to clean up owned blocking pages when they\u0027re no longer needed: that is, when they were for a committed navigation that is now replaced with another navigation, or when they were for a navigation that didn\u0027t end up committing.",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2ae29c_cd5111e0",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-06T18:40:18Z",
+      "side": 1,
+      "message": "No new failures are added here, just parameterized versions of the existing ones.",
+      "range": {
+        "startLine": 175,
+        "startChar": 47,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
