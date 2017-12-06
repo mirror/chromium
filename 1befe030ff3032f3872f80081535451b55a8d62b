@@ -157,6 +157,24 @@
       "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd569a51_d4ab6bf5",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T01:38:03Z",
+      "side": 1,
+      "message": "It can be called from Workers as well.",
+      "parentUuid": "985e4707_d3a288ab",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
