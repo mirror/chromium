@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7a0341f_48b2465d",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T00:54:58Z",
+      "side": 1,
+      "message": "nit: s/Send/On/ as we typically avoid the term \"send\" in base exo code as we could potentially have a non-ipc delegate impl instead of the wayland code we have today...",
+      "range": {
+        "startLine": 659,
+        "startChar": 19,
+        "endLine": 659,
+        "endChar": 23
+      },
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c84ff3a_ced6e0da",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T00:54:58Z",
+      "side": 1,
+      "message": "state_changed_callback is only used by remote shell. can we move all the logic related to that to the client controlled code?",
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da15d9a9_86be3b2e",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T00:54:58Z",
+      "side": 1,
+      "message": "why do these need to be virtual? can remote shell code explicitly call some other functions that client controlled shell surface provides? that way we\u0027re not having requests to try maximize be confused with request to say that the window is maximized. maybe call it SetMaximized instead.",
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9adc7cf4_cfa5cc8a",
         "filename": "ui/wm/core/window_util.cc",
         "patchSetId": 1
