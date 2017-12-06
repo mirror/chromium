@@ -94,6 +94,30 @@
       "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4e04fd_4161bb71",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T19:31:35Z",
+      "side": 1,
+      "message": "\u003e BTW, EnclosingNGBlockFlow() doesn\u0027t check |HasNGInlineNodeData()|.\n\u003e Should we check it?\n\nI would probably rename the function into |EnclosingNGInlineFormattingContext()| if add this check...\n\nSame reason here. \"NG block flow\" doesn\u0027t imply inline formatting context, and shouldn\u0027t imply that.",
+      "parentUuid": "a570c64d_0cf32778",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
