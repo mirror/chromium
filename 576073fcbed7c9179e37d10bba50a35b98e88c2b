@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58b02da_fccb7f27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T18:56:51Z",
+      "side": 1,
+      "message": "Word wrapping here is weird.",
+      "revId": "576073fcbed7c9179e37d10bba50a35b98e88c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0ce221_a035a422",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/file/send-file-form-iso-2022-jp.tentative.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T18:56:51Z",
+      "side": 1,
+      "message": "Awesome, I was going to ask \"why .tentative?\" :)",
+      "revId": "576073fcbed7c9179e37d10bba50a35b98e88c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
