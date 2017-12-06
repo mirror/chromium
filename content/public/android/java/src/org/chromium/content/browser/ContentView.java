@@ -133,6 +133,7 @@ public class ContentView extends FrameLayout
             TraceEvent.begin("ContentView.onSizeChanged");
             super.onSizeChanged(w, h, ow, oh);
             mContentViewCore.onSizeChanged(w, h, ow, oh);
+            mContentViewCore.getWebContents().setSize(w, h);
         } finally {
             TraceEvent.end("ContentView.onSizeChanged");
         }
