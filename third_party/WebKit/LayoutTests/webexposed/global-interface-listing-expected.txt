@@ -2243,6 +2243,7 @@ interface HTMLBodyElement : HTMLElement
     getter onblur
     getter onerror
     getter onfocus
+    getter onfreeze
     getter onhashchange
     getter onlanguagechange
     getter onload
@@ -2272,6 +2273,7 @@ interface HTMLBodyElement : HTMLElement
     setter onblur
     setter onerror
     setter onfocus
+    setter onfreeze
     setter onhashchange
     setter onlanguagechange
     setter onload
@@ -2684,6 +2686,7 @@ interface HTMLFrameSetElement : HTMLElement
     getter onblur
     getter onerror
     getter onfocus
+    getter onfreeze
     getter onhashchange
     getter onlanguagechange
     getter onload
@@ -2709,6 +2712,7 @@ interface HTMLFrameSetElement : HTMLElement
     setter onblur
     setter onerror
     setter onfocus
+    setter onfreeze
     setter onhashchange
     setter onlanguagechange
     setter onload
@@ -9217,6 +9221,7 @@ interface webkitURL
     getter onended
     getter onerror
     getter onfocus
+    getter onfreeze
     getter ongotpointercapture
     getter onhashchange
     getter oninput
@@ -9399,6 +9404,7 @@ interface webkitURL
     setter onended
     setter onerror
     setter onfocus
+    setter onfreeze
     setter ongotpointercapture
     setter onhashchange
     setter oninput

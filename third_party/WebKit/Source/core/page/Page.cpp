@@ -453,6 +453,13 @@ void Page::SetLifecycleState(PageLifecycleState state) {
   if (state == page_lifecycle_state_)
     return;
   page_lifecycle_state_ = state;
+  if (RuntimeEnabledFeatures::PageLifecycleEnabled() &&
+      page_lifecycle_state_ == PageLifecycleState::kStopped) {
+    for (Frame* frame = main_frame_.Get(); frame;
+         frame = frame->Tree().TraverseNext()) {
+      frame->DidFreeze();
+    }
+  }
 }
 
 PageLifecycleState Page::LifecycleState() const {

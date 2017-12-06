@@ -127,6 +127,11 @@ bool RemoteFrame::ShouldClose() {
   return true;
 }
 
+void RemoteFrame::DidFreeze() {
+  DCHECK(RuntimeEnabledFeatures::PageLifecycleEnabled());
+  // TODO(fmeawad): Add support for remote frames.
+}
+
 void RemoteFrame::SetIsInert(bool inert) {
   if (inert != is_inert_)
     Client()->SetIsInert(inert);
