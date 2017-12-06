@@ -22,6 +22,30 @@
       "revId": "e56706ce606a8b772457365b9a10ff8eb0d2d8eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1aafbb_bea3656e",
+        "filename": "ipc/SECURITY_OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T23:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6916ea35_247320ac",
+      "range": {
+        "startLine": 1,
+        "startChar": 61,
+        "endLine": 1,
+        "endChar": 76
+      },
+      "revId": "e56706ce606a8b772457365b9a10ff8eb0d2d8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
