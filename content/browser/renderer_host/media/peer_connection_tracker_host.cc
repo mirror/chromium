@@ -17,6 +17,7 @@ PeerConnectionTrackerHost::PeerConnectionTrackerHost(
     int render_process_id,
     const base::WeakPtr<WebRTCEventLogHost>& event_log_host)
     : BrowserMessageFilter(PeerConnectionTrackerMsgStart),
+      BrowserAssociatedInterface<mojom::PeerConnectionTrackerHost>(this, this),
       render_process_id_(render_process_id),
       event_log_host_(event_log_host) {
   DCHECK(event_log_host);
@@ -28,8 +29,6 @@ bool PeerConnectionTrackerHost::OnMessageReceived(const IPC::Message& message) {
   IPC_BEGIN_MESSAGE_MAP(PeerConnectionTrackerHost, message)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddPeerConnection,
                         OnAddPeerConnection)
-    IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_RemovePeerConnection,
-                        OnRemovePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_UpdatePeerConnection,
                         OnUpdatePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddStats, OnAddStats)
@@ -85,8 +84,14 @@ void PeerConnectionTrackerHost::OnAddPeerConnection(
     event_log_host_->PeerConnectionAdded(info.lid);
 }
 
-void PeerConnectionTrackerHost::OnRemovePeerConnection(int lid) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+void PeerConnectionTrackerHost::RemovePeerConnection(int lid) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&PeerConnectionTrackerHost::RemovePeerConnection, this,
+                   lid));
+    return;
+  }
   WebRTCInternals::GetInstance()->OnRemovePeerConnection(peer_pid(), lid);
   if (event_log_host_)
     event_log_host_->PeerConnectionRemoved(lid);
