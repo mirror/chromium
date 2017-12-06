@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "527663ad_cf6dfecd",
+        "filename": "base/android/jni_generator/AndroidManifest.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T20:59:49Z",
+      "side": 1,
+      "message": "nit: remove (c), and 2017",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dc74e6_0d4605e1",
+        "filename": "base/android/jni_generator/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T20:59:49Z",
+      "side": 1,
+      "message": "nit: paths in GN are relative to BUILD.gn file, so this can just be \"AndroidManifest.xml\"",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b532d3_b4969d0a",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T20:59:49Z",
+      "side": 1,
+      "message": "Are there others that need fixing? If not, then might be good to remove this safeguard so as to enforce apks to use \"valid\" manifests.\n\nAlso, if -\u003e If",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
