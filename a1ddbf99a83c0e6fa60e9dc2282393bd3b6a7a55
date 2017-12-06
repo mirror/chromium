@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a85b21da_bad1d139",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-06T00:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "952532d9_4420530c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "a1ddbf99a83c0e6fa60e9dc2282393bd3b6a7a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59743503_91eb9de5",
         "filename": "components/signin/ios/browser/wait_for_network_callback_helper.cc",
         "patchSetId": 2
