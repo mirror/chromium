@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae89992e_c36db741",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T16:18:24Z",
+      "side": 1,
+      "message": "nit: minor two typos in this sentence.",
+      "revId": "c300f250a1ad9879e7e151465fc14f8e9ad51236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24809e70_1cc72241",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T16:18:24Z",
+      "side": 1,
+      "message": "nit: Consider give a short summary of how these entries are sorted? or how we break the ties?\nCould use a comment on the \"a.delegate \u003c b.delegate\" part.",
+      "revId": "c300f250a1ad9879e7e151465fc14f8e9ad51236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5802334_8484ce6f",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T16:18:24Z",
+      "side": 1,
+      "message": "Can we add a test for this sorting comparator?",
+      "revId": "c300f250a1ad9879e7e151465fc14f8e9ad51236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b86b8f_fbe9b74c",
+        "filename": "net/spdy/chromium/http2_push_promise_index_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T16:18:24Z",
+      "side": 1,
+      "message": "nit: maybe consider adding some inlined comments to this test to document the test flow? Same with the next test.\n\nIt\u0027s hard to read what\u0027s going on. I find it difficult to associate the combinations of key1/key2 and url1/url2 with the Register/Unregister at a glance. Some comments will help to know what is going in these tests.",
+      "revId": "c300f250a1ad9879e7e151465fc14f8e9ad51236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
