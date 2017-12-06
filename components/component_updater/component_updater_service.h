@@ -159,6 +159,8 @@ class OnDemandUpdater {
   friend class DownloadableStringsComponentInstallerPolicy;
   friend class ::ComponentsUI;
   friend class ::PluginObserver;
+  friend class SwReporterInstallerPolicy;
+  friend class SwReporterInstallerUpdateTest;
 #if defined(OS_CHROMEOS)
   friend class CrOSComponent;
 #endif  // defined(OS_CHROMEOS)

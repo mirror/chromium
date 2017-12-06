@@ -23,8 +23,11 @@
 #include "base/test/scoped_feature_list.h"
 #include "base/values.h"
 #include "base/version.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "components/chrome_cleaner/public/constants/constants.h"
+#include "components/component_updater/mock_component_updater_service.h"
+#include "components/update_client/update_client.h"
 #include "components/variations/variations_params_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -41,29 +44,29 @@ using safe_browsing::SwReporterInvocation;
 using safe_browsing::SwReporterInvocationResult;
 using safe_browsing::SwReporterInvocationSequence;
 using safe_browsing::SwReporterInvocationType;
+using ::testing::_;
+using ::testing::Eq;
+using ::testing::ReturnRef;
+
+using Events = update_client::UpdateClient::Observer::Events;
 
 }  // namespace
 
-// Test parameters:
-//   - SwReporterInvocationType invocation_type_: the type of invocation
-//         tested.
-class SwReporterInstallerTest
-    : public ::testing::TestWithParam<SwReporterInvocationType> {
+class SwReporterInstallerTestBase {
  public:
-  SwReporterInstallerTest()
-      : launched_callback_(
-            base::Bind(&SwReporterInstallerTest::SwReporterLaunched,
-                       base::Unretained(this))),
+  SwReporterInstallerTestBase()
+      : launched_callback_(base::BindRepeating(
+            &SwReporterInstallerTestBase::SwReporterLaunched,
+            base::Unretained(this))),
         default_version_("1.2.3"),
-        default_path_(L"C:\\full\\path\\to\\download") {
-    invocation_type_ = GetParam();
-  }
+        default_path_(L"C:\\full\\path\\to\\download") {}
 
-  ~SwReporterInstallerTest() override {}
+  virtual ~SwReporterInstallerTestBase() {}
 
  protected:
   void SwReporterLaunched(SwReporterInvocationType invocation_type,
                           SwReporterInvocationSequence&& invocations) {
+    launched_invocation_type_ = invocation_type;
     ASSERT_TRUE(launched_invocations_.container().empty());
     launched_invocations_ = std::move(invocations);
   }
@@ -222,47 +225,48 @@ class SwReporterInstallerTest
   // Results of running |ComponentReady|.
   SwReporterInvocationSequence launched_invocations_;
 
-  SwReporterInvocationType invocation_type_ =
-      SwReporterInvocationType::kPeriodicRun;
+  SwReporterInvocationType launched_invocation_type_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerTestBase);
+};
+
+class SwReporterInstallerTest : public SwReporterInstallerTestBase,
+                                public ::testing::Test {
+ public:
+  SwReporterInstallerTest() = default;
+  ~SwReporterInstallerTest() override = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerTest);
 };
 
-INSTANTIATE_TEST_CASE_P(
-    All,
-    SwReporterInstallerTest,
-    ::testing::Values(
-        SwReporterInvocationType::kPeriodicRun,
-        SwReporterInvocationType::kUserInitiatedWithLogsDisallowed,
-        SwReporterInvocationType::kUserInitiatedWithLogsAllowed));
-
-TEST_P(SwReporterInstallerTest, MissingManifest) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MissingManifest) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   ExpectEmptyAttributes(policy);
   policy.ComponentReady(default_version_, default_path_,
                         std::make_unique<base::DictionaryValue>());
   ExpectDefaultInvocation();
 }
 
-TEST_P(SwReporterInstallerTest, MissingTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MissingTag) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   CreateFeatureWithoutTag();
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_TAG, 1);
 }
 
-TEST_P(SwReporterInstallerTest, InvalidTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, InvalidTag) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   CreateFeatureWithTag("tag with invalid whitespace chars");
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_TAG, 1);
 }
 
-TEST_P(SwReporterInstallerTest, TagTooLong) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, TagTooLong) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   std::string tag_too_long(500, 'x');
   CreateFeatureWithTag(tag_too_long);
   ExpectAttributesWithTag(policy, kMissingTag);
@@ -270,22 +274,22 @@ TEST_P(SwReporterInstallerTest, TagTooLong) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_TAG, 1);
 }
 
-TEST_P(SwReporterInstallerTest, EmptyTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptyTag) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   CreateFeatureWithTag("");
   ExpectAttributesWithTag(policy, kMissingTag);
   histograms_.ExpectUniqueSample(kErrorHistogramName,
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_TAG, 1);
 }
 
-TEST_P(SwReporterInstallerTest, ValidTag) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, ValidTag) {
+  SwReporterInstallerPolicy policy(launched_callback_);
   CreateFeatureWithTag(kExperimentTag);
   ExpectAttributesWithTag(policy, kExperimentTag);
 }
 
-TEST_P(SwReporterInstallerTest, SingleInvocation) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, SingleInvocation) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -322,8 +326,8 @@ TEST_P(SwReporterInstallerTest, SingleInvocation) {
   histograms_.ExpectTotalCount(kErrorHistogramName, 0);
 }
 
-TEST_P(SwReporterInstallerTest, MultipleInvocations) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MultipleInvocations) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -382,8 +386,8 @@ TEST_P(SwReporterInstallerTest, MultipleInvocations) {
   histograms_.ExpectTotalCount(kErrorHistogramName, 0);
 }
 
-TEST_P(SwReporterInstallerTest, MissingSuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MissingSuffix) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -398,8 +402,8 @@ TEST_P(SwReporterInstallerTest, MissingSuffix) {
   ExpectLaunchError();
 }
 
-TEST_P(SwReporterInstallerTest, EmptySuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptySuffix) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -415,8 +419,8 @@ TEST_P(SwReporterInstallerTest, EmptySuffix) {
   ExpectInvocationFromManifest("", L"random argument");
 }
 
-TEST_P(SwReporterInstallerTest, MissingSuffixAndArgs) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MissingSuffixAndArgs) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -430,8 +434,8 @@ TEST_P(SwReporterInstallerTest, MissingSuffixAndArgs) {
   ExpectLaunchError();
 }
 
-TEST_P(SwReporterInstallerTest, EmptySuffixAndArgs) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptySuffixAndArgs) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -447,8 +451,8 @@ TEST_P(SwReporterInstallerTest, EmptySuffixAndArgs) {
   ExpectInvocationFromManifest("", L"");
 }
 
-TEST_P(SwReporterInstallerTest, EmptySuffixAndArgsWithEmptyString) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptySuffixAndArgsWithEmptyString) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -464,8 +468,8 @@ TEST_P(SwReporterInstallerTest, EmptySuffixAndArgsWithEmptyString) {
   ExpectInvocationFromManifest("", L"");
 }
 
-TEST_P(SwReporterInstallerTest, MissingArguments) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, MissingArguments) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -480,8 +484,8 @@ TEST_P(SwReporterInstallerTest, MissingArguments) {
   ExpectLaunchError();
 }
 
-TEST_P(SwReporterInstallerTest, EmptyArguments) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptyArguments) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -497,8 +501,8 @@ TEST_P(SwReporterInstallerTest, EmptyArguments) {
   ExpectInvocationFromManifest("TestSuffix", L"");
 }
 
-TEST_P(SwReporterInstallerTest, EmptyArgumentsWithEmptyString) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptyArgumentsWithEmptyString) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -514,8 +518,8 @@ TEST_P(SwReporterInstallerTest, EmptyArgumentsWithEmptyString) {
   ExpectInvocationFromManifest("TestSuffix", L"");
 }
 
-TEST_P(SwReporterInstallerTest, EmptyManifest) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptyManifest) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] = "{}";
   policy.ComponentReady(
@@ -524,8 +528,8 @@ TEST_P(SwReporterInstallerTest, EmptyManifest) {
   ExpectDefaultInvocation();
 }
 
-TEST_P(SwReporterInstallerTest, EmptyLaunchParams) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, EmptyLaunchParams) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] = "{\"launch_params\": []}";
   policy.ComponentReady(
@@ -534,8 +538,8 @@ TEST_P(SwReporterInstallerTest, EmptyLaunchParams) {
   ExpectDefaultInvocation();
 }
 
-TEST_P(SwReporterInstallerTest, BadSuffix) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadSuffix) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -554,8 +558,8 @@ TEST_P(SwReporterInstallerTest, BadSuffix) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, SuffixTooLong) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, SuffixTooLong) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] =
       "{\"launch_params\": ["
@@ -577,8 +581,8 @@ TEST_P(SwReporterInstallerTest, SuffixTooLong) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_ArgumentsIsNotAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_ArgumentsIsNotAList) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   // This has a string instead of a list for "arguments".
   static constexpr char kTestManifest[] =
@@ -598,8 +602,8 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_ArgumentsIsNotAList) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_InvocationParamsIsNotAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_InvocationParamsIsNotAList) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   // This has the invocation parameters as direct children of "launch_params",
   // instead of using a list.
@@ -620,8 +624,8 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_InvocationParamsIsNotAList) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_SuffixIsAList) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_SuffixIsAList) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   // This has a list for suffix as well as for arguments.
   static constexpr char kTestManifest[] =
@@ -641,8 +645,8 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_SuffixIsAList) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_PromptIsNotABoolean) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_PromptIsNotABoolean) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   // This has an int instead of a bool for prompt.
   static constexpr char kTestManifest[] =
@@ -663,8 +667,8 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_PromptIsNotABoolean) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsScalar) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsScalar) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] = "{\"launch_params\": 0}";
   policy.ComponentReady(
@@ -677,8 +681,8 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsScalar) {
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
 }
 
-TEST_P(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsDict) {
-  SwReporterInstallerPolicy policy(launched_callback_, invocation_type_);
+TEST_F(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsDict) {
+  SwReporterInstallerPolicy policy(launched_callback_);
 
   static constexpr char kTestManifest[] = "{\"launch_params\": {}}";
   policy.ComponentReady(
@@ -689,6 +693,216 @@ TEST_P(SwReporterInstallerTest, BadTypesInManifest_LaunchParamsIsDict) {
   EXPECT_TRUE(launched_invocations_.container().empty());
   histograms_.ExpectUniqueSample(kErrorHistogramName,
                                  SW_REPORTER_EXPERIMENT_ERROR_BAD_PARAMS, 1);
+}
+
+// Test parameters:
+//   - SwReporterInvocationType invocation_type_: the type of invocation
+//         tested.
+class SwReporterInstallerUpdateTest
+    : public SwReporterInstallerTestBase,
+      public ::testing::TestWithParam<SwReporterInvocationType>,
+      public OnDemandUpdater {
+ public:
+  SwReporterInstallerUpdateTest() : policy_(launched_callback_) {
+    invocation_type_ = GetParam();
+  }
+
+  void SetUp() override {
+    EXPECT_CALL(mock_cus_, AddObserver(Eq(&policy_))).Times(1);
+    EXPECT_CALL(mock_cus_, GetOnDemandUpdater()).WillOnce(ReturnRef(*this));
+    EXPECT_CALL(mock_cus_, RemoveObserver(Eq(&policy_))).Times(1);
+
+    EXPECT_CALL(mock_cleaner_controller_, OnReporterSequenceStarted()).Times(1);
+  }
+
+  // OnDemandUpdater implementation:
+  void OnDemandUpdate(const std::string& crx_id, Callback callback) override {
+    ASSERT_EQ(kSwReporterComponentId, crx_id);
+
+    on_demand_update_called_ = true;
+    if (component_ready_call_mode_ != ComponentReadyCallMode::kNotCalled)
+      CallComponentReady(component_ready_call_mode_);
+  }
+
+ protected:
+  enum class ComponentReadyCallMode {
+    kNotCalled,
+    kCalledWithValidManifest,
+    kCalledWithInvalidManifest,
+  };
+
+  void CallComponentReady(ComponentReadyCallMode call_mode) {
+    static constexpr char kValidTestManifest[] =
+        "{\"launch_params\": ["
+        "  {"
+        "    \"arguments\": [\"--engine=experimental\"],"
+        "    \"suffix\": \"TestSuffix\","
+        "    \"prompt\": true"
+        "  }"
+        "]}";
+
+    static constexpr char kInvalidTestManifest[] =
+        "{\"launch_params\": ["
+        "  {"
+        "    \"arguments\": \"arguments-must-be-a-list\","
+        "    \"suffix\": \"TestSuffix\","
+        "    \"prompt\": true"
+        "  }"
+        "]}";
+
+    const std::string manifest =
+        call_mode == ComponentReadyCallMode::kCalledWithValidManifest
+            ? kValidTestManifest
+            : kInvalidTestManifest;
+    policy_.ComponentReady(
+        default_version_, default_path_,
+        base::DictionaryValue::From(base::JSONReader::Read(manifest)));
+  }
+
+  void InitWithSuccessfulInstallation() {
+    CallComponentReady(ComponentReadyCallMode::kCalledWithValidManifest);
+
+    // Assume successful installation and run of the reporter invocation.
+    ExpectSingleInvocation(SwReporterInvocationType::kPeriodicRun);
+  }
+
+  void ExpectSingleInvocation(SwReporterInvocationType invocation_type) {
+    ASSERT_FALSE(launched_invocations_.container().empty());
+    launched_invocations_.mutable_container().pop();
+    ASSERT_TRUE(launched_invocations_.container().empty());
+
+    EXPECT_EQ(invocation_type, launched_invocation_type_);
+  }
+
+  void ExpectNoInvocations() {
+    ASSERT_TRUE(launched_invocations_.container().empty());
+  }
+
+  void SendEventsForUpdatedComponent() {
+    policy_.OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
+                    kSwReporterComponentId);
+    policy_.OnEvent(Events::COMPONENT_UPDATE_FOUND, kSwReporterComponentId);
+    policy_.OnEvent(Events::COMPONENT_UPDATE_DOWNLOADING,
+                    kSwReporterComponentId);
+    policy_.OnEvent(Events::COMPONENT_UPDATE_READY, kSwReporterComponentId);
+    policy_.OnEvent(Events::COMPONENT_UPDATED, kSwReporterComponentId);
+  }
+
+  void SendEventsForComponentNotUpdated() {
+    policy_.OnEvent(Events::COMPONENT_CHECKING_FOR_UPDATES,
+                    kSwReporterComponentId);
+    policy_.OnEvent(Events::COMPONENT_NOT_UPDATED, kSwReporterComponentId);
+  }
+
+  SwReporterInvocationType invocation_type_;
+  SwReporterInstallerPolicy policy_;
+
+  ::testing::StrictMock<MockComponentUpdateService> mock_cus_;
+  ::testing::StrictMock<safe_browsing::MockChromeCleanerController>
+      mock_cleaner_controller_;
+
+  bool on_demand_update_called_ = false;
+  ComponentReadyCallMode component_ready_call_mode_ =
+      ComponentReadyCallMode::kNotCalled;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerUpdateTest);
+};
+
+INSTANTIATE_TEST_CASE_P(
+    All,
+    SwReporterInstallerUpdateTest,
+    ::testing::Values(
+        SwReporterInvocationType::kUserInitiatedWithLogsDisallowed,
+        SwReporterInvocationType::kUserInitiatedWithLogsAllowed));
+
+TEST_P(SwReporterInstallerUpdateTest, NotInstalledUpdateNotFound) {
+  EXPECT_CALL(mock_cleaner_controller_,
+              OnReporterSequenceDone(
+                  Eq(SwReporterInvocationResult::kComponentNotAvailable)))
+      .Times(1);
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForComponentNotUpdated();
+
+  ExpectNoInvocations();
+}
+
+TEST_P(SwReporterInstallerUpdateTest, NotInstalledUpdateSucceeded) {
+  component_ready_call_mode_ = ComponentReadyCallMode::kCalledWithValidManifest;
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForUpdatedComponent();
+
+  ExpectSingleInvocation(invocation_type_);
+}
+
+TEST_P(SwReporterInstallerUpdateTest, NotInstalledUpdatedWithInvalidManifest) {
+  component_ready_call_mode_ =
+      ComponentReadyCallMode::kCalledWithInvalidManifest;
+
+  EXPECT_CALL(mock_cleaner_controller_,
+              OnReporterSequenceDone(
+                  Eq(SwReporterInvocationResult::kComponentNotAvailable)))
+      .Times(1);
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForUpdatedComponent();
+
+  ExpectNoInvocations();
+}
+
+TEST_P(SwReporterInstallerUpdateTest, InstalledAndUpdateNotFound) {
+  InitWithSuccessfulInstallation();
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForComponentNotUpdated();
+
+  ExpectSingleInvocation(invocation_type_);
+}
+
+TEST_P(SwReporterInstallerUpdateTest, InstalledAndUpdateSucceeded) {
+  InitWithSuccessfulInstallation();
+  component_ready_call_mode_ = ComponentReadyCallMode::kCalledWithValidManifest;
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForUpdatedComponent();
+
+  ExpectSingleInvocation(invocation_type_);
+}
+
+TEST_P(SwReporterInstallerUpdateTest, InstalledAndUpdatedWithInvalidManifest) {
+  InitWithSuccessfulInstallation();
+  component_ready_call_mode_ =
+      ComponentReadyCallMode::kCalledWithInvalidManifest;
+
+  EXPECT_CALL(mock_cleaner_controller_,
+              OnReporterSequenceDone(
+                  Eq(SwReporterInvocationResult::kComponentNotAvailable)))
+      .Times(1);
+
+  OnDemandUpdateSwReporterComponent(invocation_type_, &mock_cleaner_controller_,
+                                    &mock_cus_);
+  EXPECT_TRUE(on_demand_update_called_);
+
+  SendEventsForUpdatedComponent();
+
+  ExpectNoInvocations();
 }
 
 }  // namespace component_updater

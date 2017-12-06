@@ -35,11 +35,11 @@
 #include "base/win/registry.h"
 #include "base/win/windows_version.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/component_updater/component_updater_paths.h"
-#include "components/component_updater/component_updater_service.h"
 #include "components/component_updater/pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -52,10 +52,12 @@ namespace component_updater {
 
 namespace {
 
-using safe_browsing::OnReporterSequenceDone;
+using safe_browsing::ChromeCleanerController;
 using safe_browsing::SwReporterInvocation;
 using safe_browsing::SwReporterInvocationSequence;
 using safe_browsing::SwReporterInvocationType;
+
+using Events = update_client::UpdateClient::Observer::Events;
 
 // These values are used to send UMA information and are replicated in the
 // histograms.xml file, so the order MUST NOT CHANGE.
@@ -130,8 +132,8 @@ void RunSwReportersAfterStartup(
     safe_browsing::SwReporterInvocationSequence&& invocations) {
   content::BrowserThread::PostAfterStartupTask(
       FROM_HERE, base::ThreadTaskRunnerHandle::Get(),
-      base::Bind(&safe_browsing::RunSwReporters, invocation_type,
-                 base::Passed(&invocations)));
+      base::BindRepeating(&safe_browsing::RunSwReporters, invocation_type,
+                          base::Passed(&invocations)));
 }
 
 // Ensures |str| contains only alphanumeric characters and characters from
@@ -183,9 +185,12 @@ bool GetOptionalBehaviour(
 // SwReporter should not be run at all.
 void RunSwReporters(const base::FilePath& exe_path,
                     const base::Version& version,
-                    std::unique_ptr<base::DictionaryValue> manifest,
+                    base::DictionaryValue* manifest,
                     const SwReporterRunner& reporter_runner,
-                    SwReporterInvocationType invocation_type) {
+                    SwReporterInvocationType invocation_type,
+                    base::OnceClosure on_error_closure) {
+  base::ScopedClosureRunner scoped_runner(std::move(on_error_closure));
+
   const base::ListValue* parameter_list = nullptr;
 
   // Allow an empty or missing launch_params list, but log an error if
@@ -284,16 +289,36 @@ void RunSwReporters(const base::FilePath& exe_path,
 
   DCHECK(!invocations.container().empty());
   reporter_runner.Run(invocation_type, std::move(invocations));
+  std::move(scoped_runner.Release());
 }
 
 }  // namespace
 
-SwReporterInstallerPolicy::SwReporterInstallerPolicy(
-    const SwReporterRunner& reporter_runner,
-    SwReporterInvocationType invocation_type)
-    : reporter_runner_(reporter_runner), invocation_type_(invocation_type) {}
+// static
+SwReporterInstallerPolicy* SwReporterInstallerPolicy::current_policy_ = nullptr;
 
-SwReporterInstallerPolicy::~SwReporterInstallerPolicy() {}
+SwReporterInstallerPolicy::SwReporterInstallerPolicy(
+    const SwReporterRunner& reporter_runner)
+    : reporter_runner_(reporter_runner),
+      invocation_type_(SwReporterInvocationType::kPeriodicRun) {
+  current_policy_ = this;
+}
+
+SwReporterInstallerPolicy::~SwReporterInstallerPolicy() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  current_policy_ = nullptr;
+}
+
+void SwReporterInstallerPolicy::RunSavedCallbackOrNotifyFailure() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  if (run_sw_reporters_)
+    run_sw_reporters_->Run(invocation_type_, std::move(on_error_closure_));
+  else
+    std::move(on_error_closure_).Run();
+
+  invocation_type_ = SwReporterInvocationType::kPeriodicRun;
+}
 
 bool SwReporterInstallerPolicy::VerifyInstallation(
     const base::DictionaryValue& manifest,
@@ -322,10 +347,14 @@ void SwReporterInstallerPolicy::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  manifest_ = std::move(manifest);
   const base::FilePath exe_path(install_dir.Append(kSwReporterExeName));
-  RunSwReporters(exe_path, version, std::move(manifest), reporter_runner_,
-                 invocation_type_);
+  run_sw_reporters_ = new RunSwReportersCallback(base::BindRepeating(
+      &RunSwReporters, exe_path, version, manifest_.get(), reporter_runner_));
+  run_sw_reporters_->Run(invocation_type_, std::move(on_error_closure_));
+  invocation_type_ = SwReporterInvocationType::kPeriodicRun;
 }
 
 base::FilePath SwReporterInstallerPolicy::GetRelativeInstallDir() const {
@@ -369,6 +398,50 @@ SwReporterInstallerPolicy::GetInstallerAttributes() const {
 
 std::vector<std::string> SwReporterInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
+}
+
+// static
+SwReporterInstallerPolicy* SwReporterInstallerPolicy::GetCurrentPolicy() {
+  return current_policy_;
+}
+
+void SwReporterInstallerPolicy::Update(
+    safe_browsing::SwReporterInvocationType invocation_type,
+    base::OnceClosure on_error_closure,
+    ComponentUpdateService* cus) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_NE(SwReporterInvocationType::kPeriodicRun, invocation_type);
+
+  cus_ = cus;
+  cus_->AddObserver(this);
+  invocation_type_ = invocation_type;
+  on_error_closure_ = std::move(on_error_closure);
+  cus_->GetOnDemandUpdater().OnDemandUpdate(kSwReporterComponentId, Callback());
+}
+
+void SwReporterInstallerPolicy::OnEvent(Events event, const std::string& id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(cus_);
+
+  if (id != kSwReporterComponentId)
+    return;
+
+  // If the component was updated, then ComponentReady() will be eventually
+  // invoked and will call RunSwReporters(). Just need to remove this object
+  // from the observer list for the CUS.
+  // If the component was not updated, then it's either up to date or there
+  // was a failure to update it. In any case, try to invoke RunSwReporters()
+  // from the callback saved on the most recent update, or notify the caller
+  // of a failure if there is no Software Reproter component available.
+
+  if (event == Events::COMPONENT_NOT_UPDATED) {
+    RunSavedCallbackOrNotifyFailure();
+  } else if (event != Events::COMPONENT_UPDATED) {
+    return;
+  }
+
+  cus_->RemoveObserver(this);
+  cus_ = nullptr;
 }
 
 void RegisterSwReporterComponentWithParams(
@@ -450,13 +523,39 @@ void RegisterSwReporterComponentWithParams(
   // Install the component.
   auto installer = base::MakeRefCounted<ComponentInstaller>(
       std::make_unique<SwReporterInstallerPolicy>(
-          base::BindRepeating(&RunSwReportersAfterStartup), invocation_type));
+          base::BindRepeating(&RunSwReportersAfterStartup)));
   installer->Register(cus, base::OnceClosure());
 }
 
 void RegisterSwReporterComponent(ComponentUpdateService* cus) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   RegisterSwReporterComponentWithParams(SwReporterInvocationType::kPeriodicRun,
                                         cus);
+}
+
+void OnDemandUpdateSwReporterComponent(
+    safe_browsing::SwReporterInvocationType invocation_type,
+    ChromeCleanerController* controller,
+    ComponentUpdateService* cus) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_NE(SwReporterInvocationType::kPeriodicRun, invocation_type);
+
+  controller->OnReporterSequenceStarted();
+
+  base::OnceClosure on_error_closure = base::BindOnce(
+      [](ChromeCleanerController* controller) {
+        controller->OnReporterSequenceDone(
+            safe_browsing::SwReporterInvocationResult::kComponentNotAvailable);
+      },
+      controller);
+
+  SwReporterInstallerPolicy* current_policy =
+      SwReporterInstallerPolicy::GetCurrentPolicy();
+  if (current_policy == nullptr) {
+    std::move(on_error_closure).Run();
+    return;
+  }
+  current_policy->Update(invocation_type, std::move(on_error_closure), cus);
 }
 
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry) {

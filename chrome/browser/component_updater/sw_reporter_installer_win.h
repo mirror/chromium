@@ -12,8 +12,10 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "components/component_updater/component_installer.h"
+#include "components/component_updater/component_updater_service.h"
 
 class PrefRegistrySimple;
 
@@ -21,6 +23,10 @@ namespace base {
 class DictionaryValue;
 class FilePath;
 class Version;
+}
+
+namespace safe_browsing {
+class ChromeCleanerController;
 }
 
 namespace user_prefs {
@@ -49,16 +55,26 @@ enum SoftwareReporterExperimentError {
 };
 
 // Callback for running the software reporter after it is downloaded.
-using SwReporterRunner = base::Callback<void(
+using SwReporterRunner = base::RepeatingCallback<void(
     safe_browsing::SwReporterInvocationType invocation_type,
     safe_browsing::SwReporterInvocationSequence&& invocations)>;
 
-class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
+using RunSwReportersCallback =
+    base::RepeatingCallback<void(safe_browsing::SwReporterInvocationType,
+                                 base::OnceClosure)>;
+
+class SwReporterInstallerPolicy : public ComponentInstallerPolicy,
+                                  public ServiceObserver {
  public:
-  SwReporterInstallerPolicy(
-      const SwReporterRunner& reporter_runner,
-      safe_browsing::SwReporterInvocationType invocation_type);
+  explicit SwReporterInstallerPolicy(const SwReporterRunner& reporter_runner);
   ~SwReporterInstallerPolicy() override;
+
+  static SwReporterInstallerPolicy* GetCurrentPolicy();
+
+  void Update(safe_browsing::SwReporterInvocationType invocation_type,
+              base::OnceClosure on_error_closure,
+              ComponentUpdateService* cus);
+  void RunSavedCallbackOrNotifyFailure();
 
   // ComponentInstallerPolicy implementation.
   bool VerifyInstallation(const base::DictionaryValue& manifest,
@@ -78,12 +94,30 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   update_client::InstallerAttributes GetInstallerAttributes() const override;
   std::vector<std::string> GetMimeTypes() const override;
 
+  // ServiceObserver implementation.
+  void OnEvent(Events event, const std::string& id) override;
+
  private:
   friend class SwReporterInstallerTest;
 
   SwReporterRunner reporter_runner_;
 
-  const safe_browsing::SwReporterInvocationType invocation_type_;
+  safe_browsing::SwReporterInvocationType invocation_type_;
+
+  // Keeps a pointer to the current policy, to allow user-initiated runs of the
+  // reporter at any moment after the installation. The object is owned by the
+  // component installer, so no smart pointer can be used here.
+  static SwReporterInstallerPolicy* current_policy_;
+
+  std::unique_ptr<base::DictionaryValue> manifest_;
+
+  RunSwReportersCallback* run_sw_reporters_ = nullptr;
+
+  ComponentUpdateService* cus_ = nullptr;
+
+  base::OnceClosure on_error_closure_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
@@ -93,6 +127,11 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
 // the reporter, depending on |invocation_type|.
 void RegisterSwReporterComponentWithParams(
     safe_browsing::SwReporterInvocationType invocation_type,
+    ComponentUpdateService* cus);
+
+void OnDemandUpdateSwReporterComponent(
+    safe_browsing::SwReporterInvocationType invocation_type,
+    safe_browsing::ChromeCleanerController* controller,
     ComponentUpdateService* cus);
 
 // Call once during startup to make the component update service aware of the
