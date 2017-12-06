@@ -41,6 +41,8 @@ class HistoryQuickProvider : public HistoryProvider {
   friend class HistoryQuickProviderTest;
   FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, Spans);
   FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, Relevance);
+  FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, HttpSchemeMatch);
+  FRIEND_TEST_ALL_PREFIXES(HistoryQuickProviderTest, HttpsSchemeMatch);
 
   ~HistoryQuickProvider() override;
 
