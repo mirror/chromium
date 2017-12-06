@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8477c4e0_2037c164",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-06T18:19:38Z",
+      "side": 1,
+      "message": "nit: java_prebuilt",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 41
+      },
+      "revId": "899ae4778ac126af7fcd5c47c0bec408bb64447a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f0289e_0be130be",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-06T18:19:38Z",
+      "side": 1,
+      "message": "Are you planning to change this to \u0027All\u0027 here or when adding java_annotation_processor? That change you suggested fixed the issue on my CL.",
+      "range": {
+        "startLine": 607,
+        "startChar": 48,
+        "endLine": 607,
+        "endChar": 54
+      },
+      "revId": "899ae4778ac126af7fcd5c47c0bec408bb64447a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
