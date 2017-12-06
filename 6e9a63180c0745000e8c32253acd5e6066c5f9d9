@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a0eb78_b2542c5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "8184?",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d0d237_af34bc5d",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "Check !source_callback, then move pa_stream_begin_write with zeros up here and early continue to avoid staircase code?",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6422cc4_6a8c8127",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "break?",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0630104_96c0568c",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "This can be deleted since we have blocking now in AudioSyncReader. If you want to save that for another CL, at the very least you don\u0027t need it in this inner loop, just the outer one that calls OnMoreData.",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbdca97_9f5f3287",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "Can just be if (unwritten_frames_in_bus) if you want. Ditto elsewhere.",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded20c19_74d882c7",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "NULL is okay since it\u0027s consistent, but elsewhere we use nullptr now. Feel free to change these if you want.",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ba1ffd_d9ced932",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T03:47:14Z",
+      "side": 1,
+      "message": "Check return code?",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
