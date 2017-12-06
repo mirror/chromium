@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8613013e_aa63f337",
+        "filename": "components/offline_pages/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:43:16Z",
+      "side": 1,
+      "message": "Please fix the line order, while singing the alphabet song.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 7
+      },
+      "revId": "da1b1b477e7b2bf17b9fb1b3b1431fd550fc96e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
