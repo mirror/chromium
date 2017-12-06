@@ -244,6 +244,24 @@
       "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77731f4a_6364aef8",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-06T17:34:29Z",
+      "side": 1,
+      "message": "I see that now, thanks. I\u0027m really confused how this compiled before though ?",
+      "parentUuid": "ee3abbae_e268e3ab",
+      "revId": "27e094fd8517443084eaab788bae6c63575f2bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
