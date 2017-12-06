@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda38917_e10d2454",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T21:50:38Z",
+      "side": 1,
+      "message": "Current enum is not different from the previous implementation.\nMy suggestion was to use enum with 3 values:\n- always in sync with web state cookies (iOS 11)\n- always empty (iOS 10, Incognito)\n- best effort sync (iOS 10, non-incognito)",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 34
+      },
+      "revId": "fb503bdcdea3fc612be526366806e6cf9cbac78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
