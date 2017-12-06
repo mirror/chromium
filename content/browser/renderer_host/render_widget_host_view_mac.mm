@@ -1810,6 +1810,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   UpdateBackingStoreProperties();
 }
 
+Class GetRenderWidgetHostViewCocoaClassForTesting() {
+  return [RenderWidgetHostViewCocoa class];
+}
+
 }  // namespace content
 
 // RenderWidgetHostViewCocoa ---------------------------------------------------
