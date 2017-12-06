@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "e8d58a56_8f57f8ef",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T21:49:11Z",
+      "side": 1,
+      "message": "thanks. I didn\u0027t do it in the test fixture\u0027s SetUp because it needed to wait until after the user was logged in (to get the profile).",
+      "parentUuid": "2ca159a8_b7378d69",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f5170d_8fb80033",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 5
