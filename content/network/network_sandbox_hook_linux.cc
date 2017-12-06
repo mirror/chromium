@@ -15,6 +15,7 @@ namespace content {
 bool NetworkPreSandboxHook(service_manager::SandboxLinux::Options options) {
   sandbox::syscall_broker::BrokerCommandSet command_set;
   command_set.set(sandbox::syscall_broker::COMMAND_ACCESS);
+  command_set.set(sandbox::syscall_broker::COMMAND_MKDIR);
   command_set.set(sandbox::syscall_broker::COMMAND_OPEN);
   command_set.set(sandbox::syscall_broker::COMMAND_READLINK);
   command_set.set(sandbox::syscall_broker::COMMAND_RENAME);

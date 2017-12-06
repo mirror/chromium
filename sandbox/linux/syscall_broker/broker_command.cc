@@ -18,6 +18,15 @@ bool CommandAccessIsSafe(const BrokerCommandSet& command_set,
                                              filename_to_use);
 }
 
+bool CommandMkdirIsSafe(const BrokerCommandSet& command_set,
+                        const BrokerPermissionList& policy,
+                        const char* requested_filename,
+                        const char** filename_to_use) {
+  return command_set.test(COMMAND_MKDIR) &&
+         policy.GetFileNameIfAllowedToOpen(requested_filename, O_RDWR,
+                                           filename_to_use, nullptr);
+}
+
 bool CommandOpenIsSafe(const BrokerCommandSet& command_set,
                        const BrokerPermissionList& policy,
                        const char* requested_filename,

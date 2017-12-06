@@ -133,6 +133,39 @@ int BrokerClient::Readlink(const char* path, char* buf, size_t bufsize) {
   return return_value;
 }
 
+int BrokerClient::Mkdir(const char* path, int mode) {
+  if (fast_check_in_client_ &&
+      !CommandMkdirIsSafe(allowed_command_set_, broker_permission_list_, path,
+                          nullptr)) {
+    return -broker_permission_list_.denied_errno();
+  }
+
+  base::Pickle write_pickle;
+  write_pickle.WriteInt(COMMAND_MKDIR);
+  write_pickle.WriteString(path);
+  write_pickle.WriteInt(mode);
+  RAW_CHECK(write_pickle.size() <= kMaxMessageLength);
+
+  int returned_fd = -1;
+  uint8_t reply_buf[kMaxMessageLength];
+  ssize_t msg_len = base::UnixDomainSocket::SendRecvMsg(
+      ipc_channel_.get(), reply_buf, sizeof(reply_buf), &returned_fd,
+      write_pickle);
+
+  if (msg_len <= 0) {
+    if (!quiet_failures_for_tests_)
+      RAW_LOG(ERROR, "Could not make request to broker process");
+    return -ENOMEM;
+  }
+
+  base::Pickle read_pickle(reinterpret_cast<char*>(reply_buf), msg_len);
+  base::PickleIterator iter(read_pickle);
+  int return_value = -1;
+  if (!iter.ReadInt(&return_value))
+    return -ENOMEM;
+  return return_value;
+}
+
 // Make a remote system call over IPC for syscalls that take a path and flags
 // as arguments, currently open() and access().
 // Will return -errno like a real system call.

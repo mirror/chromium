@@ -137,6 +137,11 @@ int BrokerProcess::Readlink(const char* path, char* buf, size_t bufsize) const {
   return broker_client_->Readlink(path, buf, bufsize);
 }
 
+int BrokerProcess::Mkdir(const char* path, int mode) const {
+  RAW_CHECK(initialized_);
+  return broker_client_->Mkdir(path, mode);
+}
+
 #if defined(MEMORY_SANITIZER)
 #define BROKER_UNPOISON_STRING(x) __msan_unpoison_string(x)
 #else
@@ -247,6 +252,18 @@ intptr_t BrokerProcess::SIGSYS_Handler(const sandbox::arch_seccomp_data& args,
       return broker_process->Rename(
           reinterpret_cast<const char*>(args.args[1]),
           reinterpret_cast<const char*>(args.args[3]));
+#endif
+#if defined(__NR_mkdir)
+    case __NR_mkdir:
+      return broker_process->Mkdir(reinterpret_cast<const char*>(args.args[0]),
+                                   static_cast<int>(args.args[1]));
+#endif
+#if defined(__NR_mkdirat)
+    case __NR_mkdirat:
+      if (static_cast<int>(args.args[0]) != AT_FDCWD)
+        return -EPERM;
+      return broker_process->Mkdir(reinterpret_cast<const char*>(args.args[1]),
+                                   static_cast<int>(args.args[2]));
 #endif
     default:
       RAW_CHECK(false);

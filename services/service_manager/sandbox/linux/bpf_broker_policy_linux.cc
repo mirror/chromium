@@ -32,6 +32,18 @@ ResultExpr BrokerProcessPolicy::EvaluateSyscall(int sysno) const {
         return Allow();
       break;
 #endif
+#if defined(__NR_mkdir)
+    case __NR_mkdir:
+      if (allowed_command_set_.test(sandbox::syscall_broker::COMMAND_MKDIR))
+        return Allow();
+      break;
+#endif
+#if defined(__NR_mkdirat)
+    case __NR_mkdirat:
+      if (allowed_command_set_.test(sandbox::syscall_broker::COMMAND_MKDIR))
+        return Allow();
+      break;
+#endif
 #if defined(__NR_open)
     case __NR_open:
       if (allowed_command_set_.test(sandbox::syscall_broker::COMMAND_OPEN))
@@ -44,15 +56,21 @@ ResultExpr BrokerProcessPolicy::EvaluateSyscall(int sysno) const {
         return Allow();
       break;
 #endif
-#if defined(__NR_unlink)
-    case __NR_unlink:
-      return Allow();
-#endif
 #if defined(__NR_rename)
     case __NR_rename:
       if (allowed_command_set_.test(sandbox::syscall_broker::COMMAND_RENAME))
         return Allow();
       break;
+#endif
+#if defined(__NR_renameat)
+    case __NR_renameat:
+      if (allowed_command_set_.test(sandbox::syscall_broker::COMMAND_RENAME))
+        return Allow();
+      break;
+#endif
+#if defined(__NR_unlink)
+    case __NR_unlink:
+      return Allow();
 #endif
 #if defined(__NR_stat)
     case __NR_stat:

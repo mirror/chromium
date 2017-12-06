@@ -99,6 +99,9 @@ class SANDBOX_EXPORT BrokerProcess {
   // Can be used in place of readlink().
   int Readlink(const char* path, char* buf, size_t bufsize) const;
 
+  // Can be used in place of mkdir().
+  int Mkdir(const char* path, int mode) const;
+
  private:
   friend class BrokerProcessTestHelper;
 

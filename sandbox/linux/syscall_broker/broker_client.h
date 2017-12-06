@@ -68,6 +68,9 @@ class BrokerClient {
   // Can be used in place of Readlink().
   int Readlink(const char* path, char* buf, size_t bufsize);
 
+  // Can be used in place of mkdir().
+  int Mkdir(const char* path, int mode);
+
  private:
   int PathAndFlagsSyscall(BrokerCommand syscall_type,
                           const char* pathname,

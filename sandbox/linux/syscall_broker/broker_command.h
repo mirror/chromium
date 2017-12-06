@@ -35,6 +35,7 @@ constexpr int kCurrentProcessOpenFlagsMask = O_CLOEXEC;
 enum BrokerCommand {
   COMMAND_INVALID = 0,
   COMMAND_ACCESS,
+  COMMAND_MKDIR,
   COMMAND_OPEN,
   COMMAND_READLINK,
   COMMAND_RENAME,
@@ -55,6 +56,11 @@ bool CommandAccessIsSafe(const BrokerCommandSet& command_set,
                          const char* requested_filename,
                          int requested_mode,  // e.g. F_OK, R_OK, W_OK.
                          const char** filename_to_use);
+
+bool CommandMkdirIsSafe(const BrokerCommandSet& command_set,
+                        const BrokerPermissionList& policy,
+                        const char* requested_filename,
+                        const char** filename_to_use);
 
 bool CommandOpenIsSafe(const BrokerCommandSet& command_set,
                        const BrokerPermissionList& policy,
