@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fc4cd46_31b7bd0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T22:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e1911c_682726b3",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22afe68e_683af46e",
         "filename": "chrome/app/chrome_main_delegate.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T22:00:54Z",
       "side": 1,
       "message": "I presume you\u0027re not testing this in the --diagnostics-recovery branch to allow that to be tested on Linux? Or should we only do this on device in both cases?\n\n(I\u0027m good with either way, just double-checking.)",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29250f31_375dd2f9",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T22:31:54Z",
+      "side": 1,
+      "message": "I didn\u0027t see any reference to diagnostics-recovery in chromeos, or either diagnostics-recovery or kDiagnosticsRecovery in chrome, outside of the unit test. We could probably remove the switch, but it\u0027s possible a builder or tool with a confiuration outside those repros uses it somewhere. Regardless I would want to do that separately.",
+      "parentUuid": "22afe68e_683af46e",
       "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
