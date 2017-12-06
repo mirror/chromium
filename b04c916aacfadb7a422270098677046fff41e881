@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "70f3ad18_3b89637c",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:06:01Z",
+      "side": 1,
+      "message": "I was going to do this as part of my CL after our offline discussion, but given that it\u0027s here, do you mind adding a unittests that verifies that clicks that happen on Text results in TextInput calling requestFocus?",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "b04c916aacfadb7a422270098677046fff41e881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc8619f_ca5be39d",
         "filename": "chrome/browser/vr/elements/url_bar.h",
         "patchSetId": 2
