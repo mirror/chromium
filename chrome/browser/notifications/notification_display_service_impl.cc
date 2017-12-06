@@ -13,19 +13,13 @@
 #include "build/build_config.h"
 #include "build/buildflag.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/non_persistent_notification_handler.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
-#include "chrome/browser/notifications/persistent_notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/base/ui_features.h"
 #include "ui/message_center/notification.h"
-
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
-#endif
 
 #if BUILDFLAG(ENABLE_MESSAGE_CENTER)
 #include "chrome/browser/notifications/notification_platform_bridge_message_center.h"
@@ -123,17 +117,6 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
       message_center_bridge_(CreateMessageCenterBridge(profile)),
       bridge_(GetNativeNotificationPlatformBridge()),
       weak_factory_(this) {
-  // TODO(peter): Move these to the NotificationDisplayServiceFactory.
-  AddNotificationHandler(NotificationHandler::Type::WEB_NON_PERSISTENT,
-                         std::make_unique<NonPersistentNotificationHandler>());
-  AddNotificationHandler(NotificationHandler::Type::WEB_PERSISTENT,
-                         std::make_unique<PersistentNotificationHandler>());
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  AddNotificationHandler(
-      NotificationHandler::Type::EXTENSION,
-      std::make_unique<extensions::ExtensionNotificationHandler>());
-#endif
-
   // Initialize the bridge if native notifications are available, otherwise
   // signal that the bridge could not be initialized.
   if (bridge_) {
