@@ -49,6 +49,7 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   SetContainerLayerState(mapping->LayerForScrollCorner());
   SetContainerLayerState(mapping->DecorationOutlineLayer());
   SetContainerLayerState(mapping->BackgroundLayer());
+  SetContainerLayerState(mapping->ChildClippingMaskLayer());
 
   auto SetContentsLayerState =
       [rare_paint_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
@@ -77,7 +78,24 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         snapped_paint_offset + mask_layer->OffsetFromLayoutObject());
   }
 
-  // TODO(crbug.com/790548): Complete for all drawable layers.
+  if (auto* ancestor_clipping_mask_layer =
+          mapping->AncestorClippingMaskLayer()) {
+    PropertyTreeState state(
+        rare_paint_data->PreEffectProperties().Transform(),
+        mapping->ClipInheritanceAncestor()
+            ->GetLayoutObject()
+            .FirstFragment()
+            .GetRarePaintData()
+            ->ContentsProperties()
+            .Clip(),
+        // This is a hack to incorporate mask-based clip-path. Really should be
+        // nullptr or some dummy.
+        rare_paint_data->LocalBorderBoxProperties()->Effect());
+    ancestor_clipping_mask_layer->SetLayerState(
+        std::move(state),
+        snapped_paint_offset +
+            ancestor_clipping_mask_layer->OffsetFromLayoutObject());
+  }
 }
 
 void CompositingLayerPropertyUpdater::Update(const LocalFrameView& frame_view) {
