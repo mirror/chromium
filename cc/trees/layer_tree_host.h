@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/cancelable_callback.h"
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
@@ -22,6 +23,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "base/time/time.h"
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/benchmarks/micro_benchmark_controller.h"
@@ -243,6 +245,10 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
   // Calling this will reset it back to not suitable state.
   void ResetGpuRasterizationTracking();
 
+  using PresentationTimeCallback =
+      base::OnceCallback<void(base::TimeTicks, base::TimeDelta, uint32_t)>;
+  void RequestPresentationTimeForNextFrame(PresentationTimeCallback callback);
+
   void SetRootLayer(scoped_refptr<Layer> root_layer);
   Layer* root_layer() { return root_layer_.get(); }
   const Layer* root_layer() const { return root_layer_.get(); }
@@ -435,6 +441,10 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
     client_->DidReceiveCompositorFrameAck();
   }
   bool UpdateLayers();
+  void DidPresentCompositorFrame(const std::vector<int>& source_frames,
+                                 base::TimeTicks time,
+                                 base::TimeDelta refresh,
+                                 uint32_t flags);
   // Called when the compositor completed page scale animation.
   void DidCompletePageScaleAnimation();
   void ApplyScrollAndScale(ScrollAndScaleSet* info);
@@ -674,6 +684,19 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
       queued_image_decodes_;
   std::unordered_map<int, base::OnceCallback<void(bool)>>
       pending_image_decodes_;
+
+  base::Lock presentation_time_lock_;
+
+  // Presentation time callbacks requested for the next frame are initially
+  // added here.
+  // Guaraded by |presentation_time_lock_|.
+  std::vector<PresentationTimeCallback> pending_presentation_time_callbacks_;
+
+  // Maps from the source frame presentation callbacks are requested for to
+  // the callbacks.
+  // Guaraded by |presentation_time_lock_|.
+  std::map<int, std::vector<PresentationTimeCallback>>
+      frame_to_presentation_time_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };
