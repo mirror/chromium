@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc5b36e_71f1fa2f",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "Use the default constructor.",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03f72307_415e1f8b",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "nit: if (!tree_.Unserialize(params.update))\n       return false;",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79a6de03_31f22689",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "Maybe return here? Need to clear events, but I think it would be clearer to enforce an early return if the event isn\u0027t inferred.",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c0938ed_be01b5a2",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "Why not just refactor the switch into a function -- then ShouldSendAutomationEvent would just be if that function returns extensions::api::automation::EVENT_TYPE_NONE.",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a106d3b_8a9094cc",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "Seems like this belongs in the base class.",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4aaf346_6f4f1007",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-06T19:59:58Z",
+      "side": 1,
+      "message": "nit: if (!tree_wrapper...) ...",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
