@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "97b9ebc8_29d9fbce",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T02:52:05Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow this logic, since we early return if is_background_ is true above. Maybe I\u0027m misunderstanding how this works though...",
+      "revId": "6e14a5f8a7d13c0c37c692e5d9c3f52dc744793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dc1ffc5_eabbc3f6",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
