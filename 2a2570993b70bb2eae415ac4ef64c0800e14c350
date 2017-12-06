@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338a8b34_9e6124e7",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T05:00:17Z",
+      "side": 1,
+      "message": "optional, possibly neater, one of:\n\n  TabStripModel* tab_strip_model \u003d browser-\u003etab_strip_model();\n  bool installable_app \u003d tab_strip_model \u0026\u0026\n                         tab_strip_model-\u003eGetActiveWebContents() \u0026\u0026\n                         banners::AppBannerManager::GetInstallable(\n                             tab_strip_model-\u003eGetActiveWebContents()) \u003d\u003d\n                             banners::AppBannerManager::Installable::YES;\n\n  TabStripModel* tab_strip_model \u003d browser-\u003etab_strip_model();\n  content::WebContents* web_contents \u003d\n      tab_strip_model ? tab_strip_model-\u003eGetActiveWebContents() : nullptr;\n  bool installable_app \u003d\n      web_contents \u0026\u0026 banners::AppBannerManager::GetInstallable(web_contents) \u003d\u003d\n                          banners::AppBannerManager::Installable::YES;\n\n\nAll of these are kinda ugly though :p. I\u0027m not really fussed.",
+      "revId": "2a2570993b70bb2eae415ac4ef64c0800e14c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
