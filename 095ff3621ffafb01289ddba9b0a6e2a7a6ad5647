@@ -70,6 +70,30 @@
       "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bf0233_0aa8ef2d",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-06T13:37:34Z",
+      "side": 1,
+      "message": "My general take on optional is that it is equivalent (cognitively) to branching the methods into two, one with the argument and one without. It also makes the method bit harder to extend (non-optional args must go before it). These are both (minor) costs to clarity.\n\nIn this case there probably isn\u0027t a huge reason to avoid it, but it\u0027s just my personal preference. I guess it comes down to \"explicit over implicit\". Your point about the null callback makes sense but I think it could be resolved in a comment.",
+      "parentUuid": "c69bd2cd_b52b925d",
+      "range": {
+        "startLine": 1408,
+        "startChar": 11,
+        "endLine": 1408,
+        "endChar": 51
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
