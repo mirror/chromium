@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "84d22076_d88d841b",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:52:48Z",
+      "side": 1,
+      "message": "crbug.com/778318 is the appropriate crbug for that (sorry for forgetting to link that)",
+      "parentUuid": "2e6afecf_70ce5a0e",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5722d93_031144bf",
         "filename": "content/public/test/render_view_test.cc",
         "patchSetId": 35
