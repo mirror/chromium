@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77cab3d_53420ea6",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T02:03:37Z",
+      "side": 1,
+      "message": "Can you please add a note here about what \u0027Parent\u0027 refers to?",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
