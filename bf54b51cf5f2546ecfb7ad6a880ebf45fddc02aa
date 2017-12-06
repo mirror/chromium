@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0941d5a6_99e63c47",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T21:31:22Z",
+      "side": 0,
+      "message": "This  method currently used only when passing this boolean in the init() method call? Perhaps we can move it as a helper function in destination_store.js and keep using it (both in init() and here).",
+      "range": {
+        "startLine": 609,
+        "startChar": 25,
+        "endLine": 609,
+        "endChar": 51
+      },
+      "revId": "bf54b51cf5f2546ecfb7ad6a880ebf45fddc02aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
