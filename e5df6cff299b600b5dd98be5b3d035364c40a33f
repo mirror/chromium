@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2023af6_bb45ae6a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T00:40:47Z",
+      "side": 0,
+      "message": "In order to ensure all callbacks are run, even when the pipe breaks, you do need to keep a map. Use a base::IDMap\u003cstd::unique_ptr\u003cmojom::Frame::ExtractSmartClipDataCallback\u003e\u003e.",
+      "revId": "e5df6cff299b600b5dd98be5b3d035364c40a33f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
