@@ -360,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "2a2366b1_d1c8132f",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T02:53:58Z",
+      "side": 1,
+      "message": "Renamed to speech_recognizer.mojom.",
+      "parentUuid": "c75a649b_5ff60e93",
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "927de454_30e54ec9",
         "filename": "content/common/speech_recognition_host.mojom",
         "patchSetId": 6
@@ -478,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "01247469_60c4ab24",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T02:53:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34898abd_44f221fc",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b874fd9_d4d0f8c1",
         "filename": "content/common/speech_recognition_host.mojom",
         "patchSetId": 6
@@ -581,6 +623,30 @@
       "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3134bf13_40c0ff12",
+        "filename": "content/common/speech_recognition_host.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-06T02:53:58Z",
+      "side": 1,
+      "message": "Changed \"nor\" to \"or\".",
+      "parentUuid": "b6685bd5_f9cb9804",
+      "range": {
+        "startLine": 49,
+        "startChar": 63,
+        "endLine": 49,
+        "endChar": 66
+      },
+      "revId": "84c03bb6fa91642613960208f1e5e3550e8947c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
