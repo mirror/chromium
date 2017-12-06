@@ -16,6 +16,24 @@
       "revId": "955ba583f11e21c4be789358a1e0dda4649ec7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5e2fd5_d9802d32",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 0,
+      "message": "OK, moved to a different CL.",
+      "parentUuid": "315c8ae1_8c3f35ad",
+      "revId": "955ba583f11e21c4be789358a1e0dda4649ec7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

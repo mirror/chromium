@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e116c30f_39d2055e",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b2e406_fabe310f",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73d505aa_0fbf0bda",
         "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2adb16b_9c9ff8ad",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "I think it can once I am done servicifying PdfToEmf. I added a note on the related bug.",
+      "parentUuid": "73d505aa_0fbf0bda",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2c42a1e_2afb01f1",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "Removed, will do in follow up CL.",
+      "parentUuid": "857f240c_70eed062",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d022b98f_d71fdbad",
         "filename": "chrome/utility/BUILD.gn",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2d8a4d_20b3b7c7",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d022b98f_d71fdbad",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9fa1ee48_765f4a74",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "C++ guarantees that global vars are initialized to their default value (here 0).\nLazyInstance is probably clearer, using one now.",
+      "parentUuid": "dc695da2_cf1e396b",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec87c33_beaa77a3",
         "filename": "content/public/app/mojo/content_utility_manifest.json",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1a124217_afdfb926",
+        "filename": "content/public/app/mojo/content_utility_manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec87c33_beaa77a3",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71ec417_f5cb7801",
         "filename": "content/public/app/mojo/content_utility_manifest.json",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56450701_97e67287",
+        "filename": "content/public/app/mojo/content_utility_manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-06T20:00:36Z",
+      "side": 1,
+      "message": "In one of the parent CLs I have renamed PDFToPWG to be PdfToPwg as it seems to be the preferred way of naming according to the style guide.",
+      "parentUuid": "d71ec417_f5cb7801",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
