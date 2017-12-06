@@ -34,6 +34,24 @@
       "revId": "a30c4fb0fcb67e7c42ad0b5dba99b98b65898ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b638229_e9811a85",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FETile.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T18:18:07Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like anyone de-references the filter without checking? This change is essentially restoring what the behaviour used to be before https://chromium.googlesource.com/chromium/src/+/7865b5be0f6472b14ed7a30bc7e41896a8ec9e6e%5E%21/#F120.",
+      "parentUuid": "dfe6f226_55fe13de",
+      "revId": "a30c4fb0fcb67e7c42ad0b5dba99b98b65898ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
