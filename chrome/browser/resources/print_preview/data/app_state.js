@@ -58,11 +58,15 @@ function makeRecentDestination(destination) {
 
 cr.define('print_preview', function() {
   'use strict';
-  class AppState {
+  class AppState extends cr.EventTarget {
     /**
      * Object used to get and persist the print preview application state.
+     * @param {!print_preview.DestinationStore} destinationStore The destination
+     *     store, used to track destination selection changes.
      */
-    constructor() {
+    constructor(destinationStore) {
+      super();
+
       /**
        * Internal representation of application state.
        * Must contain only plain objects or classes that override the
@@ -85,6 +89,18 @@ cr.define('print_preview', function() {
        * @private {!print_preview.NativeLayer}
        */
       this.nativeLayer_ = print_preview.NativeLayer.getInstance();
+
+      /**
+       * Destination store object for tracking recent destinations.
+       * @private {!print_preview.DestinationStore}
+       */
+      this.destinationStore_ = destinationStore;
+
+      /**
+       * Event tracker used to track event listeners.
+       * @private {!EventTracker}
+       */
+      this.tracker_ = new EventTracker();
     }
 
     /**
@@ -180,10 +196,20 @@ cr.define('print_preview', function() {
     }
 
     /**
-     * Sets to initialized state. Now object will accept persist requests.
+     * Sets to initialized state. Now object will accept persist requests and
+     * monitor for destination changes.
      */
     setInitialized() {
       this.isInitialized_ = true;
+      this.tracker_.add(
+          this.destinationStore_,
+          print_preview.DestinationStore.EventType
+              .SELECTED_DESTINATION_CAPABILITIES_READY,
+          this.persistSelectedDestination_.bind(this));
+      this.tracker_.add(
+          this.destinationStore_,
+          print_preview.DestinationStore.EventType.DESTINATION_SELECT,
+          this.persistSelectedDestination_.bind(this));
     }
 
     /**
@@ -203,16 +229,17 @@ cr.define('print_preview', function() {
     }
 
     /**
-     * Persists the selected destination.
-     * @param {!print_preview.Destination} dest Destination to persist.
+     * Persists the selected destination from the destination store.
+     * @private
      */
-    persistSelectedDestination(dest) {
+    persistSelectedDestination_() {
       if (!this.isInitialized_)
         return;
 
       // Determine if this destination is already in the recent destinations,
       // and where in the array it is located.
-      const newDestination = makeRecentDestination(dest);
+      const newDestination =
+          makeRecentDestination(this.destinationStore_.selectedDestination);
       let indexFound =
           this.state_[print_preview.AppStateField.RECENT_DESTINATIONS]
               .findIndex(function(recent) {
