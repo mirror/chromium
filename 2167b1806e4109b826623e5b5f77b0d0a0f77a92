@@ -52,6 +52,24 @@
       "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502b3f01_2c812bdb",
+        "filename": "chrome/browser/experiments/memory_ablation_experiment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-06T14:35:27Z",
+      "side": 1,
+      "message": "I am not 100% sure but I doubt that zram compressed more than one page. That would be very hard to implement. From an old LWN article [1]: \". All three zprojects use a page as the unit of compression and allocate and manage page frames to store compressed pages.\"\n\nHowever, as dskiba points out, KSM might merge page and mark them as COW before ZRAM gets there. so I guess you want pages to not be identical.\n\n\n[1] https://lwn.net/Articles/545244/",
+      "parentUuid": "5f723a43_c3faaeb6",
+      "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
