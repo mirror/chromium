@@ -293,6 +293,24 @@
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3da167_b0569087",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-06T00:55:37Z",
+      "side": 1,
+      "message": "\u003e Thanks Tommy! A quick test shows constructor method ref works nice. Got to familiarize myself with 8 more..\n\nFwiw, method reference is (we think) only syntax sugar for creating lambdas. The important part in tommy\u0027s suggestion is saving it in a static variable to avoid gc churn.",
+      "parentUuid": "7a3a4863_ac59647b",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
