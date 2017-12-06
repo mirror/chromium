@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "b1848e24_3678be73",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Definitely can\u0027t do this; you\u0027ll break the build. Just take the //media DEP instead.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53eb141_506e28a6",
+        "filename": "services/audio/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Just add .mojom and traits here and you can delete other OWNERS files.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd7d5cc_3f1424ca",
+        "filename": "services/audio/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "TODO(olka,max,dalecurtis): Write a longer document.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee34f62_5a7e4ac2",
         "filename": "services/audio/audio_service.cc",
         "patchSetId": 10
@@ -19,6 +70,40 @@
         "endLine": 1,
         "endChar": 17
       },
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db4faf8_ba7f6e53",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Line above.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0425ce04_a993879e",
+        "filename": "services/audio/in_process_audio_manager_accessor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Needs some more comments describing why this is called InProcessXXX",
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +150,40 @@
     },
     {
       "key": {
+        "uuid": "5cb4eac1_1266051a",
+        "filename": "services/audio/public/cpp/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Don\u0027t think you need this file so long as the higher level one sets all this.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492c2ecb_728cb837",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Feel free to use auto in cases like this (here and elsewhere).",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bc82684_3e517126",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
         "patchSetId": 10
@@ -76,6 +195,91 @@
       "writtenOn": "2017-12-06T15:13:24Z",
       "side": 1,
       "message": "Taking the address of this function is a bit problematic, it may break if overloads are added in the future AFAICT. How about having a helper function in an unnamed namespace instead?",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc0cf0b_a4e2284f",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Needs class comment describing what this is for and how it\u0027s used.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acb93dd_815079a0",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Generally no blank lines between functions for implementations.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790c4e92_c6083f30",
+        "filename": "services/audio/public/interfaces/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6815f4_6605cd63",
+        "filename": "services/audio/test/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "Necessary? These are test files.",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9e3740_09808634",
+        "filename": "services/audio/test/audio_system_to_mojo_adapter_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:31:12Z",
+      "side": 1,
+      "message": "FYI since this CL already has one +1 :)",
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
