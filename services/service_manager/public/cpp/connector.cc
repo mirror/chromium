@@ -87,9 +87,7 @@ void Connector::BindInterface(const Identity& target,
 }
 
 std::unique_ptr<Connector> Connector::Clone() {
-  if (!BindConnectorIfNecessary())
-    return nullptr;
-
+  BindConnectorIfNecessary();
   mojom::ConnectorPtr connector;
   connector_->Clone(mojo::MakeRequest(&connector));
   return std::make_unique<Connector>(connector.PassInterface());
