@@ -305,28 +305,6 @@ void AppListModel::SetFoldersEnabled(bool folders_enabled) {
     DeleteItem(folder_ids[i]);
 }
 
-void AppListModel::SetCustomLauncherPageEnabled(bool enabled) {
-  custom_launcher_page_enabled_ = enabled;
-  for (auto& observer : observers_)
-    observer.OnCustomLauncherPageEnabledStateChanged(enabled);
-}
-
-void AppListModel::PushCustomLauncherPageSubpage() {
-  custom_launcher_page_subpage_depth_++;
-}
-
-bool AppListModel::PopCustomLauncherPageSubpage() {
-  if (custom_launcher_page_subpage_depth_ == 0)
-    return false;
-
-  --custom_launcher_page_subpage_depth_;
-  return true;
-}
-
-void AppListModel::ClearCustomLauncherPageSubpages() {
-  custom_launcher_page_subpage_depth_ = 0;
-}
-
 // Private methods
 
 void AppListModel::OnListItemMoved(size_t from_index,
