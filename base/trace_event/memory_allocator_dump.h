@@ -106,6 +106,7 @@ class BASE_EXPORT MemoryAllocatorDump {
   // The size is the value set with AddScalar(kNameSize, kUnitsBytes, size);
   // TODO(hjd): this should return an Optional<uint64_t>.
   uint64_t GetSizeInternal() const;
+  uint64_t GetObjectCountInternal() const;
 
   MemoryDumpLevelOfDetail level_of_detail() const { return level_of_detail_; }
 
@@ -127,6 +128,7 @@ class BASE_EXPORT MemoryAllocatorDump {
   // Only for mojo serialization, which can mutate the collection.
   std::vector<Entry>* mutable_entries_for_serialization() const {
     cached_size_.reset();  // The caller can mutate the collection.
+    cached_object_count_.reset();
 
     // Mojo takes a const input argument even for move-only types that can be
     // mutate while serializing (like this one). Hence the const_cast.
@@ -139,6 +141,8 @@ class BASE_EXPORT MemoryAllocatorDump {
   MemoryDumpLevelOfDetail level_of_detail_;
   int flags_;  // See enum Flags.
   mutable Optional<uint64_t> cached_size_;  // Lazy, for GetSizeInternal().
+  mutable Optional<uint64_t>
+      cached_object_count_;  // Lazy, for GetObjectCountInternal().
   std::vector<Entry> entries_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryAllocatorDump);
