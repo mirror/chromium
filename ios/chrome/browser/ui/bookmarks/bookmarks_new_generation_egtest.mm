@@ -2295,6 +2295,8 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   [BookmarksNewGenTestCase openBookmarks];
   [BookmarksNewGenTestCase openMobileBookmarks];
 
+  // 1. Verify root node is opened when cache position is deleted.
+
   // Select Folder 1.
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Folder 1")]
       performAction:grey_tap()];
@@ -2303,7 +2305,7 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(@"Folder 2")]
       performAction:grey_tap()];
 
-  // Close bookmarks
+  // Close bookmarks, it will store Folder 2 as the cache position.
   [[EarlGrey selectElementWithMatcher:BookmarksDoneButton()]
       performAction:grey_tap()];
 
@@ -2313,7 +2315,32 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   // Reopen bookmarks.
   [BookmarksNewGenTestCase openBookmarks];
 
-  // Ensure the root node is opened, by verifying folders at this level.
+  // Ensure the root node is opened, by verifying Mobile Bookmarks is seen in a
+  // table cell.
+  [BookmarksNewGenTestCase verifyBookmarkFolderIsSeen:@"Mobile Bookmarks"];
+
+  // 2. Verify root node is opened when cache position is a permanent node and
+  // is empty.
+
+  // Enter Mobile Bookmarks.
+  [BookmarksNewGenTestCase openMobileBookmarks];
+
+  // Close bookmarks, it will store Mobile Bookmarks as the cache position.
+  [[EarlGrey selectElementWithMatcher:BookmarksDoneButton()]
+      performAction:grey_tap()];
+
+  // Delete all bookmarks and folders under Mobile Bookmarks.
+  [BookmarksNewGenTestCase removeBookmarkWithTitle:@"Folder 1.1"];
+  [BookmarksNewGenTestCase removeBookmarkWithTitle:@"Folder 1"];
+  [BookmarksNewGenTestCase removeBookmarkWithTitle:@"French URL"];
+  [BookmarksNewGenTestCase removeBookmarkWithTitle:@"Second URL"];
+  [BookmarksNewGenTestCase removeBookmarkWithTitle:@"First URL"];
+
+  // Reopen bookmarks.
+  [BookmarksNewGenTestCase openBookmarks];
+
+  // Ensure the root node is opened, by verifying Mobile Bookmarks is seen in a
+  // table cell.
   [BookmarksNewGenTestCase verifyBookmarkFolderIsSeen:@"Mobile Bookmarks"];
 }
 
