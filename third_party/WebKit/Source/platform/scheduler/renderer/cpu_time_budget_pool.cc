@@ -23,7 +23,7 @@ CPUTimeBudgetPool::CPUTimeBudgetPool(
           base::TimeDelta(),
           "RendererScheduler.BackgroundBudgetMs",
           budget_pool_controller,
-          [](const base::TimeDelta& value) { return value.InMillisecondsF(); }),
+          TimeDeltaToMilliseconds),
       last_checkpoint_(now),
       cpu_percentage_(1) {}
 
