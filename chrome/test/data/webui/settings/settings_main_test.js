@@ -49,6 +49,7 @@ cr.define('settings_main_page', function() {
 
   suiteSetup(function() {
     settingsPrefs = document.createElement('settings-prefs');
+    CrOncStrings = CrOncStrings || {};
     return CrSettingsPrefs.initialized;
   });
 
