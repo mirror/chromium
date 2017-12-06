@@ -488,8 +488,10 @@ bool DWriteFontFamilyProxy::LoadFamily() {
 
   SCOPED_UMA_HISTOGRAM_TIMER("DirectWrite.Fonts.Proxy.LoadFamilyTime");
 
-  base::debug::ScopedCrashKey crash_key(kFontKeyName,
-                                        base::WideToUTF8(family_name_));
+  auto* font_key_name = base::debug::AllocateCrashKeyString(
+      "font_key_name", base::debug::CrashKeySize::Size32);
+  base::debug::ScopedCrashKeyString crash_key(font_key_name,
+                                              base::WideToUTF8(family_name_));
 
   mswr::ComPtr<IDWriteFontCollection> collection;
   if (!proxy_collection_->LoadFamily(family_index_, &collection)) {
