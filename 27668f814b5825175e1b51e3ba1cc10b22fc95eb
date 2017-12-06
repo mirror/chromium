@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "31af3b08_1bd0dff1",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-06T17:02:35Z",
+      "side": 1,
+      "message": "Sorry, my concern is that elsewhere we may be relying on the previous value of  self._test_instance.package_info.cmdline_file (so e.g. /data/local/content-shell-command-line or similar) and so this is being inconsistently changed. My worry is that someone else is setting those flag values but now we\u0027re telling chrome (see the java changes) to read from this location so their settings are silently ignored. I don\u0027t know if this is the case or if everyone goes through this and it\u0027s safe to have a single global command line called \"test-cmdline-file\"",
+      "parentUuid": "4941b140_d1a47b93",
+      "revId": "27668f814b5825175e1b51e3ba1cc10b22fc95eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0aa1d49_75c82879",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeJUnit4ClassRunner.java",
         "patchSetId": 13
