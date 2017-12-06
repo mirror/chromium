@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "caf3af39_06af97ac",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-06T10:27:13Z",
+      "side": 1,
+      "message": "The reason behind having such checks is ServerWindow::SetProperty. What it does is simply changing the actual show state according to possible ui::mojom::ShowState enums. \n\nSo, if a window is maximized and then set to fullscreen, and a user presses F11 to exit the fullscreen mode, aura actually calls DesktopWindowTreeHostMus::SetFullscreen(false), which is correct. But on the ws side, a corresponding ws::ServerWindow receives maximized property (if it has been maximized and then fullscreen, the property is set to maximized after the fullscreen state, by the way). https://github.com/Igalia/chromium/commit/84c815efea42ee5e19e448fc307433bf53ffd753#diff-d6be100e16026a0c866a3e3965dde101\n\nThus, what PlatformDisplayDefault gets is the properties of ServerWindows, and based on that knowledge it changes the PlatformWindow\u0027s (X11WindowOzone or WaylandWindow) states.\nYou can see it from here.\n\nThat\u0027s the reason behind such a design.",
+      "parentUuid": "d666bfed_ebb58ce1",
+      "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "333f2cdc_0c508683",
         "filename": "ui/ozone/platform/wayland/wayland_window.cc",
         "patchSetId": 16
