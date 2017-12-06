@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4956d2ad_09342b85",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:18:19Z",
+      "side": 1,
+      "message": "529-533:\nAre you sure it is reasonable to settle on definitely not trusted page, if there can be something trusted later in the vector?\n\nOr is the sort order such that we put stuff with the digest first?",
+      "range": {
+        "startLine": 533,
+        "startChar": 6,
+        "endLine": 533,
+        "endChar": 30
+      },
+      "revId": "8778acfcdebf532e84022b37ac1d774b022546f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a576b2e2_9641e72b",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:18:19Z",
+      "side": 1,
+      "message": "I think if the ID is present, we are explicitly opening that page from the Download Home, isn\u0027t that the case?\n\nIn what other circumstance would we put the offline ID in the header?\n\nIf above is true:\nWhen opening a page from DH, and it is no longer trusted, we should still show it, but use content:// or file:// instead and treat as untrusted.\nReplacing with some other URL match is not appropriate for such case.",
+      "range": {
+        "startLine": 564,
+        "startChar": 11,
+        "endLine": 564,
+        "endChar": 40
+      },
+      "revId": "8778acfcdebf532e84022b37ac1d774b022546f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c505b6_2ee5a904",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:18:19Z",
+      "side": 1,
+      "message": "persistent",
+      "range": {
+        "startLine": 261,
+        "startChar": 36,
+        "endLine": 261,
+        "endChar": 45
+      },
+      "revId": "8778acfcdebf532e84022b37ac1d774b022546f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b652c49_91580cee",
+        "filename": "components/offline_pages/core/offline_page_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:18:19Z",
+      "side": 1,
+      "message": "nit: replace with: Whether",
+      "range": {
+        "startLine": 204,
+        "startChar": 5,
+        "endLine": 204,
+        "endChar": 24
+      },
+      "revId": "8778acfcdebf532e84022b37ac1d774b022546f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcd12c6_1516e041",
+        "filename": "components/offline_pages/core/offline_page_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:18:19Z",
+      "side": 1,
+      "message": "I think there is only one possible implementation of this method.\nDoes it really need to be on the model? This looks like utility or file handling related.",
+      "revId": "8778acfcdebf532e84022b37ac1d774b022546f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
