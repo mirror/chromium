@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90575104_0629452a",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:43:04Z",
+      "side": 1,
+      "message": "I believe this is the recommended best practice for googletest:\n\n\"Derive a class from ::testing::Test . Start its body with protected: or public: as we\u0027ll want to access fixture members from sub-classes.\" [1]\n\n[1] https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#test-fixtures-using-the-same-data-configuration-for-multiple-tests",
+      "parentUuid": "386359be_6329141f",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f5170d_8fb80033",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T01:58:09Z",
       "side": 1,
       "message": "nit: In theory this could happen during shutdown (or some future condition could prevent the notification from displaying), but we probably don\u0027t care too much about that? We might consider having Display() return a bool that we could test as to whether the notification will actually be shown.",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51fcac1_2682f38c",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:43:04Z",
+      "side": 1,
+      "message": "\u003e nit: In theory this could happen during shutdown (or some future condition could prevent the notification from displaying), but we probably don\u0027t care too much about that? We might consider having Display() return a bool that we could test as to whether the notification will actually be shown.\n\nThis deserves some explanation, sorry for leaving that out. Display() (which should probably be OnDisplay()) is called from the MC but it\u0027s only used in two places, and one is a test. So I plan to remove it. To continue supporting it, we\u0027d need to add it to the Ash Mojo API as well as the stub notification display service used for testing, and that\u0027s more complexity than I want to support for one notification\u0027s UMA. It\u0027s also redundant with MessageCenterObserver::OnNotificationDisplayed.\n\nI don\u0027t think that shutdown affects this UMA or would do so rarely enough we can just ignore it (this is only UMA, not mission critical behavior). What could affect this UMA is a notification blocker such as the fullscreen one, which would prevent immediate display, but in the vast majority of these cases it will still be shown anyway, just a little later.\n\ntl;dr imo for UMA, the tradeoff between precise technical accuracy and code complexity is skewed towards code simplification.",
+      "parentUuid": "47f5170d_8fb80033",
       "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
