@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "a4d29b83_6ba15932",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 4060,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T09:48:11Z",
+      "side": 1,
+      "message": "The requirement is that the factory is accessible on the IO thread when it\u0027s needed. The main thread may block while waiting for the factory call to finish, so if we tried to lazily initialize it, we could deadlock.",
+      "parentUuid": "79678d88_f96e142a",
+      "revId": "da6448a411ae1b84d64e2b8fcbbc77bdc4b53eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a10c32d_6e765b3c",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 35
