@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9445100e_3b9499b2",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "wow lol this mixing of case styles. We should really figure out what to use here...",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de83098_32729742",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "s/VSyncProvider/VRPresentationProvider",
+      "range": {
+        "startLine": 105,
+        "startChar": 39,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4772169_65c09fd3",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "nit: early return instead if you\u0027re already bound?",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b50709e_d88d7955",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "This looks subtly wrong. You could have the presentation granted, but have the connection error out before any VSyncs were sent, and you would fail to end the presentation.\n\nI\u0027m confused why we need this state at all? Why do we need vsync_connection_failed_?",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 34
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cbd42e_048edfbe",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "No need to check if this is bound before resetting, just reset it.",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 39
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9486e746_25d82d2b",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T23:26:29Z",
+      "side": 1,
+      "message": "Can we rename this to something like presentation_connection_failed_?",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 31
+      },
+      "revId": "1a89c79dfa49323a637cfbd4543ddbb10ae3184b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
