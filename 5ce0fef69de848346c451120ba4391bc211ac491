@@ -16,6 +16,24 @@
       "revId": "5ce0fef69de848346c451120ba4391bc211ac491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e68998a_632b4783",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T18:06:18Z",
+      "side": 1,
+      "message": "Ah, i forgot that margins get added to the min_size above. I\u0027ve switched this to a DCHECK, and running the tests now.\n\nI thought I needed this, but may have just been from the existing code.",
+      "parentUuid": "33377a17_cabac77c",
+      "revId": "5ce0fef69de848346c451120ba4391bc211ac491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
