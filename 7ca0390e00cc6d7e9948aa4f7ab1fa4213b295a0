@@ -16,6 +16,24 @@
       "revId": "7ca0390e00cc6d7e9948aa4f7ab1fa4213b295a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e571d5_66ffb077",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-06T19:43:50Z",
+      "side": 1,
+      "message": "I suppose so, but this class doesn\u0027t know which process it\u0027s connected to, so it would take a bit of plumbing to send a bad message from here. This should be good enough to fix the issue (including on branches), and a nicer solution can be developed by someone working on the bitstream audio stuff.",
+      "parentUuid": "0bfc6350_26b2a24d",
+      "revId": "7ca0390e00cc6d7e9948aa4f7ab1fa4213b295a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
