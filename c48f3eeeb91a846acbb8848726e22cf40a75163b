@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2930790_04150f7c",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "I see. Removed the CIPD download logic out of this CL and split to a new one:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/807594\n\nWon\u0027t land that cl until the bug fixed.",
+      "parentUuid": "d2196e28_3f78b4a0",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f9d303f_ada05b91",
         "filename": "build/args/android/sdk/sdk_update_script.py",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad9fb168_58812174",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f9d303f_ada05b91",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e4d394_f42637c6",
         "filename": "build/args/android/sdk/sdk_update_script.py",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-04T22:31:21Z",
       "side": 1,
       "message": "Hrm -- is there a way we can handle this without requiring manual acceptance here?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c4bfd8_e5cc7a23",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Yes! I did more research on it and found https://stackoverflow.com/a/493399\n\nThe following worked well:\n\n    while True:\n      next_char \u003d p.stdout.read(1)\n      if not next_char:\n        break\n      sys.stdout.write(next_char)\n      sys.stdout.flush()",
+      "parentUuid": "80e4d394_f42637c6",
       "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "b1ec085b_ec2f958b",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Makes sense! I will split it in next patch.",
+      "parentUuid": "d53c3dc8_7a97e2f6",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b58d8dc_3074d9ff",
         "filename": "build/args/android/sdk/sdk_update_script.py",
         "patchSetId": 5
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "1e967206_6a75004b",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Thanks for the tip! This way is pretty better and cleaner.",
+      "parentUuid": "3b58d8dc_3074d9ff",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f1d0dc9_a4d5a93a",
         "filename": "build/args/android/sdk/sdk_update_script.py",
         "patchSetId": 5
@@ -118,6 +208,24 @@
       "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a46e0a4_c4481ed6",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Haaa, you are right :p",
+      "parentUuid": "6f1d0dc9_a4d5a93a",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +311,48 @@
     },
     {
       "key": {
+        "uuid": "79b86abc_ad43cadb",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "As discussed offline we can now support the latest version for group of packages, since users rarely request to download specific sdk versions. If users later need to explicitly (old) sdk versions, like \u0027P\u0027 or \u0027OMR1\u0027, I am able to add related function and lists of packages specified for those versions.\n\nIn the script I am hardcoding the packages names, see _DEFAULT_DOWNLOAD_PACKAGES. It will involve manually updating the package name including a version in the future.",
+      "parentUuid": "c34d2a8b_f3c2dbf2",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "127bd0e2_2ebb588e",
+        "filename": "build/args/android/sdk/sdk_update_script.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f9ceb25_2b023e1d",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25b6a04_c1db4139",
         "filename": "build/args/android/sdk/sources.ensure",
         "patchSetId": 5
@@ -214,6 +364,24 @@
       "writtenOn": "2017-12-04T22:31:21Z",
       "side": 1,
       "message": "Is this the most recently released set of public sources?",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a31769_876377f9",
+        "filename": "build/args/android/sdk/sources.ensure",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "I thought we haven\u0027t ready to update it yet since I noticed //third_party/android-tools/adk recent version is still \u0027android-25\u0027...\n\nJust checked the latest released public sources version is \u0027sources;android-26\u0027. If we can do it now, I will update it to the new version.",
+      "parentUuid": "d25b6a04_c1db4139",
       "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -237,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "cf3f3f33_cc9da07a",
+        "filename": "third_party/.gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I thought the /android_sdk should have same configs, so was shamefully copying these from /android_tools...",
+      "parentUuid": "0c286e3e_c7433b7e",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad07995_1e736c9d",
         "filename": "third_party/android_sdk/OWNERS",
         "patchSetId": 5
@@ -251,6 +437,24 @@
       "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315297e2_e3b92ac1",
+        "filename": "third_party/android_sdk/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-06T03:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ad07995_1e736c9d",
+      "revId": "c48f3eeeb91a846acbb8848726e22cf40a75163b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
