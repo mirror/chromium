@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "542e54f4_52eec556",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T23:26:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d7810f_719ba80c",
+      "revId": "4eeab50e29c57da871f64ec40c6e79b30d054d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a76a2f1f_5c2a7e48",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 4
@@ -98,6 +116,24 @@
       "writtenOn": "2017-12-06T01:28:44Z",
       "side": 1,
       "message": "Rather than posting a task, could this be done as part of the commit?\n1- avoids out-of-order callbacks. As is, you might get a callback for a frame that didn\u0027t commit yet, so it gives you misleading information\n2- may simplify the token management a bit because you can coalesce. In LayerTreeHost you\u0027d keep a list of callbacks per source_frame_number_, so you have at most 1 \"source\" token per frame, so you don\u0027t need a map of sets in LTHI\n3- saves task overhead.\n\nThe idea would be to just keep a \"bool request_presentation_time\" in LayerTreeImpl that would be set in LayerTreeHost::FinishCommitOnImplThread if there are any callbacks in LTH, and then LayerTreeHostImpl::MakeCompositorFrameMetadata can look at the active tree\u0027s request_presentation_time and if set, generate a presentation token and map it to the active tree\u0027s source_frame_number.\n\nThen on the way back, you can send the list of source_frame_number in DidPresentCompositorFrame, and look up the list of callbacks from there.\n\nProbably less code too overall.",
+      "revId": "4eeab50e29c57da871f64ec40c6e79b30d054d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9fc614_5b3b3b56",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T23:26:57Z",
+      "side": 1,
+      "message": "Ok, I think I got this. Take another look?",
+      "parentUuid": "0779a4ac_d9b46f76",
       "revId": "4eeab50e29c57da871f64ec40c6e79b30d054d9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
