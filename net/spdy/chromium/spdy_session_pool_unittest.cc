@@ -721,7 +721,8 @@ TEST_F(SpdySessionPoolTest, IPAddressChanged) {
   spdy_streamA->SetDelegate(&delegateA);
 
   SpdyHeaderBlock headers(spdy_util.ConstructGetHeaderBlock(urlA.spec()));
-  spdy_streamA->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+  spdy_streamA->SendRequestHeaders(std::move(headers), false,
+                                   NO_MORE_DATA_TO_SEND);
 
   base::RunLoop().RunUntilIdle();  // Allow headers to write.
   EXPECT_TRUE(delegateA.send_headers_completed());

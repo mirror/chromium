@@ -15438,6 +15438,7 @@ class FakeStream : public HttpStream,
 
   int SendRequest(const HttpRequestHeaders& request_headers,
                   HttpResponseInfo* response,
+                  bool can_send_early,
                   const CompletionCallback& callback) override {
     ADD_FAILURE();
     return ERR_UNEXPECTED;
@@ -15692,6 +15693,7 @@ class FakeWebSocketBasicHandshakeStream : public WebSocketHandshakeStreamBase {
 
   int SendRequest(const HttpRequestHeaders& request_headers,
                   HttpResponseInfo* response,
+                  bool can_send_early,
                   const CompletionCallback& callback) override {
     return parser()->SendRequest(state_.GenerateRequestLine(), request_headers,
                                  response, callback);

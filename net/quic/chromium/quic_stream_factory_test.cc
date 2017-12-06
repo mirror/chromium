@@ -2019,7 +2019,7 @@ void QuicStreamFactoryTestBase::OnNetworkMadeDefault(bool async_write_before) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
@@ -2151,7 +2151,7 @@ void QuicStreamFactoryTestBase::OnNetworkDisconnected(bool async_write_before) {
   // Send GET request on stream.
   HttpResponseInfo response_info;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response_info,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response_info, true,
                                     callback_.callback()));
 
   // Do an async write to leave writer blocked.
@@ -2893,7 +2893,7 @@ TEST_P(QuicStreamFactoryTest, NewNetworkConnectedAfterNoNetwork) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Trigger connection migration. Since there are no networks
@@ -3000,7 +3000,7 @@ TEST_P(QuicStreamFactoryTest, OnNetworkChangeDisconnectedPauseBeforeConnected) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Trigger connection migration. Since there are no networks
@@ -3132,7 +3132,7 @@ TEST_P(QuicStreamFactoryTest,
                                           net_log_, CompletionCallback()));
   HttpResponseInfo response1;
   HttpRequestHeaders request_headers1;
-  EXPECT_EQ(OK, stream1->SendRequest(request_headers1, &response1,
+  EXPECT_EQ(OK, stream1->SendRequest(request_headers1, &response1, true,
                                      callback_.callback()));
 
   // Cause QUIC stream to be created and send GET so session2 has an open
@@ -3144,7 +3144,7 @@ TEST_P(QuicStreamFactoryTest,
                                           net_log_, CompletionCallback()));
   HttpResponseInfo response2;
   HttpRequestHeaders request_headers2;
-  EXPECT_EQ(OK, stream2->SendRequest(request_headers2, &response2,
+  EXPECT_EQ(OK, stream2->SendRequest(request_headers2, &response2, true,
                                      callback_.callback()));
 
   // Cause both sessions to be paused due to DISCONNECTED.
@@ -3221,7 +3221,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarly) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   MockQuicData socket_data1;
@@ -3348,7 +3348,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyWithAsyncWrites) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Set up second socket data provider that is used after migration.
@@ -3649,7 +3649,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteError(
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Run the message loop so that the migration attempt is executed and
@@ -3726,7 +3726,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNoNewNetwork(
   // to migrate to, this causes the session to wait for a new network.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Complete any pending writes. Pending async MockQuicData writes
@@ -3816,7 +3816,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorNonMigratableStream(
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Run message loop to execute migration attempt.
@@ -3884,7 +3884,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorMigrationDisabled(
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
   // Run message loop to execute migration attempt.
   base::RunLoop().RunUntilIdle();
@@ -3960,7 +3960,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnMultipleWriteErrors(
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
   EXPECT_EQ(ERR_IO_PENDING, stream->ReadResponseHeaders(callback_.callback()));
 
@@ -4064,7 +4064,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorWithNotificationQueued(
   // migration attempt behind the notification in the message loop.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   base::RunLoop().RunUntilIdle();
@@ -4155,7 +4155,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnNotificationWithWriteErrorQueued(
   // migration attempt in the message loop.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Now queue a network change notification in the message loop behind
@@ -4240,7 +4240,7 @@ void QuicStreamFactoryTestBase::TestMigrationOnWriteErrorPauseBeforeConnected(
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Run the message loop so that data queued in the new socket is read by the
@@ -4375,7 +4375,7 @@ void QuicStreamFactoryTestBase::
   // a connection migration attempt.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Run the message loop so that data queued in the new socket is read by the
@@ -4530,7 +4530,7 @@ TEST_P(QuicStreamFactoryTest, MigrateSessionEarlyToBadSocket) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   // Set up second socket that will immediately return disconnected.
@@ -4594,7 +4594,7 @@ TEST_P(QuicStreamFactoryTest, ServerMigration) {
   // Send GET request on stream.
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response,
+  EXPECT_EQ(OK, stream->SendRequest(request_headers, &response, true,
                                     callback_.callback()));
 
   IPEndPoint ip;

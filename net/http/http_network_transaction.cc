@@ -86,6 +86,7 @@ HttpNetworkTransaction::HttpNetworkTransaction(RequestPriority priority,
       request_(NULL),
       priority_(priority),
       headers_valid_(false),
+      can_early_data_(false),
       request_headers_(),
       read_buf_len_(0),
       total_received_bytes_(0),
@@ -131,6 +132,11 @@ int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
   if (request_->load_flags & LOAD_DISABLE_CERT_REVOCATION_CHECKING) {
     server_ssl_config_.rev_checking_enabled = false;
     proxy_ssl_config_.rev_checking_enabled = false;
+  }
+
+  if (HttpUtil::IsMethodSafe(request_->method)) {
+    server_ssl_config_.early_data_enabled = true;
+    can_early_data_ = true;
   }
 
   if (request_->load_flags & LOAD_PREFETCH)
@@ -1179,8 +1185,8 @@ int HttpNetworkTransaction::DoBuildRequestComplete(int result) {
 int HttpNetworkTransaction::DoSendRequest() {
   send_start_time_ = base::TimeTicks::Now();
   next_state_ = STATE_SEND_REQUEST_COMPLETE;
-
-  return stream_->SendRequest(request_headers_, &response_, io_callback_);
+  return stream_->SendRequest(request_headers_, &response_, can_early_data_,
+                              io_callback_);
 }
 
 int HttpNetworkTransaction::DoSendRequestComplete(int result) {
@@ -1245,6 +1251,11 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
 
   if (response_.headers.get() && !ContentEncodingsValid())
     return ERR_CONTENT_DECODING_FAILED;
+
+  if (can_early_data_ && response_.headers.get() &&
+      response_.headers->response_code() == HTTP_TOO_EARLY) {
+    return HandleIOError(ERR_EARLY_DATA_REJECTED);
+  }
 
   // On a 408 response from the server ("Request Timeout") on a stale socket,
   // retry the request.
@@ -1559,6 +1570,15 @@ int HttpNetworkTransaction::HandleIOError(int error) {
         ResetConnectionAndRequestForResend();
         error = OK;
       }
+      break;
+    case ERR_EARLY_DATA_REJECTED:
+      net_log_.AddEventWithNetErrorCode(
+          NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR, error);
+      // Disable early data on the SSLConfig on a reset.
+      server_ssl_config_.early_data_enabled = false;
+      can_early_data_ = false;
+      ResetConnectionAndRequestForResend();
+      error = OK;
       break;
     case ERR_SPDY_PING_FAILED:
     case ERR_SPDY_SERVER_REFUSED_STREAM:

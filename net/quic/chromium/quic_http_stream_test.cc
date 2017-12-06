@@ -630,8 +630,8 @@ TEST_P(QuicHttpStreamTest, GetRequest) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -695,8 +695,8 @@ TEST_P(QuicHttpStreamTest, LoadTimingTwoRequests) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Start a second request.
   QuicHttpStream stream2(session_->CreateHandle());
@@ -704,8 +704,8 @@ TEST_P(QuicHttpStreamTest, LoadTimingTwoRequests) {
   EXPECT_EQ(OK,
             stream2.InitializeStream(&request_, DEFAULT_PRIORITY,
                                      net_log_.bound(), callback2.callback()));
-  EXPECT_EQ(OK,
-            stream2.SendRequest(headers_, &response_, callback2.callback()));
+  EXPECT_EQ(OK, stream2.SendRequest(headers_, &response_, true,
+                                    callback2.callback()));
 
   // Ack both requests.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -776,8 +776,8 @@ TEST_P(QuicHttpStreamTest, GetRequestWithTrailers) {
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
 
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
 
@@ -868,8 +868,8 @@ TEST_P(QuicHttpStreamTest, GetRequestLargeResponse) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -922,8 +922,9 @@ TEST_P(QuicHttpStreamTest, SessionClosedBeforeSendRequest) {
   session_->connection()->CloseConnection(
       QUIC_NO_ERROR, "test", ConnectionCloseBehavior::SILENT_CLOSE);
 
-  EXPECT_EQ(ERR_CONNECTION_CLOSED,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(
+      ERR_CONNECTION_CLOSED,
+      stream_->SendRequest(headers_, &response_, true, callback_.callback()));
 
   EXPECT_EQ(0, stream_->GetTotalSentBytes());
   EXPECT_EQ(0, stream_->GetTotalReceivedBytes());
@@ -997,8 +998,8 @@ TEST_P(QuicHttpStreamTest, LogGranularQuicConnectionError) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -1036,8 +1037,8 @@ TEST_P(QuicHttpStreamTest, LogGranularQuicErrorIfHandshakeNotConfirmed) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -1072,8 +1073,8 @@ TEST_P(QuicHttpStreamTest, SessionClosedBeforeReadResponseHeaders) {
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
 
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   session_->connection()->CloseConnection(
       QUIC_NO_ERROR, "test", ConnectionCloseBehavior::SILENT_CLOSE);
@@ -1116,8 +1117,8 @@ TEST_P(QuicHttpStreamTest, SendPostRequest) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, false,
+                                     callback_.callback()));
 
   // Ack both packets in the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -1187,8 +1188,8 @@ TEST_P(QuicHttpStreamTest, SendPostRequestAndReceiveSoloFin) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, false,
+                                     callback_.callback()));
 
   // Ack both packets in the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -1262,8 +1263,8 @@ TEST_P(QuicHttpStreamTest, SendChunkedPostRequest) {
   ASSERT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  ASSERT_EQ(ERR_IO_PENDING,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(ERR_IO_PENDING, stream_->SendRequest(headers_, &response_, false,
+                                                 callback_.callback()));
 
   chunked_upload_stream->AppendData(kUploadData, chunk_size, true);
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
@@ -1336,8 +1337,8 @@ TEST_P(QuicHttpStreamTest, SendChunkedPostRequestWithFinalEmptyDataPacket) {
   ASSERT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  ASSERT_EQ(ERR_IO_PENDING,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(ERR_IO_PENDING, stream_->SendRequest(headers_, &response_, false,
+                                                 callback_.callback()));
 
   chunked_upload_stream->AppendData(nullptr, 0, true);
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
@@ -1404,8 +1405,8 @@ TEST_P(QuicHttpStreamTest, SendChunkedPostRequestWithOneEmptyDataPacket) {
   ASSERT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  ASSERT_EQ(ERR_IO_PENDING,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(ERR_IO_PENDING, stream_->SendRequest(headers_, &response_, false,
+                                                 callback_.callback()));
 
   chunked_upload_stream->AppendData(nullptr, 0, true);
   EXPECT_THAT(callback_.WaitForResult(), IsOk());
@@ -1464,8 +1465,8 @@ TEST_P(QuicHttpStreamTest, DestroyedEarly) {
   EXPECT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Ack the request.
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
@@ -1515,8 +1516,8 @@ TEST_P(QuicHttpStreamTest, Priority) {
   DCHECK(reliable_stream);
   DCHECK_EQ(kV3HighestPriority, reliable_stream->priority());
 
-  EXPECT_EQ(OK,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  EXPECT_EQ(OK, stream_->SendRequest(headers_, &response_, true,
+                                     callback_.callback()));
 
   // Check that priority has now dropped back to MEDIUM.
   DCHECK_EQ(MEDIUM,
@@ -1578,8 +1579,8 @@ TEST_P(QuicHttpStreamTest, SessionClosedDuringDoLoop) {
   QuicHttpStream* stream = stream_.get();
   DeleteStreamCallback delete_stream_callback(std::move(stream_));
   // SendRequest() completes asynchronously after the final chunk is added.
-  ASSERT_EQ(ERR_IO_PENDING,
-            stream->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(ERR_IO_PENDING, stream->SendRequest(headers_, &response_, false,
+                                                callback_.callback()));
   chunked_upload_stream->AppendData(kUploadData, chunk_size, true);
   int rv = callback_.WaitForResult();
   EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, rv);
@@ -1603,8 +1604,9 @@ TEST_P(QuicHttpStreamTest, SessionClosedBeforeSendHeadersComplete) {
   ASSERT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  ASSERT_EQ(ERR_QUIC_PROTOCOL_ERROR,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(
+      ERR_QUIC_PROTOCOL_ERROR,
+      stream_->SendRequest(headers_, &response_, false, callback_.callback()));
 
   EXPECT_LE(0, stream_->GetTotalSentBytes());
   EXPECT_EQ(0, stream_->GetTotalReceivedBytes());
@@ -1637,8 +1639,9 @@ TEST_P(QuicHttpStreamTest, SessionClosedBeforeSendBodyComplete) {
   ASSERT_EQ(OK,
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
-  ASSERT_EQ(ERR_QUIC_PROTOCOL_ERROR,
-            stream_->SendRequest(headers_, &response_, callback_.callback()));
+  ASSERT_EQ(
+      ERR_QUIC_PROTOCOL_ERROR,
+      stream_->SendRequest(headers_, &response_, false, callback_.callback()));
 }
 
 TEST_P(QuicHttpStreamTest, ServerPushGetRequest) {
@@ -1679,7 +1682,7 @@ TEST_P(QuicHttpStreamTest, ServerPushGetRequest) {
 
   // Now sending a matching request will have successful rendezvous
   // with the promised stream.
-  EXPECT_EQ(OK, promised_stream_->SendRequest(headers_, &response_,
+  EXPECT_EQ(OK, promised_stream_->SendRequest(headers_, &response_, true,
                                               callback_.callback()));
 
   EXPECT_EQ(
@@ -1734,8 +1737,9 @@ TEST_P(QuicHttpStreamTest, ServerPushGetRequestSlowResponse) {
 
   // Now sending a matching request will rendezvous with the promised
   // stream, but pending secondary validation.
-  EXPECT_EQ(ERR_IO_PENDING, promised_stream_->SendRequest(
-                                headers_, &response_, callback_.callback()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            promised_stream_->SendRequest(headers_, &response_, true,
+                                          callback_.callback()));
 
   // Receive the promised response headers.
   response_headers_ = promised_response_.Clone();
@@ -1808,8 +1812,9 @@ TEST_P(QuicHttpStreamTest, ServerPushCancelHttpStreamBeforeResponse) {
 
   // Now sending a matching request will rendezvous with the promised
   // stream, but pending secondary validation.
-  EXPECT_EQ(ERR_IO_PENDING, promised_stream_->SendRequest(
-                                headers_, &response_, callback_.callback()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            promised_stream_->SendRequest(headers_, &response_, true,
+                                          callback_.callback()));
 
   base::RunLoop().RunUntilIdle();
 
@@ -1865,7 +1870,7 @@ TEST_P(QuicHttpStreamTest, ServerPushCrossOriginOK) {
 
   // Now sending a matching request will have successful rendezvous
   // with the promised stream.
-  EXPECT_EQ(OK, promised_stream_->SendRequest(headers_, &response_,
+  EXPECT_EQ(OK, promised_stream_->SendRequest(headers_, &response_, true,
                                               callback_.callback()));
 
   EXPECT_EQ(
@@ -1947,8 +1952,9 @@ TEST_P(QuicHttpStreamTest, ServerPushVaryCheckOK) {
 
   // Now sending a matching request will rendezvous with the promised
   // stream, but pending secondary validation.
-  EXPECT_EQ(ERR_IO_PENDING, promised_stream_->SendRequest(
-                                headers_, &response_, callback_.callback()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            promised_stream_->SendRequest(headers_, &response_, true,
+                                          callback_.callback()));
 
   // Receive the promised response headers.
   promised_response_["vary"] = "accept-encoding";
@@ -2038,8 +2044,9 @@ TEST_P(QuicHttpStreamTest, ServerPushVaryCheckFail) {
 
   // Now sending a matching request will rendezvous with the promised
   // stream, but pending secondary validation.
-  EXPECT_EQ(ERR_IO_PENDING, promised_stream_->SendRequest(
-                                headers_, &response_, callback_.callback()));
+  EXPECT_EQ(ERR_IO_PENDING,
+            promised_stream_->SendRequest(headers_, &response_, true,
+                                          callback_.callback()));
 
   // Receive the promised response headers.
   promised_response_["vary"] = "accept-encoding";
@@ -2134,7 +2141,8 @@ TEST_P(QuicHttpStreamTest, DataReadErrorSynchronous) {
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
 
-  int result = stream_->SendRequest(headers_, &response_, callback_.callback());
+  int result =
+      stream_->SendRequest(headers_, &response_, false, callback_.callback());
   EXPECT_THAT(result, IsError(ERR_FAILED));
 
   EXPECT_TRUE(AtEof());
@@ -2170,7 +2178,8 @@ TEST_P(QuicHttpStreamTest, DataReadErrorAsynchronous) {
             stream_->InitializeStream(&request_, DEFAULT_PRIORITY,
                                       net_log_.bound(), callback_.callback()));
 
-  int result = stream_->SendRequest(headers_, &response_, callback_.callback());
+  int result =
+      stream_->SendRequest(headers_, &response_, false, callback_.callback());
 
   ProcessPacket(ConstructServerAckPacket(1, 0, 0, 0));
   SetResponse("200 OK", string());

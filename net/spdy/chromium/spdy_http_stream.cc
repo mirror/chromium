@@ -211,6 +211,7 @@ bool SpdyHttpStream::GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
 
 int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
                                 HttpResponseInfo* response,
+                                bool can_send_early,
                                 const CompletionCallback& callback) {
   if (stream_closed_) {
     return closed_stream_status_;
@@ -276,7 +277,7 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
       base::Bind(&SpdyHeaderBlockNetLogCallback, &headers));
   DispatchRequestHeadersCallback(headers);
   result = stream_->SendRequestHeaders(
-      std::move(headers),
+      std::move(headers), can_send_early,
       HasUploadData() ? MORE_DATA_TO_SEND : NO_MORE_DATA_TO_SEND);
 
   if (result == ERR_IO_PENDING) {

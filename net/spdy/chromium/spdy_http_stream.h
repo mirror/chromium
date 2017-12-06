@@ -54,6 +54,7 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
 
   int SendRequest(const HttpRequestHeaders& headers,
                   HttpResponseInfo* response,
+                  bool can_send_early,
                   const CompletionCallback& callback) override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;
   int ReadResponseBody(IOBuffer* buf,

@@ -95,6 +95,7 @@ class MockHttpStream : public HttpStream {
   }
   int SendRequest(const HttpRequestHeaders& request_headers,
                   HttpResponseInfo* response,
+                  bool can_send_early,
                   const CompletionCallback& callback) override {
     return ERR_UNEXPECTED;
   }

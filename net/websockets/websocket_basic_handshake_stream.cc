@@ -322,6 +322,7 @@ int WebSocketBasicHandshakeStream::InitializeStream(
 int WebSocketBasicHandshakeStream::SendRequest(
     const HttpRequestHeaders& headers,
     HttpResponseInfo* response,
+    bool can_send_early,
     const CompletionCallback& callback) {
   DCHECK(!headers.HasHeader(websockets::kSecWebSocketKey));
   DCHECK(!headers.HasHeader(websockets::kSecWebSocketProtocol));

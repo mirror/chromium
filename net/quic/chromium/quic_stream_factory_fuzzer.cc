@@ -172,8 +172,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   HttpResponseInfo response;
   HttpRequestHeaders request_headers;
-  if (OK !=
-      stream->SendRequest(request_headers, &response, callback.callback()))
+  if (OK != stream->SendRequest(request_headers, &response, false,
+                                callback.callback()))
     return 0;
 
   // TODO(nedwilliamson): attempt connection migration here

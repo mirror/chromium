@@ -32,6 +32,7 @@ int ProxyConnectRedirectHttpStream::InitializeStream(
 int ProxyConnectRedirectHttpStream::SendRequest(
     const HttpRequestHeaders& request_headers,
     HttpResponseInfo* response,
+    bool can_send_early,
     const CompletionCallback& callback) {
   NOTREACHED();
   return OK;

@@ -106,6 +106,7 @@ class MockWebSocketHandshakeStream : public WebSocketHandshakeStreamBase {
   }
   int SendRequest(const HttpRequestHeaders& request_headers,
                   HttpResponseInfo* response,
+                  bool can_send_early,
                   const CompletionCallback& callback) override {
     return ERR_IO_PENDING;
   }

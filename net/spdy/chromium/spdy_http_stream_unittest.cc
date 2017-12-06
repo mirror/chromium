@@ -208,8 +208,9 @@ TEST_F(SpdyHttpStreamTest, SendRequest) {
               IsOk());
   EXPECT_FALSE(http_stream->GetLoadTimingInfo(&load_timing_info));
 
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, true, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
   EXPECT_FALSE(http_stream->GetLoadTimingInfo(&load_timing_info));
 
@@ -260,8 +261,9 @@ TEST_F(SpdyHttpStreamTest, RequestInfoDestroyedBeforeRead) {
   ASSERT_THAT(http_stream->InitializeStream(request.get(), DEFAULT_PRIORITY,
                                             net_log, CompletionCallback()),
               IsOk());
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, true, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_LE(0, callback.WaitForResult());
@@ -332,9 +334,9 @@ TEST_F(SpdyHttpStreamTest, LoadTimingTwoRequests) {
   ASSERT_THAT(http_stream1->InitializeStream(&request1, DEFAULT_PRIORITY,
                                              net_log, CompletionCallback()),
               IsOk());
-  EXPECT_THAT(
-      http_stream1->SendRequest(headers1, &response1, callback1.callback()),
-      IsError(ERR_IO_PENDING));
+  EXPECT_THAT(http_stream1->SendRequest(headers1, &response1, true,
+                                        callback1.callback()),
+              IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_LE(0, callback1.WaitForResult());
@@ -349,9 +351,9 @@ TEST_F(SpdyHttpStreamTest, LoadTimingTwoRequests) {
   ASSERT_THAT(http_stream2->InitializeStream(&request2, DEFAULT_PRIORITY,
                                              net_log, CompletionCallback()),
               IsOk());
-  EXPECT_THAT(
-      http_stream2->SendRequest(headers2, &response2, callback2.callback()),
-      IsError(ERR_IO_PENDING));
+  EXPECT_THAT(http_stream2->SendRequest(headers2, &response2, true,
+                                        callback2.callback()),
+              IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_LE(0, callback2.WaitForResult());
@@ -428,8 +430,9 @@ TEST_F(SpdyHttpStreamTest, SendChunkedPost) {
                                            CompletionCallback()),
               IsOk());
 
-  EXPECT_THAT(http_stream.SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream.SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_THAT(callback.WaitForResult(), IsOk());
@@ -482,8 +485,9 @@ TEST_F(SpdyHttpStreamTest, SendChunkedPostLastEmpty) {
   ASSERT_THAT(http_stream.InitializeStream(&request, DEFAULT_PRIORITY, net_log,
                                            CompletionCallback()),
               IsOk());
-  EXPECT_THAT(http_stream.SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream.SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_THAT(callback.WaitForResult(), IsOk());
@@ -537,8 +541,9 @@ TEST_F(SpdyHttpStreamTest, ConnectionClosedDuringChunkedPost) {
                                            CompletionCallback()),
               IsOk());
 
-  EXPECT_THAT(http_stream.SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream.SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   EXPECT_THAT(callback.WaitForResult(), IsError(ERR_CONNECTION_CLOSED));
@@ -611,8 +616,9 @@ TEST_F(SpdyHttpStreamTest, DelayedSendChunkedPost) {
   HttpResponseInfo response;
   // This will attempt to Write() the initial request and headers, which will
   // complete asynchronously.
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   // Complete the initial request write and the first chunk.
@@ -706,8 +712,9 @@ TEST_F(SpdyHttpStreamTest, DelayedSendChunkedPostWithEmptyFinalDataFrame) {
   HttpResponseInfo response;
   // This will attempt to Write() the initial request and headers, which will
   // complete asynchronously.
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   // Complete the initial request write and the first chunk.
@@ -790,8 +797,9 @@ TEST_F(SpdyHttpStreamTest, ChunkedPostWithEmptyPayload) {
   HttpResponseInfo response;
   // This will attempt to Write() the initial request and headers, which will
   // complete asynchronously.
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   // Complete writing request, followed by a FIN.
@@ -845,8 +853,9 @@ TEST_F(SpdyHttpStreamTest, SpdyURLTest) {
                                             CompletionCallback()),
               IsOk());
 
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, true, callback.callback()),
+      IsError(ERR_IO_PENDING));
 
   EXPECT_EQ(base_url, http_stream->stream()->GetUrlFromHeaders().spec());
 
@@ -903,8 +912,9 @@ TEST_F(SpdyHttpStreamTest, DelayedSendChunkedPostWithWindowUpdate) {
   // This will attempt to Write() the initial request and headers, which will
   // complete asynchronously.
   TestCompletionCallback callback;
-  EXPECT_THAT(http_stream->SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream->SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   // Complete the initial request write and first chunk.
@@ -1002,7 +1012,8 @@ TEST_F(SpdyHttpStreamTest, DataReadErrorSynchronous) {
                                            CompletionCallback()),
               IsOk());
 
-  int result = http_stream.SendRequest(headers, &response, callback.callback());
+  int result =
+      http_stream.SendRequest(headers, &response, false, callback.callback());
   EXPECT_THAT(callback.GetResult(result), IsError(ERR_FAILED));
 
   // Run posted SpdyHttpStream::ResetStreamInternal() task.
@@ -1055,7 +1066,8 @@ TEST_F(SpdyHttpStreamTest, DataReadErrorAsynchronous) {
                                            CompletionCallback()),
               IsOk());
 
-  int result = http_stream.SendRequest(headers, &response, callback.callback());
+  int result =
+      http_stream.SendRequest(headers, &response, false, callback.callback());
   EXPECT_THAT(result, IsError(ERR_IO_PENDING));
   EXPECT_THAT(callback.GetResult(result), IsError(ERR_FAILED));
 
@@ -1102,8 +1114,9 @@ TEST_F(SpdyHttpStreamTest, RequestCallbackCancelsStream) {
   HttpResponseInfo response;
   // This will attempt to Write() the initial request and headers, which will
   // complete asynchronously.
-  EXPECT_THAT(http_stream.SendRequest(headers, &response, callback.callback()),
-              IsError(ERR_IO_PENDING));
+  EXPECT_THAT(
+      http_stream.SendRequest(headers, &response, false, callback.callback()),
+      IsError(ERR_IO_PENDING));
   EXPECT_TRUE(HasSpdySession(http_session_->spdy_session_pool(), key_));
 
   // The callback cancels |http_stream|.

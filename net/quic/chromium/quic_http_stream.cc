@@ -178,6 +178,7 @@ int QuicHttpStream::DoHandlePromiseComplete(int rv) {
 
 int QuicHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
                                 HttpResponseInfo* response,
+                                bool can_send_early,
                                 const CompletionCallback& callback) {
   CHECK(!request_body_stream_);
   CHECK(!response_info_);

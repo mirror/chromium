@@ -141,7 +141,7 @@ class WebSocketHandshakeStreamCreateHelperTest : public ::testing::Test {
     HttpResponseInfo response;
     TestCompletionCallback dummy;
 
-    rv = handshake->SendRequest(headers, &response, dummy.callback());
+    rv = handshake->SendRequest(headers, &response, false, dummy.callback());
 
     EXPECT_THAT(rv, IsOk());
 

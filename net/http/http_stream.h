@@ -73,6 +73,7 @@ class NET_EXPORT_PRIVATE HttpStream {
   // headers, except in the case of 1xx responses (See ReadResponseHeaders).
   virtual int SendRequest(const HttpRequestHeaders& request_headers,
                           HttpResponseInfo* response,
+                          bool can_send_early,
                           const CompletionCallback& callback) = 0;
 
   // Reads from the underlying socket until the next set of response headers
