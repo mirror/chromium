@@ -563,6 +563,30 @@
       "revId": "0431622618344b50f490b673b62ce71d2aff5662",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8fe7a4_8c195229",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-06T05:35:31Z",
+      "side": 1,
+      "message": "In above case, assume we are using set. We load preference {A:0,B:1,C:0,D:1} into |stored_mirror_modes_| which becomes {A, C}, then we turn off mirror mode when only display A and B is connected. After configuration, |stored_mirror_modes_| will be {C}. Then we store {C} into the preference. In this step we have to iterate through all 4 displays in the preference to update the value, which seems to be not good.",
+      "parentUuid": "dbe724da_6b1215f2",
+      "range": {
+        "startLine": 642,
+        "startChar": 2,
+        "endLine": 642,
+        "endChar": 25
+      },
+      "revId": "0431622618344b50f490b673b62ce71d2aff5662",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
