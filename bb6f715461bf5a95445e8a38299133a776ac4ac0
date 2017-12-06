@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "be09489f_e94ed804",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T17:04:03Z",
+      "side": 1,
+      "message": "I see. What is the reason it causes a raster slowdown?",
+      "parentUuid": "de8576d7_8b6e33fe",
+      "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b2d066f_3cad5a4e",
         "filename": "cc/paint/skia_paint_canvas.cc",
         "patchSetId": 4
