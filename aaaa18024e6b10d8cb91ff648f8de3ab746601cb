@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f732557_34c6362c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T04:09:25Z",
+      "side": 1,
+      "message": "I prefer to use |block_flow|. It seems other places use |block_flow| and |context| is too general(?)",
+      "range": {
+        "startLine": 28,
+        "startChar": 27,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "aaaa18024e6b10d8cb91ff648f8de3ab746601cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a19aa3_1fcc9516",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T04:09:25Z",
+      "side": 1,
+      "message": "s/const LayoutBlockFlow*/const LayoutBlock\u0026/",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "aaaa18024e6b10d8cb91ff648f8de3ab746601cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
