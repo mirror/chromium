@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b19c777_dda1fb1a",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-06T17:10:46Z",
+      "side": 1,
+      "message": "This is gone as per the review from eae@.",
+      "parentUuid": "2a729077_674c3bb2",
+      "revId": "f07e608bcf193f74d6b7f408ce8889327fe50d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "267b1b7f_c5eec9be",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
         "patchSetId": 17
@@ -39,6 +57,30 @@
       "revId": "f07e608bcf193f74d6b7f408ce8889327fe50d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58395d11_e281c7c3",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-06T17:10:46Z",
+      "side": 1,
+      "message": "Agreed, thank you for the great suggestion as always.",
+      "parentUuid": "267b1b7f_c5eec9be",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "f07e608bcf193f74d6b7f408ce8889327fe50d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
