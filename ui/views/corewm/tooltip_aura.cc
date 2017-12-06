@@ -68,7 +68,7 @@ namespace corewm {
 class TooltipAura::TooltipView : public views::View {
  public:
   TooltipView()
-      : render_text_(gfx::RenderText::CreateInstance()),
+      : render_text_(gfx::RenderText::CreateInstanceForToolkitUI()),
         max_width_(0) {
     const int kHorizontalPadding = 8;
     const int kVerticalPaddingTop = 4;

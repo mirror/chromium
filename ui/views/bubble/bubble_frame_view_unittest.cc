@@ -852,9 +852,17 @@ TEST_F(BubbleFrameViewTest, NoElideTitle) {
   // Make sure the bubble is wide enough to fit the title's full size.
   EXPECT_GE(bubble->GetClientAreaBoundsInScreen().width(),
             title_label->GetPreferredSize().width());
+#if defined(OS_MACOSX)
+  // On Mac, gfx::GetStringWidth() may typeset differently.
+  auto render_text = gfx::RenderText::CreateInstanceForToolkitUI();
+  render_text->SetText(title);
+  render_text->SetFontList(title_label->font_list());
+  EXPECT_EQ(render_text->GetStringSize().width(), title_label->size().width());
+#else
   // Make sure the title's actual size has enough room for all its text.
   EXPECT_EQ(gfx::GetStringWidth(title, title_label->font_list()),
             title_label->size().width());
+#endif
 }
 
 }  // namespace views
