@@ -21,6 +21,8 @@ class SyncControlVSyncProvider : public gfx::VSyncProvider {
   ~SyncControlVSyncProvider() override;
 
   void GetVSyncParameters(const UpdateVSyncCallback& callback) override;
+  bool GetVSyncParametersSync(base::TimeTicks* timebase,
+                              base::TimeDelta* interval) override;
 
   static constexpr bool IsSupported() {
 #if defined(OS_LINUX)

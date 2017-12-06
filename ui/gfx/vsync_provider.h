@@ -26,6 +26,11 @@ class GFX_EXPORT VSyncProvider {
   // no data source). We provide the strong guarantee that the callback will
   // not be called once the instance of this class is destroyed.
   virtual void GetVSyncParameters(const UpdateVSyncCallback& callback) = 0;
+
+  // Similar to GetVSyncParameters(). It returns true, if the data is available.
+  // Otherwise false is returned.
+  virtual bool GetVSyncParametersSync(base::TimeTicks* timebase,
+                                      base::TimeDelta* interval);
 };
 
 // Provides a constant timebase and interval.
@@ -38,6 +43,8 @@ class GFX_EXPORT FixedVSyncProvider : public VSyncProvider {
   ~FixedVSyncProvider() override {}
 
   void GetVSyncParameters(const UpdateVSyncCallback& callback) override;
+  bool GetVSyncParametersSync(base::TimeTicks* timebase,
+                              base::TimeDelta* interval) override;
 
  private:
   base::TimeTicks timebase_;
