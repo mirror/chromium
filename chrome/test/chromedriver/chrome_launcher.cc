@@ -204,7 +204,8 @@ Status WaitForDevToolsAndCheckVersion(
 
   std::unique_ptr<DevToolsHttpClient> client(new DevToolsHttpClient(
       address, context_getter, socket_factory, std::move(device_metrics),
-      std::move(window_types), capabilities->page_load_strategy));
+      std::move(window_types), capabilities->page_load_strategy,
+      capabilities->accept_insecure_certs));
   base::TimeTicks deadline =
       base::TimeTicks::Now() + base::TimeDelta::FromSeconds(60);
   Status status = client->Init(deadline - base::TimeTicks::Now());
@@ -320,7 +321,8 @@ Status LaunchRemoteChromeSession(
 
   chrome->reset(new ChromeRemoteImpl(
       std::move(devtools_http_client), std::move(devtools_websocket_client),
-      std::move(devtools_event_listeners), capabilities.page_load_strategy));
+      std::move(devtools_event_listeners), capabilities.page_load_strategy,
+      capabilities.accept_insecure_certs));
   return Status(kOk);
 }
 
@@ -459,8 +461,9 @@ Status LaunchDesktopChrome(URLRequestContextGetter* context_getter,
   std::unique_ptr<ChromeDesktopImpl> chrome_desktop(new ChromeDesktopImpl(
       std::move(devtools_http_client), std::move(devtools_websocket_client),
       std::move(devtools_event_listeners), std::move(port_reservation),
-      capabilities.page_load_strategy, std::move(process), command,
-      &user_data_dir, &extension_dir, capabilities.network_emulation_enabled));
+      capabilities.page_load_strategy, capabilities.accept_insecure_certs,
+      std::move(process), command, &user_data_dir, &extension_dir,
+      capabilities.network_emulation_enabled));
   for (size_t i = 0; i < extension_bg_pages.size(); ++i) {
     VLOG(0) << "Waiting for extension bg page load: " << extension_bg_pages[i];
     std::unique_ptr<WebView> web_view;
@@ -541,7 +544,8 @@ Status LaunchAndroidChrome(URLRequestContextGetter* context_getter,
   chrome->reset(new ChromeAndroidImpl(
       std::move(devtools_http_client), std::move(devtools_websocket_client),
       std::move(devtools_event_listeners), std::move(port_reservation),
-      capabilities.page_load_strategy, std::move(device)));
+      capabilities.page_load_strategy, capabilities.accept_insecure_certs,
+      std::move(device)));
   return Status(kOk);
 }
 

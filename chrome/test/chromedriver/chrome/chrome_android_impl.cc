@@ -21,12 +21,14 @@ ChromeAndroidImpl::ChromeAndroidImpl(
         devtools_event_listeners,
     std::unique_ptr<PortReservation> port_reservation,
     std::string page_load_strategy,
+    bool accept_insecure_certs,
     std::unique_ptr<Device> device)
     : ChromeImpl(std::move(http_client),
                  std::move(websocket_client),
                  std::move(devtools_event_listeners),
                  std::move(port_reservation),
-                 page_load_strategy),
+                 page_load_strategy,
+                 accept_insecure_certs),
       device_(std::move(device)) {}
 
 ChromeAndroidImpl::~ChromeAndroidImpl() {}

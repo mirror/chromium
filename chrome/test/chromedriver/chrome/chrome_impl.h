@@ -42,6 +42,7 @@ class ChromeImpl : public Chrome {
   bool IsMobileEmulationEnabled() const override;
   bool HasTouchScreen() const override;
   std::string page_load_strategy() const override;
+  bool accept_insecure_certs() const override;
   Status Quit() override;
 
  protected:
@@ -50,7 +51,8 @@ class ChromeImpl : public Chrome {
              std::vector<std::unique_ptr<DevToolsEventListener>>
                  devtools_event_listeners,
              std::unique_ptr<PortReservation> port_reservation,
-             std::string page_load_strategy);
+             std::string page_load_strategy,
+             bool accept_insecure_certs);
 
   virtual Status QuitImpl() = 0;
 
@@ -68,6 +70,7 @@ class ChromeImpl : public Chrome {
   std::vector<std::unique_ptr<DevToolsEventListener>> devtools_event_listeners_;
   std::unique_ptr<PortReservation> port_reservation_;
   std::string page_load_strategy_;
+  bool accept_insecure_certs_;
 };
 
 #endif  // CHROME_TEST_CHROMEDRIVER_CHROME_CHROME_IMPL_H_

@@ -79,6 +79,7 @@ ChromeDesktopImpl::ChromeDesktopImpl(
         devtools_event_listeners,
     std::unique_ptr<PortReservation> port_reservation,
     std::string page_load_strategy,
+    bool accept_insecure_certs,
     base::Process process,
     const base::CommandLine& command,
     base::ScopedTempDir* user_data_dir,
@@ -88,7 +89,8 @@ ChromeDesktopImpl::ChromeDesktopImpl(
                  std::move(websocket_client),
                  std::move(devtools_event_listeners),
                  std::move(port_reservation),
-                 page_load_strategy),
+                 page_load_strategy,
+                 accept_insecure_certs),
       process_(std::move(process)),
       command_(command),
       network_connection_enabled_(network_emulation_enabled),
@@ -154,7 +156,7 @@ Status ChromeDesktopImpl::WaitForPageToLoad(
   std::unique_ptr<WebView> web_view_tmp(
       new WebViewImpl(id, w3c_compliant, devtools_http_client_->browser_info(),
                       devtools_http_client_->CreateClient(id), device_metrics,
-                      page_load_strategy()));
+                      page_load_strategy(), accept_insecure_certs()));
   Status status = web_view_tmp->ConnectIfNecessary();
   if (status.IsError())
     return status;

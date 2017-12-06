@@ -20,6 +20,7 @@ class Value;
 }
 
 struct BrowserInfo;
+class CertificateErrorOverrideManager;
 class DebuggerTracker;
 struct DeviceMetrics;
 class DevToolsClient;
@@ -41,7 +42,8 @@ class WebViewImpl : public WebView {
               const BrowserInfo* browser_info,
               std::unique_ptr<DevToolsClient> client,
               const DeviceMetrics* device_metrics,
-              std::string page_load_strategy);
+              std::string page_load_strategy,
+              bool accept_insecure_certs);
   ~WebViewImpl() override;
 
   // Overridden from WebView:
@@ -156,6 +158,8 @@ class WebViewImpl : public WebView {
   std::unique_ptr<GeolocationOverrideManager> geolocation_override_manager_;
   std::unique_ptr<NetworkConditionsOverrideManager>
       network_conditions_override_manager_;
+  std::unique_ptr<CertificateErrorOverrideManager>
+      certificate_error_override_manager_;
   std::unique_ptr<HeapSnapshotTaker> heap_snapshot_taker_;
   std::unique_ptr<DebuggerTracker> debugger_;
   std::unique_ptr<DevToolsClient> client_;

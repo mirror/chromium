@@ -34,6 +34,7 @@ class ChromeDesktopImpl : public ChromeImpl {
                         devtools_event_listeners,
                     std::unique_ptr<PortReservation> port_reservation,
                     std::string page_load_strategy,
+                    bool accept_insecure_certs,
                     base::Process process,
                     const base::CommandLine& command,
                     base::ScopedTempDir* user_data_dir,

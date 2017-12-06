@@ -55,6 +55,9 @@ class Chrome {
   // Return the page load strategy for this session.
   virtual std::string page_load_strategy() const = 0;
 
+  // Return whether insecure SSL certificates are accepted for this session.
+  virtual bool accept_insecure_certs() const = 0;
+
   // Quits Chrome.
   virtual Status Quit() = 0;
 };

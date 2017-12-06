@@ -24,6 +24,7 @@ class ChromeAndroidImpl : public ChromeImpl {
                         devtools_event_listeners,
                     std::unique_ptr<PortReservation> port_reservation,
                     std::string page_load_strategy,
+                    bool accept_insecure_certs,
                     std::unique_ptr<Device> device);
   ~ChromeAndroidImpl() override;
 

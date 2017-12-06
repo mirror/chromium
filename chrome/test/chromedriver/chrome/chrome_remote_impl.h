@@ -20,7 +20,8 @@ class ChromeRemoteImpl : public ChromeImpl {
                    std::unique_ptr<DevToolsClient> websocket_client,
                    std::vector<std::unique_ptr<DevToolsEventListener>>
                        devtools_event_listeners,
-                   std::string page_load_strategy);
+                   std::string page_load_strategy,
+                   bool accept_insecure_certs);
   ~ChromeRemoteImpl() override;
 
   // Overridden from Chrome.

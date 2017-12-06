@@ -17,12 +17,14 @@ ChromeRemoteImpl::ChromeRemoteImpl(
     std::unique_ptr<DevToolsClient> websocket_client,
     std::vector<std::unique_ptr<DevToolsEventListener>>
         devtools_event_listeners,
-    std::string page_load_strategy)
+    std::string page_load_strategy,
+    bool accept_insecure_certs)
     : ChromeImpl(std::move(http_client),
                  std::move(websocket_client),
                  std::move(devtools_event_listeners),
                  std::unique_ptr<PortReservation>(),
-                 page_load_strategy) {}
+                 page_load_strategy,
+                 accept_insecure_certs) {}
 
 ChromeRemoteImpl::~ChromeRemoteImpl() {}
 

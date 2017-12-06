@@ -18,6 +18,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/test/chromedriver/chrome/browser_info.h"
+#include "chrome/test/chromedriver/chrome/certificate_error_override_manager.h"
 #include "chrome/test/chromedriver/chrome/debugger_tracker.h"
 #include "chrome/test/chromedriver/chrome/devtools_client_impl.h"
 #include "chrome/test/chromedriver/chrome/dom_tracker.h"
@@ -117,7 +118,8 @@ WebViewImpl::WebViewImpl(const std::string& id,
                          const BrowserInfo* browser_info,
                          std::unique_ptr<DevToolsClient> client,
                          const DeviceMetrics* device_metrics,
-                         std::string page_load_strategy)
+                         std::string page_load_strategy,
+                         bool accept_insecure_certs)
     : id_(id),
       w3c_compliant_(w3c_compliant),
       browser_info_(browser_info),
@@ -134,6 +136,11 @@ WebViewImpl::WebViewImpl(const std::string& id,
           new GeolocationOverrideManager(client.get())),
       network_conditions_override_manager_(
           new NetworkConditionsOverrideManager(client.get())),
+      certificate_error_override_manager_(new CertificateErrorOverrideManager(
+          client.get(),
+          accept_insecure_certs
+              ? CertificateErrorOverrideManager::OverrideMode::kIgnoreErrors
+              : CertificateErrorOverrideManager::OverrideMode::kClearOverride)),
       heap_snapshot_taker_(new HeapSnapshotTaker(client.get())),
       debugger_(new DebuggerTracker(client.get())),
       client_(client.release()) {}

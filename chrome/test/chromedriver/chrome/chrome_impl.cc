@@ -107,7 +107,7 @@ void ChromeImpl::UpdateWebViews(const WebViewsInfo& views_info,
         web_views_.push_back(make_linked_ptr(new WebViewImpl(
             view.id, w3c_compliant, devtools_http_client_->browser_info(),
             std::move(client), devtools_http_client_->device_metrics(),
-            page_load_strategy_)));
+            page_load_strategy_, accept_insecure_certs_)));
       }
     }
   }
@@ -155,6 +155,10 @@ std::string ChromeImpl::page_load_strategy() const {
   return page_load_strategy_;
 }
 
+bool ChromeImpl::accept_insecure_certs() const {
+  return accept_insecure_certs_;
+}
+
 Status ChromeImpl::Quit() {
   Status status = QuitImpl();
   if (status.IsOk())
@@ -167,10 +171,12 @@ ChromeImpl::ChromeImpl(std::unique_ptr<DevToolsHttpClient> http_client,
                        std::vector<std::unique_ptr<DevToolsEventListener>>
                            devtools_event_listeners,
                        std::unique_ptr<PortReservation> port_reservation,
-                       std::string page_load_strategy)
+                       std::string page_load_strategy,
+                       bool accept_insecure_certs)
     : quit_(false),
       devtools_http_client_(std::move(http_client)),
       devtools_websocket_client_(std::move(websocket_client)),
       devtools_event_listeners_(std::move(devtools_event_listeners)),
       port_reservation_(std::move(port_reservation)),
-      page_load_strategy_(page_load_strategy) {}
+      page_load_strategy_(page_load_strategy),
+      accept_insecure_certs_(accept_insecure_certs) {}

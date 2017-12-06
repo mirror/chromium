@@ -132,7 +132,8 @@ std::unique_ptr<base::DictionaryValue> CreateCapabilities(
   caps->SetBoolean("cssSelectorsEnabled", true);
   caps->SetBoolean("webStorageEnabled", true);
   caps->SetBoolean("rotatable", false);
-  caps->SetBoolean("acceptSslCerts", true);
+  caps->SetBoolean("acceptSslCerts", capabilities.accept_insecure_certs);
+  caps->SetBoolean("acceptInsecureCerts", capabilities.accept_insecure_certs);
   caps->SetBoolean("nativeEvents", true);
   caps->SetBoolean("hasTouchScreen", session->chrome->HasTouchScreen());
   caps->SetString("unexpectedAlertBehaviour",

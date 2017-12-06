@@ -320,6 +320,23 @@ TEST(ParseCapabilities, IgnoreNullValueForManualProxy) {
       capabilities.switches.GetSwitchValue("proxy-server"));
 }
 
+TEST(ParseCapabilities, AcceptInsecureCertsEnabledByDefault) {
+  Capabilities capabilities;
+  base::DictionaryValue caps;
+  Status status = capabilities.Parse(caps);
+  ASSERT_TRUE(status.IsOk());
+  ASSERT_TRUE(capabilities.accept_insecure_certs);
+}
+
+TEST(ParseCapabilities, DisableAcceptInsecureCerts) {
+  Capabilities capabilities;
+  base::DictionaryValue caps;
+  caps.SetBoolean("acceptInsecureCerts", false);
+  Status status = capabilities.Parse(caps);
+  ASSERT_TRUE(status.IsOk());
+  ASSERT_FALSE(capabilities.accept_insecure_certs);
+}
+
 TEST(ParseCapabilities, LoggingPrefsOk) {
   Capabilities capabilities;
   base::DictionaryValue logging_prefs;

@@ -79,7 +79,8 @@ class DevToolsHttpClient {
                      const SyncWebSocketFactory& socket_factory,
                      std::unique_ptr<DeviceMetrics> device_metrics,
                      std::unique_ptr<std::set<WebViewInfo::Type>> window_types,
-                     std::string page_load_strategy);
+                     std::string page_load_strategy,
+                     bool accept_insecure_certs);
   ~DevToolsHttpClient();
 
   Status Init(const base::TimeDelta& timeout);
@@ -110,6 +111,7 @@ class DevToolsHttpClient {
   std::unique_ptr<DeviceMetrics> device_metrics_;
   std::unique_ptr<std::set<WebViewInfo::Type>> window_types_;
   std::string page_load_strategy_;
+  bool accept_insecure_certs_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsHttpClient);
 };
