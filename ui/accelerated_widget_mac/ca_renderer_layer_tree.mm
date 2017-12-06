@@ -651,7 +651,6 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     if (use_av_layer) {
       av_layer.reset([[AVSampleBufferDisplayLayer109 alloc] init]);
       ca_layer.reset([av_layer retain]);
-      [av_layer setVideoGravity:AVLayerVideoGravityResize];
     } else {
       ca_layer.reset([[CALayer alloc] init]);
     }
