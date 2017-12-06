@@ -22,6 +22,30 @@
       "revId": "3c8c968afc30907f19fd35dcd918d1f17a7a353a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12462240_099a0f4f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-06T14:41:25Z",
+      "side": 1,
+      "message": "You can\u0027t set the title margins to gfx::Insets() if you have a title, though, which this dialog does - and also we do still want margins around the title.\n\nThese margins actually come from DialogDelegate::margins(), and they get set in BubbleDialogDelegateView::BubbleDialogDelegateView() to effectively views::INSETS_DIALOG on either side. We can\u0027t zero the margins out completely, because we need margins around the title and the button row, so we need to subtract away the margin here so the overall width of the dialog ends up being GetSnappedDialogWidth(0).\n\nI\u0027ll try to rewrite the comment so that it explains this instead of obfuscating it.",
+      "parentUuid": "c96b47e6_395094a7",
+      "range": {
+        "startLine": 342,
+        "startChar": 8,
+        "endLine": 342,
+        "endChar": 55
+      },
+      "revId": "3c8c968afc30907f19fd35dcd918d1f17a7a353a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
