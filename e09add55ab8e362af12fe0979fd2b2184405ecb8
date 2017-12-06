@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "000e134f_20200da8",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3257,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-06T01:25:50Z",
+      "side": 1,
+      "message": "I tried replacing this and the UpdateStyleAndLayoutTree with UpdateStyleAndLayout() since that\u0027s effectively what we\u0027re doing here and that includes the ProcessUrlFragment. This causes a layout test failure due to also updating parent frames recursively.\n\nMaybe instead we should move goto_anchor_needed_after_stylesheets_load and the ProcessUrlFragment calls into FrameView::UpdateLayout?",
+      "range": {
+        "startLine": 3256,
+        "startChar": 4,
+        "endLine": 3257,
+        "endChar": 39
+      },
+      "revId": "e09add55ab8e362af12fe0979fd2b2184405ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
