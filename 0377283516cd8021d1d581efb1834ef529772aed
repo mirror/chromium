@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8589fd5d_8cea22ac",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T19:48:25Z",
+      "side": 1,
+      "message": "I think the better way to do this is to have a virtual OnSetFocusable(), like we have for other properties, and then DCHECK there.  That way you blow up closer to where the violation happens, and don\u0027t do the check every frame.  (not that the every frame is the issue - it\u0027s the fact that OnBeginFrame isn\u0027t where someone would look for this check)",
+      "parentUuid": "a57c04a9_07ca0979",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab583a01_92d14bbc",
         "filename": "chrome/browser/vr/elements/text_input.cc",
         "patchSetId": 3
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "25afa23f_bcfbece6",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T19:48:25Z",
+      "side": 1,
+      "message": "Okay, could you just augment the comment to say that?  It really looks here like the parent-child relationship is part of what\u0027s being tested.",
+      "parentUuid": "5f792a27_afb42b52",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a091222_b1fd7b0b",
         "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
         "patchSetId": 3
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "Absolutely, happened to me too.",
       "parentUuid": "44ccc3ef_2fbe59b5",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c804f39_dc9b97a9",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T19:48:25Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "82c64fb2_c5bd89f4",
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -279,6 +333,24 @@
       "revId": "0377283516cd8021d1d581efb1834ef529772aed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124cd585_1b702d78",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T19:48:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67432fe3_a041ad01",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
