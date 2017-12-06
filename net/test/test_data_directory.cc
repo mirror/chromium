@@ -7,6 +7,11 @@
 #include "base/base_paths.h"
 #include "base/path_service.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
+
+#if defined(OS_ANDROID)
+#include "base/test/android/path_utils.h"
+#endif
 
 namespace net {
 
@@ -33,6 +38,11 @@ base::FilePath GetTestNetDataDirectory() {
 }
 
 base::FilePath GetTestCertsDirectory() {
+#if defined(OS_ANDROID)
+  return base::android::GetIsolatedTestRoot()
+      .Append(kNetDataRelativePath)
+      .Append(kCertificateDataSubPath);
+#endif
   return GetTestNetDataDirectory().Append(kCertificateDataSubPath);
 }
 
