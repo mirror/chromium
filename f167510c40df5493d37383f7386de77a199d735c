@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07299cf4_122a8ec0",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "Have you considered putting this into one of our existing files?\n\noffline_store_types.h maybe?",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 71
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8181483d_fafb64fb",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "Not sure what Sync stands for.\n\nAlso, this one is missing a proper UMA related documentation",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4115a3ea_a4fde475",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "not sure I\u0027ve seen this used.\nHow is it conceptually different from the next one?",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0673fe1_47798421",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "don\u0027t remove the empty line after this.",
+      "range": {
+        "startLine": 124,
+        "startChar": 32,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff97bcc_03577eff",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "nit: add empty line",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a9ae9e_e342dc15",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "Is there a reason we are not testing at least one of the other ones?\nI understand that transaction problems testing might not be possible now, but others?",
+      "range": {
+        "startLine": 193,
+        "startChar": 44,
+        "endLine": 193,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b241019_f1ad5f3d",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "nit: empty line after this.",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3afc9b_faca8904",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "nit: empty line after this",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 3
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc29016a_cc8b984f",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "How about ConsistencyCheck?\n\nApplies to the other Metric as well.",
+      "range": {
+        "startLine": 184,
+        "startChar": 20,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee723ee_65486787",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "same comment as with previous file.",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4893cbde_4236ac4b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30905,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "Either this or the next one is not correct.\nOtherwise they are the same and that is wrong.",
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54ac72f_730488bc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54001,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T23:35:20Z",
+      "side": 1,
+      "message": "Is there a chance that this enum (in UMA and C++ code) should be named to be more consistency check specific?",
+      "range": {
+        "startLine": 54001,
+        "startChar": 10,
+        "endLine": 54001,
+        "endChar": 41
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
