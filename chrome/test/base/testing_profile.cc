@@ -84,11 +84,14 @@
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/user_prefs/user_prefs.h"
 #include "components/webdata_services/web_data_service_wrapper.h"
+#include "content/network/network_service_impl.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/network_service.mojom.h"
 #include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/common/constants.h"
@@ -237,6 +240,15 @@ std::unique_ptr<KeyedService> BuildOfflinePageModel(
 }
 #endif
 
+content::mojom::NetworkContextParamsPtr CreateContextParams() {
+  content::mojom::NetworkContextParamsPtr params =
+      content::mojom::NetworkContextParams::New();
+  // Use a fixed proxy config, to avoid dependencies on local network
+  // configuration.
+  params->initial_proxy_config = net::ProxyConfig::CreateDirect();
+  return params;
+}
+
 }  // namespace
 
 // static
@@ -259,7 +271,8 @@ TestingProfile::TestingProfile()
           BrowserContextDependencyManager::GetInstance()),
       resource_context_(NULL),
       delegate_(NULL),
-      profile_name_(kTestingProfile) {
+      profile_name_(kTestingProfile),
+      service_(content::NetworkServiceImpl::CreateForTesting()) {
   CreateTempProfileDir();
   profile_path_ = temp_dir_.GetPath();
 
@@ -279,7 +292,8 @@ TestingProfile::TestingProfile(const base::FilePath& path)
           BrowserContextDependencyManager::GetInstance()),
       resource_context_(NULL),
       delegate_(NULL),
-      profile_name_(kTestingProfile) {
+      profile_name_(kTestingProfile),
+      service_(content::NetworkServiceImpl::CreateForTesting()) {
   Init();
   FinishInit();
 }
@@ -296,7 +310,8 @@ TestingProfile::TestingProfile(const base::FilePath& path, Delegate* delegate)
           BrowserContextDependencyManager::GetInstance()),
       resource_context_(NULL),
       delegate_(delegate),
-      profile_name_(kTestingProfile) {
+      profile_name_(kTestingProfile),
+      service_(content::NetworkServiceImpl::CreateForTesting()) {
   Init();
   if (delegate_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -337,6 +352,7 @@ TestingProfile::TestingProfile(
       resource_context_(NULL),
       delegate_(delegate),
       profile_name_(profile_name),
+      service_(content::NetworkServiceImpl::CreateForTesting()),
       policy_service_(policy_service.release()) {
   if (parent)
     parent->SetOffTheRecordProfile(std::unique_ptr<Profile>(this));
@@ -983,7 +999,12 @@ Profile::ExitType TestingProfile::GetLastSessionExitType() {
 }
 
 content::mojom::NetworkContextPtr TestingProfile::CreateMainNetworkContext() {
-  return nullptr;
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    return nullptr;
+  content::mojom::NetworkContextPtr network_context;
+  service_->CreateNetworkContext(mojo::MakeRequest(&network_context),
+                                 CreateContextParams());
+  return network_context;
 }
 
 TestingProfile::Builder::Builder()
