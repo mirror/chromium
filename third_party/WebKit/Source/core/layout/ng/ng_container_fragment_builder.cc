@@ -4,8 +4,11 @@
 
 #include "core/layout/ng/ng_container_fragment_builder.h"
 
+#include "core/layout/LayoutObject.h"
+#include "core/layout/ng/inline/ng_inline_fragment_iterator.h"
 #include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_physical_container_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
@@ -128,6 +131,9 @@ NGContainerFragmentBuilder::AddInlineOutOfFlowChildCandidate(
     TextDirection line_direction,
     LayoutObject* inline_container) {
   DCHECK(child);
+  // Fixed positioned children are never placed inside inline container.
+  if (child.Style().GetPosition() == EPosition::kFixed)
+    inline_container = nullptr;
   oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate(
       NGOutOfFlowPositionedDescendant(
           child,
@@ -168,8 +174,9 @@ void NGContainerFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
     builder_relative_position.offset =
         child_offset + candidate.descendant.static_position.offset;
 
-    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant{
-        candidate.descendant.node, builder_relative_position});
+    descendant_candidates->push_back(NGOutOfFlowPositionedDescendant(
+        candidate.descendant.node, builder_relative_position,
+        candidate.descendant.inline_container));
   }
 
   // Clear our current canidate list. This may get modified again if the
@@ -180,6 +187,76 @@ void NGContainerFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
   // fixed" for example. (This fragment isn't the containing block for the
   // fixed descendant).
   oof_positioned_candidates_.clear();
+}
+
+// Finds FragmentPairs that define inline containing blocks.
+// inline_container_fragments is a map whose keys specify which
+// inline containing blocks are required.
+// Not finding a required block is an unexpected behavior (DCHECK).
+void NGContainerFragmentBuilder::ComputeInlineContainerFragments(
+    HashMap<const LayoutObject*, FragmentPair>* inline_container_fragments,
+    NGLogicalSize* container_size) {
+  // This function has detailed knowledge of inline fragment tree structure,
+  // and will break if this changes.
+  DCHECK_GE(inline_size_, LayoutUnit());
+  DCHECK_GE(block_size_, LayoutUnit());
+  container_size->inline_size = inline_size_;
+  container_size->block_size = block_size_;
+
+  for (size_t i = 0; i < children_.size(); i++) {
+    scoped_refptr<NGPhysicalFragment> child = children_[i];
+    if (children_[i]->IsLineBox()) {
+      scoped_refptr<NGPhysicalFragment> linebox = children_[i];
+      for (auto& descendant : NGInlineFragmentTraversal::DescendantsOf(
+               ToNGPhysicalContainerFragment(*linebox))) {
+        LayoutObject* key = nullptr;
+        if (descendant.fragment->IsText()) {
+          key = descendant.fragment->GetLayoutObject();
+          DCHECK(key);
+          key = key->Parent();
+          DCHECK(key);
+        } else if (descendant.fragment->IsBox()) {
+          key = descendant.fragment->GetLayoutObject();
+        }
+        if (key && inline_container_fragments->Contains(key)) {
+          NGContainerFragmentBuilder::FragmentPair value =
+              inline_container_fragments->at(key);
+          if (!value.start_fragment) {
+            value.start_fragment = descendant.fragment;
+            value.start_fragment_offset = descendant.offset_to_container_box;
+            value.start_linebox_fragment = linebox;
+            value.start_linebox_offset = offsets_.at(i);
+          }
+          value.end_fragment = descendant.fragment;
+          value.end_fragment_offset = descendant.offset_to_container_box;
+          value.end_linebox_fragment = linebox;
+          value.end_linebox_offset = offsets_.at(i);
+          inline_container_fragments->Set(key, value);
+        }
+      }
+    }
+  }
+
+  // Sort fragments in the physical direction.
+  // Inline layout always places fragments in LTR order.
+  // Fragment order is significant when computing inline-cb geometry.
+  // When inline-cb is rtl direction, fragments are swapped.
+  // TODO(atotic) this might fail if start and end fragments are in different
+  // lineboxes, but there are multiple fragments from same inline-cb inside
+  // a single line.
+  for (auto fragment_pair : *inline_container_fragments) {
+    DCHECK(fragment_pair.value.start_fragment);
+    DCHECK(fragment_pair.value.end_fragment);
+    if (fragment_pair.value.start_fragment &&
+        fragment_pair.value.start_linebox_fragment.get() ==
+            fragment_pair.value.end_linebox_fragment.get() &&
+        fragment_pair.value.start_linebox_fragment->Style().Direction() ==
+            TextDirection::kRtl) {
+      std::swap(fragment_pair.value.start_fragment,
+                fragment_pair.value.end_fragment);
+      inline_container_fragments->Set(fragment_pair.key, fragment_pair.value);
+    }
+  }
 }
 
 #ifndef NDEBUG
