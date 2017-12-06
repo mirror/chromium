@@ -112,6 +112,11 @@ const char kProfilingFile[] = "profiling-file";
 const char kDisableUsbKeyboardDetect[]      = "disable-usb-keyboard-detect";
 #endif
 
+#if defined(OS_LINUX) || defined(OS_AIX)
+// Always use a temp dir to create anonymous shared memory files.
+const char kEnableShmemUseTempDir[] = "enable-shmem-use-temp-dir";
+#endif
+
 #if defined(OS_POSIX)
 // Used for turning on Breakpad crash reporting in a debug environment where
 // crash reporting is typically compiled but disabled.
