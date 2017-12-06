@@ -44,6 +44,10 @@ _log = logging.getLogger(__name__)
 
 
 def main(argv, stdout, stderr):
+    # argv.insert(0, '--additional-driver-flag=--enable-blink-features=LayoutNG,LayoutNGPaintFragments')
+    argv.insert(0, '--additional-driver-flag=--enable-blink-features=LayoutNG')
+    argv.insert(1, '--additional-driver-flag=--enable-blink-features=LayoutNGPaintFragments')
+    argv.insert(2, '--additional-driver-flag=--enable-slimming-paint-v175')
     options, args = parse_args(argv)
 
     if options.platform and 'test' in options.platform and not 'browser_test' in options.platform:
