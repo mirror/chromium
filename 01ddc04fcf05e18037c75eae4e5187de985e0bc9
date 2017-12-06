@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50896eeb_139e4820",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-06T21:31:41Z",
+      "side": 1,
+      "message": "Could you also add 652966?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 3
+      },
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bff19b_b95578fe",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-06T21:31:41Z",
+      "side": 1,
+      "message": "DCHECK_EQ(style_sheet_client_-\u003eGetResource(), resource_); before Dispose()",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaa6e86_dea83315",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-06T21:31:41Z",
+      "side": 1,
+      "message": "DCHECK(!style_sheet_client_-\u003eGetResource()); before TakeResource().",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d41c274_3d79d5dc",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-06T21:31:41Z",
+      "side": 1,
+      "message": "How about adding |DCHECK(!client-\u003eGetResource());| before SetResource(), to confirm this CL doesn\u0027t change the behavior?",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65dd64e_959feb47",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-06T21:31:41Z",
+      "side": 1,
+      "message": "How about adding |DCHECK_EQ(client-\u003eGetResource(), document_);| before ClearResource() to confirm this CL doesn\u0027t change the behavior?",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
