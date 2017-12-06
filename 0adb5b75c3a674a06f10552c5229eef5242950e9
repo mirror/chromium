@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5015044_2ccdcae0",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T23:40:00Z",
+      "side": 1,
+      "message": "make_unique",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb6454e_e12b2a91",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T23:40:00Z",
+      "side": 1,
+      "message": "BTW, after this CL, I will look into changing this to not take a file. There\u0027s a few bugs for issues with temp files.",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3848178_e264bdf3",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T23:40:00Z",
+      "side": 1,
+      "message": "22Something in this file may be causing the build failures. FYI, I filed https://crbug.com/792294 to simplify the printing build configs.",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b7d45d_70673dfe",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T23:40:00Z",
+      "side": 1,
+      "message": "You can use logfont_mojo.data() here, like line 108 below.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5141888_595e2c22",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T23:40:00Z",
+      "side": 1,
+      "message": "r522172 just landed, so this needs to become: if (!g_converter_clients.IsCreated()) { ... }",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
