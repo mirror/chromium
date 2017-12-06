@@ -496,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "c5bf38f2_4e105164",
+        "filename": "device/vr/orientation/orientation_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done :)",
+      "parentUuid": "40dfb937_3babf26e",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "91e657ea218d1e3656f3141567bad9543cec8844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58167ef6_53e21eae",
         "filename": "device/vr/orientation/orientation_device_provider.h",
         "patchSetId": 10

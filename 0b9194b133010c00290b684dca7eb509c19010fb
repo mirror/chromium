@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a00247a_ba8f4dfd",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8166c4ff_0b99e86d",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb46189a_1d4fabe8",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "479dd3ae_7855cd70",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a9a63c_1add469b",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20c1297c_a5ae1164",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -86,6 +128,30 @@
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ed070e_71717262",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "I didn\u0027t know you could next calls like that. Good to know.",
+      "parentUuid": "20c1297c_a5ae1164",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "754893de_24a6d82a",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c8ab25_f44e44b9",
+      "range": {
+        "startLine": 104,
+        "startChar": 38,
+        "endLine": 104,
+        "endChar": 53
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b7e4402_bf86b12c",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -123,6 +213,24 @@
       "writtenOn": "2017-12-05T19:03:41Z",
       "side": 1,
       "message": "Before this also:\n\nsensor_.set_connection_error_handler(\n    base::BindOnce(\u0026VROrientationDevice::HandleSensorError,\n                   base::Unretained(this)));",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ccbd6a_5f9e29da",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "I\u0027m confused. Why do we want this here and not on the SensorProvider up above?\nAlso, if the this errors, will OnSensorAddConfiguration still trigger? Or do I need to handle the event that it doesn\u0027t?",
+      "parentUuid": "4b7e4402_bf86b12c",
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7f2f13a8_1d22550c",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "All platforms that have display orientation. Which if a device as orientation sensors, it think is not unlikely.",
+      "parentUuid": "bf6fe821_d93cc27e",
+      "range": {
+        "startLine": 190,
+        "startChar": 36,
+        "endLine": 190,
+        "endChar": 46
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a8a5efd_43b327f5",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -166,6 +298,24 @@
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c8fd85_5ff90482",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Discussed offline, figured out the correct rotation.",
+      "parentUuid": "7a8a5efd_43b327f5",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a071e691_d008169f",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db7053d9_2b6b2e6e",
+      "range": {
+        "startLine": 205,
+        "startChar": 48,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c321f513_96b738f6",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -206,6 +380,24 @@
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fa1ec4_3fc288bc",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Oops. (0,0,-0.707, 0.707) is valid. Corrected equation.",
+      "parentUuid": "c321f513_96b738f6",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "6e655ee2_233958dc",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "This seems pretty intuitive to me, and handles close to zero well.",
+      "parentUuid": "52a3e7ee_faacc0cd",
+      "range": {
+        "startLine": 223,
+        "startChar": 3,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16df083d_f8183989",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 11
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "9719783d_7373b119",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done. Actually seems it was already done, so I can just remove this :)",
+      "parentUuid": "16df083d_f8183989",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 16
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "189daf9f_f8c21904",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 11
@@ -272,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "d5756099_67e4af6e",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189daf9f_f8c21904",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "071e858e_23a2bb2c",
         "filename": "device/vr/orientation/orientation_device.h",
         "patchSetId": 11
@@ -286,6 +544,24 @@
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc800c4_842d8ab8",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "071e858e_23a2bb2c",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "486b09cd_0daaf50d",
+        "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a8261b_2fdd9734",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d64b711_590366d1",
         "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
         "patchSetId": 11
@@ -326,6 +626,24 @@
       "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedc52bf_92a1bf67",
+        "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d64b711_590366d1",
+      "revId": "0b9194b133010c00290b684dca7eb509c19010fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

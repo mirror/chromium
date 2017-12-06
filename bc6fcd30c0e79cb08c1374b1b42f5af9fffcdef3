@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "491d75a7_4aadbe72",
+        "filename": "device/vr/orientation/orientation_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T22:17:29Z",
+      "side": 1,
+      "message": "Patch out",
+      "parentUuid": "bcd12c2e_a48a9fd2",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "bc6fcd30c0e79cb08c1374b1b42f5af9fffcdef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d5c6898_2b5fe9a1",
         "filename": "device/vr/orientation/orientation_device.cc",
         "patchSetId": 8
