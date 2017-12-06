@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "d15e35b0_d074f01e",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T22:56:50Z",
+      "side": 1,
+      "message": "I see, thanks for the explanation.  IMO this is worth documenting, since it\u0027s not obvious why metrics recording might be unavailable.",
+      "parentUuid": "6d8c8e9b_d40ecb2b",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d6f105_c96e7c92",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -290,6 +314,30 @@
       "side": 1,
       "message": "I\u0027m confused, don\u0027t enum buckets start at 0 typically? Also, max isn\u0027t 0, min is 0. Max is 12.",
       "parentUuid": "42d6f105_c96e7c92",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7505331_0436ba29",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T22:56:50Z",
+      "side": 1,
+      "message": "The confusion is justified, because the API is indeed fairly confusing.  To quickly answer your questions: (1) it\u0027s fine to record to bucket 0, but the histogram code still expects a bucket min of 1 to be specified, (2) I wrote a typo – I meant, I was surprised you didn\u0027t hit a DCHECK for specifying a /min/ of 0, and (3) the \"max\" value passed to the API should be 1 past the max.  Here is the corresponding C++ implementation that backs UMA_HISTOGRAM_ENUMERATION: https://cs.chromium.org/chromium/src/base/metrics/histogram_macros_internal.h?l\u003d124-127\n\nTo go into a bit more detail: the histograms API was not originally designed with enums in mind; rather, it was designed to measure things like durations and sizes.  The bucket [0, 1) is always used as an implicitly-provided underflow bucket.  The bucket [max, INT_MAX] is always used as an implicitly provided overflow bucket.  Enumerated histograms have been hacked on over the top of this API: It\u0027s fine to use the implicit underflow bucket to record the value 0, because enumerations should never underflow.  It\u0027s a best practice never to use the overflow bucket – this way, if additional values are appended to the end of the enum, the overflow bucket bounds do not change from [max, INT_MAX] to [max, max + 1).  Were the bucket boundaries to change, the dashboard code would interpret this as a change in the underlying data, which leads to some confusing dashboard views.  The number of buckets passed to the histogram API is expected to include room for the implicit underflow and overflow buckets.\n\nHopefully that was at least partly clear, and hopefully it also helps to explain why I think it\u0027s very valuable to provide a metricsPrivate API that mirrors UMA_HISTOGRAM_ENUMERATION – most people who write enumerated histograms shouldn\u0027t need to be aware of these fine details of the histograms API.\n\n(Extra caveat: Sparse histograms work fairly differently, and much of what I wrote above doesn\u0027t apply to them.)",
+      "parentUuid": "06a75fc1_7fcc5674",
       "range": {
         "startLine": 23,
         "startChar": 0,
