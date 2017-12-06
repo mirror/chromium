@@ -134,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "c4d85f4b_3dcda9aa",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T05:14:11Z",
+      "side": 1,
+      "message": "nit: We could write:\nalter \u003d\u003d SelectionModifyAlteration::kExtend || \nframe.GetEditor().Behavior().ShouldConsiderSelectionAsDirectional()",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d156be8_f110763f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 25
