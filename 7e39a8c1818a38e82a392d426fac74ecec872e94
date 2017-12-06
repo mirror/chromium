@@ -16,6 +16,24 @@
       "revId": "7e39a8c1818a38e82a392d426fac74ecec872e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a909615c_9229a086",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1945,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-06T17:40:37Z",
+      "side": 1,
+      "message": "Nice, thanks! I spent some time looking for how to get the rootWebArea without looping but didn\u0027t see it.\n\nI found that returning early doesn\u0027t work, I think the out_bounds_in_container calculation for frames / transforms needs to happen (below), so I did it in an if/else with the while loop.",
+      "parentUuid": "3920eafd_cf916bc3",
+      "revId": "7e39a8c1818a38e82a392d426fac74ecec872e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
