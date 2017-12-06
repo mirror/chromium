@@ -16,6 +16,24 @@
       "revId": "3f0aa799e226b11eda0570e1cffcc5443d675c08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0005e5_1d5e735e",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T19:46:15Z",
+      "side": 1,
+      "message": "Thanks. I already have https://chromium-review.googlesource.com/810041 as a cleanup CL for this file. I\u0027ll do that there and chain this CL to that one.",
+      "parentUuid": "e49a5801_ae78609b",
+      "revId": "3f0aa799e226b11eda0570e1cffcc5443d675c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
