@@ -271,26 +271,24 @@ TEST_F(MirrorWindowControllerTest, DockMode) {
       CreateDisplayInfo(external_id, gfx::Rect(1, 1, 100, 100));
   std::vector<display::ManagedDisplayInfo> display_info_list;
 
-  display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
-
   // software mirroring.
   display_info_list.push_back(internal_display_info);
   display_info_list.push_back(external_display_info);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
+  display_manager()->SetMirrorMode(true);
   const int64_t internal_display_id =
       display::test::DisplayManagerTestApi(display_manager())
           .SetFirstDisplayAsInternalDisplay();
   EXPECT_EQ(internal_id, internal_display_id);
 
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
-  EXPECT_TRUE(display_manager()->IsInMirrorMode());
+  EXPECT_TRUE(display_manager()->IsInSoftwareMirrorMode());
   EXPECT_EQ(external_id,
             display_manager()->GetMirroringDestinationDisplayIdList()[0]);
 
   // dock mode.
   display_info_list.clear();
   display_info_list.push_back(external_display_info);
-  display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
@@ -299,7 +297,6 @@ TEST_F(MirrorWindowControllerTest, DockMode) {
   display_info_list.clear();
   display_info_list.push_back(internal_display_info);
   display_info_list.push_back(external_display_info);
-  display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   display_manager()->OnNativeDisplaysChanged(display_info_list);
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_TRUE(display_manager()->IsInMirrorMode());
