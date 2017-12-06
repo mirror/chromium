@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ace1936e_d7995c74",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T03:23:35Z",
+      "side": 1,
+      "message": "We can do that, but can you please explain more why this would be better? If I understood correctly from Dana and ccameron, we wanted to keep it a property of the output surface so that when we move to the CRTC color matrix approach, we can then get it from there.",
+      "parentUuid": "06093068_9a0724c1",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f9b40d_0b4048ef",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "290369ad_8c68f86c",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T03:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f9b40d_0b4048ef",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304d1891_55d49ccf",
         "filename": "components/viz/service/display/shader.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac06ba9_5e1ecf99",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T03:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "304d1891_55d49ccf",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -81,6 +135,24 @@
       "writtenOn": "2017-12-05T22:28:25Z",
       "side": 1,
       "message": "What about software?\nIn particular as we will be switching to SkiaRenderer at some point, this needs to work there too.",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7db00f0_640dfc81",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T03:23:35Z",
+      "side": 1,
+      "message": "I don\u0027t know. From what I understood, I thought we won\u0027t have to worry about this at the moment. I need to confirm with Dana and Reveman.",
+      "parentUuid": "c63dff4e_3a6f44b6",
       "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
