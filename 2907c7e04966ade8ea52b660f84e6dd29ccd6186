@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1f499011_4167a599",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-06T00:37:18Z",
+      "side": 1,
+      "message": "Despite the generic sounding name, this config is about xvfb in particular. It seems we are slowly sliding back into assuming X11 is running in the background, unfortunately. This test launcher satisfies that assumption.\n\nI strongly believe that tests should set up their own environment and not rely on somebody else to do it. The stuff that\u0027s been added for wayland does that - it runs an internal fake windowing server for its tests. X11 platform should do the same, rather than require the build team to maintain this xvfb glue.\n\nIt\u0027ll work fine for X11 to be special and have this xvfb thing, but two special platforms won\u0027t really work unless we break ozone_unittests up. It runs all tests for all subplatforms currently.",
+      "parentUuid": "d1eebd62_a11b82a9",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20c1ea32_1eb93ceb",
         "filename": "ui/events/BUILD.gn",
         "patchSetId": 17
