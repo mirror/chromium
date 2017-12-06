@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "f43b40cd_e74e6efd",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T04:24:46Z",
+      "side": 1,
+      "message": "Missed base::MakeRefCounted here.",
+      "parentUuid": "47a6f301_14295afb",
+      "range": {
+        "startLine": 785,
+        "startChar": 45,
+        "endLine": 785,
+        "endChar": 53
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ee8b04_95542f69",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
         "patchSetId": 9
@@ -601,6 +625,30 @@
       "side": 1,
       "message": "We actually provide them for most apis, but the majority are stored in chrome_extensions.js - a *massive* file that tries to hand-document all of them.  They are now generated (yay!), but there are some differences between the generated code and the hand-written externs, and this can break certain code - in addition to just needing to import them by name.\n\nIdeally, we\u0027d generate all of them for all APIs, but we haven\u0027t had the time to make that happen yet, so it\u0027s mostly just private APIs that we generate and store here.",
       "parentUuid": "c9a57b78_b901c28d",
+      "range": {
+        "startLine": 647,
+        "startChar": 11,
+        "endLine": 647,
+        "endChar": 19
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dd10ce8_f38e02a9",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T04:24:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e487ec68_60354e60",
       "range": {
         "startLine": 647,
         "startChar": 11,

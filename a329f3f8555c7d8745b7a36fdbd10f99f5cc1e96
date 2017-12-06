@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6390e71_fd75e85f",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T04:24:46Z",
+      "side": 1,
+      "message": "Can\u0027t we just use TestExtensionRegistryObserver::WaitForExtensionUnloaded like the DeveloperPrivateApiUnitTest.DeveloperPrivateReload test?",
+      "range": {
+        "startLine": 788,
+        "startChar": 10,
+        "endLine": 788,
+        "endChar": 34
+      },
+      "revId": "a329f3f8555c7d8745b7a36fdbd10f99f5cc1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
