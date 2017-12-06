@@ -101,7 +101,7 @@ class FakeSchedulerClient : public SchedulerClient,
     automatic_ack_ = automatic_ack;
   }
   // SchedulerClient implementation.
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
     EXPECT_FALSE(inside_begin_impl_frame_);
     inside_begin_impl_frame_ = true;
     PushAction("WillBeginImplFrame");
@@ -109,6 +109,7 @@ class FakeSchedulerClient : public SchedulerClient,
       scheduler_->SetNeedsOneBeginImplFrame();
     if (will_begin_impl_frame_causes_redraw_)
       scheduler_->SetNeedsRedraw();
+    return true;
   }
   void DidFinishImplFrame() override {
     EXPECT_TRUE(inside_begin_impl_frame_);
