@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f995fb5_e593820f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993805ae_01874ed0",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25d04db_f5a64e65",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 34
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-05T15:52:21Z",
       "side": 1,
       "message": "Where is this used?",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec847311_29a6e0d8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:13:35Z",
+      "side": 1,
+      "message": "It was used when I was using the url_loader_non_network_service. We are using the ThrottlingURLLoader right know. I can remove it. Thanks!",
+      "parentUuid": "c25d04db_f5a64e65",
       "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99bfbbb1_e97d35a2",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15320cf_11cfb090",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685c5d89_ba63f067",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 34
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-05T15:52:21Z",
       "side": 1,
       "message": "All the tests in this file are testing NavigationURLLoaderImpl*. They are not applicable to the network service version at all. Just return early when NavigationMojoResponse is enabled - and check that we have equivalent browser tests.",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88da7c9d_6a40cdc1",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:13:35Z",
+      "side": 1,
+      "message": "The only difference between these two class is how the response\u0027s body is provided\nMost of the tests are still useful. For instance NavigationURLLoaderTest.CancelOnDestruct, NavigationURLLoaderTest.RequestBlocked, ...\nI would like to keep most of them.\n\nI would have preferred not to include this file in this commit.\nCan I abandon this file change and give a additional CL that will provide alternative tests?",
+      "parentUuid": "685c5d89_ba63f067",
       "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578f2a92_d1ad6935",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_content_browsertests.filter",
+        "patchSetId": 34
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:13:35Z",
+      "side": 1,
+      "message": "If I apply your suggestion, it will not make this test success.\nNavigationMojoResponseBrowserTest.FailedNavigation and\nBrowserSideNavigationBrowserTest.FailedNavigation are the same test. They are falling with the Network Service. It doesn\u0027t matter if NavigationMojoResponse is enabled or not.\n\nFurthermore, I think I took into account what will happen when both are enabled.\n* In navigation_url_loader.cc, IsNavigationMojoResponse() is used once and I know what will happens if both are enabled.\n* In navigation_url_loader_network_service.cc. I only have used if (\u003cNetworkService\u003e) and supposed that NavigationMojoResponse was enabled in the other case (which is true). If both are enabled the NetworkService path is used and that\u0027s fine.\n* In ResourceDispatcherHost::BeginNavigation(), the NetworkService is not enabled, so there are no tricky case.",
+      "parentUuid": "80efc845_8a945068",
+      "revId": "8dbd66b424baf3935978912e5e650fddfb826034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
