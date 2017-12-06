@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f91a72f5_85fcf473",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-06T15:34:25Z",
+      "side": 1,
+      "message": "I would say:\n// In ARIA 1.1, aria-expanded is not valid on separators.",
+      "revId": "dcaef3c285232ec73dd1a2a7f6415e1ef0f85392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf11b47_f873a7d6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-06T15:34:25Z",
+      "side": 1,
+      "message": "According to the HTML to Platform Accessibility mappings spec, the role of ARIA separator also applies to the \u003chr\u003e element. Could you ensure that aria-expanded is undefined when applied to an \u003chr\u003e element as well? Could you add a test for it too?",
+      "revId": "dcaef3c285232ec73dd1a2a7f6415e1ef0f85392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
