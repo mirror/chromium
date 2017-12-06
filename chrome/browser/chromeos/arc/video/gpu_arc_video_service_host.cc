@@ -54,13 +54,13 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
 
   ~VideoAcceleratorFactoryService() override = default;
 
-  void CreateDecodeAccelerator(
-      mojom::VideoDecodeAcceleratorRequest request) override {
+  void CreateDecodeAcceleratorDeprecated(
+      mojom::VideoDecodeAcceleratorDeprecatedRequest request) override {
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &content::BindInterfaceInGpuProcess<mojom::VideoDecodeAccelerator>,
-            std::move(request)));
+        base::BindOnce(&content::BindInterfaceInGpuProcess<
+                           mojom::VideoDecodeAcceleratorDeprecated>,
+                       std::move(request)));
   }
 
   void CreateEncodeAccelerator(
@@ -91,10 +91,10 @@ class VideoAcceleratorFactoryServiceMus
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   }
 
-  void CreateDecodeAccelerator(
-      mojom::VideoDecodeAcceleratorRequest request) override {
+  void CreateDecodeAcceleratorDeprecated(
+      mojom::VideoDecodeAcceleratorDeprecatedRequest request) override {
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-    arc_->CreateVideoDecodeAccelerator(std::move(request));
+    arc_->CreateVideoDecodeAcceleratorDeprecated(std::move(request));
   }
 
   void CreateEncodeAccelerator(
