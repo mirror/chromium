@@ -115,9 +115,7 @@ Page::Page(PageClients& page_clients)
       drag_caret_(DragCaret::Create()),
       drag_controller_(DragController::Create(this)),
       focus_controller_(FocusController::Create(this)),
-      context_menu_controller_(
-          ContextMenuController::Create(this,
-                                        page_clients.context_menu_client)),
+      context_menu_controller_(ContextMenuController::Create(this)),
       page_scale_constraints_set_(PageScaleConstraintsSet::Create()),
       pointer_lock_controller_(PointerLockController::Create(this)),
       browser_controls_(BrowserControls::Create(*this)),
@@ -730,7 +728,6 @@ ScrollbarTheme& Page::GetScrollbarTheme() const {
 
 Page::PageClients::PageClients()
     : chrome_client(nullptr),
-      context_menu_client(nullptr),
       editor_client(nullptr) {}
 
 Page::PageClients::~PageClients() {}
