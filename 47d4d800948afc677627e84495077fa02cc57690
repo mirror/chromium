@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d84c1e4_c804cbdb",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T20:21:37Z",
+      "side": 1,
+      "message": "nit: I would prefer to keep the boolean called scene_dirty, rather than needs_redraw",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "47d4d800948afc677627e84495077fa02cc57690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddac6f75_ebe1c27b",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T20:21:37Z",
+      "side": 1,
+      "message": "nit: return false",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 23
+      },
+      "revId": "47d4d800948afc677627e84495077fa02cc57690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
