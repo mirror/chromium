@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "883d8f19_a010458e",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-06T04:50:33Z",
+      "side": 1,
+      "message": "Yeah that would be clearer, thanks.",
+      "parentUuid": "81a4ec7a_9c3d1394",
+      "revId": "926ca4debd0f22129cfa01322c95eb27726b503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da48f35_1b9e42c7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "926ca4debd0f22129cfa01322c95eb27726b503e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71950051_60cda9cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56869,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-06T04:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da48f35_1b9e42c7",
+      "revId": "926ca4debd0f22129cfa01322c95eb27726b503e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

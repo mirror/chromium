@@ -70,6 +70,30 @@
       "revId": "6466a17994812dbbd3becbd3dc6e7fe29d5efc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69356c81_7c84fbbd",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-06T04:50:33Z",
+      "side": 1,
+      "message": "Probably it\u0027s not timing-dependent but I\u0027m afraid making such assumption here would be fragile, and might result in a untrustworthy metric.\n\nAdded a comment.",
+      "parentUuid": "e0cbf39f_9054d75a",
+      "range": {
+        "startLine": 134,
+        "startChar": 44,
+        "endLine": 134,
+        "endChar": 63
+      },
+      "revId": "6466a17994812dbbd3becbd3dc6e7fe29d5efc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
