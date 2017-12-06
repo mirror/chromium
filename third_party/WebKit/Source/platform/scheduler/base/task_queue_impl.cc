@@ -479,7 +479,7 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   DCHECK(main_thread_only().delayed_work_queue);
   DCHECK(main_thread_only().immediate_work_queue);
 
-  state->SetString("task_queue_id", PointerToString(this));
+  state->SetString("task_queue_id", util::PointerToString(this));
   state->SetBoolean("enabled", IsQueueEnabled());
   state->SetString("time_domain_name",
                    main_thread_only().time_domain->GetName());

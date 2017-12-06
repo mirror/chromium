@@ -258,7 +258,8 @@ void WebViewSchedulerImpl::AsValueInto(
 
   state->BeginDictionary("frame_schedulers");
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
-    state->BeginDictionaryWithCopiedName(PointerToString(frame_scheduler));
+    state->BeginDictionaryWithCopiedName(
+        util::PointerToString(frame_scheduler));
     frame_scheduler->AsValueInto(state);
     state->EndDictionary();
   }

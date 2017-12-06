@@ -114,7 +114,7 @@ void WakeUpBudgetPool::AsValueInto(base::trace_event::TracedValue* state,
 
   state->BeginArray("task_queues");
   for (TaskQueue* queue : associated_task_queues_) {
-    state->AppendString(PointerToString(queue));
+    state->AppendString(util::PointerToString(queue));
   }
   state->EndArray();
 

@@ -69,34 +69,6 @@ base::TimeDelta GetWakeUpDuration() {
   return base::TimeDelta::FromMilliseconds(duration_ms);
 }
 
-const char* BackgroundStateToString(bool is_backgrounded) {
-  if (is_backgrounded) {
-    return "backgrounded";
-  } else {
-    return "foregrounded";
-  }
-}
-
-const char* AudioPlayingStateToString(bool is_audio_playing) {
-  if (is_audio_playing) {
-    return "playing";
-  } else {
-    return "muted";
-  }
-}
-
-const char* YesNoStateToString(bool is_yes) {
-  if (is_yes) {
-    return "yes";
-  } else {
-    return "no";
-  }
-}
-
-double TimeDeltaToMilliseconds(const base::TimeDelta& value) {
-  return value.InMillisecondsF();
-}
-
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -218,7 +190,8 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
     const scoped_refptr<MainThreadTaskQueue>& compositor_task_runner,
     base::TickClock* time_source,
     base::TimeTicks now)
-    : loading_task_cost_estimator(time_source,
+    : tracing(renderer_scheduler_impl),
+      loading_task_cost_estimator(time_source,
                                   kLoadingTaskEstimationSampleCount,
                                   kLoadingTaskEstimationPercentile),
       timer_task_cost_estimator(time_source,
@@ -246,7 +219,7 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       renderer_backgrounded(false,
                             "RendererScheduler.Backgrounded",
                             renderer_scheduler_impl,
-                            BackgroundStateToString),
+                            util::BackgroundStateToString),
       stopping_when_backgrounded_enabled(false),
       stopped_when_backgrounded(false),
       was_shutdown(false),
@@ -254,25 +227,25 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
           base::TimeDelta(),
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
-          TimeDeltaToMilliseconds),
+          util::TimeDeltaToMilliseconds),
       timer_task_estimated_cost(
           base::TimeDelta(),
           "RendererScheduler.TimerTaskEstimatedCostMs",
           renderer_scheduler_impl,
-          TimeDeltaToMilliseconds),
+          util::TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
           renderer_scheduler_impl,
-          YesNoStateToString),
+          util::YesNoStateToString),
       timer_tasks_seem_expensive(false,
                                  "RendererScheduler.TimerTasksSeemExpensive",
                                  renderer_scheduler_impl,
-                                 YesNoStateToString),
+                                 util::YesNoStateToString),
       touchstart_expected_soon(false,
                                "RendererScheduler.TouchstartExpectedSoon",
                                renderer_scheduler_impl,
-                               YesNoStateToString),
+                               util::YesNoStateToString),
       have_seen_a_begin_main_frame(false),
       have_reported_blocking_intervention_in_current_policy(false),
       have_reported_blocking_intervention_since_navigation(false),
@@ -280,10 +253,7 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       begin_frame_not_expected_soon(false),
       in_idle_period_for_testing(false),
       use_virtual_time(false),
-      is_audio_playing(false,
-                       "RendererScheduler.AudioPlaying",
-                       renderer_scheduler_impl,
-                       AudioPlayingStateToString),
+      is_audio_playing(false, tracing.AudioPlaying()),
       compositor_will_send_main_frame_not_expected(false),
       has_navigated(false),
       pause_timers_for_webview(false),
@@ -1817,7 +1787,8 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
   state->BeginDictionary("web_view_schedulers");
   for (WebViewSchedulerImpl* web_view_scheduler :
        main_thread_only().web_view_schedulers) {
-    state->BeginDictionaryWithCopiedName(PointerToString(web_view_scheduler));
+    state->BeginDictionaryWithCopiedName(
+        util::PointerToString(web_view_scheduler));
     web_view_scheduler->AsValueInto(state.get());
     state->EndDictionary();
   }
@@ -2310,6 +2281,7 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
 
+  main_thread_only().tracing.OnTraceLogEnabled();
   main_thread_only().current_use_case.OnTraceLogEnabled();
   main_thread_only().expensive_task_policy.OnTraceLogEnabled();
   main_thread_only().rail_mode_for_tracing.OnTraceLogEnabled();
@@ -2319,7 +2291,6 @@ void RendererSchedulerImpl::OnTraceLogEnabled() {
   main_thread_only().loading_tasks_seem_expensive.OnTraceLogEnabled();
   main_thread_only().timer_tasks_seem_expensive.OnTraceLogEnabled();
   main_thread_only().touchstart_expected_soon.OnTraceLogEnabled();
-  main_thread_only().is_audio_playing.OnTraceLogEnabled();
 
   for (WebViewSchedulerImpl* web_view_scheduler :
        main_thread_only().web_view_schedulers) {

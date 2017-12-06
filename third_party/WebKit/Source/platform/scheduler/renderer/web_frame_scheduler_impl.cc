@@ -419,32 +419,32 @@ void WebFrameSchedulerImpl::AsValueInto(
                        : "Subframe");
   if (loading_task_queue_) {
     state->SetString("loading_task_queue",
-                     PointerToString(loading_task_queue_.get()));
+                     util::PointerToString(loading_task_queue_.get()));
   }
   if (loading_control_task_queue_) {
     state->SetString("loading_control_task_queue",
-                     PointerToString(loading_control_task_queue_.get()));
+                     util::PointerToString(loading_control_task_queue_.get()));
   }
   if (throttleable_task_queue_)
     state->SetString("throttleable_task_queue",
-                     PointerToString(throttleable_task_queue_.get()));
+                     util::PointerToString(throttleable_task_queue_.get()));
   if (deferrable_task_queue_) {
     state->SetString("deferrable_task_queue",
-                     PointerToString(deferrable_task_queue_.get()));
+                     util::PointerToString(deferrable_task_queue_.get()));
   }
   if (pausable_task_queue_) {
     state->SetString("pausable_task_queue",
-                     PointerToString(pausable_task_queue_.get()));
+                     util::PointerToString(pausable_task_queue_.get()));
   }
   if (unpausable_task_queue_) {
     state->SetString("unpausable_task_queue",
-                     PointerToString(unpausable_task_queue_.get()));
+                     util::PointerToString(unpausable_task_queue_.get()));
   }
   if (blame_context_) {
     state->BeginDictionary("blame_context");
     state->SetString(
         "id_ref",
-        PointerToString(reinterpret_cast<void*>(blame_context_->id())));
+        util::PointerToString(reinterpret_cast<void*>(blame_context_->id())));
     state->SetString("scope", blame_context_->scope());
     state->EndDictionary();
   }

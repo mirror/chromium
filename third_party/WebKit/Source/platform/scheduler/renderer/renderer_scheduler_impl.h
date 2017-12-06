@@ -614,6 +614,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
         base::TimeTicks now);
     ~MainThreadOnly();
 
+    RendererTracing tracing;
     TaskCostEstimator loading_task_cost_estimator;
     TaskCostEstimator timer_task_cost_estimator;
     IdleTimeEstimator idle_time_estimator;
@@ -651,7 +652,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool begin_frame_not_expected_soon;
     bool in_idle_period_for_testing;
     bool use_virtual_time;
-    TraceableState<bool, kTracingCategoryNameDefault> is_audio_playing;
+    TraceableStateX<bool> is_audio_playing;
     bool compositor_will_send_main_frame_not_expected;
     bool has_navigated;
     bool pause_timers_for_webview;
