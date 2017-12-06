@@ -27,11 +27,11 @@ void PaymentRequestUnitTestBase::SetUp() {
                                      &ios::BuildFakeSigninManager);
   chrome_browser_state_ = test_cbs_builder.Build();
   web_state_.SetBrowserState(chrome_browser_state_.get());
-  personal_data_manager_.SetTestingPrefService(pref_service_.get());
+  personal_data_manager_.SetPrefService(pref_service_.get());
 }
 
 void PaymentRequestUnitTestBase::TearDown() {
-  personal_data_manager_.SetTestingPrefService(nullptr);
+  personal_data_manager_.SetPrefService(nullptr);
 }
 
 void PaymentRequestUnitTestBase::CreateTestPaymentRequest() {
@@ -43,14 +43,11 @@ void PaymentRequestUnitTestBase::CreateTestPaymentRequest() {
 
 void PaymentRequestUnitTestBase::AddAutofillProfile(
     autofill::AutofillProfile profile) {
-  profiles_.push_back(
-      base::MakeUnique<autofill::AutofillProfile>(std::move(profile)));
-  personal_data_manager_.AddTestingProfile(profiles_.back().get());
+  personal_data_manager_.AddProfile(profile);
 }
 
 void PaymentRequestUnitTestBase::AddCreditCard(autofill::CreditCard card) {
-  cards_.push_back(base::MakeUnique<autofill::CreditCard>(std::move(card)));
-  personal_data_manager_.AddTestingCreditCard(cards_.back().get());
+  personal_data_manager_.AddCreditCard(card);
 }
 
 SigninManager* PaymentRequestUnitTestBase::GetSigninManager() {
