@@ -1315,8 +1315,8 @@ void FeatureInfo::InitializeFeatures() {
 
   if (gl_version_info_->is_desktop_core_profile ||
       (gl_version_info_->IsAtLeastGL(2, 1) &&
-       gl::HasExtension(extensions, "GL_ARB_texture_rg")) ||
-      gl::HasExtension(extensions, "GL_EXT_texture_norm16")) {
+       gl::HasExtension(extensions, "GL_ARB_texture_norm16")) ||
+      gl::HasExtension(extensions, "GL_EXT_texture_rg")) {
     feature_flags_.ext_texture_norm16 = true;
     g_r16_is_present = true;
     AddExtensionString("GL_EXT_texture_norm16");
@@ -1327,6 +1327,7 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_internal_format.AddValue(GL_R16_EXT);
     validators_.texture_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
+    validators_.texture_internal_format_storage.AddValue(GL_R16_EXT);
   }
 
   UMA_HISTOGRAM_ENUMERATION(
