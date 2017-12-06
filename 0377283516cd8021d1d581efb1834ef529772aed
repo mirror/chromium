@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab8ac9a_9cda0ecc",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "Why have this?  It feels like \"x \u003d 2; assert(x \u003d\u003d 2);\"",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab583a01_92d14bbc",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "We\u0027ll have to talk this through.  I think this is right, but ultimately we want this TextInput element to be able to move the cursor on click, which feels more like the Text element should be the hittable element (independent of focus).  Can go either way, but we should chat about it.",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bbe89c_869705b1",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "Also here.  A button or a text field are trees of elements.  That compound element should be focusable, but the root isn\u0027t necessarily going to be hit testable.",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44d6009_cb52153e",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "Is the parent-child relationship special here?  Any focusable element would steal focus - why is a child special?",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a091222_b1fd7b0b",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "FocusableChildStealsFocus",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ccc3ef_2fbe59b5",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "I stared at this for 2 minutes before realizing that CreateMockElement() also adds it to the scene.  Could you rename CreateMockElement and CreateMockInputElement to CreateAndAdd... ?",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e5af96_4e70db57",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "NonFocusableChildDoestNotStealFocus  (fixes typo and more clear).",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f725a7ce_d26d5156",
+        "filename": "chrome/browser/vr/ui_input_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T15:34:32Z",
+      "side": 1,
+      "message": "Do you actually need this on a strict mock?  If OnFocus is called once, won\u0027t it catch it?",
+      "revId": "0377283516cd8021d1d581efb1834ef529772aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
