@@ -34,6 +34,24 @@
       "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f723a43_c3faaeb6",
+        "filename": "chrome/browser/experiments/memory_ablation_experiment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-06T00:56:55Z",
+      "side": 1,
+      "message": "but if the zram compression allows simultaneous compression for multiple pages, then the dictionary could efficiently compress the pages [I don\u0027t htink this is the case. I think zram only ever allows compression of a single page at a time (?)].",
+      "parentUuid": "8fad9fc4_cac787a0",
+      "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
