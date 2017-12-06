@@ -140,6 +140,16 @@ __gCrWeb.autofill.EXTRACT_MASK_OPTIONS = 1 << 2;
 __gCrWeb.autofill.ROLE_ATTRIBUTE_PRESENTATION = 0;
 
 /**
+ * The delay between filling two fields
+ *
+ * Page need time to propagate the events after setting one field. Add a delay
+ * between filling two fields. In milliseconds.
+ *
+ * @const {number}
+ */
+__gCrWeb.autofill.DELAY_BETWEEN_FIELD_FILLING_MS = 50;
+
+/**
  * The last element that was autofilled.
  *
  * @type {Element}
@@ -612,6 +622,7 @@ __gCrWeb.autofill['fillForm'] = function(data, forceFillFieldName) {
     controlElements =
         getUnownedAutofillableFormFieldElements_(document.all, fieldsets);
   }
+  var delay = 0;
   for (var i = 0; i < controlElements.length; ++i) {
     var element = controlElements[i];
     if (!__gCrWeb.autofill.isAutofillableElement(element)) {
@@ -636,14 +647,19 @@ __gCrWeb.autofill['fillForm'] = function(data, forceFillFieldName) {
     if (__gCrWeb.autofill.isTextInput(element) ||
         __gCrWeb.autofill.isTextAreaElement(element) ||
         __gCrWeb.autofill.isSelectElement(element)) {
-      __gCrWeb.common.setInputElementValue(value, element, true);
+      (function (_element, _value, _delay) {
+        window.setTimeout(function() {
+          __gCrWeb.common.setInputElementValue(_value, _element, true);
+          _element.setAttribute('chrome-autofilled', '');
+          _element.isAutofilled = true;
+          _element.addEventListener('input', controlElementInputListener);
+        }, _delay);})(element, value, delay);
+      delay = delay + __gCrWeb.autofill.DELAY_BETWEEN_FIELD_FILLING_MS;
     }
     // TODO(bondd): Handle __gCrWeb.autofill.isCheckableElement(element) ==
     // true. |is_checked| is not currently passed in by the caller.
 
-    element.setAttribute('chrome-autofilled', '');
-    element.isAutofilled = true;
-    element.addEventListener('input', controlElementInputListener);
+
   }
 
   if (form) {
