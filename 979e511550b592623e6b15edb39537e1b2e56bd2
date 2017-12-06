@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "face1c3a_531c3ad7",
+        "filename": "components/arc/arc_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T23:28:31Z",
+      "side": 0,
+      "message": "Would it be safer just to invert this as ENABLED_BY_DEFAULT instead, in case we missed something?",
+      "revId": "979e511550b592623e6b15edb39537e1b2e56bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
