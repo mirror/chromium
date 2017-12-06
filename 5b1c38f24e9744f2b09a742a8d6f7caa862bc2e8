@@ -16,6 +16,24 @@
       "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38914f42_ba008d73",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-06T02:55:21Z",
+      "side": 1,
+      "message": "I checked and found that the last line was missing a \u0027newline\u0027 character (\u0027\\n\u0027) at the end when this file was created:\nhttps://chromium.googlesource.com/chromium/src/+/166906a0b37ae6500585e3680a299eb7c720a110%5E%21/#F14\n\nAnd now the new file added that missing \u0027\\n\u0027 so we got such a diff.",
+      "parentUuid": "6e171fa4_93ab1707",
+      "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
