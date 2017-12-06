@@ -118,7 +118,7 @@ class CORE_EXPORT HTMLInputElement
   bool ShouldAppearChecked() const;
   bool ShouldAppearIndeterminate() const override;
 
-  int size() const;
+  unsigned size() const;
   bool SizeShouldIncludeDecoration(int& preferred_size) const;
 
   void setType(const AtomicString&);
@@ -402,7 +402,7 @@ class CORE_EXPORT HTMLInputElement
   AtomicString name_;
   // The value string in |value| value mode.
   String non_attribute_value_;
-  int size_;
+  unsigned size_;
   // https://html.spec.whatwg.org/multipage/forms.html#concept-input-value-dirty-flag
   unsigned has_dirty_value_ : 1;
   // https://html.spec.whatwg.org/multipage/forms.html#concept-fe-checked
