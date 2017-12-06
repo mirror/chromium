@@ -10,6 +10,7 @@
 #include "base/android/jni_string.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/feature_utilities.h"
@@ -435,10 +436,16 @@ void TabWebContentsDelegateAndroid::OnAudioStateChanged(
 void TabWebContentsDelegateAndroid::OnDidBlockFramebust(
     content::WebContents* web_contents,
     const GURL& url) {
+  auto intervention_outcome =
+      [](FramebustBlockMessageDelegate::InterventionOutcome outcome) {
+        UMA_HISTOGRAM_ENUMERATION(
+            "WebCore.Framebust.InterventionOutcome", outcome,
+            FramebustBlockMessageDelegate::InterventionOutcome::kCount);
+      };
   FramebustBlockInfoBar::Show(
       web_contents,
       base::MakeUnique<FramebustBlockMessageDelegate>(
-          web_contents, url, FramebustBlockMessageDelegate::OutcomeCallback()));
+          web_contents, url, base::BindOnce(intervention_outcome)));
 }
 
 }  // namespace android
