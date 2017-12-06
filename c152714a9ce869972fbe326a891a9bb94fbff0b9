@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8e7d3f1_3f3c33fd",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "744a3560_039d8b72",
+      "range": {
+        "startLine": 4208,
+        "startChar": 92,
+        "endLine": 4208,
+        "endChar": 98
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cef12971_04bab34a",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T02:41:49Z",
       "side": 1,
       "message": "Do these need to be comma-separated without a space?",
+      "range": {
+        "startLine": 4215,
+        "startChar": 31,
+        "endLine": 4215,
+        "endChar": 40
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb2784e_e95191c2",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4215,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Changed the format to match Mac\u0027s. Usually these does not have space.",
+      "parentUuid": "cef12971_04bab34a",
       "range": {
         "startLine": 4215,
         "startChar": 31,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b8697d95_0d3256b7",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Yep, it does not change UI language. I just copied new stuff :) Is there a guide about the differences betwee i18nDynamic, $i18n, and i18n-content?",
+      "parentUuid": "224e0270_ae609680",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6789f69_64546cbf",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594a63ad_50af272a",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6789f69_64546cbf",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +206,48 @@
     },
     {
       "key": {
+        "uuid": "c765832e_738de0bf",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6db490_f73a5b69",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d8ec20f_ffe8ee28",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5f957a_71592423",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604139b9_fdff5692",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01cb0e3_8f364bf9",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "604139b9_fdff5692",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +312,24 @@
       "side": 1,
       "message": "but that would be \u003e80 characters, in this case -- if it\u0027s possible to break somewhere before 80 chars, we should",
       "parentUuid": "9170b3ea_435fc6b5",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b96386f_fb660780",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "So this is ok?",
+      "parentUuid": "35db2458_bdad4845",
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -214,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "abddbf44_fec520bf",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Actually I don\u0027t need it.",
+      "parentUuid": "7d925415_a564b24d",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e4bbec0_4fce0d02",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
         "patchSetId": 2
@@ -234,6 +420,30 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae79793_46b75e49",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4bbec0_4fce0d02",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "e709cf49_e3d488e6",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab784312_468e74af",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 23
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c49ccf_db4cbc4c",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
         "patchSetId": 2
@@ -274,6 +508,24 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2813ed1d_1dcddacb",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-12-06T17:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c49ccf_db4cbc4c",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
