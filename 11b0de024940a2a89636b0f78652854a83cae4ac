@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2180b2d4_0997f27d",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T02:19:04Z",
+      "side": 1,
+      "message": "Please add TODO(crbug.com/676224) so this can be cleaned up when we get preprocessing in mojoms supported.",
+      "revId": "11b0de024940a2a89636b0f78652854a83cae4ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
