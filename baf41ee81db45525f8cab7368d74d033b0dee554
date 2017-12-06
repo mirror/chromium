@@ -22,6 +22,30 @@
       "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47c58c4_8c0baea3",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-06T11:41:08Z",
+      "side": 1,
+      "message": "When is bounding_box.X()/Y() not 0?\n\nIf it can be non-zero, then we are missing a test that might help us understand if the old or new behavior is correct.",
+      "parentUuid": "374ad239_c525f779",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 72
+      },
+      "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
