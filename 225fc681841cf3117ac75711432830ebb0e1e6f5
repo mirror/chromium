@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2529a16_8e4ee185",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/0001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-06T07:59:35Z",
+      "side": 1,
+      "message": "I think this file is missing, which is unfortunate, since it seems important! :)",
+      "revId": "225fc681841cf3117ac75711432830ebb0e1e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0f704d_5a287287",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/path/match.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-06T07:59:35Z",
+      "side": 1,
+      "message": "We can probably drop all this file\u0027s changes, and move them to a separate patch. Interested in picking that up?",
+      "revId": "225fc681841cf3117ac75711432830ebb0e1e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
