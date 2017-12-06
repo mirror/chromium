@@ -624,7 +624,6 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
 void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
   if (IsBrowserSideNavigationEnabled()) {
     // Destroying session automatically detaches in renderer.
-    suspended_messages_by_session_id_.erase(session_id);
   } else {
     if (current_)
       current_->Detach(session_id);
@@ -647,11 +646,6 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (!navigation_handles_.empty()) {
-      suspended_messages_by_session_id_[session_id].push_back(
-          {call_id, method, message});
-      return true;
-    }
     session->DispatchProtocolMessageToAgent(call_id, method, message);
     session->waiting_messages()[call_id] = {method, message};
   } else {
@@ -751,19 +745,6 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   UpdateFrameHost(frame_tree_node_->current_frame_host());
   DCHECK(CheckConsistency());
 
-  if (navigation_handles_.empty()) {
-    for (auto& pair : suspended_messages_by_session_id_) {
-      int session_id = pair.first;
-      DevToolsSession* session = SessionById(session_id);
-      for (const Message& message : pair.second) {
-        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
-                                                message.message);
-        session->waiting_messages()[message.call_id] = {message.method,
-                                                        message.message};
-      }
-    }
-    suspended_messages_by_session_id_.clear();
-  }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
       target->DidCommitNavigation();
