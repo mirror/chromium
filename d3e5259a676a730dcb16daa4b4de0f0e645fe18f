@@ -76,6 +76,75 @@
     },
     {
       "key": {
+        "uuid": "aa76d99f_d29eafef",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T00:03:59Z",
+      "side": 1,
+      "message": "Is this code reachable?  If so, why?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d6f105_c96e7c92",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T00:03:59Z",
+      "side": 1,
+      "message": "I believe that these values are all off-by-1, and should each be 1 larger.  (In fact, I\u0027m a bit surprised that you don\u0027t get a DCHECK triggered for setting a max of 0.  Are you running in a build with DCHECKs enabled?)\n\nIt would be great to update the metricsPrivate API to support recording enumerated histograms directly, so that JS code can use the same API conventions as C++ code.  Is that feasible to implement as part of this CL or as a precursor to landing this CL?  I don\u0027t want to delay your work unnecessarily; but if you have a bit of time to add this common utility, I think it will pay off a lot in terms of safety.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 54
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a37b741_80aff695",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T00:03:59Z",
+      "side": 1,
+      "message": "Please also document that these values are persisted to logs, and should therefore never be renumbered nor reused.",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d99281a_f53fc57f",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 14
@@ -92,6 +161,29 @@
         "startChar": 0,
         "endLine": 47,
         "endChar": 24
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797a2c9a_c34de966",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 60044,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T00:03:59Z",
+      "side": 1,
+      "message": "It\u0027s probably worth mentioning what the \"First\" buckets mean – I believe that they\u0027re only incremented the first time that a given action is taken on a given PDF?",
+      "range": {
+        "startLine": 60042,
+        "startChar": 0,
+        "endLine": 60044,
+        "endChar": 58
       },
       "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
