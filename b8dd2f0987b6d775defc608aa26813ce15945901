@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "445f7433_fbacaa18",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-06T00:49:32Z",
+      "side": 1,
+      "message": "Bare Worklet doesn\u0027t pay attention to Frame. Instead, it observes ExecutionContext (Document) via LifecycleObserver. When the context is destroyed, Worklet::IsContextDestroyed() is called. If AudioWorklet wants to abort tasks when the context is destroyed, it should inherit IsContextDestroyed().\n\nIf we want to avoid dependency on Frame from bare Worklet, we could remove it from the constructor (PaintWorklet still needs it though) and pass Document instead.\n\nI think behavior after Frame is gone is not well-defined generally in the HTML spec. IIUC, DedicatedWorker also doesn\u0027t pay attention to it.",
+      "parentUuid": "c9b3cf79_d2801ef6",
+      "revId": "b8dd2f0987b6d775defc608aa26813ce15945901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bec4847e_9879b5ca",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
