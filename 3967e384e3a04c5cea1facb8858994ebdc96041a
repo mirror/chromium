@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f629c3a1_5c9f5c6d",
+        "filename": "content/browser/renderer_host/media/media_stream_track_metrics_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:35:48Z",
+      "side": 1,
+      "message": "This explicit call isn\u0027t needed.",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22752a2_5b691b88",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:35:48Z",
+      "side": 1,
+      "message": "Is there a reason this is per-process rather than, say, per-frame? Can multiple frames in the same renderer use webrtc?",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852d3147_4978033f",
+        "filename": "content/common/media/media_stream_track_metrics_host_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:35:48Z",
+      "side": 1,
+      "message": "Any reason not to just remove this file altogether now?",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9973a514_6eb47775",
+        "filename": "content/renderer/media/webrtc/media_stream_track_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:35:48Z",
+      "side": 1,
+      "message": "Why not just return mojom::MediaStramTrackMetricsHostPtr\u0026 and avoid the need to store a pointer field as well?",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
