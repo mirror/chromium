@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac4abd9b_69331e49",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T19:53:43Z",
+      "side": 1,
+      "message": "We could make all these arguments deducible from the arguments. Is there a reason not to?",
+      "revId": "4f9a8157241474dfd0c8bcea222d2156d4be9329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

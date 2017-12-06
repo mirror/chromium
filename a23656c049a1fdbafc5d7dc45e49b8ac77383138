@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f441d190_66afb6b2",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T19:53:43Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to share implementations, but if we\u0027re going to go to the trouble of moving things, I think we should keep StrCat and JoinStrings in separate headers. They\u0027re similar conceptually, but ultimately, they\u0027re not quite the same either. The fact that StrCat happens to work with containers just like JoinStrings() is a detail of the current implementation that I see as something that could potentially change down the road, whereas JoinStrings() is always going to work with containers.\n\nGranted this is because I\u0027m still not very fond of the ilist overload...",
+      "parentUuid": "6d53e298_10dfc558",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
