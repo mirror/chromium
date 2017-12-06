@@ -23,7 +23,9 @@ class FramebustBlockMessageDelegate : public InterventionDelegate {
   // Describes the actions the user can take regarding this intervention, they
   // are provided through a callback the caller can pass to the delegate's
   // constructor.
-  enum class InterventionOutcome { kAccepted, kDeclinedAndNavigated };
+  // This class backs a histogram. Any updates should be reflected in enums.xml,
+  // and new elements should come before kCount.
+  enum class InterventionOutcome { kAccepted, kDeclinedAndNavigated, kCount };
 
   typedef base::OnceCallback<void(InterventionOutcome)> OutcomeCallback;
 
