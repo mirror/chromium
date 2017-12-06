@@ -336,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "f89a0590_56b73cdb",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:48:35Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "9b96386f_fb660780",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b728cfd_d5a6c333",
         "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
         "patchSetId": 2
@@ -350,6 +368,24 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bb47b9_c227bad2",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:48:35Z",
+      "side": 1,
+      "message": "same, no action needed",
+      "parentUuid": "7b728cfd_d5a6c333",
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -397,6 +433,30 @@
       "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a912f1e_acf39b82",
+        "filename": "chrome/browser/resources/chromeos/login/offline_ad_login.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:48:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "abddbf44_fec520bf",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "c152714a9ce869972fbe326a891a9bb94fbff0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
