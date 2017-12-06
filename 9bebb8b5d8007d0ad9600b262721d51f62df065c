@@ -160,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "fee67f86_4ac38d24",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T22:53:58Z",
+      "side": 1,
+      "message": "Sounds bad to have such side effect hidden by a harmless name...\n\nI haven\u0027t touched EditingStyle much and don\u0027t have a good idea to improve this class yet, so leave it...",
+      "parentUuid": "b73eebe2_187291fb",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 35
+      },
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3ad2609_187ff0e5",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -433,6 +457,24 @@
       "side": 1,
       "message": "That will be good, but right now I don\u0027t see a way to do it.",
       "parentUuid": "a8e650ee_47f222ea",
+      "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087f82f2_e9c5a23a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-06T22:53:58Z",
+      "side": 1,
+      "message": "This part seems to be checking whether |n| has style \u0027unicode-bidi: embed\u0027 or \u0027unicode-bidi: isolate\u0027.\n\nThe natural implementation is to check |n-\u003eComputedStyle()-\u003eGetUnicodeBidi()|. Not sure why the current code does such a big detour to CSSComputedStyleDeclaration.\n\nIn fact, there\u0027s a FIXME in EditingStyle.h by GetIdentifierValue():\n\n// FIXME: Remove these functions or make them non-global to discourage using\n// CSSStyleDeclaration directly.\nCSSValueID GetIdentifierValue(CSSStyleDeclaration*, CSSPropertyID);\nCSSValueID GetIdentifierValue(CSSPropertyValueSet*, CSSPropertyID);\n\nIn other words, the usage of CSSStyleDeclaration here is discouraged.",
+      "parentUuid": "a8c480fa_123e540e",
       "revId": "9bebb8b5d8007d0ad9600b262721d51f62df065c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
