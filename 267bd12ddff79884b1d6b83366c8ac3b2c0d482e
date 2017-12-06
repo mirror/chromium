@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "4bd1c9ef_0bc959d4",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-06T04:48:01Z",
+      "side": 1,
+      "message": "--test-shard to me seems like it would be a shard number or something. How about --test or --test-name or something?",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cf35e6_ac8c5738",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-06T04:48:01Z",
+      "side": 1,
+      "message": "Add that if unspecified, runs all tests.",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3794e914_df117574",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-06T04:48:01Z",
+      "side": 1,
+      "message": "-t seems like it\u0027s only for xctests (see line 688) but here you are using it for GTests as well.\n\nMore importantly, this interferes with the logic that retries failed test cases. There are several use cases and you need to handle all of them. In every case I assume invert is false because iossim doesn\u0027t support inverted filters for xctests (see line 689):\n\n1. Empty test_filter, empty test_shards. Should not apply any filter.\n2. Empty test_filter, non-empty test_shards. Should add -t for each test in test_shards.\n3. Non-empty test_filter, empty test_shards. Should add -t for each test in test_filter.\n4. Non-empty test_filter, non-empty test_shards. Should add -t for each test in test_filter (if everything is working correctly these tests will implicitly always also be in test_shards).\n\nThe way it is now, if test_shards contains tests A, B, and C and tests A and C pass, the test runner will call get_launch_command(test_filter\u003d[\u0027B\u0027]), but this code will add -t B -t A -t B -t C which is wrong.\n\nI think you need something like:\n\nif test_filter:\n  if self.xctest_path:\n    if not invert:\n      for test in test_filter:\n        cmd.extend([\u0027-t\u0027, test])\n  else:\n    kif_filter \u003d ...\n    gtest_filter \u003d ...\nelif self.xctest_path and not invert:\n  for test in self.test_shard:\n    cmd.extend([\u0027-t\u0027, test])\n\nThis way when there is a test filter, it supersedes test_shards. Note that this approach will not work for devices where you need to support inverted filters.\n\nI also suggest writing test cases for this get_launch_command, because the logic is getting quite complex.",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ac64a3a_a85b3bfc",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 3
@@ -36,6 +87,54 @@
       "writtenOn": "2017-12-06T02:39:54Z",
       "side": 1,
       "message": "Please sort filter (e.g. add filter.sort() after this), to keep tests deterministic. Otherwise list(set()) will give you random order, potentially different every time, making the tests flaky.",
+      "range": {
+        "startLine": 891,
+        "startChar": 10,
+        "endLine": 891,
+        "endChar": 16
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f00d1b_2c6e308a",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-06T04:48:01Z",
+      "side": 1,
+      "message": "Not always true.\n\nHere we have even more cases than with simulators (above) because invert must be supported:\n\n1. test_filter empty, test_shards empty, invert false: do nothing.\n2. test_filter empty, test_shards non-empty, invert false: add OnlyTestIdentifiers: test_shards.\n3. test_filter non-empty, test_shards empty, invert false: add OnlyTestIdentifiers: test_filter.\n4. test_filter non-empty, test_shards non-empty, invert false: add OnlyTestIdentifiers: test_filter ^ test_shards (actually the way this test_runner is implemented you can get away with OnlyTestIdentifiers: test_filter, because it only uses invert\u003dfalse when len(test_filter) \u003d\u003d 1).\n5. test_filter empty, test_shards empty, invert true: shouldn\u0027t happen, but would mean \"run zero tests\".\n6. test_filter empty, test_shards non-empty, invert true: add OnlyTestIdentifiers: test_shards. Invert is used when the test suite crashes to relaunch the test suite with test_filter \u003d \u003call the tests that ran so far\u003e. By skipping all the tests that ran so far we run only those test cases that remain (even if we don\u0027t know what they\u0027re called). If test_filter is empty it means we basically crashed on startup. Invert should be treated as only applying to test_filter, we shouldn\u0027t invert test_shards. In practice this shouldn\u0027t happen because there is special logic for handling \"crashed without starting even a single test case\".\n7. test_filter non-empty, test_shards empty, invert true: add SkipTestIdentifiers: test_filter.\n8. test_filter non-empty, test_shards non-empty, invert true: two options: either a) OnlyTestIdentifiers: test_shards and SkipTestIdentifiers: test_filter, or b) OnlyTestIdentifiers: test_shards - test_filter (these should be equivalent).\n\nIn any case, I would definitely pull this out into its own function and add tests. The logic here is becoming fairly complicated.",
+      "parentUuid": "0ac64a3a_a85b3bfc",
+      "range": {
+        "startLine": 891,
+        "startChar": 26,
+        "endLine": 891,
+        "endChar": 55
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b76b28_084b6511",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-06T04:48:01Z",
+      "side": 1,
+      "message": "You can do it in one step by calling sorted() instead of list() + .sort(). sorted(\u003cset\u003e) returns a sorted list.",
+      "parentUuid": "f1646262_28a1de84",
       "range": {
         "startLine": 891,
         "startChar": 10,
