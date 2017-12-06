@@ -6,17 +6,20 @@
 #define MediaDevices_h
 
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "platform/AsyncMethodRunner.h"
+#include "platform/heap/HeapAllocator.h"
+#include "public/platform/modules/mediastream/media_devices.mojom-blink.h"
 
 namespace blink {
 
 class MediaStreamConstraints;
 class MediaTrackSupportedConstraints;
+class ScriptPromise;
+class ScriptPromiseResolver;
 class ScriptState;
 class UserMediaController;
 
@@ -71,11 +74,18 @@ class MODULES_EXPORT MediaDevices final
   void StopObserving();
   UserMediaController* GetUserMediaController();
   void Dispose();
+  const mojom::blink::MediaDevicesDispatcherHostPtr& GetDispatcherHost(
+      LocalFrame*);
+  void DevicesEnumerated(ScriptPromiseResolver*,
+                         Vector<Vector<mojom::blink::MediaDeviceInfoPtr>>);
+  void OnDispatcherHostConnectionError();
 
   bool observing_;
   bool stopped_;
   Member<AsyncMethodRunner<MediaDevices>> dispatch_scheduled_event_runner_;
   HeapVector<Member<Event>> scheduled_events_;
+  mojom::blink::MediaDevicesDispatcherHostPtr dispatcher_host_;
+  HeapHashSet<Member<ScriptPromiseResolver>> requests_;
 };
 
 }  // namespace blink
