@@ -162,6 +162,24 @@
       "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd20334_ef5a9912",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-06T07:59:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "88f1d0a1_9aa26274",
+      "revId": "a17f599b81654f9fd9663d7105625d31870fba2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
