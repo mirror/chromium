@@ -15,7 +15,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
-#include "media/audio/audio_debug_recording_helper.h"
+#include "media/audio/audio_debug_file_writer.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/media_export.h"
 
@@ -26,21 +26,18 @@ class SingleThreadTaskRunner;
 
 namespace media {
 
-class AudioDebugRecordingHelper;
+class AudioDebugRecordingWriter;
 
 // A manager for audio debug recording that handles registration of data
-// sources and hands them a recorder (AudioDebugRecordingHelper) to feed data
+// sources and hands them a recorder (AudioDebugRecordingWriter) to feed data
 // to. The recorder will unregister with the manager automatically when deleted.
 // When debug recording is enabled, it is enabled on all recorders and
 // constructs a unique file name for each recorder by using a running ID.
 // A somewhat simplified diagram of the the debug recording infrastructure,
 // interfaces omitted:
 //
-//                                AudioDebugFileWriter
-//                                        ^
-//                                        | owns
-//                        owns            |                     owns
-//   OnMoreDataConverter  ---->  AudioDebugRecordingHelper <---------
+//                        owns                                  owns
+//   OnMoreDataConverter  ---->  AudioDebugRecordingWriter <---------
 //            ^                           ^                          |
 //            | owns several              | raw pointer to several   |
 //            |                   AudioDebugRecordingManager         |
@@ -55,8 +52,8 @@ class AudioDebugRecordingHelper;
 // in AudioManager::Create() in WebRTC enabled builds, but not in non WebRTC
 // enabled builds.
 // If AudioDebugRecordingManager is not created, neither is
-// AudioDebugRecordingHelper or AudioDebugFileWriter. In this case the pointers
-// to AudioDebugRecordingManager and AudioDebugRecordingHelper are null.
+// AudioDebugRecordingWriter or AudioDebugFileWriter. In this case the pointers
+// to AudioDebugRecordingManager and AudioDebugRecordingWriter are null.
 //
 class MEDIA_EXPORT AudioDebugRecordingManager {
  public:
@@ -75,15 +72,13 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
       const AudioParameters& params);
 
  protected:
-  // Creates a AudioDebugRecordingHelper. Overridden by test.
-  virtual std::unique_ptr<AudioDebugRecordingHelper>
-  CreateAudioDebugRecordingHelper(
-      const AudioParameters& params,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-      base::OnceClosure on_destruction_closure);
+  // Creates a AudioDebugRecordingWriter. Overridden by test.
+  virtual std::unique_ptr<AudioDebugRecordingWriter>
+  CreateAudioDebugRecordingWriter(const AudioParameters& params,
+                                  base::OnceClosure on_destruction_closure);
 
   // The task runner this class lives on. Also handed to
-  // AudioDebugRecordingHelpers.
+  // AudioDebugRecordingWriters.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
  private:
@@ -95,9 +90,9 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
                            EnableRegisterDisable);
 
   // Map type from source id to recorder and its filename extension.
-  using DebugRecordingHelperMap = std::map<
+  using DebugRecordingWriterMap = std::map<
       int,
-      std::pair<AudioDebugRecordingHelper*, base::FilePath::StringType>>;
+      std::pair<AudioDebugRecordingWriter*, base::FilePath::StringType>>;
 
   // Unregisters a source.
   void UnregisterDebugRecordingSource(int id);
@@ -105,7 +100,7 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   bool IsDebugRecordingEnabled();
 
   // Recorders, one per source.
-  DebugRecordingHelperMap debug_recording_helpers_;
+  DebugRecordingWriterMap debug_recording_writers_;
 
   // The base file name for debug recording files. If this is non-empty, debug
   // recording is enabled.
