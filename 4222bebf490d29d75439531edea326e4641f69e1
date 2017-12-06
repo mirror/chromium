@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "e75aa8b6_34c8371a",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T22:42:22Z",
+      "side": 1,
+      "message": "The backend keeps track of one sub-KiB precision range (per child), and updates that when there is a write. So imagine if someone wrote 2048 + 100 bytes starting at offset 0 into the child. At the time of the write, it would set 2 bits, and update the child_data_.header_last_block to 2, and child_data_.header_last_block_size to 100.",
+      "parentUuid": "6a23a5f7_14bdab47",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
