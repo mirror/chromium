@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "dace76ba_a6d1623c",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "aside: This class should use views::StyledLabel instead.",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29dba7d_50bdc49c",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "aside: This could just use a Label afaict, but I\u0027m not sure why these headers are created outside a views::View hierarchy...",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da3c041_425758c0",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "aside: StyledLabel here and below",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea4e4796_a637272d",
         "filename": "ui/gfx/canvas_skia.cc",
         "patchSetId": 10
@@ -19,6 +70,41 @@
     },
     {
       "key": {
+        "uuid": "a65b1798_db733b1f",
+        "filename": "ui/gfx/canvas_skia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea4e4796_a637272d",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a84e1253_738c5cfd",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "nit: Maybe just call this CreateHarfBuzzInstance or similar?",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afc5ad82_2def982c",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 10
@@ -30,6 +116,160 @@
       "writtenOn": "2017-12-06T11:10:10Z",
       "side": 1,
       "message": "This had a 3 pixel discrepancy :/ (old: 123 pixels, new: 126 pixels)",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d762230a_898e3bf5",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "This bubble frame view test should simply check that the label is as wide as it prefers to be, not that views::Label widths match gfx\u0027s measurements. Drop these GetStringWidth/GetStringSize checks and instead check something like:\n  EXPECT_LE(title_label-\u003eGetPreferredSize().width(), title_label-\u003esize().width());",
+      "parentUuid": "afc5ad82_2def982c",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aecfb7_6a6fcd5a",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "nit: this comment seems a bit redundant now, remove it or simplify? (ditto below)",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0860b9e_ba033c07",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "This can just be Harfbuzz now, right?",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164c562e_d03bae4f",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "nit: focus_bounds \u003d gfx::Rect(display_text_-\u003eGetLineOffset(0), display_text_-\u003eGetStringSize());",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e036b3ff_d9872299",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "nit: \u0027be null\u0027",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec179411_848e5f0f",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this block should be needed anymore... the alignment and directionality of |unelided_text_| can be applied directly to |display_text_|",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002d076a_bcff73f0",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "nit: assign directly to display_text_ and remove the move below.",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa90919_6972e6a6",
+        "filename": "ui/views/controls/label.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "I don\u0027t really like this name, but don\u0027t have a great suggestion... original_text_?",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe538cdc_6a5a02cb",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T17:22:04Z",
+      "side": 1,
+      "message": "Is there a better check than this?",
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
