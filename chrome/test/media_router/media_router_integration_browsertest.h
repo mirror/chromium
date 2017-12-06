@@ -102,10 +102,11 @@ class MediaRouterIntegrationBrowserTest : public MediaRouterBaseBrowserTest {
   // that the presentation has successfully started if |should_succeed| is true.
   content::WebContents* StartSessionWithTestPageAndChooseSink();
 
-  // Opens the MR dialog and clicks through the motions of casting a file.
+  // Opens the MR dialog and clicks through the motions of casting a file. Sets
+  // up the route provider to succeed or otherwise based on |route_success|.
   // Note: The system dialog portion has to be mocked out as it cannot be
   // simulated.
-  void OpenDialogAndCastFile();
+  void OpenDialogAndCastFile(bool route_success = true);
 
   // Opens the MR dialog and clicks through the motions of choosing to cast
   // file, file returns an issue. Note: The system dialog portion has to be
