@@ -22,15 +22,15 @@ void DisplayErrorObserver::OnDisplayModeChangeFailed(
     const display::DisplayConfigurator::DisplayStateList& displays,
     display::MultipleDisplayState new_state) {
   bool internal_display_failed = false;
-  LOG(ERROR) << "Failed to configure the following display(s):";
+  DLOG(ERROR) << "Failed to configure the following display(s):";
   for (auto* display : displays) {
     const int64_t display_id = display->display_id();
     internal_display_failed |=
         display::Display::IsInternalDisplayId(display_id);
-    LOG(ERROR) << "- Display with ID = " << display_id << ", and EDID = "
-               << base::HexEncode(display->edid().data(),
-                                  display->edid().size())
-               << ".";
+    DLOG(ERROR) << "- Display with ID = " << display_id << ", and EDID = "
+                << base::HexEncode(display->edid().data(),
+                                   display->edid().size())
+                << ".";
   }
 
   if (internal_display_failed && displays.size() == 1u) {

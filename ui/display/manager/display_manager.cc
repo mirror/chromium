@@ -218,13 +218,13 @@ bool ValidateMatrixForDisplayInfoList(
   for (const auto& row : matrix) {
     for (const auto& id : row) {
       if (!matrix_ids.emplace(id).second) {
-        LOG(ERROR) << "Matrix has a repeated ID: " << id;
+        DLOG(ERROR) << "Matrix has a repeated ID: " << id;
         return false;
       }
 
       if (!FindInfoById(display_info_list, id)) {
-        LOG(ERROR) << "Matrix has ID: " << id << " with no corresponding info "
-                   << "in the display info list.";
+        DLOG(ERROR) << "Matrix has ID: " << id << " with no corresponding info "
+                    << "in the display info list.";
         return false;
       }
     }
@@ -232,8 +232,8 @@ bool ValidateMatrixForDisplayInfoList(
 
   for (const auto& info : display_info_list) {
     if (!matrix_ids.count(info.id())) {
-      LOG(ERROR) << "Display info with ID: " << info.id() << " doesn't exist "
-                 << "in the layout matrix.";
+      DLOG(ERROR) << "Display info with ID: " << info.id() << " doesn't exist "
+                  << "in the layout matrix.";
       return false;
     }
   }

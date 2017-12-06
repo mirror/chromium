@@ -274,14 +274,14 @@ void TouchDeviceManager::AssociateTouchscreens(
 
   if (VLOG_IS_ON(2)) {
     for (const ManagedDisplayInfo* display : displays) {
-      VLOG(2) << "Received display " << display->name()
-              << " (size: " << display->GetNativeModeSize().ToString() << ", "
-              << "sys_path: " << display->sys_path().LossyDisplayName() << ")";
+      DVLOG(2) << "Received display " << display->name()
+               << " (size: " << display->GetNativeModeSize().ToString() << ", "
+               << "sys_path: " << display->sys_path().LossyDisplayName() << ")";
     }
     for (const ui::TouchscreenDevice& device : devices) {
-      VLOG(2) << "Received device " << device.name
-              << " (size: " << device.size.ToString()
-              << ", sys_path: " << device.sys_path.LossyDisplayName() << ")";
+      DVLOG(2) << "Received device " << device.name
+               << " (size: " << device.size.ToString()
+               << ", sys_path: " << device.sys_path.LossyDisplayName() << ")";
     }
   }
 
@@ -293,13 +293,13 @@ void TouchDeviceManager::AssociateTouchscreens(
   AssociateAnyRemainingDevices(&displays, &devices);
 
   for (const ui::TouchscreenDevice& device : devices)
-    LOG(WARNING) << "Unmatched device " << device.name;
+    DLOG(WARNING) << "Unmatched device " << device.name;
 }
 
 void TouchDeviceManager::AssociateInternalDevices(DisplayInfoList* displays,
                                                   DeviceList* devices) {
-  VLOG(2) << "Trying to match internal devices (" << displays->size()
-          << " displays and " << devices->size() << " devices to match)";
+  DVLOG(2) << "Trying to match internal devices (" << displays->size()
+           << " displays and " << devices->size() << " devices to match)";
 
   // Internal device assocation has a couple of gotchas:
   // - There can be internal devices but no internal display, or visa-versa.
@@ -323,20 +323,20 @@ void TouchDeviceManager::AssociateInternalDevices(DisplayInfoList* displays,
     }
 
     if (internal_display) {
-      VLOG(2) << "=> Matched device " << internal_device.name << " to display "
-              << internal_display->name();
+      DVLOG(2) << "=> Matched device " << internal_device.name << " to display "
+               << internal_display->name();
       Associate(internal_display, internal_device);
       matched = true;
     } else {
       // We do not want to associate an internal device to any other display.
-      VLOG(2) << "=> Removing internal device " << internal_device.name;
+      DVLOG(2) << "=> Removing internal device " << internal_device.name;
     }
     device_it = devices->erase(device_it);
   }
 
   if (!matched && internal_display) {
-    VLOG(2) << "=> No device found to match with internal display "
-            << internal_display->name();
+    DVLOG(2) << "=> No device found to match with internal display "
+             << internal_display->name();
   }
 }
 
@@ -345,17 +345,17 @@ void TouchDeviceManager::AssociateFromHistoricalData(DisplayInfoList* displays,
   if (!devices->size() || !displays->size())
     return;
 
-  VLOG(2) << "Trying to match " << devices->size() << " devices "
-          << "and " << displays->size() << " displays based on historical "
-          << "preferences.";
+  DVLOG(2) << "Trying to match " << devices->size() << " devices "
+           << "and " << displays->size() << " displays based on historical "
+           << "preferences.";
 
   for (auto device_it = devices->begin(); device_it != devices->end();) {
     auto* matched_display_info = GetBestMatchForDevice(
         touch_associations_, TouchDeviceIdentifier::FromDevice(*device_it),
         displays);
     if (matched_display_info) {
-      VLOG(2) << "=> Matched device " << (*device_it).name << " to display "
-              << matched_display_info->name();
+      DVLOG(2) << "=> Matched device " << (*device_it).name << " to display "
+               << matched_display_info->name();
       Associate(matched_display_info, *device_it);
       device_it = devices->erase(device_it);
     } else {
@@ -366,8 +366,8 @@ void TouchDeviceManager::AssociateFromHistoricalData(DisplayInfoList* displays,
 
 void TouchDeviceManager::AssociateUdlDevices(DisplayInfoList* displays,
                                              DeviceList* devices) {
-  VLOG(2) << "Trying to match udl devices (" << displays->size()
-          << " displays and " << devices->size() << " devices to match)";
+  DVLOG(2) << "Trying to match udl devices (" << displays->size()
+           << " displays and " << devices->size() << " devices to match)";
 
   for (auto display_it = displays->begin(); display_it != displays->end();
        display_it++) {
@@ -376,9 +376,9 @@ void TouchDeviceManager::AssociateUdlDevices(DisplayInfoList* displays,
 
     if (device_it != devices->end()) {
       const ui::TouchscreenDevice& device = *device_it;
-      VLOG(2) << "=> Matched device " << device.name << " to display "
-              << display->name()
-              << " (score=" << GetUdlAssociationScore(display, device) << ")";
+      DVLOG(2) << "=> Matched device " << device.name << " to display "
+               << display->name()
+               << " (score=" << GetUdlAssociationScore(display, device) << ")";
       Associate(display, device);
       devices->erase(device_it);
     }
@@ -388,8 +388,8 @@ void TouchDeviceManager::AssociateUdlDevices(DisplayInfoList* displays,
 void TouchDeviceManager::AssociateSameSizeDevices(DisplayInfoList* displays,
                                                   DeviceList* devices) {
   // Associate screens/displays with the same size.
-  VLOG(2) << "Trying to match same-size devices (" << displays->size()
-          << " displays and " << devices->size() << " devices to match)";
+  DVLOG(2) << "Trying to match same-size devices (" << displays->size()
+           << " displays and " << devices->size() << " devices to match)";
 
   for (auto display_it = displays->begin(); display_it != displays->end();
        display_it++) {
@@ -415,9 +415,10 @@ void TouchDeviceManager::AssociateSameSizeDevices(DisplayInfoList* displays,
 
     if (device_it != devices->end()) {
       const ui::TouchscreenDevice& device = *device_it;
-      VLOG(2) << "=> Matched device " << device.name << " to display "
-              << display->name() << " (display_size: " << native_size.ToString()
-              << ", device_size: " << device.size.ToString() << ")";
+      DVLOG(2) << "=> Matched device " << device.name << " to display "
+               << display->name()
+               << " (display_size: " << native_size.ToString()
+               << ", device_size: " << device.size.ToString() << ")";
       Associate(display, device);
 
       device_it = devices->erase(device_it);
@@ -429,8 +430,8 @@ void TouchDeviceManager::AssociateToSingleDisplay(DisplayInfoList* displays,
                                                   DeviceList* devices) {
   // If there is only one display left, then we should associate all input
   // devices with it.
-  VLOG(2) << "Trying to match to single display (" << displays->size()
-          << " displays and " << devices->size() << " devices to match)";
+  DVLOG(2) << "Trying to match to single display (" << displays->size()
+           << " displays and " << devices->size() << " devices to match)";
 
   std::size_t num_displays_excluding_internal = displays->size();
   ManagedDisplayInfo* internal_display = GetInternalDisplay(displays);
@@ -447,8 +448,8 @@ void TouchDeviceManager::AssociateToSingleDisplay(DisplayInfoList* displays,
     display = (*displays)[1];
 
   for (const ui::TouchscreenDevice& device : *devices) {
-    VLOG(2) << "=> Matched device " << device.name << " to display "
-            << display->name();
+    DVLOG(2) << "=> Matched device " << device.name << " to display "
+             << display->name();
     Associate(display, device);
   }
   devices->clear();
@@ -458,8 +459,8 @@ void TouchDeviceManager::AssociateAnyRemainingDevices(DisplayInfoList* displays,
                                                       DeviceList* devices) {
   if (!displays->size() || !devices->size())
     return;
-  VLOG(2) << "Trying to match remaining " << devices->size()
-          << " devices to a display.";
+  DVLOG(2) << "Trying to match remaining " << devices->size()
+           << " devices to a display.";
 
   // Try to match all devices to the internal display.
   ManagedDisplayInfo* display = GetInternalDisplay(displays);
@@ -468,11 +469,12 @@ void TouchDeviceManager::AssociateAnyRemainingDevices(DisplayInfoList* displays,
     // the other displays.
     display = *(displays->begin());
 
-    VLOG(2) << "Could not find any internal display. Matching all devices to a "
-            << "random non internal display.";
+    DVLOG(2)
+        << "Could not find any internal display. Matching all devices to a "
+        << "random non internal display.";
   }
-  VLOG(2) << "Matching " << devices->size() << " touch devices to "
-          << display->name() << "[" << display->id() << "]";
+  DVLOG(2) << "Matching " << devices->size() << " touch devices to "
+           << display->name() << "[" << display->id() << "]";
 
   // device_it is iterated within the loop.
   for (auto device_it = devices->begin(); device_it != devices->end();) {
@@ -483,7 +485,7 @@ void TouchDeviceManager::AssociateAnyRemainingDevices(DisplayInfoList* displays,
       continue;
     }
 
-    VLOG(2) << "=> Matched " << (*device_it).name << " to " << display->name();
+    DVLOG(2) << "=> Matched " << (*device_it).name << " to " << display->name();
     Associate(display, *device_it);
     device_it = devices->erase(device_it);
   }
@@ -631,8 +633,8 @@ bool IsInternalTouchscreenDevice(const TouchDeviceIdentifier& identifier) {
     if (TouchDeviceIdentifier::FromDevice(device) == identifier)
       return device.type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL;
   }
-  VLOG(1) << "Touch device identified by " << identifier << " is currently"
-          << " not connected to the device or is an invalid device.";
+  DVLOG(1) << "Touch device identified by " << identifier << " is currently"
+           << " not connected to the device or is an invalid device.";
   return false;
 }
 

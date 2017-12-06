@@ -49,7 +49,8 @@ float GetForcedDeviceScaleFactorImpl() {
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kForceDeviceScaleFactor);
     if (!base::StringToDouble(value, &scale_in_double)) {
-      LOG(ERROR) << "Failed to parse the default device scale factor:" << value;
+      DLOG(ERROR) << "Failed to parse the default device scale factor:"
+                  << value;
       scale_in_double = 1.0;
     }
   }
@@ -129,7 +130,7 @@ gfx::ColorSpace Display::GetForcedColorProfile() {
     return gfx::ICCProfile::FromParametricColorSpace(color_space)
         .GetColorSpace();
   }
-  LOG(ERROR) << "Invalid forced color profile";
+  DLOG(ERROR) << "Invalid forced color profile";
   return gfx::ColorSpace::CreateSRGB();
 }
 
