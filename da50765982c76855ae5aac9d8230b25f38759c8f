@@ -22,6 +22,30 @@
       "revId": "da50765982c76855ae5aac9d8230b25f38759c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bd3163_243814fa",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 39
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-06T05:22:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5f48f4e5_d99c1bf3",
+      "range": {
+        "startLine": 649,
+        "startChar": 8,
+        "endLine": 649,
+        "endChar": 23
+      },
+      "revId": "da50765982c76855ae5aac9d8230b25f38759c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
