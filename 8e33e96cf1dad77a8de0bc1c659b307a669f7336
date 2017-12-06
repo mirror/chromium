@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b5e51096_77690362",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/BaseRenderingContext2D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T01:05:03Z",
+      "side": 1,
+      "message": "Also, regarding putting it in SetOriginTainted, I can\u0027t do that because GetFilter() can\ncall SetOriginTainted, which delete the filter while it\u0027s being created.",
+      "parentUuid": "3365c537_f21cf5f9",
+      "range": {
+        "startLine": 1319,
+        "startChar": 4,
+        "endLine": 1319,
+        "endChar": 43
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b647fa3a_73c0ec8e",
         "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
         "patchSetId": 10
@@ -236,6 +260,30 @@
       "side": 1,
       "message": "I would like to leave that for a followup. OffscreenCanvas has not yet launched and\nhas special tests.This is built off of last_effect, which is tainted if necessary via\nBuildFilterEffect, right?",
       "parentUuid": "b647fa3a_73c0ec8e",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 310,
+        "endChar": 3
+      },
+      "revId": "8e33e96cf1dad77a8de0bc1c659b307a669f7336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a71667_d5c76b8f",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T01:05:03Z",
+      "side": 1,
+      "message": "Ignore my second sentence.",
+      "parentUuid": "52494167_6a8814af",
       "range": {
         "startLine": 308,
         "startChar": 4,
