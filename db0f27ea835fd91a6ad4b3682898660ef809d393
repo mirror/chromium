@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7363f1_a00a2c2f",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-06T02:21:35Z",
+      "side": 1,
+      "message": "Suggest appending \"...that is an abstract representation of an airstrip landing\" to the desc, so translator can choose the right word.",
+      "range": {
+        "startLine": 266,
+        "startChar": 132,
+        "endLine": 266,
+        "endChar": 139
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "015e38cf_50ed9bf1",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-06T02:21:35Z",
+      "side": 1,
+      "message": "Suggest appending \"...that is an abstract representation of a lunar landscape. Moonscape is another possible translation.\" to the desc, so translator can choose the right word.",
+      "range": {
+        "startLine": 269,
+        "startChar": 132,
+        "endLine": 269,
+        "endChar": 137
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ce4e5b7_0040c27e",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-06T02:21:35Z",
+      "side": 1,
+      "message": "Change to \"...of abstract geometric figure containing dots\"",
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "783e4ad1_dff40158",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-06T02:21:35Z",
+      "side": 1,
+      "message": "Change to \"user icon with an abstract picture of a geometric figure containing concentric circles, named \u0027Spin\u0027\"",
+      "range": {
+        "startLine": 275,
+        "startChar": 132,
+        "endLine": 275,
+        "endChar": 136
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "541d190c_90074b2c",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-06T02:21:35Z",
+      "side": 1,
+      "message": "containing \u0027Grids\u0027",
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
