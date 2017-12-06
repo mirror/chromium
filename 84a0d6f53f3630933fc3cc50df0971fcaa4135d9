@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c2bda924_1fc8ccb7",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T18:40:54Z",
+      "side": 1,
+      "message": "I spoke with reveman@, and he believes that keeping it as an output surface property would make it easier for the CRTC color matrix future work. However, we\u0027d have to verify that using CRTC matrix is possible on certain devices.\n\nIn any cases, can we keep it as is for now so that I can unblock and move forward with this CL and the following two? Any needed refactoring I can handle in future CLs.",
+      "parentUuid": "914a70b4_a6ac9645",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f9b40d_0b4048ef",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I don\u0027t know. From what I understood, I thought we won\u0027t have to worry about this at the moment. I need to confirm with Dana and Reveman.",
       "parentUuid": "c63dff4e_3a6f44b6",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0cb6d3_0a76ab21",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-06T18:40:54Z",
+      "side": 1,
+      "message": "I just spoke with Dana, and indeed we need to add this to SkiaRenderer. But I prefer to do this in another CL, as this is the first time I\u0027m looking at the SkiaRenderer and I need more time to figure out how it works and how to test Night Light with it. Probably after I hook it up end-to-end, then I\u0027d start working on adding it to SkiaRenderer.",
+      "parentUuid": "c7db00f0_640dfc81",
       "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
