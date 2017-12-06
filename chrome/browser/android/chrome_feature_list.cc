@@ -92,6 +92,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &data_reduction_proxy::features::kDataReductionSiteBreakdown,
     &kFullscreenActivity,
     &kImprovedA2HS,
+    &kIncognitoSnapshots,
     &kLanguagesPreference,
     &kNewPhotoPicker,
     &kNoCreditCardAbort,
@@ -262,6 +263,9 @@ const base::Feature kDownloadAutoResumptionThrottling{
 
 const base::Feature kDownloadHomeShowStorageInfo{
     "DownloadHomeShowStorageInfo", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kIncognitoSnapshots{"IncognitoSnapshots",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kFullscreenActivity{"FullscreenActivity",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
