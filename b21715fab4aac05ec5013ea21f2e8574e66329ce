@@ -198,6 +198,30 @@
       "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba32b222_e3de38d8",
+        "filename": "chrome/common/extensions/docs/templates/public/extensions/redirects.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-06T23:33:13Z",
+      "side": 1,
+      "message": "Totally missed it, sorry!",
+      "parentUuid": "4b890bb3_1a28256d",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
