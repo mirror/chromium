@@ -69,8 +69,6 @@ source_set("audio") {
     "alive_checker.h",
     "audio_debug_file_writer.cc",
     "audio_debug_file_writer.h",
-    "audio_debug_recording_helper.cc",
-    "audio_debug_recording_helper.h",
     "audio_debug_recording_manager.cc",
     "audio_debug_recording_manager.h",
     "audio_device_description.cc",
