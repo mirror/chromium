@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "6a23a5f7_14bdab47",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T19:55:39Z",
+      "side": 1,
+      "message": "Maybe bitmap_range.  bits_range sounds like a range of bits, which is both not illuminating and not correct.  I still don\u0027t know what last_write is.  child_data_header_range?  Though maybe if I knew how that was related to \"last_write\", that would be obvious.",
+      "parentUuid": "4540d91d_38dfacfa",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
