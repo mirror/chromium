@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7551e1b2_f55e96ad",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-06T12:12:14Z",
+      "side": 1,
+      "message": "Warn/error if lightweight_instrumention is not set, but some of these options are? Otherwise behavior will silently be unexpected.",
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20d3bd86_96ca33da",
         "filename": "tools/cygprofile/orderfile_generator_backend.py",
         "patchSetId": 2
