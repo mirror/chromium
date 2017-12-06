@@ -4,29 +4,9 @@
 
 module printing.mojom;
 
-import "ui/gfx/geometry/mojo/geometry.mojom";
+import "chrome/services/printing/public/interfaces/pdf_render_settings.mojom";
 
-const string kPdfToPwgRasterConverterServiceName =
-    "pdf_to_pwg_raster_converter";
-
-struct PDFRenderSettings {
-  enum Mode {
-    NORMAL = 0,
-    // Modes below are Windows only.
-    TEXTONLY,
-    GDI_TEXT,
-    POSTSCRIPT_LEVEL2,
-    POSTSCRIPT_LEVEL3
-  };
-
-  gfx.mojom.Rect area;
-  gfx.mojom.Point offsets;
-  int32 dpi;
-  bool autorotate;
-  Mode mode;
-};
-
-struct PWGRasterSettings {
+struct PwgRasterSettings {
   enum TransformType {
     TRANSFORM_NORMAL,
     TRANSFORM_ROTATE_180,
@@ -44,9 +24,9 @@ struct PWGRasterSettings {
   bool reverse_page_order;
 };
 
-interface PDFToPWGRasterConverter {
+interface PdfToPwgRasterConverter {
   Convert(handle pdf_file_in,
-          PDFRenderSettings pdf_settings,
-          PWGRasterSettings pwg_raster_settings,
+          PdfRenderSettings pdf_settings,
+          PwgRasterSettings pwg_raster_settings,
           handle pwg_raster_file_out) => (bool success);
 };

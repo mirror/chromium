@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h"
+#include "chrome/services/printing/pdf_to_pwg_raster_converter.h"
 
 #include "chrome/utility/cloud_print/bitmap_image.h"
 #include "chrome/utility/cloud_print/pwg_encoder.h"
@@ -14,7 +14,7 @@ namespace printing {
 
 namespace {
 
-bool RenderPDFPagesToPWGRaster(base::File pdf_file,
+bool RenderPdfPagesToPwgRaster(base::File pdf_file,
                                const PdfRenderSettings& settings,
                                const PwgRasterSettings& bitmap_settings,
                                base::File bitmap_file) {
@@ -96,13 +96,13 @@ bool RenderPDFPagesToPWGRaster(base::File pdf_file,
 
 }  // namespace
 
-PDFToPWGRasterConverterImpl::PDFToPWGRasterConverterImpl(
+PdfToPwgRasterConverterImpl::PdfToPwgRasterConverterImpl(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : service_ref_(std::move(service_ref)) {}
 
-PDFToPWGRasterConverterImpl::~PDFToPWGRasterConverterImpl() {}
+PdfToPwgRasterConverterImpl::~PdfToPwgRasterConverterImpl() {}
 
-void PDFToPWGRasterConverterImpl::Convert(
+void PdfToPwgRasterConverterImpl::Convert(
     mojo::ScopedHandle pdf_file_in,
     const PdfRenderSettings& pdf_settings,
     const PwgRasterSettings& pwg_raster_settings,
@@ -111,7 +111,7 @@ void PDFToPWGRasterConverterImpl::Convert(
   base::PlatformFile pdf_file;
   if (mojo::UnwrapPlatformFile(std::move(pdf_file_in), &pdf_file) !=
       MOJO_RESULT_OK) {
-    LOG(ERROR) << "Invalid PDF file passed to PDFToPWGRasterConverterImpl";
+    LOG(ERROR) << "Invalid PDF file passed to PdfToPwgRasterConverterImpl";
     std::move(callback).Run(false);
     return;
   }
@@ -120,12 +120,12 @@ void PDFToPWGRasterConverterImpl::Convert(
   if (mojo::UnwrapPlatformFile(std::move(pwg_raster_file_out),
                                &pwg_raster_file) != MOJO_RESULT_OK) {
     LOG(ERROR)
-        << "Invalid PWGRaster file passed to PDFToPWGRasterConverterImpl";
+        << "Invalid PWGRaster file passed to PdfToPwgRasterConverterImpl";
     std::move(callback).Run(false);
     return;
   }
 
-  bool result = RenderPDFPagesToPWGRaster(base::File(pdf_file), pdf_settings,
+  bool result = RenderPdfPagesToPwgRaster(base::File(pdf_file), pdf_settings,
                                           pwg_raster_settings,
                                           base::File(pwg_raster_file));
   std::move(callback).Run(result);
