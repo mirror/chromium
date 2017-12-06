@@ -334,6 +334,20 @@ void CounterNode::RemoveChild(CounterNode* old_child) {
   DCHECK(!old_child->first_child_);
   DCHECK(!old_child->last_child_);
 
+  DetachChild(old_child);
+}
+
+void CounterNode::MoveToLastChildOf(CounterNode* new_parent,
+                                    const AtomicString& identifier) {
+  DCHECK(parent_);
+  DCHECK(new_parent);
+  parent_->DetachChild(this);
+  new_parent->InsertAfter(this, new_parent->LastChild(), identifier);
+}
+
+void CounterNode::DetachChild(CounterNode* old_child) {
+  DCHECK(old_child);
+
   CounterNode* next = old_child->next_sibling_;
   CounterNode* previous = old_child->previous_sibling_;
 
