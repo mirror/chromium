@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd0b887_2db21028",
+        "filename": "base/strings/string_number_conversions.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T21:20:35Z",
+      "side": 1,
+      "message": "treat",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "1d3fc61052a08ac11641478a322aaac3c07a4061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
