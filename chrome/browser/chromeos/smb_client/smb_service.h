@@ -31,6 +31,8 @@ class SmbService : public KeyedService, public ProviderInterface {
   explicit SmbService(Profile* profile);
   ~SmbService() override;
 
+  static SmbService* Get(content::BrowserContext* context);
+
   // Mounts an SMB file system, passing |options| on to
   // file_system_provider::Service::MountFileSystem().
   base::File::Error Mount(const file_system_provider::MountOptions& options);
