@@ -259,10 +259,23 @@ void ProfilingProcessHost::Observe(
 bool ProfilingProcessHost::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  profiling_service_->DumpProcessesForTracing(
-      base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
-                     base::Unretained(this), args.dump_guid));
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(FROM_HERE,
+                 base::BindOnce(&ProfilingProcessHost::OnMemoryDumpOnIOThread,
+                                base::Unretained(this), args.dump_guid));
   return true;
+}
+
+void ProfilingProcessHost::OnMemoryDumpOnIOThread(uint64_t dump_guid) {
+  bool force_prune = IsReportForUpload();
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  bool keep_small_allocations =
+      !force_prune && cmdline->HasSwitch(switches::kMemlogKeepSmallAllocations);
+
+  profiling_service_->DumpProcessesForTracing(
+      keep_small_allocations,
+      base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
+                     base::Unretained(this), dump_guid));
 }
 
 void ProfilingProcessHost::OnDumpProcessesForTracingCallback(
@@ -465,15 +478,23 @@ void ProfilingProcessHost::RequestProcessReport(std::string trigger_name) {
     return;
   }
 
+  if (IsReportForUpload())
+    return;
+  SetIsReportForUpload(true);
+
+  // It's safe to pass a raw pointer for ProfilingProcessHost because it's a
+  // singleton that's never destroyed.
   auto finish_report_callback = base::BindOnce(
-      [](std::string trigger_name, bool success, std::string trace) {
+      [](ProfilingProcessHost* host, std::string trigger_name, bool success,
+         std::string trace) {
         UMA_HISTOGRAM_BOOLEAN("OutOfProcessHeapProfiling.RecordTrace.Success",
                               success);
+        host->SetIsReportForUpload(false);
         if (success) {
           UploadTraceToCrashServer(std::move(trace), std::move(trigger_name));
         }
       },
-      std::move(trigger_name));
+      base::Unretained(this), std::move(trigger_name));
   RequestTraceWithHeapDump(std::move(finish_report_callback), false);
 }
 
@@ -799,6 +820,16 @@ void ProfilingProcessHost::StartProfilingRenderer(
 
 void ProfilingProcessHost::SetRendererSamplingAlwaysProfileForTest() {
   always_sample_for_tests_ = true;
+}
+
+bool ProfilingProcessHost::IsReportForUpload() {
+  base::AutoLock lock(is_report_for_upload_lock_);
+  return is_report_for_upload_;
+}
+
+void ProfilingProcessHost::SetIsReportForUpload(bool new_state) {
+  base::AutoLock lock(is_report_for_upload_lock_);
+  is_report_for_upload_ = new_state;
 }
 
 }  // namespace profiling
