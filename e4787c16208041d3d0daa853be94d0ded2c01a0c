@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc966ce4_ce8b1bd2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78412827_af902462",
+      "range": {
+        "startLine": 143,
+        "startChar": 44,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f4e2dd_79dd5238",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T10:09:42Z",
       "side": 1,
       "message": "Can\u0027t we modify the stack view directly here and below?",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b959c79e_0f2beee4",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "As per the last comment. We\u0027ll go with buttons translation transformation.",
+      "parentUuid": "d4f4e2dd_79dd5238",
       "range": {
         "startLine": 180,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "775aecfa_47a54a77",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "Good catch, thanks!",
+      "parentUuid": "70261b93_ab2fb100",
+      "range": {
+        "startLine": 705,
+        "startChar": 2,
+        "endLine": 705,
+        "endChar": 3
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85f7c542_d63b49b1",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a62efc82_daddd2bf",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f7c542_d63b49b1",
+      "range": {
+        "startLine": 712,
+        "startChar": 0,
+        "endLine": 712,
+        "endChar": 60
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce463c05_1e1fdf17",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-06T10:09:42Z",
       "side": 1,
       "message": "Can\u0027t you directly set the alpha of the leading/trailing stack view instead?",
+      "range": {
+        "startLine": 845,
+        "startChar": 8,
+        "endLine": 845,
+        "endChar": 42
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53f427e_1e64e1ca",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "Just tried and its not working... On the other hand if the stackview ever changes which is a real possibility with the \"new coat of paint\" (background is added,etc.) we only want the buttons to fade out, so I think we can keep it this way. WDYT?",
+      "parentUuid": "ce463c05_1e1fdf17",
       "range": {
         "startLine": 845,
         "startChar": 8,
@@ -152,6 +272,30 @@
       "side": 1,
       "message": "I agree. If you need to actually change the frame, you should update constraints and then animate the -layoutIfNeeded call.\n\nOr (and this is probably easiest here) you can set the view\u0027s transform to translate it by |offset| and animate that. The frame stays the same, the view just gets drawn differently. Since transforms don\u0027t affect the layout engine at all they are very fast (just remember that a view whose transform isn\u0027t the identity transform has an undefined frame).",
       "parentUuid": "8bf24f5f_ea01f9f1",
+      "range": {
+        "startLine": 859,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 62
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb531424_93d7e05d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-06T20:03:07Z",
+      "side": 1,
+      "message": "Sounds good! I\u0027ll set the view\u0027s transform.",
+      "parentUuid": "9339a0da_7127d799",
       "range": {
         "startLine": 859,
         "startChar": 0,
