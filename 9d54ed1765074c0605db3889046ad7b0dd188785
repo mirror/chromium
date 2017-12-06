@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86486036_77194f0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-06T00:41:53Z",
+      "side": 1,
+      "message": "It\u0027s better to use crrev.com/1840113003 instead of the hash because then it can more easily be viewed in a browser.",
+      "range": {
+        "startLine": 10,
+        "startChar": 52,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234deb11_c49cb5a5",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-06T00:41:53Z",
+      "side": 1,
+      "message": "Why is a return added here? It\u0027s harmless but does it improve the code?",
+      "revId": "9d54ed1765074c0605db3889046ad7b0dd188785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
