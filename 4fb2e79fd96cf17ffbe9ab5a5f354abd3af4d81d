@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61007d9_1e1b4500",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T01:23:58Z",
+      "side": 1,
+      "message": "I\u0027d put this exception under a new comment for chromium.sandbox so it\u0027s more easily searchable later.",
+      "revId": "4fb2e79fd96cf17ffbe9ab5a5f354abd3af4d81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4aba0f8_f1cd9e14",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-06T01:23:58Z",
+      "side": 1,
+      "message": "Add comment about chromium.sandbox to make this easier to find later?",
+      "revId": "4fb2e79fd96cf17ffbe9ab5a5f354abd3af4d81d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
