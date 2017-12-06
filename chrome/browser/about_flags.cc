@@ -882,35 +882,6 @@ const FeatureEntry::FeatureVariation
         {"Learning", kSpeculativeResourcePrefetchingLearning,
          arraysize(kSpeculativeResourcePrefetchingLearning), nullptr}};
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
-const FeatureEntry::FeatureParam kPauseBackgroundTabsMinimalEngagment[] = {
-    {pausetabs::kFeatureName, pausetabs::kModeParamMinimal}};
-
-const FeatureEntry::FeatureParam kPauseBackgroundTabsLowEngagment[] = {
-    {pausetabs::kFeatureName, pausetabs::kModeParamLow}};
-
-const FeatureEntry::FeatureParam kPauseBackgroundTabsMediumEngagment[] = {
-    {pausetabs::kFeatureName, pausetabs::kModeParamMedium}};
-
-const FeatureEntry::FeatureParam kPauseBackgroundTabsHighEngagment[] = {
-    {pausetabs::kFeatureName, pausetabs::kModeParamHigh}};
-
-const FeatureEntry::FeatureParam kPauseBackgroundTabsMaxEngagment[] = {
-    {pausetabs::kFeatureName, pausetabs::kModeParamMax}};
-
-const FeatureEntry::FeatureVariation kPauseBackgroundTabsVariations[] = {
-    {"minimal engagement", kPauseBackgroundTabsMinimalEngagment,
-     arraysize(kPauseBackgroundTabsMinimalEngagment), nullptr},
-    {"low engagement", kPauseBackgroundTabsLowEngagment,
-     arraysize(kPauseBackgroundTabsLowEngagment), nullptr},
-    {"medium engagement", kPauseBackgroundTabsMediumEngagment,
-     arraysize(kPauseBackgroundTabsMediumEngagment), nullptr},
-    {"high engagement", kPauseBackgroundTabsHighEngagment,
-     arraysize(kPauseBackgroundTabsHighEngagment), nullptr},
-    {"max engagement", kPauseBackgroundTabsMaxEngagment,
-     arraysize(kPauseBackgroundTabsMaxEngagment), nullptr}};
-#endif
-
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam
     kAutofillCreditCardPopupLayoutFeatureVariationIconAtStart[] = {
@@ -3097,14 +3068,6 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
 #endif  // OS_ANDROID
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
-    {pausetabs::kFeatureName, flag_descriptions::kPauseBackgroundTabsName,
-     flag_descriptions::kPauseBackgroundTabsDescription, kOsDesktop,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(pausetabs::kFeature,
-                                    kPauseBackgroundTabsVariations,
-                                    "PauseBackgroundTabs")},
-#endif
-
 #if defined(OS_CHROMEOS)
     {"ash-disable-smooth-screen-rotation",
      flag_descriptions::kAshDisableSmoothScreenRotationName,
@@ -3574,6 +3537,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kStopLoadingInBackgroundName,
      flag_descriptions::kStopLoadingInBackgroundDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kStopLoadingInBackground)},
+
+    {"stop-in-background", flag_descriptions::kStopInBackgroundName,
+     flag_descriptions::kStopInBackgroundDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kStopInBackground)},
 
 #if defined(TOOLKIT_VIEWS)
     {"experimental-tab-controller",
