@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a299e3ed_cc272903",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:04:01Z",
+      "side": 1,
+      "message": "const std::vector\u003c....\u003e\u0026 focus_ring_layers_for_testing() {\n  ...\n}",
+      "revId": "02a1b5261e968962d392c9f0dcd0740da57bca51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0534809d_8003382e",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:04:01Z",
+      "side": 1,
+      "message": "I think just set_focus_ring_observer_for_testing(base::RepeatingCallback\u003cvoid()\u003e observer) { ... }",
+      "revId": "02a1b5261e968962d392c9f0dcd0740da57bca51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d33e5b2_f94bfe39",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:04:01Z",
+      "side": 1,
+      "message": "This shouldn\u0027t need a cast.\n\nI think RepeatingCallback is copyable, so what you had before should work. (OnceCallback is not copyable, so would need a focus_ring_observer_for_testing_ \u003d std::move(callback); )",
+      "revId": "02a1b5261e968962d392c9f0dcd0740da57bca51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
