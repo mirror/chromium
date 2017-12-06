@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f59e1ebf_6ffba993",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T18:59:03Z",
+      "side": 1,
+      "message": "Yes, I still have no clue what either of these are.\n\nI would have thought bits_range is the blocks of the child that are both populated and in the range we care about, but that would render everything else below pointless.",
+      "parentUuid": "f2d0124e_adc75c96",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
