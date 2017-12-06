@@ -39,5 +39,10 @@ rootWebArea
 ++++++lineBreak name='<newline>'
 ++++++++inlineTextBox name='<newline>'
 ++++++radioButton name='blue' setSize=1 posInSet=1 checkedState=false
+++++staticText name='This is an ARIA article 1.'
+++++++inlineTextBox name='This is an ARIA article 1.'
+++article setSize=2 posInSet=2
+++++staticText name='This is an ARIA article 2.'
+++++++inlineTextBox name='This is an ARIA article 2.'
 ++staticText name='Done'
 ++++inlineTextBox name='Done'
