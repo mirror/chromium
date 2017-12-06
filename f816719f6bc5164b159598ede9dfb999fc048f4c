@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ea8a95_e9931925",
+        "filename": "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "nit: can you document false here?",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a697882e_8ae0a1d0",
+        "filename": "chrome/browser/ui/permission_bubble/permission_bubble_browser_test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4fa77a_16fa3731",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "It\u0027s really weird to call this DisplayOrigin when it\u0027s not an origin (and also the fact that the function is called GetDisplayOrigin). I realise that wasn\u0027t at all your fault though :)\n\nBut perhaps you could rename both since you\u0027re probably touching almost all the places that have the GetDisplayOrigin name anyway? How about something like GetDisplayNameOrOrigin? Then we could have a similar name for this struct.",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac8c0c3_72c0144b",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "nit: name_or_origin?",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea42a1ba_0492ffbc",
+        "filename": "chrome/browser/ui/permission_bubble/permission_prompt.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "I would call this either is_origin or flip it and call it is_extension_name",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f673b68e_e7e2629b",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:21:25Z",
+      "side": 1,
+      "message": "Should this just be a DisplayOrigin object rather than the two separate members?",
+      "revId": "f816719f6bc5164b159598ede9dfb999fc048f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
