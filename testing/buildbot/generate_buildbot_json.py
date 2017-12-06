@@ -248,15 +248,18 @@ class BBJSONGenerator(object):
           #
           # Fundamentally we want different behavior for arrays of
           # dictionaries vs. arrays of strings.
-          for idx in xrange(len(b[key])):
-            try:
-              a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
-                                                  path + [str(key), str(idx)],
-                                                  update=update)
-            except (IndexError, TypeError): # pragma: no cover
-              raise BBGenErr('Error merging list keys ' + str(key) +
-                              ' and indices ' + str(idx) + ' between ' +
-                              str(a) + ' and ' + str(b)) # pragma: no cover
+          if all(isinstance(s, basestring) for s in a[key]+b[key]):
+            a[key].extend(b[key])
+          else:
+            for idx in xrange(len(b[key])):
+              try:
+                a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
+                                                    path + [str(key), str(idx)],
+                                                    update=update)
+              except (IndexError, TypeError): # pragma: no cover
+                raise BBGenErr('Error merging list keys ' + str(key) +
+                                ' and indices ' + str(idx) + ' between ' +
+                                str(a) + ' and ' + str(b)) # pragma: no cover
         elif update: # pragma: no cover
           a[key] = b[key] # pragma: no cover
         else:
@@ -354,6 +357,9 @@ class BBJSONGenerator(object):
             'name': 'shard #${SHARD_INDEX} logcats',
           },
         ]
+      if not tester_config.get('skip_device_recovery', False):
+        result['args'] = result.get('args', []) + ['--recover-devices']
+
     result = self.update_and_cleanup_test(result, test_name, tester_name)
     return result
 

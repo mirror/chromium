@@ -368,6 +368,14 @@ ANDROID_TEST_EXCEPTIONS = """\
         'merge',
       ],
     },
+    'modifications': {
+      'Fake Android L Tester': {
+        'args': [
+          '--foo-arg',
+          '--bar-arg',
+        ],
+      }
+    }
   },
 }
 """
@@ -590,6 +598,9 @@ ANDROID_WATERFALL_OUTPUT = """\
     ],
     "gtest_tests": [
       {
+        "args": [
+          "--recover-devices"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -626,6 +637,11 @@ ANDROID_WATERFALL_OUTPUT = """\
   "Fake Android L Tester": {
     "gtest_tests": [
       {
+        "args": [
+          "--recover-devices",
+          "--foo-arg",
+          "--bar-arg"
+        ],
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
