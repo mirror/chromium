@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c771088_a8ddf303",
+        "filename": "base/android/jni_generator/AndroidManifest.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-06T21:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527663ad_cf6dfecd",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8dc74e6_0d4605e1",
         "filename": "base/android/jni_generator/BUILD.gn",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce2d5fdd_71b93997",
+        "filename": "base/android/jni_generator/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-06T21:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8dc74e6_0d4605e1",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02b532d3_b4969d0a",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2691e6fe_fb0984e4",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-06T21:24:55Z",
+      "side": 1,
+      "message": "Done. Yes, I meant to do that.",
+      "parentUuid": "02b532d3_b4969d0a",
+      "revId": "25886b589d1f6c7717e7609b49c3bf37acb4fe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
