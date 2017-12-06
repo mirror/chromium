@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da9050a_ec228c06",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-12-06T16:02:24Z",
+      "side": 1,
+      "message": "nit: while you\u0027re in here, can you move each of these comments to before the member? It\u0027ll make it more consistent and might be more readable.",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66aba254_7328556d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-12-06T16:02:24Z",
+      "side": 1,
+      "message": "wondering if it\u0027s possible to have render_initiated\u003d\u003dfalse AND have an entry in the user_gesture_map_? That would cause both :463 and [:468 or :472] to execute.\n\nIf that\u0027s not possible, should there be an else block below?",
+      "range": {
+        "startLine": 462,
+        "startChar": 7,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfb83a9_33b240ea",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-12-06T16:02:24Z",
+      "side": 1,
+      "message": "Is this mostly just a convenient default value? If so, maybe mention that we should never see this value for real navigation events (if we do, something is wrong)?",
+      "range": {
+        "startLine": 593,
+        "startChar": 14,
+        "endLine": 593,
+        "endChar": 16
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c29e237_7c53a46b",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-12-06T16:02:24Z",
+      "side": 1,
+      "message": "The examples for the other two are very useful for providing some context. Can you give an example of how this might happen in the real world?",
+      "range": {
+        "startLine": 599,
+        "startChar": 35,
+        "endLine": 599,
+        "endChar": 45
+      },
+      "revId": "a9856fe9891857e261d77be4ab28fa597e691ca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
