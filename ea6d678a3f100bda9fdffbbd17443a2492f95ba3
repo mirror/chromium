@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa1820a_766d0445",
+        "filename": "ios/chrome/browser/tabs/tab_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T19:27:22Z",
+      "side": 0,
+      "message": "Do these tests pass after removing this code?",
+      "revId": "ea6d678a3f100bda9fdffbbd17443a2492f95ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
