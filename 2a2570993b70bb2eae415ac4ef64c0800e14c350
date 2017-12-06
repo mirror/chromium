@@ -16,6 +16,24 @@
       "revId": "2a2570993b70bb2eae415ac4ef64c0800e14c350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4fe7d5_c51978c7",
+        "filename": "chrome/browser/ui/toolbar/app_menu_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-06T05:49:48Z",
+      "side": 1,
+      "message": "I tried to avoid line splitting on the \"\u003d\u003d\", since it at a different \"level\" of the expression compared to the \u0026\u0026s.  I think splitting on both \"\u0026\u0026\" and \"\u003d\u003d\" here is less readable.",
+      "parentUuid": "338a8b34_9e6124e7",
+      "revId": "2a2570993b70bb2eae415ac4ef64c0800e14c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
