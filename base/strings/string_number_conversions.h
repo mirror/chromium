@@ -63,6 +63,54 @@ BASE_EXPORT std::string NumberToString(size_t value);
 BASE_EXPORT base::string16 NumberToString16(size_t value);
 #endif
 
+// These platforms threat "long" as different than one of the above sized
+// types.
+#if defined(ARCH_CPU_32_BITS) && \
+    (defined(OS_WIN) || defined(ARCH_CPU_ARM_FAMILY))
+static_assert(sizeof(long) == sizeof(int32_t),
+              "Expecting long long == int64_t");
+inline std::string NumberToString(long value) {
+  return NumberToString(static_cast<int32_t>(value));
+}
+inline base::string16 NumberToString16(long value) {
+  return NumberToString16(static_cast<int32_t>(value));
+}
+
+static_assert(sizeof(unsigned long) == sizeof(uint32_t),
+              "Expecting unsigned long long == uint64_t");
+inline std::string NumberToString(unsigned long value) {
+  return NumberToString(static_cast<uint32_t>(value));
+}
+inline base::string16 NumberToString16(unsigned long value) {
+  return NumberToString16(static_cast<uint32_t>(value));
+}
+#endif
+
+// These platforms treat "long long" as different than one of the above sized
+// types.
+#if (defined(ARCH_CPU_64_BITS) &&                                          \
+     (defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FUCHSIA))) || \
+    (defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)) ||              \
+    (defined(OS_WIN) && defined(__clang__) && defined(ARCH_CPU_64_BITS))
+static_assert(sizeof(long long) == sizeof(int64_t),
+              "Expecting long long == int64_t");
+inline std::string NumberToString(long long value) {
+  return NumberToString(static_cast<int64_t>(value));
+}
+inline base::string16 NumberToString16(long long value) {
+  return NumberToString16(static_cast<int64_t>(value));
+}
+
+static_assert(sizeof(unsigned long long) == sizeof(uint64_t),
+              "Expecting unsigned long long == uint64_t");
+inline std::string NumberToString(unsigned long long value) {
+  return NumberToString(static_cast<uint64_t>(value));
+}
+inline base::string16 NumberToString16(unsigned long long value) {
+  return NumberToString16(static_cast<uint64_t>(value));
+}
+#endif
+
 // Type-specific naming for backwards compatibility.
 //
 // TODO(brettw) these should be removed and callers converted to the overloaded
@@ -83,12 +131,6 @@ inline std::string Int64ToString(int64_t value) {
   return NumberToString(value);
 }
 inline string16 Int64ToString16(int64_t value) {
-  return NumberToString16(value);
-}
-inline std::string Uint64ToString(uint64_t value) {
-  return NumberToString(value);
-}
-inline string16 Uint64ToString16(uint64_t value) {
   return NumberToString16(value);
 }
 
