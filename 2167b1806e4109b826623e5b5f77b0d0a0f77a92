@@ -70,6 +70,24 @@
       "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1d7be4_777f84a1",
+        "filename": "chrome/browser/experiments/memory_ablation_experiment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-06T23:51:54Z",
+      "side": 1,
+      "message": "OK, so I dug through the code.\n\ndrivers/block/zram/zcomp_lz4.c is where zram lz4 implementation lives. It calls lz4_compress() with PAGE_SIZE, i.e. never compresses more than one page. And both branches of lz4_compress() (see lib/lz4/lz4_compress.c) always memset() lz4 context before doing anything. I.e. each page is compressed separately.",
+      "parentUuid": "502b3f01_2c812bdb",
+      "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
