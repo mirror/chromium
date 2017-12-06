@@ -12,6 +12,7 @@
 
 #include "extensions/browser/api/socket/socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -26,10 +27,12 @@ class UDPSocket : public Socket {
   int Bind(const std::string& address, uint16_t port) override;
   void Read(int count, const ReadCompletionCallback& callback) override;
   void RecvFrom(int count, const RecvFromCompletionCallback& callback) override;
-  void SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-              int byte_count,
-              const net::IPEndPoint& address,
-              const CompletionCallback& callback) override;
+  void SendTo(
+      scoped_refptr<net::IOBuffer> io_buffer,
+      int byte_count,
+      const net::IPEndPoint& address,
+      const CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
 
   bool IsConnected() override;
 
@@ -50,9 +53,11 @@ class UDPSocket : public Socket {
   const std::vector<std::string>& GetJoinedGroups() const;
 
  protected:
-  int WriteImpl(net::IOBuffer* io_buffer,
-                int io_buffer_size,
-                const net::CompletionCallback& callback) override;
+  int WriteImpl(
+      net::IOBuffer* io_buffer,
+      int io_buffer_size,
+      const net::CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
 
  private:
   // Make net::IPEndPoint can be refcounted

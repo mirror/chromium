@@ -19,6 +19,7 @@
 #include "extensions/browser/api/socket/udp_socket.h"
 #include "net/base/io_buffer.h"
 #include "net/base/ip_address.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
@@ -103,7 +104,8 @@ static void SendMulticastPacket(const base::Closure& quit_run_loop,
                                 int result) {
   if (result == 0) {
     scoped_refptr<net::IOBuffer> data = new net::WrappedIOBuffer(test_message);
-    src->Write(data, test_message_length, base::Bind(&OnSendCompleted));
+    src->Write(data, test_message_length, base::Bind(&OnSendCompleted),
+               TRAFFIC_ANNOTATION_FOR_TESTS);
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&SendMulticastPacket, quit_run_loop, src, result),

@@ -176,10 +176,13 @@ void TCPSocket::RecvFrom(int count,
                0);
 }
 
-void TCPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-                       int byte_count,
-                       const net::IPEndPoint& address,
-                       const CompletionCallback& callback) {
+void TCPSocket::SendTo(
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const net::IPEndPoint& address,
+    const CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   callback.Run(net::ERR_FAILED);
 }
 
@@ -266,15 +269,18 @@ bool TCPSocket::GetLocalAddress(net::IPEndPoint* address) {
 
 Socket::SocketType TCPSocket::GetSocketType() const { return Socket::TYPE_TCP; }
 
-int TCPSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int TCPSocket::WriteImpl(
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (socket_mode_ != CLIENT)
     return net::ERR_FAILED;
   else if (!socket_.get() || !IsConnected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_->Write(io_buffer, io_buffer_size, callback);
+    return socket_->Write(io_buffer, io_buffer_size, callback,
+                          traffic_annotation);
 }
 
 void TCPSocket::RefreshConnectionStatus() {

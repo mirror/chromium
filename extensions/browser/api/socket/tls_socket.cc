@@ -132,13 +132,16 @@ void TLSSocket::OnReadComplete(const scoped_refptr<net::IOBuffer>& io_buffer,
       .Run(result, io_buffer, false /* socket_destroying */);
 }
 
-int TLSSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int TLSSocket::WriteImpl(
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (!IsConnected()) {
     return net::ERR_SOCKET_NOT_CONNECTED;
   }
-  return tls_socket_->Write(io_buffer, io_buffer_size, callback);
+  return tls_socket_->Write(io_buffer, io_buffer_size, callback,
+                            traffic_annotation);
 }
 
 bool TLSSocket::SetKeepAlive(bool enable, int delay) {

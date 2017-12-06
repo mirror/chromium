@@ -15,6 +15,7 @@
 // moves that make it easier to just include it.
 #include "net/socket/tcp_client_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class Socket;
@@ -37,10 +38,12 @@ class TCPSocket : public Socket {
   int Bind(const std::string& address, uint16_t port) override;
   void Read(int count, const ReadCompletionCallback& callback) override;
   void RecvFrom(int count, const RecvFromCompletionCallback& callback) override;
-  void SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-              int byte_count,
-              const net::IPEndPoint& address,
-              const CompletionCallback& callback) override;
+  void SendTo(
+      scoped_refptr<net::IOBuffer> io_buffer,
+      int byte_count,
+      const net::IPEndPoint& address,
+      const CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   bool SetKeepAlive(bool enable, int delay) override;
   bool SetNoDelay(bool no_delay) override;
   int Listen(const std::string& address,
@@ -77,9 +80,11 @@ class TCPSocket : public Socket {
   bool HasPendingRead() const;
 
  protected:
-  int WriteImpl(net::IOBuffer* io_buffer,
-                int io_buffer_size,
-                const net::CompletionCallback& callback) override;
+  int WriteImpl(
+      net::IOBuffer* io_buffer,
+      int io_buffer_size,
+      const net::CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
 
  private:
   void RefreshConnectionStatus();

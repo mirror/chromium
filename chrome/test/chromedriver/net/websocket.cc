@@ -30,6 +30,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 #include "net/log/net_log_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_frame.h"
 
 #if defined(OS_WIN)
@@ -181,10 +182,11 @@ void WebSocket::ContinueWritingIfNecessary() {
         pending_write_.length());
     pending_write_.clear();
   }
+  // TODO(crbug.com/656607): Add proper annotation.
   int code =
-      socket_->Write(write_buffer_.get(),
-                     write_buffer_->BytesRemaining(),
-                     base::Bind(&WebSocket::OnWrite, base::Unretained(this)));
+      socket_->Write(write_buffer_.get(), write_buffer_->BytesRemaining(),
+                     base::Bind(&WebSocket::OnWrite, base::Unretained(this)),
+                     NO_TRAFFIC_ANNOTATION_BUG_656607);
   if (code != net::ERR_IO_PENDING)
     OnWrite(code);
 }

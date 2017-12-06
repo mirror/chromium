@@ -20,6 +20,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/ip_endpoint.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 #if defined(OS_CHROMEOS)
 #include "extensions/browser/api/socket/app_firewall_hole_manager.h"
@@ -90,14 +91,17 @@ class Socket : public ApiResource {
   // error occurred.
   void Write(scoped_refptr<net::IOBuffer> io_buffer,
              int byte_count,
-             const CompletionCallback& callback);
+             const CompletionCallback& callback,
+             const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   virtual void RecvFrom(int count,
                         const RecvFromCompletionCallback& callback) = 0;
-  virtual void SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-                      int byte_count,
-                      const net::IPEndPoint& address,
-                      const CompletionCallback& callback) = 0;
+  virtual void SendTo(
+      scoped_refptr<net::IOBuffer> io_buffer,
+      int byte_count,
+      const net::IPEndPoint& address,
+      const CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   virtual bool SetKeepAlive(bool enable, int delay);
   virtual bool SetNoDelay(bool no_delay);
@@ -125,9 +129,11 @@ class Socket : public ApiResource {
   explicit Socket(const std::string& owner_extension_id_);
 
   void WriteData();
-  virtual int WriteImpl(net::IOBuffer* io_buffer,
-                        int io_buffer_size,
-                        const net::CompletionCallback& callback) = 0;
+  virtual int WriteImpl(
+      net::IOBuffer* io_buffer,
+      int io_buffer_size,
+      const net::CompletionCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation) = 0;
   virtual void OnWriteComplete(int result);
 
   std::string hostname_;
@@ -140,13 +146,15 @@ class Socket : public ApiResource {
   struct WriteRequest {
     WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
                  int byte_count,
-                 const CompletionCallback& callback);
+                 const CompletionCallback& callback,
+                 const net::NetworkTrafficAnnotationTag& traffic_annotation);
     WriteRequest(const WriteRequest& other);
     ~WriteRequest();
     scoped_refptr<net::IOBuffer> io_buffer;
     int byte_count;
     CompletionCallback callback;
     int bytes_written;
+    net::MutableNetworkTrafficAnnotationTag traffic_annotation;
   };
   base::queue<WriteRequest> write_queue_;
   scoped_refptr<net::IOBuffer> io_buffer_write_;

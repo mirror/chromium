@@ -133,13 +133,16 @@ void UDPSocket::Read(int count, const ReadCompletionCallback& callback) {
     OnReadComplete(io_buffer, result);
 }
 
-int UDPSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int UDPSocket::WriteImpl(
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (!socket_.is_connected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_.Write(io_buffer, io_buffer_size, callback);
+    return socket_.Write(io_buffer, io_buffer_size, callback,
+                         traffic_annotation);
 }
 
 void UDPSocket::RecvFrom(int count,
@@ -183,10 +186,12 @@ void UDPSocket::RecvFrom(int count,
     OnRecvFromComplete(io_buffer, address, result);
 }
 
-void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-                       int byte_count,
-                       const net::IPEndPoint& address,
-                       const CompletionCallback& callback) {
+void UDPSocket::SendTo(
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const net::IPEndPoint& address,
+    const CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!callback.is_null());
 
   if (!send_to_callback_.is_null()) {
@@ -205,6 +210,7 @@ void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
       break;
     }
 
+    // TODO(crbug.com/656607): Handle traffic annotation.
     result = socket_.SendTo(
         io_buffer.get(), byte_count, address,
         base::Bind(&UDPSocket::OnSendToComplete, base::Unretained(this)));
