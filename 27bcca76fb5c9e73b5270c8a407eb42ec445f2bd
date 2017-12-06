@@ -22,6 +22,30 @@
       "revId": "27bcca76fb5c9e73b5270c8a407eb42ec445f2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bc8520_72ea4fcc",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-06T14:58:26Z",
+      "side": 0,
+      "message": "Ok, a simple mistake, and agree we should be extra careful to not accept such things.",
+      "parentUuid": "b6b269dd_31a19242",
+      "range": {
+        "startLine": 3,
+        "startChar": 1,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "27bcca76fb5c9e73b5270c8a407eb42ec445f2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
