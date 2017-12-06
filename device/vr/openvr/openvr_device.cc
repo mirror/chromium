@@ -146,6 +146,7 @@ OpenVRDevice::OpenVRDevice(vr::IVRSystem* vr)
     : vr_system_(vr),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "ASDF Creating OpenVRDevice";
   DCHECK(vr_system_);
   SetVRDisplayInfo(CreateVRDisplayInfo(vr_system_, GetId()));
 
@@ -161,10 +162,12 @@ void OpenVRDevice::RequestPresent(
     mojom::VRSubmitFrameClientPtr submit_client,
     mojom::VRPresentationProviderRequest request,
     mojom::VRDisplayHost::RequestPresentCallback callback) {
+  LOG(ERROR) << "ASDF OpenVRDevice::RequestPresent";
   if (!render_loop_->IsRunning())
     render_loop_->Start();
 
   if (!render_loop_->IsRunning()) {
+    LOG(ERROR) << "ASDF returning false because render loop is not running";
     std::move(callback).Run(false);
     return;
   }

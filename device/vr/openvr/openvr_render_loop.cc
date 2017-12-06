@@ -104,8 +104,10 @@ void OpenVRRenderLoop::RequestPresent(
     mojom::VRSubmitFrameClientPtrInfo submit_client_info,
     mojom::VRPresentationProviderRequest request,
     base::Callback<void(bool)> callback) {
+  LOG(ERROR) << "ASDF OpenVRRenderLoop::RequestPresent";
 #if defined(OS_WIN)
   if (!texture_helper_.EnsureInitialized()) {
+    LOG(ERROR) << "ASDF failed to initialize texture helper";
     main_thread_task_runner_->PostTask(FROM_HERE, base::Bind(callback, false));
     return;
   }
