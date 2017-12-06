@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//components/vector_icons/vector_icons.gni")
 import("//testing/test.gni")
@@ -38,9 +39,15 @@ buildflag_header("features") {
       [ "ENABLE_NATIVE_WINDOW_NAV_BUTTONS=$enable_native_window_nav_buttons" ]
 }
 
-component("views") {
+jumbo_component("views") {
   all_dependent_configs = [ ":flags" ]
 
+  public_deps = [
+    ":views_sources",
+  ]
+}
+
+jumbo_source_set("views_sources") {
   public = [
     "accessibility/native_view_accessibility.h",
     "accessible_pane_view.h",
@@ -711,7 +718,7 @@ component("views") {
   }
 }
 
-static_library("test_support_internal") {
+jumbo_source_set("test_support_internal") {
   testonly = true
   sources = [
     "animation/test/flood_fill_ink_drop_ripple_test_api.cc",
@@ -865,7 +872,7 @@ static_library("test_support_internal") {
   }
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   public_deps = [
     ":test_support_internal",
@@ -974,7 +981,7 @@ source_set("views_unittests_sources") {
   # views_mus_unittests will get them.
   public_deps = [
     ":test_support",
-    ":views",
+    ":views_sources",
     "//base",
     "//base:i18n",
     "//base/test:test_support",
@@ -1126,7 +1133,7 @@ source_set("views_interactive_ui_tests") {
 
   deps = [
     ":test_support",
-    ":views",
+    ":views_sources",
     "//base",
     "//base/test:test_support",
     "//mojo/edk/system",
