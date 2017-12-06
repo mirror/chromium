@@ -22,6 +22,30 @@
       "revId": "8b68a95a92c3471d732f5f874be947db26e16301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e7d21d_1532beaf",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T19:24:20Z",
+      "side": 1,
+      "message": "This was me assuming that GL_ARB_texture_rg was a cut-n-paste error from above, but it turns out that that\u0027s not the case, so I changed it back.",
+      "parentUuid": "a0d78b04_f2ee1afd",
+      "range": {
+        "startLine": 1318,
+        "startChar": 37,
+        "endLine": 1318,
+        "endChar": 58
+      },
+      "revId": "8b68a95a92c3471d732f5f874be947db26e16301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
