@@ -16,7 +16,7 @@
       }
 
       async_test(test => {
-          const remoteWindow = window.open('resources/window-permission-detached-context.html');
+          const remoteWindow = window.open('resources/window-detached-context.html');
           let remoteNotificationObj = null;
 
           window.addEventListener('message', test.step_func(event => {
