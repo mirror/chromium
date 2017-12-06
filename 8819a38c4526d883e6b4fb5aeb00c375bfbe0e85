@@ -34,6 +34,24 @@
       "revId": "8819a38c4526d883e6b4fb5aeb00c375bfbe0e85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ba3b28a_98410837",
+        "filename": "ui/gfx/mojo/gpu_fence_handle.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T22:15:30Z",
+      "side": 1,
+      "message": "Ah, I see, Android here doesn\u0027t mean Android-only, it just means the extension was proposed by Android. Thanks for explaining.",
+      "parentUuid": "17f81859_038486dc",
+      "revId": "8819a38c4526d883e6b4fb5aeb00c375bfbe0e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
