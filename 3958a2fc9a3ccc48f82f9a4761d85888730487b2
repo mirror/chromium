@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3cde485_29a8313f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "MAGIC",
+      "range": {
+        "startLine": 74,
+        "startChar": 50,
+        "endLine": 74,
+        "endChar": 57
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e8d95b_a82b61db",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "node.data",
+      "range": {
+        "startLine": 147,
+        "startChar": 58,
+        "endLine": 147,
+        "endChar": 67
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cef5a3_941bf9fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": ".data",
+      "range": {
+        "startLine": 162,
+        "startChar": 104,
+        "endLine": 162,
+        "endChar": 113
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265f5b02_97c93e5a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "emptyTextNode.remove();",
+      "range": {
+        "startLine": 171,
+        "startChar": 6,
+        "endLine": 171,
+        "endChar": 58
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531020d4_63c182ca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "we can apply all binds except elements before importing and avoid the tree walk.",
+      "range": {
+        "startLine": 192,
+        "startChar": 26,
+        "endLine": 192,
+        "endChar": 42
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6da879_1c6dcbe2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "support UI Fragment as well",
+      "range": {
+        "startLine": 204,
+        "startChar": 10,
+        "endLine": 204,
+        "endChar": 12
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70082e99_fd5b54bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "result is undone here - I feel unsafe!",
+      "range": {
+        "startLine": 222,
+        "startChar": 47,
+        "endLine": 222,
+        "endChar": 53
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1f81e1_e8798d76",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "replacedNode.remove();",
+      "range": {
+        "startLine": 246,
+        "startChar": 13,
+        "endLine": 246,
+        "endChar": 37
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a54e29_f37e2bfa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-06T02:03:10Z",
+      "side": 1,
+      "message": "this feels like N^2. We can move child nodes using intermediate js array",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 255,
+        "endChar": 50
+      },
+      "revId": "3958a2fc9a3ccc48f82f9a4761d85888730487b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
