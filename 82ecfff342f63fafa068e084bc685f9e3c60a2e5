@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9aed253_c1fb3cc9",
+        "filename": "components/navigation_interception/intercept_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-06T19:59:36Z",
+      "side": 1,
+      "message": "Nit: Keep the DCHECK above the timer.",
+      "revId": "82ecfff342f63fafa068e084bc685f9e3c60a2e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
