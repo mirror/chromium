@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adaf5b1d_0f34e35f",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-06T09:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96d2e9e7_b26a6b1a",
+      "revId": "821702f7ef94648e24086cf6223cff42085bcd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb9d2f66_13a1afca",
         "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "821702f7ef94648e24086cf6223cff42085bcd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ca25cc_28468ffe",
+        "filename": "chrome/browser/media/media_engagement_preloaded_list.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-06T09:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9d2f66_13a1afca",
+      "revId": "821702f7ef94648e24086cf6223cff42085bcd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
