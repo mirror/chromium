@@ -94,6 +94,30 @@
       "revId": "4a054aef19132646681a60619865c678f12c58c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bb1da3_0adb5c06",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-06T17:30:43Z",
+      "side": 1,
+      "message": "Got it.\n\nI\u0027ve unexposed the command_updater() from BCC, and started trying to refactor all call sites to proxy through BCC instead, but I hit what I think is a roadblock:\n- in [1] the ReloadButton is created through the command_controller which is fine,\n- but in [2] the ReloadButton is passed a command_updater_ directly (different one to the one in BCC).\n\nI\u0027m unsure what to do with this ReloadButton. Have two versions? Or maybe have two different constructors for it - one that takes a BrowserCommandController, and the currently existing one that takes a CommandUpdater and then in code I either make the call through BCC or CU depending on which one was saved during construction.\n\nWDYT?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/toolbar/toolbar_view.cc?rcl\u003db04d8e25de2f9a56bfe5df61e7cc4488193f66bd\u0026l\u003d172\n[2] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/ui/simple_web_view_dialog.cc?rcl\u003db04d8e25de2f9a56bfe5df61e7cc4488193f66bd\u0026l\u003d199",
+      "parentUuid": "e92ba4be_4129b947",
+      "range": {
+        "startLine": 1146,
+        "startChar": 0,
+        "endLine": 1146,
+        "endChar": 71
+      },
+      "revId": "4a054aef19132646681a60619865c678f12c58c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
