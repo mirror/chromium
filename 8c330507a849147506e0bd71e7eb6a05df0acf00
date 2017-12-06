@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6e7097_eed333b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/parse-input-arguments-018.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-06T20:51:31Z",
+      "side": 1,
+      "message": "Can you write a new test expectation summary so that a tester would know what to expect? \nhttps://github.com/w3c/web-platform-tests/blob/master/docs/_writing-tests/reftests.md#writing-a-good-reftest",
+      "revId": "8c330507a849147506e0bd71e7eb6a05df0acf00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed0299f_780cddf5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-paint-api/parse-input-arguments-018.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-06T20:51:31Z",
+      "side": 1,
+      "message": "Maybe we should paint red and put it in the #canvas-geometry background-image above so that if it does somehow paint it will fail the test?",
+      "revId": "8c330507a849147506e0bd71e7eb6a05df0acf00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
