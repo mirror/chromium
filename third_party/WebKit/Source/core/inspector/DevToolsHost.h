@@ -32,6 +32,7 @@
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/Vector.h"
+#include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
