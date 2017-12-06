@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "6c670739_52215805",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-06T09:55:07Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "c8f83c75_215d6163",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf9dc6c_a0e77b98",
         "filename": "chrome/browser/resources/local_ntp/README.md",
         "patchSetId": 3
