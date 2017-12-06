@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a13458_fa52cd83",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-06T18:23:44Z",
+      "side": 1,
+      "message": "This one is redundant.",
+      "revId": "c8512f1fd8e8fd329fee5954976b1657d567c45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
