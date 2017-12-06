@@ -24,15 +24,15 @@ const CSSValue* CaretColor::ParseSingleValue(
 const blink::Color CaretColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleAutoColor auto_color =
-      visited_link ? style.VisitedLinkCaretColor() : style.CaretColor();
+  StyleAutoColor auto_color = visited_link ? style.CaretColorIgnoringUnvisited()
+                                           : style.CaretColorIgnoringVisited();
   // TODO(rego): We may want to adjust the caret color if it's the same as
   // the background to ensure good visibility and contrast.
   StyleColor result = auto_color.IsAutoColor() ? StyleColor::CurrentColor()
                                                : auto_color.ToStyleColor();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* CaretColor::CSSValueFromComputedStyle(
@@ -41,12 +41,14 @@ const CSSValue* CaretColor::CSSValueFromComputedStyle(
     Node* styled_node,
     bool allow_visited_style) const {
   blink::Color color;
-  if (allow_visited_style)
+  if (allow_visited_style) {
     color = style.VisitedDependentColor(*this);
-  else if (style.CaretColor().IsAutoColor())
-    color = StyleColor::CurrentColor().Resolve(style.GetColor());
-  else
-    color = style.CaretColor().ToStyleColor().Resolve(style.GetColor());
+  } else if (style.CaretColorIgnoringVisited().IsAutoColor()) {
+    color = StyleColor::CurrentColor().Resolve(style.ColorIgnoringVisited());
+  } else {
+    color = style.CaretColorIgnoringVisited().ToStyleColor().Resolve(
+        style.ColorIgnoringVisited());
+  }
   return cssvalue::CSSColorValue::Create(color.Rgb());
 }
 
