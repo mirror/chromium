@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1e7387_e8406554",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 49
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-06T14:42:02Z",
+      "side": 1,
+      "message": "Could you please test it with flag --mus\u003dviz to make sure it doesn\u0027t break mus? Thanks.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "b2dbb538dd7916000312aee6a9b5b5d0324eb212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
