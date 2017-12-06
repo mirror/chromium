@@ -632,6 +632,12 @@ void InstallableManager::DidFinishNavigation(
   }
 }
 
+void InstallableManager::DidUpdateWebManifestURL(
+    const base::Optional<GURL>& manifest_url) {
+  // A change in the manifest URL invalidates our entire internal state.
+  Reset();
+}
+
 void InstallableManager::WebContentsDestroyed() {
   Reset();
   Observe(nullptr);
