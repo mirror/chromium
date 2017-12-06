@@ -16,6 +16,24 @@
       "revId": "5823a42e45e175fe37c9711a2154d61d7ce504a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4d1bec_86f15027",
+        "filename": "chrome/browser/installable/installable_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T04:07:43Z",
+      "side": 1,
+      "message": "Apparently, yes. I\u0027ll change that everywhere else in this file too. I have the vague memory that this used to not work, but yay it works now.",
+      "parentUuid": "edcca108_210f2f15",
+      "revId": "5823a42e45e175fe37c9711a2154d61d7ce504a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
