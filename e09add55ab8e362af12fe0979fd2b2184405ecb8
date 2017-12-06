@@ -22,6 +22,30 @@
       "revId": "e09add55ab8e362af12fe0979fd2b2184405ecb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e797d9c_1559e9b0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3257,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T17:44:37Z",
+      "side": 1,
+      "message": "\u003e Maybe instead we should move goto_anchor_needed_after_stylesheets_load and the ProcessUrlFragment calls into FrameView::UpdateLayout?\n\nThat sounds better to me.  It would eliminate the ProcessUrlFragment calls here and in UpdateStyleAndLayout, right?",
+      "parentUuid": "000e134f_20200da8",
+      "range": {
+        "startLine": 3256,
+        "startChar": 4,
+        "endLine": 3257,
+        "endChar": 39
+      },
+      "revId": "e09add55ab8e362af12fe0979fd2b2184405ecb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
