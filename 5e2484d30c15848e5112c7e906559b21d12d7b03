@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57bdf6b_dd829430",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-06T01:22:05Z",
+      "side": 1,
+      "message": "nit: These",
+      "range": {
+        "startLine": 1156,
+        "startChar": 3,
+        "endLine": 1156,
+        "endChar": 7
+      },
+      "revId": "5e2484d30c15848e5112c7e906559b21d12d7b03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
