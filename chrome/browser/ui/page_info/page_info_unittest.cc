@@ -213,12 +213,20 @@ bool PermissionInfoListContainsPermission(const PermissionInfoList& permissions,
 
 TEST_F(PageInfoTest, NonFactoryDefaultPermissionsShown) {
   page_info()->PresentSitePermissions();
-// By default, the number of permissions shown should be 0, except on Android,
-// where Geolocation needs to be checked for DSE settings.
 #if defined(OS_ANDROID)
+  constexpr size_t kNumPermissionsShown = 0;
+  // Geolocation is always allowed to pass through to Android-specific logic to
+  // check for DSE settings, but isn't actually shown because this test isn't
+  // testing with a default search engine origin.
   EXPECT_EQ(1uL, last_permission_info_list().size());
+  EXPECT_EQ(CONTENT_SETTINGS_TYPE_GEOLOCATION,
+            last_permission_info_list().back().type);
 #else
-  EXPECT_EQ(0uL, last_permission_info_list().size());
+  // TODO(https://crbug.com/791142): Change this expectation back to 0 for m65.
+  constexpr size_t kNumPermissionsShown = 1;
+  EXPECT_EQ(kNumPermissionsShown, last_permission_info_list().size());
+  EXPECT_EQ(CONTENT_SETTINGS_TYPE_PLUGINS,
+            last_permission_info_list().back().type);
 #endif
 
   std::vector<ContentSettingsType> non_default_permissions = {
@@ -232,43 +240,50 @@ TEST_F(PageInfoTest, NonFactoryDefaultPermissionsShown) {
                                        CONTENT_SETTING_ALLOW);
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC,
                                        CONTENT_SETTING_ALLOW);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   non_default_permissions.push_back(CONTENT_SETTINGS_TYPE_POPUPS);
   // Change a default-block setting to a user-preference block instead.
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_POPUPS,
                                        CONTENT_SETTING_BLOCK);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   non_default_permissions.push_back(CONTENT_SETTINGS_TYPE_JAVASCRIPT);
   // Change a default-allow setting away from the default.
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                        CONTENT_SETTING_BLOCK);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   // Make sure setting a default setting to the default doesn't do anything.
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,
                                        CONTENT_SETTING_DEFAULT);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   non_default_permissions.pop_back();
   // Clear the Javascript setting.
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                        CONTENT_SETTING_DEFAULT);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   non_default_permissions.push_back(CONTENT_SETTINGS_TYPE_JAVASCRIPT);
   // Change the default setting for Javascript away from the factory default.
   page_info()->content_settings_->SetDefaultContentSetting(
       CONTENT_SETTINGS_TYPE_JAVASCRIPT, CONTENT_SETTING_BLOCK);
   page_info()->PresentSitePermissions();
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   // Change it back to ALLOW, which is its factory default, but has a source
   // from the user preference (i.e. it counts as non-factory default).
   page_info()->OnSitePermissionChanged(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                        CONTENT_SETTING_ALLOW);
-  EXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());
+  EXPECT_EQ(kNumPermissionsShown + non_default_permissions.size(),
+            last_permission_info_list().size());
 
   // Sanity check the correct permissions are being shown.
   for (ContentSettingsType type : non_default_permissions) {

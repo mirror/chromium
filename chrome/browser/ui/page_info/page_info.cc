@@ -179,6 +179,12 @@ bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
   // gets checked there regardless of default setting on Desktop.
   if (info.type == CONTENT_SETTINGS_TYPE_GEOLOCATION)
     return true;
+#else
+  // TODO(https://crbug.com/791142): Flash will always be shown until efforts
+  // are taken to increase discoverability of Site Settings / Details. This
+  // should be completed for m65, so remove this code then.
+  if (info.type == CONTENT_SETTINGS_TYPE_PLUGINS)
+    return true;
 #endif
 
   // All other content settings only show when they are non-factory-default.
