@@ -56,7 +56,7 @@ NavigationResourceHandler::NavigationResourceHandler(
 
 NavigationResourceHandler::~NavigationResourceHandler() {
   if (core_) {
-    core_->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+    core_->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt);
     DetachFromCore();
   }
 }
@@ -159,7 +159,7 @@ void NavigationResourceHandler::OnResponseCompleted(
     }
 
     core_->NotifyRequestFailed(request()->response_info().was_cached, net_error,
-                               ssl_info, ShouldSSLErrorsBeFatal(request()));
+                               ssl_info);
     DetachFromCore();
   }
   next_handler_->OnResponseCompleted(status, std::move(controller));
