@@ -1644,6 +1644,11 @@ public class ChromeTabbedActivity
                 // Return early if Chrome Home is not enabled.
                 if (getBottomSheet() == null) return null;
 
+                if (getBottomSheet() != null
+                        && AppMenuPropertiesDelegate.shouldShowNavMenuItems()) {
+                    return null;
+                }
+
                 boolean isPageMenu = getAppMenuPropertiesDelegate().shouldShowPageMenu();
                 LayoutInflater inflater = LayoutInflater.from(ChromeTabbedActivity.this);
 
@@ -1807,11 +1812,15 @@ public class ChromeTabbedActivity
                 getTabCreator(true).launchNTP();
             }
         } else if (id == R.id.all_bookmarks_menu_id) {
-            if (currentTab != null) {
-                getCompositorViewHolder().hideKeyboard(() -> {
-                    StartupMetrics.getInstance().recordOpenedBookmarks();
-                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
-                });
+            if (currentTab != null || getBottomSheet() != null) {
+                if (getBottomSheet() != null) {
+                    openBottomSheetForMenuItem(R.id.action_bookmarks);
+                } else {
+                    getCompositorViewHolder().hideKeyboard(() -> {
+                        StartupMetrics.getInstance().recordOpenedBookmarks();
+                        BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
+                    });
+                }
                 if (currentTabIsNtp) {
                     NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_BOOKMARKS_MANAGER);
                 }
@@ -1849,7 +1858,11 @@ public class ChromeTabbedActivity
                 getToolbarManager().setUrlBarFocus(true);
             }
         } else if (id == R.id.downloads_menu_id) {
-            DownloadUtils.showDownloadManager(this, currentTab);
+            if (getBottomSheet() != null) {
+                openBottomSheetForMenuItem(R.id.action_downloads);
+            } else {
+                DownloadUtils.showDownloadManager(this, currentTab);
+            }
             if (currentTabIsNtp) {
                 NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_DOWNLOADS_MANAGER);
             }

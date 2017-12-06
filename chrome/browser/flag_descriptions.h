@@ -1038,6 +1038,9 @@ extern const char kChromeHomeClearUrlOnOpenDescription[];
 extern const char kChromeHomeInactivitySheetExpansionName[];
 extern const char kChromeHomeInactivitySheetExpansionDescription[];
 
+extern const char kChromeHomeMenuItemsName[];
+extern const char kChromeHomeMenuItemsDescription[];
+
 extern const char kChromeHomeOptOutSnackbarName[];
 extern const char kChromeHomeOptOutSnackbarDescription[];
 

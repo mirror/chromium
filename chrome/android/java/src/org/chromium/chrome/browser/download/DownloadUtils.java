@@ -210,7 +210,7 @@ public class DownloadUtils {
         if (tabbedActivity == null) return false;
 
         tabbedActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                R.id.action_downloads);
+                R.id.action_downloads, true);
 
         // Bring the ChromeTabbedActivity to the front.
         Intent intent = new Intent(appContext, tabbedActivity.getClass());

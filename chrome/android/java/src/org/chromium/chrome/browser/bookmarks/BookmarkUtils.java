@@ -164,7 +164,7 @@ public class BookmarkUtils {
 
         if (activity.getBottomSheet() != null) {
             activity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_bookmarks);
+                    R.id.action_bookmarks, true);
         } else if (DeviceFormFactor.isTablet()) {
             openUrl(activity, url, activity.getComponentName());
         } else {

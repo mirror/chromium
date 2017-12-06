@@ -1049,13 +1049,13 @@ public class BottomSheet
 
         if (UrlConstants.BOOKMARKS_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_bookmarks);
+                    R.id.action_bookmarks, true);
         } else if (UrlConstants.DOWNLOADS_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_downloads);
+                    R.id.action_downloads, true);
         } else if (UrlConstants.HISTORY_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_history);
+                    R.id.action_history, true);
         } else {
             return false;
         }
