@@ -16,6 +16,24 @@
       "revId": "5790d253ef27ef58fc448595036947f4468e0f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66138ecf_f6b384f4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositingReasons.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-06T21:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e99f9be5_9f26c25d",
+      "revId": "5790d253ef27ef58fc448595036947f4468e0f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
