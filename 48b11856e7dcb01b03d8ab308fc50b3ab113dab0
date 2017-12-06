@@ -22,6 +22,30 @@
       "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c566f9d2_0d764ed1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4558,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-06T22:39:21Z",
+      "side": 1,
+      "message": "This was a fix for crbug.com/622183, but I wasn\u0027t able to reproduce the condition using the steps in that bug. It looks like WKWebView no longer triggers a navigation callback for invalid URLs. Maybe the original security bug was fixed in WKWebView.\n\nShall we remove this patch?",
+      "parentUuid": "80ab3a8c_ad19c1db",
+      "range": {
+        "startLine": 4558,
+        "startChar": 29,
+        "endLine": 4558,
+        "endChar": 0
+      },
+      "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
