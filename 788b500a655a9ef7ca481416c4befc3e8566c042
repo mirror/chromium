@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf2d240_82f17360",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "observes",
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6ef6e6_439dd374",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "Might as well move this to the anonymous namespace below.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbac37fa_362fca70",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "incomplete sentence",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54af5a6_7b66bda9",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "why a unique_ptr and not a direct class member?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bfa34e_8350f3dc",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "A set of unique_ptrs is useful if you need to extract items back out of the set. Since this is set up once and only modified by destroying the whole thing, can you directly put the wrappers into the set?",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a071aacd_fbbf0680",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "Can this LazyInstance and the one above be static variables on RenderWidgetHostViewCocoaObserver?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd8721e_073dd2ac",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "On this line and many of the lines below, why do you qualify with content::? This code, being in content, should find all of those types without qualification.",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 11
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e66003_789d44cc",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "Check for a null result and return early, as this can return nullptr and you\u0027re immediately, on the next line, calling through it.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 48
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbccf3c_006ba3e7",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T16:20:25Z",
+      "side": 1,
+      "message": "This seems out of place; inside of the callback\u0027s DidAddSubviewWillBeDismissed is where this belongs.",
+      "range": {
+        "startLine": 191,
+        "startChar": 11,
+        "endLine": 191,
+        "endChar": 26
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
