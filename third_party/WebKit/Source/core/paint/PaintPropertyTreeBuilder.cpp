@@ -395,12 +395,19 @@ void FragmentPaintPropertyTreeBuilder::UpdateForPaintOffsetTranslation(
   if (!NeedsPaintOffsetTranslation(object_))
     return;
 
-  paint_offset_translation =
+  IntPoint paint_offset =
       ApplyPaintOffsetTranslation(object_, context_.current.paint_offset);
+
   if (RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
       object_.IsLayoutView()) {
+    // Create PaintOffsetTranslation for LayoutView even if the paint offset
+    // is zero to ensure a root transform for the frame for convenience.
+    paint_offset_translation = paint_offset;
     context_.absolute_position.paint_offset = context_.current.paint_offset;
     context_.fixed_position.paint_offset = context_.current.paint_offset;
+  } else if (paint_offset != LayoutPoint()) {
+    // Create PaintOffsetTranslation only if the paint offset is not zero.
+    paint_offset_translation = paint_offset;
   }
 }
 
