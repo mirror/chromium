@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c7283c66_f8f41be0",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T21:37:24Z",
+      "side": 1,
+      "message": "It needs to last longer than the SigninErrorNotifier, a profile keyed service, because that class assumes the display service exists (which is also the reason for my change to signin_error_notifier_factory_ash.cc). If I instantiate it locally, that won\u0027t be the case. I tried to convey that in the comment on L133 -- how do you think I should improve the phrasing?",
+      "parentUuid": "a8c07b82_546d2f0c",
+      "revId": "2b2696eb5c5242a47c0594507996e55ba6f7ff42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47f5170d_8fb80033",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 5
