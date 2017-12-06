@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "65717c53_fee80ec1",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T15:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151762b5_ada14c41",
+      "range": {
+        "startLine": 35,
+        "startChar": 34,
+        "endLine": 35,
+        "endChar": 58
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3666ead0_71193e17",
         "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
         "patchSetId": 4
@@ -377,6 +401,30 @@
       "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d222bfb_fc40b95e",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T15:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0404661_2b748e99",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 19
+      },
+      "revId": "51ed03c15623c55837a61a85ce9b3c6cc869b6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
