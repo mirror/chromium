@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e3f28aab_51afcd9a",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-06T22:54:10Z",
+      "side": 1,
+      "message": "I think this comment from my abandoned CL explains the choice pretty well. At least for Android:\n\n  // UMA stats show that hardware buffer sizes range from a low of 96\n  // up to 87,360(!).  Set the minimum to 128, and a max of 8192.\n  // (The stats say 8192 includes 99.1% of all devices, as of\n  // 2017/11/29.)",
+      "parentUuid": "79823455_82af979c",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ab8ed50_fdcbae86",
         "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The buffer size should be clamped to the output_buffer_size on the line below in any case but I\u0027m fine with using ceiling if you think that makes more sense here.",
       "parentUuid": "0ab8ed50_fdcbae86",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f768cab_246025b9",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-06T22:54:10Z",
+      "side": 1,
+      "message": "Chatted with Hongchan offline.  If the user requests latency x, we should provide a value greater than or equal to x, but clamped to some maximum of course.  Thus, if output_buffer_size is 240 (like on some Android devices), and the requested size is 300 (sample rate * hint), we would currently get rounded_buffer_size \u003d 240, which becomes the final size.  This is lower than requested.  If we take the ceiling, the rounded size is 480, so the latency is higher than requested.  But probably better in terms of glitching and power consumption. (Not so good for latency, but you\u0027re supposed to know what you\u0027re doing when you set a numeric latency value.)",
+      "parentUuid": "92e954e7_ad1bbb3b",
       "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
