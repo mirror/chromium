@@ -133,4 +133,18 @@ void NGPaintFragment::AddOutlineRects(
   }
 }
 
+void NGPaintFragment::ForEachDescendant(
+    const LayoutObject* layout_object,
+    std::function<bool(const NGPaintFragment&, const NGPhysicalOffset&)> yield,
+    NGPhysicalOffset offset) const {
+  if (GetLayoutObject() == layout_object) {
+    if (!yield(*this, offset))
+      return;
+  }
+
+  for (const auto& child : Children()) {
+    child->ForEachDescendant(layout_object, yield, offset + child->Offset());
+  }
+}
+
 }  // namespace blink
