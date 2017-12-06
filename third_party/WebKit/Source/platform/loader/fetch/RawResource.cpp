@@ -35,6 +35,7 @@
 #include "platform/scheduler/child/web_scheduler.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -48,7 +49,7 @@ RawResource* RawResource::FetchSynchronously(FetchParameters& params,
 RawResource* RawResource::FetchImport(FetchParameters& params,
                                       ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   params.SetRequestContext(WebURLRequest::kRequestContextImport);
   return ToRawResource(fetcher->RequestResource(
       params, RawResourceFactory(Resource::kImportResource)));
@@ -57,7 +58,7 @@ RawResource* RawResource::FetchImport(FetchParameters& params,
 RawResource* RawResource::Fetch(FetchParameters& params,
                                 ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   DCHECK_NE(params.GetResourceRequest().GetRequestContext(),
             WebURLRequest::kRequestContextUnspecified);
   return ToRawResource(
@@ -69,7 +70,7 @@ RawResource* RawResource::FetchMainResource(
     ResourceFetcher* fetcher,
     const SubstituteData& substitute_data) {
   DCHECK_NE(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   DCHECK(params.GetResourceRequest().GetRequestContext() ==
              WebURLRequest::kRequestContextForm ||
          params.GetResourceRequest().GetRequestContext() ==
@@ -90,7 +91,7 @@ RawResource* RawResource::FetchMainResource(
 RawResource* RawResource::FetchMedia(FetchParameters& params,
                                      ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   DCHECK(params.GetResourceRequest().GetRequestContext() ==
              WebURLRequest::kRequestContextAudio ||
          params.GetResourceRequest().GetRequestContext() ==
@@ -102,7 +103,7 @@ RawResource* RawResource::FetchMedia(FetchParameters& params,
 RawResource* RawResource::FetchTextTrack(FetchParameters& params,
                                          ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   params.SetRequestContext(WebURLRequest::kRequestContextTrack);
   return ToRawResource(fetcher->RequestResource(
       params, RawResourceFactory(Resource::kTextTrack)));
@@ -111,7 +112,7 @@ RawResource* RawResource::FetchTextTrack(FetchParameters& params,
 RawResource* RawResource::FetchManifest(FetchParameters& params,
                                         ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            WebURLRequest::kFrameTypeNone);
+            network::mojom::RequestContextFrameType::kNone);
   DCHECK_EQ(params.GetResourceRequest().GetRequestContext(),
             WebURLRequest::kRequestContextManifest);
   return ToRawResource(fetcher->RequestResource(

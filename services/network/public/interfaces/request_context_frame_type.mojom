@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module network.mojom;
+
+// Corresponds to Fetch's "context frame type".
+// However, it has been removed in spec, see the details:
+// https://github.com/whatwg/fetch/issues/93
+//
+// TODO: It can be possibly replaced by content::mojom::ResourceType which is
+// more commonly used in regular loading code, but needs further investigation
+// and confirmation.
+enum RequestContextFrameType {
+  kAuxiliary,
+  kNested,
+  kNone,
+  kTopLevel
+};

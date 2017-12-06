@@ -49,6 +49,7 @@
 #include "net/url_request/redirect_util.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
@@ -181,9 +182,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     }
 
     if (service_worker_navigation_handle_core) {
-      RequestContextFrameType frame_type =
-          request_info->is_main_frame ? REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL
-                                      : REQUEST_CONTEXT_FRAME_TYPE_NESTED;
+      network::mojom::RequestContextFrameType frame_type =
+          request_info->is_main_frame
+              ? network::mojom::RequestContextFrameType::kTopLevel
+              : network::mojom::RequestContextFrameType::kNested;
 
       storage::BlobStorageContext* blob_storage_context = GetBlobStorageContext(
           GetChromeBlobStorageContextForResourceContext(resource_context_));
