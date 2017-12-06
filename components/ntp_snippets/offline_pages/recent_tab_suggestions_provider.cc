@@ -143,12 +143,21 @@ void RecentTabSuggestionsProvider::GetDismissedSuggestionsForDebugging(
     Category category,
     DismissedSuggestionsCallback callback) {
   DCHECK_EQ(provided_category_, category);
+  bool have_pending_callbacks = !dismiss_suggestion_callbacks_.empty();
+  dismiss_suggestion_callbacks_.push_back(std::move(callback));
+  if (have_pending_callbacks)
+    return;
 
-  std::vector<OfflineItem> items = recent_tabs_ui_adapter_->GetAllItems();
+  recent_tabs_ui_adapter_->GetAllItems(base::Bind(
+      &RecentTabSuggestionsProvider::OnGetDismissedSuggestionsForDebuggingDone,
+      weak_ptr_factory_.GetWeakPtr()));
+}
 
+void RecentTabSuggestionsProvider::OnGetDismissedSuggestionsForDebuggingDone(
+    const std::vector<OfflineItem>& offline_items) {
   std::set<std::string> dismissed_ids = ReadDismissedIDsFromPrefs();
   std::vector<ContentSuggestion> suggestions;
-  for (const OfflineItem& item : items) {
+  for (const OfflineItem& item : offline_items) {
     int64_t offline_page_id =
         recent_tabs_ui_adapter_->GetOfflineIdByGuid(item.id.id);
     if (!dismissed_ids.count(base::IntToString(offline_page_id))) {
@@ -157,7 +166,11 @@ void RecentTabSuggestionsProvider::GetDismissedSuggestionsForDebugging(
 
     suggestions.push_back(ConvertUIItem(item));
   }
-  std::move(callback).Run(std::move(suggestions));
+
+  for (auto& callback : dismiss_suggestion_callbacks_)
+    std::move(callback).Run(std::move(suggestions));
+
+  dismiss_suggestion_callbacks_.clear();
 }
 
 void RecentTabSuggestionsProvider::ClearDismissedSuggestionsForDebugging(
@@ -200,13 +213,19 @@ void RecentTabSuggestionsProvider::OnItemRemoved(const ContentId& id) {
 }
 
 void RecentTabSuggestionsProvider::FetchRecentTabs() {
-  std::vector<OfflineItem> ui_items = recent_tabs_ui_adapter_->GetAllItems();
+  recent_tabs_ui_adapter_->GetAllItems(
+      base::Bind(&RecentTabSuggestionsProvider::OnFetchRecentTabsDone,
+                 weak_ptr_factory_.GetWeakPtr()));
+}
+
+void RecentTabSuggestionsProvider::OnFetchRecentTabsDone(
+    const std::vector<OfflineItem>& offline_items) {
   NotifyStatusChanged(CategoryStatus::AVAILABLE);
   std::set<std::string> old_dismissed_ids = ReadDismissedIDsFromPrefs();
   std::set<std::string> new_dismissed_ids;
   std::vector<OfflineItem> non_dismissed_items;
 
-  for (const OfflineItem& item : ui_items) {
+  for (const OfflineItem& item : offline_items) {
     std::string offline_page_id = base::IntToString(
         recent_tabs_ui_adapter_->GetOfflineIdByGuid(item.id.id));
     if (old_dismissed_ids.count(offline_page_id)) {
