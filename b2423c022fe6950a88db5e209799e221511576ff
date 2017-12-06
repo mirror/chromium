@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cfd2fac_2905213e",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "This class may go through multiple sockets over time.  I think we need a test for that case.  The reconnection is transparent to the layer just above us, as I recall.",
+      "range": {
+        "startLine": 295,
+        "startChar": 9,
+        "endLine": 295,
+        "endChar": 26
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38800a6a_4d7d5338",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "So some SSL socket pools can\u0027t tag sockets?  How\u0027s that going to work?  I\u0027m not sure if SSL socket pools that sit on top of QUIC tunnels even know they\u0027re on top of a quic (Or H2) tunnel.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4395b1_008f40eb",
+        "filename": "net/socket/stream_socket.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Tag needs to be specced out more thoroughly.  What happens if the socket isn\u0027t connected yet?  What happens if this is a SSL/Socket/HttpProxy socket and the lower layer socket this was created with was already tagged?  (Is that how things will work in the socket pool layer, or will we just tag the higher layer class after the lower layer one has connected?)",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2d3fc4_181e3f9c",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Why do we consider this valid with UDP but not TCP?",
+      "range": {
+        "startLine": 351,
+        "startChar": 9,
+        "endLine": 351,
+        "endChar": 12
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0086c9_858154eb",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "As with the UDP code, suggest moving this down to the socket layer, in case we decide to support server sockets.",
+      "range": {
+        "startLine": 351,
+        "startChar": 2,
+        "endLine": 351,
+        "endChar": 7
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95d1ab6_93533d77",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Having tag not reset if a socket fails to connect and is reused (Or is closed and reconnected) like a bad idea to me.  Nothing else behaves that way, to the extent of my knowledge.",
+      "range": {
+        "startLine": 389,
+        "startChar": 29,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ab26ba_f240ca9b",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Per comment in UDP code, should be consistent either about DCHECKing on non-Android platforms when setting a tag, or not DCHECKing.",
+      "range": {
+        "startLine": 396,
+        "startChar": 23,
+        "endLine": 396,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c22317_fc4b84b2",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "We should also test tagging/retagging a socket for the first time after its connected, out of paranoia.",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27cdc000_fefd03a7",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "This sentence is awkward.  Remove \"and\", or say \"retagged with a new value and the current process\u0027s UID\"?\n\nAlso, avoid \"our\"",
+      "range": {
+        "startLine": 193,
+        "startChar": 19,
+        "endLine": 193,
+        "endChar": 23
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e95e7d5_9f7d8052",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Again, rephrase",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7007f52b_64bf5482",
+        "filename": "net/socket/tcp_socket_posix.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Can we call this ApplySocketTag?  May be easiest just to do a mass replace on the diff.  My main concern is that \"Tag\" doesn\u0027t provide a whole lot of information, and we have another *Tag class in net/.",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 17
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dbec35_e69514d0",
+        "filename": "net/socket/udp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "This will make it legal to call Tag(foo) on UDP sockets on all platforms, despite the fact that we have DCHECKs at the socket_ layer in that case.  We should be consistent:  Either Tag() should DCHECK on non-Android platforms, or it should not.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 5
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3ac1a6_71e16ab0",
+        "filename": "net/socket/udp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Suggest moving tag caching down to the UDPSocketPosix layer, just in case we decide we need to tag \"server\" UDP sockets.",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac31d9e_6bf531c6",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:40:14Z",
+      "side": 1,
+      "message": "Any reason not to just use tag.Apply, which will DCHECK, anyways (With a comment that it will just fail)?  Or if we\u0027re really concerned about it, we can just make the Tag() function not exist on Windows and non-Android POSIX.  Will mean more ifdefs, but it turns a runtime error into a build error.\n\nMy preference is just to keep things as similar as we can across platforms, and CHECKing directly here doesn\u0027t seem to do that.  Same goes for the TCP code.",
+      "range": {
+        "startLine": 1221,
+        "startChar": 15,
+        "endLine": 1221,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
