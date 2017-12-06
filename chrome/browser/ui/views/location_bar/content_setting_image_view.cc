@@ -199,6 +199,7 @@ bool ContentSettingImageView::ShowBubble(const ui::Event& event) {
       bubble_view_->SetArrowPaintType(views::BubbleBorder::PAINT_TRANSPARENT);
     }
     bubble_widget->Show();
+    RecordBubbleShown();
   }
 
   return true;
@@ -270,4 +271,9 @@ void ContentSettingImageView::AnimateIn() {
   slide_animator_.Show();
   GetInkDrop()->SetShowHighlightOnHover(false);
   GetInkDrop()->SetShowHighlightOnFocus(false);
+}
+
+void ContentSettingImageView::RecordBubbleShown() {
+  delegate_->RecordContentSettingImageBubbleShown(
+      content_setting_image_model_->image_type());
 }

@@ -242,6 +242,8 @@ class LocationBarView : public LocationBar,
   content::WebContents* GetContentSettingWebContents() override;
   ContentSettingBubbleModelDelegate* GetContentSettingBubbleModelDelegate()
       override;
+  void RecordContentSettingImageBubbleShown(
+      ContentSettingImageModel::ContentSettingImageType type) const override;
 
   // ZoomEventManagerObserver:
   // Updates the view for the zoom icon when default zoom levels change.
