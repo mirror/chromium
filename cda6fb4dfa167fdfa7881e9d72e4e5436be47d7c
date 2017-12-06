@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c648425_b34fdda5",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T22:45:16Z",
+      "side": 1,
+      "message": "note.. we\u0027re also using it to coordinate with the window server, e.g., to suppress painting of a blank window until the first draw, and to invalidate the window shadow drawn by the WindowServer process.",
+      "revId": "cda6fb4dfa167fdfa7881e9d72e4e5436be47d7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
