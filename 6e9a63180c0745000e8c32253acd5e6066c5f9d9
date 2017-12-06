@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ce4b8c97_0a85b981",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T20:24:53Z",
+      "side": 1,
+      "message": "I think it definitely needs to break from your inner loop at least, probably should just be a return statement if we know writes are going to fail.",
+      "parentUuid": "446177c5_4cbb2b45",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0630104_96c0568c",
         "filename": "media/audio/pulse/pulse_output.cc",
         "patchSetId": 3
