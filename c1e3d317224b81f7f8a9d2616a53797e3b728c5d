@@ -70,6 +70,30 @@
       "revId": "c1e3d317224b81f7f8a9d2616a53797e3b728c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ad5c18_999ff71e",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-06T22:23:09Z",
+      "side": 1,
+      "message": "Correct, but I bumped the complexity of the search provider tests to demonstrate.\n\nPerhaps more disconcerting is that when (I) enter \"http://face book\", not a single suggestion guesses that I accidentally hit the spacebar. :(",
+      "parentUuid": "3f8994b0_bab8208b",
+      "range": {
+        "startLine": 291,
+        "startChar": 6,
+        "endLine": 291,
+        "endChar": 35
+      },
+      "revId": "c1e3d317224b81f7f8a9d2616a53797e3b728c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
