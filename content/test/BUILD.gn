@@ -435,6 +435,8 @@ static_library("test_support") {
       "../browser/compositor/test/no_transport_image_transport_factory.h",
       "../browser/renderer_host/mock_render_widget_host_delegate.cc",
       "../browser/renderer_host/mock_render_widget_host_delegate.h",
+      "../browser/renderer_host/render_widget_host_view_desktop_base_unittest.cc",
+      "../browser/renderer_host/render_widget_host_view_desktop_base_unittest.h",
     ]
   }
 
