@@ -2505,6 +2505,16 @@ void LayoutBlockFlow::AddOverflowFromFloats() {
   }
 }
 
+scoped_refptr<NGLayoutResult> LayoutBlockFlow::CachedLayoutResult(
+    const NGConstraintSpace&,
+    NGBreakToken*) const {
+  return nullptr;
+}
+
+scoped_refptr<NGLayoutResult> LayoutBlockFlow::CachedLayoutResultForTesting() {
+  return nullptr;
+}
+
 void LayoutBlockFlow::ComputeOverflow(LayoutUnit old_client_after_edge,
                                       bool recompute_floats) {
   LayoutBlock::ComputeOverflow(old_client_after_edge, recompute_floats);
