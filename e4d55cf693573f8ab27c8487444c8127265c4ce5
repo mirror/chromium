@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6ac7de3_d927cbcb",
+        "filename": "components/offline_pages/core/offline_store_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-06T21:15:44Z",
+      "side": 1,
+      "message": "Nit: In a future CL, can we put this sooner in the list?  It\u0027s nice if we traverse the list of states top to bottom in the enum...",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "e4d55cf693573f8ab27c8487444c8127265c4ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
