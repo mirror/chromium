@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c4bad9_5efbaf7b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T15:50:35Z",
+      "side": 1,
+      "message": "nit: you can remove these lines now, they\u0027re not necessary.",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced15f4f_35bde871",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T15:50:35Z",
+      "side": 1,
+      "message": "nit: no parens",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 3
+      },
+      "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fd0d27_a04132b4",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T15:50:35Z",
+      "side": 1,
+      "message": "nit: VRFieldOfView fov(45, 45, 45, 45);",
+      "range": {
+        "startLine": 212,
+        "startChar": 1,
+        "endLine": 212,
+        "endChar": 20
+      },
+      "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a507b2_bab0eb33",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-06T15:50:35Z",
+      "side": 1,
+      "message": "More of a question for Brandon, but shouldn\u0027t we just set the projection matrices to nullptrs when the device can\u0027t present, rather than making fake projection matrices with a hard-coded fov?",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 218,
+        "endChar": 51
+      },
+      "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
