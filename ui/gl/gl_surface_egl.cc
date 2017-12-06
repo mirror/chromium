@@ -557,14 +557,15 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
     return true;
 
   // Must be called before InitializeDisplay().
-  g_driver_egl.InitializeClientExtensionBindings();
+  auto writer = base::AutoWritableMemory::Create(g_driver_egl);
+  g_driver_egl->InitializeClientExtensionBindings();
 
   InitializeDisplay(native_display);
   if (g_display == EGL_NO_DISPLAY)
     return false;
 
   // Must be called after InitializeDisplay().
-  g_driver_egl.InitializeExtensionBindings();
+  g_driver_egl->InitializeExtensionBindings();
 
   g_egl_extensions = eglQueryString(g_display, EGL_EXTENSIONS);
   g_egl_create_context_robustness_supported =
@@ -645,11 +646,11 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
   // present and we're on Android N or newer, assume that it's usable even if
   // the extension wasn't reported.
   g_egl_android_native_fence_sync_supported =
-      g_driver_egl.ext.b_EGL_ANDROID_native_fence_sync;
+      g_driver_egl->ext.b_EGL_ANDROID_native_fence_sync;
 #if defined(OS_ANDROID)
   if (base::android::BuildInfo::GetInstance()->sdk_int() >=
           base::android::SDK_VERSION_NOUGAT &&
-      g_driver_egl.fn.eglDupNativeFenceFDANDROIDFn) {
+      g_driver_egl->fn.eglDupNativeFenceFDANDROIDFn) {
     g_egl_android_native_fence_sync_supported = true;
   }
 #endif
@@ -662,7 +663,8 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
 bool GLSurfaceEGL::InitializeExtensionSettingsOneOff() {
   if (!initialized_)
     return false;
-  g_driver_egl.UpdateConditionalExtensionBindings();
+  auto writer = base::AutoWritableMemory::Create(g_driver_egl);
+  g_driver_egl->UpdateConditionalExtensionBindings();
   g_egl_extensions = eglQueryString(g_display, EGL_EXTENSIONS);
 
   return true;
@@ -876,7 +878,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     egl_window_attributes.push_back(size_.height());
   }
 
-  if (g_driver_egl.ext.b_EGL_NV_post_sub_buffer) {
+  if (g_driver_egl->ext.b_EGL_NV_post_sub_buffer) {
     egl_window_attributes.push_back(EGL_POST_SUB_BUFFER_SUPPORTED_NV);
     egl_window_attributes.push_back(EGL_TRUE);
   }
@@ -941,7 +943,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     return false;
   }
 
-  if (g_driver_egl.ext.b_EGL_NV_post_sub_buffer) {
+  if (g_driver_egl->ext.b_EGL_NV_post_sub_buffer) {
     EGLint surfaceVal;
     EGLBoolean retVal = eglQuerySurface(
         GetDisplay(), surface_, EGL_POST_SUB_BUFFER_SUPPORTED_NV, &surfaceVal);
@@ -949,7 +951,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
   }
 
   supports_swap_buffer_with_damage_ =
-      g_driver_egl.ext.b_EGL_KHR_swap_buffers_with_damage;
+      g_driver_egl->ext.b_EGL_KHR_swap_buffers_with_damage;
 
   if (!vsync_provider_external_ && EGLSyncControlVSyncProvider::IsSupported()) {
     vsync_provider_internal_ =
@@ -960,11 +962,11 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
 }
 
 bool NativeViewGLSurfaceEGL::SupportsSwapTimestamps() const {
-  return g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps;
+  return g_driver_egl->ext.b_EGL_ANDROID_get_frame_timestamps;
 }
 
 void NativeViewGLSurfaceEGL::SetEnableSwapTimestamps() {
-  DCHECK(g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps);
+  DCHECK(g_driver_egl->ext.b_EGL_ANDROID_get_frame_timestamps);
 
   // If frame timestamps are supported, set the proper attribute to enable the
   // feature and then cache the timestamps supported by the underlying
@@ -1468,10 +1470,10 @@ void* PbufferGLSurfaceEGL::GetShareHandle() {
   NOTREACHED();
   return NULL;
 #else
-  if (!g_driver_egl.ext.b_EGL_ANGLE_query_surface_pointer)
+  if (!g_driver_egl->ext.b_EGL_ANGLE_query_surface_pointer)
     return NULL;
 
-  if (!g_driver_egl.ext.b_EGL_ANGLE_surface_d3d_texture_2d_share_handle)
+  if (!g_driver_egl->ext.b_EGL_ANGLE_surface_d3d_texture_2d_share_handle)
     return NULL;
 
   void* handle;
