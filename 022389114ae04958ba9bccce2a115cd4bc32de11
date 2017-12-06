@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0514f6_885ce5b7",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-06T01:18:02Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "revId": "022389114ae04958ba9bccce2a115cd4bc32de11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
