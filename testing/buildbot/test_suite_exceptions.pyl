@@ -102,6 +102,11 @@
           'shards': 5,
         },
       },
+      'Linux Tests SANDBOX': {
+        'swarming': {
+          'shards': 5,
+        },
+      },
     },
   },
   'blink_heap_unittests': {
@@ -581,6 +586,10 @@
     },
   },
   'content_unittests': {
+    'remove_from': [
+       # TODO(dpranke) - remove this exception.
+       'Fuchsia x64 SANDBOX',
+    ],
     'modifications': {
       'KitKat Tablet Tester': {
         'swarming': {
@@ -601,6 +610,8 @@
   },
   'crypto_unittests': {
     'remove_from': [
+       # TODO(dpranke) - remove this exception.
+      'Fuchsia x64 SANDBOX',
       # TODO(kbr): these tests aren't run on Android except on one bot
       # on chromium.android.fyi, which might just be an accident.
       # Consider moving it to non_android_chromium_gtests.
@@ -889,6 +900,11 @@
           'shards': 1,
         },
       },
+      'Linux Tests SANDBOX': {
+        'swarming': {
+          'shards': 1,
+        },
+      },
       'Linux Tests (dbg)(1)': {
         'swarming': {
           'shards': 3,
@@ -959,6 +975,8 @@
   },
   'keyboard_unittests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Linux Tests SANDBOX',
       'Win7 Tests (dbg)(1)',
       # On chromium.linux, unclear why these aren't run.
       'Linux Tests',
@@ -968,6 +986,8 @@
   },
   'latency_unittests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Linux Tests SANDBOX',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1061,12 +1081,15 @@
       'Mac10.9 Tests (dbg)',
       # On chromium.linux, unclear why these aren't run.
       'Linux Tests',
+      'Linux Tests SANDBOX',
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
     ],
   },
   'metrics_python_tests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Linux Tests SANDBOX',
       'Win7 Tests (dbg)(1)',
       # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
       'Mac10.10 Tests',
@@ -1266,6 +1289,8 @@
   },
   'renderer_side_navigation_content_browsertests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Linux Tests SANDBOX',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1310,6 +1335,8 @@
   },
   'renderer_side_navigation_content_unittests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Linux Tests SANDBOX',
       # On chromium.android, unclear why these aren't run on all bots.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1478,6 +1505,8 @@
   },
   'skia_unittests': {
     'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Fuchsia x64 SANDBOX',
       # On chromium.android, unclear why these aren't run.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
@@ -1504,6 +1533,10 @@
     ],
   },
   'sql_unittests': {
+    'remove_from': [
+      # TODO(dpranke) - remove this exception.
+      'Fuchsia x64 SANDBOX',
+    ],
     'modifications': {
       'KitKat Tablet Tester': {
         'swarming': {
@@ -1608,6 +1641,11 @@
           '--xvfb',
         ],
       },
+      'Linux Tests SANDBOX': {
+        'args': [
+          '--xvfb',
+        ],
+      },
       # Disable parallelism on all Mac bots.
       'Mac10.10 Tests': {
         'args': [
@@ -1635,6 +1673,14 @@
   },
   'telemetry_unittests': {
     'modifications': {
+      'Linux Tests SANDBOX': {
+        'args': [
+          '--jobs=1',
+        ],
+        'swarming': {
+          'shards': 4,
+        },
+      },
       'Linux Tests': {
         'args': [
           '--jobs=1',
@@ -1671,6 +1717,12 @@
   'traffic_annotation_auditor_unittests': {
     'modifications': {
       'Linux Tests': {
+        # Unclear why this isn't swarmed.
+        'swarming': {
+          'can_use_on_swarming_builders': False,
+        },
+      },
+      'Linux Tests SANDBOX': {
         # Unclear why this isn't swarmed.
         'swarming': {
           'can_use_on_swarming_builders': False,
@@ -1791,6 +1843,7 @@
   },
   'viz_content_browsertests': {
     'remove_from': [
+      'Linux Tests SANDBOX',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
@@ -1889,6 +1942,17 @@
     },
     'modifications': {
       'Linux Tests': {
+        'swarming': {
+          'dimension_sets': [
+            {
+              # TODO(kbr): this is essentially redundant.
+              'os': 'Ubuntu-14.04',
+            },
+          ],
+          'shards': 6,
+        },
+      },
+      'Linux Tests SANDBOX': {
         'swarming': {
           'dimension_sets': [
             {
