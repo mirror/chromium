@@ -212,6 +212,8 @@ class VIEWS_EXPORT ViewsDelegate {
                                      const base::Closure& callback);
 #endif
 
+  virtual bool ShouldMirrorArrowsInRTL() const = 0;
+
  protected:
   ViewsDelegate();
 

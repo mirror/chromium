@@ -20,6 +20,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/views/style/platform_style.h"
 #include "ui/views/widget/widget.h"
 
 #if defined(USE_AURA)
@@ -187,5 +188,11 @@ views::Widget::InitParams::WindowOpacity
 ChromeViewsDelegate::GetOpacityForInitParams(
     const views::Widget::InitParams& params) {
   return views::Widget::InitParams::OPAQUE_WINDOW;
+}
+#endif
+
+#if !defined(OS_MACOSX)
+bool ChromeViewsDelegate::ShouldMirrorArrowsInRTL() const {
+  return views::PlatformStyle::kMirrorBubbleArrowInRTLByDefault;
 }
 #endif
