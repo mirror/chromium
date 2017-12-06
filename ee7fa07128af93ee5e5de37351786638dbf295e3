@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d91d537_17fca6a4",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:56:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this function is particularly useful anymore but I defer to iclelland to answer that.",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16ec176_59057078",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:56:58Z",
+      "side": 1,
+      "message": "Are magentometer and ambient-light-sensor APIs shipped? If not perhaps we should put these behind the experimental flag below?",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b21f15c_c2e87a64",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:56:58Z",
+      "side": 1,
+      "message": "nit: // The following features control access to the corresponding sensor classes.",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea9f333_6315f6b1",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T03:56:58Z",
+      "side": 1,
+      "message": "nit: Fusion sensor APIs (e.g. ...) require all of the features that are inputs into that API to be enabled for the feature to be allowed.",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
