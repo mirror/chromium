@@ -25,6 +25,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -37,6 +38,7 @@
 #include "components/user_manager/user_image/user_image.h"
 #include "components/wallpaper/wallpaper_color_calculator.h"
 #include "components/wallpaper/wallpaper_color_profile.h"
+#include "components/wallpaper/wallpaper_files_id.h"
 #include "components/wallpaper/wallpaper_resizer.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
@@ -44,6 +46,7 @@
 #include "ui/gfx/codec/jpeg_codec.h"
 #include "ui/gfx/color_analysis.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/views/widget/widget.h"
 
 using color_utils::ColorProfile;
@@ -67,6 +70,12 @@ constexpr int kWallpaperReloadDelayMs = 100;
 
 // How long to wait for resizing of the the wallpaper.
 constexpr int kCompositorLockTimeoutMs = 750;
+
+// Default quality for encoding wallpaper.
+const int kDefaultEncodingQuality = 90;
+
+// Directory where custom wallpapers reside.
+base::FilePath dir_chrome_os_custom_wallpapers_path_;
 
 // Caches color calculation results in local state pref service.
 void CacheProminentColors(const std::vector<SkColor>& colors,
@@ -174,13 +183,92 @@ void DeleteWallpaperInList(const std::vector<base::FilePath>& file_list) {
   }
 }
 
+// Saves wallpaper image raw |data| to |path| (absolute path) in file system.
+// Returns true on success.
+bool SaveWallpaperInternal(const base::FilePath& path,
+                           const char* data,
+                           int size) {
+  int written_bytes = base::WriteFile(path, data, size);
+  return written_bytes == size;
+}
+
+// Creates all new custom wallpaper directories for |wallpaper_files_id| if they
+// don't exist.
+void EnsureCustomWallpaperDirectories(const std::string& wallpaper_files_id) {
+  base::FilePath dir;
+  dir = WallpaperController::GetCustomWallpaperDir(
+      ash::WallpaperController::kSmallWallpaperSubDir);
+  dir = dir.Append(wallpaper_files_id);
+  if (!base::PathExists(dir))
+    base::CreateDirectory(dir);
+  dir = WallpaperController::GetCustomWallpaperDir(
+      ash::WallpaperController::kLargeWallpaperSubDir);
+  dir = dir.Append(wallpaper_files_id);
+  if (!base::PathExists(dir))
+    base::CreateDirectory(dir);
+  dir = WallpaperController::GetCustomWallpaperDir(
+      ash::WallpaperController::kOriginalWallpaperSubDir);
+  dir = dir.Append(wallpaper_files_id);
+  if (!base::PathExists(dir))
+    base::CreateDirectory(dir);
+  dir = WallpaperController::GetCustomWallpaperDir(
+      ash::WallpaperController::kThumbnailWallpaperSubDir);
+  dir = dir.Append(wallpaper_files_id);
+  if (!base::PathExists(dir))
+    base::CreateDirectory(dir);
+}
+
+// Saves original custom wallpaper to |path| (absolute path) on filesystem
+// and starts resizing operation of the custom wallpaper if necessary.
+void SaveCustomWallpaper(const std::string& wallpaper_files_id,
+                         const base::FilePath& original_path,
+                         wallpaper::WallpaperLayout layout,
+                         std::unique_ptr<gfx::ImageSkia> image) {
+  base::DeleteFile(WallpaperController::GetCustomWallpaperDir(
+                       WallpaperController::kOriginalWallpaperSubDir)
+                       .Append(wallpaper_files_id),
+                   true /* recursive */);
+  base::DeleteFile(WallpaperController::GetCustomWallpaperDir(
+                       WallpaperController::kSmallWallpaperSubDir)
+                       .Append(wallpaper_files_id),
+                   true /* recursive */);
+  base::DeleteFile(WallpaperController::GetCustomWallpaperDir(
+                       WallpaperController::kLargeWallpaperSubDir)
+                       .Append(wallpaper_files_id),
+                   true /* recursive */);
+  EnsureCustomWallpaperDirectories(wallpaper_files_id);
+  std::string file_name = original_path.BaseName().value();
+  base::FilePath small_wallpaper_path =
+      WallpaperController::GetCustomWallpaperPath(
+          WallpaperController::kSmallWallpaperSubDir, wallpaper_files_id,
+          file_name);
+  base::FilePath large_wallpaper_path =
+      WallpaperController::GetCustomWallpaperPath(
+          WallpaperController::kLargeWallpaperSubDir, wallpaper_files_id,
+          file_name);
+
+  // Re-encode orginal file to jpeg format and saves the result in case that
+  // resized wallpaper is not generated (i.e. chrome shutdown before resized
+  // wallpaper is saved).
+  WallpaperController::ResizeAndSaveWallpaper(
+      *image, original_path, wallpaper::WALLPAPER_LAYOUT_STRETCH,
+      image->width(), image->height(), nullptr);
+  WallpaperController::ResizeAndSaveWallpaper(
+      *image, small_wallpaper_path, layout,
+      WallpaperController::kSmallWallpaperMaxWidth,
+      WallpaperController::kSmallWallpaperMaxHeight, nullptr);
+  WallpaperController::ResizeAndSaveWallpaper(
+      *image, large_wallpaper_path, layout,
+      WallpaperController::kLargeWallpaperMaxWidth,
+      WallpaperController::kLargeWallpaperMaxHeight, nullptr);
+}
+
 }  // namespace
 
 const SkColor WallpaperController::kInvalidColor = SK_ColorTRANSPARENT;
 
 base::FilePath WallpaperController::dir_user_data_path_;
 base::FilePath WallpaperController::dir_chrome_os_wallpapers_path_;
-base::FilePath WallpaperController::dir_chrome_os_custom_wallpapers_path_;
 
 const char WallpaperController::kSmallWallpaperSubDir[] = "small";
 const char WallpaperController::kLargeWallpaperSubDir[] = "large";
@@ -276,6 +364,98 @@ WallpaperController::GetAppropriateResolution() {
           size.height() > kSmallWallpaperMaxHeight)
              ? WALLPAPER_RESOLUTION_LARGE
              : WALLPAPER_RESOLUTION_SMALL;
+}
+
+// static
+base::FilePath WallpaperController::GetCustomWallpaperPath(
+    const std::string& sub_dir,
+    const std::string& wallpaper_files_id,
+    const std::string& file_name) {
+  base::FilePath custom_wallpaper_path = GetCustomWallpaperDir(sub_dir);
+  return custom_wallpaper_path.Append(wallpaper_files_id).Append(file_name);
+}
+
+// static
+base::FilePath WallpaperController::GetCustomWallpaperDir(
+    const std::string& sub_dir) {
+  DCHECK(!dir_chrome_os_custom_wallpapers_path_.empty());
+  return dir_chrome_os_custom_wallpapers_path_.Append(sub_dir);
+}
+
+// static
+bool WallpaperController::ResizeImage(
+    const gfx::ImageSkia& image,
+    wallpaper::WallpaperLayout layout,
+    int preferred_width,
+    int preferred_height,
+    scoped_refptr<base::RefCountedBytes>* output,
+    gfx::ImageSkia* output_skia) {
+  int width = image.width();
+  int height = image.height();
+  int resized_width;
+  int resized_height;
+  *output = new base::RefCountedBytes();
+
+  if (layout == wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED) {
+    // Do not resize custom wallpaper if it is smaller than preferred size.
+    if (!(width > preferred_width && height > preferred_height))
+      return false;
+
+    double horizontal_ratio = static_cast<double>(preferred_width) / width;
+    double vertical_ratio = static_cast<double>(preferred_height) / height;
+    if (vertical_ratio > horizontal_ratio) {
+      resized_width =
+          gfx::ToRoundedInt(static_cast<double>(width) * vertical_ratio);
+      resized_height = preferred_height;
+    } else {
+      resized_width = preferred_width;
+      resized_height =
+          gfx::ToRoundedInt(static_cast<double>(height) * horizontal_ratio);
+    }
+  } else if (layout == wallpaper::WALLPAPER_LAYOUT_STRETCH) {
+    resized_width = preferred_width;
+    resized_height = preferred_height;
+  } else {
+    resized_width = width;
+    resized_height = height;
+  }
+
+  gfx::ImageSkia resized_image = gfx::ImageSkiaOperations::CreateResizedImage(
+      image, skia::ImageOperations::RESIZE_LANCZOS3,
+      gfx::Size(resized_width, resized_height));
+
+  SkBitmap bitmap = *(resized_image.bitmap());
+  gfx::JPEGCodec::Encode(bitmap, kDefaultEncodingQuality, &(*output)->data());
+
+  if (output_skia) {
+    resized_image.MakeThreadSafe();
+    *output_skia = resized_image;
+  }
+
+  return true;
+}
+
+// static
+bool WallpaperController::ResizeAndSaveWallpaper(
+    const gfx::ImageSkia& image,
+    const base::FilePath& path,
+    wallpaper::WallpaperLayout layout,
+    int preferred_width,
+    int preferred_height,
+    gfx::ImageSkia* output_skia) {
+  if (layout == wallpaper::WALLPAPER_LAYOUT_CENTER) {
+    // TODO(bshe): Generates cropped custom wallpaper for CENTER layout.
+    if (base::PathExists(path))
+      base::DeleteFile(path, false);
+    return false;
+  }
+  scoped_refptr<base::RefCountedBytes> data;
+  if (ResizeImage(image, layout, preferred_width, preferred_height, &data,
+                  output_skia)) {
+    return SaveWallpaperInternal(
+        path, reinterpret_cast<const char*>(data->front()), data->size());
+  }
+  return false;
 }
 
 // static
@@ -548,10 +728,12 @@ void WallpaperController::CreateEmptyWallpaper() {
   InstallDesktopControllerForAllWindows();
 }
 
-base::FilePath WallpaperController::GetCustomWallpaperDir(
-    const std::string& sub_dir) {
-  DCHECK(!dir_chrome_os_custom_wallpapers_path_.empty());
-  return dir_chrome_os_custom_wallpapers_path_.Append(sub_dir);
+bool WallpaperController::IsPolicyControlled(const AccountId& account_id,
+                                             bool is_persistent) const {
+  WallpaperInfo info;
+  if (!GetUserWallpaperInfo(account_id, &info, is_persistent))
+    return false;
+  return info.type == wallpaper::POLICY;
 }
 
 void WallpaperController::OnDisplayConfigurationChanged() {
@@ -682,7 +864,7 @@ void WallpaperController::SetUserWallpaperInfo(const AccountId& account_id,
 
 bool WallpaperController::GetUserWallpaperInfo(const AccountId& account_id,
                                                WallpaperInfo* info,
-                                               bool is_persistent) {
+                                               bool is_persistent) const {
   if (!is_persistent) {
     // Default to the values cached in memory.
     *info = current_user_wallpaper_info_;
@@ -736,6 +918,11 @@ void WallpaperController::InitializeUserWallpaperInfo(
   SetUserWallpaperInfo(account_id, info, is_persistent);
 }
 
+void WallpaperController::NotifyCustomWallpaperCancelled(uint32_t image_id) {
+  for (auto& observer : observers_)
+    observer.OnCustomWallpaperCancelled(image_id);
+}
+
 bool WallpaperController::GetWallpaperFromCache(const AccountId& account_id,
                                                 gfx::ImageSkia* image) {
   CustomWallpaperMap::const_iterator it = wallpaper_cache_map_.find(account_id);
@@ -783,7 +970,73 @@ void WallpaperController::SetCustomWallpaper(
     wallpaper::WallpaperType type,
     const SkBitmap& image,
     bool show_wallpaper) {
-  NOTIMPLEMENTED();
+  gfx::ImageSkia custom_wallpaper = gfx::ImageSkia::CreateFrom1xBitmap(image);
+  uint32_t image_id = wallpaper::WallpaperResizer::GetImageId(custom_wallpaper);
+
+  // There is no visible wallpaper in kiosk mode.
+  base::Optional<user_manager::UserType> active_user_type =
+      Shell::Get()->session_controller()->GetUserType();
+  // |active_user_type| is empty when there's no active user.
+  if (active_user_type &&
+      *active_user_type == user_manager::USER_TYPE_KIOSK_APP) {
+    NotifyCustomWallpaperCancelled(image_id);
+    return;
+  }
+
+  // Don't allow custom wallpapers while policy is in effect.
+  if (type != wallpaper::POLICY &&
+      IsPolicyControlled(user_info->account_id, !user_info->is_ephemeral)) {
+    NotifyCustomWallpaperCancelled(image_id);
+    return;
+  }
+
+  // Empty image indicates decode failure. Use default wallpaper in this case.
+  if (custom_wallpaper.isNull()) {
+    NotifyCustomWallpaperCancelled(image_id);
+    SetDefaultWallpaperImpl(user_info->account_id, user_info->type,
+                            show_wallpaper, MovableOnDestroyCallbackHolder());
+    return;
+  }
+
+  base::FilePath wallpaper_path =
+      GetCustomWallpaperPath(WallpaperController::kOriginalWallpaperSubDir,
+                             wallpaper_files_id, file_name);
+
+  const bool should_save_to_disk =
+      !user_info->is_ephemeral ||
+      (type == wallpaper::POLICY &&
+       user_info->type == user_manager::USER_TYPE_PUBLIC_ACCOUNT);
+
+  if (should_save_to_disk) {
+    custom_wallpaper.EnsureRepsForSupportedScales();
+    std::unique_ptr<gfx::ImageSkia> deep_copy(custom_wallpaper.DeepCopy());
+    // Block shutdown on this task. Otherwise, we may lose the custom wallpaper
+    // that the user selected.
+    scoped_refptr<base::SequencedTaskRunner> blocking_task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
+             base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+    // TODO(bshe): This may break if RawImage becomes RefCountedMemory.
+    blocking_task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(&SaveCustomWallpaper, wallpaper_files_id, wallpaper_path,
+                       layout, base::Passed(std::move(deep_copy))));
+  }
+
+  std::string relative_path =
+      base::FilePath(wallpaper_files_id).Append(file_name).value();
+  // User's custom wallpaper path is determined by relative path and the
+  // appropriate wallpaper resolution in GetCustomWallpaperInternal.
+  WallpaperInfo info = {relative_path, layout, type,
+                        base::Time::Now().LocalMidnight()};
+  SetUserWallpaperInfo(user_info->account_id, info, !user_info->is_ephemeral);
+  if (show_wallpaper)
+    SetWallpaperImage(custom_wallpaper, info);
+  else
+    NotifyCustomWallpaperCancelled(image_id);
+
+  wallpaper_cache_map_[user_info->account_id] =
+      CustomWallpaperElement(wallpaper_path, custom_wallpaper);
 }
 
 void WallpaperController::SetOnlineWallpaper(
@@ -895,6 +1148,14 @@ void WallpaperController::OnColorCalculationComplete() {
   if (!current_location_.empty())
     CacheProminentColors(colors, current_location_);
   SetProminentColors(colors);
+}
+
+void WallpaperController::InitializePathsForTesting() {
+  dir_user_data_path_ = base::FilePath(FILE_PATH_LITERAL("user_data"));
+  dir_chrome_os_wallpapers_path_ =
+      base::FilePath(FILE_PATH_LITERAL("chrome_os_wallpapers"));
+  dir_chrome_os_custom_wallpapers_path_ =
+      base::FilePath(FILE_PATH_LITERAL("chrome_os_custom_wallpapers"));
 }
 
 void WallpaperController::ShowDefaultWallpaperForTesting() {

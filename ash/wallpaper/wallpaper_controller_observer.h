@@ -22,6 +22,11 @@ class ASH_EXPORT WallpaperControllerObserver {
   // Invoked when the blur state of the wallpaper changes.
   virtual void OnWallpaperBlurChanged() {}
 
+  // Invoked when a |SetCustomWallpaper| request with |image_id| is cancelled.
+  // It may be due to various reasons, e.g. kiosk app is running, or a policy
+  // is currently enforced, or |show_wallpaper| is false.
+  virtual void OnCustomWallpaperCancelled(uint32_t image_id) {}
+
  protected:
   virtual ~WallpaperControllerObserver() {}
 };
