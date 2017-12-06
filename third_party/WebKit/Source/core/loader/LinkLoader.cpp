@@ -34,6 +34,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/Document.h"
 #include "core/dom/ModuleScript.h"
 #include "core/dom/ScriptLoader.h"
@@ -62,6 +63,8 @@
 #include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebPrerender.h"
+#include "public/platform/modules/webpackage/webpackage_prefetch_service.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -122,6 +125,73 @@ class LinkLoader::FinishObserver final
  private:
   Member<LinkLoader> loader_;
   Member<Resource> resource_;
+};
+
+class LinkLoader::WebPackagePrefetcher final
+    : public GarbageCollectedFinalized<WebPackagePrefetcher>,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(WebPackagePrefetcher);
+  USING_PRE_FINALIZER(WebPackagePrefetcher, Dispose);
+
+ public:
+  static WebPackagePrefetcher* CreateIfNeeded(
+      const LinkRelAttribute& rel_attribute,
+      const KURL& href,
+      Document* document,
+      const String& as) {
+    if (!rel_attribute.IsLinkPrefetch())
+      return nullptr;
+    if (!href.IsValid() || href.IsEmpty())
+      return nullptr;
+    if (as != "wpk")
+      return nullptr;
+    if (!document->GetFrame())
+      return nullptr;
+
+    return new WebPackagePrefetcher(document, href);
+  }
+
+  WebPackagePrefetcher(ExecutionContext* execution_context, const KURL& href)
+      : ContextLifecycleObserver(execution_context) {
+    LOG(ERROR) << "WebPackagePrefetcher::WebPackagePrefetcher "
+               << href.GetString().Utf8().data();
+    GetFrame()->GetInterfaceProvider().GetInterface(
+        mojo::MakeRequest(&service_));
+    service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
+        &WebPackagePrefetcher::OnConnectionError, WrapWeakPersistent(this))));
+    DCHECK(service_);
+    service_->Prefetch(href, mojo::MakeRequest(&aborter_));
+  }
+  ~WebPackagePrefetcher() {
+    LOG(ERROR) << "WebPackagePrefetcher::~WebPackagePrefetcher";
+  }
+  void Dispose() {
+    LOG(ERROR) << "WebPackagePrefetcher::Dispose";
+    Abort();
+  }
+  void Abort() {
+    LOG(ERROR) << "WebPackagePrefetcher::Abort " << !!aborter_;
+    if (aborter_) {
+      aborter_->Abort();
+      aborter_ = nullptr;
+    }
+  }
+  void OnConnectionError() {
+    LOG(ERROR) << "WebPackagePrefetcher::OnConnectionError";
+  }
+
+  void Trace(blink::Visitor* visitor) override {
+    ContextLifecycleObserver::Trace(visitor);
+  }
+
+ private:
+  void ContextDestroyed(ExecutionContext*) override {
+    LOG(ERROR) << "WebPackagePrefetcher::ContextDestroyed";
+    Abort();
+  }
+
+  blink::mojom::blink::WebPackagePrefetchServicePtr service_;
+  blink::mojom::blink::WebPackagePrefetchAborterPtr aborter_;
 };
 
 LinkLoader::LinkLoader(LinkLoaderClient* client,
@@ -634,6 +704,9 @@ bool LinkLoader::LoadLink(
   if (resource)
     finish_observer_ = new FinishObserver(this, resource);
 
+  wpk_prefetcher_ =
+      WebPackagePrefetcher::CreateIfNeeded(rel_attribute, href, &document, as);
+
   ModulePreloadIfNeeded(rel_attribute, href, document, as, media, nonce,
                         integrity, cross_origin, nullptr, referrer_policy,
                         this);
@@ -671,10 +744,15 @@ void LinkLoader::Abort() {
     finish_observer_->ClearResource();
     finish_observer_ = nullptr;
   }
+  if (wpk_prefetcher_) {
+    wpk_prefetcher_->Abort();
+    wpk_prefetcher_ = nullptr;
+  }
 }
 
 void LinkLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(finish_observer_);
+  visitor->Trace(wpk_prefetcher_);
   visitor->Trace(client_);
   visitor->Trace(prerender_);
   SingleModuleClient::Trace(visitor);

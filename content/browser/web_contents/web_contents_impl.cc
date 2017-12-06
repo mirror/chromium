@@ -5686,6 +5686,13 @@ bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
 
 #endif
 
+void WebContentsImpl::SetIsAMP(bool is_amp) {
+  is_amp_ = is_amp;
+}
+bool WebContentsImpl::IsAMP() const {
+  return is_amp_;
+}
+
 void WebContentsImpl::OnDidDownloadImage(
     const ImageDownloadCallback& callback,
     int id,

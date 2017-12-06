@@ -313,6 +313,10 @@ source_set("common") {
     "user_agent.cc",
     "view_message_enums.h",
     "view_messages.h",
+    "webpackage_response_handler.cc",
+    "webpackage_response_handler.h",
+    "webpackage_subresource_loader.cc",
+    "webpackage_subresource_loader.h",
     "zygote_commands_linux.h",
   ]
 
@@ -607,6 +611,7 @@ mojom("mojo_bindings") {
     "storage_partition_service.mojom",
     "url_loader_factory_bundle.mojom",
     "video_capture.mojom",
+    "webpackage_subresource_manager.mojom",
     "widget.mojom",
   ]
 
