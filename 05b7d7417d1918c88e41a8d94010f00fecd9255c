@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0561a36_c0855ad4",
+        "filename": "ios/web/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-06T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbe619ef_a8d749af",
+      "range": {
+        "startLine": 580,
+        "startChar": 19,
+        "endLine": 580,
+        "endChar": 29
+      },
+      "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede8b667_be776c8f",
         "filename": "ios/web/web_state/js/resources/form.js",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd39196_3c4bb481",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-06T21:56:48Z",
+      "side": 1,
+      "message": "I\u0027ve added comment on line 20 (the first place in this file where window.top is used)",
+      "parentUuid": "ede8b667_be776c8f",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "a800ee31_441c1e05",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-06T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75494133_b2b377e2",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56aa17c5_6fc102e6",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-06T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21094c2_55a71eed",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 11
+      },
+      "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b729cb7_d54ec1d4",
         "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider_unittest.mm",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-05T23:24:24Z",
       "side": 1,
       "message": "Can we check that all frames script is also injected?",
+      "range": {
+        "startLine": 147,
+        "startChar": 37,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "05b7d7417d1918c88e41a8d94010f00fecd9255c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f710ee_e4c10940",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-06T21:56:48Z",
+      "side": 1,
+      "message": "Done.\nI\u0027ve updated comment. For me it\u0027s not clear what \"The latter wraps the\n  // former with \"if (!injected)\" check to avoid double injections.\" means? Is it some leftover from old times?",
+      "parentUuid": "0b729cb7_d54ec1d4",
       "range": {
         "startLine": 147,
         "startChar": 37,
