@@ -18,7 +18,7 @@
 namespace sandbox {
 namespace syscall_broker {
 
-BrokerPolicy::BrokerPolicy(int denied_errno,
+BrokerPermissionList::BrokerPermissionList(int denied_errno,
                            const std::vector<BrokerFilePermission>& permissions)
     : denied_errno_(denied_errno),
       permissions_(permissions),
@@ -33,7 +33,7 @@ BrokerPolicy::BrokerPolicy(int denied_errno,
   }
 }
 
-BrokerPolicy::~BrokerPolicy() {
+BrokerPermissionList::~BrokerPermissionList() {
 }
 
 // Check if calling access() should be allowed on |requested_filename| with
@@ -47,7 +47,7 @@ BrokerPolicy::~BrokerPolicy() {
 // return true if calling access() on this file should be allowed, false
 // otherwise.
 // Async signal safe if and only if |file_to_access| is NULL.
-bool BrokerPolicy::GetFileNameIfAllowedToAccess(
+bool BrokerPermissionList::GetFileNameIfAllowedToAccess(
     const char* requested_filename,
     int requested_mode,
     const char** file_to_access) const {
@@ -75,7 +75,7 @@ bool BrokerPolicy::GetFileNameIfAllowedToAccess(
 // string comparison mechanism.
 // Return true if opening should be allowed, false otherwise.
 // Async signal safe if and only if |file_to_open| is NULL.
-bool BrokerPolicy::GetFileNameIfAllowedToOpen(const char* requested_filename,
+bool BrokerPermissionList::GetFileNameIfAllowedToOpen(const char* requested_filename,
                                               int requested_flags,
                                               const char** file_to_open,
                                               bool* unlink_after_open) const {

@@ -27,7 +27,7 @@
 namespace sandbox {
 namespace syscall_broker {
 
-BrokerClient::BrokerClient(const BrokerPolicy& broker_policy,
+BrokerClient::BrokerClient(const BrokerPermissionList& broker_policy,
                            BrokerChannel::EndPoint ipc_channel,
                            const BrokerCommandSet& allowed_command_set,
                            bool fast_check_in_client,

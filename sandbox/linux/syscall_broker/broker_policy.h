@@ -17,22 +17,22 @@
 namespace sandbox {
 namespace syscall_broker {
 
-// BrokerPolicy allows to define the security policy enforced by a
+// BrokerPermissionList allows to define the security policy enforced by a
 // BrokerHost. The BrokerHost will evaluate requests sent over its
-// IPC channel according to the BrokerPolicy.
+// IPC channel according to the BrokerPermissionList.
 // Some of the methods of this class can be used in an async-signal safe
 // way.
-class BrokerPolicy {
+class BrokerPermissionList {
  public:
   // |denied_errno| is the error code returned when IPC requests for system
   // calls such as open() or access() are denied because a file is not in the
   // whitelist. EACCESS would be a typical value.
   // |permissions| is a list of BrokerPermission objects that define
   // what the broker will allow.
-  BrokerPolicy(int denied_errno,
+  BrokerPermissionList(int denied_errno,
                const std::vector<BrokerFilePermission>& permissions);
 
-  ~BrokerPolicy();
+  ~BrokerPermissionList();
 
   // Check if calling access() should be allowed on |requested_filename| with
   // mode |requested_mode|.
@@ -79,7 +79,7 @@ class BrokerPolicy {
   const BrokerFilePermission* permissions_array_;
   const size_t num_of_permissions_;
 
-  DISALLOW_COPY_AND_ASSIGN(BrokerPolicy);
+  DISALLOW_COPY_AND_ASSIGN(BrokerPermissionList);
 };
 
 }  // namespace syscall_broker
