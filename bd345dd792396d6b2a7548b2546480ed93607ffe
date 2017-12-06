@@ -22,6 +22,30 @@
       "revId": "bd345dd792396d6b2a7548b2546480ed93607ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080db3b0_e6301f0e",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-12-06T15:37:13Z",
+      "side": 1,
+      "message": "Sure thing. I figured it could go either way, so I picked one.",
+      "parentUuid": "1a3364cf_09df6135",
+      "range": {
+        "startLine": 1804,
+        "startChar": 2,
+        "endLine": 1804,
+        "endChar": 9
+      },
+      "revId": "bd345dd792396d6b2a7548b2546480ed93607ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
