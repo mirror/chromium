@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50cc772f_5faea2f6",
+        "filename": "components/language/content/browser/geo_language_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-06T23:48:11Z",
+      "side": 1,
+      "message": "To avoid referring to the private member background_task_runner_, how about this wording:\n\n// |service_manager_connector| should not yet be bound to a sequence, e.g., it \n// should be the result of invoking ServiceManagerConnect::Clone() on another \n// connector.\n\n?",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94c24a7_e6787753",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-06T23:48:11Z",
+      "side": 1,
+      "message": "Could you pop a one-liner comment above these mock impls?\n\nE.g.\n\n// Mock impl of mojom::Geolocation that allows tests to control the returned location.",
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae422ae_cddfd139",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-06T23:48:11Z",
+      "side": 1,
+      "message": "// One-liner comment",
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acd66ff_68eed8fe",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-12-06T23:48:11Z",
+      "side": 1,
+      "message": "Cool! Thanks for finding this\n\nI am interested to see if reviewers may know an even simpler way since situations like this probably came up from time to time before.",
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
