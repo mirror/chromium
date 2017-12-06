@@ -86,22 +86,6 @@ size_t RegisterChromeCrashKeys() {
     {kCohortName, kSmallSize},
 #endif  // defined(OS_WIN)
 
-// gpu
-#if !defined(OS_ANDROID)
-    {gpu::crash_keys::kGPUVendorID, kSmallSize},
-    {gpu::crash_keys::kGPUDeviceID, kSmallSize},
-#endif
-    {gpu::crash_keys::kGPUDriverVersion, kSmallSize},
-    {gpu::crash_keys::kGPUPixelShaderVersion, kSmallSize},
-    {gpu::crash_keys::kGPUVertexShaderVersion, kSmallSize},
-#if defined(OS_MACOSX)
-    {gpu::crash_keys::kGPUGLVersion, kSmallSize},
-#elif defined(OS_POSIX)
-    {gpu::crash_keys::kGPUVendor, kSmallSize},
-    {gpu::crash_keys::kGPURenderer, kSmallSize},
-#endif
-    {gpu::crash_keys::kGPUGLContextIsVirtual, kSmallSize},
-
     // content/:
     {"bad_message_reason", kSmallSize},
     {"discardable-memory-allocated", kSmallSize},

@@ -47,14 +47,6 @@ size_t RegisterWebViewCrashKeys() {
       {kAppPackageVersionCode, kSmallSize},
       {kAndroidSdkInt, kSmallSize},
 
-      // gpu
-      {gpu::crash_keys::kGPUDriverVersion, kSmallSize},
-      {gpu::crash_keys::kGPUPixelShaderVersion, kSmallSize},
-      {gpu::crash_keys::kGPUVertexShaderVersion, kSmallSize},
-      {gpu::crash_keys::kGPUVendor, kSmallSize},
-      {gpu::crash_keys::kGPURenderer, kSmallSize},
-      {gpu::crash_keys::kGPUGLContextIsVirtual, kSmallSize},
-
       // content/:
       {"bad_message_reason", kSmallSize},
       {"discardable-memory-allocated", kSmallSize},
