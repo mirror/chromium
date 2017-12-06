@@ -8,6 +8,8 @@
 
 #include <utility>
 
+#include "base/threading/thread.h"
+
 #include "base/guid.h"
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
@@ -116,6 +118,19 @@ void ShellDevToolsBindings::InspectElementAt(int x, int y) {
   }
 }
 
+void ShellDevToolsBindings::Inspect() {
+  if (agent_host_)
+    agent_host_->DetachClient(this);
+  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
+  agent_host_->AttachClient(this);
+  if (inspect_element_at_x_ != -1) {
+    agent_host_->InspectElement(this, inspect_element_at_x_,
+                                inspect_element_at_y_);
+    inspect_element_at_x_ = -1;
+    inspect_element_at_y_ = -1;
+  }
+}
+
 ShellDevToolsBindings::ShellDevToolsBindings(WebContents* devtools_contents,
                                              WebContents* inspected_contents,
                                              ShellDevToolsDelegate* delegate)
@@ -155,16 +170,8 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
 }
 
 void ShellDevToolsBindings::DocumentAvailableInMainFrame() {
-  if (agent_host_)
-    agent_host_->DetachClient(this);
-  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
-  agent_host_->AttachClient(this);
-  if (inspect_element_at_x_ != -1) {
-    agent_host_->InspectElement(this, inspect_element_at_x_,
-                                inspect_element_at_y_);
-    inspect_element_at_x_ = -1;
-    inspect_element_at_y_ = -1;
-  }
+  fprintf(stderr, "================= ShellDevToolsBindings::DocumentAvailableInMainFrame = GetThreadId(): %d\n",  base::PlatformThread::CurrentId());
+  // TODO
 }
 
 void ShellDevToolsBindings::WebContentsDestroyed() {

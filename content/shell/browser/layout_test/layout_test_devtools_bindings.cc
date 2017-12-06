@@ -137,6 +137,11 @@ void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
       base::UTF8ToUTF16(source));
 }
 
+void LayoutTestDevToolsBindings::Inspect() {
+  ShellDevToolsBindings::Inspect();
+  EvaluateInFrontend(0, "TestRunner.initStartupTest();");
+}
+
 LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* devtools_contents,
     WebContents* inspected_contents,
@@ -146,7 +151,6 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
       frontend_url_(frontend_url) {
   SetPreferences(settings);
-
   if (new_harness) {
     secondary_observer_ = base::MakeUnique<SecondaryObserver>(this);
     NavigationController::LoadURLParams params(
@@ -172,6 +176,13 @@ void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
     for (const auto& pair : pending_evaluations_)
       EvaluateInFrontend(pair.first, pair.second);
     pending_evaluations_.clear();
+    return;
+  }
+
+  // Handle this before
+  if (parsed_message && parsed_message->GetAsDictionary(&dict) &&
+      dict->GetString("method", &method) && method == "getPreferences") {
+    SendMessageAck(1, preferences());
     return;
   }
 

@@ -567,6 +567,8 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_SetPopupBlockingEnabled,
                         OnSetPopupBlockingEnabled)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
+    IPC_MESSAGE_HANDLER(ShellViewHostMsg_NavigateSecondaryWindow,
+                        OnNavigateSecondaryWindow)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ShowDevTools, OnShowDevTools)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_EvaluateInDevTools,
                         OnEvaluateInDevTools)
@@ -751,12 +753,15 @@ void BlinkTestController::HandleNewRenderFrameHost(RenderFrameHost* frame) {
     }
   }
 
+  fprintf(stderr, "########### BlinkTestController::HandleNewRenderFrameHost IsObserving=%d\n", render_process_host_observer_.IsObserving(process));
+
   // Is this a previously unknown renderer process?
   if (!render_process_host_observer_.IsObserving(process)) {
     render_process_host_observer_.Add(process);
     all_observed_render_process_hosts_.insert(process);
 
     if (!main_window) {
+      fprintf(stderr, "GetLayoutTestControlPtr(frame)->SetupSecondaryRenderer();");
       GetLayoutTestControlPtr(frame)->SetupSecondaryRenderer();
     }
 
@@ -950,6 +955,14 @@ void BlinkTestController::OnOverridePreferences(const WebPreferences& prefs) {
 
 void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
   LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
+}
+
+void BlinkTestController::OnNavigateSecondaryWindow(const std::string& url) {
+  secondary_window_->LoadURL(GURL(url));
+}
+
+void BlinkTestController::OnInspectSecondaryWindow() {
+  devtools_bindings_->Inspect();
 }
 
 void BlinkTestController::OnShowDevTools(const std::string& settings,

@@ -12,6 +12,38 @@
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
 
+TestRunner.setupStartupTest = function(path) {
+  var absoluteURL = TestRunner.url(path);
+  testRunner.navigateSecondaryWindow(absoluteURL);
+  return new Promise(f => TestRunner.initStartupTest = () => {
+    Main._mainForTesting._initializeTarget();
+    f();
+  });
+};
+
+TestRunner._evaluateForTestInFrontend = function(event) {
+    var callId = /** @type {number} */ (event.data['callId']);
+    var script = /** @type {number} */ (event.data['script']);
+
+    // InspectorFrontendHost.events.removeEventListener(
+    //   InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, evaluateForTestInFrontend, null);
+
+    function invokeMethod() {
+      try {
+        script = script + '//# sourceURL=TestRunner' + callId + '.js';
+        self.eval(script);
+      } catch (e) {
+        console.error(e.stack);
+      }
+    }
+
+    // The first evaluateForTestInFrontend is called before target has been initialized
+    if (Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches)
+      Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(invokeMethod);
+    else
+      invokeMethod();
+  }
+
 TestRunner._executeTestScript = function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
@@ -1338,9 +1370,8 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
-    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner._setBaseTag();
   }
 
   /**
@@ -1351,7 +1382,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner._setBaseTag = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1360,7 +1391,6 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
 };
 
 /**
@@ -1388,4 +1418,8 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
+// TestRunner._printDevToolsConsole();
+TestRunner._executeTestScript();
+InspectorFrontendHost.events.addEventListener(
+    InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, TestRunner._evaluateForTestInFrontend, TestRunner);
 })();
