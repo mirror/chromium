@@ -16,6 +16,24 @@
       "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae8ccee_74fb72bb",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-06T21:32:22Z",
+      "side": 1,
+      "message": "Excellent question.\n\nIt should not lead to hang because  SpdySessionPool::CloseCurrentSessionsHelper() calls SpdySession::CloseSessionOnError(), which calls SpdySession::DoDrainSession(), which sets spdy_session.availability_state_ to STATE_DRAINING.  (Unless for some weird reasons some callbacks keep creating newer and newer SpdySessions, see comment in header file for SpdySessionPool::CloseAllSessions()).\n\nHow about adding a DCHECK to CloseCurrentSessionsHelper() to make this a little bit more transparent?",
+      "parentUuid": "9681cad7_657ed2f2",
+      "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
