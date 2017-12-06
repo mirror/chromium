@@ -91,8 +91,6 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
                              mojom::HitTestRegionListPtr hit_test_region_list,
                              uint64_t submit_time) override;
 
-  void EvictCurrentSurface();
-
   // Submits a new CompositorFrame to |local_surface_id|. If |local_surface_id|
   // hasn't been submitted to before then a new Surface will be created for it.
   // Returns false if |frame| was rejected due to invalid data.

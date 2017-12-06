@@ -9,6 +9,7 @@
 #include "base/compiler_specific.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
+#include "components/viz/common/surfaces/surface_sequence_generator.h"
 #include "components/viz/host/host_frame_sink_client.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "content/common/content_export.h"
@@ -80,6 +81,8 @@ class CONTENT_EXPORT OffscreenCanvasSurfaceImpl
   const viz::FrameSinkId parent_frame_sink_id_;
 
   bool has_created_compositor_frame_sink_ = false;
+
+  viz::SurfaceSequenceGenerator surface_sequence_generator_;
 
   DISALLOW_COPY_AND_ASSIGN(OffscreenCanvasSurfaceImpl);
 };

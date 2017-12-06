@@ -450,6 +450,7 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 #if defined(OS_CHROMEOS)
   DCHECK(!resize_lock_ || !client_->IsAutoResizeEnabled());
 #endif
+
   float frame_device_scale_factor = frame.metadata.device_scale_factor;
   viz::BeginFrameAck ack(frame.metadata.begin_frame_ack);
 
@@ -507,14 +508,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     bool result = support_->SubmitCompositorFrame(
         local_surface_id, std::move(frame), std::move(hit_test_region_list));
     DCHECK(result);
-
-    DCHECK(enable_surface_synchronization_ || has_primary_surface_);
-  }
-
-  if (!enable_surface_synchronization_) {
-    if (has_primary_surface_)
-      frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
-    // Note: the frame may have been evicted immediately.
   }
 }
 
@@ -565,6 +558,7 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_info.id(), frame_size_in_dip, GetSurfaceReferenceFactory());
     has_primary_surface_ = true;
+    frame_evictor_->SwappedFrame(client_->DelegatedFrameHostIsVisible());
   }
 
   // If surface synchronization is enabled, and we don't have a primary surface
@@ -598,15 +592,9 @@ void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {
 }
 
 void DelegatedFrameHost::EvictDelegatedFrame() {
-  if (enable_viz_) {
-    NOTIMPLEMENTED();
-    return;
-  }
-
   if (!has_primary_surface_)
     return;
   client_->DelegatedFrameHostGetLayer()->SetShowSolidColorContent();
-  support_->EvictCurrentSurface();
   has_primary_surface_ = false;
   resize_lock_.reset();
   frame_evictor_->DiscardedFrame();

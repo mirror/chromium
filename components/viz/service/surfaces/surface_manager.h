@@ -61,17 +61,13 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   void RequestSurfaceResolution(Surface* surface);
 
   // Creates a Surface for the given SurfaceClient. The surface will be
-  // destroyed when DestroySurface is called, all of its destruction
-  // dependencies are satisfied, and it is not reachable from the root surface.
-  // If LifetimeType=REFERENCES, then a temporary reference will be added to
-  // the new Surface.
+  // destroyed when all of its destruction dependencies are satisfied and it is
+  // not reachable from the root surface. If LifetimeType=REFERENCES, then a
+  // temporary reference will be added to the new Surface.
   Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
                          const SurfaceInfo& surface_info,
                          BeginFrameSource* begin_frame_source,
                          bool needs_sync_tokens);
-
-  // Destroy the Surface once a set of sequence numbers has been satisfied.
-  void DestroySurface(const SurfaceId& surface_id);
 
   // Called when |surface_id| or one of its descendents is determined to be
   // damaged at aggregation time.
@@ -276,7 +272,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   void MarkOldTemporaryReference();
 
   // Removes the surface from the surface map and destroys it.
-  void DestroySurfaceInternal(const SurfaceId& surface_id);
+  void DestroySurface(const SurfaceId& surface_id);
 
 #if DCHECK_IS_ON()
   // Recursively prints surface references starting at |surface_id| to |str|.
@@ -284,9 +280,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
                                      std::string indent,
                                      std::stringstream* str);
 #endif
-
-  // Returns true if |surface_id| is in the garbage collector's queue.
-  bool IsMarkedForDestruction(const SurfaceId& surface_id);
 
   // Use reference or sequence based lifetime management.
   LifetimeType lifetime_type_;
@@ -298,8 +291,6 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   base::flat_map<SurfaceId, std::unique_ptr<Surface>> surface_map_;
   base::ObserverList<SurfaceObserver> observer_list_;
   base::ThreadChecker thread_checker_;
-
-  base::flat_set<SurfaceId> surfaces_to_destroy_;
 
   // Set of SurfaceSequences that have been satisfied by a frame but not yet
   // waited on.
@@ -346,6 +337,11 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
 
   // Timer that ticks every 10 seconds and calls MarkTemporaryReference().
   base::RepeatingTimer temporary_reference_timer_;
+
+  // This will be set to true when there is a chance that some surface needs to
+  // be garbage collected, i.e. when a reference is removed or when a
+  // SurfaceSequence is satisfied.
+  bool needs_garbage_collection_ = false;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 

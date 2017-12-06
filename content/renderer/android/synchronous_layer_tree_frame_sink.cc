@@ -292,6 +292,8 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
     embed_frame.metadata.device_scale_factor =
         frame.metadata.device_scale_factor;
     embed_frame.render_pass_list.push_back(viz::RenderPass::Create());
+    embed_frame.metadata.referenced_surfaces.push_back(
+        viz::SurfaceId(kChildFrameSinkId, child_local_surface_id_));
 
     // The embedding RenderPass covers the entire Display's area.
     const auto& embed_render_pass = embed_frame.render_pass_list.back();
