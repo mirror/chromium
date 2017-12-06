@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/containers/flat_map.h"
-#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "chrome/browser/resource_coordinator/lifecycle_unit_source_base.h"
@@ -51,8 +50,7 @@ class TabLifecycleUnitSource : public LifecycleUnitSourceBase,
   void SetFocusedTabStripModelForTesting(TabStripModel* tab_strip);
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(TabLifecycleUnitTest, SetFocused);
-  FRIEND_TEST_ALL_PREFIXES(TabLifecycleUnitTest, AutoDiscardable);
+  friend class TabLifecycleUnitTest;
 
   class TabLifecycleUnit;
 
