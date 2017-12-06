@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x541
+  LayoutBlockFlow {HTML} at (0,0) size 800x541
+    LayoutBlockFlow {BODY} at (8,8) size 784x525
+      LayoutText {#text} at (0,0) size 0x0
+layer at (8,8) size 520x520 clip at (18,18) size 500x500
+  LayoutIFrame {IFRAME} at (0,0) size 520x520 [bgcolor=#0000FF] [border: (10px solid #808080)]
+    layer at (0,0) size 500x500
+      LayoutView at (0,0) size 500x500
+    layer at (0,0) size 500x8
+      LayoutBlockFlow {HTML} at (0,0) size 500x8
+        LayoutBlockFlow {BODY} at (8,8) size 484x0
+    layer at (0,10) size 500x480
+      LayoutBlockFlow (positioned) {DIV} at (0,10) size 500x480 [bgcolor=#008000]
