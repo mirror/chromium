@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85fb9a99_8c9fda15",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T02:44:23Z",
+      "side": 1,
+      "message": "I guess I could just leave this to 0. Since canvas is all at-raster so this limit shouldn\u0027t matter.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 62
+      },
+      "revId": "be29878716a30cb872b6e644c088a0b38e4a17ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
