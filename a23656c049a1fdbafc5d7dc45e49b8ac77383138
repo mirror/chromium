@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6d53e298_10dfc558",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-06T15:19:40Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to share implementations. I do really want the separate file though, and think that the JoinString methods should be moved to strcat.h. I have beel trying to move things out of string_util.h for about 9 years now, as almost everything in base/strings used to be in there.",
+      "parentUuid": "a20cd27a_b7505f12",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
