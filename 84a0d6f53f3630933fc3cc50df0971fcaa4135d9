@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a2e0b937_d10a8a59",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T20:06:50Z",
+      "side": 1,
+      "message": "If we do send to OutputSurface, should we wait to do that until we draw \u0026 swap? Otherwise depending on what OutputSurface would use it for in the future, it would happen out-of-order. It just feels... odd to do this here.",
+      "parentUuid": "5edc1743_ac595911",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f9b40d_0b4048ef",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
