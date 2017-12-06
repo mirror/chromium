@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0b2b70c_9eaa0cba",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-06T15:48:47Z",
+      "side": 1,
+      "message": "same comment for this for-loop too?",
+      "revId": "b4e35ee73167ec99c3d253953d6025c7a317f916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
