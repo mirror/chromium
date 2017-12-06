@@ -72,6 +72,9 @@ int main(int argc, char** argv) {
   gin::V8Initializer::LoadV8Snapshot();
   gin::V8Initializer::LoadV8Natives();
 #endif
+#ifdef USE_V8_CONTEXT_SNAPSHOT
+  gin::V8Initializer::LoadV8ContextSnapshot();
+#endif
 
   base::MessageLoop message_loop;
   base::TaskScheduler::CreateAndStartWithDefaultParams("gin");

@@ -376,6 +376,9 @@ class SharedIsolateFactory {
         gin::V8Initializer::LoadV8Snapshot();
         gin::V8Initializer::LoadV8Natives();
 #endif
+#ifdef USE_V8_CONTEXT_SNAPSHOT
+        gin::V8Initializer::LoadV8ContextSnapshot();
+#endif
 
         // The performance of the proxy resolver is limited by DNS resolution,
         // and not V8, so tune down V8 to use as little memory as possible.

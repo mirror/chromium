@@ -75,6 +75,9 @@ class BlinkInitializer : public blink::Platform {
     gin::V8Initializer::LoadV8Snapshot();
     gin::V8Initializer::LoadV8Natives();
 #endif
+#ifdef USE_V8_CONTEXT_SNAPSHOT
+    gin::V8Initializer::LoadV8ContextSnapshot();
+#endif
 
     service_manager::BinderRegistry empty_registry;
     blink::Initialize(this, &empty_registry);
