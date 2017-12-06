@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4387f9a7_f754a2e1",
+        "filename": "media/gpu/windows/d3d11_video_decoder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-12-06T00:02:51Z",
+      "side": 1,
+      "message": "I approve of this namespace.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 16
+      },
+      "revId": "42b51870c5dc96fe3035340143f42760a69eaac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
