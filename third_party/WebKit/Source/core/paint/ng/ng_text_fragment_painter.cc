@@ -28,6 +28,24 @@ void NGTextFragmentPainter::Paint(const Document& document,
                                   const LayoutPoint& paint_offset) {
   const ComputedStyle& style = fragment_.Style();
 
+  // When painting selection, we want to include a highlight when the
+  // selection spans line breaks. In other cases such as invisible elements
+  // or those with no text that are not line breaks, we can skip painting
+  // wholesale.
+  // TODO(wkorman): Constrain line break painting to appropriate paint phase.
+  // This code path is only called in PaintPhaseForeground whereas we would
+  // expect PaintPhaseSelection. The existing haveSelection logic in paint()
+  // tests for != PaintPhaseTextClip.
+  if (style.Visibility() != EVisibility::kVisible)
+    return;
+
+  // TODO(kojii): Should we not generate these non-painting fragments? Review if
+  // they're needed.
+  const NGPhysicalTextFragment& text_fragment =
+      ToNGPhysicalTextFragment(fragment_.PhysicalFragment());
+  if (!text_fragment.Length() || !text_fragment.TextShapeResult())
+    return;
+
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
 
@@ -78,9 +96,6 @@ void NGTextFragmentPainter::Paint(const Document& document,
   // 2. Now paint the foreground, including text and decorations.
   int selection_start = 0;
   int selection_end = 0;
-
-  const NGPhysicalTextFragment& text_fragment =
-      ToNGPhysicalTextFragment(fragment_.PhysicalFragment());
 
   LayoutRect box_rect(box_origin, fragment_.Size().ToLayoutSize());
   Optional<GraphicsContextStateSaver> state_saver;
