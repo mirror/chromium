@@ -84,6 +84,8 @@ bool LayoutTestMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnLayoutTestRuntimeFlagsChanged)
     IPC_MESSAGE_HANDLER(LayoutTestHostMsg_TestFinishedInSecondaryRenderer,
                         OnTestFinishedInSecondaryRenderer)
+    IPC_MESSAGE_HANDLER(LayoutTestHostMsg_InspectSecondaryWindow,
+                        OnInspectSecondaryWindow)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -214,6 +216,11 @@ void LayoutTestMessageFilter::OnLayoutTestRuntimeFlagsChanged(
 void LayoutTestMessageFilter::OnTestFinishedInSecondaryRenderer() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   BlinkTestController::Get()->OnTestFinishedInSecondaryRenderer();
+}
+
+void LayoutTestMessageFilter::OnInspectSecondaryWindow() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BlinkTestController::Get()->OnInspectSecondaryWindow();
 }
 
 }  // namespace content

@@ -41,7 +41,13 @@ class LayoutTestDevToolsBindings::SecondaryObserver
  public:
   explicit SecondaryObserver(LayoutTestDevToolsBindings* bindings)
       : WebContentsObserver(bindings->inspected_contents()),
-        bindings_(bindings) {}
+        bindings_(bindings) { 
+          // RenderFrameHost* frame = bindings->inspected_contents()->GetMainFrame();
+          // if (frame) {
+          //   fprintf(stderr, "LayoutTestDevToolsBindings::SecondaryObserver frame exists!! url=%s\n", frame->GetLastCommittedURL().spec().c_str());
+          //   BlinkTestController::Get()->HandleNewRenderFrameHost(frame);
+          // }
+        }
 
   // WebContentsObserver implementation.
   void DocumentAvailableInMainFrame() override {
@@ -52,6 +58,7 @@ class LayoutTestDevToolsBindings::SecondaryObserver
 
   // WebContentsObserver implementation.
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override {
+    fprintf(stderr, "LayoutTestDevToolsBindings::RenderFrameCreated url=%s\n", render_frame_host->GetLastCommittedURL().spec().c_str());
     BlinkTestController::Get()->HandleNewRenderFrameHost(render_frame_host);
   }
 
@@ -123,6 +130,7 @@ void LayoutTestDevToolsBindings::NavigateDevToolsFrontend() {
 
 void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
                                                     const std::string& script) {
+  fprintf(stderr, "***************** LayoutTestDevToolsBindings::EvaluateInFrontend: script=%s ready_for_test_:%d\n", script.c_str(), ready_for_test_);
   if (!ready_for_test_) {
     pending_evaluations_.push_back(std::make_pair(call_id, script));
     return;
@@ -137,6 +145,21 @@ void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
       base::UTF8ToUTF16(source));
 }
 
+void LayoutTestDevToolsBindings::Inspect() {
+  fprintf(stderr, "******* LayoutTestDevToolsBindings::Inspect\n");
+  if (agent_host())
+    agent_host()->DetachClient(this);
+  set_agent_host(DevToolsAgentHost::GetOrCreateFor(inspected_contents()));
+  agent_host()->AttachClient(this);
+  if (inspect_element_at_x_ != -1) {
+    agent_host()->InspectElement(this, inspect_element_at_x_,
+                                inspect_element_at_y_);
+    inspect_element_at_x_ = -1;
+    inspect_element_at_y_ = -1;
+  }
+  EvaluateInFrontend(999, "TestRunner.startupTestReady();");
+}
+
 LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* devtools_contents,
     WebContents* inspected_contents,
@@ -146,7 +169,6 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
       frontend_url_(frontend_url) {
   SetPreferences(settings);
-
   if (new_harness) {
     secondary_observer_ = base::MakeUnique<SecondaryObserver>(this);
     NavigationController::LoadURLParams params(
@@ -159,10 +181,15 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
   }
 }
 
-LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}
+LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {
+  if (agent_host())
+    agent_host()->DetachClient(this);
+  set_agent_host(nullptr);
+}
 
 void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
     const std::string& message) {
+  fprintf(stderr, "************ LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend: message=%s\n", message.c_str());
   std::string method;
   base::DictionaryValue* dict = nullptr;
   std::unique_ptr<base::Value> parsed_message = base::JSONReader::Read(message);
@@ -172,6 +199,13 @@ void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
     for (const auto& pair : pending_evaluations_)
       EvaluateInFrontend(pair.first, pair.second);
     pending_evaluations_.clear();
+    return;
+  }
+
+  // Handle this before
+  if (parsed_message && parsed_message->GetAsDictionary(&dict) &&
+      dict->GetString("method", &method) && method == "getPreferences") {
+    SendMessageAck(1, preferences());
     return;
   }
 

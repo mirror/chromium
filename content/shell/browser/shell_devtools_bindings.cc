@@ -120,10 +120,10 @@ ShellDevToolsBindings::ShellDevToolsBindings(WebContents* devtools_contents,
                                              WebContents* inspected_contents,
                                              ShellDevToolsDelegate* delegate)
     : WebContentsObserver(devtools_contents),
-      inspected_contents_(inspected_contents),
-      delegate_(delegate),
       inspect_element_at_x_(-1),
       inspect_element_at_y_(-1),
+      inspected_contents_(inspected_contents),
+      delegate_(delegate),
       weak_factory_(this) {}
 
 ShellDevToolsBindings::~ShellDevToolsBindings() {
@@ -135,6 +135,7 @@ ShellDevToolsBindings::~ShellDevToolsBindings() {
 
 void ShellDevToolsBindings::ReadyToCommitNavigation(
     NavigationHandle* navigation_handle) {
+  // fprintf(stderr, "*************** ReadyToCommitNavigation = navigation_handle->GetURL(): %s\n", navigation_handle->GetURL().spec().c_str());
 #if !defined(OS_ANDROID)
   content::RenderFrameHost* frame = navigation_handle->GetRenderFrameHost();
   if (navigation_handle->IsInMainFrame()) {
@@ -155,16 +156,16 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
 }
 
 void ShellDevToolsBindings::DocumentAvailableInMainFrame() {
-  if (agent_host_)
-    agent_host_->DetachClient(this);
-  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
-  agent_host_->AttachClient(this);
-  if (inspect_element_at_x_ != -1) {
-    agent_host_->InspectElement(this, inspect_element_at_x_,
-                                inspect_element_at_y_);
-    inspect_element_at_x_ = -1;
-    inspect_element_at_y_ = -1;
-  }
+  // if (agent_host_)
+  //   agent_host_->DetachClient(this);
+  // agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
+  // agent_host_->AttachClient(this);
+  // if (inspect_element_at_x_ != -1) {
+  //   agent_host_->InspectElement(this, inspect_element_at_x_,
+  //                               inspect_element_at_y_);
+  //   inspect_element_at_x_ = -1;
+  //   inspect_element_at_y_ = -1;
+  // }
 }
 
 void ShellDevToolsBindings::WebContentsDestroyed() {
@@ -271,6 +272,7 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
     fetcher->Start();
     return;
   } else if (method == "getPreferences") {
+    fprintf(stderr, "************** getPreferences: request_id=%d\n", request_id);
     SendMessageAck(request_id, &preferences_);
     return;
   } else if (method == "setPreference") {

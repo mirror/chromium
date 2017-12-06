@@ -12,7 +12,34 @@
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
 
+TestRunner.initStartupTest = function(path) {
+  testRunner.navigateSecondaryWindow('resources/console-sample');
+  return new Promise(f => {
+    TestRunner.startupTestReady = f;
+  }).then(() => Main._mainForTesting._initializeTarget());
+}
+
 TestRunner._executeTestScript = function() {
+  InspectorFrontendHost.events.addEventListener(
+    InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, evaluateForTestInFrontend, null);
+
+  function evaluateForTestInFrontend(event) {
+    var callId = /** @type {number} */ (event.data['callId']);
+    var script = /** @type {number} */ (event.data['script']);
+
+    // InspectorFrontendHost.events.removeEventListener(
+    //   InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, evaluateForTestInFrontend, null);
+
+    // function invokeMethod() {
+      try {
+        script = script + '//# sourceURL=TestRunner' + callId + '.js';
+        self.eval(script);
+      } catch (e) {
+        console.error(e.stack);
+      }
+    // }
+  }
+
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
       .then(data => data.text())
@@ -560,24 +587,6 @@ TestRunner.addStylesheetTag = function(path) {
     })();
   `);
 };
-
-/**
- * @param {string} path
- * @return {!Promise<*>}
- */
-TestRunner.addHTMLImport = function(path) {
-  return TestRunner.evaluateInPageAsync(`
-    (function(){
-      var link = document.createElement('link');
-      link.rel = 'import';
-      link.href = '${path}';
-      var promise = new Promise(r => link.onload = r);
-      document.body.append(link);
-      return promise;
-    })();
-  `);
-};
-
 /**
  * @param {string} path
  * @param {!Object|undefined} options
@@ -1338,9 +1347,8 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
-    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner._setBaseTag();
   }
 
   /**
@@ -1351,7 +1359,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner._setBaseTag = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1360,7 +1368,6 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
 };
 
 /**
@@ -1388,4 +1395,6 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
+// TestRunner._printDevToolsConsole();
+TestRunner._executeTestScript();
 })();

@@ -151,6 +151,7 @@
      * @param {string} script
      */
     evaluateForTestInFrontend(callId, script) {
+      console.log('evaluateForTestInFrontend: ' + script);
       this._dispatchOnInspectorFrontendAPI('evaluateForTestInFrontend', [callId, script]);
     }
 

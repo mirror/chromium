@@ -60,27 +60,27 @@ SDK.MainConnection = class {
   /**
    * @param {!Common.Event} event
    */
-  _evaluateForTestInFrontend(event) {
-    if (!Host.isUnderTest())
-      return;
+  // _evaluateForTestInFrontend(event) {
+  //   console.log('_evaluateForTestInFrontend');
+  //   if (!Host.isUnderTest())
+  //     return;
 
-    var callId = /** @type {number} */ (event.data['callId']);
-    var script = /** @type {number} */ (event.data['script']);
+  //   var callId = /** @type {number} */ (event.data['callId']);
+  //   var script = /** @type {number} */ (event.data['script']);
 
-    /**
-     * @suppressGlobalPropertiesCheck
-     */
-    function invokeMethod() {
-      try {
-        script = script + '//# sourceURL=evaluateInWebInspector' + callId + '.js';
-        window.eval(script);
-      } catch (e) {
-        console.error(e.stack);
-      }
-    }
-
-    Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(invokeMethod);
-  }
+  //   /**
+  //    * @suppressGlobalPropertiesCheck
+  //    */
+  //   function invokeMethod() {
+  //     try {
+  //       script = script + '//# sourceURL=evaluateInWebInspector' + callId + '.js';
+  //       window.eval(script);
+  //     } catch (e) {
+  //       console.error(e.stack);
+  //     }
+  //   }
+  //   Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(invokeMethod);
+  // }
 
   /**
    * @override
