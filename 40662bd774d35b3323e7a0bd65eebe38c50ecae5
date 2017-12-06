@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6ea40894_11abe3b0",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-06T14:20:49Z",
+      "side": 1,
+      "message": "Ok, got it - specifically it\u0027s safe because Service() returns base::Singleton\u003cPlatformNotificationServiceImpl\u003e::get(), which is guaranteed to stay alive for the whole lifetime of the process.",
+      "parentUuid": "3cb6db32_007fdc44",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b9d7e53_b4d7271c",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 11
@@ -104,6 +122,24 @@
       "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebbd7a4_c5143034",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-06T14:20:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7507eef3_7058a4b7",
+      "revId": "40662bd774d35b3323e7a0bd65eebe38c50ecae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
