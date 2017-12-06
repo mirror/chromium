@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9961d09f_29de85c3",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "I don\u0027t agree on this one; there\u0027s a difference between \"user accepted bubble\" and \"user rejected bubble\", but both will give \"state \u003d no bubble visible\".",
+      "parentUuid": "6d216134_354c2663",
+      "range": {
+        "startLine": 195,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 46
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2564e6b3_14cbf72d",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
         "patchSetId": 13
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-06T01:16:11Z",
       "side": 1,
       "message": "I believe this can be tested with a histogram tester",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 56
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84e7a94_8d44f059",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "How is that any different or less flaky than what the unit tests do, though?  Feels to me like I shouldn\u0027t need to rely on the AutofillMetrics class for matters that involve accepting/declining the bubble; the bubble should know those things.",
+      "parentUuid": "2564e6b3_14cbf72d",
       "range": {
         "startLine": 202,
         "startChar": 2,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "e9ea4700_b592b9d6",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "I don\u0027t agree on this one; there\u0027s a difference between \"user accepted bubble\" and \"user rejected bubble\", but both will give \"state \u003d no bubble visible\".",
+      "parentUuid": "1bfcdec6_4bad7ccb",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 47
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc1926cd_bf67f71f",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
         "patchSetId": 13
@@ -105,6 +177,30 @@
       "writtenOn": "2017-12-06T01:16:11Z",
       "side": 1,
       "message": "can be tested with a histogram tester and/or checking the open tabs",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 52
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f39558_82dd1d8a",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "(We do check the newly-opened tab now; I can indeed probably get rid of this in that case)",
+      "parentUuid": "bc1926cd_bf67f71f",
       "range": {
         "startLine": 229,
         "startChar": 0,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ac41326a_87f2acc1",
+        "filename": "chrome/browser/ui/views/autofill/dialog_view_ids.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "(Yep that works thanks; removing in next patch set.)",
+      "parentUuid": "1a640469_3350dc0c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed8aec8d_532240d1",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 13
@@ -151,6 +271,30 @@
       "writtenOn": "2017-12-06T01:16:11Z",
       "side": 1,
       "message": "I thought the point of setting the IDs was to make them accessible to tests, meaning you wouldn\u0027t need this (?)",
+      "range": {
+        "startLine": 277,
+        "startChar": 34,
+        "endLine": 277,
+        "endChar": 59
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a293c4_e5033939",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T01:46:36Z",
+      "side": 1,
+      "message": "Ideally, yeah, but unfortunately the footnote_view_ isn\u0027t part of the SaveCardBubbleViews, but rather owned by BubbleDialogDelegateView, so it can\u0027t easily be found when given the SaveCardBubbleViews View.  Before needing to make it visible/invisible on a whim, this class didn\u0027t hold a reference to it at all.\n\nTo that extent it likely wouldn\u0027t matter if I removed setting the FOOTNOTE_VIEW ID, but then does it cause confusion that some pieces of the dialog get IDs and some don\u0027t?  Or is it better to only assign IDs to things that need to explicitly be referenced?",
+      "parentUuid": "ed8aec8d_532240d1",
       "range": {
         "startLine": 277,
         "startChar": 34,
