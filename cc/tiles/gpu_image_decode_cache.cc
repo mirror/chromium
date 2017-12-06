@@ -648,7 +648,7 @@ DecodedDrawImage GpuImageDecodeCache::GetDecodedImageForDraw(
 
   // We are being called during raster. The context lock must already be
   // acquired by the caller.
-  context_->GetLock()->AssertAcquired();
+  context_->CheckValidThreadOrLockAcquired();
 
   // If we're skipping the image, then the filter quality doesn't matter.
   if (SkipImage(draw_image))
@@ -706,7 +706,7 @@ void GpuImageDecodeCache::DrawWithImageFinished(
 
   // We are being called during raster. The context lock must already be
   // acquired by the caller.
-  context_->GetLock()->AssertAcquired();
+  context_->CheckValidThreadOrLockAcquired();
 
   if (SkipImage(draw_image))
     return;
@@ -729,10 +729,14 @@ void GpuImageDecodeCache::ReduceCacheUsage() {
   // This is typically called when no tasks are running (between scheduling
   // tasks). Try to lock and run pending operations if possible, but don't
   // block on it.
-  if (context_->GetLock()->Try()) {
-    RunPendingContextThreadOperations();
+  const bool can_acquire_context =
+      !context_->GetLock() || context_->GetLock()->Try();
+  if (!can_acquire_context)
+    return;
+
+  RunPendingContextThreadOperations();
+  if (context_->GetLock())
     context_->GetLock()->Release();
-  }
 }
 
 void GpuImageDecodeCache::SetShouldAggressivelyFreeResources(
@@ -1263,7 +1267,7 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
 
 void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
                                                  ImageData* image_data) {
-  context_->GetLock()->AssertAcquired();
+  context_->CheckValidThreadOrLockAcquired();
   lock_.AssertAcquired();
 
   // We are about to upload a new image and are holding the context lock.
@@ -1377,7 +1381,7 @@ void GpuImageDecodeCache::UnlockImage(ImageData* image_data) {
 // we need to call GlIdFromSkImage, which flushes pending IO on the image,
 // rather than just using a cached GL ID.
 void GpuImageDecodeCache::RunPendingContextThreadOperations() {
-  context_->GetLock()->AssertAcquired();
+  context_->CheckValidThreadOrLockAcquired();
   lock_.AssertAcquired();
 
   for (auto* image : images_pending_complete_lock_) {

@@ -82,7 +82,8 @@ class PerfGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
 class PerfContextProvider : public viz::ContextProvider {
  public:
   PerfContextProvider()
-      : context_gl_(new PerfGLES2Interface),
+      : viz::ContextProvider(true),
+        context_gl_(new PerfGLES2Interface),
         cache_controller_(&support_, nullptr) {
     capabilities_.sync_query = true;
   }
@@ -116,7 +117,6 @@ class PerfContextProvider : public viz::ContextProvider {
     if (gr_context_)
       gr_context_.get()->resetContext(state);
   }
-  base::Lock* GetLock() override { return &context_lock_; }
   void AddObserver(viz::ContextLostObserver* obs) override {}
   void RemoveObserver(viz::ContextLostObserver* obs) override {}
 
@@ -127,7 +127,6 @@ class PerfContextProvider : public viz::ContextProvider {
   sk_sp<class GrContext> gr_context_;
   TestContextSupport support_;
   viz::ContextCacheController cache_controller_;
-  base::Lock context_lock_;
   gpu::Capabilities capabilities_;
   gpu::GpuFeatureInfo gpu_feature_info_;
 };

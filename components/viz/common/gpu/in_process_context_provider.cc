@@ -57,7 +57,8 @@ InProcessContextProvider::InProcessContextProvider(
     gpu::GpuChannelManagerDelegate* gpu_channel_manager_delegate,
     const gpu::SharedMemoryLimits& limits,
     InProcessContextProvider* shared_context)
-    : attributes_(CreateAttributes()),
+    : ContextProvider(true /* support_locking */),
+      attributes_(CreateAttributes()),
       context_(gpu::GLInProcessContext::CreateWithoutInit()),
       context_result_(context_->Initialize(
           std::move(service),
@@ -105,10 +106,6 @@ ContextCacheController* InProcessContextProvider::CacheController() {
 void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
   if (gr_context_)
     gr_context_->ResetContext(state);
-}
-
-base::Lock* InProcessContextProvider::GetLock() {
-  return &context_lock_;
 }
 
 const gpu::Capabilities& InProcessContextProvider::ContextCapabilities() const {

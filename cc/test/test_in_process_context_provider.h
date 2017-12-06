@@ -46,7 +46,6 @@ class TestInProcessContextProvider : public viz::ContextProvider {
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   void AddObserver(viz::ContextLostObserver* obs) override {}
@@ -65,7 +64,6 @@ class TestInProcessContextProvider : public viz::ContextProvider {
   std::unique_ptr<gpu::GLInProcessContext> context_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
   std::unique_ptr<viz::ContextCacheController> cache_controller_;
-  base::Lock context_lock_;
   bool capabilities_texture_norm16_ = false;
   gpu::Capabilities capabilities_;
   gpu::GpuFeatureInfo gpu_feature_info_;

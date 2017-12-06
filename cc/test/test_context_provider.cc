@@ -172,10 +172,10 @@ TestContextProvider::TestContextProvider(
     std::unique_ptr<TestGLES2Interface> gl,
     std::unique_ptr<TestWebGraphicsContext3D> context,
     bool support_locking)
-    : support_(std::move(support)),
+    : viz::ContextProvider(support_locking),
+      support_(std::move(support)),
       context3d_(std::move(context)),
       context_gl_(std::move(gl)),
-      support_locking_(support_locking),
       weak_ptr_factory_(this) {
   DCHECK(main_thread_checker_.CalledOnValidThread());
   DCHECK(context3d_);
@@ -263,10 +263,6 @@ void TestContextProvider::InvalidateGrContext(uint32_t state) {
 
   if (gr_context_)
     gr_context_->get()->resetContext(state);
-}
-
-base::Lock* TestContextProvider::GetLock() {
-  return &context_lock_;
 }
 
 void TestContextProvider::OnLostContext() {

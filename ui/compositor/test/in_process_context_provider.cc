@@ -67,7 +67,7 @@ InProcessContextProvider::InProcessContextProvider(
     gpu::SurfaceHandle window,
     const std::string& debug_name,
     bool support_locking)
-    : support_locking_(support_locking),
+    : viz::ContextProvider(support_locking),
       attribs_(attribs),
       shared_context_(shared_context),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
@@ -160,10 +160,6 @@ void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
 
   if (gr_context_)
     gr_context_->ResetContext(state);
-}
-
-base::Lock* InProcessContextProvider::GetLock() {
-  return &context_lock_;
 }
 
 void InProcessContextProvider::AddObserver(viz::ContextLostObserver* obs) {

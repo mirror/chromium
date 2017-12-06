@@ -57,7 +57,6 @@ class InProcessContextProvider : public viz::ContextProvider {
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
   void AddObserver(viz::ContextLostObserver* obs) override;
   void RemoveObserver(viz::ContextLostObserver* obs) override;
 
@@ -93,7 +92,6 @@ class InProcessContextProvider : public viz::ContextProvider {
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
   std::unique_ptr<viz::ContextCacheController> cache_controller_;
 
-  const bool support_locking_ ALLOW_UNUSED_TYPE;
   bool bind_tried_ = false;
   gpu::ContextResult bind_result_;
 

@@ -10,7 +10,9 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/thread_checker.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "components/viz/common/gpu/context_lost_observer.h"
 #include "components/viz/common/viz_common_export.h"
@@ -36,11 +38,10 @@ namespace viz {
 class VIZ_COMMON_EXPORT ContextProvider
     : public base::RefCountedThreadSafe<ContextProvider> {
  public:
-  // Hold an instance of this lock while using a context across multiple
-  // threads. This only works for ContextProviders that will return a valid
-  // lock from GetLock(), so is not always supported. Most use of
-  // ContextProvider should be single-thread only on the thread that
-  // BindToCurrentThread is run on.
+  // Hold an instance of this lock when a context may be used across multiple
+  // threads. If the context supports locking and can be used across multiple
+  // threads, it will acquire the context lock. If not, it will assert that the
+  // object is created on the single thread the context can be used on.
   class VIZ_COMMON_EXPORT ScopedContextLock {
    public:
     explicit ScopedContextLock(ContextProvider* context_provider);
@@ -52,7 +53,7 @@ class VIZ_COMMON_EXPORT ContextProvider
 
    private:
     ContextProvider* const context_provider_;
-    base::AutoLock context_lock_;
+    base::Optional<base::AutoLock> context_lock_;
     std::unique_ptr<ContextCacheController::ScopedBusy> busy_;
   };
 
@@ -93,13 +94,35 @@ class VIZ_COMMON_EXPORT ContextProvider
   // Detaches debugging thread checkers to allow use of the provider from the
   // current thread. This can be called on any thread.
   virtual void DetachFromThread() {}
+
   // Returns the lock that should be held if using this context from multiple
   // threads. This can be called on any thread.
-  virtual base::Lock* GetLock() = 0;
+  base::Lock* GetLock();
+
+  void CheckValidThreadOrLockAcquired() const {
+#if DCHECK_IS_ON()
+    if (support_locking_) {
+      context_lock_.AssertAcquired();
+    } else {
+      DCHECK(context_thread_checker_.CalledOnValidThread());
+    }
+#endif
+  }
 
  protected:
+  explicit ContextProvider(bool support_locking);
+
   friend class base::RefCountedThreadSafe<ContextProvider>;
   virtual ~ContextProvider() {}
+
+  // If locking supported, the context lock must be acquired before using the
+  // context.
+  const bool support_locking_;
+  base::Lock context_lock_;
+
+  // If locking is not supported, the context must always be used from the same
+  // thread, that |context_thread_checker_| is bound to.
+  base::ThreadChecker context_thread_checker_;
 };
 
 }  // namespace viz

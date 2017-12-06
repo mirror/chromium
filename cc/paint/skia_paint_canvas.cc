@@ -14,8 +14,25 @@
 #include "third_party/skia/include/utils/SkNWayCanvas.h"
 
 namespace cc {
+#define CREATE_PAINT_FOR_RASTER()                          \
+  SkPaint paint;                                           \
+  base::Optional<ScopedImageFlags> scoped_flags;           \
+  if (!flags.HasDiscardableImages()) {                     \
+    paint = flags.ToSkPaint();                             \
+  } else {                                                 \
+    scoped_flags.emplace(image_provider_.get(), &flags,    \
+                         canvas_->getTotalMatrix(), 255u); \
+    if (!scoped_flags->flags())                            \
+      return;                                              \
+    paint = scoped_flags->flags()->ToSkPaint();            \
+  }
 
-SkiaPaintCanvas::SkiaPaintCanvas(SkCanvas* canvas) : canvas_(canvas) {}
+SkiaPaintCanvas::SkiaPaintCanvas(SkCanvas* canvas,
+                                 std::unique_ptr<ImageProvider> image_provider)
+    : canvas_(canvas), image_provider_(std::move(image_provider)) {
+  if (image_provider_)
+    image_provider_->BeginRaster();
+}
 
 SkiaPaintCanvas::SkiaPaintCanvas(const SkBitmap& bitmap)
     : canvas_(new SkCanvas(bitmap)), owned_(canvas_) {}
@@ -25,12 +42,19 @@ SkiaPaintCanvas::SkiaPaintCanvas(const SkBitmap& bitmap,
     : canvas_(new SkCanvas(bitmap, props)), owned_(canvas_) {}
 
 SkiaPaintCanvas::SkiaPaintCanvas(SkCanvas* canvas,
-                                 sk_sp<SkColorSpace> target_color_space)
-    : canvas_(canvas) {
+                                 sk_sp<SkColorSpace> target_color_space,
+                                 std::unique_ptr<ImageProvider> image_provider)
+    : canvas_(canvas), image_provider_(std::move(image_provider)) {
+  if (image_provider_)
+    image_provider_->BeginRaster();
+
   WrapCanvasInColorSpaceXformCanvas(target_color_space);
 }
 
-SkiaPaintCanvas::~SkiaPaintCanvas() = default;
+SkiaPaintCanvas::~SkiaPaintCanvas() {
+  if (image_provider_)
+    image_provider_->EndRaster();
+}
 
 void SkiaPaintCanvas::WrapCanvasInColorSpaceXformCanvas(
     sk_sp<SkColorSpace> target_color_space) {
@@ -60,6 +84,7 @@ int SkiaPaintCanvas::save() {
 int SkiaPaintCanvas::saveLayer(const SkRect* bounds, const PaintFlags* flags) {
   if (!flags)
     return canvas_->saveLayer(bounds, nullptr);
+
   SkPaint paint = flags->ToSkPaint();
   return canvas_->saveLayer(bounds, &paint);
 }
@@ -154,34 +179,34 @@ void SkiaPaintCanvas::drawLine(SkScalar x0,
                                SkScalar x1,
                                SkScalar y1,
                                const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   SkiaPaintCanvas::canvas_->drawLine(x0, y0, x1, y1, paint);
 }
 
 void SkiaPaintCanvas::drawRect(const SkRect& rect, const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawRect(rect, paint);
 }
 
 void SkiaPaintCanvas::drawIRect(const SkIRect& rect, const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawIRect(rect, paint);
 }
 
 void SkiaPaintCanvas::drawOval(const SkRect& oval, const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawOval(oval, paint);
 }
 
 void SkiaPaintCanvas::drawRRect(const SkRRect& rrect, const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawRRect(rrect, paint);
 }
 
 void SkiaPaintCanvas::drawDRRect(const SkRRect& outer,
                                  const SkRRect& inner,
                                  const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawDRRect(outer, inner, paint);
 }
 
@@ -189,12 +214,12 @@ void SkiaPaintCanvas::drawRoundRect(const SkRect& rect,
                                     SkScalar rx,
                                     SkScalar ry,
                                     const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawRoundRect(rect, rx, ry, paint);
 }
 
 void SkiaPaintCanvas::drawPath(const SkPath& path, const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawPath(path, paint);
 }
 
@@ -202,11 +227,19 @@ void SkiaPaintCanvas::drawImage(const PaintImage& image,
                                 SkScalar left,
                                 SkScalar top,
                                 const PaintFlags* flags) {
-  SkPaint paint;
-  if (flags)
-    paint = flags->ToSkPaint();
-  canvas_->drawImage(image.GetSkImage().get(), left, top,
-                     flags ? &paint : nullptr);
+  base::Optional<ScopedImageFlags> scoped_flags;
+  if (flags && flags->HasDiscardableImages()) {
+    scoped_flags.emplace(image_provider_.get(), flags,
+                         canvas_->getTotalMatrix(), 255u);
+    if (!scoped_flags->flags())
+      return;
+  }
+
+  PlaybackParams params(image_provider_.get(), canvas_->getTotalMatrix());
+  DrawImageOp op(image, left, top, nullptr);
+  DrawImageOp::RasterWithFlags(
+      &op, scoped_flags ? scoped_flags->flags() : flags, canvas_, params);
+  op.DestroyThis();
 }
 
 void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
@@ -214,36 +247,49 @@ void SkiaPaintCanvas::drawImageRect(const PaintImage& image,
                                     const SkRect& dst,
                                     const PaintFlags* flags,
                                     SrcRectConstraint constraint) {
-  SkPaint paint;
-  if (flags)
-    paint = flags->ToSkPaint();
-  canvas_->drawImageRect(image.GetSkImage().get(), src, dst,
-                         flags ? &paint : nullptr,
-                         static_cast<SkCanvas::SrcRectConstraint>(constraint));
+  base::Optional<ScopedImageFlags> scoped_flags;
+  if (flags && flags->HasDiscardableImages()) {
+    scoped_flags.emplace(image_provider_.get(), flags,
+                         canvas_->getTotalMatrix(), 255u);
+    if (!scoped_flags->flags())
+      return;
+  }
+
+  PlaybackParams params(image_provider_.get(), canvas_->getTotalMatrix());
+  DrawImageRectOp op(image, src, dst, nullptr, constraint);
+  DrawImageRectOp::RasterWithFlags(
+      &op, scoped_flags ? scoped_flags->flags() : flags, canvas_, params);
+  op.DestroyThis();
 }
 
 void SkiaPaintCanvas::drawBitmap(const SkBitmap& bitmap,
                                  SkScalar left,
                                  SkScalar top,
                                  const PaintFlags* flags) {
-  if (flags) {
-    SkPaint paint = flags->ToSkPaint();
-    canvas_->drawBitmap(bitmap, left, top, &paint);
-  } else {
+  if (flags)
+    drawBitmap(bitmap, left, top, *flags);
+  else
     canvas_->drawBitmap(bitmap, left, top, nullptr);
-  }
+}
+
+void SkiaPaintCanvas::drawBitmap(const SkBitmap& bitmap,
+                                 SkScalar left,
+                                 SkScalar top,
+                                 const PaintFlags& flags) {
+  CREATE_PAINT_FOR_RASTER();
+  canvas_->drawBitmap(bitmap, left, top, &paint);
 }
 
 void SkiaPaintCanvas::drawTextBlob(scoped_refptr<PaintTextBlob> blob,
                                    SkScalar x,
                                    SkScalar y,
                                    const PaintFlags& flags) {
-  SkPaint paint = flags.ToSkPaint();
+  CREATE_PAINT_FOR_RASTER();
   canvas_->drawTextBlob(blob->ToSkTextBlob(), x, y, paint);
 }
 
 void SkiaPaintCanvas::drawPicture(sk_sp<const PaintRecord> record) {
-  record->Playback(canvas_);
+  record->Playback(canvas_, image_provider_.get());
 }
 
 bool SkiaPaintCanvas::isClipEmpty() const {

@@ -55,7 +55,6 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
   class GrContext* GrContext() override;
   ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   void AddObserver(ContextLostObserver* obs) override;
@@ -81,7 +80,6 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
  private:
   const gpu::gles2::ContextCreationAttribHelper attributes_;
 
-  base::Lock context_lock_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
   gpu::ContextResult context_result_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;

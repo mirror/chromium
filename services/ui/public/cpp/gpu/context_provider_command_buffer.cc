@@ -143,12 +143,12 @@ ContextProviderCommandBuffer::ContextProviderCommandBuffer(
     const gpu::gles2::ContextCreationAttribHelper& attributes,
     ContextProviderCommandBuffer* shared_context_provider,
     command_buffer_metrics::ContextType type)
-    : stream_id_(stream_id),
+    : viz::ContextProvider(support_locking),
+      stream_id_(stream_id),
       stream_priority_(stream_priority),
       surface_handle_(surface_handle),
       active_url_(active_url),
       automatic_flushes_(automatic_flushes),
-      support_locking_(support_locking),
       memory_limits_(memory_limits),
       attributes_(attributes),
       context_type_(type),
@@ -404,11 +404,6 @@ void ContextProviderCommandBuffer::SetDefaultTaskRunner(
     scoped_refptr<base::SingleThreadTaskRunner> default_task_runner) {
   DCHECK(!bind_tried_);
   default_task_runner_ = std::move(default_task_runner);
-}
-
-base::Lock* ContextProviderCommandBuffer::GetLock() {
-  DCHECK(support_locking_);
-  return &context_lock_;
 }
 
 const gpu::Capabilities& ContextProviderCommandBuffer::ContextCapabilities()

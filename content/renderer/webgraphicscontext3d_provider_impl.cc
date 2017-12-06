@@ -4,6 +4,7 @@
 
 #include "content/renderer/webgraphicscontext3d_provider_impl.h"
 
+#include "cc/tiles/gpu_image_decode_cache.h"
 #include "components/viz/common/gl_helper.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
@@ -79,6 +80,17 @@ void WebGraphicsContext3DProviderImpl::SignalQuery(uint32_t query,
 void WebGraphicsContext3DProviderImpl::OnContextLost() {
   if (!context_lost_callback_.is_null())
     context_lost_callback_.Run();
+}
+
+cc::ImageDecodeCache* WebGraphicsContext3DProviderImpl::ImageDecodeCache() {
+  if (image_decode_cache_)
+    return image_decode_cache_.get();
+
+  // TODO(khushalsagar): Cargo-culted from LayerTreeSettings.
+  static const size_t kMaxWorkingSetBytes = 128 * 1024 * 1024;
+  image_decode_cache_ = std::make_unique<cc::GpuImageDecodeCache>(
+      provider_.get(), kN32_SkColorType, kMaxWorkingSetBytes);
+  return image_decode_cache_.get();
 }
 
 }  // namespace content

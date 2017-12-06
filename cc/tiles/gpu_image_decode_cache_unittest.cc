@@ -186,7 +186,7 @@ class DiscardableTextureMockContextProvider : public TestContextProvider {
       : TestContextProvider(std::move(support),
                             std::move(gl),
                             std::move(context),
-                            false) {}
+                            true /* support_locking */) {}
 };
 
 gfx::ColorSpace DefaultColorSpace() {

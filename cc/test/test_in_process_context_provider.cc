@@ -59,7 +59,8 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext() {
 }
 
 TestInProcessContextProvider::TestInProcessContextProvider(
-    TestInProcessContextProvider* shared_context) {
+    TestInProcessContextProvider* shared_context)
+    : viz::ContextProvider(true /* support_locking */) {
   context_ = CreateTestInProcessContext(
       &gpu_memory_buffer_manager_, &image_factory_,
       (shared_context ? shared_context->context_.get() : nullptr),
@@ -111,10 +112,6 @@ viz::ContextCacheController* TestInProcessContextProvider::CacheController() {
 void TestInProcessContextProvider::InvalidateGrContext(uint32_t state) {
   if (gr_context_)
     gr_context_->ResetContext(state);
-}
-
-base::Lock* TestInProcessContextProvider::GetLock() {
-  return &context_lock_;
 }
 
 const gpu::Capabilities& TestInProcessContextProvider::ContextCapabilities()

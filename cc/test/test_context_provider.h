@@ -58,7 +58,6 @@ class TestContextProvider : public viz::ContextProvider {
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
   void AddObserver(viz::ContextLostObserver* obs) override;
   void RemoveObserver(viz::ContextLostObserver* obs) override;
 
@@ -83,30 +82,17 @@ class TestContextProvider : public viz::ContextProvider {
 
  private:
   void OnLostContext();
-  void CheckValidThreadOrLockAcquired() const {
-#if DCHECK_IS_ON()
-    if (support_locking_) {
-      context_lock_.AssertAcquired();
-    } else {
-      DCHECK(context_thread_checker_.CalledOnValidThread());
-    }
-#endif
-  }
 
   std::unique_ptr<TestContextSupport> support_;
   std::unique_ptr<TestWebGraphicsContext3D> context3d_;
   std::unique_ptr<TestGLES2Interface> context_gl_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
   std::unique_ptr<viz::ContextCacheController> cache_controller_;
-  const bool support_locking_ ALLOW_UNUSED_TYPE;
   bool bound_ = false;
 
   gpu::GpuFeatureInfo gpu_feature_info_;
 
   base::ThreadChecker main_thread_checker_;
-  base::ThreadChecker context_thread_checker_;
-
-  base::Lock context_lock_;
 
   base::ObserverList<viz::ContextLostObserver> observers_;
 
