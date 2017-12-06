@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "65639afb_5d0c97af",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-06T18:37:17Z",
+      "side": 1,
+      "message": "Great idea. Done.",
+      "parentUuid": "da162715_84314ae8",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd3652b8_b2b291e1",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 6
@@ -65,6 +83,24 @@
       "writtenOn": "2017-12-06T04:34:21Z",
       "side": 1,
       "message": "nit: ParentLocalSurfaceIdAllocator \u003d default;",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0e7c32_be294234",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-06T18:37:17Z",
+      "side": 1,
+      "message": "Is it okay if I do these in a separate patch?\nThat way there is a clean distinction between the renaming patch and the refactoring patch.\n\nThat said, do we want the default here (in the header) or in the .cc? If we put it here, these will be inline functions. It is common to avoid inlining ctors and dtors since they are likely to become complex. In our case here, the object is simple, nothing derives from it, and we have exceptions disabled. It isn\u0027t marked final to prevent being derived but it is still unlikely that our ctors and dtors are in danger of becoming complex.",
+      "parentUuid": "fd3652b8_b2b291e1",
       "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +135,24 @@
       "writtenOn": "2017-12-06T04:34:21Z",
       "side": 1,
       "message": "I\u0027ve noticed that LocalSurfaceIdAllocator always has a local_surface_id_ next to it to store the allocated ID. It seems like a nice (future) cleanup to simply track the last allocated Id in here too.",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef2053b_47168fbf",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-06T18:37:17Z",
+      "side": 1,
+      "message": "You mean when LocalSurfaceIdAllocator is being used, right?\nFor example, here[1].\nThat makes sense to me.\n\n[1] https://cs.chromium.org/chromium/src/components/viz/client/local_surface_id_provider.cc?l\u003d22",
+      "parentUuid": "e182de9c_03a1c33b",
       "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
