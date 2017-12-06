@@ -211,6 +211,7 @@ void Ui::OnKeyboardHidden() {
 
 void Ui::OnAppButtonClicked() {
   // App button clicks should be a no-op when auto-presenting WebVR.
+  model_->exiting_vr = true;
   if (model_->web_vr_started_for_autopresentation) {
     return;
   }
