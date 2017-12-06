@@ -10,11 +10,6 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
 
 config("zlib_config") {
   include_dirs = [ "." ]
-  if (current_cpu == "arm" || current_cpu == "arm64") {
-    if (arm_use_neon) {
-      include_dirs += [ "contrib/optimizations/arm" ]
-    }
-  }
 }
 
 config("zlib_adler32_simd_config") {
@@ -62,6 +57,36 @@ source_set("zlib_adler32_simd") {
   configs += [ "//build/config/compiler:no_chromium_code" ]
 
   public_configs = [ ":zlib_adler32_simd_config" ]
+}
+
+config("zlib_inflate_fast_chunk_config") {
+  defines = [ "INFLATE_FAST_CHUNK"]
+}
+
+source_set("zlib_inflate_fast_chunk") {
+  visibility = [ ":*" ]
+
+  include_dirs = [ "." ]
+
+  sources = [
+    "contrib/optimizations/chunkcopy.h",
+    "contrib/optimizations/inffast_chunk.c",
+    "contrib/optimizations/inffast_chunk.h",
+    "contrib/optimizations/inflate.c",
+  ]
+
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (!is_debug) {
+      # Use optimize_speed (-O3) to output the _smallest_ code.
+      configs -= [ "//build/config/compiler:default_optimization" ]
+      configs += [ "//build/config/compiler:optimize_speed" ]
+    }
+  }
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+
+  public_configs = [ ":zlib_inflate_fast_chunk_config" ]
 }
 
 static_library("zlib_x86_simd") {
@@ -129,26 +154,12 @@ static_library("zlib") {
     "zutil.h",
   ]
 
-  if (current_cpu == "arm" || current_cpu == "arm64") {
-    if (arm_use_neon) {
-      sources -= [ "inflate.c" ]
-      sources += [
-        "contrib/optimizations/arm/chunkcopy_arm.h",
-        "contrib/optimizations/chunkcopy.h",
-        "contrib/optimizations/inffast_chunky.c",
-        "contrib/optimizations/inffast_chunky.h",
-        "contrib/optimizations/inflate.c",
-      ]
-    }
-  }
-
   defines = []
   deps = []
 
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
-    sources += [ "x86.c" ]
-
     deps += [ ":zlib_adler32_simd" ]
+    sources += [ "x86.c" ]
   }
 
   if (current_cpu == "arm" || current_cpu == "arm64") {
@@ -157,10 +168,12 @@ static_library("zlib") {
     }
   }
 
+  deps += [ ":zlib_inflate_fast_chunk" ]
+  sources -= [ "inflate.c" ]
+
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [
     "//build/config/compiler:no_chromium_code",
-
     # Must be after no_chromium_code for warning flags to be ordered correctly.
     ":zlib_warnings",
   ]
