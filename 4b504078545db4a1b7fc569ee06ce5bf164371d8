@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13f04359_522b3c99",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "Use base/callback_forward.h in headers.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3149e6e4_5e8d8efe",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "This header is unneeded.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a50000_08038a52",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "SensorReadingSharedBuffer can be forward declared.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b638c9_662fbf90",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "Please add a class-level comment describing what this class is.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7ae92e_8864a3c5",
+        "filename": "device/vr/orientation/orientation_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "The style guide forbids passing values by non-const pointer. Please use mojom::SensorProvider*.",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 47
+      },
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb8d1c1_d4f5bf06",
+        "filename": "device/vr/orientation/orientation_device_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "Use base/callback_forward.h in headers.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d207db89_f23fe583",
+        "filename": "device/vr/orientation/orientation_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "This function is unused.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e599fb1_3ee330b0",
+        "filename": "device/vr/orientation/orientation_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "Space between override and {}, no trailing semicolons (surrounding functions have them too).",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fde12a_1f06c2a0",
+        "filename": "device/vr/orientation/orientation_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "This function is unused.",
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa626e5_23caa543",
+        "filename": "device/vr/orientation/orientation_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "No need to create |reading| above,\n\nseqlock.WriteBegin();\nbuffer-\u003ereading.orientation_quat.x \u003d q.x();\nbuffer-\u003ereading.orientation_quat.y \u003d q.y();\nbuffer-\u003ereading.orientation_quat.z \u003d q.z();\nbuffer-\u003ereading.orientation_quat.w \u003d q.w();\nseqlock.WriteEnd();\n\nSince this is single-threaded the seqlock stuff isn\u0027t really necessary either because the reader won\u0027t access the buffer until this is done.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b389e4_5eb91fa1",
+        "filename": "device/vr/orientation/orientation_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-06T23:46:31Z",
+      "side": 1,
+      "message": "std::unique_ptr defaults to nullptr so this isn\u0027t necessary.",
+      "range": {
+        "startLine": 187,
+        "startChar": 47,
+        "endLine": 187,
+        "endChar": 56
+      },
+      "revId": "4b504078545db4a1b7fc569ee06ce5bf164371d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
