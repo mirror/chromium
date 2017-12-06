@@ -17,6 +17,7 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
+#include "base/containers/flat_set.h"
 #include "base/containers/id_map.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
@@ -527,8 +528,7 @@ class CONTENT_EXPORT RenderFrameImpl
       mojo::ScopedDataPipeConsumerHandle body_data,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
       const base::UnguessableToken& devtools_navigation_token,
-      mojom::WebPackageSubresourceManagerRequest
-          webpackage_subresource_manager_request) override;
+      mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1107,8 +1107,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       std::unique_ptr<StreamOverrideParameters> stream_params,
       base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-      mojom::WebPackageSubresourceManagerRequest
-          webpackage_subresource_manager_request,
+      mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info,
       const base::UnguessableToken& devtools_navigation_token);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources
@@ -1584,7 +1583,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // Service is enabled.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
 
-  bool skip_throttlers_ = false;
+  base::flat_set<std::pair<GURL, std::string>> skip_throttler_requests_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;

@@ -3462,7 +3462,7 @@ void RenderFrameHostImpl::CommitNavigation(
         mojo::ScopedDataPipeConsumerHandle(),
         /*subresource_loader_factories=*/base::nullopt,
         devtools_navigation_token,
-        /*webpackage_subresource_manager_request*/ nullptr);
+        /*webpackage_subresource_info*/ nullptr);
     return;
   }
 
@@ -3575,12 +3575,11 @@ void RenderFrameHostImpl::CommitNavigation(
     }
   }
 
-  mojom::WebPackageSubresourceManagerRequest
-      webpackage_subresource_manager_request;
+  mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info;
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       subresource_loader_params) {
-    webpackage_subresource_manager_request = std::move(
-        subresource_loader_params->webpackage_subresource_manager_request);
+    webpackage_subresource_info =
+        std::move(subresource_loader_params->webpackage_subresource_info);
   }
 
   // It is imperative that cross-document navigations always provide a set of
@@ -3592,7 +3591,7 @@ void RenderFrameHostImpl::CommitNavigation(
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
       std::move(subresource_loader_factories), devtools_navigation_token,
-      std::move(webpackage_subresource_manager_request));
+      std::move(webpackage_subresource_info));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&

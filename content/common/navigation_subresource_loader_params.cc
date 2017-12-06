@@ -17,8 +17,7 @@ SubresourceLoaderParams::SubresourceLoaderParams(
 SubresourceLoaderParams& SubresourceLoaderParams::operator=(
     SubresourceLoaderParams&& other) {
   loader_factory_info = std::move(other.loader_factory_info);
-  webpackage_subresource_manager_request =
-      std::move(other.webpackage_subresource_manager_request);
+  webpackage_subresource_info = std::move(other.webpackage_subresource_info);
   return *this;
 }
 

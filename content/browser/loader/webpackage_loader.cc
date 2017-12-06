@@ -232,17 +232,20 @@ void WebPackageRequestHandler::MaybeCreateLoader(
 base::Optional<SubresourceLoaderParams>
 WebPackageRequestHandler::MaybeCreateSubresourceLoaderParams() {
   SubresourceLoaderParams params;
-  if (WebPackageStreamResourcesEnabled()) {
-    if (!subresource_manager_request_.is_pending())
-      return base::nullopt;
+  if (!subresource_manager_request_.is_pending() &&
+      !subresource_loader_factory_) {
+    return base::nullopt;
+  }
 
-    params.webpackage_subresource_manager_request =
+  params.webpackage_subresource_info = mojom::WebPackageSubresourceInfo::New();
+  webpackage_reader_->PopulateRequests(
+      params.webpackage_subresource_info.get());
+
+  if (WebPackageStreamResourcesEnabled()) {
+    params.webpackage_subresource_info->manager_request =
         std::move(subresource_manager_request_);
     LOG(INFO) << "** Returning subresource manager";
   } else {
-    if (!subresource_loader_factory_)
-      return base::nullopt;
-
     params.loader_factory_info = subresource_loader_factory_.PassInterface();
     LOG(INFO) << "** Returning subresource loader factory";
   }
@@ -300,7 +303,7 @@ WebPackageLoader::WebPackageLoader(
 }
 
 WebPackageLoader::~WebPackageLoader() {
-  DCHECK(!loader_callback_);
+  // DCHECK(!loader_callback_);
 }
 
 void WebPackageLoader::DetachFromRequestHandler() {

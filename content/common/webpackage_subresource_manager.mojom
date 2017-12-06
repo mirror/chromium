@@ -27,3 +27,8 @@ interface WebPackageSubresourceManager {
              handle<data_pipe_consumer> response_body,
              WebPackageResponseCompletionCallback& completion_callback);
 };
+
+struct WebPackageSubresourceInfo {
+  array<WebPackageResourceRequest> requests;
+  WebPackageSubresourceManager&? manager_request;
+};

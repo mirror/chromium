@@ -775,6 +775,9 @@ void NavigationURLLoaderNetworkService::OnComplete(
   // TODO(https://crbug.com/757633): Pass real values in the case of cert
   // errors.
   bool should_ssl_errors_be_fatal = true;
+
+  LOG(INFO) << "*** OnComplete: " << request_controller_->resource_request_->url
+            << " " << status.error_code;
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              status.ssl_info, should_ssl_errors_be_fatal);
 }

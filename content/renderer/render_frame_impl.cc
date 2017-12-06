@@ -1865,7 +1865,7 @@ void RenderFrameImpl::OnNavigate(
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
                    /*subresource_loader_factories=*/base::nullopt,
-                   /*webpackage_subresource_manager_request*/ nullptr,
+                   /*webpackage_subresource_info*/ nullptr,
                    /* non-plznavigate navigations are not traced */
                    base::UnguessableToken::Create());
 }
@@ -3129,8 +3129,7 @@ void RenderFrameImpl::CommitNavigation(
     mojo::ScopedDataPipeConsumerHandle body_data,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
     const base::UnguessableToken& devtools_navigation_token,
-    mojom::WebPackageSubresourceManagerRequest
-        webpackage_subresource_manager_request) {
+    mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info) {
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
@@ -3174,11 +3173,10 @@ void RenderFrameImpl::CommitNavigation(
   browser_side_navigation_pending_ = false;
   browser_side_navigation_pending_url_ = GURL();
 
-  NavigateInternal(common_params, StartNavigationParams(), request_params,
-                   std::move(stream_override),
-                   std::move(subresource_loader_factories),
-                   std::move(webpackage_subresource_manager_request),
-                   devtools_navigation_token);
+  NavigateInternal(
+      common_params, StartNavigationParams(), request_params,
+      std::move(stream_override), std::move(subresource_loader_factories),
+      std::move(webpackage_subresource_info), devtools_navigation_token);
 
   // Don't add code after this since NavigateInternal may have destroyed this
   // RenderFrameImpl.
@@ -4681,8 +4679,18 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
 
   // TODO(kinuko, yzshen): We need to set up throttles for some worker cases
   // that don't go through here.
-  if (!skip_throttlers_)
+  if (!skip_throttler_requests_.empty()) {
+    std::pair<GURL, std::string> req(
+        GURL(request.Url()), base::ToLowerASCII(request.HttpMethod().Ascii()));
+    if (skip_throttler_requests_.find(req) == skip_throttler_requests_.end()) {
+      extra_data->set_url_loader_throttles(std::move(throttles));
+    } else {
+      // Skip throttlers.
+      // LOG(ERROR) << "*** SKIPPING: " << GURL(request.Url());
+    }
+  } else {
     extra_data->set_url_loader_throttles(std::move(throttles));
+  }
 
   request.SetExtraData(extra_data);
 
@@ -6284,8 +6292,7 @@ void RenderFrameImpl::NavigateInternal(
     const RequestNavigationParams& request_params,
     std::unique_ptr<StreamOverrideParameters> stream_params,
     base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
-    mojom::WebPackageSubresourceManagerRequest
-        webpackage_subresource_manager_request,
+    mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info,
     const base::UnguessableToken& devtools_navigation_token) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
@@ -6372,34 +6379,40 @@ void RenderFrameImpl::NavigateInternal(
   if (subresource_loader_factories) {
     subresource_loader_factories_ = std::move(subresource_loader_factories);
 
-    if (webpackage_subresource_manager_request.is_pending()) {
-      mojom::URLLoaderFactoryPtr factory_ptr;
-      auto request = mojo::MakeRequest(&factory_ptr);
-      subresource_loader_factories_->SetDefaultFactory(std::move(factory_ptr));
+    if (webpackage_subresource_info) {
+      auto& requests = webpackage_subresource_info->requests;
+      std::vector<std::pair<GURL, std::string>> reqs(requests.size());
+      for (size_t i = 0; i < requests.size(); ++i) {
+        reqs[i] = std::make_pair(requests[i]->url,
+                                 base::ToLowerASCII(requests[i]->method));
+      }
+      skip_throttler_requests_.insert(reqs.begin(), reqs.end());
 
-      // XXX: Make this a whitelist of URLs.
-      // We should skip throttles only for the requests that can be
-      // fetched from the package.
-      skip_throttlers_ = true;
+      if (webpackage_subresource_info->manager_request.is_pending()) {
+        auto manager_request =
+            std::move(webpackage_subresource_info->manager_request);
+        mojom::URLLoaderFactoryPtr factory_ptr;
+        auto request = mojo::MakeRequest(&factory_ptr);
+        subresource_loader_factories_->SetDefaultFactory(
+            std::move(factory_ptr));
 
-      const bool off_main_thread = true;
-      if (off_main_thread) {
-        // Off-main-thread:
-        // (We use IO thread here, creating a new thread with
-        // base::CreateSingleThreadTaskRunnerWithTraits({}) seems
-        // a bit slower)
-        ChildThreadImpl::current()->GetIOTaskRunner()->PostTask(
-            FROM_HERE,
-            base::BindOnce(
-                &WebPackageSubresourceManagerImpl::CreateLoaderFactory,
-                std::move(request),
-                std::move(webpackage_subresource_manager_request),
-                GetDefaultURLLoaderFactoryGetter()->GetClonedInfo()));
-      } else {
-        WebPackageSubresourceManagerImpl::CreateLoaderFactory(
-            std::move(request),
-            std::move(webpackage_subresource_manager_request),
-            GetDefaultURLLoaderFactoryGetter()->GetClonedInfo());
+        const bool off_main_thread = true;
+        if (off_main_thread) {
+          // Off-main-thread:
+          // (We use IO thread here, creating a new thread with
+          // base::CreateSingleThreadTaskRunnerWithTraits({}) seems
+          // a bit slower)
+          ChildThreadImpl::current()->GetIOTaskRunner()->PostTask(
+              FROM_HERE,
+              base::BindOnce(
+                  &WebPackageSubresourceManagerImpl::CreateLoaderFactory,
+                  std::move(request), std::move(manager_request),
+                  GetDefaultURLLoaderFactoryGetter()->GetClonedInfo()));
+        } else {
+          WebPackageSubresourceManagerImpl::CreateLoaderFactory(
+              std::move(request), std::move(manager_request),
+              GetDefaultURLLoaderFactoryGetter()->GetClonedInfo());
+        }
       }
     }
   }
