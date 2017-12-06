@@ -60,8 +60,7 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/IdlenessDetector.h"
 #include "core/loader/ScheduledNavigation.h"
-#include "core/loader/resource/CSSStyleSheetResource.h"
-#include "core/loader/resource/ScriptResource.h"
+#include "core/loader/resource/TextResource.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
 #include "core/style/ComputedStyle.h"
@@ -340,16 +339,10 @@ bool InspectorPageAgent::CachedResourceContent(Resource* cached_resource,
   DCHECK(cached_resource);
   switch (cached_resource->GetType()) {
     case Resource::kCSSStyleSheet:
-      MaybeEncodeTextContent(
-          ToCSSStyleSheetResource(cached_resource)
-              ->SheetText(nullptr, CSSStyleSheetResource::MIMETypeCheck::kLax),
-          cached_resource->ResourceBuffer(), result, base64_encoded);
-      return true;
     case Resource::kScript:
+    case Resource::kXSLStyleSheet:
       MaybeEncodeTextContent(
-          cached_resource->ResourceBuffer()
-              ? ToScriptResource(cached_resource)->DecodedText()
-              : ToScriptResource(cached_resource)->SourceText(),
+          static_cast<TextResource*>(cached_resource)->DecodedText(),
           cached_resource->ResourceBuffer(), result, base64_encoded);
       return true;
     default:

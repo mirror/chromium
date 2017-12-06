@@ -201,7 +201,7 @@ void ProcessingInstruction::NotifyFinished(Resource* resource) {
     sheet_ = XSLStyleSheet::Create(this, resource->Url(),
                                    resource->GetResponse().Url());
     ToXSLStyleSheet(sheet_.Get())
-        ->ParseString(ToXSLStyleSheetResource(resource)->Sheet());
+        ->ParseString(ToXSLStyleSheetResource(resource)->DecodedText());
   } else {
     DCHECK(is_css_);
     CSSStyleSheetResource* style_resource = ToCSSStyleSheetResource(resource);

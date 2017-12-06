@@ -53,8 +53,6 @@ XSLStyleSheetResource* XSLStyleSheetResource::FetchSynchronously(
   params.MakeSynchronous();
   XSLStyleSheetResource* resource = ToXSLStyleSheetResource(
       fetcher->RequestResource(params, XSLStyleSheetResourceFactory()));
-  if (resource && resource->Data())
-    resource->sheet_ = resource->DecodedText();
   return resource;
 }
 
@@ -71,12 +69,6 @@ XSLStyleSheetResource::XSLStyleSheetResource(
     const ResourceLoaderOptions& options,
     const TextResourceDecoderOptions& decoder_options)
     : TextResource(resource_request, kXSLStyleSheet, options, decoder_options) {
-}
-
-void XSLStyleSheetResource::NotifyFinished() {
-  if (Data())
-    sheet_ = DecodedText();
-  Resource::NotifyFinished();
 }
 
 }  // namespace blink

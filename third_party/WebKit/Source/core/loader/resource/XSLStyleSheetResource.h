@@ -40,8 +40,6 @@ class XSLStyleSheetResource final : public TextResource {
                                                    ResourceFetcher*);
   static XSLStyleSheetResource* Fetch(FetchParameters&, ResourceFetcher*);
 
-  const String& Sheet() const { return sheet_; }
-
  private:
   class XSLStyleSheetResourceFactory : public ResourceFactory {
    public:
@@ -59,10 +57,6 @@ class XSLStyleSheetResource final : public TextResource {
   XSLStyleSheetResource(const ResourceRequest&,
                         const ResourceLoaderOptions&,
                         const TextResourceDecoderOptions&);
-
-  void NotifyFinished() override;
-
-  String sheet_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(XSLStyleSheet);
