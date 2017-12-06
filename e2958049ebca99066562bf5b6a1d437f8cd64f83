@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db88c2c8_63b0e4ee",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T04:34:12Z",
+      "side": 1,
+      "message": "Is the static_cast needed here?",
+      "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a81a7c4_8eb24a4f",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T04:34:12Z",
+      "side": 1,
+      "message": "nit: should this go down below AnimateIn at the bottom?",
+      "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
