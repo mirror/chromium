@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61ebafd_e2fd9001",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4895,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T23:26:46Z",
+      "side": 1,
+      "message": "s/afte/after",
+      "range": {
+        "startLine": 4895,
+        "startChar": 66,
+        "endLine": 4895,
+        "endChar": 70
+      },
+      "revId": "624f9b9dc6ace3e8aaf50a56d30fa9cd32947eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
