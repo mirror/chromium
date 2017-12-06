@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fa05ad9_93639836",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1238,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T02:01:09Z",
+      "side": 1,
+      "message": "Now I think we may need to lie about effect node here to incorporate mask-based clip-paths, because ClipPathClipper will paint mask-based clip-path into a kDstIn child effect node of the main effect node.\n\nTo be specific, still use the transform and clip node from PreEffectProperties(), but override effect node with the one from BorderBoxProperties().\n\n(Yes, this is weird and wrong, I hope we can remove this hack once ancestor_clipping_mask_layer_ no longer includes clip-path.)",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b8f6b7_9242c07b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
         "patchSetId": 10
@@ -49,6 +66,24 @@
       "side": 1,
       "message": "https://chromium-review.googlesource.com/c/chromium/src/+/806424 refactors SPv1 clipping mask painting, but for now it fails fast/borders/border-radius-mask-canvas*.html because of missing border radius clipping on canvas. I may need to change PaintLayerClipper to add back the clipping which was done in BoxClipper, but I would like to put it in priority lower than SPv175 work.",
       "parentUuid": "bb3e436c_e0ade20b",
+      "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8ee938_62150dab",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T02:01:09Z",
+      "side": 1,
+      "message": "I\u0027m thinking we should even move these to CLM. These are very specific to CLM using masks to synthesize clips. But like you said we don\u0027t have to be blocked by this.",
+      "parentUuid": "3a7c71bd_11b72a3c",
       "revId": "f3ee3012b5d9dd945a0907cc9b01bdff2b61a845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
