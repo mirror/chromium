@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b43686_e17f5b77",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T04:03:15Z",
+      "side": 1,
+      "message": "Can we name this function to EnclosingNGBlockFlowOf()?\nReasons are:\n1. We don\u0027t use term \"inline formatting context\" in current code.\n2. This function mapes Position to LayoutBlockFlow(NG) and similar to\nmapping LayoutObject to LayoutBlockFlow(NG) of LayoutObject::EnclosingNGBlockFlow().",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
