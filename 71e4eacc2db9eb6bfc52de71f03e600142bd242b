@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7014fb50_ba62eebe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "@Nullable?",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124a6d03_68c6f0ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 51,
+        "startChar": 60,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965b7e37_496533a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "@NonNull",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db8fdc1_277ec269",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "I did not check if the `String` in this class are expected to be @Nullable or @NonNull so feel free to not care but if you know, better to add the info.",
+      "range": {
+        "startLine": 69,
+        "startChar": 34,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a015bdd8_d653729a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "AS long as you are here, would it work to have the call above inline here instead of creating the temp variable?",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6e3534_ce408d08",
+        "filename": "chrome/browser/media/android/router/media_router_android_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:56:07Z",
+      "side": 1,
+      "message": "Should we provide more details as the object is created by `this` so it may be unclear why `this` being destroyed wouldn\u0027t also destroy it.",
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
