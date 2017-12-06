@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28af6019_bb848f29",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-06T02:12:06Z",
+      "side": 1,
+      "message": "nit: itertools.chain(a[key], b[key])",
+      "revId": "dc3e06fe15fa9297ede9c394f57609361c08ae81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ffb610_b071bfa5",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-06T02:12:06Z",
+      "side": 1,
+      "message": "nit: might be a bit cleaner to do this as an else if that ensures that all keys in both are dicts.",
+      "revId": "dc3e06fe15fa9297ede9c394f57609361c08ae81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
