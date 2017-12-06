@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8538e4_5d8c39e4",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-06T21:40:15Z",
+      "side": 1,
+      "message": "martin had expressed concern w/ logging query params of chrome schemes. not sure if that has changed. for now it might be best to just do http/https/ftp since iiuc we have clear approval for those, and then address chrome and about (assuming both can have query params) in a follow up.",
+      "revId": "5ebdf694c34079f688f3ef45dda316be7a754abe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
