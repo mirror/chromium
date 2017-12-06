@@ -16,6 +16,24 @@
       "revId": "09c530a13e7406241178c3034019e70e994cfb99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c2a4b8_24de3ff2",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1108044
+      },
+      "writtenOn": "2017-12-06T00:07:54Z",
+      "side": 1,
+      "message": "What I want to avoid for the the MQ is relying on IsWindows10TabletMode which software test if the tablet mode of windows is on/off. Please note that the tablet mode of Windows is purely aesthetic and is not sync with with the actual hardware state. For example in the case of these convertible/detachable laptops, one can use the tablet mode (by triggering it in the taskbar or settings) but the keyboard/mouse are still connected/used. This is purely a user choice.\n\nHowever the MQ should reflect the state of the hardware and not relying on the tablet mode. Reason is that user can still use Windows in \"desktop mode\" yet the keyboard/trackpad has been detached and you want website to know that the pointer is touch and hover is not possible.\n\nThe reason I split is because IsTabletDevice is used in some other call sites which I\u0027m not entirely sure want or not to trace if the device is actually used in tablet mode (the windows 10 mode).\n\nConcerning the keyboard suggestion I\u0027m not sure this is a good alternative. We already have the mechanism to detect that the keyboard/trackapad has been attached/detached/flipped, that part works well. What didn\u0027t work well and the patch fixes, is when we react from that state change we read the hardware status only not the tablet mode and then the hardware status. They may become out of sync depending what the user do.\n\nI agree the name could be better but on top of my head nothing better came. I hope I\u0027m being clearer here.",
+      "parentUuid": "c96132ba_f05c9dc5",
+      "revId": "09c530a13e7406241178c3034019e70e994cfb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
