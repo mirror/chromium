@@ -91,6 +91,30 @@
       "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263a1d88_3c3f2d8f",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-06T17:36:38Z",
+      "side": 1,
+      "message": "That\u0027s sensible, but it would require changing the IDL signature which *may* be a breaking change for some apps (though I personally think it\u0027s unlikely). Given that we\u0027re replacing this in the near future anyway I\u0027d prefer to err on the side of compatibility for the moment.",
+      "parentUuid": "a8a507b2_bab0eb33",
+      "range": {
+        "startLine": 218,
+        "startChar": 28,
+        "endLine": 218,
+        "endChar": 51
+      },
+      "revId": "d2203754627554b0e3d2f398f5b608802ec50c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
