@@ -22,8 +22,7 @@ SandboxBPFTestRunner::SandboxBPFTestRunner(
     : bpf_tester_delegate_(bpf_tester_delegate) {
 }
 
-SandboxBPFTestRunner::~SandboxBPFTestRunner() {
-}
+SandboxBPFTestRunner::~SandboxBPFTestRunner() = default;
 
 void SandboxBPFTestRunner::Run() {
   DCHECK(bpf_tester_delegate_);

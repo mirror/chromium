@@ -132,7 +132,7 @@ BrokerClient::BrokerClient(const BrokerPolicy& broker_policy,
       fast_check_in_client_(fast_check_in_client),
       quiet_failures_for_tests_(quiet_failures_for_tests) {}
 
-BrokerClient::~BrokerClient() {}
+BrokerClient::~BrokerClient() = default;
 
 int BrokerClient::Access(const char* pathname, int mode) const {
   return PathAndFlagsSyscall(COMMAND_ACCESS, pathname, mode);

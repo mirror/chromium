@@ -115,8 +115,7 @@ bpf_dsl::ResultExpr SandboxPanic(const char* error) {
 SandboxBPF::SandboxBPF(std::unique_ptr<bpf_dsl::Policy> policy)
     : proc_fd_(), sandbox_has_started_(false), policy_(std::move(policy)) {}
 
-SandboxBPF::~SandboxBPF() {
-}
+SandboxBPF::~SandboxBPF() = default;
 
 // static
 bool SandboxBPF::SupportsSeccompSandbox(SeccompLevel level) {

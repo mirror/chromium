@@ -85,7 +85,7 @@ class ThreadProvider {
   // Removes all the registrations done with the same cookie parameter.
   // This frees internal thread pool resources.
   virtual bool UnRegisterWaits(void* cookie) = 0;
-  virtual ~ThreadProvider() {}
+  virtual ~ThreadProvider() = default;
 };
 
 // Models the server-side of the original input parameters.

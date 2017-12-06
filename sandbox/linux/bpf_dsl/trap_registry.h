@@ -57,12 +57,12 @@ class SANDBOX_EXPORT TrapRegistry {
   virtual bool EnableUnsafeTraps() = 0;
 
  protected:
-  TrapRegistry() {}
+  TrapRegistry() = default;
 
   // TrapRegistry's destructor is intentionally non-virtual so that
   // implementations can omit their destructor.  Instead we protect against
   // misuse by marking it protected.
-  ~TrapRegistry() {}
+  ~TrapRegistry() = default;
 
   DISALLOW_COPY_AND_ASSIGN(TrapRegistry);
 };

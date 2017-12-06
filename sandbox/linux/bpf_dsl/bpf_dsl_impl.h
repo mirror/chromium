@@ -28,8 +28,8 @@ class BoolExprImpl {
                                 CodeGen::Node else_node) const = 0;
 
  protected:
-  BoolExprImpl() {}
-  virtual ~BoolExprImpl() {}
+  BoolExprImpl() = default;
+  virtual ~BoolExprImpl() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BoolExprImpl);
@@ -53,8 +53,8 @@ class ResultExprImpl {
   virtual bool IsDeny() const;
 
  protected:
-  ResultExprImpl() {}
-  virtual ~ResultExprImpl() {}
+  ResultExprImpl() = default;
+  virtual ~ResultExprImpl() = default;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ResultExprImpl);

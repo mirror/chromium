@@ -97,8 +97,7 @@ PolicyCompiler::PolicyCompiler(const Policy* policy, TrapRegistry* registry)
   DCHECK(policy);
 }
 
-PolicyCompiler::~PolicyCompiler() {
-}
+PolicyCompiler::~PolicyCompiler() = default;
 
 CodeGen::Program PolicyCompiler::Compile() {
   CHECK(policy_->InvalidSyscall()->IsDeny())

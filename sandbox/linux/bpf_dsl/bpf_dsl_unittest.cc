@@ -83,7 +83,7 @@ class PolicyEmulator {
     }
   }
 
-  ~PolicyEmulator() {}
+  ~PolicyEmulator() = default;
 
   void ExpectAllow(const struct arch_seccomp_data& data) const {
     EXPECT_EQ(SECCOMP_RET_ALLOW, Emulate(data));
@@ -115,8 +115,8 @@ class PolicyEmulator {
 
 class BasicPolicy : public Policy {
  public:
-  BasicPolicy() {}
-  ~BasicPolicy() override {}
+  BasicPolicy() = default;
+  ~BasicPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_getpgid) {
       const Arg<pid_t> pid(0);
@@ -147,8 +147,8 @@ TEST(BPFDSL, Basic) {
 #if !defined(ARCH_CPU_X86)
 class BooleanLogicPolicy : public Policy {
  public:
-  BooleanLogicPolicy() {}
-  ~BooleanLogicPolicy() override {}
+  BooleanLogicPolicy() = default;
+  ~BooleanLogicPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_socketpair) {
       const Arg<int> domain(0), type(1), protocol(2);
@@ -193,8 +193,8 @@ TEST(BPFDSL, BooleanLogic) {
 
 class MoreBooleanLogicPolicy : public Policy {
  public:
-  MoreBooleanLogicPolicy() {}
-  ~MoreBooleanLogicPolicy() override {}
+  MoreBooleanLogicPolicy() = default;
+  ~MoreBooleanLogicPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_setresuid) {
       const Arg<uid_t> ruid(0), euid(1), suid(2);
@@ -233,8 +233,8 @@ static const uintptr_t kDeadBeefAddr =
 
 class ArgSizePolicy : public Policy {
  public:
-  ArgSizePolicy() {}
-  ~ArgSizePolicy() override {}
+  ArgSizePolicy() = default;
+  ~ArgSizePolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_uname) {
       const Arg<uintptr_t> addr(0);
@@ -256,8 +256,8 @@ TEST(BPFDSL, ArgSizeTest) {
 
 class NegativeConstantsPolicy : public Policy {
  public:
-  NegativeConstantsPolicy() {}
-  ~NegativeConstantsPolicy() override {}
+  NegativeConstantsPolicy() = default;
+  ~NegativeConstantsPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_fcntl) {
       const Arg<int> fd(0);
@@ -315,8 +315,8 @@ BPF_TEST_C(BPFDSL, TrapTest, TrappingPolicy) {
 
 class MaskingPolicy : public Policy {
  public:
-  MaskingPolicy() {}
-  ~MaskingPolicy() override {}
+  MaskingPolicy() = default;
+  ~MaskingPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_setuid) {
       const Arg<uid_t> uid(0);
@@ -358,8 +358,8 @@ TEST(BPFDSL, MaskTest) {
 
 class ElseIfPolicy : public Policy {
  public:
-  ElseIfPolicy() {}
-  ~ElseIfPolicy() override {}
+  ElseIfPolicy() = default;
+  ~ElseIfPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_setuid) {
       const Arg<uid_t> uid(0);
@@ -392,8 +392,8 @@ TEST(BPFDSL, ElseIfTest) {
 
 class SwitchPolicy : public Policy {
  public:
-  SwitchPolicy() {}
-  ~SwitchPolicy() override {}
+  SwitchPolicy() = default;
+  ~SwitchPolicy() override = default;
   ResultExpr EvaluateSyscall(int sysno) const override {
     if (sysno == __NR_fcntl) {
       const Arg<int> cmd(1);

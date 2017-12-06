@@ -215,7 +215,7 @@ template <typename T>
 class SANDBOX_EXPORT Caser {
  public:
   Caser(const Caser<T>& caser) : arg_(caser.arg_), elser_(caser.elser_) {}
-  ~Caser() {}
+  ~Caser() = default;
 
   // Case adds a single-value "case" clause to the switch.
   Caser<T> Case(T value, ResultExpr result) const;

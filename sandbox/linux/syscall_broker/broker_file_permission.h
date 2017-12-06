@@ -20,7 +20,7 @@ namespace syscall_broker {
 // |path| is the path to be whitelisted.
 class SANDBOX_EXPORT BrokerFilePermission {
  public:
-  ~BrokerFilePermission() {}
+  ~BrokerFilePermission() = default;
   BrokerFilePermission(const BrokerFilePermission&) = default;
   BrokerFilePermission& operator=(const BrokerFilePermission&) = default;
 
