@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea5139c8_5d01ce96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f06cb99b_9088abe2",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "187c50a4_e5e1ff97",
         "filename": "/COMMIT_MSG",
         "patchSetId": 47
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "80c34d30_6dc8afcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187c50a4_e5e1ff97",
+      "range": {
+        "startLine": 27,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d47721_f8d7af95",
         "filename": "/COMMIT_MSG",
         "patchSetId": 47
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-05T21:45:36Z",
       "side": 1,
       "message": "Doesn\u0027t seem to match my understanding of this CL and what step 5 says:\n\nStep 5: \"Ensure that the request is properly paused in the net stack while the navigation code is performing the WillProcessResponse checks, and only restart it when Resume is called.\"\n\nThis CL seems more like step 3: \"Have the NavigationURLLoaderNetworkService detach from the URLLoader and pass the URLLoader interface pointer to the renderer process after it has asked the URLLoader to proceed with the response.\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1ae854_5e735648",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Yes this is weird. I don\u0027t know why there is a 5 here. Thanks!",
+      "parentUuid": "37d47721_f8d7af95",
       "range": {
         "startLine": 37,
         "startChar": 8,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "7289cc2e_cbdf70a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 47
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7703f7c_834bb623",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "548d2ce3_8c135808",
         "filename": "content/browser/browser_side_navigation_browsertest.cc",
         "patchSetId": 47
@@ -108,6 +198,30 @@
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04b2018_6ac8b737",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548d2ce3_8c135808",
+      "range": {
+        "startLine": 557,
+        "startChar": 2,
+        "endLine": 557,
+        "endChar": 13
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "3e1f3b14_e1d9f30e",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07e473b_07de89a0",
+      "range": {
+        "startLine": 565,
+        "startChar": 24,
+        "endLine": 565,
+        "endChar": 30
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "534666e1_a5318604",
         "filename": "content/browser/browser_side_navigation_browsertest.cc",
         "patchSetId": 47
@@ -145,6 +283,24 @@
       "writtenOn": "2017-12-05T21:45:36Z",
       "side": 1,
       "message": "I wonder if exposing the NavigationHandle from TestNavigationManager is worthwhile, since we only need it to get specific details and cancel the navigation. Why not just provide a method on TestNavigationManager that implements this internally and hides all of this boilerplate code in one place? We can also then update it to do the right thing with Network Service.",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae2e36a_5584f26a",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "It is complicated. I want to cancel the URLLoader **after** the navigation has committed. So I need to get the NavigationHandle in between WaitForResponse() and ResumeNavigation() and use the GlobalRequestID latter to cancel the URLLoader.\n\nI want to cancel the URLLoader not the navigation.",
+      "parentUuid": "534666e1_a5318604",
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -165,6 +321,24 @@
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac6415e_b291de47",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "We say that the navigation commit when the renderer has received the first byte of the response\u0027s body and the document has changed.\nSo the navigation has already finished successfully. I want to check that the url_loader_client in the renderer is notified that its url_loader (in the browser process) has been canceled.\nIf it is not notified, the load will continue indefinitely.\n\nI updated the test to make it explicit.",
+      "parentUuid": "2267658b_f7bb65e5",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "555430c7_3734a5aa",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1947c98b_bf2dde27",
+      "range": {
+        "startLine": 354,
+        "startChar": 5,
+        "endLine": 354,
+        "endChar": 14
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc077cf_acfb46df",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 47
@@ -205,6 +403,24 @@
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca87eaf_b5ca589f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc077cf_acfb46df",
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "10365ab1_2697e840",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 47
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa78364f_ea918eab",
+      "range": {
+        "startLine": 71,
+        "startChar": 81,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9339e4a_9272ca09",
         "filename": "content/common/throttling_url_loader.h",
         "patchSetId": 47
@@ -251,6 +491,30 @@
       "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9949a1_0fac6cd6",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9339e4a_9272ca09",
+      "range": {
+        "startLine": 76,
+        "startChar": 37,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "f69b1ae063df74c122734417d0b1a33a270e6fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

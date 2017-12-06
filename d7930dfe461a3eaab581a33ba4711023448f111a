@@ -16,6 +16,24 @@
       "revId": "d7930dfe461a3eaab581a33ba4711023448f111a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f5335_41893bf1",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-06T15:12:43Z",
+      "side": 0,
+      "message": "The most important effort is probably to find a new name for this class :-)\n\nInstead of making a subclass, I will make it to be a superclass of BrowserSideNavigationBrowserTest.",
+      "parentUuid": "7c493d97_c05efce2",
+      "revId": "d7930dfe461a3eaab581a33ba4711023448f111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
