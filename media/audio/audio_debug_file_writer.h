@@ -1,61 +1,72 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_AUDIO_AUDIO_DEBUG_FILE_WRITER_H_
-#define MEDIA_AUDIO_AUDIO_DEBUG_FILE_WRITER_H_
-
-#include <stdint.h>
+#ifndef MEDIA_AUDIO_AUDIO_DEBUG_RECORDING_WRITER_H_
+#define MEDIA_AUDIO_AUDIO_DEBUG_RECORDING_WRITER_H_
 
 #include <memory>
 
+#include "base/atomicops.h"
+#include "base/callback.h"
+#include "base/gtest_prod_util.h"
+#include "base/memory/weak_ptr.h"
+#include "base/threading/thread_checker.h"
+#include "media/base/audio_parameters.h"
+#include "media/base/media_export.h"
+
+#include <stdint.h>
 #include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
-#include "media/base/audio_parameters.h"
-#include "media/base/media_export.h"
+
+namespace base {
+class FilePath;
+}  // namespace base
 
 namespace media {
 
 class AudioBus;
 
+// Interface for feeding data to a recorder.
+class AudioDebugRecorder {
+ public:
+  virtual ~AudioDebugRecorder() {}
+
+  // If debug recording is enabled, copies audio data and makes sure it's
+  // written on the right thread. Otherwise ignores the data. Can be called on
+  // any thread.
+  virtual void OnData(const AudioBus* source) = 0;
+};
+
 // Writes audio data to a 16 bit PCM WAVE file used for debugging purposes. All
 // operations are non-blocking.
 // Functions are virtual for the purpose of test mocking.
-class MEDIA_EXPORT AudioDebugFileWriter {
+class MEDIA_EXPORT AudioDebugRecordingWriter : public AudioDebugRecorder {
  public:
-  // Number of channels and sample rate are used from |params|, the other
-  // parameters are ignored. The number of channels in the data passed to
-  // Write() must match |params|.
-  explicit AudioDebugFileWriter(const AudioParameters& params);
+  AudioDebugRecordingWriter(const AudioParameters& params,
+                            base::OnceClosure on_destruction_closure);
+  ~AudioDebugRecordingWriter() override;
 
-  virtual ~AudioDebugFileWriter();
+  // Start debug recording. Must be called before calling OnData() for the first
+  // time after creation or StopRecording() call. Can be called on any sequence;
+  // OnData() and StopRecording() must be called on the same sequence as
+  // Start().
+  virtual void StartRecording(const base::FilePath& file_name);
 
-  // Must be called before calling Write() for the first time after creation or
-  // Stop() call. Can be called on any sequence; Write() and Stop() must be
-  // called on the same sequence as Start().
-  virtual void Start(const base::FilePath& file);
+  // Disable debug recording. Must be called to finish recording. Each call to
+  // Start() requires a call to Stop(). Will be automatically called on
+  // destruction.
+  virtual void StopRecording();
 
-  // Must be called to finish recording. Each call to Start() requires a call to
-  // Stop(). Will be automatically called on destruction.
-  virtual void Stop();
-
+  // AudioDebugRecorder implementation. Can be called on any thread.
   // Write |data| to file.
-  virtual void Write(std::unique_ptr<AudioBus> data);
-
-  // Returns true if Write() call scheduled at this point will most likely write
-  // data to the file, and false if it most likely will be a no-op. The result
-  // may be ambigulous if Start() or Stop() is executed at the moment. Can be
-  // called from any sequence.
-  virtual bool WillWrite();
-
-  // Gets the extension for the file type the as a string, for example "wav".
-  // Can be called before calling Start() to add the appropriate extension to
-  // the filename.
-  virtual const base::FilePath::CharType* GetFileNameExtension();
+  // Number of channels and sample rate are used from |params|, the other
+  // parameters are ignored.
+  void OnData(const AudioBus* source) override;
 
  protected:
   const AudioParameters params_;
@@ -73,11 +84,24 @@ class MEDIA_EXPORT AudioDebugFileWriter {
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   AudioFileWriterUniquePtr file_writer_;
-  SEQUENCE_CHECKER(client_sequence_checker_);
 
-  DISALLOW_COPY_AND_ASSIGN(AudioDebugFileWriter);
+  FRIEND_TEST_ALL_PREFIXES(AudioDebugRecordingWriterTest, EnableDisable);
+  FRIEND_TEST_ALL_PREFIXES(AudioDebugRecordingWriterTest, OnData);
+
+  // Writes debug data to |file_writer_|.
+  void DoWrite(std::unique_ptr<media::AudioBus> data);
+
+  // Used as a flag to indicate if recording is enabled, accessed on different
+  // threads.
+  base::subtle::Atomic32 recording_enabled_ = 0;
+
+  // Runs in destructor if set.
+  base::OnceClosure on_destruction_closure_;
+
+  base::WeakPtrFactory<AudioDebugRecordingWriter> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingWriter);
 };
 
 }  // namespace media
 
-#endif  // MEDIA_AUDIO_AUDIO_DEBUG_FILE_WRITER_H_
+#endif  // MEDIA_AUDIO_AUDIO_DEBUG_RECORDING_WRITER_H_
