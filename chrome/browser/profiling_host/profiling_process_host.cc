@@ -259,10 +259,28 @@ void ProfilingProcessHost::Observe(
 bool ProfilingProcessHost::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  profiling_service_->DumpProcessesForTracing(
-      base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
-                     base::Unretained(this), args.dump_guid));
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(FROM_HERE,
+                 base::BindOnce(&ProfilingProcessHost::OnMemoryDumpOnIOThread,
+                                base::Unretained(this), args.dump_guid));
   return true;
+}
+
+void ProfilingProcessHost::OnMemoryDumpOnIOThread(uint64_t dump_guid) {
+  bool force_prune = false;
+  {
+    base::AutoLock lock(requesting_process_report_lock_);
+    force_prune = requesting_process_report_;
+  }
+
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  bool keep_small_allocations =
+      !force_prune && cmdline->HasSwitch(switches::kMemlogKeepSmallAllocations);
+
+  profiling_service_->DumpProcessesForTracing(
+      keep_small_allocations,
+      base::BindOnce(&ProfilingProcessHost::OnDumpProcessesForTracingCallback,
+                     base::Unretained(this), dump_guid));
 }
 
 void ProfilingProcessHost::OnDumpProcessesForTracingCallback(
@@ -465,15 +483,30 @@ void ProfilingProcessHost::RequestProcessReport(std::string trigger_name) {
     return;
   }
 
+  {
+    base::AutoLock lock(requesting_process_report_lock_);
+    if (requesting_process_report_)
+      return;
+
+    requesting_process_report_ = true;
+  }
+
+  // It's safe to pass a raw pointer for ProfilingProcessHost because it's a
+  // singleton that's never destroyed.
   auto finish_report_callback = base::BindOnce(
-      [](std::string trigger_name, bool success, std::string trace) {
+      [](ProfilingProcessHost* host, std::string trigger_name, bool success,
+         std::string trace) {
         UMA_HISTOGRAM_BOOLEAN("OutOfProcessHeapProfiling.RecordTrace.Success",
                               success);
+        {
+          base::AutoLock lock(host->requesting_process_report_lock_);
+          host->requesting_process_report_ = false;
+        }
         if (success) {
           UploadTraceToCrashServer(std::move(trace), std::move(trigger_name));
         }
       },
-      std::move(trigger_name));
+      base::Unretained(this), std::move(trigger_name));
   RequestTraceWithHeapDump(std::move(finish_report_callback), false);
 }
 
