@@ -155,6 +155,9 @@ class MdDownloadsDOMHandler : public content::WebContentsObserver,
   // User profile that corresponds to this handler.
   Profile* profile_;
 
+  // Whether the render process has gone.
+  bool render_process_gone_ = false;
+
   base::WeakPtrFactory<MdDownloadsDOMHandler> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MdDownloadsDOMHandler);

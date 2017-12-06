@@ -139,12 +139,14 @@ void MdDownloadsDOMHandler::RegisterMessages() {
 void MdDownloadsDOMHandler::OnJavascriptDisallowed() {
   list_tracker_.Stop();
   list_tracker_.Reset();
-  CheckForRemovedFiles();
+  if (!render_process_gone_)
+    CheckForRemovedFiles();
 }
 
 void MdDownloadsDOMHandler::RenderProcessGone(base::TerminationStatus status) {
   // TODO(dbeam): WebUI + WebUIMessageHandler should do this automatically.
   // http://crbug.com/610450
+  render_process_gone_ = true;
   DisallowJavascript();
 }
 
