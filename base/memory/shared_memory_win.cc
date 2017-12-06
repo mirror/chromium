@@ -10,6 +10,7 @@
 
 #include "base/logging.h"
 #include "base/memory/shared_memory_tracker.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
@@ -41,7 +42,7 @@ void LogError(CreateError error, DWORD winerror) {
                             CREATE_ERROR_LAST + 1);
   static_assert(ERROR_SUCCESS == 0, "Windows error code changed!");
   if (winerror != ERROR_SUCCESS)
-    UMA_HISTOGRAM_SPARSE_SLOWLY("SharedMemory.CreateWinError", winerror);
+    UmaHistogramSparse("SharedMemory.CreateWinError", winerror);
 }
 
 typedef enum _SECTION_INFORMATION_CLASS {
