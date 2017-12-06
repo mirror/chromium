@@ -111,6 +111,30 @@
       "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341ad764_3dfee637",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:34:42Z",
+      "side": 1,
+      "message": "thank you. Yes, looking at it now I believe that entire interface is redundant. It may have had a purpose in the past but there\u0027s not one I can see currently. For now we can just avoid adding to it.",
+      "parentUuid": "cf9062b8_32db7c0e",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "176f3662caf9946b32abf2e3428fb99a987710de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
