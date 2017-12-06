@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33b0ccd2_bf2ce704",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-06T18:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f0c887_02868be9",
+      "range": {
+        "startLine": 207,
+        "startChar": 59,
+        "endLine": 207,
+        "endChar": 60
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9c62c8d_1aacd8de",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 2
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "5496f068_d9dee3b5",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-06T18:23:43Z",
+      "side": 1,
+      "message": "That\u0027s certainly a fair point. Part of me is happy that a reviewer had to see this though. It would obviously make more sense if you were actually responsible for the use of this API, because if you were you\u0027d realize that there\u0027s new API functionality you should probably implement to collect better metrics for your feature.\n\nUnfortunately, because browser.cc is sort of a global, this doesn\u0027t actually work out right though, and we have to resort to top-level owners.\n\nI\u0027ve added a comment on the API and a todo for myself to fill in this callback with something meaningful :)",
+      "parentUuid": "b33a4155_fa34adf2",
+      "range": {
+        "startLine": 1408,
+        "startChar": 11,
+        "endLine": 1408,
+        "endChar": 51
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5774ac32_acf9c3ac",
         "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
         "patchSetId": 2
@@ -164,6 +212,30 @@
       "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be085bc_8f7723bb",
+        "filename": "chrome/browser/ui/content_settings/framebust_block_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-06T18:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5774ac32_acf9c3ac",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
