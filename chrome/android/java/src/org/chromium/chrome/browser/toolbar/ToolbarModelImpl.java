@@ -17,9 +17,11 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerServiceFactory;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerTabUtils;
+import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarModel.ToolbarModelDelegate;
 import org.chromium.chrome.browser.util.ColorUtils;
@@ -195,6 +197,30 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @Override
     public boolean isOfflinePage() {
         return hasTab() && OfflinePageUtils.isOfflinePage(mTab);
+    }
+
+    @Override
+    public boolean shouldShowGoogleG(String urlBarText) {
+        LocaleManager localeManager = LocaleManager.getInstance();
+        if (localeManager.hasCompletedSearchEnginePromo()
+                || localeManager.hasShownSearchEnginePromoThisSession()) {
+            return false;
+        }
+
+        // Only access ChromeFeatureList and TemplateUrlService after the NTP check,
+        // to prevent native method calls before the native side has been initialized.
+        NewTabPage ntp = getNewTabPageForCurrentTab();
+        boolean isShownInRegularNtp = ntp != null && ntp.isLocationBarShownInNTP()
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX);
+
+        boolean isShownInBottomSheet = mBottomSheet != null && !mBottomSheet.isShowingNewTab()
+                && mBottomSheet.isSheetOpen() && TextUtils.isEmpty(urlBarText)
+                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN)
+                && ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.CHROME_HOME_SHOW_GOOGLE_G_WHEN_URL_CLEARED);
+
+        return (isShownInRegularNtp || isShownInBottomSheet)
+                && TemplateUrlService.getInstance().isDefaultSearchEngineGoogle();
     }
 
     @Override
