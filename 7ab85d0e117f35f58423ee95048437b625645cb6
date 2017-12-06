@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fca0e990_12d948c4",
+        "filename": "chrome/browser/ui/cocoa/apps/app_shim_menu_controller_mac_interactive_uitest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-06T09:33:19Z",
+      "side": 1,
+      "message": "Actually, my bad, this wasn\u0027t a flake, it\u0027s stable at failing.\n\nIn order to fix it here I did what\u0027s done in GlobalCommandApiTest.GlobalCommand: post a Cmd down event before key_down_event and posting Cmd up event after key_up_event.\n\nAnd the bad news, GlobalCommandApiTest.GlobalCommand is still failing and leaves Shift pressed. It\u0027s posting 18 events: Cmd-down, Shift-down, Key-down, Key-up, Shift-up, Cmd-up (and repeats 3 times). If you repeat only 2 times, it passes. If you repeat 4 times but add a delay in the middle, it passes. If you remove flags from Key, it still fails. If you remove Cmd and repeat 10 times, it passes.\n\nIn short, I still have no idea, what\u0027s going on. I thought it was a problem with event queue overfilling with events, but the last test hints that it\u0027s not the case.",
+      "parentUuid": "eae56c53_2711e91e",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68e868d4_0f627719",
         "filename": "chrome/test/base/in_process_browser_test_mac.mm",
         "patchSetId": 4
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "\u003e Maybe it\u0027s better to check the diff between modifiers at the start and modifiers at the end?\n\nGood point - perhaps with sky\u0027s suggestion to clear them out as well, this will be less of an issue",
       "parentUuid": "715d5736_6b32f6c7",
+      "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f8ee43_7fd03a3e",
+        "filename": "chrome/test/base/in_process_browser_test_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1230445
+      },
+      "writtenOn": "2017-12-06T09:33:19Z",
+      "side": 1,
+      "message": "But should we clear if the test crashes?",
+      "parentUuid": "6c20f50e_e972370f",
       "revId": "7ab85d0e117f35f58423ee95048437b625645cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
