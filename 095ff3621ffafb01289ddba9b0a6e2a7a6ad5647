@@ -46,6 +46,30 @@
       "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69bd2cd_b52b925d",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T04:13:19Z",
+      "side": 1,
+      "message": "I marked this as optional and +1d, so feel free to land this.\n\nI\u0027m curious, could elaborate on what you don\u0027t like about optional? IMO using optional here makes it more obvious the callback isn\u0027t needed, rather than having to wonder if a null callback is really allowed.",
+      "parentUuid": "8d2cdf69_0bc9e71a",
+      "range": {
+        "startLine": 1408,
+        "startChar": 11,
+        "endLine": 1408,
+        "endChar": 51
+      },
+      "revId": "095ff3621ffafb01289ddba9b0a6e2a7a6ad5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
