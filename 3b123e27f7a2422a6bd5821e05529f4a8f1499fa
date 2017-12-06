@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "5c1963ca_ef23c247",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:20:19Z",
+      "side": 1,
+      "message": "Mathieu, can you provide some background on your assertion that this is the new way in Chrome? I\u0027ve heard multiple people complain about parameterized tests: they\u0027re harder to read, harder to write, and because they have weird names they\u0027re harder to run and harder to read the output of; plus I wager they\u0027re slower.\n\nI\u0027d like to resolve this sooner rather than later because code has a way of getting copied so we shouldn\u0027t allow bad examples in the codebase.",
+      "parentUuid": "e493ac8e_de0058ce",
+      "revId": "3b123e27f7a2422a6bd5821e05529f4a8f1499fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "887638ab_d0bdd9b7",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_view_native_views_unittest.cc",
         "patchSetId": 29
