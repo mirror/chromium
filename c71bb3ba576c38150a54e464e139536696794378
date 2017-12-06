@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f10e22a_3a07b228",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T22:13:59Z",
+      "side": 1,
+      "message": "could be `\u003d default;` too",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfc8d05_cb4764bf",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T22:13:59Z",
+      "side": 1,
+      "message": "nit: Add `// static` comment",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7e9fa06_9c36a535",
         "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
         "patchSetId": 11
@@ -65,6 +99,24 @@
     },
     {
       "key": {
+        "uuid": "5ae70473_c093de57",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T22:13:59Z",
+      "side": 1,
+      "message": "Why? (honest question, not second-guessing)\n\nbad_message::ReceivedBadMessage would terminate the renderer so any reply would go into a black hole in the old code. Does that contract change now w/ mojo?",
+      "parentUuid": "3c297322_cc26ec20",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "555eabd8_45c85d5b",
         "filename": "content/common/appcache.mojom",
         "patchSetId": 11
@@ -76,6 +128,30 @@
       "writtenOn": "2017-12-06T07:15:13Z",
       "side": 1,
       "message": "The existing AppCacheHost class has a different meaning. This is more like AppCacheBackend.",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f9f1b5_9c6fc99f",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-06T22:13:59Z",
+      "side": 1,
+      "message": "Yeah, unfortunate name collision between \"Host\" concepts in the appcache spec vs. content/browser. Maybe someday we\u0027ll be able to eliminate all the intermediate plumbing and this really can be implemented by content::AppCacheHost, but mojom::AppCacheBackend seems better now.",
+      "parentUuid": "555eabd8_45c85d5b",
       "range": {
         "startLine": 54,
         "startChar": 10,
