@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23b56d1e_75252b2e",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T02:05:02Z",
+      "side": 1,
+      "message": "nit: (wzang), \"wallpaper\"",
+      "revId": "4e11f907782bd4ce68aaaf0e84ed4454433ca218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
