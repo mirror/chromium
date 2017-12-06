@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "04ab35cd_e05303e3",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T02:01:05Z",
+      "side": 1,
+      "message": "This CL will not have an effect on 788926, since they go through different flows.  I have a separate CL to improve that.",
+      "parentUuid": "aa7dbd95_729f8c58",
+      "range": {
+        "startLine": 181,
+        "startChar": 17,
+        "endLine": 181,
+        "endChar": 66
+      },
+      "revId": "883ffd35da4eef5de207e2d425fcb57e823c1854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c61f7857_b846e3bf",
         "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
         "patchSetId": 6
