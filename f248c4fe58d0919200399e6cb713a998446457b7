@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7346d79d_eace62fd",
+        "filename": "ui/aura/mus/window_port_mus.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-06T00:52:24Z",
+      "side": 1,
+      "message": "When the object name matched the actual type name like \"local_surface_id_allocator_\" here I went ahead and updated the object name to continue to match the type name.",
+      "range": {
+        "startLine": 297,
+        "startChar": 7,
+        "endLine": 297,
+        "endChar": 44
+      },
+      "revId": "f248c4fe58d0919200399e6cb713a998446457b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
