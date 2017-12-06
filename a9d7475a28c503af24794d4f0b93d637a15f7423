@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c88546_726549ed",
+        "filename": "base/memory/shared_memory_handle_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-06T18:44:30Z",
+      "side": 1,
+      "message": "Could just be \"ashmem_get_prot_region\" since the PLOG part of the error will appen \": errno: strerror\" it\u0027ll read fluently.",
+      "range": {
+        "startLine": 22,
+        "startChar": 21,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "a9d7475a28c503af24794d4f0b93d637a15f7423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

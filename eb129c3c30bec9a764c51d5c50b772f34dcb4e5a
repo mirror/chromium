@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1321198c_51d7c32c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-06T18:44:30Z",
+      "side": 1,
+      "message": "Do you have a stacktrace from the GPU crash? We could ask some GPU team experts for insight perhaps.",
+      "parentUuid": "21165d7e_0f873a06",
+      "revId": "eb129c3c30bec9a764c51d5c50b772f34dcb4e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f33197a5_c155c9ec",
         "filename": "base/memory/shared_memory_android.cc",
         "patchSetId": 4
