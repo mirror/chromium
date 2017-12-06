@@ -49,6 +49,40 @@
     },
     {
       "key": {
+        "uuid": "34e571f7_436c1ba1",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T01:12:12Z",
+      "side": 1,
+      "message": "I am wondering if these properties should be stored as state on the object.\n\nAfter an initial download, |pass| and |webState| will be held for the lifetime of the BVC, even though they are not needed beyond the download.\n\nI also don\u0027t think these should be exposed publicly. The interface for presenting PassKit UI is through the TabHelper delegate, so these properties (and the start method) don\u0027t really need to be public.",
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46eaa9d7_2147104d",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-06T01:12:12Z",
+      "side": 1,
+      "message": "I don\u0027t know if I see a particular benefit for putting this code in start instead of in |presentDialogForPass|. We have a variety of examples where the start method is not overridden, and the coordinator is sent messages through a different API. (https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.mm?q\u003dactivityservicelegacy\u0026dr\u003dC)\n\nUsing the delegate callback would allow us to avoid storing |pass| and |WebState| as properties.",
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "011229f8_b1f1076e",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 6
