@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e914c0b7_ee03fe01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "ah, yes, i forgot a word.",
+      "parentUuid": "e4a0eb78_b2542c5f",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13d0d237_af34bc5d",
         "filename": "media/audio/pulse/pulse_output.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "10d1efb1_a58d0ea2",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d0d237_af34bc5d",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6422cc4_6a8c8127",
         "filename": "media/audio/pulse/pulse_output.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-06T03:47:14Z",
       "side": 1,
       "message": "break?",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446177c5_4cbb2b45",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "is that the right thing to do here? That wasn\u0027t part of the older code.",
+      "parentUuid": "e6422cc4_6a8c8127",
       "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "34d34db9_82dd2cab",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "i just took it out entirely, it had no effect.",
+      "parentUuid": "a0630104_96c0568c",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dbdca97_9f5f3287",
         "filename": "media/audio/pulse/pulse_output.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57632ece_e4bf1015",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "Done (forgot i changed this to a size_t)",
+      "parentUuid": "4dbdca97_9f5f3287",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "11ff91a6_42f64d33",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded20c19_74d882c7",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ba1ffd_d9ced932",
         "filename": "media/audio/pulse/pulse_output.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef646a0_032ca6a7",
+        "filename": "media/audio/pulse/pulse_output.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-06T20:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ba1ffd_d9ced932",
+      "revId": "6e9a63180c0745000e8c32253acd5e6066c5f9d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
