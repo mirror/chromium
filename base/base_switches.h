@@ -37,6 +37,10 @@ extern const char kWaitForDebugger[];
 extern const char kDisableUsbKeyboardDetect[];
 #endif
 
+#if defined(OS_LINUX) || defined(OS_AIX)
+extern const char kEnableShmemUseTempDir[];
+#endif
+
 #if defined(OS_POSIX)
 extern const char kEnableCrashReporterForTesting[];
 #endif
