@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d88b617f_dde1ba68",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "These aren\u0027t needed - can just inline them.",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b457f00_428739df",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "I think we want the consumer to provide the URL - just slapping on https seems unexpected.  This just just what we pass to the proxy resolver logic (The proxy rules or the PAC script), so we aren\u0027t really committing to it, but I still think the embedder should determine what lie we tell.  We can then just grab the host/port pair from that when we need it.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156fad8_44b10d48",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "I think we should fail more gracefully.  Can be done either at the Mojo layer before we create the request, or on start.",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f188a9f7_1831730b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "Creating one SessionContext per request seems too resource intensive - seems better to just use one, and use IGNORE_LIMITS on all requests.  Also, picking and copying individual components is bound to regress, at some point.  I think this code may not enable HTTP2/QUIC proxies?  Not sure.\n\nFixing it in this CL may be way too much, but I don\u0027t think we should land either a mojo interface or add additional consumers until we\u0027ve resolved this.",
+      "range": {
+        "startLine": 81,
+        "startChar": 45,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6fb4af_906502ac",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "I think we\u0027ll need to make these more robust - mojo interfaces provide no ordering guarantees, if we\u0027re using separate read/write pipes, as I suspect we will be.",
+      "range": {
+        "startLine": 121,
+        "startChar": 15,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9852246_a0a1ba3b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "These should also probably be removed - I would not be surprised if they end up used by an extension at some point, so I think we should be more robust about misuse.  Also, if we\u0027re using multiple mojo pipes (Separate read/write pipes and the main pipe), order will no longer be guaranteed.",
+      "range": {
+        "startLine": 121,
+        "startChar": 15,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badf764b_e1587119",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "A null method makes me nervous.  Can we make this \"POST\" (\"POST\" is likely to have the most magic around being non-idempotent).",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a63ae2_7060f75b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "A null ProxyDelegate seems weird - Given current uses, we probably don\u0027t want to use the DRP logic, but baking in that magic at this layer seems not great.  Maybe ask reillyg what the new interface will look like?",
+      "range": {
+        "startLine": 160,
+        "startChar": 35,
+        "endLine": 160,
+        "endChar": 36
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41142937_6c0bfed1",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "This name is a bit misleading - maybe TryConnectToProxy or BeginConnectToNextProxy?",
+      "range": {
+        "startLine": 182,
+        "startChar": 33,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7073aed9_bc5384d0",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "I guess this is just the QUIC proxy?  (Where we indeed don\u0027t support tunneling, yet).  Maybe add a TODO about allowing QUIC proxies, once we do?",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b4f631_e4a02f9f",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "This could result in trying direct twice (If it\u0027s both in the proxy list, and then this code adds it).  May be simplest to figure this out in another CL.",
+      "range": {
+        "startLine": 205,
+        "startChar": 30,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d10350_6fcdbd3d",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:37:30Z",
+      "side": 1,
+      "message": "Pre-existing issue, but I think this path should avoid marking proxies as bad, since it\u0027s generally not talking HTTP and using weird ports.  Again, fine to worry about this in another CL.",
+      "range": {
+        "startLine": 303,
+        "startChar": 46,
+        "endLine": 303,
+        "endChar": 71
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
