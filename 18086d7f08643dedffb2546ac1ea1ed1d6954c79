@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0014fcf6_8c76efa9",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:44:06Z",
+      "side": 1,
+      "message": "nit: delete \"the\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 43,
+        "endLine": 91,
+        "endChar": 46
+      },
+      "revId": "18086d7f08643dedffb2546ac1ea1ed1d6954c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8c9e89_cb352b06",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:44:06Z",
+      "side": 1,
+      "message": "So if I understand things correctly, the \"OCSP\" server is being used not just for OCSP but for AIA URLs too (in the python it uses OCSP port for AIA urls, i.e. caIssuers).\n\nThis was confusing while reading this. Can you minimally document that? Or rename to something more generic.",
+      "range": {
+        "startLine": 95,
+        "startChar": 31,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "18086d7f08643dedffb2546ac1ea1ed1d6954c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ebcd4e_cb24c2ef",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:44:06Z",
+      "side": 1,
+      "message": "Should this be testing IPv6 localhost too?",
+      "range": {
+        "startLine": 99,
+        "startChar": 27,
+        "endLine": 99,
+        "endChar": 53
+      },
+      "revId": "18086d7f08643dedffb2546ac1ea1ed1d6954c79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
