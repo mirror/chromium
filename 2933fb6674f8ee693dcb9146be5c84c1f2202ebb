@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "927e58e7_53e582a6",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639cb99e_ba487e70",
+      "range": {
+        "startLine": 1008,
+        "startChar": 2,
+        "endLine": 1010,
+        "endChar": 39
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46543fa1_d379035b",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T17:55:10Z",
       "side": 1,
       "message": "can derived classes just override OnMouseEvent instead of us having to add this virtual function? I\u0027d like to minimize the number of virtual functions that base class uses as that flow is always harder to follow compared to a virtual function called from outside but overridden by a derived class. if we can at least avoid calling virtual functions from within virtual functions would be nice.",
+      "range": {
+        "startLine": 1043,
+        "startChar": 10,
+        "endLine": 1043,
+        "endChar": 24
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a25e61_cf7b483b",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "The derived classes would duplicate the boilerplate here. FWIW, this is consistent with views::View, which branches on the event type and dispatches to virtual handlers.",
+      "parentUuid": "46543fa1_d379035b",
       "range": {
         "startLine": 1043,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c0d14e34_73cb6c28",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "The TODO is for this class. Removed the reference to ClientControlledShellSurface.",
+      "parentUuid": "2d142a78_b43972cb",
+      "range": {
+        "startLine": 1074,
+        "startChar": 2,
+        "endLine": 1075,
+        "endChar": 68
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fedf2060_788e2303",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 2
@@ -82,6 +154,24 @@
       "writtenOn": "2017-12-06T17:55:10Z",
       "side": 1,
       "message": "Is the value of container_ not enough for base shell surface class? I\u0027d like to keep all popup related logic in Xdg derived classes.",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9e1bcd_2328d8b1",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "I think an explicit flag is clearer and more flexible than requiring popups to be in a specific container. Shouldn\u0027t the popup logic be shared by wl_shell_surface::set_popup?",
+      "parentUuid": "fedf2060_788e2303",
       "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d4b7fdf3_6c3e15a0",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "These are helper functions that can be overridden, i.e. they do not belong in the public API. They could be made protected, but I think visibility should be reduced unless the override needs to chain with the base version.",
+      "parentUuid": "13324cbf_83eced50",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "358d011f_b1e26753",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af68041d_1bc091fe",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-06T19:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358d011f_b1e26753",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
