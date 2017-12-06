@@ -1,0 +1,271 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20f90dd_a811ac8e",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "this can probably replaced with:\n\n  compatible_cros_components_.erase(name);",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a502355_2936f5ee",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "would \"Unregister\" be more accurate than \"Unset\"? if so, should \"Set\" also be renamed to \"Register\" in the previous method?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc503cb9_646dd2b1",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "nit: delete blank line (we usually don\u0027t have blank lines between overridden methods belonging to the same interface in class definitions)",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3582f21d_5b244eae",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "please move this to the anonymous namespace.\n\ndo you plan to make it do something in the future?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8378f04_1fc896ee",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "are there cases where you expect the ImageLoaderClient to be unavailable?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543c4b8a_720f95cf",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "the fact that this map is being instantiated in multiple methods seems like it may be a sign that CrOSComponent should be a regular class instead of bunch of static methods. doing so would probably also make it easier to write tests for this code.",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da866071_53d29225",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "you probably don\u0027t need the .empty() check; i don\u0027t see any components with empty names in CONFIG_MAP_CONTENT.",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318c8b3d_eedb3d87",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "nit:\n\n  bool success \u003d updater-\u003eUnregisterComponent(id);\n  PostTask(FROM_HERE, ..., success);",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c038ed5_64d94f2d",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "what\u0027s the reason for this class that just contains static methods? would it be cleaner to make these be regular functions in their own namespace, or for them to be regular functions with \"CrOS\" in their names at the top of the component_updater namespace?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d792039a_e67383d2",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "nit: Installs, keeps",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed55b87_1c6a7db5",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "nit: Stops, removes",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73979ea_ca35fd0d",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "if this needs to remain a class, can you delete the d\u0027tor instead of marking it private?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93606a4_f9b91526",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "if this undoes the work performed by LoadComponent, either this should be named UnloadComponent or LoadComponent should be renamed to MountComponent.",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844ac8ca_e4bbe048",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "what\u0027s the reason for the \"is_successful\" argument? it looks like you only pass true here; on failure, an error response is returned instead of passing false.",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1e8dac_52a14b0e",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-06T23:57:47Z",
+      "side": 1,
+      "message": "do these do opposite things? if so please name them either Load/Unload or Add/Remove.",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
