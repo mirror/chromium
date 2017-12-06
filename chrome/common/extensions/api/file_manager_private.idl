@@ -813,6 +813,12 @@ interface Functions {
       [instanceOf=Entry] object[] entries,
       ResolveEntriesCallback callback);
 
+  // Creates and returns isolated file system entries from the given entries in the external file system mounted to Chrome OS file manager backend. If resolving entry fails, the entry will be just ignored and the corresponding entry does not appear in the result.
+  [nocompile]
+  static void createIsolatedEntries(
+      [instanceOf=Entry] object[] entries,
+      ResolveEntriesCallback callback);
+
   // Mount a resource or a file.
   // |source| Mount point source. For compressed files it is relative file path
   //     within external file system

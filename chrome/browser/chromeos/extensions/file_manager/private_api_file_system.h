@@ -302,6 +302,26 @@ class FileManagerPrivateInternalResolveIsolatedEntriesFunction
           entry_definition_list);
 };
 
+// Implements the chrome.fileManagerPrivateInternal.createIsolatedEntries
+// method.
+class FileManagerPrivateInternalCreateIsolatedEntriesFunction
+    : public ChromeAsyncExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("fileManagerPrivateInternal.createIsolatedEntries",
+                             FILEMANAGERPRIVATE_CREATEISOLATEDENTRIES)
+
+ protected:
+  ~FileManagerPrivateInternalCreateIsolatedEntriesFunction() override {}
+
+  // AsyncExtensionFunction overrides.
+  bool RunAsync() override;
+
+ private:
+  void RunAsyncAfterConvertFileDefinitionListToEntryDefinitionList(
+      std::unique_ptr<file_manager::util::EntryDefinitionList>
+          entry_definition_list);
+};
+
 class FileManagerPrivateInternalComputeChecksumFunction
     : public LoggedAsyncExtensionFunction {
  public:
