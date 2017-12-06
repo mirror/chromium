@@ -22,8 +22,10 @@ enum class WindowOpenDisposition {
   SAVE_TO_DISK,
   OFF_THE_RECORD,
   IGNORE_ACTION,
+  // Indicates that the URL may exist and, if so, switch to it and clean up.
+  SWITCH_TO_TAB,
   // Update when adding a new disposition.
-  MAX_VALUE = IGNORE_ACTION
+  MAX_VALUE = SWITCH_TO_TAB
 };
 
 namespace ui {

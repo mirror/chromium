@@ -73,7 +73,8 @@ NavigateParams GetSingletonTabNavigateParams(Browser* browser,
 // Returns the index of an existing singleton tab in |params->browser| matching
 // the URL specified in |params|.
 int GetIndexOfSingletonTab(NavigateParams* params) {
-  if (params->disposition != WindowOpenDisposition::SINGLETON_TAB)
+  if (params->disposition != WindowOpenDisposition::SINGLETON_TAB &&
+      params->disposition != WindowOpenDisposition::SWITCH_TO_TAB)
     return -1;
 
   // In case the URL was rewritten by the BrowserURLHandler we need to ensure
@@ -87,8 +88,13 @@ int GetIndexOfSingletonTab(NavigateParams* params) {
       &reverse_on_redirect);
 
   // If there are several matches: prefer the active tab by starting there.
-  int start_index =
-      std::max(0, params->browser->tab_strip_model()->active_index());
+  int start_index;
+  if (params->disposition == WindowOpenDisposition::SINGLETON_TAB) {
+    start_index =
+        std::max(0, params->browser->tab_strip_model()->active_index());
+  } else {
+    start_index = std::max(0, params->tab_switch_hint);
+  }
   int tab_count = params->browser->tab_strip_model()->count();
   for (int i = 0; i < tab_count; ++i) {
     int tab_index = (start_index + i) % tab_count;
