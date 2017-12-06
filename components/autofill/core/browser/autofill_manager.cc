@@ -1317,6 +1317,19 @@ void AutofillManager::FillOrPreviewDataModelForm(
 
   FormData result = form;
 
+  base::string16 profile_full_name;
+  std::string profile_language_code;
+  if (!is_credit_card) {
+    profile_full_name =
+        data_model.GetInfo(AutofillType(NAME_FULL), app_locale_);
+    profile_language_code =
+        static_cast<const AutofillProfile*>(&data_model)->language_code();
+  }
+
+  if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions)) {
+    form_structure->RationalizePhoneNumbersInSection(autofill_field->section());
+  }
+
   // If the relevant section is auto-filled, we should fill |field| but not the
   // rest of the form.
   if (SectionIsAutofilled(*form_structure, form, autofill_field->section())) {
@@ -1338,10 +1351,6 @@ void AutofillManager::FillOrPreviewDataModelForm(
   }
 
   DCHECK_EQ(form_structure->field_count(), form.fields.size());
-
-  if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions)) {
-    form_structure->RationalizePhoneNumbersInSection(autofill_field->section());
-  }
 
   for (size_t i = 0; i < form_structure->field_count(); ++i) {
     if (form_structure->field(i)->section() != autofill_field->section())
@@ -1833,7 +1842,6 @@ void AutofillManager::DisambiguatePhoneUploadTypes(FormStructure* form,
   // needs to be uploaded.
   ServerFieldTypeSet matching_types;
   matching_types.insert(PHONE_HOME_CITY_AND_NUMBER);
-
   AutofillField* field = form->field(current_index);
   field->set_possible_types(matching_types);
 }

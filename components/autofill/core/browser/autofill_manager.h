@@ -261,9 +261,7 @@ class AutofillManager : public AutofillHandler,
   }
 
   // Exposed for testing.
-  AutofillExternalDelegate* external_delegate() {
-    return external_delegate_;
-  }
+  AutofillExternalDelegate* external_delegate() { return external_delegate_; }
 
   // Exposed for testing.
   void set_download_manager(AutofillDownloadManager* manager) {
@@ -600,6 +598,17 @@ class AutofillManager : public AutofillHandler,
   FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest, QualityMetrics);
   FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest,
                            QualityMetrics_BasedOnAutocomplete);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillMetricsTest,
+      QualityMetrics_LoggedCorrecltyForOnlyFillWhenFocusedField);
+  FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest,
+                           QualityMetrics_LoggedCorrecltyForRationalizationOk);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillMetricsTest,
+      QualityMetrics_LoggedCorrecltyForRationalizationGood);
+  FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest,
+                           QualityMetrics_LoggedCorrecltyForRationalizationBad);
+
   FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest, SaneMetricsWithCacheMismatch);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest, TestExternalDelegate);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
@@ -610,8 +619,7 @@ class AutofillManager : public AutofillHandler,
                            UserHappinessFormInteraction_AddressForm);
   FRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest,
                            UserHappinessFormInteraction_CreditCardForm);
-  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
-                           OnLoadedServerPredictions);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest, OnLoadedServerPredictions);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
                            OnLoadedServerPredictions_ResetManager);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest, DontOfferToSavePaymentsCard);
