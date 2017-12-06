@@ -16,6 +16,24 @@
       "revId": "a5f4b6fa30926426e4ea2dd52e5385d3d70dc825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e041940_f6aec004",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-12-06T22:33:35Z",
+      "side": 0,
+      "message": "yeah. There are other places where ForEachGlyphInRange is called. As soon as I clear up all tests, I\u0027ll try to remove this.",
+      "parentUuid": "40e9edcc_138dd297",
+      "revId": "a5f4b6fa30926426e4ea2dd52e5385d3d70dc825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
