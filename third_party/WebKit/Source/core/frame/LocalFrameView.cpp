@@ -5625,7 +5625,7 @@ MainThreadScrollingReasons LocalFrameView::GetMainThreadScrollingReasons()
   return reasons;
 }
 
-String LocalFrameView::MainThreadScrollingReasonsAsText() const {
+String LocalFrameView::MainThreadScrollingReasonsAsText() {
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kPrePaintClean);
 
@@ -5642,12 +5642,14 @@ String LocalFrameView::MainThreadScrollingReasonsAsText() const {
   }
 
   DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kCompositingClean);
-  if (LayerForScrolling() && LayerForScrolling()->PlatformLayer()) {
-    String result(
-        MainThreadScrollingReason::mainThreadScrollingReasonsAsText(
-            LayerForScrolling()->PlatformLayer()->MainThreadScrollingReasons())
-            .c_str());
-    return result;
+  if (GraphicsLayer* layer_for_scrolling =
+          LayoutViewportScrollableArea()->LayerForScrolling()) {
+    if (WebLayer* platform_layer = layer_for_scrolling->PlatformLayer()) {
+      String result(MainThreadScrollingReason::mainThreadScrollingReasonsAsText(
+                        platform_layer->MainThreadScrollingReasons())
+                        .c_str());
+      return result;
+    }
   }
 
   String result(MainThreadScrollingReason::mainThreadScrollingReasonsAsText(
