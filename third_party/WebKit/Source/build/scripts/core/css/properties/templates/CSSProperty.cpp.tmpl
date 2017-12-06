@@ -23,18 +23,10 @@ namespace {
 
 static constexpr Variable property_csspropertyvariable(CSSPropertyVariable);
 {% for _, property_id, classname, superclass in property_classes_by_property_id %}
-  {% if superclass != None %}
 static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% else %}
-static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% endif %}
 {% endfor %}
 {% for _, property_id, classname, superclass in alias_classes_by_property_id %}
-  {% if superclass != None %}
 static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% else %}
-static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
-  {% endif %}
 {% endfor %}
 
 const CSSProperty& GetProperty(CSSPropertyID id) {
