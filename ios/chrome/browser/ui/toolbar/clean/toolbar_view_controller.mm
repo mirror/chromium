@@ -151,11 +151,21 @@
 }
 
 - (void)updateForSideSwipeSnapshotOnNTP:(BOOL)onNTP {
-  // TODO(crbug.com/785756): Implement this.
+  self.progressBar.hidden = YES;
+  if (onNTP) {
+    self.backgroundView.alpha = 1;
+    self.locationBarContainer.hidden = YES;
+    if (!self.forwardButton.enabled) {
+      // The back button is visible only if the forward button is enabled.
+      self.backButton.hiddenInCurrentState = YES;
+    }
+  }
 }
 
 - (void)resetAfterSideSwipeSnapshot {
-  // TODO(crbug.com/785756): Implement this.
+  self.backgroundView.alpha = 0;
+  self.locationBarContainer.hidden = NO;
+  self.backButton.hiddenInCurrentState = NO;
 }
 
 - (void)setBackgroundToIncognitoNTPColorWithAlpha:(CGFloat)alpha {
@@ -670,8 +680,7 @@
     _backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
     _backgroundView.backgroundColor =
-        [UIColor colorWithWhite:kNTPBackgroundColorBrightnessIncognito
-                          alpha:1.0];
+        self.buttonFactory.toolbarConfiguration.NTPBackgroundColor;
     [self.view insertSubview:_backgroundView atIndex:0];
     AddSameConstraints(self.view, _backgroundView);
   }
