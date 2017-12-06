@@ -50,6 +50,7 @@ namespace media {
 class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
  public:
   using GetMediaTimeCB = base::RepeatingCallback<base::TimeDelta(void)>;
+  using GetStatsCB = base::RepeatingCallback<PipelineStatistics(void)>;
 
   // Constructor for the reporter; all requested metadata should be fully known
   // before attempting construction as incorrect values will result in the wrong
@@ -64,6 +65,10 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   // allows us to avoid a whole class of issues around clock changes during
   // suspend and resume.
   //
+  // |get_stats_cb| returns the PipelineStatistics object associated
+  // with the current playback. This is currently only used to log decoded and
+  // dropped video frames for a playback.
+  //
   // |provider| A provider of mojom::WatchTimeRecorder instances which will be
   // created and used to handle caching of metrics outside of the current
   // process.
@@ -72,6 +77,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   // the elapsed media time instead?
   WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
                     GetMediaTimeCB get_media_time_cb,
+                    GetStatsCB get_stats_cb,
                     mojom::WatchTimeRecorderProvider* provider);
   ~WatchTimeReporter() override;
 
@@ -142,6 +148,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
                     bool is_background,
                     GetMediaTimeCB get_media_time_cb,
+                    GetStatsCB get_stats_cb,
                     mojom::WatchTimeRecorderProvider* provider);
 
   // base::PowerObserver implementation.
@@ -162,6 +169,7 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   const mojom::PlaybackPropertiesPtr properties_;
   const bool is_background_;
   const GetMediaTimeCB get_media_time_cb_;
+  const GetStatsCB get_stats_cb_;
   mojom::WatchTimeRecorderPtr recorder_;
 
   // The amount of time between each UpdateWatchTime(); this is the frequency by
@@ -179,6 +187,12 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   double volume_ = 1.0;
   int underflow_count_ = 0;
   std::vector<base::TimeDelta> pending_underflow_events_;
+
+  // Starting, last, and ending stats used for reporting WatchTime statistics.
+  PipelineStatistics start_stats_;
+  PipelineStatistics last_stats_;
+  PipelineStatistics end_stats_;
+
   blink::WebMediaPlayer::DisplayType display_type_ =
       blink::WebMediaPlayer::DisplayType::kInline;
   blink::WebMediaPlayer::DisplayType display_type_for_recording_ =

@@ -183,6 +183,11 @@ class WatchTimeReporterTest
       parent_->OnUnderflowUpdate(count);
     }
 
+    void UpdateVideoFrameStats(uint32_t decoded_count,
+                               uint32_t dropped_count) override {
+      parent_->OnVideoFrameStatsUpdate(decoded_count, dropped_count);
+    }
+
    private:
     WatchTimeReporterTest* parent_;
 
@@ -208,8 +213,10 @@ class WatchTimeReporterTest
                                        has_audio_, has_video_, false, is_mse,
                                        is_encrypted, false, initial_video_size,
                                        url::Origin(), true /* is_top_frame */),
-        base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
-                   base::Unretained(this)),
+        base::BindRepeating(&WatchTimeReporterTest::GetCurrentMediaTime,
+                            base::Unretained(this)),
+        base::BindRepeating(&WatchTimeReporterTest::GetPipelineStats,
+                            base::Unretained(this)),
         this));
 
     // Setup the reporting interval to be immediate to avoid spinning real time
@@ -252,6 +259,8 @@ class WatchTimeReporterTest
   void OnDisplayTypeChanged(WebMediaPlayer::DisplayType display_type) {
     wtr_->OnDisplayTypeChanged(display_type);
   }
+
+  PipelineStatistics GetPipelineStats() { return pipeline_stats_; }
 
   enum {
     // After |test_callback_func| is executed, should watch time continue to
@@ -503,9 +512,11 @@ class WatchTimeReporterTest
   MOCK_METHOD2(OnWatchTimeUpdate, void(WatchTimeKey, base::TimeDelta));
   MOCK_METHOD1(OnUnderflowUpdate, void(int));
   MOCK_METHOD1(OnError, void(PipelineStatus));
+  MOCK_METHOD2(OnVideoFrameStatsUpdate, void(uint32_t, uint32_t));
 
   const bool has_video_;
   const bool has_audio_;
+  PipelineStatistics pipeline_stats_;
   base::TestMessageLoop message_loop_;
   std::unique_ptr<WatchTimeReporter> wtr_;
 
@@ -571,6 +582,13 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBasic) {
       .WillOnce(testing::Return(kWatchTimeEarly))
       .WillRepeatedly(testing::Return(kWatchTimeLate));
   Initialize(true, true, kSizeJustRight);
+
+  // Set a base decoded/dropped frame value to confirm relative values are
+  // reported in the end.
+  const uint32_t kBaseFrameValue = 10u;
+  pipeline_stats_.video_frames_decoded = kBaseFrameValue;
+  pipeline_stats_.video_frames_dropped = kBaseFrameValue;
+
   wtr_->OnPlaying();
   EXPECT_TRUE(IsMonitoring());
 
@@ -580,6 +598,16 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBasic) {
 
   wtr_->OnUnderflow();
   wtr_->OnUnderflow();
+
+  if (has_video_) {
+    pipeline_stats_.video_frames_decoded = 50;
+    pipeline_stats_.video_frames_dropped = 10;
+    EXPECT_CALL(*this,
+                OnVideoFrameStatsUpdate(
+                    pipeline_stats_.video_frames_decoded - kBaseFrameValue,
+                    pipeline_stats_.video_frames_dropped - kBaseFrameValue));
+  }
+
   EXPECT_WATCH_TIME(Ac, kWatchTimeLate);
   EXPECT_WATCH_TIME(All, kWatchTimeLate);
   EXPECT_WATCH_TIME(Eme, kWatchTimeLate);
@@ -626,6 +654,56 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterUnderflow) {
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTimeEarly);
   EXPECT_WATCH_TIME_IF_VIDEO(DisplayInline, kWatchTimeEarly);
   EXPECT_CALL(*this, OnUnderflowUpdate(1));
+  EXPECT_WATCH_TIME_FINALIZED();
+  CycleReportingTimer();
+  wtr_.reset();
+}
+
+TEST_P(WatchTimeReporterTest, WatchTimeReporterVideoFrameStats) {
+  // VideoFrame stats are only reported for video...
+  if (!has_video_)
+    return;
+
+  constexpr base::TimeDelta kWatchTimeEarly = base::TimeDelta::FromSeconds(10);
+  constexpr base::TimeDelta kWatchTimeLate = base::TimeDelta::FromSeconds(15);
+  EXPECT_CALL(*this, GetCurrentMediaTime())
+      .WillOnce(testing::Return(base::TimeDelta()))
+      .WillOnce(testing::Return(base::TimeDelta::FromSeconds(5)))
+      .WillOnce(testing::Return(kWatchTimeEarly))
+      .WillRepeatedly(testing::Return(kWatchTimeLate));
+  Initialize(true, true, kSizeJustRight);
+
+  // Set a base decoded/dropped frame value to confirm relative values are
+  // reported in the end.
+  const uint32_t kBaseFrameValue = 2u;
+  pipeline_stats_.video_frames_decoded = kBaseFrameValue;
+  pipeline_stats_.video_frames_dropped = kBaseFrameValue;
+  wtr_->OnPlaying();
+  EXPECT_TRUE(IsMonitoring());
+
+  // No log should have been generated yet since the message loop has not had
+  // any chance to pump.
+  CycleReportingTimer();
+
+  const uint32_t kDecodedFrames = 100u;
+  const uint32_t kDroppedFrames = 5u;
+  pipeline_stats_.video_frames_decoded = kDecodedFrames;
+  pipeline_stats_.video_frames_dropped = kDroppedFrames;
+  wtr_->OnVolumeChange(0);
+
+  // These stats should not be reported since a pending finalize has already
+  // collected the final values.
+  pipeline_stats_.video_frames_decoded = kDecodedFrames * 2;
+  pipeline_stats_.video_frames_dropped = kDroppedFrames * 2;
+
+  EXPECT_WATCH_TIME(Ac, kWatchTimeEarly);
+  EXPECT_WATCH_TIME(All, kWatchTimeEarly);
+  EXPECT_WATCH_TIME(Eme, kWatchTimeEarly);
+  EXPECT_WATCH_TIME(Mse, kWatchTimeEarly);
+  EXPECT_WATCH_TIME(NativeControlsOff, kWatchTimeEarly);
+  EXPECT_WATCH_TIME_IF_VIDEO(DisplayInline, kWatchTimeEarly);
+  EXPECT_CALL(*this, OnVideoFrameStatsUpdate(kDecodedFrames - kBaseFrameValue,
+                                             kDroppedFrames - kBaseFrameValue));
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
   wtr_.reset();

@@ -62,6 +62,10 @@ interface WatchTimeRecorder {
   // Used to report mean values for rebuffering metrics. As with watch time,
   // this is an absolute count and not relative since the last call.
   UpdateUnderflowCount(int32 count);
+
+  // Reports the decoded and dropped frames for the current segment. As with
+  // watch time, these are absolute counts and not relative since the last call.
+  UpdateVideoFrameStats(uint32 decoded_count, uint32 dropped_count);
 };
 
 // Provider interface used to avoid having a SetPlaybackProperties() type method

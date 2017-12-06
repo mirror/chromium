@@ -795,6 +795,16 @@ be describing additional metrics about the same event.
       is true because we don't always know the codec.
     </summary>
   </metric>
+  <metric name="DecodedVideoFrames">
+    <summary>
+      The number of decoded video frames for this event.
+    </summary>
+  </metric>
+  <metric name="DroppedVideoFrames">
+    <summary>
+      The number of dropped video frames for this event.
+    </summary>
+  </metric>
   <metric name="HasAudio">
     <summary>
       Boolean value indicating the presence of audio.

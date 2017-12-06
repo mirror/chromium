@@ -220,6 +220,13 @@ void WatchTimeRecorder::UpdateUnderflowCount(int32_t count) {
   underflow_count_ = count;
 }
 
+void WatchTimeRecorder::UpdateVideoFrameStats(uint32_t decoded_count,
+                                              uint32_t dropped_count) {
+  DCHECK(properties_->has_video);
+  decoded_video_frame_count_ = decoded_count;
+  dropped_video_frame_count_ = dropped_count;
+}
+
 // static
 bool WatchTimeRecorder::ShouldReportUmaForTesting(WatchTimeKey key) {
   return ShouldReportToUma(key);
@@ -313,6 +320,10 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   builder.SetVideoCodec(properties_->video_codec);
   builder.SetHasAudio(properties_->has_audio);
   builder.SetHasVideo(properties_->has_video);
+
+  builder.SetDecodedVideoFrames(decoded_video_frame_count_);
+  builder.SetDroppedVideoFrames(dropped_video_frame_count_);
+  decoded_video_frame_count_ = dropped_video_frame_count_ = 0u;
 
   builder.SetIsEME(properties_->is_eme);
   builder.SetIsMSE(properties_->is_mse);

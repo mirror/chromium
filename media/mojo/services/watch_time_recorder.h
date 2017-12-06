@@ -35,6 +35,8 @@ class MEDIA_MOJO_EXPORT WatchTimeRecorder : public mojom::WatchTimeRecorder {
       const std::vector<WatchTimeKey>& watch_time_keys) override;
   void OnError(PipelineStatus status) override;
   void UpdateUnderflowCount(int32_t count) override;
+  void UpdateVideoFrameStats(uint32_t decoded_count,
+                             uint32_t dropped_count) override;
 
   // Test helper method for determining if keys are not reported to UMA.
   static bool ShouldReportUmaForTesting(WatchTimeKey key);
@@ -67,6 +69,8 @@ class MEDIA_MOJO_EXPORT WatchTimeRecorder : public mojom::WatchTimeRecorder {
   WatchTimeInfo aggregate_watch_time_info_;
 
   int underflow_count_ = 0;
+  uint32_t decoded_video_frame_count_ = 0u;
+  uint32_t dropped_video_frame_count_ = 0u;
   PipelineStatus pipeline_status_ = PIPELINE_OK;
 
   DISALLOW_COPY_AND_ASSIGN(WatchTimeRecorder);
