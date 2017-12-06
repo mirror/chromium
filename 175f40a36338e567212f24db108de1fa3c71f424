@@ -16,6 +16,24 @@
       "revId": "175f40a36338e567212f24db108de1fa3c71f424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe18277_9cfe2f5c",
+        "filename": "sandbox/linux/syscall_broker/broker_permission_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-06T22:54:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7efb98bf_fe86cae0",
+      "revId": "175f40a36338e567212f24db108de1fa3c71f424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
