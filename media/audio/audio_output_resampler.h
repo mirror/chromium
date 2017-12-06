@@ -9,7 +9,7 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "media/audio/audio_debug_recording_helper.h"
+#include "media/audio/audio_debug_recording_writer.h"
 #include "media/audio/audio_io.h"
 #include "media/audio/audio_output_dispatcher.h"
 #include "media/base/audio_parameters.h"

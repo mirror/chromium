@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "media/audio/audio_debug_recording_helper.h"
+#include "media/audio/audio_debug_recording_writer.h"
 
 namespace media {
 
