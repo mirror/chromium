@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94f92bc_79f3245a",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-06T20:42:05Z",
+      "side": 1,
+      "message": "no () around infobar_tab_helper.",
+      "revId": "49018b4e726a92b1c00d9eeced37f16edb0a670e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23dde6ab_8a7f45bc",
+        "filename": "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-06T20:42:05Z",
+      "side": 1,
+      "message": "I\u0027d null check previews_user_data as well.\n\nuint64_t page_id \u003d 0;\nif (infobar_tab_helper \u0026\u0026 infobar_tab_helper-\u003epreviews_user_data()) {\n  page_id \u003d infobar_tab_helper-\u003epreviews_user_data()-\u003epage_id();\n}\n\nmight be cleaner, since the ternary operator would be a little crowded with an extra check",
+      "revId": "49018b4e726a92b1c00d9eeced37f16edb0a670e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
