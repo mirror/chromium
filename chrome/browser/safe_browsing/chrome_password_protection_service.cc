@@ -617,7 +617,7 @@ void ChromePasswordProtectionService::
         bool all_history,
         const history::URLRows& deleted_rows) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(all_history || !deleted_rows.empty());
+  DCHECK(!all_history || deleted_rows.empty());
 
   DictionaryPrefUpdate unhandled_sync_password_reuses(
       profile_->GetPrefs(), prefs::kSafeBrowsingUnhandledSyncPasswordReuses);
