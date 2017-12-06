@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8df9910b_75342f54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:44:33Z",
+      "side": 1,
+      "message": "This seems like it was added accidentally. You\u0027ll need to remove these (and Lines 1-6) from the Gerrit UI, since any modifications to the commit message are not reflected upon pushing changes through `git cl`.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eb07b76_a899c4f7",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 20
