@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db0f5108_fe824061",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-06T21:10:10Z",
+      "side": 1,
+      "message": "As per discussion, this shouldn\u0027t make a big difference as it doesn\u0027t introduce any harm.\nAlso if i move this to root directory i\u0027ll have to add ios/net dependency in the BUILD file (right now ios/net dependency is only used in ios/web/net/)",
+      "parentUuid": "91b3bfc3_35e60704",
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b95b4f44_d9c7643d",
         "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c177c966_9747602a",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-06T21:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b95b4f44_d9c7643d",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62010705_399c2299",
         "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-05T22:17:09Z",
       "side": 1,
       "message": "This will return main cookie store for Incognito, which may lead to privacy bugs.",
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b492b640_d89d801c",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-06T21:10:10Z",
+      "side": 1,
+      "message": "Right now we use NSHTTPSystemCookieStorage for everything. As it seems that persistentCookieStore is readonly (from nshttpcookiestore) this doesn\u0027t affect the privacy. I\u0027ll update that if needed when i remove the persistentcookiestore",
+      "parentUuid": "62010705_399c2299",
       "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3450546d_347c818d",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-06T21:10:10Z",
+      "side": 1,
+      "message": "based on our offline discussion, i\u0027ll use enum instead of strings. as the need for defining the class type function exist outside of this unit test.",
+      "parentUuid": "a5743117_46730123",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5354e1_50722fc1",
         "filename": "ios/web/public/system_cookie_store_util.h",
         "patchSetId": 3
@@ -102,6 +186,30 @@
       "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc24bc1f_75019e65",
+        "filename": "ios/web/public/system_cookie_store_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-12-06T21:10:10Z",
+      "side": 1,
+      "message": "I agree with not mentioning the type of the cookie store in details here, on the same time i think we shouldn\u0027t also tell the difference between both iOSes - instead this can be a comment on the implementation part.\nSo i added comment on the implementation to explain the difference.",
+      "parentUuid": "2a5354e1_50722fc1",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 47
+      },
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
