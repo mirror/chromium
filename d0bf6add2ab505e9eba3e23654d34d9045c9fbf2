@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98bd9dde_32e27204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/AsyncFeedbackSourceAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T23:22:25Z",
+      "side": 1,
+      "message": "Optional: In case people fail to read the class comment; do we want getResult(), isReady() and start(...) to be final?",
+      "revId": "d0bf6add2ab505e9eba3e23654d34d9045c9fbf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
