@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "29d9c4cc_9cb584a1",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T01:33:37Z",
+      "side": 1,
+      "message": "Added a comment on the canPresent above and modified this one to hopefully make things clearer.",
+      "parentUuid": "2b6f2e30_450308b3",
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cad0eca8_a306879f",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 2
@@ -57,6 +75,30 @@
       "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6a1205_3bc8118e",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T01:33:37Z",
+      "side": 1,
+      "message": "Done. Though it turned out to be somewhat complicated, which is why I didn\u0027t do it at first.",
+      "parentUuid": "cad0eca8_a306879f",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "d2802033_9bafa720",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T01:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7608ffc4_8e7986f6",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 48
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9f156c9_e9b12c20",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 2
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "af10a528_03686bcc",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T01:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9f156c9_e9b12c20",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 24
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76645e3d_87447a9d",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 2
@@ -126,6 +216,30 @@
       "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10eca49_f31e2f97",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-06T01:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76645e3d_87447a9d",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "9e8eaebeea9906590d1d4d0d051c31f6f19fd98e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
