@@ -112,6 +112,11 @@ namespace storage {
 class FileSystemBackend;
 }
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}
+
 namespace content {
 
 enum class PermissionType;
@@ -974,6 +979,9 @@ class CONTENT_EXPORT ContentBrowserClient {
                                         bool is_main_frame,
                                         ui::PageTransition transition);
 #endif
+
+  virtual void PictureInPicture(RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id);
 };
 
 }  // namespace content

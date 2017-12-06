@@ -6,6 +6,11 @@
 
 #include "chrome/browser/ui/overlay/overlay_window.h"
 #include "content/public/browser/web_contents.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
+#include "chrome/browser/ui/overlay/overlay_surface_embedder.h"
+#include "components/viz/common/surfaces/surface_id.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PictureInPictureWindowController);
 
@@ -30,6 +35,13 @@ PictureInPictureWindowController::PictureInPictureWindowController(
   DCHECK(initiator_);
 }
 
+void PictureInPictureWindowController::Init() {
+  if (!window_) {
+    window_ = OverlayWindow::Create();
+    window_->Init();
+  }
+}
+
 void PictureInPictureWindowController::Show() {
   if (window_ && window_->IsActive())
     return;
@@ -45,3 +57,18 @@ void PictureInPictureWindowController::Close() {
   if (window_->IsActive())
     window_->Close();
 }
+
+void PictureInPictureWindowController::EmbedSurface(viz::FrameSinkId frame_sink_id) {
+  viz::LocalSurfaceId local_surface_id = local_surface_id_allocator_.GenerateId();
+  LOG(ERROR) << "PictureInPictureWindowController::EmbedSurface: " << frame_sink_id << " | " << local_surface_id;
+
+  // LOG(ERROR) << "frame sink id: " << frame_sink_id;
+  // LOG(ERROR) << "local surface id: " << local_surface_id;
+
+  viz::SurfaceId surface_id(viz::SurfaceId(frame_sink_id, local_surface_id));
+
+  DCHECK(window_);
+  embedder_.reset(new OverlaySurfaceEmbedder(window_.get()));
+  embedder_->SetPrimarySurfaceId(surface_id);
+}
+
