@@ -16,6 +16,24 @@
       "revId": "614efb0ce0673a9a89409fb4ea26438ca8fc2de5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd7a0fd_9833cbbd",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-06T15:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05adffce_d4c02af8",
+      "revId": "614efb0ce0673a9a89409fb4ea26438ca8fc2de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
