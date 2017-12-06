@@ -90,6 +90,7 @@
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/ui/autofill/chrome_autofill_client.h"
 #include "chrome/browser/ui/blocked_content/framebust_block_tab_helper.h"
+#include "chrome/browser/ui/blocked_content/list_item_position.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
 #include "chrome/browser/ui/bluetooth/bluetooth_chooser_controller.h"
@@ -1404,10 +1405,14 @@ void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
   TabSpecificContentSettings* content_settings =
       TabSpecificContentSettings::FromWebContents(web_contents);
   DCHECK(content_settings);
-  // TODO(csharrison): Add a click callback here to collect framebusting
-  // click-through metrics.
-  content_settings->OnFramebustBlocked(
-      url, FramebustBlockTabHelper::ClickCallback());
+
+  auto on_click = [](const GURL& url, size_t index, size_t total_elements) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "WebCore.Framebust.ClickThroughPosition",
+        GetListItemPositionFromDistance(index, total_elements),
+        ListItemPosition::kLast);
+  };
+  content_settings->OnFramebustBlocked(url, base::BindOnce(on_click));
 }
 
 bool Browser::IsMouseLocked() const {
