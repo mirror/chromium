@@ -154,16 +154,21 @@ class CSSProperties(object):
         self._properties_including_aliases = self._longhands + \
             self._shorthands + self._aliases
 
+    # TODO(rjwright): inline this once groups are removed (then we can resolve the
+    # aliased property class for an alias here instead of in make_css_property_headers.py)
+    def aliased_property(self, alias):
+        return self._properties_by_id[enum_for_css_property(alias['alias_for'])]
+
     def expand_aliases(self):
         for i, alias in enumerate(self._aliases):
             assert not alias['runtime_flag'], \
                 "Property '{}' is an alias with a runtime_flag, "\
                 "but runtime flags do not currently work for aliases.".format(
                     alias['name'])
-            aliased_property = self._properties_by_id[
-                enum_for_css_property(alias['alias_for'])]
+            aliased_property = self.aliased_property(alias)
             updated_alias = aliased_property.copy()
             updated_alias['name'] = alias['name']
+            updated_alias['property_class'] = alias['property_class']
             updated_alias['alias_for'] = alias['alias_for']
             updated_alias['property_id'] = enum_for_css_property_alias(
                 alias['name'])

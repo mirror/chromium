@@ -32,6 +32,7 @@ class CSSPropertyWriter(json5_generator.Writer):
 
         # A list of (enum_value, property_id, property_classname) tuples.
         self._property_classes_by_id = []
+        self._alias_classes_by_id = []
         # Just a set of class names.
         self._shorthand_property_classes = set()
         self._longhand_property_classes = set()
@@ -43,9 +44,17 @@ class CSSPropertyWriter(json5_generator.Writer):
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
             self._shorthand_property_classes.add(property_class.classname)
+        for property_ in self._css_properties.aliases:
+            property_class = self.get_class(property_)
+            self._alias_classes_by_id.append(property_class)
+            if property_['longhands']:
+                self._shorthand_property_classes.add(property_class.classname)
+            else:
+                self._longhand_property_classes.add(property_class.classname)
 
         # Sort by enum value.
         self._property_classes_by_id.sort(key=lambda t: t.enum_value)
+        self._alias_classes_by_id.sort(key=lambda t: t.enum_value)
 
     def get_class(self, property_):
         """Gets the classname for a given property.
@@ -97,6 +106,8 @@ class CSSPropertyWriter(json5_generator.Writer):
             'longhand_property_classnames': self._longhand_property_classes,
             'shorthand_property_classnames': self._shorthand_property_classes,
             'property_classes_by_property_id': self._property_classes_by_id,
+            'alias_classes_by_property_id': self._alias_classes_by_id,
+            'last_unresolved_property_id': self._css_properties.last_unresolved_property_id,
             'last_property_id': self._css_properties.last_property_id
         }
 
