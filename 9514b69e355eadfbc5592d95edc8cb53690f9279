@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ad542a4_f64b1416",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-06T19:22:03Z",
+      "side": 1,
+      "message": "erg this should be fine, right?  gconf has been deprecated for a while",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "9514b69e355eadfbc5592d95edc8cb53690f9279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816ef17e_2f77c490",
         "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager_gsettings.cc",
         "patchSetId": 5
@@ -13,6 +36,24 @@
       "writtenOn": "2017-12-06T19:17:13Z",
       "side": 1,
       "message": "The comment on https://developer.gnome.org/gio/stable/GSettings.html#g-settings-list-schemas implies that you should be using g_settings_schema_source_lookup() if you\u0027re trying to check for a specific schema.\n\nIs there a specific old version/compatibility reason you\u0027re using this?",
+      "revId": "9514b69e355eadfbc5592d95edc8cb53690f9279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bccd17a_f1caacdd",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager_gsettings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-06T19:22:03Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/build/linux/BUILD.gn?rcl\u003d03ca62023fae9eef463611ead5e551b176ceb162\u0026l\u003d13\n\nPresumably we should be able to remove the other one too now that 13.10 support is dropped? (Doesn\u0027t have to be in this CL)",
+      "parentUuid": "816ef17e_2f77c490",
       "revId": "9514b69e355eadfbc5592d95edc8cb53690f9279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
