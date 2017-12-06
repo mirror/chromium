@@ -22,6 +22,30 @@
       "revId": "f0231bfef26d4f56cdd0d566e31c9fb5ef7ecee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a88ba79_1a131e55",
+        "filename": "components/nacl/zygote/nacl_fork_delegate_linux.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-06T08:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfad3d75_18815787",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "f0231bfef26d4f56cdd0d566e31c9fb5ef7ecee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
