@@ -52,6 +52,24 @@
       "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5611e565_3473e7c3",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-06T03:09:48Z",
+      "side": 1,
+      "message": "Maybe it\u0027s just be added automatically by vim or some one tooling ;-)",
+      "parentUuid": "8b5a7ddd_2080a0e9",
+      "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
