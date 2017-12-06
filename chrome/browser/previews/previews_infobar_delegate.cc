@@ -146,7 +146,7 @@ void PreviewsInfoBarDelegate::Create(
         web_contents->GetController()
             .GetLastCommittedEntry()
             ->GetRedirectChain()[0] /* GURL */,
-        base::Time::Now(), 0 /* page_id */);
+        base::Time::Now(), infobar_tab_helper->previews_user_data()->page_id());
   }
 
   RecordPreviewsInfoBarAction(previews_type, INFOBAR_SHOWN);
