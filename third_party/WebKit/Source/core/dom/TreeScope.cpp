@@ -257,9 +257,29 @@ Element* TreeScope::HitTestPoint(double x,
   if (node->IsPseudoElement() || node->IsTextNode())
     node = node->ParentOrShadowHostNode();
   DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
-  if (!node || !node->IsElementNode())
+  // alternative, but currently returns wrong result.
+  // if (node && node->IsElementNode()) {
+  // node = Retarget(*ToElement(node));
+  // }
+  for (Node* retargeted_node = node; retargeted_node;) {
+    if (retargeted_node->IsInShadowTree()) {
+      if (retargeted_node->TreeRoot().IsShadowIncludingInclusiveAncestorOf(
+              &RootNode())) {
+        node = retargeted_node;
+        break;
+      }
+      retargeted_node = retargeted_node->OwnerShadowHost();
+    } else {
+      node = retargeted_node;
+      break;
+    }
+  }
+  if (node && node->IsShadowRoot()) {
+    node = node->OwnerShadowHost();
+  }
+  if (!node || !node->IsElementNode()) {
     return nullptr;
+  }
   return ToElement(node);
 }
 
