@@ -1787,19 +1787,22 @@ void GL_APIENTRY GLES2RasterCHROMIUM(const cc::DisplayItemList* list,
 void GL_APIENTRY GLES2EndRasterCHROMIUM() {
   gles2::GetGLContext()->EndRasterCHROMIUM();
 }
-void GL_APIENTRY GLES2CreateTransferCacheEntryCHROMIUM(
-    GLuint64 handle_id,
-    GLuint handle_shm_id,
-    GLuint handle_shm_offset,
-    const cc::ClientTransferCacheEntry& entry) {
-  gles2::GetGLContext()->CreateTransferCacheEntryCHROMIUM(
-      handle_id, handle_shm_id, handle_shm_offset, entry);
+void GL_APIENTRY GLES2CreateTransferCacheEntryINTERNAL(GLuint64 handle_id,
+                                                       GLuint handle_shm_id,
+                                                       GLuint handle_shm_offset,
+                                                       GLuint type,
+                                                       GLuint data_shm_id,
+                                                       GLuint data_shm_offset,
+                                                       GLuint data_size) {
+  gles2::GetGLContext()->CreateTransferCacheEntryINTERNAL(
+      handle_id, handle_shm_id, handle_shm_offset, type, data_shm_id,
+      data_shm_offset, data_size);
 }
-void GL_APIENTRY GLES2DeleteTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
-  gles2::GetGLContext()->DeleteTransferCacheEntryCHROMIUM(handle_id);
+void GL_APIENTRY GLES2DeleteTransferCacheEntryINTERNAL(GLuint64 handle_id) {
+  gles2::GetGLContext()->DeleteTransferCacheEntryINTERNAL(handle_id);
 }
-void GL_APIENTRY GLES2UnlockTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
-  gles2::GetGLContext()->UnlockTransferCacheEntryCHROMIUM(handle_id);
+void GL_APIENTRY GLES2UnlockTransferCacheEntryINTERNAL(GLuint64 handle_id) {
+  gles2::GetGLContext()->UnlockTransferCacheEntryINTERNAL(handle_id);
 }
 void GL_APIENTRY GLES2TexStorage2DImageCHROMIUM(GLenum target,
                                                 GLenum internalFormat,
@@ -3162,19 +3165,19 @@ extern const NameToFunc g_gles2_function_table[] = {
         reinterpret_cast<GLES2FunctionPointer>(glEndRasterCHROMIUM),
     },
     {
-        "glCreateTransferCacheEntryCHROMIUM",
+        "glCreateTransferCacheEntryINTERNAL",
         reinterpret_cast<GLES2FunctionPointer>(
-            glCreateTransferCacheEntryCHROMIUM),
+            glCreateTransferCacheEntryINTERNAL),
     },
     {
-        "glDeleteTransferCacheEntryCHROMIUM",
+        "glDeleteTransferCacheEntryINTERNAL",
         reinterpret_cast<GLES2FunctionPointer>(
-            glDeleteTransferCacheEntryCHROMIUM),
+            glDeleteTransferCacheEntryINTERNAL),
     },
     {
-        "glUnlockTransferCacheEntryCHROMIUM",
+        "glUnlockTransferCacheEntryINTERNAL",
         reinterpret_cast<GLES2FunctionPointer>(
-            glUnlockTransferCacheEntryCHROMIUM),
+            glUnlockTransferCacheEntryINTERNAL),
     },
     {
         "glTexStorage2DImageCHROMIUM",
