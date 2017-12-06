@@ -16,6 +16,24 @@
       "revId": "37ab07238b06fb2824619d6e6aa14f3a1655efa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06379ab_f9f1a69e",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4699,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-06T00:35:35Z",
+      "side": 1,
+      "message": "It has already been validated in ValidateTexFuncData() (line 4681 above),\nso the only situation that skip_pixels + width could be invalid is height \u003d\u003d 0.\n\nActually we should not enter this block if any dimension is 0. I\u0027ll amend the condition.",
+      "parentUuid": "0979afa5_80623d23",
+      "revId": "37ab07238b06fb2824619d6e6aa14f3a1655efa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
