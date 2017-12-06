@@ -46,6 +46,30 @@
       "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c65669_c53d9222",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T08:29:36Z",
+      "side": 1,
+      "message": "Thanks for explanation. I should be more familiar with CSS visual formatting model.\n\nBTW, EnclosingNGBlockFlow() doesn\u0027t check |HasNGInlineNodeData()|.\nShould we check it?",
+      "parentUuid": "4bb37844_5043566c",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1ad537a7d04e983f2553a8a4f58fc1b4c3fcc507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
