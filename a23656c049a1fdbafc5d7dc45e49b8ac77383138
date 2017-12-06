@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315187c2_e6a0f502",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-06T02:58:31Z",
+      "side": 1,
+      "message": "All the refactors you\u0027re making in this CL change JoinString (not operator+) to StrCat. Is there a performance benefit to using StrCat over JoinString? (I ask because of my suggestion below.)",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892cc9a8_dd1c1751",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-06T02:58:31Z",
+      "side": 1,
+      "message": "Is there a good reason to have a divergent implementation from base::JoinString? (Even though this implementation is simpler, due to not having a separator, is there a performance cost to dealing with the empty separator?)\n\nYou could augment base::JoinStringT to also take a std::string* dest, and then JoinString, StrAppend and StrCat could all use the same code.",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127be37c_e6c3d749",
+        "filename": "base/strings/strcat.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-06T02:58:31Z",
+      "side": 1,
+      "message": "Can this be called ConcatString and AppendString for consistency with JoinString? (Is the reason to call it StrCat and StrAppend for consistency with Abseil? Is that something we care about over consistency with our own base libraries?)",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
