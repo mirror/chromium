@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4ce1d3fa_6d05b1b7",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:42:36Z",
+      "side": 1,
+      "message": "I suspect that the problem might have something to do with line 17927 in gles2_cmd_decoder.cc, but I don\u0027t know how it\u0027s supposed to work.",
+      "parentUuid": "6b847a89_ca786d44",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f495ff1d_e623a54a",
         "filename": "gpu/command_buffer/service/texture_manager.cc",
         "patchSetId": 3
