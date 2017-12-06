@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ac2e91_6a87369a",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: this may as well be web_contents-\u003eGetMainFrame()-\u003eGetRemote....",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 12
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9b5869_484f6adf",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: inline this into the GetWebApplicationInfo() call",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 40
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db1cbf8_4001751a",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "This fails tests on Android because, as reillyg@ pointed out, |client| goes out of scope immediately and so |callback| will never be invoked.\n\nYou need to make |client| a member variable on this object so it stays alive. You\u0027ll want to call reset() on |client| in OnDidGetWebApplicationInfo to close the connection when the callback comes back.",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f31476_7afe448e",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: inline the base::Bind call into GetWebApplicationInfo",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bfe625_3617e8ba",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: #include \"base/bind.h\" for base::Bind (no idea why it isn\u0027t here already)",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3c4afa_e63616ef",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Similarly, this is going to need to be a member variable, or else |callback| will not be run. There aren\u0027t full browser tests exercising this, but if you run the browser on Linux and try to add a site to desktop, I think this will fail.",
+      "range": {
+        "startLine": 597,
+        "startChar": 3,
+        "endLine": 597,
+        "endChar": 62
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fc5c82_df1f1dbb",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: this may as well be web_contents()-\u003eGetMainFrame()-\u003eGet....",
+      "range": {
+        "startLine": 598,
+        "startChar": 3,
+        "endLine": 598,
+        "endChar": 13
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afad5a2_45d496b0",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Nit: inline this into the GetWebApplicationInfo call.",
+      "range": {
+        "startLine": 599,
+        "startChar": 18,
+        "endLine": 600,
+        "endChar": 52
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006eef19_b81194cd",
+        "filename": "chrome/common/render_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "Is this include required here? If it\u0027s needed by a dependent file then you should add the include to the dependent file.",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 17,
+        "endChar": 66
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4dce7f1_dc5ec50b",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T08:29:11Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "62898845b03a3c1d522a129f17b38c44693cb5b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
