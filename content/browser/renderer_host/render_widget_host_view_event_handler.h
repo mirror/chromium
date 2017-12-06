@@ -39,6 +39,11 @@ class RenderWidgetHostImpl;
 class RenderWidgetHostViewBase;
 class TouchSelectionControllerClientAura;
 
+namespace render_widget_host_view_aura_unittest {
+class InputMethodResultAuraTest;
+FORWARD_DECLARE_TEST(InputMethodResultAuraTest, FinishImeCompositionSession);
+}  // namespace render_widget_host_view_aura_unittest
+
 // Provides an implementation of ui::EventHandler for use with
 // RenderWidgetHostViewBase. A delegate is required in order to provide platform
 // specific functionality.
@@ -148,8 +153,9 @@ class CONTENT_EXPORT RenderWidgetHostViewEventHandler
   void OnGestureEvent(ui::GestureEvent* event) override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(InputMethodResultAuraTest,
-                           FinishImeCompositionSession);
+  FRIEND_TEST_ALL_PREFIXES(
+      render_widget_host_view_aura_unittest::InputMethodResultAuraTest,
+      FinishImeCompositionSession);
   // Returns true if the |event| passed in can be forwarded to the renderer.
   bool CanRendererHandleEvent(const ui::MouseEvent* event,
                               bool mouse_locked,
