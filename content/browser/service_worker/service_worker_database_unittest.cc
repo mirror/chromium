@@ -77,6 +77,7 @@ void VerifyRegistrationData(const RegistrationData& expected,
   EXPECT_EQ(expected.resources_total_size_bytes,
             actual.resources_total_size_bytes);
   EXPECT_EQ(expected.used_features, actual.used_features);
+  EXPECT_EQ(expected.update_via_cache, actual.update_via_cache);
 }
 
 void VerifyResourceRecords(const std::vector<Resource>& expected,
@@ -575,6 +576,7 @@ TEST(ServiceWorkerDatabaseTest, GetAllRegistrations) {
   data2.script = URL(origin2, "/script2.js");
   data2.version_id = 2000;
   data2.resources_total_size_bytes = 200;
+  data2.update_via_cache = blink::mojom::ServiceWorkerUpdateViaCache::kNone;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(2, data2.script, 200));
   ASSERT_EQ(ServiceWorkerDatabase::STATUS_OK,
@@ -800,6 +802,8 @@ TEST(ServiceWorkerDatabaseTest, Registration_Overwrite) {
   updated_data.version_id = data.version_id + 1;
   updated_data.resources_total_size_bytes = 12 + 13;
   updated_data.used_features = {109, 421, 9101};
+  updated_data.update_via_cache =
+      blink::mojom::ServiceWorkerUpdateViaCache::kAll;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(3, URL(origin, "/resource3"), 12));
   resources2.push_back(CreateResource(4, URL(origin, "/resource4"), 13));
@@ -1395,6 +1399,7 @@ TEST(ServiceWorkerDatabaseTest, UserData_DataIsolation) {
   data2.script = URL(kOrigin, "/script2.js");
   data2.version_id = 201;
   data2.resources_total_size_bytes = 200;
+  data2.update_via_cache = blink::mojom::ServiceWorkerUpdateViaCache::kImports;
   std::vector<Resource> resources2;
   resources2.push_back(CreateResource(2, data2.script, 200));
 

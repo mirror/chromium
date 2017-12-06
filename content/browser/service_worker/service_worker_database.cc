@@ -273,6 +273,7 @@ const char* ServiceWorkerDatabase::StatusToString(
 
 ServiceWorkerDatabase::RegistrationData::RegistrationData()
     : registration_id(blink::mojom::kInvalidServiceWorkerRegistrationId),
+      update_via_cache(blink::mojom::ServiceWorkerUpdateViaCache::kImports),
       version_id(blink::mojom::kInvalidServiceWorkerVersionId),
       is_active(false),
       has_fetch_handler(false),
@@ -1409,6 +1410,17 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::ParseRegistrationData(
   for (uint32_t feature : data.used_features())
     out->used_features.insert(feature);
 
+  if (data.has_update_via_cache()) {
+    auto value = data.update_via_cache();
+    if (!ServiceWorkerRegistrationData_ServiceWorkerUpdateViaCacheType_IsValid(
+            value)) {
+      DLOG(ERROR) << "Update via cache mode '" << value << "' is not valid.";
+      return ServiceWorkerDatabase::STATUS_ERROR_CORRUPTED;
+    }
+    out->update_via_cache =
+        static_cast<blink::mojom::ServiceWorkerUpdateViaCache>(value);
+  }
+
   return ServiceWorkerDatabase::STATUS_OK;
 }
 
@@ -1448,6 +1460,11 @@ void ServiceWorkerDatabase::WriteRegistrationDataInBatch(
 
   for (uint32_t feature : registration.used_features)
     data.add_used_features(feature);
+
+  data.set_update_via_cache(
+      static_cast<
+          ServiceWorkerRegistrationData_ServiceWorkerUpdateViaCacheType>(
+          registration.update_via_cache));
 
   std::string value;
   bool success = data.SerializeToString(&value);

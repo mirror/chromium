@@ -21,6 +21,24 @@
 
 namespace content {
 
+namespace {
+
+bool ShouldBypassCache(bool is_main_script,
+                       blink::mojom::ServiceWorkerUpdateViaCache cache_mode) {
+  switch (cache_mode) {
+    case blink::mojom::ServiceWorkerUpdateViaCache::kImports:
+      return is_main_script;
+    case blink::mojom::ServiceWorkerUpdateViaCache::kNone:
+      return true;
+    case blink::mojom::ServiceWorkerUpdateViaCache::kAll:
+      return false;
+  }
+  NOTREACHED() << static_cast<int>(cache_mode);
+  return is_main_script;
+}
+
+}  // namespace
+
 ServiceWorkerContextRequestHandler::ServiceWorkerContextRequestHandler(
     base::WeakPtr<ServiceWorkerContextCore> context,
     base::WeakPtr<ServiceWorkerProviderHost> provider_host,
@@ -191,7 +209,9 @@ net::URLRequestJob* ServiceWorkerContextRequestHandler::MaybeCreateJobImpl(
   int extra_load_flags = 0;
   base::TimeDelta time_since_last_check =
       base::Time::Now() - registration->last_update_check();
-  if (time_since_last_check > kServiceWorkerScriptMaxCacheAge ||
+
+  if (ShouldBypassCache(is_main_script, registration->update_via_cache()) ||
+      time_since_last_check > kServiceWorkerScriptMaxCacheAge ||
       version_->force_bypass_cache_for_scripts()) {
     extra_load_flags = net::LOAD_BYPASS_CACHE;
   }
