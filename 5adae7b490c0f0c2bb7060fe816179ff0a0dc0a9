@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76227795_08ae3a71",
+        "filename": "components/language/content/browser/geo_language_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-06T23:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50cc772f_5faea2f6",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94c24a7_e6787753",
         "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "205d5ecb_011e4503",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-06T23:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c94c24a7_e6787753",
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ae422ae_cddfd139",
         "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530c8978_6f151f25",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-06T23:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae422ae_cddfd139",
+      "revId": "5adae7b490c0f0c2bb7060fe816179ff0a0dc0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
