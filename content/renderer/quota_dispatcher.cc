@@ -7,13 +7,11 @@
 #include <memory>
 #include <utility>
 
-#include "base/lazy_instance.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
-#include "base/threading/thread_local.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_thread.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaCallbacks.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaType.h"
 #include "url/origin.h"
@@ -25,9 +23,6 @@ using storage::QuotaStatusCode;
 using storage::StorageType;
 
 namespace content {
-
-static base::LazyInstance<base::ThreadLocalPointer<QuotaDispatcher>>::Leaky
-    g_quota_dispatcher_tls = LAZY_INSTANCE_INITIALIZER;
 
 namespace {
 
@@ -59,28 +54,35 @@ int CurrentWorkerId() {
   return WorkerThread::GetCurrentId();
 }
 
-void BindConnectorOnMainThread(mojom::QuotaDispatcherHostRequest request) {
-  DCHECK(RenderThread::Get());
-  RenderThread::Get()->GetConnector()->BindInterface(mojom::kBrowserServiceName,
-                                                     std::move(request));
-}
-
 }  // namespace
 
-QuotaDispatcher::QuotaDispatcher(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner)
-    : main_thread_task_runner_(main_thread_task_runner) {
-  g_quota_dispatcher_tls.Pointer()->Set(this);
+// static
+QuotaDispatcher* QuotaDispatcher::From(
+    blink::ExecutionContext* execution_context) {
+  DCHECK(execution_context);
+  DCHECK(execution_context->IsContextThread());
 
-  auto request = mojo::MakeRequest(&quota_host_);
-  if (main_thread_task_runner_->BelongsToCurrentThread()) {
-    BindConnectorOnMainThread(std::move(request));
-  } else {
-    main_thread_task_runner->PostTask(
-        FROM_HERE,
-        base::BindOnce(&BindConnectorOnMainThread, std::move(request)));
+  QuotaDispatcher* dispatcher = static_cast<QuotaDispatcher*>(
+      blink::Supplement<blink::ExecutionContext>::From(execution_context,
+                                                       SupplementName()));
+  if (!dispatcher) {
+    dispatcher = new QuotaDispatcher(*execution_context);
+    blink::Supplement<blink::ExecutionContext>::ProvideTo(
+        *execution_context, SupplementName(), dispatcher);
+    if (WorkerThread::GetCurrentId())
+      WorkerThread::AddObserver(dispatcher);
   }
+
+  return dispatcher;
 }
+
+// static
+const char* QuotaDispatcher::SupplementName() {
+  return "QuotaDispatcher";
+}
+
+QuotaDispatcher::QuotaDispatcher(blink::ExecutionContext& execution_context)
+    : blink::Supplement<blink::ExecutionContext>(execution_context) {}
 
 QuotaDispatcher::~QuotaDispatcher() {
   base::IDMap<std::unique_ptr<Callback>>::iterator iter(
@@ -89,50 +91,38 @@ QuotaDispatcher::~QuotaDispatcher() {
     iter.GetCurrentValue()->DidFail(storage::kQuotaErrorAbort);
     iter.Advance();
   }
-
-  g_quota_dispatcher_tls.Pointer()->Set(nullptr);
-}
-
-QuotaDispatcher* QuotaDispatcher::ThreadSpecificInstance(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  if (g_quota_dispatcher_tls.Pointer()->Get())
-    return g_quota_dispatcher_tls.Pointer()->Get();
-
-  QuotaDispatcher* dispatcher = new QuotaDispatcher(task_runner);
-  if (WorkerThread::GetCurrentId())
-    WorkerThread::AddObserver(dispatcher);
-  return dispatcher;
-}
-
-void QuotaDispatcher::WillStopCurrentWorkerThread() {
-  delete this;
 }
 
 void QuotaDispatcher::QueryStorageUsageAndQuota(
+    service_manager::InterfaceProvider* interface_provider,
     const url::Origin& origin,
     StorageType type,
     std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   int request_id = pending_quota_callbacks_.Add(std::move(callback));
-  quota_host_->QueryStorageUsageAndQuota(
-      origin, type,
-      base::BindOnce(&QuotaDispatcher::DidQueryStorageUsageAndQuota,
-                     base::Unretained(this), request_id));
+  QuotaHost(interface_provider)
+      ->QueryStorageUsageAndQuota(
+          origin, type,
+          base::BindOnce(&QuotaDispatcher::DidQueryStorageUsageAndQuota,
+                         base::Unretained(this), request_id));
 }
 
-void QuotaDispatcher::RequestStorageQuota(int render_frame_id,
-                                          const url::Origin& origin,
-                                          StorageType type,
-                                          int64_t requested_size,
-                                          std::unique_ptr<Callback> callback) {
+void QuotaDispatcher::RequestStorageQuota(
+    service_manager::InterfaceProvider* interface_provider,
+    int render_frame_id,
+    const url::Origin& origin,
+    StorageType type,
+    int64_t requested_size,
+    std::unique_ptr<Callback> callback) {
   DCHECK(callback);
   DCHECK_EQ(CurrentWorkerId(), 0)
       << "Requests may show permission UI and are not allowed from workers.";
   int request_id = pending_quota_callbacks_.Add(std::move(callback));
-  quota_host_->RequestStorageQuota(
-      render_frame_id, origin, type, requested_size,
-      base::BindOnce(&QuotaDispatcher::DidGrantStorageQuota,
-                     base::Unretained(this), request_id));
+  QuotaHost(interface_provider)
+      ->RequestStorageQuota(
+          render_frame_id, origin, type, requested_size,
+          base::BindOnce(&QuotaDispatcher::DidGrantStorageQuota,
+                         base::Unretained(this), request_id));
 }
 
 // static
@@ -180,6 +170,13 @@ void QuotaDispatcher::DidFail(
   DCHECK(callback);
   callback->DidFail(error);
   pending_quota_callbacks_.Remove(request_id);
+}
+
+mojom::QuotaDispatcherHost* QuotaDispatcher::QuotaHost(
+    service_manager::InterfaceProvider* interface_provider) {
+  if (!quota_host_)
+    interface_provider->GetInterface(mojo::MakeRequest(&quota_host_));
+  return quota_host_.get();
 }
 
 static_assert(int(blink::kWebStorageQuotaTypeTemporary) ==

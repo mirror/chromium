@@ -81,8 +81,9 @@ void DeprecatedStorageQuota::queryUsageAndQuota(
   StorageQuotaCallbacks* callbacks =
       DeprecatedStorageQuotaCallbacksImpl::Create(success_callback,
                                                   error_callback);
-  Platform::Current()->QueryStorageUsageAndQuota(security_origin->ToUrlOrigin(),
-                                                 storage_type, callbacks);
+  Platform::Current()->QueryStorageUsageAndQuota(
+      execution_context->GetInterfaceProvider(), security_origin->ToUrlOrigin(),
+      storage_type, callbacks);
 }
 
 void DeprecatedStorageQuota::requestQuota(

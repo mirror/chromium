@@ -20,13 +20,13 @@ class Origin;
 
 namespace content {
 class QuotaPermissionContext;
+class RenderProcessHost;
 
 class QuotaDispatcherHost : public mojom::QuotaDispatcherHost {
  public:
-  static void Create(int process_id,
-                     storage::QuotaManager* quota_manager,
-                     scoped_refptr<QuotaPermissionContext> permission_context,
-                     mojom::QuotaDispatcherHostRequest request);
+  static void Create(mojom::QuotaDispatcherHostRequest request,
+                     RenderProcessHost* host,
+                     const url::Origin& origin);
 
   QuotaDispatcherHost(int process_id,
                       storage::QuotaManager* quota_manager,

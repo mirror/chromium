@@ -14,10 +14,14 @@
 #include "base/containers/id_map.h"
 #include "base/macros.h"
 #include "content/common/quota_dispatcher_host.mojom.h"
-#include "content/public/renderer/worker_thread.h"
+#include "third_party/WebKit/Source/core/dom/ExecutionContext.h"
 
 namespace blink {
 class WebStorageQuotaCallbacks;
+}
+
+namespace service_manager {
+class InterfaceProvider;
 }
 
 namespace url {
@@ -26,12 +30,10 @@ class Origin;
 
 namespace content {
 
-// Dispatches and sends quota related messages sent to/from a child
-// process from/to the main browser process.  There is one instance
-// per each thread.  Thread-specific instance can be obtained by
-// ThreadSpecificInstance().
-// TODO(sashab): Change this to be per-execution context instead of per-process.
-class QuotaDispatcher : public WorkerThread::Observer {
+// Dispatches and sends quota related messages sent to/from a child process
+// from/to the main browser process. There is one QuotaDispatcher per execution
+// context.
+class QuotaDispatcher : public blink::Supplement<blink::ExecutionContext> {
  public:
   // TODO(sashab): Remove this wrapper, using lambdas or just the web callback
   // itself.
@@ -43,20 +45,17 @@ class QuotaDispatcher : public WorkerThread::Observer {
     virtual void DidFail(storage::QuotaStatusCode status) = 0;
   };
 
-  explicit QuotaDispatcher(
-      scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner);
+  static QuotaDispatcher* From(blink::ExecutionContext*);
+  static const char* SupplementName();
+
   ~QuotaDispatcher() override;
 
-  static QuotaDispatcher* ThreadSpecificInstance(
-      scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner);
-
-  // WorkerThread::Observer implementation.
-  void WillStopCurrentWorkerThread() override;
-
-  void QueryStorageUsageAndQuota(const url::Origin& origin,
+  void QueryStorageUsageAndQuota(service_manager::InterfaceProvider*,
+                                 const url::Origin& origin,
                                  storage::StorageType type,
                                  std::unique_ptr<Callback> callback);
-  void RequestStorageQuota(int render_frame_id,
+  void RequestStorageQuota(service_manager::InterfaceProvider*,
+                           int render_frame_id,
                            const url::Origin& origin,
                            storage::StorageType type,
                            int64_t requested_size,
@@ -67,6 +66,8 @@ class QuotaDispatcher : public WorkerThread::Observer {
       blink::WebStorageQuotaCallbacks callbacks);
 
  private:
+  explicit QuotaDispatcher(blink::ExecutionContext&);
+
   // Message handlers.
   void DidQueryStorageUsageAndQuota(int64_t request_id,
                                     storage::QuotaStatusCode status,
@@ -78,7 +79,11 @@ class QuotaDispatcher : public WorkerThread::Observer {
                             int64_t granted_quota);
   void DidFail(int request_id, storage::QuotaStatusCode error);
 
-  content::mojom::QuotaDispatcherHostPtr quota_host_;
+  // Binds the interface (if not already bound) with the given interface
+  // provider, and returns it,
+  mojom::QuotaDispatcherHost* QuotaHost(service_manager::InterfaceProvider*);
+
+  mojom::QuotaDispatcherHostPtr quota_host_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
   // TODO(sashab, nverne): Once default callbacks are available for dropped mojo

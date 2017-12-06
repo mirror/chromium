@@ -78,6 +78,7 @@ class GpuMemoryBufferManager;
 
 namespace service_manager {
 class Connector;
+class InterfaceProvider;
 }
 
 namespace v8 {
@@ -686,6 +687,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   // an error occurs WebStorageQuotaCallbacks::DidFail is called with an
   // error code.
   virtual void QueryStorageUsageAndQuota(
+      service_manager::InterfaceProvider*,
       const WebSecurityOrigin& storage_partition,
       WebStorageQuotaType,
       WebStorageQuotaCallbacks) {}

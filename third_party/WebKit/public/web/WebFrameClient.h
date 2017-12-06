@@ -730,7 +730,8 @@ class BLINK_EXPORT WebFrameClient {
   // is called with an error code otherwise.
   // Note that the requesting quota size may not always be granted and
   // a smaller amount of quota than requested might be returned.
-  virtual void RequestStorageQuota(WebStorageQuotaType,
+  virtual void RequestStorageQuota(service_manager::InterfaceProvider*,
+                                   WebStorageQuotaType,
                                    unsigned long long new_quota_in_bytes,
                                    WebStorageQuotaCallbacks) {}
 

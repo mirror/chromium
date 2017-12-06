@@ -12,6 +12,7 @@
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
+#include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/websockets/websocket_manager.h"
@@ -132,6 +133,8 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
             ->GetPlatformNotificationContext()
             ->CreateService(host->GetID(), origin, std::move(request));
       }));
+  parameterized_binder_registry_.AddInterface(
+      base::Bind(&QuotaDispatcherHost::Create));
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {

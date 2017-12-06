@@ -12,6 +12,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/numerics/safe_conversions.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/browser/storage_partition.h"
+#include "content/public/common/content_client.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -24,19 +29,30 @@ using storage::StorageType;
 
 namespace content {
 
-// static
-void QuotaDispatcherHost::Create(
-    int process_id,
-    QuotaManager* quota_manager,
-    scoped_refptr<QuotaPermissionContext> permission_context,
-    mojom::QuotaDispatcherHostRequest request) {
-  DCHECK(quota_manager);
-  // TODO(sashab): Work out the conditions for permission_context to be set and
-  // add a DCHECK for it here.
+namespace {
+
+void BindConnectorOnIOThread(RenderProcessHost* host,
+                             mojom::QuotaDispatcherHostRequest request) {
   mojo::MakeStrongBinding(
-      base::MakeUnique<QuotaDispatcherHost>(process_id, quota_manager,
-                                            std::move(permission_context)),
+      base::MakeUnique<QuotaDispatcherHost>(
+          host->GetID(), host->GetStoragePartition()->GetQuotaManager(),
+          GetContentClient()->browser()->CreateQuotaPermissionContext()),
       std::move(request));
+}
+
+}  // namespace
+
+// static
+void QuotaDispatcherHost::Create(mojom::QuotaDispatcherHostRequest request,
+                                 RenderProcessHost* host,
+                                 const url::Origin& origin) {
+  // TODO(sashab): Save the |origin| here and use it rather than the one
+  // provided by QuotaDispatcher. crbug.com/595685
+
+  // Bind on the IO thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&BindConnectorOnIOThread, host, std::move(request)));
 }
 
 QuotaDispatcherHost::QuotaDispatcherHost(
@@ -46,7 +62,11 @@ QuotaDispatcherHost::QuotaDispatcherHost(
     : process_id_(process_id),
       quota_manager_(quota_manager),
       permission_context_(std::move(permission_context)),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  DCHECK(quota_manager);
+  // TODO(sashab): Work out the conditions for permission_context to be set and
+  // add a DCHECK for it here.
+}
 
 void QuotaDispatcherHost::QueryStorageUsageAndQuota(
     const url::Origin& origin,
