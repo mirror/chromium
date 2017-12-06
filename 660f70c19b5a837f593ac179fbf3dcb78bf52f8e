@@ -16,6 +16,24 @@
       "revId": "660f70c19b5a837f593ac179fbf3dcb78bf52f8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65104fb_04040707",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-06T23:23:56Z",
+      "side": 1,
+      "message": "Sure, makes sense. Had skimmed this but hadn\u0027t noticed the 1:1 relationship for offscreen_target_frame_buffer_. Will use that.",
+      "parentUuid": "8d4d2d03_7531198b",
+      "revId": "660f70c19b5a837f593ac179fbf3dcb78bf52f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
