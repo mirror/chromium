@@ -22,6 +22,30 @@
       "revId": "e69a34498f869e6d4ab6a90d4a817b59cb1622ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a72659_1c65256a",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-06T01:01:34Z",
+      "side": 1,
+      "message": "I reworked this section a bit.",
+      "parentUuid": "57314306_2a5fa668",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 76
+      },
+      "revId": "e69a34498f869e6d4ab6a90d4a817b59cb1622ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
