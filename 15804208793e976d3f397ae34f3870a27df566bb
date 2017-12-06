@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9e740ff_03585af2",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-06T23:05:41Z",
+      "side": 1,
+      "message": "Ah, you\u0027re 100% right. My bad. :)",
+      "parentUuid": "7216f7f8_198429c9",
+      "revId": "15804208793e976d3f397ae34f3870a27df566bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "198a6f13_5249d3d9",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
         "patchSetId": 17
