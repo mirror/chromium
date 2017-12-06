@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -316,7 +317,9 @@ bool ContentSettingDecoration::OnMousePressed(NSRect frame, NSPoint location) {
                                           anchoredAt:anchor];
     bubbleWindow_.reset([[bubbleController window] retain]);
   }
-
+  UMA_HISTOGRAM_ENUMERATION("ContentSettings.PageActionPressed",
+                            model->image_type(),
+                            ContentSettingImageModel::NUM_TYPES);
   return true;
 }
 
