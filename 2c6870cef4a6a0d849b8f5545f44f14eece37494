@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f517f7f_fd76188d",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-06T05:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695c1b21_8bd28591",
+      "revId": "2c6870cef4a6a0d849b8f5545f44f14eece37494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20fccde2_2151810a",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T02:09:10Z",
       "side": 1,
       "message": "If this is trying to implement retarget algorithm, could you use\nTreeScope::Retarget()?",
+      "revId": "2c6870cef4a6a0d849b8f5545f44f14eece37494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bb5390_b2f59078",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-06T05:11:04Z",
+      "side": 1,
+      "message": "So I tried using TreeScope::Retarget before, but it only accepts Elements. I tried replacing all of these newly added lines with\n\nif (node \u0026\u0026 node-\u003eIsElementNode()) {\n    node \u003d Retarget(*ToElement(node));\n}\nif (node \u0026\u0026 node-\u003eIsShadowRoot()) {\n    node \u003d node-\u003eOwnerShadowHost();\n}\n\nbut for some of the testcases, it fails (in all of the failing tests it returns null). Since TreeScope::Retarget is also used by other functions, I\u0027m also hesitant in changing it. What should I do?",
+      "parentUuid": "20fccde2_2151810a",
       "revId": "2c6870cef4a6a0d849b8f5545f44f14eece37494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
