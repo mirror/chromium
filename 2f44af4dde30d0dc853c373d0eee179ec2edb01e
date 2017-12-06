@@ -16,6 +16,24 @@
       "revId": "2f44af4dde30d0dc853c373d0eee179ec2edb01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5373b2_8cb8a3bd",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3328,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-06T01:27:50Z",
+      "side": 1,
+      "message": "That\u0027s what we\u0027d do if we added support for aria-rowtext/aria-coltext in\nBlink. For now these are html attributes but not accessibility string\nattributes so we need an extra step here.",
+      "parentUuid": "89187ebc_15cdfdd7",
+      "revId": "2f44af4dde30d0dc853c373d0eee179ec2edb01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
