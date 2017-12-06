@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37679bbd_08223b64",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-06T22:03:17Z",
+      "side": 1,
+      "message": "Can we move this DCHECK down, to after the UnregisterCompositorFrameSinkSupport() call at the end? When I originally added this, I had assumed (incorrectly) that FrameSinkManagerImpl was the sole owner of all CFSS, and so FSMI would have detached all the video capture clients at this point.\n\nInstead, it seems the remaining video capture clients will have to be detached inside the call to FSMI::UnregisterCFSS().",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "4b75da2937f8cd982b6c809c9fe02124e898b110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fd2906_4af73a5d",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-06T22:03:17Z",
+      "side": 1,
+      "message": "nit: Since these are now set in the ctor initializer list, and never should be changed, can we make them const (and remove the default initializer here)?\n\n  FrameSinkManagerImpl* const frame_sink_manager_;\n  SurfaceManager* const surface_manager_;",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "4b75da2937f8cd982b6c809c9fe02124e898b110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d4fae4_8874c5f7",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-06T22:03:17Z",
+      "side": 1,
+      "message": "This is a bit subtle. Maybe add a comment at EOL, like:\n\n  DCHECK(entry.support);  // Was set by calls from RootCFSI ctor.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 24
+      },
+      "revId": "4b75da2937f8cd982b6c809c9fe02124e898b110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e125e4d_23d70858",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-06T22:03:17Z",
+      "side": 1,
+      "message": "ditto here:\n\n  DCHECK(entry.support);  // Was set by calls from CFSI ctor.",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 24
+      },
+      "revId": "4b75da2937f8cd982b6c809c9fe02124e898b110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cca969_bc515601",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-06T22:03:17Z",
+      "side": 1,
+      "message": "nit: The latter sentence of this comment feels inaccurate, since UnregisterCFFS() is being called as the very last step of its destruction. Or, did you mean to call UnregisterCFFS() at the top of the CFFS destructor?",
+      "range": {
+        "startLine": 92,
+        "startChar": 65,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "4b75da2937f8cd982b6c809c9fe02124e898b110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
