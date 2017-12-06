@@ -185,6 +185,24 @@
       "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1544ec6_d3910188",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 20
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-06T14:16:42Z",
+      "side": 1,
+      "message": "Nope, we always need this mind, since the adler32_simd patch needs it.  I had a note about it in the change description.",
+      "parentUuid": "4062cd7e_7bc8fd03",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
