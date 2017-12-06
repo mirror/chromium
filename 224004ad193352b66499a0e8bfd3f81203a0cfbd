@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a0d1330_3b2be5d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T19:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c356f1e9_c6b7f256",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 9
+      },
+      "revId": "224004ad193352b66499a0e8bfd3f81203a0cfbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1821b91c_f78b6d9d",
         "filename": "components/cronet/android/cronet_upload_data_stream_adapter.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6ce1daae_be55d537",
+        "filename": "components/cronet/android/cronet_upload_data_stream_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T19:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1821b91c_f78b6d9d",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "224004ad193352b66499a0e8bfd3f81203a0cfbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5479e6_ca422eb6",
         "filename": "components/cronet/ios/empty.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-05T18:25:23Z",
       "side": 1,
       "message": "Hrm, spurious change?",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "224004ad193352b66499a0e8bfd3f81203a0cfbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0335c6_acbab443",
+        "filename": "components/cronet/ios/empty.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-06T19:01:37Z",
+      "side": 1,
+      "message": "Huh, this is odd.",
+      "parentUuid": "7a5479e6_ca422eb6",
       "range": {
         "startLine": 6,
         "startChar": 3,
