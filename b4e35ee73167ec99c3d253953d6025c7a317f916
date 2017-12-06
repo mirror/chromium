@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "72623d24_37a60512",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:35:19Z",
+      "side": 1,
+      "message": "This referenced bug has been closed for months.  Could you please file an active bug for this work?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "b4e35ee73167ec99c3d253953d6025c7a317f916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b2b70c_9eaa0cba",
         "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -13,6 +36,52 @@
       "writtenOn": "2017-12-06T15:48:47Z",
       "side": 1,
       "message": "same comment for this for-loop too?",
+      "revId": "b4e35ee73167ec99c3d253953d6025c7a317f916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30035670_8838062c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 56926,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:35:19Z",
+      "side": 1,
+      "message": "nit: tabs",
+      "range": {
+        "startLine": 56926,
+        "startChar": 11,
+        "endLine": 56926,
+        "endChar": 16
+      },
+      "revId": "b4e35ee73167ec99c3d253953d6025c7a317f916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bf520a_4a3ab61a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 56930,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-06T23:35:19Z",
+      "side": 1,
+      "message": "nit: either \"starts\" or \"is started\"",
+      "range": {
+        "startLine": 56930,
+        "startChar": 18,
+        "endLine": 56930,
+        "endChar": 25
+      },
       "revId": "b4e35ee73167ec99c3d253953d6025c7a317f916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
