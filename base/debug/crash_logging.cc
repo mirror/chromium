@@ -73,6 +73,16 @@ void ClearCrashKeyString(CrashKeyString* crash_key) {
   g_crash_key_impl->Clear(crash_key);
 }
 
+ScopedCrashKeyString::ScopedCrashKeyString(CrashKeyString* key,
+                                           base::StringPiece value)
+    : key_(key) {
+  SetCrashKeyString(key_, value);
+}
+
+ScopedCrashKeyString::~ScopedCrashKeyString() {
+  ClearCrashKeyString(key_);
+}
+
 void SetCrashKeyImplementation(std::unique_ptr<CrashKeyImplementation> impl) {
   delete g_crash_key_impl;
   g_crash_key_impl = impl.release();
