@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89e574e3_a30a9852",
+        "filename": "gpu/config/gpu_info_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T00:28:22Z",
+      "side": 1,
+      "message": "Maybe we should do this on all platforms. There are some old Chrome OS devices that don\u0027t support ES3 for example.\nGLES2 or GL2 is the minimum requirement for Chrome.",
+      "revId": "777ea3ed81ab16d82fbdee3d774bc55d5701a070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
