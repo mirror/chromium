@@ -2007,7 +2007,6 @@ split_static_library("browser") {
       "android/metrics/uma_session_stats.cc",
       "android/metrics/uma_session_stats.h",
       "android/metrics/uma_utils.cc",
-      "android/metrics/uma_utils.h",
       "android/metrics/variations_session.cc",
       "android/mojo/chrome_interface_registrar_android.cc",
       "android/mojo/chrome_interface_registrar_android.h",

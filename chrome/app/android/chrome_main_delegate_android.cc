@@ -12,7 +12,6 @@
 #include "base/path_service.h"
 #include "base/trace_event/trace_event.h"
 #include "chrome/browser/android/chrome_startup_flags.h"
-#include "chrome/browser/android/metrics/uma_utils.h"
 #include "chrome/browser/media/android/remote/remote_media_player_manager.h"
 #include "components/policy/core/browser/android/android_combined_policy_provider.h"
 #include "components/safe_browsing/android/safe_browsing_api_handler.h"
@@ -89,13 +88,8 @@ int ChromeMainDelegateAndroid::RunProcess(
     // UI thread tasks a second request to start it can come in while the
     // first request is still being processed. Chrome must keep the same
     // browser runner for the second request.
-    // Also only record the start time the first time round, since this is the
-    // start time of the application, and will be same for all requests.
-    if (!browser_runner_.get()) {
-      base::Time time = chrome::android::GetMainEntryPointTime();
-      startup_metric_utils::RecordMainEntryPointTime(time);
+    if (!browser_runner_.get())
       browser_runner_.reset(content::BrowserMainRunner::Create());
-    }
     return browser_runner_->Initialize(main_function_params);
   }
 
