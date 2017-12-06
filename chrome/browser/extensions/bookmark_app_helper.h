@@ -13,6 +13,7 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/installable/installable_metrics.h"
 #include "chrome/common/web_application_info.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -57,7 +58,8 @@ class BookmarkAppHelper : public content::NotificationObserver {
   // will have a chance to cancel the operation.
   BookmarkAppHelper(Profile* profile,
                     WebApplicationInfo web_app_info,
-                    content::WebContents* contents);
+                    content::WebContents* contents,
+                    WebAppInstallSource* install_source);
   ~BookmarkAppHelper() override;
 
   // Update the given WebApplicationInfo with information from the manifest.
@@ -164,6 +166,11 @@ class BookmarkAppHelper : public content::NotificationObserver {
   InstallableManager* installable_manager_;
 
   Installable installable_ = INSTALLABLE_UNKNOWN;
+
+  // The mechanism via which the app creation was triggered.  For
+  // non-installable apps, this will be WebAppInstallSource::COUNT and should
+  // be considered to be unset.
+  WebAppInstallSource install_source_;
 
   // With fast tab unloading enabled, shutting down can cause BookmarkAppHelper
   // to be destroyed before the bookmark creation bubble. Use weak pointers to
