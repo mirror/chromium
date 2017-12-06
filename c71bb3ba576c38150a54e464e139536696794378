@@ -117,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "41331182_b16db91a",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-06T23:37:41Z",
+      "side": 1,
+      "message": "Mojo requires that all callbacks for message responses be called unless the Binding is closed. mojo::ReportBadMessage will arrange for the renderer to be terminated, but it doesn\u0027t immediately close the binding so the bindings DCHECK if the callback is dropped without being called.\n\nIn this case it\u0027s trickier, because the callback is destroyed before control returns to this method.",
+      "parentUuid": "5ae70473_c093de57",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "555eabd8_45c85d5b",
         "filename": "content/common/appcache.mojom",
         "patchSetId": 11
