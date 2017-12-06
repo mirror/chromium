@@ -26,6 +26,28 @@ Security Critical: no
 Description: code coverage metrics gathering for test-webkitpy.
 Local Modifications: None
 
+Name: google-api-python-client
+Short Name: googleapiclient
+URL: https://github.com/google/google-api-python-client
+Version: 1.6.4 90ffb8534b43a6a8f12daca7917584a1fd850612
+License: Apache 2.0
+License File: googleapiclient/LICENSE
+Security Critical: no
+Description: Client library for accessing Google APIs including Monorail.
+Local Modifications: Only took googleapiclient directory from the git repo.
+
+Name: httplib2
+Short Name: httplib2
+URL: https://github.com/httplib2/httplib2
+Version: 0.10.3 f9ba19f895a5c1c328382cfc566bc04c37df6cb1
+License: MIT
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of google-api-python-client.
+Local Modifications:
+- Took python2/httplib2 directory from the git repository.
+- Removed test subdirectory (which failed presubmit checks).
+
 Name: mod_pywebsocket
 Short Name: mod_pywebsocket
 URL: https://code.google.com/p/pywebsocket/
@@ -47,6 +69,16 @@ Description: Used during presubmit checks and via lint-webkitpy and format-webki
     overlap between pep8 and pylint, but pep8 catches a bunch of stylistic
 	issues that pylint doesn't (e.g., warning about blank lines, various whitespace issues, etc.).
 Local Modifications: None
+
+Name: uritemplate
+Short Name: uritemplate
+URL: https://github.com/python-hyper/uritemplate
+Version: 3.0.0 6eaef88a8309e6a913872d07b6bea421c6960713
+License: BSD & Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of google-api-python-client.
+Local Modifications: Only took uritemplate directory from the git repo.
 
 Name: web-platform-tests - Test Suites for Web Platform specifications
 Short Name: wpt
