@@ -104,7 +104,7 @@ class BPFTesterSimpleDelegate : public BPFTesterDelegate {
  public:
   explicit BPFTesterSimpleDelegate(void (*test_function)(void))
       : test_function_(test_function) {}
-  ~BPFTesterSimpleDelegate() override {}
+  ~BPFTesterSimpleDelegate() override = default;
 
   std::unique_ptr<bpf_dsl::Policy> GetSandboxBPFPolicy() override {
     return std::unique_ptr<bpf_dsl::Policy>(new PolicyClass());

@@ -27,7 +27,7 @@ class BPFTesterCompatibilityDelegate : public BPFTesterDelegate {
   explicit BPFTesterCompatibilityDelegate(TestFunction test_function)
       : aux_(), test_function_(test_function) {}
 
-  ~BPFTesterCompatibilityDelegate() override {}
+  ~BPFTesterCompatibilityDelegate() override = default;
 
   std::unique_ptr<bpf_dsl::Policy> GetSandboxBPFPolicy() override {
     // The current method is guaranteed to only run in the child process

@@ -21,8 +21,8 @@ class Policy;
 // guaranteed to not be destroyed until the child process terminates.
 class BPFTesterDelegate {
  public:
-  BPFTesterDelegate() {}
-  virtual ~BPFTesterDelegate() {}
+  BPFTesterDelegate() = default;
+  virtual ~BPFTesterDelegate() = default;
 
   // This will instanciate a policy suitable for the test we want to run. It is
   // guaranteed to only be called from the child process that will run the

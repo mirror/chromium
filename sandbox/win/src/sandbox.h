@@ -97,7 +97,7 @@ class BrokerServices {
   virtual ResultCode WaitForAllTargets() = 0;
 
  protected:
-  ~BrokerServices() {}
+  ~BrokerServices() = default;
 };
 
 // TargetServices models the current process from the perspective
@@ -142,7 +142,7 @@ class TargetServices {
   virtual ProcessState* GetState() = 0;
 
  protected:
-  ~TargetServices() {}
+  ~TargetServices() = default;
 };
 
 }  // namespace sandbox

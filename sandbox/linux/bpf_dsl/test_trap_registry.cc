@@ -12,7 +12,7 @@ namespace sandbox {
 namespace bpf_dsl {
 
 TestTrapRegistry::TestTrapRegistry() : map_() {}
-TestTrapRegistry::~TestTrapRegistry() {}
+TestTrapRegistry::~TestTrapRegistry() = default;
 
 uint16_t TestTrapRegistry::Add(TrapFnc fnc, const void* aux, bool safe) {
   EXPECT_TRUE(safe);

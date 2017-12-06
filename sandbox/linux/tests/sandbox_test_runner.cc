@@ -6,11 +6,9 @@
 
 namespace sandbox {
 
-SandboxTestRunner::SandboxTestRunner() {
-}
+SandboxTestRunner::SandboxTestRunner() = default;
 
-SandboxTestRunner::~SandboxTestRunner() {
-}
+SandboxTestRunner::~SandboxTestRunner() = default;
 
 bool SandboxTestRunner::ShouldCheckForLeaks() const {
   return true;

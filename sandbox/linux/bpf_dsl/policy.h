@@ -15,8 +15,8 @@ namespace bpf_dsl {
 // Interface to implement to define a BPF sandbox policy.
 class SANDBOX_EXPORT Policy {
  public:
-  Policy() {}
-  virtual ~Policy() {}
+  Policy() = default;
+  virtual ~Policy() = default;
 
   // User extension point for writing custom sandbox policies.
   // The returned ResultExpr will control how the kernel responds to the

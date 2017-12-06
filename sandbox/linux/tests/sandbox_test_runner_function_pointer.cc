@@ -14,8 +14,7 @@ SandboxTestRunnerFunctionPointer::SandboxTestRunnerFunctionPointer(
     : function_to_run_(function_to_run) {
 }
 
-SandboxTestRunnerFunctionPointer::~SandboxTestRunnerFunctionPointer() {
-}
+SandboxTestRunnerFunctionPointer::~SandboxTestRunnerFunctionPointer() = default;
 
 void SandboxTestRunnerFunctionPointer::Run() {
   DCHECK(function_to_run_);

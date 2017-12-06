@@ -252,7 +252,7 @@ class TargetPolicy {
   virtual bool GetEnableOPMRedirection() = 0;
 
  protected:
-  ~TargetPolicy() {}
+  ~TargetPolicy() = default;
 };
 
 }  // namespace sandbox

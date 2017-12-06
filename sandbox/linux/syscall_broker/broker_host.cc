@@ -246,7 +246,7 @@ BrokerHost::BrokerHost(const BrokerPolicy& broker_policy,
       allowed_command_set_(allowed_command_set),
       ipc_channel_(std::move(ipc_channel)) {}
 
-BrokerHost::~BrokerHost() {}
+BrokerHost::~BrokerHost() = default;
 
 // Handle a request on the IPC channel ipc_channel_.
 // A request should have a file descriptor attached on which we will reply and

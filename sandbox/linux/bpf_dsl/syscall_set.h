@@ -31,8 +31,8 @@ class SANDBOX_EXPORT SyscallSet {
  public:
   class Iterator;
 
-  SyscallSet(const SyscallSet& ss) : set_(ss.set_) {}
-  ~SyscallSet() {}
+  SyscallSet(const SyscallSet& ss) = default;
+  ~SyscallSet() = default;
 
   Iterator begin() const;
   Iterator end() const;
@@ -74,7 +74,7 @@ class SyscallSet::Iterator
  public:
   Iterator(const Iterator& it)
       : set_(it.set_), done_(it.done_), num_(it.num_) {}
-  ~Iterator() {}
+  ~Iterator() = default;
 
   uint32_t operator*() const;
   Iterator& operator++();
