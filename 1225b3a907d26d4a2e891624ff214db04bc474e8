@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ced864_5f7ff309",
+        "filename": "ui/gfx/vsync_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "nit: can we keep this as a pure interface?\nnit2: maybe GetVSyncParametersIfAvailable. \"GetVSyncParametersSync\" suggests blocking synchronization but I don\u0027t think that\u0027s intended here.",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae2735a_48f36863",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "This could be called without a context current, e.g. if the context has been lost. In that case, we need to pass |false| instead of |true|. See also e.g. GLES2DecoderImpl::Destroy. Unfortunately there is no good way of passing that information through currently. I suppose we could use a proxy of checking if the expected context is current (see comment below about tracking the context)?",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3ceb47_82dd152e",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "In theory, a GLSurface can be used with different GLContexts over its lifetime. While this isn\u0027t currently the case for the browser, this is something that we want to do in the future (to reduce the number of contexts), in particular post-viz.\n\nThe problem is that a GPUTimingClient (or its GPUTimers) corresponds to a given GLContext, and shouldn\u0027t be used while other contexts are current.\nMaybe we don\u0027t have to support the case right now, but we then need to defend against it. The only way I can think of is to keep a reference to the GLContext, and make sure that particular one is current before accessing gpu_timing_client_ / timers.",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fde3d3_671f2ef9",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "Timing queries may not be available (you can check with gpu_timing_client_-\u003eIsAvailable()), in which case we shouldn\u0027t try to use them. I believe using the timer here will DCHECK if not supported.",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87fb4d9_df1fb671",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "nit: typo \"immediately\"",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d078d02_e86b8fa9",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "It sounds like this is trying to guess the implementation of the VSyncProvider. Maybe it would be preferable to add an API on VSyncProvider that explains whether GetVSyncParametersSync (or renamed to GetVSyncParametersIfAvailable) is expected to return true?",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16964103_c6535a2f",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "Before getting the timestamps, you need to check gpu_timing_client_-\u003eCheckAndResetTimerErrors() and discard the all the timers if it returns false (because a \"disjoint\" event occurred, invalidating all results).",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a4519c_e7fa653c",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s really better to do this than the case above, because FixedVSyncProvider has a timebase and interval that are completely arbitrary. I think the time we finished rendering (timestamp before adjustment) is more valuable.",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eea10c_97260741",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "nit: which -\u003e whose\ntimestmap -\u003e timestamp\nfinish -\u003e finished",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bdcaf3_c8495557",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "We could use a future computed vsync based on vsync_timebase_ + n*vsync_interval_. I don\u0027t think we generally promise that vsync_timebase_ is the actual time of the latest vsync currently, in particular with SGIVideoSyncVSyncProvider. Is there a strong reason to wait for a future vsync?",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ca3926_d19f4b74",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "nit: \"task_is_pending_\" is not very descriptive. Maybe \"waiting_for_vsync_parameters_\" or something?",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97dffcf_eb9bddc6",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "Should this use the weak_ptr_factory_ instead of Unretained? The VSyncProvider (at least the SGIVideoSyncVSyncProvider one) doesn\u0027t guarantee the callback isn\u0027t called after its destruction.",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adcc9b2_96074a6f",
+        "filename": "ui/gl/gl_surface_glx.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:27:08Z",
+      "side": 1,
+      "message": "nit: can you make a real struct?\nstruct Frame {\n  std::unique_ptr\u003cGPUTimer\u003e timer;\n  PresentationCallback callback;\n};\n\nbecause \"timer\" and \"callback\" are much more expressive than \"first\" and \"second\".",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
