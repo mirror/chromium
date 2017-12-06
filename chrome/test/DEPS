@@ -23,6 +23,9 @@ include_rules = [
   # within content/ and a test within chrome/.
   "+content/public",
 
+  # Below file only for NetworkServiceImpl::CreateForTesting.
+  "+content/network/network_service_impl.h",
+
   "+gin/public",
   "+media/base",
   "+mojo/edk/embedder",

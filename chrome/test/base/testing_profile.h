@@ -428,6 +428,8 @@ class TestingProfile : public Profile {
 
   std::string profile_name_;
 
+  std::unique_ptr<content::mojom::NetworkService> service_;
+
 #if defined(OS_CHROMEOS)
   std::unique_ptr<chromeos::ScopedCrosSettingsTestHelper>
       scoped_cros_settings_test_helper_;
