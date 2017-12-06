@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f0a1dea_ab1f13cc",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-06T01:04:18Z",
+      "side": 1,
+      "message": "When would this be true? Is it when running a first Execute,  initialization fails but closing is scheduled?",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 61
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c1eab0_c10b3334",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-06T01:04:18Z",
+      "side": 1,
+      "message": "Do we need to replace `RunUntilIdle()` calls with `FastForwardUntilNoTasksRemain()` when they happen from within a TearDown?\n\n1) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_downloader_impl_unittest.cc?type\u003dcs\u0026q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d67\n\n2) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_gcm_app_handler_unittest.cc?q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d63\u0026dr\u003dC\n\n3) https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/suggested_articles_observer_unittest.cc?q\u003dfile:components/offline_pages/core/prefetch/.*%5C.cc+%22RunUntilIdle()%22\u0026l\u003d60\u0026dr\u003dC",
+      "range": {
+        "startLine": 213,
+        "startChar": 16,
+        "endLine": 213,
+        "endChar": 45
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ceb627_c2a8e494",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-06T01:04:18Z",
+      "side": 1,
+      "message": "nit: please wrap this and the following similar call with EXPECT_TRUE.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "698cd344784cc0628065c27d77baf167503a10c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

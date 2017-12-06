@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f12a0f3_78329908",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-06T01:04:18Z",
+      "side": 0,
+      "message": "question: is this in fact a bugfix? We shouldn\u0027t be initializing it here anyway, right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 30
+      },
+      "revId": "811e9b1906d1b366ff76c8810429d4920c493e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
