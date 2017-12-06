@@ -1171,6 +1171,8 @@ class CORE_EXPORT LocalFrameView final
 
   PaintController* GetPaintController() { return paint_controller_.get(); }
 
+  void RecordUkmPerformanceMetric(const char* metric, int64_t value);
+
   LayoutSize size_;
 
   typedef HashSet<scoped_refptr<LayoutEmbeddedObject>> EmbeddedObjectSet;
