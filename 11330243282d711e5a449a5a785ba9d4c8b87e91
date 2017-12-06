@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "776f1715_3170c3ab",
+        "filename": "chrome/browser/extensions/api/extension_action/extension_action_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "nit #include \"base/macros.h\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef72771_7331a4d4",
+        "filename": "chrome/browser/extensions/api/extension_action/extension_action_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "I don\u0027t get why Optional is required here. The empty optional value (nullopt) is never used.",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29be4b8_18546fd1",
+        "filename": "chrome/browser/extensions/extension_action_storage_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "optional nit: This can probably be clarified better. Maybe something like:\n\nOnly default settings need to be persisted to disk. Per-Tab settings can\u0027t be persisted across browser sessions.",
+      "range": {
+        "startLine": 237,
+        "startChar": 14,
+        "endLine": 237,
+        "endChar": 51
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bb2922_c7d2b39e",
+        "filename": "extensions/browser/state_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\" for DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358f8f2a_944c1c37",
+        "filename": "extensions/browser/state_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "Rename to TestObserver to make it clear that it is only used in tests.",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ece9b5_bcbec910",
+        "filename": "extensions/browser/state_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-06T00:12:51Z",
+      "side": 1,
+      "message": "optional nit: Change to WillSetExtensionValue for consistency.",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "11330243282d711e5a449a5a785ba9d4c8b87e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
