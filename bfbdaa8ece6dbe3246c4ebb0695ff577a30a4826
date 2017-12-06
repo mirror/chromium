@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfcfbe49_7d4a939c",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T16:25:48Z",
+      "side": 1,
+      "message": "This is the same as the fallthrough code at the bottom, so is this even needed?  If you feel this is clearer, that\u0027s fine.",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 27
+      },
+      "revId": "bfbdaa8ece6dbe3246c4ebb0695ff577a30a4826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
