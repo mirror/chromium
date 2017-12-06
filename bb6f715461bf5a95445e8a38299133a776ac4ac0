@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "acd51fa2_07e04d23",
+        "filename": "cc/paint/skia_paint_canvas.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-06T19:09:03Z",
+      "side": 1,
+      "message": "This seems like an odd use of a macro. How about:\n\nclass PaintForRaster {\nPaintForRaster(flags, canvas, image_provider) {\n// same logic as here\n}\n\nconst SkPaint\u0026 paint() { return paint_; }\n\nprivate:\nSkPaint paint_;\nbase::Optional\u003cScopedImageFlags\u003e scoped_flags_;\n};",
+      "parentUuid": "be09489f_e94ed804",
+      "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b2d066f_3cad5a4e",
         "filename": "cc/paint/skia_paint_canvas.cc",
         "patchSetId": 4
@@ -66,6 +84,29 @@
       "writtenOn": "2017-12-06T04:36:06Z",
       "side": 1,
       "message": "Nit: spurious line",
+      "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58281b0e_b806fa2d",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-06T19:09:03Z",
+      "side": 1,
+      "message": "I can understand this being different for canvas as well, but it would still be nice to define all these things somewhere common.. fine to save for later though, but please add a crbug if so",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 41
+      },
       "revId": "bb6f715461bf5a95445e8a38299133a776ac4ac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
