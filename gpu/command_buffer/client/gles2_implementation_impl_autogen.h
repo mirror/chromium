@@ -3574,21 +3574,41 @@ void GLES2Implementation::EndRasterCHROMIUM() {
   CheckGLError();
 }
 
-void GLES2Implementation::DeleteTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
+void GLES2Implementation::CreateTransferCacheEntryINTERNAL(
+    GLuint64 handle_id,
+    GLuint handle_shm_id,
+    GLuint handle_shm_offset,
+    GLuint type,
+    GLuint data_shm_id,
+    GLuint data_shm_offset,
+    GLuint data_size) {
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix()
-                     << "] glDeleteTransferCacheEntryCHROMIUM(" << handle_id
-                     << ")");
-  helper_->DeleteTransferCacheEntryCHROMIUM(handle_id);
+                     << "] glCreateTransferCacheEntryINTERNAL(" << handle_id
+                     << ", " << handle_shm_id << ", " << handle_shm_offset
+                     << ", " << type << ", " << data_shm_id << ", "
+                     << data_shm_offset << ", " << data_size << ")");
+  helper_->CreateTransferCacheEntryINTERNAL(
+      handle_id, handle_shm_id, handle_shm_offset, type, data_shm_id,
+      data_shm_offset, data_size);
   CheckGLError();
 }
 
-void GLES2Implementation::UnlockTransferCacheEntryCHROMIUM(GLuint64 handle_id) {
+void GLES2Implementation::DeleteTransferCacheEntryINTERNAL(GLuint64 handle_id) {
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix()
-                     << "] glUnlockTransferCacheEntryCHROMIUM(" << handle_id
+                     << "] glDeleteTransferCacheEntryINTERNAL(" << handle_id
                      << ")");
-  helper_->UnlockTransferCacheEntryCHROMIUM(handle_id);
+  helper_->DeleteTransferCacheEntryINTERNAL(handle_id);
+  CheckGLError();
+}
+
+void GLES2Implementation::UnlockTransferCacheEntryINTERNAL(GLuint64 handle_id) {
+  GPU_CLIENT_SINGLE_THREAD_CHECK();
+  GPU_CLIENT_LOG("[" << GetLogPrefix()
+                     << "] glUnlockTransferCacheEntryINTERNAL(" << handle_id
+                     << ")");
+  helper_->UnlockTransferCacheEntryINTERNAL(handle_id);
   CheckGLError();
 }
 
