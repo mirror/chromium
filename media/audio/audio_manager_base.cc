@@ -23,6 +23,7 @@
 #include "media/audio/fake_audio_input_stream.h"
 #include "media/audio/fake_audio_output_stream.h"
 #include "media/base/media_switches.h"
+#include "media/mojo/services/mojo_audio_debug_recording_file_provider.h"
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 #include "media/audio/audio_input_stream_data_interceptor.h"
@@ -517,11 +518,11 @@ void AudioManagerBase::InitializeDebugRecording() {
 }
 
 void AudioManagerBase::EnableDebugRecording(
-    const base::FilePath& base_file_name) {
+    mojom::AudioDebugRecordingFileProviderPtr file_provider) {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   DCHECK(debug_recording_manager_)
       << "InitializeDebugRecording() must be called before enabling";
-  debug_recording_manager_->EnableDebugRecording(base_file_name);
+  debug_recording_manager_->EnableDebugRecording(std::move(file_provider));
 }
 
 void AudioManagerBase::DisableDebugRecording() {

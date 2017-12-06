@@ -516,11 +516,13 @@ void WebRTCInternals::EnableAudioDebugRecordingsOnAllRenderProcessHosts() {
   // on the UI thread, which we're on.
   // AudioManager is deleted on the audio thread, and the AudioManager outlives
   // this object, so it's safe to post unretained to the audio thread.
+  /*
   media::AudioManager* audio_manager = media::AudioManager::Get();
   audio_manager->GetTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&media::AudioManager::EnableDebugRecording,
                                 base::Unretained(audio_manager),
                                 audio_debug_recordings_file_path_));
+                                */
 }
 
 void WebRTCInternals::EnableLocalEventLogRecordingsOnAllRenderProcessHosts() {

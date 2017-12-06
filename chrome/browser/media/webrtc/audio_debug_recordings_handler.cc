@@ -113,9 +113,11 @@ void AudioDebugRecordingsHandler::DoStartAudioDebugRecordings(
   // AudioManager is deleted on the audio thread, and the AudioManager outlives
   // this object, which is owned by content::RenderProcessHost, so it's safe to
   // post unretained.
+  /*
   audio_manager_->GetTaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(&media::AudioManager::EnableDebugRecording,
                                 base::Unretained(audio_manager_), prefix_path));
+                                */
 
   if (delay.is_zero()) {
     const bool is_stopped = false, is_manual_stop = false;

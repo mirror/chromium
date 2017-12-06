@@ -18,6 +18,7 @@
 #include "media/audio/audio_debug_recording_helper.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/media_export.h"
+#include "media/mojo/interfaces/audio_debug_recording_file_provider.mojom.h"
 
 namespace base {
 class FilePath;
@@ -65,7 +66,8 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   virtual ~AudioDebugRecordingManager();
 
   // Enables and disables debug recording.
-  virtual void EnableDebugRecording(const base::FilePath& base_file_name);
+  virtual void EnableDebugRecording(
+      mojom::AudioDebugRecordingFileProviderPtr file_provider);
   virtual void DisableDebugRecording();
 
   // Registers a source and returns a wrapped recorder. |file_name_extension| is
@@ -107,9 +109,9 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // Recorders, one per source.
   DebugRecordingHelperMap debug_recording_helpers_;
 
-  // The base file name for debug recording files. If this is non-empty, debug
-  // recording is enabled.
-  base::FilePath debug_recording_base_file_name_;
+  // The file provider for obtaining debug recording file handless. If this is
+  // non-nullptr, debug recording is enabled.
+  mojom::AudioDebugRecordingFileProviderPtr debug_recording_file_provider_;
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);

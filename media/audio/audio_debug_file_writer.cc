@@ -141,7 +141,8 @@ void WriteWavHeader(WavHeaderBuffer* buf,
 class AudioDebugFileWriter::AudioFileWriter {
  public:
   static AudioFileWriterUniquePtr Create(
-      const base::FilePath& file_name,
+      mojom::AudioDebugRecordingFileProviderPtr file_provider,
+      const base::FilePath& file_suffix,
       const AudioParameters& params,
       scoped_refptr<base::SequencedTaskRunner> task_runner);
 
@@ -161,6 +162,7 @@ class AudioDebugFileWriter::AudioFileWriter {
   void WriteHeader();
 
   void CreateRecordingFile(const base::FilePath& file_name);
+  void OnGetFileHandle(base::File file);
 
   // The file to write to.
   base::File file_;
@@ -182,7 +184,8 @@ class AudioDebugFileWriter::AudioFileWriter {
 // static
 AudioDebugFileWriter::AudioFileWriterUniquePtr
 AudioDebugFileWriter::AudioFileWriter::Create(
-    const base::FilePath& file_name,
+    mojom::AudioDebugRecordingFileProviderPtr file_provider,
+    const base::FilePath& file_suffix,
     const AudioParameters& params,
     scoped_refptr<base::SequencedTaskRunner> task_runner) {
   AudioFileWriterUniquePtr file_writer(new AudioFileWriter(params),
@@ -191,9 +194,9 @@ AudioDebugFileWriter::AudioFileWriter::Create(
   // base::Unretained is safe, because destructor is called on
   // |task_runner|.
   task_runner->PostTask(
-      FROM_HERE,
-      base::Bind(&AudioFileWriter::CreateRecordingFile,
-                 base::Unretained(file_writer.get()), file_name));
+      FROM_HERE, base::BindRepeating(&AudioFileWriter::CreateRecordingFile,
+                                     base::Unretained(file_writer.get()),
+                                     std::move(file_provider), file_suffix));
   return file_writer;
 }
 
@@ -249,14 +252,12 @@ void AudioDebugFileWriter::AudioFileWriter::WriteHeader() {
   file_.Seek(base::File::FROM_BEGIN, kWavHeaderSize);
 }
 
-void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
-    const base::FilePath& file_name) {
+void AudioDebugFileWriter::AudioFileWriter::OnGetFileHandle(base::File file) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::AssertBlockingAllowed();
   DCHECK(!file_.IsValid());
 
-  file_ = base::File(file_name,
-                     base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  file_ = std::move(file);
 
   if (file_.IsValid()) {
     WriteHeader();
@@ -274,6 +275,15 @@ void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
               << file_.error_details();
 }
 
+void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
+    mojom::AudioDebugRecordingFileProviderPtr file_provider,
+    const base::FilePath& file_suffix) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  file_provider->GetFileHandle(
+      file_suffix, base::BindOnce(OnGetFileHandle, base::Unretained(this)));
+}
+
 AudioDebugFileWriter::AudioDebugFileWriter(const AudioParameters& params)
     : params_(params),
       file_writer_(nullptr, base::OnTaskRunnerDeleter(nullptr)) {
@@ -284,10 +294,13 @@ AudioDebugFileWriter::~AudioDebugFileWriter() {
   // |file_writer_| will be deleted on |task_runner_|.
 }
 
-void AudioDebugFileWriter::Start(const base::FilePath& file_name) {
+void AudioDebugFileWriter::Start(
+    mojom::AudioDebugRecordingFileProviderPtr file_provider,
+    const base::FilePath& file_suffix) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(client_sequence_checker_);
   DCHECK(!file_writer_);
-  file_writer_ = AudioFileWriter::Create(file_name, params_, file_task_runner_);
+  file_writer_ = AudioFileWriter::Create(file_provider, file_name, params_,
+                                         file_task_runner_);
 }
 
 void AudioDebugFileWriter::Stop() {
