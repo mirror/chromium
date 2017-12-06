@@ -9,6 +9,8 @@
 
 #include "base/macros.h"
 #include "base/power_monitor/power_observer.h"
+#include "content/common/media/peer_connection_tracker.mojom.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 
 struct PeerConnectionInfo;
@@ -25,8 +27,11 @@ class WebRTCEventLogHost;
 // managed by RenderProcessHostImpl. It receives PeerConnection events from
 // PeerConnectionTracker as IPC messages that it forwards to WebRTCInternals.
 // It also forwards browser process events to PeerConnectionTracker via IPC.
-class PeerConnectionTrackerHost : public BrowserMessageFilter,
-                                  public base::PowerObserver {
+class PeerConnectionTrackerHost
+    : public BrowserMessageFilter,
+      public base::PowerObserver,
+      public BrowserAssociatedInterface<mojom::PeerConnectionTrackerHost>,
+      public mojom::PeerConnectionTrackerHost {
  public:
   PeerConnectionTrackerHost(
       int render_process_id,
@@ -48,7 +53,7 @@ class PeerConnectionTrackerHost : public BrowserMessageFilter,
  private:
   // Handlers for peer connection messages coming from the renderer.
   void OnAddPeerConnection(const PeerConnectionInfo& info);
-  void OnRemovePeerConnection(int lid);
+  void RemovePeerConnection(int lid) override;
   void OnUpdatePeerConnection(
       int lid, const std::string& type, const std::string& value);
   void OnAddStats(int lid, const base::ListValue& value);
