@@ -141,6 +141,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e6a1d0_05738962",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-06T02:20:29Z",
+      "side": 1,
+      "message": "What do you think about using a pointer which can be null, instead of MAX (see latest patchset)?",
+      "parentUuid": "bbabb85a_4151205a",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
