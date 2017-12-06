@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40724609_a1e631c4",
+        "filename": "chrome/app/android/chrome_main_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-06T17:07:38Z",
+      "side": 0,
+      "message": "sorry i\u0027m slow but where is this getting set now? A bunch of metrics still use the value",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
