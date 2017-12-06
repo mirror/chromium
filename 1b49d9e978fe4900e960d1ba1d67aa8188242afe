@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbc2a75b_879d18a9",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-06T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb332fce_ed051c31",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55592c9_2b21974c",
         "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7d8d33a8_9f1fb4b6",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-06T23:30:49Z",
+      "side": 1,
+      "message": "Yeah, sorry! This is why the tests are failing on Android. I wrote another comment and fixed it, but the kNumPermissionsShown lines are still as-is. Resolving here but LMK if the new changes are OK.",
+      "parentUuid": "a55592c9_2b21974c",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20786896_b8e2b34d",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c17144_a25c63ab",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-06T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20786896_b8e2b34d",
+      "revId": "1b49d9e978fe4900e960d1ba1d67aa8188242afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
