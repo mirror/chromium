@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94ec36f1_284c3807",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "What about line 223? There\u0027s a return statement after a successful run.",
+      "range": {
+        "startLine": 195,
+        "startChar": 71,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fd8d86_1305198f",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "Instead of having the SwReporterInstallerPolicy have several fields which are only set through the organic flow, what about having an optional member object which contains all of these fields?",
+      "range": {
+        "startLine": 435,
+        "startChar": 26,
+        "endLine": 435,
+        "endChar": 0
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d672a0_c4cc1e96",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "The \"Events\" type should have a bit more context. I think it would be better to have the full namespace here for clarity and below.",
+      "range": {
+        "startLine": 441,
+        "startChar": 47,
+        "endLine": 441,
+        "endChar": 52
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe0a07a_afee4fc0",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "s/Just need to remove this object.../ Remove this object from ... in order to prevent foo",
+      "range": {
+        "startLine": 449,
+        "startChar": 50,
+        "endLine": 449,
+        "endChar": 54
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda03e97_6a019c99",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "Nit: remove line break.",
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86146cc3_2f01d2e4",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "This class is getting large enough that we should probably move it to its own file.",
+      "range": {
+        "startLine": 66,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6448a0f_4586f504",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "nit for clarity:\n\nis up to date.\nThis is used by user-initiated SwReporter runs.",
+      "range": {
+        "startLine": 110,
+        "startChar": 62,
+        "endLine": 110,
+        "endChar": 63
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d0d850_26dddbb1",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "nit: \"so no smart pointer can be used here\".\n\nInstead mention the expected lifetime of the object. Do we expect it to outlive this class?",
+      "range": {
+        "startLine": 122,
+        "startChar": 58,
+        "endLine": 122,
+        "endChar": 62
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e57a89_83e5665d",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "nit: maybe add quotes around \"component not available\" and \"invalid manifest\"",
+      "range": {
+        "startLine": 133,
+        "startChar": 22,
+        "endLine": 133,
+        "endChar": 31
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f34267e_e580ac4e",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "Please add a comment to describe the expected lifetime of this raw pointer.",
+      "range": {
+        "startLine": 136,
+        "startChar": 40,
+        "endLine": 136,
+        "endChar": 41
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a177f53_c1f0e0d3",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "I don\u0027t understand the second sentence.",
+      "range": {
+        "startLine": 151,
+        "startChar": 49,
+        "endLine": 151,
+        "endChar": 51
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b75871c_f37a2f73",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-06T20:25:30Z",
+      "side": 1,
+      "message": "It seems weird that a \"SwReporterInstallerPolicy\" object has a method that isn\u0027t related to policy. Should this be a static method, or in a different class?",
+      "range": {
+        "startLine": 153,
+        "startChar": 45,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
