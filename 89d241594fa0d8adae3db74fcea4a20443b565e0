@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "773d4671_f27489e1",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-06T12:09:17Z",
+      "side": 1,
+      "message": "General guidelines on Chrome are not to spam log, so anything except VLOG will be not appropriate here. However, temporary we could do the trick that Xiyuan pointed to - consolidated place to enable verbose logs for such debugging.",
+      "parentUuid": "d8f06ed6_e4e87ca3",
+      "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0f57da4_1d5d9a1c",
         "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bf6949_a1afc9c2",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-06T12:09:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f57da4_1d5d9a1c",
+      "revId": "89d241594fa0d8adae3db74fcea4a20443b565e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
