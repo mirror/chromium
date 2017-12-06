@@ -356,6 +356,24 @@
     },
     {
       "key": {
+        "uuid": "78ec2241_dc0d11bc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-06T10:15:28Z",
+      "side": 1,
+      "message": "My concern was that the function name \"AuthenticateUser\" does not reflect what the function does. It authenticates the user and does a couple of other things (opening another bubble and revealing passwords).",
+      "parentUuid": "2d4c4b28_df5a413c",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888cedbb_1d2d4e23",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 18
