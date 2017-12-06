@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 import static org.chromium.webapk.lib.client.WebApkVersion.CURRENT_SHELL_APK_VERSION;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import org.chromium.webapk.test.WebApkTestHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,6 +72,7 @@ public class WebApkUpdateManagerUnitTest {
     private static final String SCOPE_URL = "/";
     private static final String NAME = "Long Name";
     private static final String SHORT_NAME = "Short Name";
+    private static final String SHARE_URL_TEMPLATE = "/share?text={text}";
     private static final String PRIMARY_ICON_URL = "/icon.png";
     private static final String PRIMARY_ICON_MURMUR2_HASH = "3";
     private static final String BADGE_ICON_URL = "/badge.png";
@@ -174,6 +177,7 @@ public class WebApkUpdateManagerUnitTest {
         public String scopeUrl;
         public String name;
         public String shortName;
+        public String shareUrlTemplate;
         public Map<String, String> iconUrlToMurmur2HashMap;
         public String primaryIconUrl;
         public Bitmap primaryIcon;
@@ -223,7 +227,14 @@ public class WebApkUpdateManagerUnitTest {
         metaData.putString(
                 WebApkMetaDataKeys.ICON_URLS_AND_ICON_MURMUR2_HASHES, iconUrlsAndIconMurmur2Hashes);
 
-        WebApkTestHelper.registerWebApkWithMetaData(packageName, metaData);
+        ArrayList<ActivityInfo> activities = new ArrayList<>();
+        ActivityInfo activityInfo = new ActivityInfo();
+        activityInfo.metaData = new Bundle();
+        activityInfo.metaData.putString(
+                WebApkMetaDataKeys.SHARE_TEMPLATE, manifestData.shareUrlTemplate);
+        activities.add(activityInfo);
+
+        WebApkTestHelper.registerWebApkWithMetaData(packageName, metaData, activities);
     }
 
     private static ManifestData defaultManifestData() {
@@ -232,6 +243,7 @@ public class WebApkUpdateManagerUnitTest {
         manifestData.scopeUrl = SCOPE_URL;
         manifestData.name = NAME;
         manifestData.shortName = SHORT_NAME;
+        manifestData.shareUrlTemplate = SHARE_URL_TEMPLATE;
 
         manifestData.iconUrlToMurmur2HashMap = new HashMap<>();
         manifestData.iconUrlToMurmur2HashMap.put(PRIMARY_ICON_URL, PRIMARY_ICON_MURMUR2_HASH);
@@ -255,10 +267,10 @@ public class WebApkUpdateManagerUnitTest {
         return WebApkInfo.create(getWebApkId(kPackageName), "", manifestData.scopeUrl,
                 new WebApkInfo.Icon(manifestData.primaryIcon),
                 new WebApkInfo.Icon(manifestData.badgeIcon), manifestData.name,
-                manifestData.shortName, manifestData.displayMode, manifestData.orientation, -1,
-                manifestData.themeColor, manifestData.backgroundColor, kPackageName, -1,
-                WEB_MANIFEST_URL, manifestData.startUrl, manifestData.iconUrlToMurmur2HashMap,
-                false /* forceNavigation */);
+                manifestData.shortName, manifestData.shareUrlTemplate, manifestData.displayMode,
+                manifestData.orientation, -1, manifestData.themeColor, manifestData.backgroundColor,
+                kPackageName, -1, WEB_MANIFEST_URL, manifestData.startUrl,
+                manifestData.iconUrlToMurmur2HashMap, false /* forceNavigation */);
     }
 
     /**
@@ -649,7 +661,7 @@ public class WebApkUpdateManagerUnitTest {
     }
 
     @Test
-    public void testManifestDoesNotUpgrade() {
+    public void testUnchangedManifestShouldNotUpgrade() {
         assertFalse(
                 checkUpdateNeededForFetchedManifest(defaultManifestData(), defaultManifestData()));
     }
@@ -812,6 +824,24 @@ public class WebApkUpdateManagerUnitTest {
         fetchedManifestData.iconUrlToMurmur2HashMap.put(badgeUrl2, hash4);
 
         assertFalse(checkUpdateNeededForFetchedManifest(androidManifestData, fetchedManifestData));
+    }
+
+    /**
+     * Test that an upgrade is requested when the share target URL template in the Web Manifest is
+     * changed.
+     */
+    @Test
+    public void testShareUrlTemplateChangedShouldUpgrade() {
+        final String newShareUrlTemplate = "/new_share?text={text}";
+        final String oldShareUrlTemplate = "/old_share?text={text}";
+
+        ManifestData androidManifestData = defaultManifestData();
+        androidManifestData.shareUrlTemplate = newShareUrlTemplate;
+
+        ManifestData fetchedManifestData = defaultManifestData();
+        fetchedManifestData.shareUrlTemplate = oldShareUrlTemplate;
+
+        assertTrue(checkUpdateNeededForFetchedManifest(androidManifestData, fetchedManifestData));
     }
 
     /**
