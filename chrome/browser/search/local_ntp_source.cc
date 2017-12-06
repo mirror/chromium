@@ -448,7 +448,6 @@ LocalNtpSource::LocalNtpSource(Profile* profile)
       one_google_bar_service_observer_(this),
       logo_service_(nullptr),
       default_search_provider_is_google_(false),
-      default_search_provider_is_google_io_thread_(false),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -642,11 +641,7 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
 #endif  // !defined(GOOGLE_CHROME_BUILD)
 
   return base::StringPrintf(
-      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s' 'sha256-%s';",
-      GetIntegritySha256Value(
-          GetConfigData(default_search_provider_is_google_io_thread_,
-                        google_base_url_io_thread_))
-          .c_str(),
+      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s';",
       LOCAL_NTP_JS_INTEGRITY, VOICE_JS_INTEGRITY);
 }
 
@@ -709,34 +704,12 @@ void LocalNtpSource::DefaultSearchProviderIsGoogleChanged(bool is_google) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   default_search_provider_is_google_ = is_google;
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread,
-          weak_ptr_factory_.GetWeakPtr(), is_google));
-}
-
-void LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread(
-    bool is_google) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  default_search_provider_is_google_io_thread_ = is_google;
 }
 
 void LocalNtpSource::GoogleBaseUrlChanged(const GURL& google_base_url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   google_base_url_ = google_base_url;
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&LocalNtpSource::SetGoogleBaseUrlOnIOThread,
-                     weak_ptr_factory_.GetWeakPtr(), google_base_url));
-}
-
-void LocalNtpSource::SetGoogleBaseUrlOnIOThread(const GURL& google_base_url) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  google_base_url_io_thread_ = google_base_url;
 }
 
 LocalNtpSource::OneGoogleBarRequest::OneGoogleBarRequest(
