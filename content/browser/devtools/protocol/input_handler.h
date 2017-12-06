@@ -153,11 +153,13 @@ class InputHandler : public DevToolsDomainHandler,
   RenderFrameHostImpl* host_;
   // Callbacks for calls to Input.dispatchKey/MouseEvent that have been sent to
   // the renderer, but that we haven't yet received an ack for.
-  bool input_queued_;
+  int input_queued_;
   base::circular_deque<std::unique_ptr<DispatchKeyEventCallback>>
       pending_key_callbacks_;
   base::circular_deque<std::unique_ptr<DispatchMouseEventCallback>>
       pending_mouse_callbacks_;
+  base::circular_deque<std::unique_ptr<DispatchTouchEventCallback>>
+      pending_touch_callbacks_;
   float page_scale_factor_;
   gfx::SizeF scrollable_viewport_size_;
   int last_id_;
