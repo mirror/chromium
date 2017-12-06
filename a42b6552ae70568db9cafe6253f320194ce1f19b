@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43c50db0_636219d3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3a22a4_5c22bb81",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298bfd11_9d038875",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T01:31:38Z",
       "side": 1,
       "message": "Ahh, so this refers to non-minimal CBOR encoding, not non-minimal UTF-8 encoding.\n\n(Does base::IsStringUTF8 check for non-minimal UTF-8 encoding? It might not, I\u0027m not sure.)",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fba85ed_f2aa970f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "I believe so. The unittest case for base::IsStringUTF8 includes test for overlong sequences. \n\nhttps://cs.chromium.org/chromium/src/base/strings/string_util_unittest.cc?rcl\u003d04349b4ff2adfb7fab7a44f19d9889d537d7d6c8\u0026l\u003d339\n\nPlease let me know if I\u0027m missing anything!",
+      "parentUuid": "298bfd11_9d038875",
       "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e31560e8_ad47e212",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987bf099_8e7c4eaf",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6fe5b1_7d47feb6",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 24
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2bac38b6_3fbfab8a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Changed error code name to avoid confusion.",
+      "parentUuid": "1b6fe5b1_7d47feb6",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffad4149_676e803e",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 24
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-06T01:31:38Z",
       "side": 1,
       "message": "It\u0027d be good to have a negative unit test for this check.",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17aa6048_eb2597bc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Negative test is included in CBORReaderTest/TestDuplicateKeyError  (cbor_reader_unittest.cc line 436).",
+      "parentUuid": "ffad4149_676e803e",
       "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ba75fdac_f3d3577f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Negative test is included in CBORReaderTest/TestOutOfOrderKeyError  (cbor_reader_unittest.cc line 404). :)",
+      "parentUuid": "56b31879_94211f8a",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af8d5e19_5025ec6a",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 24
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9245b411_52e36ca9",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "Yes. The value of enum follows the exact CBOR major type value. Since negative integer types (1) are not implemented, it is skipped. \n\nThe CL for implementing negative integer type is https://chromium-review.googlesource.com/c/chromium/src/+/777807 and upstreams this CL.",
+      "parentUuid": "af8d5e19_5025ec6a",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c2ecd48_c2171ae9",
         "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
         "patchSetId": 24
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-06T01:34:46Z",
       "side": 1,
       "message": "Where do the inputs come from? Are they purely random, or do we seed them from a corpus of valid and invalid CBOR objects?",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246903a5_37d231b8",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-06T02:30:53Z",
+      "side": 1,
+      "message": "The input bytes are generated purely randomly.",
+      "parentUuid": "0c2ecd48_c2171ae9",
       "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
