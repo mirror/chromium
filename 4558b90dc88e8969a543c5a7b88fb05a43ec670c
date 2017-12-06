@@ -22,6 +22,30 @@
       "revId": "4558b90dc88e8969a543c5a7b88fb05a43ec670c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0c523a_0c14e5fa",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-06T16:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c9886f_45b7b6f9",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 59
+      },
+      "revId": "4558b90dc88e8969a543c5a7b88fb05a43ec670c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
