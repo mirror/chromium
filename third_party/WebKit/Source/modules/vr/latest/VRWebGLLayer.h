@@ -53,8 +53,8 @@ class VRWebGLLayer final : public VRLayer {
 
   void UpdateViewports();
 
-  virtual void OnFrameStart();
-  virtual void OnFrameEnd();
+  void OnFrameStart() override;
+  void OnFrameEnd() override;
 
   virtual void Trace(blink::Visitor*);
 

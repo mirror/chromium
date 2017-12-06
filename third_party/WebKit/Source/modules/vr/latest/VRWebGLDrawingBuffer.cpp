@@ -86,13 +86,11 @@ VRWebGLDrawingBuffer::VRWebGLDrawingBuffer(
     bool want_stencil_buffer,
     bool multiview_supported)
     : webgl_context_(webgl_context),
-      antialias_(false),
+      discard_framebuffer_supported_(discard_framebuffer_supported),
       depth_(want_depth_buffer),
       stencil_(want_stencil_buffer),
       alpha_(want_alpha_channel),
-      multiview_(false) {
-  contents_changed_ = true;  // TODO: Obviously something better than this.
-}
+      multiview_(multiview_supported) {}
 
 // TODO(bajones): The GL resources allocated in this function are leaking. Add
 // a way to clean up the buffers when the layer is GCed or the session ends.
@@ -252,8 +250,15 @@ void VRWebGLDrawingBuffer::Resize(const IntSize& new_size) {
   client->DrawingBufferClientRestoreFramebufferBinding();
 }
 
-void VRWebGLDrawingBuffer::MarkFramebufferComplete(bool complete) {
-  framebuffer_->MarkOpaqueBufferComplete(complete);
+void VRWebGLDrawingBuffer::Activate() {
+  framebuffer_->MarkOpaqueBufferComplete(true);
+  framebuffer_->SetHasChanged(false);
+}
+
+bool VRWebGLDrawingBuffer::Finish() {
+  framebuffer_->MarkOpaqueBufferComplete(false);
+  contents_changed_ = framebuffer_->HasChanged();
+  return contents_changed_;
 }
 
 GLuint VRWebGLDrawingBuffer::CreateColorBuffer() {
@@ -335,7 +340,54 @@ void VRWebGLDrawingBuffer::SwapColorBuffers() {
                              GL_TEXTURE_2D, back_color_buffer_, 0);
   }
 
+  // VRWebGLDrawingBuffer does not support preserveDrawingBuffer symatics, so
+  // newly attached buffers are always discarded or cleared.
+
+  if (discard_framebuffer_supported_) {
+    // Explicitly specify that fbo_ (which is now bound to back_color_buffer_)
+    // is not initialized, to save GPU memory bandwidth for tile-based GPUs.
+    const GLenum kAttachments[3] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT,
+                                    GL_STENCIL_ATTACHMENT};
+    gl->DiscardFramebufferEXT(GL_FRAMEBUFFER, 3, kAttachments);
+  } else {
+    GLenum clear_bits = GL_COLOR_BUFFER_BIT;
+    if (depth_)
+      clear_bits |= GL_DEPTH_BUFFER_BIT;
+    if (stencil_)
+      clear_bits |= GL_STENCIL_BUFFER_BIT;
+    gl->Clear(clear_bits);
+  }
+
   client->DrawingBufferClientRestoreFramebufferBinding();
+}
+
+gpu::MailboxHolder VRWebGLDrawingBuffer::GetMailbox() {
+  gpu::gles2::GLES2Interface* gl = gl_context();
+
+  if (contents_changed_) {
+    SwapColorBuffers();
+    gl->Flush();
+    contents_changed_ = false;
+  }
+
+  // Contexts may be in a different share group. We must transfer the texture
+  // through a mailbox first.
+  GLenum target = GL_TEXTURE_2D;
+  gpu::Mailbox mailbox;
+  gpu::SyncToken sync_token;
+
+  gl->GenMailboxCHROMIUM(mailbox.name);
+  gl->ProduceTextureDirectCHROMIUM(front_color_buffer_, target, mailbox.name);
+  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
+  gl->Flush();
+  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+
+  if (!sync_token.HasData()) {
+    // This should only happen if the context has been lost.
+    return gpu::MailboxHolder();
+  }
+
+  return gpu::MailboxHolder(mailbox, sync_token, target);
 }
 
 void VRWebGLDrawingBuffer::Trace(blink::Visitor* visitor) {
