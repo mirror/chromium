@@ -37,8 +37,7 @@
 #include "url/origin.h"
 
 namespace content {
-
-namespace {
+namespace mime_sniffing_resource_handler_unittest {
 
 class TestResourceDispatcherHostDelegate
     : public ResourceDispatcherHostDelegate {
@@ -156,8 +155,6 @@ class TestFakePluginService : public FakePluginService {
 
   DISALLOW_COPY_AND_ASSIGN(TestFakePluginService);
 };
-
-}  // namespace
 
 class MimeSniffingResourceHandlerTest : public testing::Test {
  public:
@@ -968,4 +965,5 @@ TEST_F(MimeSniffingResourceHandlerTest, FetchShouldDisableMimeSniffing) {
   content::RunAllPendingInMessageLoop();
 }
 
+}  // namespace mime_sniffing_resource_handler_unittest
 }  // namespace content

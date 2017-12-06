@@ -46,6 +46,15 @@ namespace content {
 class BlobConsolidation;
 class ThreadSafeSender;
 
+namespace blob_transport_controller_unittest {
+class BlobTransportControllerTest;
+FORWARD_DECLARE_TEST(BlobTransportControllerTest, Descriptions);
+FORWARD_DECLARE_TEST(BlobTransportControllerTest, Responses);
+FORWARD_DECLARE_TEST(BlobTransportControllerTest, SharedMemory);
+FORWARD_DECLARE_TEST(BlobTransportControllerTest, Disk);
+FORWARD_DECLARE_TEST(BlobTransportControllerTest, ResponsesErrors);
+}  // namespace blob_transport_controller_unittest
+
 // This class is used to manage all the asynchronous transporation of blobs from
 // the Renderer to the Browser process, where it's handling the Renderer side.
 // The function of this class is to:
@@ -102,11 +111,21 @@ class CONTENT_EXPORT BlobTransportController {
  private:
   friend struct base::LazyInstanceTraitsBase<BlobTransportController>;
   friend class BlobTransportControllerTest;
-  FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, Descriptions);
-  FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, Responses);
-  FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, SharedMemory);
-  FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, Disk);
-  FRIEND_TEST_ALL_PREFIXES(BlobTransportControllerTest, ResponsesErrors);
+  FRIEND_TEST_ALL_PREFIXES(
+      blob_transport_controller_unittest::BlobTransportControllerTest,
+      Descriptions);
+  FRIEND_TEST_ALL_PREFIXES(
+      blob_transport_controller_unittest::BlobTransportControllerTest,
+      Responses);
+  FRIEND_TEST_ALL_PREFIXES(
+      blob_transport_controller_unittest::BlobTransportControllerTest,
+      SharedMemory);
+  FRIEND_TEST_ALL_PREFIXES(
+      blob_transport_controller_unittest::BlobTransportControllerTest,
+      Disk);
+  FRIEND_TEST_ALL_PREFIXES(
+      blob_transport_controller_unittest::BlobTransportControllerTest,
+      ResponsesErrors);
 
   enum class ResponsesStatus {
     BLOB_NOT_FOUND,
