@@ -32,6 +32,12 @@ class SequenceSurfaceReferenceFactoryImpl
   SequenceSurfaceReferenceFactoryImpl(base::WeakPtr<SurfaceLayerBridge> bridge)
       : bridge_(bridge) {}
 
+  void SetTemporarySequence(const viz::SurfaceSequence& seq) {
+    if (temporary_sequence_.is_valid())
+      SatisfySequence(temporary_sequence_);
+    temporary_sequence_ = seq;
+  }
+
  private:
   ~SequenceSurfaceReferenceFactoryImpl() override = default;
 
@@ -39,6 +45,10 @@ class SequenceSurfaceReferenceFactoryImpl
   void RequireSequence(const viz::SurfaceId& id,
                        const viz::SurfaceSequence& sequence) const override {
     DCHECK(bridge_);
+    if (temporary_sequence_.is_valid()) {
+      SatisfySequence(temporary_sequence_);
+      temporary_sequence_ = viz::SurfaceSequence();
+    }
     bridge_->RequireCallback(id, sequence);
   }
 
@@ -47,6 +57,7 @@ class SequenceSurfaceReferenceFactoryImpl
       bridge_->SatisfyCallback(sequence);
   }
 
+  mutable viz::SurfaceSequence temporary_sequence_;
   base::WeakPtr<SurfaceLayerBridge> bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(SequenceSurfaceReferenceFactoryImpl);
@@ -104,7 +115,11 @@ void SurfaceLayerBridge::CreateSolidColorLayer() {
 }
 
 void SurfaceLayerBridge::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {
+    const viz::SurfaceInfo& surface_info,
+    const viz::SurfaceSequence& seq) {
+  static_cast<SequenceSurfaceReferenceFactoryImpl*>(ref_factory_.get())
+      ->SetTemporarySequence(seq);
+
   if (!current_surface_id_.is_valid() && surface_info.is_valid()) {
     // First time a SurfaceId is received
     current_surface_id_ = surface_info.id();
