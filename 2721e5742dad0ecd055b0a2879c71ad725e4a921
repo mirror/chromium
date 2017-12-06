@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1731df81_961f3cf7",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-06T03:56:15Z",
+      "side": 1,
+      "message": "This means you accumulate entries in this map forever, never removed.\n\nGiven that this is a \"yes/no\" value, you can maybe use a set\u003cWebContents*\u003e, add a WebContents* into that map when you hide the throbber, and remove it when you show it? That\u0027ll keep things bounded.\n\nAlso, you should probably clear out the WebContents pointer if the tab is closed while the throbber is hidden.",
+      "range": {
+        "startLine": 1650,
+        "startChar": 4,
+        "endLine": 1650,
+        "endChar": 40
+      },
+      "revId": "2721e5742dad0ecd055b0a2879c71ad725e4a921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
