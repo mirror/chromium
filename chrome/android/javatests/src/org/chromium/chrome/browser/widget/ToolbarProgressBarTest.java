@@ -18,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.BaseSwitches;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
@@ -111,6 +112,22 @@ public class ToolbarProgressBarTest {
                 return mProgressBar.getVisibility() == View.VISIBLE;
             }
         });
+    }
+
+    /**
+     * Wait for the progress bar to reach a specified completion fraction and assert that it is
+     * still visible.
+     * @param completeFraction The fraction complete to wait on the progress bar.
+     */
+    private void waitForProgressAndAssertVisible(float completeFraction)
+            throws InterruptedException, TimeoutException {
+        int currentProgressCallCount = mProgressUpdateHelper.getCallCount();
+        while (!MathUtils.areFloatsEqual(getProgress(), completeFraction)) {
+            mProgressUpdateHelper.waitForCallback(currentProgressCallCount, 1);
+            currentProgressCallCount++;
+        }
+
+        assertTrue("Progress bar should still be visible.", isProgressBarVisible());
     }
 
     /**
@@ -219,11 +236,56 @@ public class ToolbarProgressBarTest {
     }
 
     /**
-     * Test that the progress bar completely traverses the screen without animation.
+     * Test that the progress bar throttle animation completely traverses the screen.
      */
     @Test
     @Feature({"Android-Progress-Bar"})
     @MediumTest
+    @Restriction(Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE)
+    public void testProgressBarCompletion_throttledAnimation()
+            throws InterruptedException, TimeoutException {
+        Animator throttleAnimator = mProgressBar.getThrottleAnimatorForTesting();
+        int currentVisibilityCallCount = mProgressVisibilityHelper.getCallCount();
+
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.start());
+        assertFalse("Throttle animation should not be running.", throttleAnimator.isRunning());
+
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.setProgress(0.5f));
+
+        assertTrue("Throttle animation should be running.", throttleAnimator.isRunning());
+
+        // Wait for a visibility change.
+        mProgressVisibilityHelper.waitForCallback(currentVisibilityCallCount, 1);
+        currentVisibilityCallCount++;
+
+        // Wait for progress updates to reach 50%.
+        waitForProgressAndAssertVisible(0.5f);
+
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.finish(true));
+
+        // Wait for progress updates to reach 100%.
+        waitForProgressAndAssertVisible(1.0f);
+
+        // Make sure the progress bar remains visible through completion.
+        assertTrue("Progress bar should still be visible.", isProgressBarVisible());
+
+        assertEquals("Progress should have reached 100%.", 1.0f, getProgress(), MathUtils.EPSILON);
+
+        // Wait for a visibility change now that progress has completed.
+        mProgressVisibilityHelper.waitForCallback(currentVisibilityCallCount, 1);
+
+        assertFalse("Progress bar should not be visible.", isProgressBarVisible());
+        assertFalse("Throttle animation should not be running.", throttleAnimator.isRunning());
+    }
+
+    /**
+     * Test that the progress bar completely traverses the screen without animation. This will only
+     * pass on low-end devices since the progress throttle will be disabled.
+     */
+    @Test
+    @Feature({"Android-Progress-Bar"})
+    @MediumTest
+    @CommandLineFlags.Add(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)
     public void testProgressBarCompletion_noAnimation()
             throws InterruptedException, TimeoutException {
         int currentVisibilityCallCount = mProgressVisibilityHelper.getCallCount();
@@ -275,23 +337,19 @@ public class ToolbarProgressBarTest {
         ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.start());
         assertFalse("Indeterminate animation should not be running.", progressAnimator.isRunning());
 
+        // Wait for a visibility change.
+        mProgressVisibilityHelper.waitForCallback(currentVisibilityCallCount, 1);
+        currentVisibilityCallCount++;
+
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mProgressBar.startIndeterminateAnimationForTesting();
             mProgressBar.setProgress(0.5f);
         });
 
-        // Wait for a visibility change.
-        mProgressVisibilityHelper.waitForCallback(currentVisibilityCallCount, 1);
-        currentVisibilityCallCount++;
-
         assertTrue("Indeterminate animation should be running.", progressAnimator.isRunning());
 
         // Wait for progress updates to reach 50%.
-        int currentProgressCallCount = mProgressUpdateHelper.getCallCount();
-        while (!MathUtils.areFloatsEqual(getProgress(), 0.5f)) {
-            mProgressUpdateHelper.waitForCallback(currentProgressCallCount, 1);
-            currentProgressCallCount++;
-        }
+        waitForProgressAndAssertVisible(0.5f);
 
         // Finish progress with no delay.
         ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.finish(false));
@@ -300,6 +358,44 @@ public class ToolbarProgressBarTest {
         assertFalse("Progress bar should be invisible.", isProgressBarVisible());
 
         assertFalse("Indeterminate animation should not be running.", progressAnimator.isRunning());
+    }
+
+    /**
+     * Test that the progress bar ends throttle immediately if #finish(...) is called with
+     * delay = false.
+     */
+    @Test
+    @Feature({"Android-Progress-Bar"})
+    @MediumTest
+    @Restriction(Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE)
+    public void testProgressBarCompletion_throttledAnimation_noDelay()
+            throws InterruptedException, TimeoutException {
+        Animator throttleAnimator = mProgressBar.getThrottleAnimatorForTesting();
+
+        int currentVisibilityCallCount = mProgressVisibilityHelper.getCallCount();
+
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.start());
+
+        // Wait for a visibility change.
+        mProgressVisibilityHelper.waitForCallback(currentVisibilityCallCount, 1);
+        currentVisibilityCallCount++;
+
+        // No progress has occured yet, the progress throttle should not be started.
+        assertFalse("Throttle animation should not be running.", throttleAnimator.isRunning());
+
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.setProgress(0.5f));
+        assertTrue("Throttle animation should be running.", throttleAnimator.isRunning());
+
+        // Wait for progress updates to reach 50%.
+        waitForProgressAndAssertVisible(0.5f);
+
+        // Finish progress with no delay.
+        ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.finish(false));
+
+        // The progress bar should immediately be invisible.
+        assertFalse("Progress bar should be invisible.", isProgressBarVisible());
+
+        assertFalse("Throttle animation should not be running.", throttleAnimator.isRunning());
     }
 
     /**
@@ -330,19 +426,14 @@ public class ToolbarProgressBarTest {
         assertTrue("Indeterminate animation should be running.", progressAnimator.isRunning());
 
         // Wait for progress updates to reach 50%.
-        int currentProgressCallCount = mProgressUpdateHelper.getCallCount();
-        while (!MathUtils.areFloatsEqual(getProgress(), 0.5f)) {
-            mProgressUpdateHelper.waitForCallback(currentProgressCallCount, 1);
-            currentProgressCallCount++;
-        }
+        waitForProgressAndAssertVisible(0.5f);
 
         // Restart the progress bar.
-        currentProgressCallCount = mProgressUpdateHelper.getCallCount();
+        int currentProgressCallCount = mProgressUpdateHelper.getCallCount();
         ThreadUtils.runOnUiThreadBlocking(() -> mProgressBar.start());
 
         // Wait for progress update.
         mProgressUpdateHelper.waitForCallback(currentProgressCallCount, 1);
-        currentProgressCallCount++;
 
         // Make sure the progress bar remains visible through completion.
         assertTrue("Progress bar should still be visible.", isProgressBarVisible());

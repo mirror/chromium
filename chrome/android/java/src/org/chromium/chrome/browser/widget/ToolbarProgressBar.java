@@ -20,10 +20,10 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ProgressBar;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.ui.UiUtils;
@@ -231,6 +231,14 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
         mUseStatusBarColorAsBackground = useStatusBarColorAsBackground;
         mAnimationLogic = new ProgressAnimationSmooth();
 
+        // TODO(mdjones): Maybe subclass this to be ThrottledToolbarProgressBar.
+        if (!SysUtils.isLowEndDevice()) {
+            mProgressThrottle = new TimeAnimator();
+            mProgressThrottleListener = new ThrottleTimeListener();
+            mProgressThrottle.addListener(mProgressThrottleListener);
+            mProgressThrottle.setTimeListener(mProgressThrottleListener);
+        }
+
         // This tells accessibility services that progress bar changes are important enough to
         // announce to the user even when not focused.
         ViewCompat.setAccessibilityLiveRegion(this, ViewCompat.ACCESSIBILITY_LIVE_REGION_POLITE);
@@ -424,22 +432,20 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
     public void setProgress(float progress) {
         ThreadUtils.assertOnUiThread();
 
-        // TODO(mdjones): Maybe subclass this to be ThrottledToolbarProgressBar.
-        if (mProgressThrottle == null && ChromeFeatureList.isInitialized()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.PROGRESS_BAR_THROTTLE)) {
-            mProgressThrottle = new TimeAnimator();
-            mProgressThrottleListener = new ThrottleTimeListener();
-            mProgressThrottle.addListener(mProgressThrottleListener);
-            mProgressThrottle.setTimeListener(mProgressThrottleListener);
-        }
-
         // Throttle progress if the increment was greater than 5%.
-        if (mProgressThrottle != null
-                && (progress - getProgress() > PROGRESS_THROTTLE_MAX_UPDATE_AMOUNT
-                           || mProgressThrottle.isRunning())) {
-            mProgressThrottleListener.mThrottledProgressTarget = progress;
+        boolean isLargeProgressDiff =
+                progress - getProgress() > PROGRESS_THROTTLE_MAX_UPDATE_AMOUNT;
+        // ... or the progress throttle is already running.
+        boolean wasProgressThrottleRunning =
+                mProgressThrottle != null && mProgressThrottle.isRunning();
 
-            mProgressThrottle.cancel();
+        // Once we determine if the throttle was running, cancel it. Both cases below depend on the
+        // animator being stopped.
+        if (mProgressThrottle != null) mProgressThrottle.cancel();
+
+        if (!mSmoothProgressAnimator.isRunning() && mProgressThrottle != null
+                && (isLargeProgressDiff || wasProgressThrottleRunning)) {
+            mProgressThrottleListener.mThrottledProgressTarget = progress;
             mProgressThrottle.start();
         } else {
             setProgressInternal(progress);
@@ -564,5 +570,13 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
     @VisibleForTesting
     public Animator getIndeterminateAnimatorForTesting() {
         return mSmoothProgressAnimator;
+    }
+
+    /**
+     * @return The throttle animator.
+     */
+    @VisibleForTesting
+    public Animator getThrottleAnimatorForTesting() {
+        return mProgressThrottle;
     }
 }

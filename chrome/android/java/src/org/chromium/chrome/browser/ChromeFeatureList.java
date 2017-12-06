@@ -224,7 +224,6 @@ public abstract class ChromeFeatureList {
     public static final String NTP_SNIPPETS_INCREASED_VISIBILITY = "NTPSnippetsIncreasedVisibility";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";
     public static final String PAY_WITH_GOOGLE_V1 = "PayWithGoogleV1";
-    public static final String PROGRESS_BAR_THROTTLE = "ProgressBarThrottle";
     public static final String PWA_PERSISTENT_NOTIFICATION = "PwaPersistentNotification";
     public static final String READER_MODE_IN_CCT = "ReaderModeInCCT";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
