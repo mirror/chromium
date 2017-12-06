@@ -78,7 +78,8 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
 
 OSMemDumpPtr GetFakeOSMemDump(uint32_t resident_set_kb,
                               uint32_t private_footprint_kb,
-                              uint32_t shared_footprint_kb) {
+                              uint32_t shared_footprint_kb,
+                              uint32_t private_swap_footprint_kb) {
   using memory_instrumentation::mojom::VmRegion;
 
   std::vector<memory_instrumentation::mojom::VmRegionPtr> vm_regions;
@@ -96,7 +97,7 @@ OSMemDumpPtr GetFakeOSMemDump(uint32_t resident_set_kb,
                     200));  // byte_stats_proportional_resident
   return memory_instrumentation::mojom::OSMemDump::New(
       resident_set_kb, private_footprint_kb, shared_footprint_kb,
-      std::move(vm_regions));
+      std::move(vm_regions), private_swap_footprint_kb);
 }
 
 void PopulateBrowserMetrics(GlobalMemoryDumpPtr& global_dump,
@@ -111,7 +112,16 @@ void PopulateBrowserMetrics(GlobalMemoryDumpPtr& global_dump,
   OSMemDumpPtr os_dump =
       GetFakeOSMemDump(metrics_mb["Resident"] * 1024,
                        metrics_mb["PrivateMemoryFootprint"] * 1024,
-                       metrics_mb["SharedMemoryFootprint"] * 1024);
+                       metrics_mb["SharedMemoryFootprint"] * 1024,
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+                       // accessing PrivateSwapFootprint on other OSes will
+                       // modify metrics_mb to create the value, which leads to
+                       // expectation failures.
+                       metrics_mb["PrivateSwapFootprint"] * 1024
+#else
+                       0
+#endif
+                       );
   pmd->os_dump = std::move(os_dump);
   global_dump->process_dumps.push_back(std::move(pmd));
 }
@@ -126,6 +136,9 @@ base::flat_map<const char*, int64_t> GetExpectedBrowserMetrics() {
 #endif
             {"PrivateMemoryFootprint", 30}, {"SharedMemoryFootprint", 35},
             {"Uptime", 42},
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+            {"PrivateSwapFootprint", 50},
+#endif
       },
       base::KEEP_FIRST_OF_DUPES);
 }
@@ -147,7 +160,16 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
   OSMemDumpPtr os_dump =
       GetFakeOSMemDump(metrics_mb["Resident"] * 1024,
                        metrics_mb["PrivateMemoryFootprint"] * 1024,
-                       metrics_mb["SharedMemoryFootprint"] * 1024);
+                       metrics_mb["SharedMemoryFootprint"] * 1024,
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+                       // accessing PrivateSwapFootprint on other OSes will
+                       // modify metrics_mb to create the value, which leads to
+                       // expectation failures.
+                       metrics_mb["PrivateSwapFootprint"] * 1024
+#else
+                       0
+#endif
+                       );
   pmd->os_dump = std::move(os_dump);
   pmd->pid = pid;
   global_dump->process_dumps.push_back(std::move(pmd));
@@ -163,9 +185,10 @@ base::flat_map<const char*, int64_t> GetExpectedRendererMetrics() {
 #endif
             {"PrivateMemoryFootprint", 130}, {"SharedMemoryFootprint", 135},
             {"PartitionAlloc", 140}, {"BlinkGC", 150}, {"V8", 160},
-            {"NumberOfExtensions", 0}, {
-          "Uptime", 42
-        }
+            {"NumberOfExtensions", 0}, {"Uptime", 42},
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+            {"PrivateSwapFootprint", 50},
+#endif
       },
       base::KEEP_FIRST_OF_DUPES);
 }
@@ -190,7 +213,16 @@ void PopulateGpuMetrics(GlobalMemoryDumpPtr& global_dump,
   OSMemDumpPtr os_dump =
       GetFakeOSMemDump(metrics_mb["Resident"] * 1024,
                        metrics_mb["PrivateMemoryFootprint"] * 1024,
-                       metrics_mb["SharedMemoryFootprint"] * 1024);
+                       metrics_mb["SharedMemoryFootprint"] * 1024,
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+                       // accessing PrivateSwapFootprint on other OSes will
+                       // modify metrics_mb to create the value, which leads to
+                       // expectation failures.
+                       metrics_mb["PrivateSwapFootprint"] * 1024
+#else
+                       0
+#endif
+                       );
   pmd->os_dump = std::move(os_dump);
   global_dump->process_dumps.push_back(std::move(pmd));
 }
@@ -205,6 +237,9 @@ base::flat_map<const char*, int64_t> GetExpectedGpuMetrics() {
 #endif
             {"PrivateMemoryFootprint", 230}, {"SharedMemoryFootprint", 235},
             {"CommandBuffer", 240}, {"Uptime", 42},
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+            {"PrivateSwapFootprint", 50},
+#endif
       },
       base::KEEP_FIRST_OF_DUPES);
 }
