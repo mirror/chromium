@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12125e97_037dd7d0",
+        "filename": "tools/media_engagement_preload/make_dafsa.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-06T19:12:48Z",
+      "side": 1,
+      "message": "Normally, os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir) instead of dirname()ing repeatedly, but it doesn\u0027t matter too much.",
+      "revId": "24d1ae807de2141b4fc0fc1b8304958670ffd622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
