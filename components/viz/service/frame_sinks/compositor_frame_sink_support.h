@@ -15,7 +15,6 @@
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
 #include "components/viz/service/frame_sinks/referenced_surface_tracker.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
@@ -34,7 +33,6 @@ class SurfaceManager;
 class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
     : public BeginFrameObserver,
       public SurfaceResourceHolderClient,
-      public FrameSinkManagerClient,
       public SurfaceClient,
       public CapturableFrameSink,
       public mojom::CompositorFrameSink {
@@ -71,6 +69,9 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   // Sets callback called on destruction.
   void SetDestructionCallback(base::OnceCallback<void()> callback);
 
+  // This allows the FrameSinkManagerImpl to pass a BeginFrameSource to use.
+  void SetBeginFrameSource(BeginFrameSource* begin_frame_source);
+
   // SurfaceClient implementation.
   void OnSurfaceActivated(Surface* surface) override;
   void RefResources(
@@ -79,9 +80,6 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   void ReturnResources(const std::vector<ReturnedResource>& resources) override;
   void ReceiveFromChild(
       const std::vector<TransferableResource>& resources) override;
-
-  // FrameSinkManagerClient implementation.
-  void SetBeginFrameSource(BeginFrameSource* begin_frame_source) override;
 
   // mojom::CompositorFrameSink implementation.
   void SetNeedsBeginFrame(bool needs_begin_frame) override;

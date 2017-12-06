@@ -51,7 +51,7 @@ CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
   }
 
   EvictCurrentSurface();
-  frame_sink_manager_->UnregisterFrameSinkManagerClient(frame_sink_id_);
+  frame_sink_manager_->UnregisterCompositorFrameSinkSupport(frame_sink_id_);
 }
 
 void CompositorFrameSinkSupport::SetAggregatedDamageCallback(
@@ -62,6 +62,16 @@ void CompositorFrameSinkSupport::SetAggregatedDamageCallback(
 void CompositorFrameSinkSupport::SetDestructionCallback(
     base::OnceCallback<void()> callback) {
   destruction_callback_ = std::move(callback);
+}
+
+void CompositorFrameSinkSupport::SetBeginFrameSource(
+    BeginFrameSource* begin_frame_source) {
+  if (begin_frame_source_ && added_frame_observer_) {
+    begin_frame_source_->RemoveObserver(this);
+    added_frame_observer_ = false;
+  }
+  begin_frame_source_ = begin_frame_source;
+  UpdateNeedsBeginFramesInternal();
 }
 
 void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
@@ -101,16 +111,6 @@ void CompositorFrameSinkSupport::ReturnResources(
 void CompositorFrameSinkSupport::ReceiveFromChild(
     const std::vector<TransferableResource>& resources) {
   surface_resource_holder_.ReceiveFromChild(resources);
-}
-
-void CompositorFrameSinkSupport::SetBeginFrameSource(
-    BeginFrameSource* begin_frame_source) {
-  if (begin_frame_source_ && added_frame_observer_) {
-    begin_frame_source_->RemoveObserver(this);
-    added_frame_observer_ = false;
-  }
-  begin_frame_source_ = begin_frame_source;
-  UpdateNeedsBeginFramesInternal();
 }
 
 void CompositorFrameSinkSupport::EvictCurrentSurface() {
@@ -346,7 +346,7 @@ void CompositorFrameSinkSupport::Init(
     FrameSinkManagerImpl* frame_sink_manager) {
   frame_sink_manager_ = frame_sink_manager;
   surface_manager_ = frame_sink_manager->surface_manager();
-  frame_sink_manager_->RegisterFrameSinkManagerClient(frame_sink_id_, this);
+  frame_sink_manager_->RegisterCompositorFrameSinkSupport(frame_sink_id_, this);
 }
 
 void CompositorFrameSinkSupport::OnBeginFrame(const BeginFrameArgs& args) {
