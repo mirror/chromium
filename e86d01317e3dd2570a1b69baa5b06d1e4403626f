@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9931f0fc_feca846d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-06T02:46:56Z",
+      "side": 1,
+      "message": "Nit: I think because of line 295, we know one of app_for_window or target_app is non-null. So this if means we know target_app is non-null, so it is relevant to record the metric. This is a bit subtle though, so I think you should add a comment that target_app is known to be non-null.",
+      "revId": "e86d01317e3dd2570a1b69baa5b06d1e4403626f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
