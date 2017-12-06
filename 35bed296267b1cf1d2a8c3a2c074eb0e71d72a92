@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba35335_431537a0",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "There is no such extension. GL_ARB_texture_rg supports R16, why remove?",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bf3c96_2ee5dd69",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t support R16. GL_EXT_texture_norm16 did. Why change?",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8320f6_71b0d64f",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "To be accurate, GL_EXT_texture_norm16 includes more than just R16, it has all of (R, RG, RGB, RGBA)16 x (, _SNORM)\nUnless we add all these formats (maybe that\u0027s ok, but we\u0027ll need to test for GL_EXT_texture_snorm too on desktop), we should write a subset spec (GL_CHROMIUM_texture_r16 or something).",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fddad64_258c50ea",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "I think it was correct before. This says \"you can call glTexImage2D(_, _, GL_RED, _, _, _, GL_RED, GL_UNSIGNED_SHORT, _);\" which is neither necessary nor sufficient for GL_EXT_texture_norm16. It does need \"glTexImage2D(_, _, GL_R16_EXT, _, _, _, GL_RED, GL_UNSIGNED_SHORT, _);\" to be supported, so the previous line seemed correct.\n\nNote: GL_RED and GL_RED_EXT have the same value, I\u0027d stick with GL_RED for consistency.",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f495ff1d_e623a54a",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3660,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "nit: can you move to l.3543 so that it stays around other normalized GL_RED sized internal formats?",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79d8664_b7445b72",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3806,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:55:22Z",
+      "side": 1,
+      "message": "nit: can you move to l.3691 to keep around the other R16 variations?",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
