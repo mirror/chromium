@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "558392d6_f4841e3b",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:38:32Z",
+      "side": 1,
+      "message": "Asserting equality against model()-\u003eGetRowCount() is a little dicey, since it relies on the fact that there are no extraneous processes (e.g. a process for a built-in extension, or some platform- or config- specific zygote/utility/network service/arc++ thing).\n\nI\u0027d probably just drop this assertion -- the old assertion was about ensuring that there was space for tab2\u0027s subframe rows here.\n\nAlternatively, we could update the test so that |other_tab_url| includes a site not in |a_with_frames|",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2a0119_713257dc",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:38:32Z",
+      "side": 1,
+      "message": "Food for thought: Overall these changes are going to mean a greater glut of indistinguishable \"Subframe: \" row-spam in --site-per-process.\n\nWe should probably rethink how we show things, though it will be an information loss -- maybe a variant of beng\u0027s proposal, back when we last thought this through: one row per subframe process, with an expandable/collapsible list of the tabs. But that would require major UI overhaul, since I don\u0027t think we have a widget capable of that in views/.\n\nWithout major UI overhaul, the easiest thing we could do is to reflect the tab\u0027s title/favicon in the Subframe: row text...",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ade602_99aa9ccc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -19,6 +53,70 @@
         "endLine": 1235,
         "endChar": 51
       },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6406e551_0c27e782",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:38:32Z",
+      "side": 1,
+      "message": "I think this makes sense -- and thanks for pointing out the complexity wrt process-per-site/extensions.\n\nTaking a step back, this puts us closer to the policy of \"for subframes, only create a new process when we must. for main frames, create a new process whenever we can.\" So this logic actually feels quite appropriate and natural.\n\nFrom that perspective, I see one other case where applying REUSE_PENDING_OR_COMMITTED_SITE would make sense: when new_instance_impl-\u003eRequiresDedicatedProcess() is false, but is true for the parent SiteInstance (with some TDI exception). Shouldn\u0027t we do that too?",
+      "parentUuid": "a1ade602_99aa9ccc",
+      "range": {
+        "startLine": 1235,
+        "startChar": 6,
+        "endLine": 1235,
+        "endChar": 51
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c3259f_734330fa",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:38:32Z",
+      "side": 1,
+      "message": "I don\u0027t love that set_process_reuse_policy might be overwritten to another value later. Is there any way we could rearrange the logic so that we have a centralized decider function [say, right here]?",
+      "range": {
+        "startLine": 1236,
+        "startChar": 21,
+        "endLine": 1236,
+        "endChar": 22
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d61f4f2_dfbf665a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-06T21:38:32Z",
+      "side": 1,
+      "message": "This chooses one of the suitable hosts at random. Because this is limited to RequiresDedicatedProcess(), choosing at random is probably a decent strategy indeed; we already know that there\u0027s no suitable process already in our browsing instance, so we are effectively consolidating with some stranger. The only four criteria I can imagine that might be appropriate here are:\n\n - Resource utilization / memory footprint / some kind of accumulated cost function for the chosen process (\"choose the least busy process\", some kind of best-fit allocation)\n - A bias towards exact matches of |dest_url|\u0027s path (attempt to hit a cache).\n - Age of the last activity in the chosen process (e.g. MRU to avoid paging and avoid screwing up discarding, LRU to obtain even spreading)\n - Connectedness of the process graph / fault isolation: if tab1 has a(b), tab2 has b() [using a second b process], and then tab3 comes along with has c(a(b)) -- we might prefer to put tab3\u0027s \"b\" in tab1\u0027s \"b\" process since tab3 and tab1\u0027s fates are already linked via their shared \"a\" process, whereas choosing tab2\u0027s \"b\" process would comparatively reduce fault isolation among the three tabs.\n\nIt comes down to which dimension of stability or performance we value the most, and it seems like we just don\u0027t really know. Random-choice will avoid on average the worst case in the first three criteria, but may fail on the fourth criteria. That probably good enough for now, let\u0027s try it and learn.",
       "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
