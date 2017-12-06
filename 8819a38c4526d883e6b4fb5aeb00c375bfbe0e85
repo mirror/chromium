@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d88901_9fecc0fb",
+        "filename": "ui/gfx/mojo/gpu_fence_handle.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T07:10:15Z",
+      "side": 1,
+      "message": "Same question here as in the other CL:\n1. This enum value should be Android only right? Let\u0027s add a TODO(crbug.com/676224) so we can track cleaning this up when the associated bug is fixed.\n2. The entire enum isn\u0027t Android-only because there\u0027s a desire to add a CrOS implementation?",
+      "revId": "8819a38c4526d883e6b4fb5aeb00c375bfbe0e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
