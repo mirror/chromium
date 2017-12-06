@@ -11,7 +11,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-class InterstitialPage;
 class WebContents;
 }
 
@@ -23,9 +22,8 @@ class SecurityInterstitialPage;
 
 namespace chrome_browser_interstitials {
 
-bool IsInterstitialDisplayingText(
-    const content::InterstitialPage* const interstitial,
-    const std::string& text);
+bool IsInterstitialDisplayingText(content::RenderFrameHost* interstitial_frame,
+                                  const std::string& text);
 
 // This class is used for testing the display of IDN names in security
 // interstitials.
