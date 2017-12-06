@@ -139,6 +139,24 @@
       "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985e4707_d3a288ab",
+        "filename": "content/renderer/quota_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-06T01:34:25Z",
+      "side": 1,
+      "message": "Or shall we make QuotaDispatcher per-RenderFrame?",
+      "parentUuid": "9c19b66d_6101ce9e",
+      "revId": "1befe030ff3032f3872f80081535451b55a8d62b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
