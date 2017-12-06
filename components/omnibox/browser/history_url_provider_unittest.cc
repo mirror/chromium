@@ -1246,3 +1246,35 @@ TEST_F(HistoryURLProviderTest, MatchURLFormatting) {
       omnibox::kUIExperimentElideSuggestionUrlAfterHost);
   ExpectFormattedFullMatch("hij", L"https://www.hij.com/\x2026\x0000", 12, 3);
 }
+
+TEST_F(HistoryURLProviderTest, HttpSchemeMatch) {
+  AutocompleteInput input(ASCIIToUTF16("http://face"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+
+  history::HistoryMatch history_match;
+  history_match.url_info.set_url(GURL("http://www.facebook.com"));
+  HistoryURLProviderParams params(input, true, AutocompleteMatch(), nullptr,
+                                  SearchTermsData());
+  params.matches.push_back(history_match);
+  AutocompleteMatch match = autocomplete_->HistoryMatchToACMatch(params, 0, 0);
+  EXPECT_EQ(ASCIIToUTF16("http://www.facebook.com"), match.contents);
+}
+
+TEST_F(HistoryURLProviderTest, HttpsSchemeMatch) {
+  auto feature_list = std::make_unique<base::test::ScopedFeatureList>();
+  feature_list->InitWithFeatures(
+      {omnibox::kUIExperimentHideSuggestionUrlScheme}, {});
+
+  AutocompleteInput input(ASCIIToUTF16("https://face"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+
+  history::HistoryMatch history_match;
+  history_match.url_info.set_url(GURL("https://www.facebook.com"));
+  HistoryURLProviderParams params(input, true, AutocompleteMatch(), nullptr,
+                                  SearchTermsData());
+  params.matches.push_back(history_match);
+  AutocompleteMatch match = autocomplete_->HistoryMatchToACMatch(params, 0, 0);
+  EXPECT_EQ(ASCIIToUTF16("https://www.facebook.com"), match.contents);
+}
