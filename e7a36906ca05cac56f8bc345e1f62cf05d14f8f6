@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9a9cc5_793fa84b",
+        "filename": "net/cert/internal/revocation_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-06T21:49:18Z",
+      "side": 1,
+      "message": "This is how the other implementations fetch the Subject, based on the full DER-encoded certificate. Given that |cert| is already a ParsedCertificate, should we be fetching from the normalized_subject() field, instead?",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 53
+      },
+      "revId": "e7a36906ca05cac56f8bc345e1f62cf05d14f8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
