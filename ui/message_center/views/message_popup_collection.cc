@@ -122,9 +122,13 @@ void MessagePopupCollection::ClickOnSettingsButton(
   message_center_->ClickOnSettingsButton(notification_id);
 }
 
-void MessagePopupCollection::UpdateNotificationSize(
-    const std::string& notification_id) {
-  OnNotificationUpdated(notification_id);
+void MessagePopupCollection::OnViewPreferredSizeChanged(
+    views::View* observed_view) {
+  NOTIMPLEMENTED() << " changed size";
+  DCHECK_EQ(std::string(MessageView::kViewClassName),
+            observed_view->GetClassName());
+  OnNotificationUpdated(
+      static_cast<MessageView*>(observed_view)->notification_id());
 }
 
 void MessagePopupCollection::MarkAllPopupsShown() {
@@ -195,6 +199,7 @@ void MessagePopupCollection::UpdateWidgets() {
 
     // Create top-level notification.
     MessageView* view = MessageViewFactory::Create(nullptr, notification, true);
+    observed_views_.Add(view);
 #if defined(OS_CHROMEOS)
     // Disable pinned feature since this is a popup.
     view->set_force_disable_pinned();

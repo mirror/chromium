@@ -13,12 +13,14 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/scoped_observer.h"
 #include "base/timer/timer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/views/message_view_delegate.h"
 #include "ui/message_center/views/toast_contents_view.h"
+#include "ui/views/view_observer.h"
 #include "ui/views/widget/widget_observer.h"
 
 namespace base {
@@ -50,7 +52,8 @@ class PopupAlignmentDelegate;
 // be slightly different.
 class MESSAGE_CENTER_EXPORT MessagePopupCollection
     : public MessageViewDelegate,
-      public MessageCenterObserver {
+      public MessageCenterObserver,
+      public views::ViewObserver {
  public:
   MessagePopupCollection(MessageCenter* message_center,
                          UiController* tray,
@@ -67,7 +70,9 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
                                           int button_index,
                                           const base::string16& reply) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
-  void UpdateNotificationSize(const std::string& notification_id) override;
+
+  // Overridden from views::ViewObserver:
+  void OnViewPreferredSizeChanged(views::View* observed_view) override;
 
   void MarkAllPopupsShown();
 
@@ -177,6 +182,8 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
   std::unique_ptr<base::RunLoop> run_loop_for_test_;
 
   std::unique_ptr<MessageViewContextMenuController> context_menu_controller_;
+
+  ScopedObserver<views::View, views::ViewObserver> observed_views_{this};
 
   // Gives out weak pointers to toast contents views which have an unrelated
   // lifetime.  Must remain the last member variable.

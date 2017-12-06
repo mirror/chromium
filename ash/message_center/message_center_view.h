@@ -11,6 +11,7 @@
 #include "ash/message_center/message_list_view.h"
 #include "ash/session/session_observer.h"
 #include "base/macros.h"
+#include "base/scoped_observer.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/notification_list.h"
@@ -47,7 +48,8 @@ class ASH_EXPORT MessageCenterView
       public SessionObserver,
       public MessageListView::Observer,
       public gfx::AnimationDelegate,
-      public views::FocusChangeListener {
+      public views::FocusChangeListener,
+      public views::ViewObserver {
  public:
   MessageCenterView(message_center::MessageCenter* message_center,
                     message_center::UiController* ui_controller,
@@ -110,7 +112,6 @@ class ASH_EXPORT MessageCenterView
                                           int button_index,
                                           const base::string16& reply) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
-  void UpdateNotificationSize(const std::string& notification_id) override;
 
   // Overridden from SessionObserver:
   void OnLockStateChanged(bool locked) override;
@@ -122,6 +123,9 @@ class ASH_EXPORT MessageCenterView
   void AnimationEnded(const gfx::Animation* animation) override;
   void AnimationProgressed(const gfx::Animation* animation) override;
   void AnimationCanceled(const gfx::Animation* animation) override;
+
+  // Overridden from views::ViewObserver:
+  void OnViewPreferredSizeChanged(views::View* observed_view) override;
 
  private:
   friend class MessageCenterViewTest;
@@ -193,6 +197,8 @@ class ASH_EXPORT MessageCenterView
   views::FocusManager* focus_manager_ = nullptr;
 
   ScopedSessionObserver session_observer_{this};
+
+  ScopedObserver<views::View, views::ViewObserver> view_observer_{this};
 
   DISALLOW_COPY_AND_ASSIGN(MessageCenterView);
 };
