@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "baed38e7_58bb2cf8",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-06T05:18:15Z",
+      "side": 1,
+      "message": "The goal is to replace current sequences of operator + for string concatenation. Having each of those places need to supply a second argument of an empty string seems undesirable.\n\nThis patch started off as a function that takes many arguments (see patch 2) and in that case the two versions could not be unified.\n\nIf we do want to keep the initializer-list-only approach, it might be interesting to consider a default separator argument of an empty string piece. It would make the call sites larger which is not so great (I would expect thousands) but maybe not horrible. I am not concerned about performance at this level.\n\nIf we do keep them separate, I personally prefer StrCat since it matches a C concept. I called it this before I knew of the Abseil one.",
+      "parentUuid": "892cc9a8_dd1c1751",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
