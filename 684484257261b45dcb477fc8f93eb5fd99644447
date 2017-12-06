@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c1eaa0b2_1ccfc2ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-06T23:07:21Z",
+      "side": 1,
+      "message": "Thanks John and Ken.  Using the non-associated interface is better, and pretty much the same effort.  I think the lack of an existing registry field in WebContentsImpl got me confused about how to register the non-associated interface.  Thanks Ken for the guidance.",
+      "parentUuid": "17ebc487_3b518b97",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e47fc5_bdf81b57",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 13
