@@ -11,6 +11,10 @@ struct LocalSurfaceId {
   // a client process.
   uint32 parent_id;
 
+  // An identifier allocated by the client for when the client wants to allocate
+  // its own surface.
+  uint32 child_sequence_number;
+
   mojo.common.mojom.UnguessableToken nonce;
 };
 
