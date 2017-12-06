@@ -546,10 +546,7 @@ if (current_os == "winrt_81" || current_os == "winrt_81_phone" ||
 }
 
 if (is_posix) {
-  if (current_os != "aix") {
-    default_compiler_configs +=
-        [ "//build/config/gcc:symbol_visibility_hidden" ]
-  }
+  default_compiler_configs += [ "//build/config/gcc:symbol_visibility_hidden" ]
 }
 
 if (is_android) {
