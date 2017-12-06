@@ -509,8 +509,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Wraps the web view in a CRWWebViewContentView and adds it to the container
 // view.
 - (void)displayWebView;
-// Removes webView.
-- (void)removeWebView;
 // Called when web view process has been terminated.
 - (void)webViewWebProcessDidCrash;
 // Returns the WKWebViewConfigurationProvider associated with the web
@@ -2957,11 +2955,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
         ![MIMEType isEqualToString:@"application/vnd.apple.pkpass"]) {
       // This block is executed to handle legacy download navigation.
       const GURL errorGURL = net::GURLWithNSURL(errorURL);
-      if (errorGURL.is_valid() &&
-          [_delegate respondsToSelector:@selector
-                     (controllerForUnhandledContentAtURL:)]) {
+      if (errorGURL.is_valid()) {
         id<CRWNativeContent> controller =
-            [_delegate controllerForUnhandledContentAtURL:errorGURL];
+            [_nativeProvider controllerForUnhandledContentAtURL:errorGURL
+                                                       webState:self.webState];
         if (controller) {
           [self loadCompleteWithSuccess:NO forNavigation:navigation];
           [self removeWebView];
@@ -3792,7 +3789,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
         }
       }));
 
-  _webStateImpl->DidChangeVisibleSecurityState();
   [self loadCancelled];
 }
 
@@ -3952,15 +3948,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)webViewWebProcessDidCrash {
-  _webProcessCrashed = YES;
-  _webStateImpl->CancelDialogs();
-  _webStateImpl->OnRenderProcessGone();
   if (@available(iOS 11, *)) {
     // On iOS 11 WKWebView does not repaint after crash and reload. Recreating
     // web view fixes the issue. TODO(crbug.com/770914): Remove this workaround
     // once rdar://35063950 is fixed.
     [self removeWebView];
   }
+  _webProcessCrashed = YES;
+  _webStateImpl->CancelDialogs();
+  _webStateImpl->OnRenderProcessGone();
 }
 
 - (web::WKWebViewConfigurationProvider&)webViewConfigurationProvider {
@@ -4661,6 +4657,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
       CRWPlaceholderNavigationInfo* placeholderNavigationInfo =
           [CRWPlaceholderNavigationInfo infoForNavigation:navigation];
       if (placeholderNavigationInfo) {
+        web::NavigationItem* item = self.currentNavItem;
+        // The |didFinishNavigation| callback can arrive after another
+        // navigation has started. Abort in this case.
+        if (CreatePlaceholderUrlForUrl(item->GetVirtualURL()) != webViewURL)
+          return;
         [placeholderNavigationInfo runCompletionHandler];
       }
       return;

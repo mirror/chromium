@@ -140,11 +140,16 @@ TEST_F(WKWebViewConfigurationProviderTest, Purge) {
 TEST_F(WKWebViewConfigurationProviderTest, UserScript) {
   WKWebViewConfiguration* config = GetProvider().GetWebViewConfiguration();
   NSArray* scripts = config.userContentController.userScripts;
-  EXPECT_EQ(1U, scripts.count);
-  NSString* early_script = GetEarlyPageScript(&browser_state_);
-  // |earlyScript| is a substring of |userScripts|. The latter wraps the
-  // former with "if (!injected)" check to avoid double injections.
-  EXPECT_LT(0U, [[scripts[0] source] rangeOfString:early_script].length);
+  ASSERT_EQ(2U, scripts.count);
+  EXPECT_TRUE(((WKUserScript*)[scripts objectAtIndex:0]).isForMainFrameOnly);
+  EXPECT_FALSE(((WKUserScript*)[scripts objectAtIndex:1]).isForMainFrameOnly);
+  NSString* main_frame_script = GetEarlyPageScript(&browser_state_);
+  NSString* all_frames_script = GetEarlyAllFramesPageScript(&browser_state_);
+  // |early_main_frame_script| and |all_frames_script| are substrings of
+  // corresponding scripts from |userScripts|. The latter wraps the former with
+  // "if (!injected)" check to avoid double injections.
+  EXPECT_LT(0U, [[scripts[0] source] rangeOfString:main_frame_script].length);
+  EXPECT_LT(0U, [[scripts[1] source] rangeOfString:all_frames_script].length);
 }
 
 }  // namespace
