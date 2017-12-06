@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d13af3e2_75e46648",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T05:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd526af_0d8b6670",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243b6442_28624640",
         "filename": "components/user_manager/user_manager.cc",
         "patchSetId": 20
@@ -105,6 +123,24 @@
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439a57b0_feca9e09",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T05:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20848027_e966822f",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "bcdda052_19c686a3",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T05:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b76aea_89f0100a",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4405e5c_159269ac",
         "filename": "components/user_manager/user_manager.cc",
         "patchSetId": 20
@@ -211,6 +265,24 @@
       "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5fffdd_fcfc67af",
+        "filename": "components/user_manager/user_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-06T05:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eea3d5b_d3987139",
+      "revId": "cab0a2bb4f06a6f644407adb534df28528f09005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
