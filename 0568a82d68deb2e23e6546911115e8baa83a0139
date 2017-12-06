@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee384464_d358fcd2",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-06T17:33:23Z",
+      "side": 1,
+      "message": "(I know this is not your code)\n\nThere is not much confidence behind this logic, we just wanted to make multiclient work and compromised strictness in some places. Maybe this is fine, maybe it is not. In this case, with Puppeteer and DevTools connected at a time, depending on the order of connection, DevTools will either receive cert errors or it will not. Not that it is doing anything to them, but still.\n\nIt seems like for all those interested in the cert errors we should report them. For those interested in overriding them while override is in place, we should throw. And that is on renderdevtoolsagenthost level only, with the browser target, it adds to the bunch. Should those interested in renderer take precedence in overriding? It all screams for the security_handler to be aware of multiple sessions or for a security_manager that manages that state to sit beside it.\n\nNot trying to derail this, but hinting at the kind of questions we would need to resolve within the scope of this feature request.",
+      "revId": "0568a82d68deb2e23e6546911115e8baa83a0139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
