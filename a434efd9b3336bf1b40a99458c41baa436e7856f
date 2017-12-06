@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce139d60_16ccf116",
+        "filename": "base/containers/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:20:00Z",
+      "side": 1,
+      "message": "Revert this?",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "a434efd9b3336bf1b40a99458c41baa436e7856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822bd42_2036084f",
+        "filename": "base/containers/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:20:00Z",
+      "side": 1,
+      "message": "type alias",
+      "range": {
+        "startLine": 139,
+        "startChar": 13,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "a434efd9b3336bf1b40a99458c41baa436e7856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7621b230_80c6e898",
+        "filename": "base/containers/unique_ptr_comparator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:20:00Z",
+      "side": 1,
+      "message": "Or WrapUnique or emplace() will work too right?",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "a434efd9b3336bf1b40a99458c41baa436e7856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d23940f_3ad185db",
+        "filename": "base/containers/unique_ptr_comparator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-06T03:20:00Z",
+      "side": 1,
+      "message": "I think foo3 is leaked, right?",
+      "revId": "a434efd9b3336bf1b40a99458c41baa436e7856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
