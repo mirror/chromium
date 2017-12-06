@@ -4,11 +4,13 @@
 
 package org.chromium.webapk.shell_apk;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
@@ -83,7 +85,7 @@ public class WebApkServiceImplWrapper extends IWebApkApi.Stub {
         // We always rewrite the notification channel id to the WebAPK's default channel id on O+.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             ensureNotificationChannelExists();
-            if (!setNotificationChannelId(notification)) return;
+            setNotificationChannelId(notification);
         }
         delegateNotifyNotification(platformTag, platformID, notification);
     }
@@ -144,22 +146,11 @@ public class WebApkServiceImplWrapper extends IWebApkApi.Stub {
         return false;
     }
 
-    /** Sets the notification channel of the given notification object via reflection. */
-    private boolean setNotificationChannelId(Notification notification) {
-        try {
-            // Now that WebAPKs target SDK 26, we need to set a channel id to display the
-            // notification properly on O+. We set the channel id via reflection because the
-            // notification is already built (and therefore supposedly immutable) when received from
-            // Chrome. This is unavoidable because Notification.Builder is not parcelable.
-            Field channelId = notification.getClass().getDeclaredField("mChannelId");
-            channelId.setAccessible(true);
-            channelId.set(notification, DEFAULT_NOTIFICATION_CHANNEL_ID);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
+    /** Sets the notification channel of the given notification object. */
+    @TargetApi(Build.VERSION_CODES.O)
+    private void setNotificationChannelId(Notification notification) {
+        Notification.Builder builder = Notification.Builder.recoverBuilder(mContext, notification);
+        builder.setChannelId(DEFAULT_NOTIFICATION_CHANNEL_ID);
     }
 
     /** Calls the delegate's {@link notifyNotification} method via reflection. */
