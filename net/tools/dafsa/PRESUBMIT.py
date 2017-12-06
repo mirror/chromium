@@ -6,27 +6,40 @@
 """Chromium presubmit script for src/net/tools/dafsa."""
 
 
-def _RunMakeDafsaTests(input_api, output_api):
-  """Runs unittest for make_dafsa if any related file has been modified."""
-  files = ('net/tools/dafsa/make_dafsa.py',
-           'net/tools/dafsa/make_dafsa_unittest.py')
-  if not any(f in input_api.LocalPaths() for f in files):
-    return []
-  test_path = input_api.os_path.join(input_api.PresubmitLocalPath(),
-                                     'make_dafsa_unittest.py')
-  cmd_name = 'make_dafsa_unittest'
+def _MakeDafsaTestCommand(input_api, output_api, file_name):
+  source_path = input_api.os_path.dirname(input_api.os_path.dirname(
+      input_api.os_path.dirname(input_api.PresubmitLocalPath())))
+  test_path = input_api.os_path.join(source_path, '%s.py' % file_name)
   cmd = [input_api.python_executable, test_path]
-  test_cmd = input_api.Command(
-    name=cmd_name,
+  return input_api.Command(
+    name=file_name,
     cmd=cmd,
     kwargs={},
     message=output_api.PresubmitPromptWarning)
-  return input_api.RunTests([test_cmd])
+
+
+def _RunDafsaTests(input_api, output_api):
+  """Runs unittest for make_dafsa if any related file has been modified."""
+  files = ('net/tools/dafsa/dafsa_utils.py',
+           'net/tools/dafsa/dafsa_utils_unittest.py',
+           'net/tools/dafsa/make_dafsa.py',
+           'net/tools/dafsa/make_dafsa_unittest.py')
+  if not any(f in input_api.LocalPaths() for f in files):
+    return []
+  return input_api.RunTests([
+    _MakeDafsaTestCommand(
+        input_api, output_api, 'net/tools/dafsa/dafsa_utils_unittest'),
+    _MakeDafsaTestCommand(
+        input_api, output_api, 'net/tools/dafsa/make_dafsa_unittest'),
+    _MakeDafsaTestCommand(
+        input_api, output_api,
+        'tools/media_engagement_preload/make_dafsa_unittest'),
+  ])
 
 
 def CheckChangeOnUpload(input_api, output_api):
-  return _RunMakeDafsaTests(input_api, output_api)
+  return _RunDafsaTests(input_api, output_api)
 
 
 def CheckChangeOnCommit(input_api, output_api):
-  return _RunMakeDafsaTests(input_api, output_api)
+  return _RunDafsaTests(input_api, output_api)
