@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eab2e8a_34900e52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/0001.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-06T09:49:23Z",
+      "side": 1,
+      "message": "Absolutely, fixed.",
+      "parentUuid": "a2529a16_8e4ee185",
+      "revId": "225fc681841cf3117ac75711432830ebb0e1e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0f704d_5a287287",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/path/match.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "225fc681841cf3117ac75711432830ebb0e1e6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380986fd_b1c4117d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/path/match.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-06T09:49:23Z",
+      "side": 1,
+      "message": "Yeah, doing that in https://crrev.com/c/809148\n(It\u0027s an artifact from patching https://crrev.com/c/788217)",
+      "parentUuid": "de0f704d_5a287287",
+      "revId": "225fc681841cf3117ac75711432830ebb0e1e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
