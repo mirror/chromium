@@ -471,6 +471,24 @@
     },
     {
       "key": {
+        "uuid": "f7e821da_55b38e97",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "I\u0027m going to defer this decision to where we host the COM server. There is an interesting question on if we need a dedicated thread for an MTA COM server since COM does need to talk to someone to create the object. Where that originates is an interesting question. (STA COM server is trivial as you need the thread to keep it alive).",
+      "parentUuid": "bfc0f9e6_bd8172aa",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a2fd108_b4d29fed",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
         "patchSetId": 5

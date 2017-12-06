@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bae696e_42d45449",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "Use IFACEMETHODIMP here.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93448e9_c20499ad",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "SAL annotations aren\u0027t used by Chrome, so these can be removed.",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 16
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e6fba3_005b268c",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "I think the general style is to do this for removing arguments:\nLPCWSTR /* appUserModelId */",
+      "range": {
+        "startLine": 116,
+        "startChar": 49,
+        "endLine": 116,
+        "endChar": 67
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b32349_e09bb836",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "Nit: This should be ActivatorRegisterer",
+      "range": {
+        "startLine": 128,
+        "startChar": 6,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daba32c_ec319435",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "Use ComPtr\u003cIUnknown\u003e factory;\nOtherwise it does appear we leak this factory.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 32
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a6579e_1f532de4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "This should be determined through QueryInterface.",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 49
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdf697f_932db284",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "Since there\u0027s only one value, you can get away with just providing the address of entry.activationId.clsid and the IClassFactory to RegisterCOMObject.\n\nSomething like this:\nComPtr\u003cIClassFactory\u003e class_factory;\nhr \u003d factory.As(\u0026class_factory);\nif (FAILED(hr))\n  return hr;\n\nhr \u003d module.RegisterClassObject(nullptr, \u0026entry.activationId.clsid, class_factory.GetAddressOf(), \u0026cookies_, 1);",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 51
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7fa07f_a9da68b8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-12-06T20:29:52Z",
+      "side": 1,
+      "message": "activator_register.reset() is sufficient.",
+      "range": {
+        "startLine": 573,
+        "startChar": 28,
+        "endLine": 573,
+        "endChar": 35
+      },
+      "revId": "7ee6e9b6105bb8da377d284f2faf3ee538275be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
