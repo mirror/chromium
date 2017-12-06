@@ -36,6 +36,47 @@
     },
     {
       "key": {
+        "uuid": "0c059f60_a922211f",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "ash/message_center might belong in ash/system/message_center (combine with ash/system/web_notification) but aside from that, the message center is a tray popup so it makes sense to reach into tray from here.",
+      "parentUuid": "338291e3_a8f21fe1",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1ed229_eec80379",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "please add class level docs",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e2a5f61_d4a4beb9",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 1
@@ -47,6 +88,93 @@
       "writtenOn": "2017-12-05T19:08:35Z",
       "side": 1,
       "message": "This seems close enough to TrayPopupUtils::ConfigureTrayPopupButton() that we should use that, maybe add a param for the focus painter or set it after the fact?",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48cb9608_7c5907d9",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "agreed, and I kinda doubt the focus painter should be different. Those insets are papering over a bug (see declaration for CreateSolidFocusPainter).",
+      "parentUuid": "4e2a5f61_d4a4beb9",
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a63b3e2_347d7780",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "pretty confusing since this class is always a ToggleImageButton. It\u0027s somewhat frightening that we\u0027re trying to mish mash different classes into one. I gather it\u0027s because you want to share the ink drop creation code, and it would be nice if Views were more modular so you could just set that stuff instead of needing to override things. In this case though, I don\u0027t think you need to worry about this: ToggleImageButton::GetAccessibleNodeData looks like it handles things correctly if the state is left on !toggled but the !toggled image isn\u0027t set.",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 24
+      },
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8236d8a_495af244",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "disallow copy and assign",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 2
+      },
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faba15c_41001a15",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:00:24Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be necessary -- has_ink_drop_action_on_click should take care of it. Why is that not working?",
+      "range": {
+        "startLine": 343,
+        "startChar": 22,
+        "endLine": 343,
+        "endChar": 36
+      },
       "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
