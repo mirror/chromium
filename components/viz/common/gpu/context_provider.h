@@ -80,8 +80,8 @@ class VIZ_COMMON_EXPORT ContextProvider
   virtual const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const = 0;
 
   // Adds/removes an observer to be called when the context is lost. This should
-  // be called from the same thread that the context is bound to. To avoid
-  // races, it should be called before BindToCurrentThread().
+  // be called immediately after BindToCurrentThread from the same thread that
+  // the context is bound to, or while the lock is acquired.
   // Implementation note: Implementations must avoid post-tasking the to the
   // observer directly as the observer may remove itself before the task runs.
   virtual void AddObserver(ContextLostObserver* obs) = 0;
