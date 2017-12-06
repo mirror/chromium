@@ -4,7 +4,6 @@
 
 #include "components/cronet/url_request_context_config.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "net/cert/cert_verifier.h"
@@ -71,7 +70,7 @@ TEST(URLRequestContextConfigTest, TestExperimentalOptionParsing) {
   EXPECT_FALSE(config.effective_experimental_options->HasKey("UnknownOption"));
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =
@@ -153,7 +152,7 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationOptions) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =
@@ -205,7 +204,7 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationV2Options) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =
@@ -255,7 +254,7 @@ TEST(URLRequestContextConfigTest, SetQuicHostWhitelist) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =
@@ -308,7 +307,7 @@ TEST(URLRequestContextConfigTest, SetQuicMaxTimeBeforeCryptoHandshake) {
   config.ConfigureURLRequestContextBuilder(&builder, &net_log);
   // Set a ProxyConfigService to avoid DCHECK failure when building.
   builder.set_proxy_config_service(
-      base::MakeUnique<net::ProxyConfigServiceFixed>(
+      std::make_unique<net::ProxyConfigServiceFixed>(
           net::ProxyConfig::CreateDirect()));
   std::unique_ptr<net::URLRequestContext> context(builder.Build());
   const net::HttpNetworkSession::Params* params =
