@@ -78,11 +78,14 @@ class ASH_EXPORT NotifierSettingsView
     // changed.
     void GridChanged();
 
+    void SetPolicyEnforced();
+
     message_center::NotifierId notifier_id_;
     views::ImageView* icon_view_;
     views::Label* name_view_;
     views::Checkbox* checkbox_;
     views::ImageButton* learn_more_ = nullptr;
+    views::ImageView* policy_enforced_icon_;
 
     DISALLOW_COPY_AND_ASSIGN(NotifierButton);
   };
