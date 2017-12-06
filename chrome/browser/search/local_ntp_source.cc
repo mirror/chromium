@@ -45,8 +45,6 @@
 #include "components/search_provider_logos/logo_tracker.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
-#include "crypto/secure_hash.h"
-#include "net/base/hash_value.h"
 #include "net/base/url_util.h"
 #include "net/url_request/url_request.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -182,22 +180,6 @@ std::string GetConfigData(bool is_google, const GURL& google_base_url) {
   config_data_js.append(js_text);
   config_data_js.append(";");
   return config_data_js;
-}
-
-std::string GetIntegritySha256Value(const std::string& data) {
-  // Compute the sha256 hash.
-  net::SHA256HashValue hash_value;
-  std::unique_ptr<crypto::SecureHash> hash(
-      crypto::SecureHash::Create(crypto::SecureHash::SHA256));
-  hash->Update(data.data(), data.size());
-  hash->Finish(&hash_value, sizeof(hash_value));
-
-  // Base64-encode it.
-  base::StringPiece hash_value_str(
-      reinterpret_cast<const char*>(hash_value.data), sizeof(hash_value));
-  std::string result;
-  base::Base64Encode(hash_value_str, &result);
-  return result;
 }
 
 std::string GetThemeCSS(Profile* profile) {
@@ -448,7 +430,6 @@ LocalNtpSource::LocalNtpSource(Profile* profile)
       one_google_bar_service_observer_(this),
       logo_service_(nullptr),
       default_search_provider_is_google_(false),
-      default_search_provider_is_google_io_thread_(false),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -551,13 +532,6 @@ void LocalNtpSource::StartDataRequest(
     std::string html = ui::ResourceBundle::GetSharedInstance()
                            .GetRawDataResource(IDR_LOCAL_NTP_HTML)
                            .as_string();
-    std::string config_integrity = base::StringPrintf(
-        kIntegrityFormat,
-        GetIntegritySha256Value(
-            GetConfigData(default_search_provider_is_google_, google_base_url_))
-            .c_str());
-    base::ReplaceFirstSubstringAfterOffset(&html, 0, "{{CONFIG_INTEGRITY}}",
-                                           config_integrity);
     std::string local_ntp_integrity =
         base::StringPrintf(kIntegrityFormat, LOCAL_NTP_JS_INTEGRITY);
     base::ReplaceFirstSubstringAfterOffset(&html, 0, "{{LOCAL_NTP_INTEGRITY}}",
@@ -642,11 +616,7 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
 #endif  // !defined(GOOGLE_CHROME_BUILD)
 
   return base::StringPrintf(
-      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s' 'sha256-%s';",
-      GetIntegritySha256Value(
-          GetConfigData(default_search_provider_is_google_io_thread_,
-                        google_base_url_io_thread_))
-          .c_str(),
+      "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s';",
       LOCAL_NTP_JS_INTEGRITY, VOICE_JS_INTEGRITY);
 }
 
@@ -709,34 +679,12 @@ void LocalNtpSource::DefaultSearchProviderIsGoogleChanged(bool is_google) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   default_search_provider_is_google_ = is_google;
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          &LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread,
-          weak_ptr_factory_.GetWeakPtr(), is_google));
-}
-
-void LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread(
-    bool is_google) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  default_search_provider_is_google_io_thread_ = is_google;
 }
 
 void LocalNtpSource::GoogleBaseUrlChanged(const GURL& google_base_url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   google_base_url_ = google_base_url;
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&LocalNtpSource::SetGoogleBaseUrlOnIOThread,
-                     weak_ptr_factory_.GetWeakPtr(), google_base_url));
-}
-
-void LocalNtpSource::SetGoogleBaseUrlOnIOThread(const GURL& google_base_url) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-
-  google_base_url_io_thread_ = google_base_url;
 }
 
 LocalNtpSource::OneGoogleBarRequest::OneGoogleBarRequest(

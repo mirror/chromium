@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="chrome-search://local-ntp/theme.css"></link>
   <link rel="stylesheet" href="chrome-search://local-ntp/local-ntp.css"></link>
   <link rel="stylesheet" href="chrome-search://local-ntp/voice.css"></link>
-  <script src="chrome-search://local-ntp/config.js"
-      {{CONFIG_INTEGRITY}}></script>
   <script src="chrome-search://local-ntp/local-ntp.js"
       {{LOCAL_NTP_INTEGRITY}}></script>
   <script src="chrome-search://local-ntp/voice.js"
@@ -18,7 +16,7 @@
 </head>
 <!-- Remember to update the test HTML files in chrome/test/data/local_ntp/
    whenever making changes to this file.-->
-<body>
+<body class="not-inited">
   <!-- Container for the OneGoogleBar HTML. -->
   <div id="one-google" class="hidden"></div>
 
