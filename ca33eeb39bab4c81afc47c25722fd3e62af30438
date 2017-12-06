@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "24d67f9f_04d402c1",
+        "filename": "cc/debug/debug_colors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-06T22:12:10Z",
+      "side": 1,
+      "message": "Update after offline discussion: |kColorTransform|\nis in a column major order, so the equation updated\nis:\n\nnew_R \u003d R + 0.3 G + 0.3 B\nnew_G \u003d     0.7 G \nnew_B \u003d             0.7 B\n\nso it\u0027s correct. Maybe add a comment?",
+      "parentUuid": "bb2c17b1_dfcd5296",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 57
+      },
+      "revId": "ca33eeb39bab4c81afc47c25722fd3e62af30438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "882dabda_9bb3ceb6",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
