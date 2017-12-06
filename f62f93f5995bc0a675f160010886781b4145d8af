@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "997c32f4_fef3a80d",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-06T15:23:02Z",
+      "side": 1,
+      "message": "This is used when t1 that created writers was, say, partial and a full request t2 wants to join writers. It cannot and must be able to get the reason for the same.",
+      "parentUuid": "156c88a6_8f63aa76",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 38
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da98dbe4_0f49d39f",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T14:54:25Z",
       "side": 1,
       "message": "argument no longer used, please remove and update comment",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6096330f_8c8d46cb",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-06T15:23:02Z",
+      "side": 1,
+      "message": "Being used when the first transaction is added to save its reason for exclusiveness or not.",
+      "parentUuid": "da98dbe4_0f49d39f",
       "range": {
         "startLine": 90,
         "startChar": 22,
