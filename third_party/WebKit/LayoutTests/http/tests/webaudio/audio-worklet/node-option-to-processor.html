@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test cross-thread passing of AudioWorkletNodeOptions
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../../webaudio-resources/audit.js"></script>
+    <script src="audio-worklet-common.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // TODO(hongchan): remove this assertion when AudioWorklet shipped.
+      assertAudioWorklet();
+
+      const sampleRate = 48000;
+
+      const audit = Audit.createTaskRunner();
+      let context;
+
+      audit.define('setup', (task, should) => {
+        
+          task.done();
+      
+      });
+
+      // Test AudioWorkletNode construction without AudioWorkletNodeOptions.
+      audit.define('without-audio-node-options', (task, should) => {
+        
+        task.done();
+      });
+
+      audit.run();
+    </script>
+  </body>
+</html>

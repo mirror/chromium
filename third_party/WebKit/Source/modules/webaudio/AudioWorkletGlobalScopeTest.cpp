@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/ScriptModule.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/ScriptValue.h"
@@ -185,11 +186,14 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
     EXPECT_EQ(definition->GetName(), "testProcessor");
     EXPECT_TRUE(definition->ConstructorLocal(isolate)->IsFunction());
     EXPECT_TRUE(definition->ProcessLocal(isolate)->IsFunction());
-
     MessageChannel* channel = MessageChannel::Create(thread->GlobalScope());
     MessagePortChannel dummy_port_channel = channel->port2()->Disentangle();
-    AudioWorkletProcessor* processor = global_scope->CreateProcessor(
-        "testProcessor", kTestingSampleRate, dummy_port_channel);
+
+    AudioWorkletProcessor* processor =
+        global_scope->CreateProcessor("testProcessor", 
+                                      kTestingSampleRate,
+                                      dummy_port_channel,
+                                      SerializedScriptValue::NullValue());
     EXPECT_TRUE(processor);
     EXPECT_EQ(processor->Name(), "testProcessor");
     v8::Local<v8::Value> processor_value =
@@ -286,8 +290,11 @@ class AudioWorkletGlobalScopeTest : public ::testing::Test {
 
     MessageChannel* channel = MessageChannel::Create(thread->GlobalScope());
     MessagePortChannel dummy_port_channel = channel->port2()->Disentangle();
-    AudioWorkletProcessor* processor = global_scope->CreateProcessor(
-        "testProcessor", kTestingSampleRate, dummy_port_channel);
+    AudioWorkletProcessor* processor =
+        global_scope->CreateProcessor("testProcessor", 
+                                      kTestingSampleRate,
+                                      dummy_port_channel,
+                                      SerializedScriptValue::NullValue());
     EXPECT_TRUE(processor);
 
     Vector<AudioBus*> input_buses;
