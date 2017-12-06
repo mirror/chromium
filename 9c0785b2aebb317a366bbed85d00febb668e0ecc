@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b41b3b4e_41902ab7",
+        "filename": "content/common/common_param_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177565
+      },
+      "writtenOn": "2017-12-06T16:40:15Z",
+      "side": 1,
+      "message": "Why 4? I assume that\u0027s the size of one bitmap\u0027s color data. A comment about this would be helpful.",
+      "revId": "9c0785b2aebb317a366bbed85d00febb668e0ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcf9a56_ac052d90",
+        "filename": "content/common/common_param_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1177565
+      },
+      "writtenOn": "2017-12-06T16:40:15Z",
+      "side": 1,
+      "message": "Why + 4? I assume that the data are [4 byte color],[4 byte alpha],...\n\nA comment would clarify this. jam@chromium.org can comment; how consistent is this byte alignment assumption? Is there some constant or interface that would ensure that what gets changed is \"alpha data for bitmap\"?",
+      "revId": "9c0785b2aebb317a366bbed85d00febb668e0ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
