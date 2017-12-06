@@ -35,7 +35,6 @@ cr.define('extensions', function() {
       inDevMode: {
         type: Boolean,
         value: false,
-        observer: 'onInDevModeChanged_',
       },
 
       isGuest: Boolean,
@@ -57,27 +56,40 @@ cr.define('extensions', function() {
 
     /** @override */
     ready: function() {
-      this.$.devDrawer.addEventListener('transitionend', () => {
-        this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
-      });
+      if (this.inDevMode) {
+        this.updateDrawer_(true);
+      }
     },
 
-    /** @private */
-    onDevModeToggleChange_: function() {
+    /**
+     * @param {!Event} event
+     * @param {boolean} isChecked
+     * @private
+     */
+    onDevModeToggleChange_: function(event, isChecked) {
+      this.updateDrawer_(isChecked);
+    },
+
+    /**
+     * @param {boolean} expand Whether to expand the drawer.
+     * @private
+     */
+    updateDrawer_: function(expand) {
       const drawer = this.$.devDrawer;
       if (drawer.hidden) {
         drawer.hidden = false;
         // Requesting the offsetTop will cause a reflow (to account for hidden).
         /** @suppress {suspiciousCode} */ drawer.offsetTop;
       }
-      this.expanded_ = !this.expanded_;
-    },
-
-    /** @private */
-    onInDevModeChanged_: function() {
-      // Set the initial state.
-      this.expanded_ = this.inDevMode;
-      this.$.devDrawer.hidden = !this.inDevMode;
+      listenOnce(drawer, 'transitionend', () => {
+        this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
+        this.inDevMode = expand;
+        this.$.devDrawer.hidden = !expand;
+      });
+      const height = this.$['button-strip'].scrollHeight;
+      drawer.style.height = expand ? `${height}px` : '0';
+      this.$['button-strip'].style.top = expand ? '0' : `-${height}px`;
+      this.expanded_ = expand;
     },
 
     /** @private */

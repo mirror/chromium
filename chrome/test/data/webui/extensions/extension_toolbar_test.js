@@ -34,9 +34,7 @@ cr.define('extension_toolbar_tests', function() {
       testVisible('#pack-extensions', false);
       testVisible('#update-now', false);
 
-      toolbar.set('inDevMode', true);
-      Polymer.dom.flush();
-
+      MockInteractions.tap(toolbar.$['dev-mode']);
       testVisible('#dev-mode', true);
       testVisible('#load-unpacked', true);
       testVisible('#pack-extensions', true);
@@ -44,28 +42,33 @@ cr.define('extension_toolbar_tests', function() {
     });
 
     test(assert(TestNames.ClickHandlers), function() {
-      toolbar.set('inDevMode', true);
-      Polymer.dom.flush();
-
+      // Begin with dev-mode disabled; enable it; tap some buttons; disable it.
+      assertTrue(toolbar.$.devDrawer.hidden);
       MockInteractions.tap(toolbar.$['dev-mode']);
-      return mockDelegate.whenCalled('setProfileInDevMode').then(function(arg) {
-        assertFalse(arg);
-        mockDelegate.reset();
-        MockInteractions.tap(toolbar.$['dev-mode']);
-        return mockDelegate.whenCalled('setProfileInDevMode');
-      }).then(function(arg) {
-        assertTrue(arg);
-        MockInteractions.tap(toolbar.$$('#load-unpacked'));
-        return mockDelegate.whenCalled('loadUnpacked');
-      }).then(function() {
-        MockInteractions.tap(toolbar.$$('#update-now'));
-        return mockDelegate.whenCalled('updateAllExtensions');
-      }).then(function() {
-        var listener = new extension_test_util.ListenerMock();
-        listener.addListener(toolbar, 'pack-tap');
-        MockInteractions.tap(toolbar.$$('#pack-extensions'));
-        listener.verify();
-      });
+      return mockDelegate.whenCalled('setProfileInDevMode')
+          .then(function(arg) {
+            assertTrue(arg);
+            assertFalse(toolbar.$.devDrawer.hidden);
+            mockDelegate.reset();
+            MockInteractions.tap(toolbar.$$('#load-unpacked'));
+            return mockDelegate.whenCalled('loadUnpacked');
+          })
+          .then(function() {
+            MockInteractions.tap(toolbar.$$('#update-now'));
+            return mockDelegate.whenCalled('updateAllExtensions');
+          })
+          .then(function() {
+            var listener = new extension_test_util.ListenerMock();
+            listener.addListener(toolbar, 'pack-tap');
+            MockInteractions.tap(toolbar.$$('#pack-extensions'));
+            listener.verify();
+            MockInteractions.tap(toolbar.$['dev-mode']);
+            return mockDelegate.whenCalled('setProfileInDevMode');
+          })
+          .then(function(arg) {
+            assertFalse(arg);
+            assertTrue(toolbar.$.devDrawer.hidden);
+          });
     });
   });
 
