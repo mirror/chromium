@@ -477,7 +477,7 @@ static CompositingReasons CompositingReasonsForTransform(const LayoutBox& box) {
     compositing_reasons |= CompositingReason::k3DTransform;
 
   if (CompositingReasonFinder::RequiresCompositingForTransformAnimation(style))
-    compositing_reasons |= CompositingReason::kActiveAnimation;
+    compositing_reasons |= CompositingReason::kActiveTransformAnimation;
 
   if (style.HasWillChangeCompositingHint() &&
       !style.SubtreeWillChangeContents())
@@ -684,7 +684,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateEffect() {
       CompositingReasons compositing_reasons = CompositingReason::kNone;
       if (CompositingReasonFinder::RequiresCompositingForOpacityAnimation(
               style)) {
-        compositing_reasons = CompositingReason::kActiveAnimation;
+        compositing_reasons = CompositingReason::kActiveOpacityAnimation;
       }
 
       IntRect mask_clip;
@@ -802,7 +802,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateFilter() {
       // current.
       CompositingReasons compositing_reasons =
           CompositingReasonFinder::RequiresCompositingForFilterAnimation(style)
-              ? CompositingReason::kActiveAnimation
+              ? CompositingReason::kActiveFilterAnimation
               : CompositingReason::kNone;
       DCHECK(!style.HasCurrentFilterAnimation() ||
              compositing_reasons != CompositingReason::kNone);
