@@ -516,8 +516,7 @@ void CustomFrameViewAsh::OnOverviewModeEnded() {
 void CustomFrameViewAsh::OnSplitViewStateChanged(
     SplitViewController::State /* previous_state */,
     SplitViewController::State state) {
-  if (Shell::Get()->window_selector_controller()->IsSelecting())
-    MaybePaintHeaderForSplitview(state);
+  MaybePaintHeaderForSplitview(state);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
