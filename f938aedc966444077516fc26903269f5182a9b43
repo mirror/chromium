@@ -70,6 +70,24 @@
       "revId": "f938aedc966444077516fc26903269f5182a9b43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86b0d71b_7dc2fad0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:20:38Z",
+      "side": 1,
+      "message": "I\u0027m not the owner of this file and unless qinmin@ approves of it, I think we might want to keep this change smaller.",
+      "parentUuid": "ed100b28_08fdfe42",
+      "revId": "f938aedc966444077516fc26903269f5182a9b43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
