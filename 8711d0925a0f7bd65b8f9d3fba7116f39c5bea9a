@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf8b2ed5_8192e7a0",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-06T06:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ccedac4_ce845d5b",
+      "range": {
+        "startLine": 136,
+        "startChar": 27,
+        "endLine": 136,
+        "endChar": 35
+      },
+      "revId": "8711d0925a0f7bd65b8f9d3fba7116f39c5bea9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29b5af3_fb55be75",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 2
