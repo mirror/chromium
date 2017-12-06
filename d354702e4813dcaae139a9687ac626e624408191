@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "f203276a_ea540de3",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T03:16:37Z",
+      "side": 1,
+      "message": "The logic may be simple now, but it may become more complex in the future. Perhaps there will be some transformation applied to the templates, or some other internal refactoring. Java is also prone to \u003d\u003d vs .equals() bugs. I think there is always value in simple unit tests like this.\n\nThis could even be extended by having one pass with two identical share templates, and ensuring that an upgrade is not requested.",
+      "parentUuid": "7d7c7a19_c74f2e38",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 854,
+        "endChar": 5
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c38a17b6_2b7ffed2",
         "filename": "chrome/browser/android/shortcut_info.h",
         "patchSetId": 1
