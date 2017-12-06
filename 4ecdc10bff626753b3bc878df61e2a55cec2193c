@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "b66aeb7e_069162a5",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T07:57:33Z",
+      "side": 1,
+      "message": "\u003e Can we pull this value on creation and return a const member here instead?\n\nI have to clear |password_is_revealed_by_default_| after bubble reopening. \nOtherwise, if a user passes re-auth, closes the bubble, opens the bubble, then the password will be always revealed because password_is_revealed_by_default_ is true and we cannot change it.",
+      "parentUuid": "4fed214d_50c99672",
+      "range": {
+        "startLine": 570,
+        "startChar": 9,
+        "endLine": 570,
+        "endChar": 63
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "832bf772_96e2eb8c",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
@@ -314,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "2d4c4b28_df5a413c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T07:57:33Z",
+      "side": 1,
+      "message": "\u003e I\u0027d propose that 504 - 525 go to a callback. The function returns immediately always. True means show the password. False means don\u0027t do anything. In the background we can reauth the user and in case it was successful bring the bubble back with the password revealed.\n\u003e \n\u003e AuthenticateUser can take a lot of time. I think the messages are still handled. You can\u0027t do 514-515 because you don\u0027t really know the state.\n\nWhy do we need callback here? The current bubble will be destroyed if re-auth dialog has a focus, i.e. the caller is destroyed. We have to re-create a bubble. \n\nIf you insist, please provide more details.",
+      "parentUuid": "530abd39_7cc2a619",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888cedbb_1d2d4e23",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 18
@@ -431,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "64c9e537_e17b3c6e",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T07:57:33Z",
+      "side": 1,
+      "message": "\u003e The name is confusing. It probably should be current bubble. Maybe we don\u0027t need this member at all.\n\nNot sure I understand how we can eliminate this field.",
+      "parentUuid": "3b777722_7ca2400f",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b31e8f_9ed51725",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -475,6 +541,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72f24b1e_3be11727",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-06T07:57:33Z",
+      "side": 1,
+      "message": "\u003e Ack\n\nI mark it unresolved.",
+      "parentUuid": "eaa1f2b0_072cb650",
+      "range": {
+        "startLine": 116,
+        "startChar": 32,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
