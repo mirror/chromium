@@ -10,6 +10,8 @@
 #include <memory>
 
 #include "base/atomicops.h"
+#include "base/base_switches.h"
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/process/kill.h"
@@ -105,10 +107,9 @@ const char MultipleThreadMain::s_test_name_[] =
 // Android/Mac/Fuchsia doesn't support SharedMemory::Open/Delete/
 // CreateNamedDeprecated(openExisting=true)
 #if !defined(OS_ANDROID) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
-TEST(SharedMemoryTest, OpenClose) {
-  const uint32_t kDataSize = 1024;
-  std::string test_name = "SharedMemoryOpenCloseTest";
 
+void TestOpenClose(const std::string& test_name) {
+  const uint32_t kDataSize = 1024;
   // Open two handles to a memory segment, confirm that they are mapped
   // separately yet point to the same space.
   SharedMemory memory1;
@@ -153,14 +154,13 @@ TEST(SharedMemoryTest, OpenClose) {
   EXPECT_TRUE(rv);
 }
 
-TEST(SharedMemoryTest, OpenExclusive) {
+TEST(SharedMemoryTest, OpenClose) {
+  TestOpenClose("SharedMemoryOpenCloseTest");
+}
+
+void TestOpenExclusive(const std::string& test_name) {
   const uint32_t kDataSize = 1024;
   const uint32_t kDataSize2 = 2048;
-  std::ostringstream test_name_stream;
-  test_name_stream << "SharedMemoryOpenExclusiveTest."
-                   << Time::Now().ToDoubleT();
-  std::string test_name = test_name_stream.str();
-
   // Open two handles to a memory segment and check that
   // open_existing_deprecated works as expected.
   SharedMemory memory1;
@@ -218,10 +218,17 @@ TEST(SharedMemoryTest, OpenExclusive) {
   rv = memory1.Delete(test_name);
   EXPECT_TRUE(rv);
 }
+
+TEST(SharedMemoryTest, OpenExclusive) {
+  std::ostringstream test_name_stream;
+  test_name_stream << "SharedMemoryOpenExclusiveTest."
+                   << Time::Now().ToDoubleT();
+  TestOpenExclusive(test_name_stream.str());
+}
 #endif  // !defined(OS_ANDROID) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 
 // Check that memory is still mapped after its closed.
-TEST(SharedMemoryTest, CloseNoUnmap) {
+void TestCloseNoUnmap() {
   const size_t kDataSize = 4096;
 
   SharedMemory memory;
@@ -243,10 +250,14 @@ TEST(SharedMemoryTest, CloseNoUnmap) {
   EXPECT_EQ(nullptr, memory.memory());
 }
 
+TEST(SharedMemoryTest, CloseNoUnmap) {
+  TestCloseNoUnmap();
+}
+
 #if !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 // Create a set of N threads to each open a shared memory segment and write to
 // it. Verify that they are always reading/writing consistent data.
-TEST(SharedMemoryTest, MultipleThreads) {
+void TestMultipleThreads() {
   const int kNumThreads = 5;
 
   MultipleThreadMain::CleanUp();
@@ -282,12 +293,16 @@ TEST(SharedMemoryTest, MultipleThreads) {
   }
   MultipleThreadMain::CleanUp();
 }
+
+TEST(SharedMemoryTest, MultipleThreads) {
+  TestMultipleThreads();
+}
 #endif
 
 // Allocate private (unique) shared memory with an empty string for a
 // name.  Make sure several of them don't point to the same thing as
 // we might expect if the names are equal.
-TEST(SharedMemoryTest, AnonymousPrivate) {
+void TestAnonymousPrivate() {
   int i, j;
   int count = 4;
   bool rv;
@@ -328,7 +343,11 @@ TEST(SharedMemoryTest, AnonymousPrivate) {
   }
 }
 
-TEST(SharedMemoryTest, GetReadOnlyHandle) {
+TEST(SharedMemoryTest, AnonymousPrivate) {
+  TestAnonymousPrivate();
+}
+
+void TestGetReadOnlyHandle() {
   StringPiece contents = "Hello World";
 
   SharedMemory writable_shmem;
@@ -430,6 +449,10 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
 #endif  // defined(OS_POSIX) || defined(OS_WIN)
 }
 
+TEST(SharedMemoryTest, GetReadOnlyHandle) {
+  TestGetReadOnlyHandle();
+}
+
 TEST(SharedMemoryTest, ShareToSelf) {
   StringPiece contents = "Hello World";
 
@@ -461,7 +484,7 @@ TEST(SharedMemoryTest, ShareToSelf) {
                         contents.size()));
 }
 
-TEST(SharedMemoryTest, ShareWithMultipleInstances) {
+void TestShareWithMultipleInstances() {
   static const StringPiece kContents = "Hello World";
 
   SharedMemory shmem;
@@ -505,7 +528,11 @@ TEST(SharedMemoryTest, ShareWithMultipleInstances) {
   ASSERT_EQ(StringPiece(ToLowerASCII(kContents)), readonly_contents);
 }
 
-TEST(SharedMemoryTest, MapAt) {
+TEST(SharedMemoryTest, ShareWithMultipleInstances) {
+  TestShareWithMultipleInstances();
+}
+
+void TestMapAt() {
   ASSERT_TRUE(SysInfo::VMAllocationGranularity() >= sizeof(uint32_t));
   const size_t kCount = SysInfo::VMAllocationGranularity();
   const size_t kDataSize = kCount * sizeof(uint32_t);
@@ -531,7 +558,11 @@ TEST(SharedMemoryTest, MapAt) {
   }
 }
 
-TEST(SharedMemoryTest, MapTwice) {
+TEST(SharedMemoryTest, MapAt) {
+  TestMapAt();
+}
+
+void TestMapTwice() {
   const uint32_t kDataSize = 1024;
   SharedMemory memory;
   bool rv = memory.CreateAndMapAnonymous(kDataSize);
@@ -544,11 +575,15 @@ TEST(SharedMemoryTest, MapTwice) {
   EXPECT_EQ(old_address, memory.memory());
 }
 
+TEST(SharedMemoryTest, MapTwice) {
+  TestMapTwice();
+}
+
 #if defined(OS_POSIX)
 // This test is not applicable for iOS (crbug.com/399384).
 #if !defined(OS_IOS)
 // Create a shared memory object, mmap it, and mprotect it to PROT_EXEC.
-TEST(SharedMemoryTest, AnonymousExecutable) {
+void TestAnonymousExecutable() {
   const uint32_t kTestSize = 1 << 16;
 
   SharedMemory shared_memory;
@@ -565,6 +600,10 @@ TEST(SharedMemoryTest, AnonymousExecutable) {
 
   EXPECT_EQ(0, mprotect(shared_memory.memory(), shared_memory.requested_size(),
                         PROT_READ | PROT_EXEC));
+}
+
+TEST(SharedMemoryTest, AnonymousExecutable) {
+  TestAnonymousExecutable();
 }
 #endif  // !defined(OS_IOS)
 
@@ -588,7 +627,7 @@ class ScopedUmaskSetter {
 };
 
 // Create a shared memory object, check its permissions.
-TEST(SharedMemoryTest, FilePermissionsAnonymous) {
+void TestFilePermissionsAnonymous() {
   const uint32_t kTestSize = 1 << 8;
 
   SharedMemory shared_memory;
@@ -611,6 +650,10 @@ TEST(SharedMemoryTest, FilePermissionsAnonymous) {
   // file.
   EXPECT_FALSE(shm_stat.st_mode & S_IRWXO);
   EXPECT_FALSE(shm_stat.st_mode & S_IRWXG);
+}
+
+TEST(SharedMemoryTest, FilePermissionsAnonymous) {
+  TestFilePermissionsAnonymous();
 }
 
 // Create a shared memory object, check its permissions.
@@ -645,7 +688,7 @@ TEST(SharedMemoryTest, FilePermissionsNamed) {
 // Map() will return addresses which are aligned to the platform page size, this
 // varies from platform to platform though.  Since we'd like to advertise a
 // minimum alignment that callers can count on, test for it here.
-TEST(SharedMemoryTest, MapMinimumAlignment) {
+void TestMapMinimumAlignment() {
   static const int kDataSize = 8192;
 
   SharedMemory shared_memory;
@@ -653,6 +696,10 @@ TEST(SharedMemoryTest, MapMinimumAlignment) {
   EXPECT_EQ(0U, reinterpret_cast<uintptr_t>(
       shared_memory.memory()) & (SharedMemory::MAP_MINIMUM_ALIGNMENT - 1));
   shared_memory.Close();
+}
+
+TEST(SharedMemoryTest, MapMinimumAlignment) {
+  TestMapMinimumAlignment();
 }
 
 #if defined(OS_WIN)
@@ -784,7 +831,7 @@ MULTIPROCESS_TEST_MAIN(SharedMemoryTestMain) {
 #endif  // !defined(OS_IOS) && !defined(OS_ANDROID) && !defined(OS_MACOSX) &&
         // !defined(OS_FUCHSIA)
 
-TEST(SharedMemoryTest, MappedId) {
+void TestMappedId() {
   const uint32_t kDataSize = 1024;
   SharedMemory memory;
   SharedMemoryCreateOptions options;
@@ -808,5 +855,114 @@ TEST(SharedMemoryTest, MappedId) {
   memory.Unmap();
   EXPECT_TRUE(memory.mapped_id().is_empty());
 }
+
+TEST(SharedMemoryTest, MappedId) {
+  TestMappedId();
+}
+
+#if defined(OS_LINUX) || defined(OS_AIX)
+TEST(SharedMemoryTest, TempOpenCloseDir) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestOpenClose("SharedMemoryTempDirOpenCloseTest");
+}
+
+TEST(SharedMemoryTest, TempOpenExclusiveDir) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  std::ostringstream test_name_stream;
+  test_name_stream << "SharedMemoryTempOpenExclusiveTempTest."
+                   << Time::Now().ToDoubleT();
+  TestOpenExclusive(test_name_stream.str());
+}
+
+// Check that memory is still mapped after its closed.
+TEST(SharedMemoryTest, TempCloseNoUnmap) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestCloseNoUnmap();
+}
+
+TEST(SharedMemoryTest, TempMultipleThreads) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestMultipleThreads();
+}
+
+TEST(SharedMemoryTest, TempAnonymousPrivate) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestAnonymousPrivate();
+}
+
+TEST(SharedMemoryTest, TempGetReadOnlyHandle) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestGetReadOnlyHandle();
+}
+
+TEST(SharedMemoryTest, TempShareWithMultipleInstances) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestShareWithMultipleInstances();
+}
+
+TEST(SharedMemoryTest, TempMapAt) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestMapAt();
+}
+
+TEST(SharedMemoryTest, TempMapTwice) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestMapTwice();
+}
+
+TEST(SharedMemoryTest, TempAnonymousExecutable) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestAnonymousExecutable();
+}
+
+TEST(SharedMemoryTest, TempFilePermissionsAnonymous) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestFilePermissionsAnonymous();
+}
+
+TEST(SharedMemoryTest, TempMapMinimumAlignment) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestMapMinimumAlignment();
+}
+
+MULTIPROCESS_TEST_MAIN(TempSharedMemoryTestMain) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  return SharedMemoryProcessTest::TaskTestMain();
+}
+
+TEST(SharedMemoryTest, TempMappedId) {
+  CommandLine* cmdline = CommandLine::ForCurrentProcess();
+  cmdline->AppendSwitchASCII(switches::kEnableShmemUseTempDir, "");
+
+  TestMappedId();
+}
+
+#endif  // defined(OS_LINUX) || defined(OS_AIX)
 
 }  // namespace base
