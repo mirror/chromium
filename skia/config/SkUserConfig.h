@@ -204,6 +204,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_USE_LEGACY_DISTANCE_FIELDS
 #endif
 
+#ifndef SK_SUPPORT_LEGACY_BLUR_IMAGE
+#define SK_SUPPORT_LEGACY_BLUR_IMAGE
+#endif
+
 // Skia is enabling this feature soon. Chrome probably does
 // not want it for M64
 #ifndef SK_DISABLE_EXPLICIT_GPU_RESOURCE_ALLOCATION
@@ -220,6 +224,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_DELTA_AA
 #endif
 
+#ifndef SK_USE_LEGACY_INTERP_BLUR
+#define SK_USE_LEGACY_INTERP_BLUR
+#endif
+
 #ifndef SK_SUPPORT_LEGACY_SMALLRECT_AA
 #define SK_SUPPORT_LEGACY_SMALLRECT_AA
 #endif
@@ -232,6 +240,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
 #endif
 
+// remove after rebaselining svg layout tests
+#ifndef SK_SUPPORT_LEGACY_SVG_ARC_TO
+#define SK_SUPPORT_LEGACY_SVG_ARC_TO
+#endif
 
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi
 
