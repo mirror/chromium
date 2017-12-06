@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60367b8b_ad7044a1",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "why it closes then update the id? who will reopen this? (if so, please add comment)",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d902c15_368bd4db",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "It\u0027s odd to call the display manager back from the method that is called by display manager.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d20d99_0714b6a8",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "This is different scenario than original test. (It used to switch to mirror UPON connection, while this changes to the mirror after extended. Can you keep it the same (or add as an extra case)?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06212b11_382e27c7",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f3cdd0_39e077b4",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "can you store mirror state as a part of display property?\nI also think you\u0027ll need to store as \"mixed_mirror\" to distinguish from mirror later.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5d8dca_156a6174",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "remove \"Previous\" as none of properties are called previous.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1f859d_f2f4f0d8",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "current",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0a4d63_5fd32456",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "why this was necessary?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951b453e_acce6024",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e5a98d_fbfadfab",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "can  you add comment why this needs to be set first?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859ff729_855d618a",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "I think we should mask the output index out (first 8 bits). That way, once it\u0027s mirrored the same display will be mirrored regardless of which port it is connected to.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811c607a_ea33fa25",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "can\u0027t we instead just use the current displays\u0027s mirror mode to determine if it should be mirrored?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5809382_4d1e4f39",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:10:50Z",
+      "side": 1,
+      "message": "why we need off and not set? Should they be the same?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
