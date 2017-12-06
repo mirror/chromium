@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd73c501_c24f86f2",
+        "filename": "ui/gfx/ca_layer_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-06T00:11:00Z",
+      "side": 1,
+      "message": "This comment still relevant?  The old code is strange in that it would seem to contradict the ifdef, btw.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "ca7bb37b0458be480d608cfb89674f3659fc2b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
