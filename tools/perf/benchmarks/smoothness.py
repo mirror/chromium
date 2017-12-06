@@ -831,3 +831,18 @@ class SmoothnessToughSchedulingCases(_Smoothness):
     # has been named this way for long time, we keep the name as-is to avoid
     # data migration.
     return 'scheduler.tough_scheduling_cases'
+
+
+@benchmark.Owner(emails=['dave.rodgman@arm.com'])
+class SmoothnessInfiniteScroll(_Smoothness):
+  """Scrolls the given page up and down forever (never completes). This will
+  not produce a benchmark score, but it is useful when investigating smoothness
+  issues with perf, etc.
+
+  This should be used with --story-filter to select a page."""
+
+  page_set = page_sets.Top25InfinitePageSet
+
+  @classmethod
+  def Name(cls):
+    return 'smoothness.infinite'
