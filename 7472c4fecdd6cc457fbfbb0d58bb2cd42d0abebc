@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4a1015_1c179e14",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T21:55:57Z",
+      "side": 1,
+      "message": "s/|url|/the link element",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "7472c4fecdd6cc457fbfbb0d58bb2cd42d0abebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb23acd_b8b61763",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T21:55:57Z",
+      "side": 1,
+      "message": "RequestToOpenUrl",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "7472c4fecdd6cc457fbfbb0d58bb2cd42d0abebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdec143b_ea7410b0",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-06T21:55:57Z",
+      "side": 1,
+      "message": "Do we need this import?",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "7472c4fecdd6cc457fbfbb0d58bb2cd42d0abebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
