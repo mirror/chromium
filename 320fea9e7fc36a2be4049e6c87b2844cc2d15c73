@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698500d3_11c54be3",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T23:07:37Z",
+      "side": 1,
+      "message": "I think this can just be\n\n  return base::FeatureList::IsEnabled(features::kMacRTL);\n\nsee next comment.",
+      "revId": "320fea9e7fc36a2be4049e6c87b2844cc2d15c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9383f16_874d72ef",
+        "filename": "ui/views/views_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T23:07:37Z",
+      "side": 1,
+      "message": "and just `return true;`",
+      "revId": "320fea9e7fc36a2be4049e6c87b2844cc2d15c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1b2c5a_92fc8a25",
+        "filename": "ui/views/views_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T23:07:37Z",
+      "side": 1,
+      "message": "You know... I think we can just remove the platform style constant now - it\u0027s basically redundant with this. The comment from platform_style.h can move here. I.e.\n\n  // Whether to mirror the arrow of bubble dialogs in RTL, such that the bubble\n  // opens in the opposite direction.\n\nPerhaps add, \"This may depend on the layout of the parent window.\" or similar.",
+      "revId": "320fea9e7fc36a2be4049e6c87b2844cc2d15c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
