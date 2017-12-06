@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3919b0f0_f2285409",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-06T17:18:40Z",
+      "side": 1,
+      "message": "nit: Consider moving this block to a private method that can be shared by the multiple tests that need it",
+      "range": {
+        "startLine": 451,
+        "startChar": 8,
+        "endLine": 462,
+        "endChar": 11
+      },
+      "revId": "fcc00d9d1e455b3eac093b70846696d5036846a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
