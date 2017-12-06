@@ -93,6 +93,30 @@
       "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13c1ad53_7c28f3e2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "What changed? The comment is not resolved.",
+      "parentUuid": "07afcb7d_f4aa70fa",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 50
+      },
+      "revId": "762d0aa2617fff5abfe9b0732a0ae4efbfa69435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

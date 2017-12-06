@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "43a916c3_0ff021e7",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "That\u0027s a strange piece of code. If !visible then you should just populate the field with ***. If it\u0027s visible then you call TryToViewPasswords",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 11
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bfa6b5_c27b5915",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "The condition is reversed here. Have you tested on Mac at all?",
+      "range": {
+        "startLine": 207,
+        "startChar": 8,
+        "endLine": 207,
+        "endChar": 54
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ef7a14_71ed12b0",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "This should also be true when PasswordIsRevealedByDefault() is true.",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b16d509_8acf6144",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 18
@@ -18,6 +87,29 @@
         "startChar": 9,
         "endLine": 565,
         "endChar": 38
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fed214d_50c99672",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "Can we pull this value on creation and return a const member here instead?",
+      "range": {
+        "startLine": 570,
+        "startChar": 9,
+        "endLine": 570,
+        "endChar": 63
       },
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -64,6 +156,30 @@
         "startChar": 28,
         "endLine": 144,
         "endChar": 33
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2c0a7_7bf77389",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "That comment is confusing. It should return \u0027true\u0027 if the password can be shown right now. If it returns \u0027false\u0027 then the bubble and the model are already destroyed. It should be emphasized in the comment. I\u0027m fine with the name RevealPasswords().",
+      "parentUuid": "832bf772_96e2eb8c",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 25
       },
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -180,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "530abd39_7cc2a619",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "I\u0027d propose that 504 - 525 go to a callback. The function returns immediately always. True means show the password. False means don\u0027t do anything. In the background we can reauth the user and in case it was successful bring the bubble back with the password revealed.\n\nAuthenticateUser can take a lot of time. I think the messages are still handled. You can\u0027t do 514-515 because you don\u0027t really know the state.",
+      "parentUuid": "f8097264_4606b8c2",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888cedbb_1d2d4e23",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 18
@@ -191,6 +325,30 @@
       "writtenOn": "2017-12-05T12:58:01Z",
       "side": 1,
       "message": "This function name indicates that it does not have side effects. --\u003e Probably should be named \"GetAndReset...\"",
+      "range": {
+        "startLine": 520,
+        "startChar": 34,
+        "endLine": 520,
+        "endChar": 61
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3167265_c7871a00",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "I think it shouldn\u0027t have side effects. The state can be reset after the bubble is shown. We already handle this event in this class.",
+      "parentUuid": "888cedbb_1d2d4e23",
       "range": {
         "startLine": 520,
         "startChar": 34,
@@ -249,6 +407,30 @@
     },
     {
       "key": {
+        "uuid": "3b777722_7ca2400f",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "The name is confusing. It probably should be current bubble. Maybe we don\u0027t need this member at all.",
+      "parentUuid": "eaa6e66f_5b51f3e8",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b31e8f_9ed51725",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -272,6 +454,53 @@
     },
     {
       "key": {
+        "uuid": "eaa1f2b0_072cb650",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80b31e8f_9ed51725",
+      "range": {
+        "startLine": 116,
+        "startChar": 32,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38f87e23_6816168b",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "That\u0027s a dangerous interface. It may return true because the bubble should show the password right away. It may also return true 1 minute later when the bubble is already destroyed and should not attempt to access |this|.",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4647b896_39fada69",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -288,6 +517,53 @@
         "startChar": 31,
         "endLine": 120,
         "endChar": 40
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9389b34_ac4fde78",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "Is not true. It\u0027s just called all the time.",
+      "parentUuid": "4647b896_39fada69",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7c722b_2ac6f742",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "It\u0027s ignored when you create a combobox.",
+      "range": {
+        "startLine": 487,
+        "startChar": 6,
+        "endLine": 487,
+        "endChar": 23
       },
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -330,6 +606,30 @@
       "side": 1,
       "message": "Vasilii, what do you think of extending UIDisplayDisposition to have an entry \"REOPEN_AFTER_REAUTH\"?",
       "parentUuid": "1df09526_6cb0bd1d",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 64
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3605bd9_bdad723e",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-06T03:34:53Z",
+      "side": 1,
+      "message": "I\u0027m fine with that.",
+      "parentUuid": "8d86de47_fd448a05",
       "range": {
         "startLine": 313,
         "startChar": 2,
