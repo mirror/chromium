@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "172e6cfa_db591a55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-12-06T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce6202bc_eb3c436d",
+      "range": {
+        "startLine": 77,
+        "startChar": 37,
+        "endLine": 77,
+        "endChar": 98
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef0c3087_38d241a9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
         "patchSetId": 7
@@ -68,6 +92,54 @@
       "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d4bd40_17741a36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-12-06T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f054f7_fc2321c0",
+      "range": {
+        "startLine": 24,
+        "startChar": 68,
+        "endLine": 24,
+        "endChar": 74
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c6c3d97_05d08167",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FileSizeUtil.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-12-06T00:45:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef0c3087_38d241a9",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 45
+      },
+      "revId": "c0e9554d7b3ff62db9702ec747b6a2142bf7025b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
