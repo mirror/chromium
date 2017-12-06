@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb931142_cc87bd2e",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-06T20:51:15Z",
+      "side": 1,
+      "message": "Matt: looks like it\u0027s illegal to pass in an empty buffer to ReadOnlyBuffer. I get the following error msg when I run this test:\n\n[16069:16069:1206/154211.107708:426292969842:FATAL:read_only_buffer.mojom-shared.h(123)] The outgoing message will trigger VALIDATION_ERROR_UNEXPECTED_NULL_POINTER at the receiving side (null buffer in ReadOnlyBuffer struct).",
+      "revId": "23cd9812329411a7dcc41cee381d22e11df3796a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
