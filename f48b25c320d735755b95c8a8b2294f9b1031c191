@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "55a5f5ba_eb87ac7a",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T16:17:18Z",
+      "side": 1,
+      "message": "nit: not needed anymore?",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb837e58_5c2805fa",
         "filename": "ui/views/DEPS",
         "patchSetId": 8
@@ -13,6 +30,75 @@
       "writtenOn": "2017-12-06T11:15:06Z",
       "side": 1,
       "message": "this is done in ui/aura and src/ash so hopefully not controversial ;)",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76937d1a_cdb70314",
+        "filename": "ui/views/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T16:17:18Z",
+      "side": 1,
+      "message": "Why is it needed in these non-test targets? I don\u0027t see cause for it in this CL.",
+      "parentUuid": "bb837e58_5c2805fa",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5dc17e1_c2194193",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T16:17:18Z",
+      "side": 1,
+      "message": "I wonder if each platform could use a separate reference image.",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38a5689_00eac631",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T16:17:18Z",
+      "side": 1,
+      "message": "Nice, this width is narrow enough that the test actually fades the string... looks like the old one didn\u0027t. Maybe shrink the height?",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf5646b_65442300",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T16:17:18Z",
+      "side": 1,
+      "message": "Update this, or at least the comment... I\u0027m not totally sure what value the test has (beyond ensuring we don\u0027t crash) if we allow this many pixels to have errors (how many pixels even paint text at all?)",
       "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
