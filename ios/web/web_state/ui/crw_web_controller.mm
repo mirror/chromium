@@ -4551,9 +4551,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // pending navigation information should be applied to state information.
   [self setDocumentURL:webViewURL];
 
-  if (!_lastRegisteredRequestURL.is_valid() &&
-      _documentURL != _lastRegisteredRequestURL) {
-    // if |_lastRegisteredRequestURL| is an invalid URL, then |_documentURL|
+  web::NavigationContextImpl* context =
+      [_navigationStates contextForNavigation:navigation];
+  if (!context->GetUrl().is_valid() && _documentURL != context->GetUrl()) {
+    // If the registered URL is an invalid URL, then |_documentURL|
     // will be "about:blank".
     self.navigationManagerImpl->UpdatePendingItemUrl(_documentURL);
   }
@@ -4570,8 +4571,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   // Update HTTP response headers.
   _webStateImpl->UpdateHttpResponseHeaders(_documentURL);
-  web::NavigationContextImpl* context =
-      [_navigationStates contextForNavigation:navigation];
   context->SetResponseHeaders(_webStateImpl->GetHttpResponseHeaders());
 
   [self commitPendingNavigationInfo];
