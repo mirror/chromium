@@ -104,7 +104,6 @@ NOINLINE void ClassicPendingScript::CheckState() const {
   CHECK(GetElement());
   CHECK_EQ(is_external_, !!GetResource());
   CHECK(GetResource() || !streamer_);
-  CHECK(!streamer_ || streamer_->GetResource() == GetResource());
 }
 
 void ClassicPendingScript::Prefinalize() {
@@ -211,7 +210,7 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
   // If there is no script streamer, this step completes immediately.
   AdvanceReadyState(kWaitingForStreaming);
   if (streamer_)
-    streamer_->NotifyFinished(resource);
+    streamer_->NotifyFinished();
   else
     FinishWaitingForStreaming();
 }
