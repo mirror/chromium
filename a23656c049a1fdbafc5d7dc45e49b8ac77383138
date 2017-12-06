@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a20cd27a_b7505f12",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-06T06:23:04Z",
+      "side": 1,
+      "message": "\u003e Having each of those places need to supply a second argument of an empty string seems undesirable.\n\nI\u0027m not talking about the interface, but whether the implementation can be shared with JoinString\u0027s? (i.e., StrCat just calls JoinString with \"\").\n\nWould that suffer a performance penalty due to processing the empty delimiter, versus this separate implementation?\n\nTo be clear, I think having StrCat that does not take a delimiter is great, especially since most call sites seem to pass \"\". It could just be an overload of JoinString though, instead of a separate method in a separate file with a separate implementation that is really just a special case. (An overload, rather than a default argument, would avoid bloating all the call sites.)",
+      "parentUuid": "baed38e7_58bb2cf8",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
