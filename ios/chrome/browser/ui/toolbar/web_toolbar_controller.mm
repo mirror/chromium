@@ -1211,8 +1211,10 @@ using ios::material::TimingFunction;
                                     newOmniboxLayout.position.leading;
       // Likewise the incognito icon will not be pinned to the leading side, so
       // force a layout here.
-      if (_incognitoIcon)
+      if (_incognitoIcon) {
         [self layoutIncognitoIcon];
+        newOmniboxLayout.size.width -= CGRectGetWidth(_incognitoIcon.frame);
+      }
     } else {
       newOmniboxLayout.position.leading = [self omniboxLeading];
       newOmniboxLayout.size.width = CGRectGetWidth([_webToolbar frame]) -
