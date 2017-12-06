@@ -695,7 +695,14 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
   if (!layout_object)
     return LocalCaretRect();
 
-  const InlineBoxPosition& box_position = ComputeInlineBoxPosition(position);
+  const PositionWithAffinityTemplate<Strategy>& adjusted =
+      ComputeInlineAdjustedPosition(position);
+
+  // TODO(xiaochengh): Plug in NG implementation here.
+
+  AssertSamePrimaryDirection(position, adjusted);
+  const InlineBoxPosition& box_position =
+      ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted);
 
   if (box_position.inline_box) {
     return ComputeLocalCaretRect(
@@ -721,7 +728,14 @@ LocalCaretRect LocalSelectionRectOfPositionTemplate(
   if (!node->GetLayoutObject())
     return LocalCaretRect();
 
-  const InlineBoxPosition& box_position = ComputeInlineBoxPosition(position);
+  const PositionWithAffinityTemplate<Strategy>& adjusted =
+      ComputeInlineAdjustedPosition(position);
+
+  // TODO(xiaochengh): Plug in NG implementation here.
+
+  AssertSamePrimaryDirection(position, adjusted);
+  const InlineBoxPosition& box_position =
+      ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted);
 
   if (!box_position.inline_box)
     return LocalCaretRect();
