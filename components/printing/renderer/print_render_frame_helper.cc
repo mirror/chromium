@@ -624,6 +624,7 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
   options->SetString("url", params.url);
   base::string16 title = source_frame.GetDocument().Title().Utf16();
   options->SetString("title", title.empty() ? params.title : title);
+  options->SetString("pageNumberStyle", params.page_number_style);
 
   ExecuteScript(frame, kPageSetupScriptFormat, *options);
 

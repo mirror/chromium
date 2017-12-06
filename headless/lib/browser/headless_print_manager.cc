@@ -202,6 +202,8 @@ HeadlessPrintManager::GetPrintParamsFromSettings(
   printing::RenderParamsFromPrintSettings(print_settings,
                                           &print_params->params);
   print_params->params.document_cookie = printing::PrintSettings::NewCookie();
+  print_params->params.page_number_style =
+      base::UTF8ToUTF16(settings.page_number_style);
   return print_params;
 }
 

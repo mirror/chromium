@@ -115,6 +115,7 @@ class PageHandler : public DevToolsDomainHandler,
                   Maybe<double> margin_right,
                   Maybe<String> page_ranges,
                   Maybe<bool> ignore_invalid_page_ranges,
+                  Maybe<String> page_number_style,
                   std::unique_ptr<PrintToPDFCallback> callback) override;
   Response StartScreencast(Maybe<std::string> format,
                            Maybe<int> quality,

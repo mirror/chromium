@@ -79,6 +79,7 @@ function setup(options) {
 
   document.querySelector('#url span').innerText = options['url'];
   document.querySelector('#page_number span').innerText = options['pageNumber'];
+  document.querySelector('#page_number').style = options['pageNumberStyle'];
 
   // Reduce date and page number space to give more space to title and url.
   document.querySelector('#date').style.width =

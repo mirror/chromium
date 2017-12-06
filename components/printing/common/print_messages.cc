@@ -79,6 +79,7 @@ PrintMsg_Print_Params::PrintMsg_Print_Params()
       display_header_footer(false),
       title(),
       url(),
+      page_number_style(),
       should_print_backgrounds(false),
       printed_doc_type(printing::SkiaDocumentType::PDF) {}
 
@@ -107,6 +108,7 @@ void PrintMsg_Print_Params::Reset() {
   display_header_footer = false;
   title = base::string16();
   url = base::string16();
+  page_number_style = base::string16();
   should_print_backgrounds = false;
   printed_doc_type = printing::SkiaDocumentType::PDF;
 }

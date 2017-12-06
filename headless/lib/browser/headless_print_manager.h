@@ -35,6 +35,7 @@ struct HEADLESS_EXPORT HeadlessPrintSettings {
   double scale;
 
   std::string page_ranges;
+  std::string page_number_style;
   bool ignore_invalid_page_ranges;
 };
 

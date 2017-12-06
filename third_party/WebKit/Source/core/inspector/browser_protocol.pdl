@@ -4491,6 +4491,9 @@ domain Page
       # Whether to silently ignore invalid but successfully parsed page ranges, such as '3-2'.
       # Defaults to false.
       optional boolean ignoreInvalidPageRanges
+      # Page number style. Specifies CSS style body that can will be used for the page numbers.
+      # Should be a valid CSS body assignable to Element.style.
+      optional string pageNumberStyle
     returns
       # Base64-encoded pdf data.
       string data

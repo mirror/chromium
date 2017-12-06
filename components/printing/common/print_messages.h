@@ -61,6 +61,7 @@ struct PrintMsg_Print_Params {
   bool display_header_footer;
   base::string16 title;
   base::string16 url;
+  base::string16 page_number_style;
   bool should_print_backgrounds;
   printing::SkiaDocumentType printed_doc_type;
 };
@@ -165,6 +166,9 @@ IPC_STRUCT_TRAITS_BEGIN(PrintMsg_Print_Params)
 
   // URL string to be printed as footer if requested by the user.
   IPC_STRUCT_TRAITS_MEMBER(url)
+
+  // CSS style to apply to page number.
+  IPC_STRUCT_TRAITS_MEMBER(page_number_style)
 
   // Whether to rasterize a PDF for printing
   IPC_STRUCT_TRAITS_MEMBER(rasterize_pdf)

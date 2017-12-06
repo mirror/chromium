@@ -234,6 +234,7 @@ std::unique_ptr<base::DictionaryValue> ParsePrintSettings(
   double margin_bottom_in_inch = default_margin_in_inch;
   double margin_left_in_inch = default_margin_in_inch;
   double margin_right_in_inch = default_margin_in_inch;
+  std::string page_number_style;
 
   if (const base::Value* margin_top_value = params->FindKey("marginTop"))
     margin_top_in_inch = margin_top_value->GetDouble();
@@ -246,6 +247,10 @@ std::unique_ptr<base::DictionaryValue> ParsePrintSettings(
 
   if (const base::Value* margin_right_value = params->FindKey("marginRight"))
     margin_right_in_inch = margin_right_value->GetDouble();
+
+  if (const base::Value* page_number_style_value =
+          params->FindKey("pageNumberStyle"))
+    settings->page_number_style = page_number_style_value->GetString();
 
   if (margin_top_in_inch < 0)
     return CreateInvalidParamResponse(command_id, "marginTop");
