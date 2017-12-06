@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8e8040_0c48b5a2",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T23:26:10Z",
+      "side": 1,
+      "message": "You\u0027ll need to fix this variable name :)",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2293c37_c020fbe9",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T23:26:10Z",
+      "side": 1,
+      "message": "Nit: this include shouldn\u0027t be needed here. If it\u0027s needed in the cc file, you should include it there",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294e855e_95aad24f",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T23:26:10Z",
+      "side": 1,
+      "message": "Nit: |web_app_info_provider_| is sufficient.",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bc6458_0164f8d4",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-06T23:26:10Z",
+      "side": 1,
+      "message": "This was actually fine as it was - the Wait() method spins a RunLoop and keeps the pointer and the pipe in-scope and alive until |quit_closure_| is dispatched. The changes here look like they\u0027ve broken the test so you can put it back the way it was. :)",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 32
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
