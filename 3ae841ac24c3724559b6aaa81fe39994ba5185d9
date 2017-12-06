@@ -22,6 +22,30 @@
       "revId": "3ae841ac24c3724559b6aaa81fe39994ba5185d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dc661d_35720e24",
+        "filename": "base/debug/crash_logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-06T17:20:37Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "ee97c136_09469a54",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "3ae841ac24c3724559b6aaa81fe39994ba5185d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
