@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4482261a_cc0a3fdb",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:41:53Z",
+      "side": 1,
+      "message": "This is for when we\u0027ll need tasks to open the file - could delay adding this, but thought I might as well land it now.",
+      "range": {
+        "startLine": 163,
+        "startChar": 21,
+        "endLine": 163,
+        "endChar": 36
+      },
+      "revId": "46f7290f601c956414eaf526770c796d971ce413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa7760d_edf4b9ab",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-06T21:41:53Z",
+      "side": 1,
+      "message": "This isn\u0027t too exciting in this CL, but it will be when I start opening files.",
+      "range": {
+        "startLine": 419,
+        "startChar": 24,
+        "endLine": 419,
+        "endChar": 46
+      },
+      "revId": "46f7290f601c956414eaf526770c796d971ce413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
