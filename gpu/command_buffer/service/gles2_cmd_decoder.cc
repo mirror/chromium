@@ -2879,6 +2879,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
                                                 GLenum format,
                                                 bool zero) {
   DCHECK(format == GL_RGB || format == GL_RGBA);
+  bool is_cleared = false;
   scoped_refptr<gl::GLImage> image =
       decoder_->GetContextGroup()->image_factory()->CreateAnonymousImage(
           size,
@@ -2895,15 +2896,19 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
               gfx::BufferFormat::RGBX_8888
 #endif
               : gfx::BufferFormat::RGBA_8888,
-          gfx::BufferUsage::SCANOUT, format);
+          gfx::BufferUsage::SCANOUT, format, &is_cleared);
   if (!image || !image->BindTexImage(Target()))
     return false;
+
+  gfx::Rect cleared_rect;
+  if (is_cleared)
+    cleared_rect = gfx::Rect(size);
 
   image_ = image;
   decoder_->texture_manager()->SetLevelInfo(
       texture_ref_.get(), Target(), 0, image_->GetInternalFormat(),
       size.width(), size.height(), 1, 0, image_->GetInternalFormat(),
-      GL_UNSIGNED_BYTE, gfx::Rect(size));
+      GL_UNSIGNED_BYTE, cleared_rect);
   decoder_->texture_manager()->SetLevelImage(texture_ref_.get(), Target(), 0,
                                              image_.get(), Texture::BOUND);
 
@@ -18016,19 +18021,24 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
     return;
   }
 
+  bool is_cleared = false;
   scoped_refptr<gl::GLImage> image =
       GetContextGroup()->image_factory()->CreateAnonymousImage(
           gfx::Size(width, height), buffer_format, gfx::BufferUsage::SCANOUT,
-          untyped_format);
+          untyped_format, &is_cleared);
   if (!image || !image->BindTexImage(target)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
                        "Failed to create or bind GL Image");
     return;
   }
 
+  gfx::Rect cleared_rect;
+  if (is_cleared)
+    cleared_rect = gfx::Rect(width, height);
+
   texture_manager()->SetLevelInfo(
       texture_ref, target, 0, image->GetInternalFormat(), width, height, 1, 0,
-      image->GetInternalFormat(), GL_UNSIGNED_BYTE, gfx::Rect(width, height));
+      image->GetInternalFormat(), GL_UNSIGNED_BYTE, cleared_rect);
   texture_manager()->SetLevelImage(texture_ref, target, 0, image.get(),
                                    Texture::BOUND);
 
