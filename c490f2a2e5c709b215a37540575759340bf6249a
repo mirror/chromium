@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51bbbc8f_2b39d158",
+        "filename": "ios/web/web_state/navigation_context_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-06T21:23:00Z",
+      "side": 1,
+      "message": "I took Eugene\u0027s advice to store WKNavigationType here instead. So deciding whether this is a fast or slow back/forward navigation will now be moved to CRWWebController. I\u0027ll make sure to comment clearly there.",
+      "parentUuid": "2b93a1ec_09277d4c",
+      "range": {
+        "startLine": 57,
+        "startChar": 45,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff1f53b_d72a5e14",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a254224d_37a13f61",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-06T21:23:00Z",
+      "side": 1,
+      "message": "Fair point. Changed to storing WKNavigationType instead.",
+      "parentUuid": "5ff1f53b_d72a5e14",
+      "range": {
+        "startLine": 1371,
+        "startChar": 13,
+        "endLine": 1371,
+        "endChar": 43
+      },
+      "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
