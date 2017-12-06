@@ -16,6 +16,24 @@
       "revId": "777ea3ed81ab16d82fbdee3d774bc55d5701a070",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c05a3ce_276f4cb8",
+        "filename": "gpu/config/gpu_info_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-06T00:52:39Z",
+      "side": 1,
+      "message": "This is actually a behavior change on platforms other than Android, but sure, let\u0027s give it a try. Hopefully not introduce more crashes.",
+      "parentUuid": "89e574e3_a30a9852",
+      "revId": "777ea3ed81ab16d82fbdee3d774bc55d5701a070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
