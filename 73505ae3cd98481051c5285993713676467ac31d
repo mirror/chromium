@@ -16,6 +16,24 @@
       "revId": "73505ae3cd98481051c5285993713676467ac31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe1879f_e351ed9b",
+        "filename": "content/renderer/renderer_webcolorchooser_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-06T01:39:05Z",
+      "side": 0,
+      "message": "The CL comment gives a little description about this:\n\n\"ColorChooserEnd messages\nhave been replaced with connection error handlers, and\neach side can simply close the connection without explicitly\nsending EndColorChooser msgs.\"\n\nThe blink code that handles things is the call to |set_connection_error_handler| in function |Open| (line 38).\n\nOn the browser side, the WebContentsImpl::DidEndColorChooser function calls reset which closes the mojo pipe and triggers the error handling.",
+      "parentUuid": "6824ffba_92b2f8dc",
+      "revId": "73505ae3cd98481051c5285993713676467ac31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
