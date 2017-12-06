@@ -282,10 +282,13 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
   bool SuccessfulResponseToURL(const GURL& url,
                                const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
-    EXPECT_TRUE(fetcher);
-    EXPECT_EQ(url, fetcher->GetOriginalURL());
+    if (!fetcher) {
+      ADD_FAILURE();
+      return false;
+    }
 
-    if (!fetcher || url != fetcher->GetOriginalURL())
+    EXPECT_EQ(url, fetcher->GetOriginalURL());
+    if (url != fetcher->GetOriginalURL())
       return false;
 
     fetcher->SetResponseString(response);
@@ -300,11 +303,12 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
                                       const std::string& data,
                                       const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
-    EXPECT_TRUE(fetcher);
-    EXPECT_EQ(url, fetcher->GetOriginalURL());
-
-    if (!fetcher)
+    if (!fetcher) {
+      ADD_FAILURE();
       return false;
+    }
+
+    EXPECT_EQ(url, fetcher->GetOriginalURL());
 
     EXPECT_EQ(data, fetcher->upload_data());
     if (data != fetcher->upload_data())
@@ -317,11 +321,12 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
                                           const std::string& data,
                                           const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
-    EXPECT_TRUE(fetcher);
-    EXPECT_EQ(url, fetcher->GetOriginalURL());
-
-    if (!fetcher)
+    if (!fetcher) {
+      ADD_FAILURE();
       return false;
+    }
+
+    EXPECT_EQ(url, fetcher->GetOriginalURL());
 
     std::string normalized_data = NormalizeJson(data);
     std::string normalized_upload_data = NormalizeJson(fetcher->upload_data());
@@ -336,11 +341,12 @@ class PrivetHTTPTest : public TestWithParam<const char*> {
                                           const base::FilePath& file_path,
                                           const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
-    EXPECT_TRUE(fetcher);
-    EXPECT_EQ(url, fetcher->GetOriginalURL());
-
-    if (!fetcher)
+    if (!fetcher) {
+      ADD_FAILURE();
       return false;
+    }
+
+    EXPECT_EQ(url, fetcher->GetOriginalURL());
 
     EXPECT_EQ(file_path, fetcher->upload_file_path());
     if (file_path != fetcher->upload_file_path())
@@ -500,9 +506,13 @@ class PrivetRegisterTest : public PrivetHTTPTest {
   bool SuccessfulResponseToURL(const GURL& url,
                                const std::string& response) {
     net::TestURLFetcher* fetcher = fetcher_factory_.GetFetcherByID(0);
-    EXPECT_TRUE(fetcher);
+    if (!fetcher) {
+      ADD_FAILURE();
+      return false;
+    }
+
     EXPECT_EQ(url, fetcher->GetOriginalURL());
-    if (!fetcher || url != fetcher->GetOriginalURL())
+    if (url != fetcher->GetOriginalURL())
       return false;
 
     fetcher->SetResponseString(response);
