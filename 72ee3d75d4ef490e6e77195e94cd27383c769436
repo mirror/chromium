@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e28f0a5_d4db8af0",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-06T21:01:29Z",
+      "side": 1,
+      "message": "Do we need to handle the overlapping calls case here as we had to for the metadata store?",
+      "revId": "72ee3d75d4ef490e6e77195e94cd27383c769436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
