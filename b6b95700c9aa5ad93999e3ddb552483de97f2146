@@ -114,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "2571556d_264c5748",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-06T14:22:52Z",
+      "side": 1,
+      "message": "Indeed we can make it the same: chunkcopy_chunk_t removed, done.",
+      "parentUuid": "02440736_71b97042",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "955b445f_861fec87",
         "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
         "patchSetId": 20
@@ -128,6 +146,24 @@
       "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabc8554_0394af7a",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-06T14:22:52Z",
+      "side": 1,
+      "message": "Yes it is the 128-bit check. but it is not reversed looking at Z_STATIC_ASSERT, where the |assert| condition is its second argument, right?",
+      "parentUuid": "955b445f_861fec87",
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +204,30 @@
       "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc10562_d69bed3e",
+        "filename": "third_party/zlib/contrib/optimizations/chunkcopy.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-06T14:22:52Z",
+      "side": 1,
+      "message": "Yes, we should swap these for consistency in this file: done.",
+      "parentUuid": "b010a62c_94934d6a",
+      "range": {
+        "startLine": 216,
+        "startChar": 40,
+        "endLine": 216,
+        "endChar": 72
+      },
+      "revId": "b6b95700c9aa5ad93999e3ddb552483de97f2146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
