@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc86f4ef_76598767",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-06T21:18:12Z",
+      "side": 1,
+      "message": "We probably don\u0027t need to any more. We used to require non-empty because want to CC the owners.\n\nI\u0027ll change this in the next CL to allow OWNERS with no emails, along with the new logic to parse \u0027# WPT-NOTIFY\u0027.",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53d6e08_61e927d7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-06T21:18:12Z",
+      "side": 1,
+      "message": "Quinten, do you know how to get the patchset number? I need it to generate a link to the baseline diff.",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
