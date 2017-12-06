@@ -230,10 +230,13 @@ class UIControlsOzone : public ui_controls::UIControlsAura {
   WindowTreeHost* host_;
 
   // Mask of the mouse buttons currently down.
-  unsigned button_down_mask_ = 0;
+  static unsigned button_down_mask_;
 
   DISALLOW_COPY_AND_ASSIGN(UIControlsOzone);
 };
+
+// static
+unsigned UIControlsOzone::button_down_mask_ = 0;
 
 }  // namespace
 
