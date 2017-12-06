@@ -457,9 +457,12 @@ bool ParseAndValidateOncForImport(const std::string& onc_blob,
                                   base::ListValue* network_configs,
                                   base::DictionaryValue* global_network_config,
                                   base::ListValue* certificates) {
-  network_configs->Clear();
-  global_network_config->Clear();
-  certificates->Clear();
+  if (network_configs)
+    network_configs->Clear();
+  if (global_network_config)
+    global_network_config->Clear();
+  if (certificates)
+    certificates->Clear();
   if (onc_blob.empty())
     return true;
 
@@ -518,13 +521,14 @@ bool ParseAndValidateOncForImport(const std::string& onc_blob,
   }
 
   base::ListValue* validated_certs = nullptr;
-  if (toplevel_onc->GetListWithoutPathExpansion(toplevel_config::kCertificates,
-                                                &validated_certs)) {
+  if (certificates && toplevel_onc->GetListWithoutPathExpansion(
+                          toplevel_config::kCertificates, &validated_certs)) {
     certificates->Swap(validated_certs);
   }
 
   base::ListValue* validated_networks = nullptr;
-  if (toplevel_onc->GetListWithoutPathExpansion(
+  if (network_configs &&
+      toplevel_onc->GetListWithoutPathExpansion(
           toplevel_config::kNetworkConfigurations, &validated_networks)) {
     FillInHexSSIDFieldsInNetworks(validated_networks);
 
@@ -542,9 +546,9 @@ bool ParseAndValidateOncForImport(const std::string& onc_blob,
   }
 
   base::DictionaryValue* validated_global_config = nullptr;
-  if (toplevel_onc->GetDictionaryWithoutPathExpansion(
-          toplevel_config::kGlobalNetworkConfiguration,
-          &validated_global_config)) {
+  if (global_network_config && toplevel_onc->GetDictionaryWithoutPathExpansion(
+                                   toplevel_config::kGlobalNetworkConfiguration,
+                                   &validated_global_config)) {
     global_network_config->Swap(validated_global_config);
   }
 
