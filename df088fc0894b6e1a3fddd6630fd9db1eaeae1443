@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c8f83c75_215d6163",
+        "filename": "chrome/browser/resources/local_ntp/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-06T09:26:01Z",
+      "side": 1,
+      "message": "Right, for copy-pasting and drag\u0026drop it does move the text, just for normal input it doesn\u0027t.",
+      "parentUuid": "dd01b71a_cc93f9a4",
+      "range": {
+        "startLine": 126,
+        "startChar": 22,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "df088fc0894b6e1a3fddd6630fd9db1eaeae1443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf9dc6c_a0e77b98",
         "filename": "chrome/browser/resources/local_ntp/README.md",
         "patchSetId": 3
