@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaefee04_e8d903fb",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T20:35:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fd4e4c_e57e3257",
+      "range": {
+        "startLine": 643,
+        "startChar": 0,
+        "endLine": 643,
+        "endChar": 54
+      },
+      "revId": "6b9f335ba7e226a3362914e9c2adafdec6fc78ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd40e852_9d2fca34",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T19:56:37Z",
       "side": 1,
       "message": "In case the DB fails loading the 1st item will re-attempt initialization  and all other entries will be re-inserted into the pending queue. But then the clear() call below will drop all those remaining entries. \n\nThis needs to be addressed and I\u0027d suggest also adding a test to verify that case is properly handled. It might even be better to start with the test to confirm what I\u0027m describing here actually happens.",
+      "range": {
+        "startLine": 680,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 3
+      },
+      "revId": "6b9f335ba7e226a3362914e9c2adafdec6fc78ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3b648f_0c556bdd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-06T20:35:13Z",
+      "side": 1,
+      "message": "Actually state_ will be set to FAILED_LOADING.\nThis means all the pending commands will be flushed with db \u003d\u003d nullptr, and fail, which is what we want.",
+      "parentUuid": "bd40e852_9d2fca34",
       "range": {
         "startLine": 680,
         "startChar": 0,
