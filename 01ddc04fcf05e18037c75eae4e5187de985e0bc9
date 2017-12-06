@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "020c351a_c6d1aeec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T22:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50896eeb_139e4820",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 3
+      },
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9bff19b_b95578fe",
         "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ccad40_4c078be0",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T22:05:14Z",
+      "side": 1,
+      "message": "StyleRuleImport doesn\u0027t hold a resource_, there\u0027s nothing to get out of sync here.",
+      "parentUuid": "f9bff19b_b95578fe",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "80d216a2_002d5044",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T22:05:14Z",
+      "side": 1,
+      "message": "Done in TakeResource()",
+      "parentUuid": "ffaa6e86_dea83315",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d41c274_3d79d5dc",
         "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
         "patchSetId": 14
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "407e4f6c_0c3f3061",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T22:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d41c274_3d79d5dc",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f65dd64e_959feb47",
         "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
         "patchSetId": 14
@@ -90,6 +168,24 @@
       "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19598b20_2e94e408",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElementProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-06T22:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f65dd64e_959feb47",
+      "revId": "01ddc04fcf05e18037c75eae4e5187de985e0bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
