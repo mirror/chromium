@@ -49,6 +49,75 @@
     },
     {
       "key": {
+        "uuid": "a45f68fc_6452831f",
+        "filename": "chrome/browser/vr/elements/text_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T20:04:41Z",
+      "side": 1,
+      "message": "why wrapping this in a conditional? Shouldn\u0027t it always be set as its passed through the constructor?",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf3cb19_30ccb687",
+        "filename": "chrome/browser/vr/model/text_input_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T20:04:41Z",
+      "side": 1,
+      "message": "haha nice, I should\u0027ve done this",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88af04de_1f356efa",
+        "filename": "chrome/browser/vr/text_input_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T20:04:41Z",
+      "side": 1,
+      "message": "why are we doing below only in debug mode?",
+      "range": {
+        "startLine": 190,
+        "startChar": 58,
+        "endLine": 190,
+        "endChar": 59
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b92da94_fc6b1bb8",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
