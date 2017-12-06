@@ -72,6 +72,11 @@ NSHTTPCookieAcceptPolicy NSHTTPSystemCookieStore::GetCookieAcceptPolicy() {
   return [cookie_store_ cookieAcceptPolicy];
 }
 
+SystemCookieStore::SystemCookieStoreType
+NSHTTPSystemCookieStore::GetCookieStoreType() const {
+  return SystemCookieStoreType::kNSHTTPSystemCookieStore;
+}
+
 #pragma mark private methods
 
 NSArray* NSHTTPSystemCookieStore::GetCookiesForURL(const GURL& url) {
