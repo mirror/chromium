@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ce18d7f_bff3873b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/notification-creation-detached-context.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T16:02:09Z",
+      "side": 1,
+      "message": "nit: this was renamed to `remoteNotificationObj` in the other CL",
+      "revId": "7429855947b6f021d438587e9aca8d2064b7cbbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78a29dd_5cba49f4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/notification-creation-detached-context.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T16:02:09Z",
+      "side": 1,
+      "message": "nit: simplify this to:\n\nassert_equals(e.name, \u0027TypeError\u0027)\nassert_equals(e.message, \"Failed to construct \u0027Notification\u0027: Illegal invocation.\");\n\n(you can skip the wrapping if you want, otherwise use four spaces.)",
+      "revId": "7429855947b6f021d438587e9aca8d2064b7cbbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
