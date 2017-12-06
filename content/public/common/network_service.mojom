@@ -6,6 +6,7 @@ module content.mojom;
 
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "net/interfaces/ip_endpoint.mojom";
 import "proxy_config.mojom";
 import "resource_type.mojom";
 import "url_loader.mojom";
@@ -14,6 +15,7 @@ import "url/mojo/url.mojom";
 import "services/network/public/interfaces/cookie_manager.mojom";
 import "services/network/public/interfaces/network_change_manager.mojom";
 import "services/network/public/interfaces/restricted_cookie_manager.mojom";
+import "services/network/public/interfaces/udp_socket.mojom";
 import "services/proxy_resolver/public/interfaces/proxy_resolver.mojom";
 
 [Native]
@@ -178,4 +180,26 @@ interface NetworkService {
   // Gets the NetworkChangeManager.
   GetNetworkChangeManager(
       network.mojom.NetworkChangeManager& network_change_manager);
+
+  // Creates a udp client socket. |remote_addr| is the address of the remote to
+  // connect to. If connect is successful, returns net::OK and |local_addr_out|
+  // contains the local address of this socket. Otherwise, returns a net error
+  // code indicating the error that occurred.
+  CreateUDPClientSocket(
+      network.mojom.UDPSocket& request,
+      network.mojom.UDPSocketReceiver receiver,
+      net.interfaces.IPEndPoint remote_addr)
+          => (int32 result, net.interfaces.IPEndPoint local_addr_out);
+
+  // Creates a udp server socket. |local_addr| is the desired local address of
+  // the server socket. Caller can use port 0 in |local_addr| for the OS to pick
+  // an available port. Upon successfully binding the socket, returns net::OK
+  // and the real local address to |local_addr_out|. Otherwise, returns a net
+  // error code indicating the error that occurred.
+  CreateUDPServerSocket(
+      network.mojom.UDPSocket& request,
+      network.mojom.UDPSocketReceiver receiver,
+      net.interfaces.IPEndPoint local_addr,
+      bool allow_address_reuse)
+          => (int32 result, net.interfaces.IPEndPoint local_addr_out);
 };
