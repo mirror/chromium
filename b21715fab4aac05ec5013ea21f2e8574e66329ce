@@ -174,6 +174,30 @@
       "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b890bb3_1a28256d",
+        "filename": "chrome/common/extensions/docs/templates/public/extensions/redirects.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "Missed this one?",
+      "parentUuid": "ded82474_b3c5412a",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "b21715fab4aac05ec5013ea21f2e8574e66329ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

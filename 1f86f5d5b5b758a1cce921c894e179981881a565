@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fb845b_fd825d37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "Let\u0027s also clean up the description to match the normal format.",
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23986df0_6526f3c5",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "replace \"developer\u0027s\" with \"a\", \"the\", \"your\", or similar.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0056aac1_6482f81b",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "I don\u0027t think \"comply\" is quite the right word here.  Perhaps rather \"Extensions that are distributed through\" or \"...installed by\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 24,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44456e6_c1d683e5",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "This wouldn\u0027t necessarily be linux-specific - it\u0027s just that linux doesn\u0027t have these hosting restrictions.  Maybe something like \"Extensions installed on a Linux machine\" or just a note below this section \"Note: Linux currently does not restrict installed extensions to the webstore\"?",
+      "range": {
+        "startLine": 26,
+        "startChar": 33,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5929b142_5677fee7",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "maybe \"extensions\" instead of \"files\"?",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9857b9e4_335ca086",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T16:14:51Z",
+      "side": 1,
+      "message": "nit: maybe something like:\nThis page describes how to serve \u003ccode\u003e.crx\u003c/code\u003e files on your own server.  Note that only Linux users will be able to install your extension in this way.\n\nWDYT?",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
