@@ -16,6 +16,24 @@
       "revId": "a30c4fb0fcb67e7c42ad0b5dba99b98b65898ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe6f226_55fe13de",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FETile.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-06T04:51:32Z",
+      "side": 1,
+      "message": "Hmmm, this is what the behaviour used to be before PaintFilters. We would return an SkTileImageFilter here which can fail with a null input (https://cs.chromium.org/chromium/src/third_party/skia/src/effects/SkTileImageFilter.cpp?l\u003d32).",
+      "parentUuid": "25712f1e_1e27d4fe",
+      "revId": "a30c4fb0fcb67e7c42ad0b5dba99b98b65898ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
