@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f2bc2c37_09d6064d",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-06T17:21:59Z",
+      "side": 1,
+      "message": "Yep.  The issue isn\u0027t whether or not to use net error codes, it\u0027s whether to have a separate type that means \"Net error code\".  \n\nThis is something that various folks have gone back and forth on in //net--we use \"int\" rather than an enum partially because we also often return byte counts in positive form in the return.  I\u0027d personally like to break those out into three separate types: Net error code (always negative), byte count (zero or positive), and both.\n\nBut that\u0027s not an issue for this CL, and I\u0027m not sure if it\u0027s API cleanup we want to do as part of mojoification.  I\u0027ll chat with Matt about it if I think of it.",
+      "parentUuid": "100e6e70_94477b5e",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80395f72_93876c11",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 11
