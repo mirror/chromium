@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2945fe01_36cdf666",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "This is the only sticking point left.  Any ideas on how to check if the capturer has been warmed up yet?\n\nAside from the first instance after Chrome startup it works every time.",
+      "revId": "8d003d938e7b171f87942904396ef15bd6f1e5fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

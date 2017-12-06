@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1455e797_b5e8c03a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done.  RenderFrameHost is actually used around line 239 but I removed the others.",
+      "parentUuid": "784c0084_b05f16a5",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6991bb55_c8ba2b71",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "33e663d2_34c2252c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Thanks for the explanation, yes one of the methods below being guaranteed of getting a call is what we are hoping for.  I tried to verify and it looks like they are always called, but there could be some edge case where we didn\u0027t finish loading and navigation never started.  However, it does look like we will reliably clean up when WebContents is destroyed (ie the tab is closed) so it shouldn\u0027t last longer than the tab.\n\nYour suggested wording sounds good, updated comment.",
+      "parentUuid": "076465ef_699eaf16",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2caa8a_40c960ea",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -104,6 +140,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cede72f_98269f8f",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "I added a check to make sure we have a capturer on the web contents just before requesting fullscreen on the main frame below.\n\nWhen testing I did run across one time where the cast failed and so it ended up fullscreening the video over the entire display (not fullscreen in tab since the capture failed).\n\nWith the check on capture this doesn\u0027t happen.",
+      "parentUuid": "176c5c14_70c8aea3",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +267,24 @@
     },
     {
       "key": {
+        "uuid": "ef60b51e_e6ce0347",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to react quickly enough before the loading finishes and click stop (in the cases I tried, perhaps I need a really large video file to try with)...",
+      "parentUuid": "6983fd57_1486d89c",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6045e7d_903a5918",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -263,6 +335,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8924a2_27833bbb",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done.  I save the url from when the observer is created.  I\u0027m looking at trying to get the url directly from the file picker step, but that involves some more wiring.",
+      "parentUuid": "76c790b8_867a3b56",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +409,24 @@
     },
     {
       "key": {
+        "uuid": "14a8cf2b_407be0d6",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c17b4917_013d2bcc",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2101fcce_ad7d6cb7",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 2
@@ -372,6 +480,24 @@
     },
     {
       "key": {
+        "uuid": "b504e6b2_9e1fc257",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "785895e4_afdc7f72",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "097e9b83_f3779a25",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 2
@@ -416,6 +542,30 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b613a8_5730a92c",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb89244_0f106fd1",
+      "range": {
+        "startLine": 249,
+        "startChar": 22,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -486,6 +636,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f950430a_20279881",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Updated comments.  These were copies from the base test.",
+      "parentUuid": "519b9260_f77763bb",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -612,6 +780,24 @@
     },
     {
       "key": {
+        "uuid": "c880f252_a54f7714",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Removed as we don\u0027t need this anymore since we are using mojo instead of IPC messages.",
+      "parentUuid": "bd27ef94_c8f8f759",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b43425a8_f6b679ed",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -665,6 +851,24 @@
     },
     {
       "key": {
+        "uuid": "afa4d5af_5a51b416",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Done.  This is removed now and I created a new mojo interface for fullscreening.",
+      "parentUuid": "2ff6ca1c_7874b935",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a48281_4715c8ce",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -700,6 +904,24 @@
     },
     {
       "key": {
+        "uuid": "6f6cf101_b508e833",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4815,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "I removed the static storage, but I couldn\u0027t use QuerySelector as the type it returns doesn\u0027t have the \u0027FirstItem\u0027 method on it.  (I\u0027m not familiar enough with c++ typing to know why).",
+      "parentUuid": "aa301bb0_6d3f6080",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71e0141_c585d52e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -732,6 +954,24 @@
       "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12e50c4_82bd98b5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4822,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "Seems to work fine.",
+      "parentUuid": "82146abe_fa2d2d38",
+      "revId": "9e813d310bc6f78fa2b92b5d8ce1afd430a35973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
