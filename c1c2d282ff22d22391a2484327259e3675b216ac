@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "98f155db_4213deea",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "Sorry, what I meant was that I think it\u0027s  required per coding style (https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types).",
+      "parentUuid": "f4e297a4_54712cef",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d680ef_d5869694",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25

@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9449a42_aa2df1a8",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecb0043_98d68897",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "We should probably not mention too many details of the implementation of the client here, as they may change. I would suggest perhaps something like this instead:\n\n\"DismissPictureBuffer() is required for VDA::ALLOCATE mode, as PictureBuffers are backed by texture IDs and not refcounted then.\nThis class supports VDA::IMPORT mode only however, where PictureBuffers are backed by dmabufs, which are refcounted. Both the client and the VDA itself maintain their own references and can drop them independently when no longer needed, so there is no need to explicitly notify the client about this.\"",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bc7255_bab9d654",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "Is this cast needed?",
+      "range": {
+        "startLine": 540,
+        "startChar": 25,
+        "endLine": 540,
+        "endChar": 44
+      },
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118d3851_2b3ce68a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "native_pixmap_handle is under #ifdef LINUX (https://cs.chromium.org/chromium/src/ui/gfx/gpu_memory_buffer.h?l\u003d54), so we should probably have the code using it under an #ifdef, or perhaps simply #else from l.553 to the end of the method.",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7895f7_74b22e0a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-06T08:54:29Z",
+      "side": 1,
+      "message": "Please add a comment that this is indexed by picture_buffer_id",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
