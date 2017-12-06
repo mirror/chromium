@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "d4c2a772_a862744a",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T18:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f43b40cd_e74e6efd",
+      "range": {
+        "startLine": 785,
+        "startChar": 45,
+        "endLine": 785,
+        "endChar": 53
+      },
+      "revId": "90e9e5d8e96f4f46363b4382cb9425a5bb3d9f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ee8b04_95542f69",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
         "patchSetId": 9

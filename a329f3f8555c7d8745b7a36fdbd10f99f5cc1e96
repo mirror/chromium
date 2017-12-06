@@ -22,6 +22,30 @@
       "revId": "a329f3f8555c7d8745b7a36fdbd10f99f5cc1e96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe5ff91_0ba3793e",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-06T18:54:45Z",
+      "side": 1,
+      "message": "Not if we wanted to test that the function waits for the reload to complete.  TestExtensionRegistryObserver doesn\u0027t expose a \"was satisfied\" bit, and so if we did:\n\ntest_observer;\nfunction-\u003eRun();\ntest_observer.WaitForUnload();\n\nthen we\u0027d have no way of knowing whether the unload happened before or after the Run() finished.  One of the important things to test here is that the function *does* wait for the unload/reload, so we need to be able to check without waiting.",
+      "parentUuid": "e6390e71_fd75e85f",
+      "range": {
+        "startLine": 788,
+        "startChar": 10,
+        "endLine": 788,
+        "endChar": 34
+      },
+      "revId": "a329f3f8555c7d8745b7a36fdbd10f99f5cc1e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
