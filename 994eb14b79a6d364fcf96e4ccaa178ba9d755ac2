@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d2f165_3ad004e3",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "I wonder if this should return String instead of AtomicString.  Do we gain anything by having these selectors in the atomic string table?  Most pages won\u0027t have a large number of ScrollAnchor objects holding copies of the same selector strings.",
+      "range": {
+        "startLine": 187,
+        "startChar": 13,
+        "endLine": 187,
+        "endChar": 25
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e42a104_ef73ae4e",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "Element ID\u0027s aren\u0027t always unique in practice.  I think you can check for this using document-\u003eContainsMultipleElementsWithId(...), and continue the ancestor walk if it returns true.",
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f691d434_0dd636b1",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "Could we save some bytes by leaving the spaces out?",
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea8f73b_a68b1562",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "IsEmpty is sufficient, since it returns true for a null string.  Though perhaps we should DCHECK(saved_selector_.IsNull() || !saved_selector_.IsEmpty()).",
+      "range": {
+        "startLine": 463,
+        "startChar": 37,
+        "endLine": 463,
+        "endChar": 52
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653d3182_32d4752c",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "Can we DCHECK(anchor_object_-\u003eGetNode())?  There should always be a node (FindAnchor skips anonymous layout objects).",
+      "range": {
+        "startLine": 470,
+        "startChar": 42,
+        "endLine": 470,
+        "endChar": 49
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1845d3_53242c7b",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "This should just be String().",
+      "range": {
+        "startLine": 489,
+        "startChar": 20,
+        "endLine": 489,
+        "endChar": 32
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1addac28_e832300a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 31114,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "Description looks wrong.",
+      "range": {
+        "startLine": 31114,
+        "startChar": 47,
+        "endLine": 31114,
+        "endChar": 53
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76071769_ab669cab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 31129,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T19:50:28Z",
+      "side": 1,
+      "message": "computer -\u003e compute",
+      "range": {
+        "startLine": 31129,
+        "startChar": 24,
+        "endLine": 31129,
+        "endChar": 32
+      },
+      "revId": "994eb14b79a6d364fcf96e4ccaa178ba9d755ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
