@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "7d7c7a19_c74f2e38",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerUnitTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-06T00:42:00Z",
+      "side": 1,
+      "message": "I could retain the test. I don\u0027t want to because I feel like the logic being tested is too simple. I think that it is important to have tests for when:\n- the logic for whether an update should be requested is more complicated than checking for int/string equality\n- the attribute being compared has a surprising default value",
+      "parentUuid": "ca622506_0208a09b",
+      "range": {
+        "startLine": 837,
+        "startChar": 0,
+        "endLine": 854,
+        "endChar": 5
+      },
+      "revId": "d354702e4813dcaae139a9687ac626e624408191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c38a17b6_2b7ffed2",
         "filename": "chrome/browser/android/shortcut_info.h",
         "patchSetId": 1

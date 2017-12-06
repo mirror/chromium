@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5ec2cbf_caf233ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateDataFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-06T00:42:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1c1326_081a193b",
+      "range": {
+        "startLine": 102,
+        "startChar": 68,
+        "endLine": 102,
+        "endChar": 91
+      },
+      "revId": "7a8b7128e9a1d2bba39463f6f01fa301dde0b95e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ecb9c15_c8a15c46",
         "filename": "chrome/android/webapk/test/src/org/chromium/webapk/test/WebApkTestHelper.java",
         "patchSetId": 2
