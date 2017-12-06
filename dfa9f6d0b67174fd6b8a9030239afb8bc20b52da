@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7109cb48_fa4a0bf5",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "this can be tested via state",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 46
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d216134_354c2663",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "this can be tested via state",
+      "range": {
+        "startLine": 195,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 46
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2564e6b3_14cbf72d",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "I believe this can be tested with a histogram tester",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 56
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfcdec6_4bad7ccb",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 47
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1926cd_bf67f71f",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "can be tested with a histogram tester and/or checking the open tabs",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 52
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a640469_3350dc0c",
+        "filename": "chrome/browser/ui/views/autofill/dialog_view_ids.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "why is this an enum class? It allows you to forward declare it but that\u0027s not done anywhere that I can see. It forces you to static_cast (a lot). Should this be a normal enum?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8aec8d_532240d1",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "I thought the point of setting the IDs was to make them accessible to tests, meaning you wouldn\u0027t need this (?)",
+      "range": {
+        "startLine": 277,
+        "startChar": 34,
+        "endLine": 277,
+        "endChar": 59
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e57803_95d06fc6",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "auto*, here and elsewhere (you don\u0027t need \"views::Label\" twice on the same line)",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 348,
+        "endChar": 40
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

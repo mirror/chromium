@@ -187,6 +187,30 @@
       "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5555dfdc_8d0d9fa9",
+        "filename": "components/autofill/core/browser/ui/save_card_bubble_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T01:16:11Z",
+      "side": 1,
+      "message": "I still see many places where you\u0027re adding test-only hooks to production code where it doesn\u0027t seem necessary to me (see other comments). Very tight coupling of code and tests will make future changes slow and difficult, and makes the tests fragile.",
+      "parentUuid": "f005eb38_3ef2d3ac",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
