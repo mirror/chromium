@@ -563,12 +563,15 @@ dictionary DeviceEvent {
   DOMString devicePath;
 };
 
-// Describes an installed providing extension.
-dictionary ProvidingExtension {
-  // ID of the providing extension.
+// Describes an installed provider.
+dictionary Provider {
+  // ID of the provider.
+  DOMString providerId;
+
+  // ID of the providing extension, if the provider is an extension.
   DOMString extensionId;
 
-  // Name of the providing extension.
+  // Name of the provider.
   DOMString name;
 
   // Whether supports configuration dialog.
@@ -677,8 +680,8 @@ callback ResolveEntriesCallback =
 // |checksum| Result checksum.
 callback ComputeChecksumCallback = void(DOMString checksum);
 
-// |extensions| List of providing extensions.
-callback GetProvidingExtensionsCallback = void(ProvidingExtension[] extensions);
+// |extensions| List of providers.
+callback GetProvidersCallback = void(Provider[] extensions);
 
 // |actions| List of actions.
 callback GetCustomActionsCallback = void(fileSystemProvider.Action[] actions);
@@ -989,12 +992,12 @@ interface Functions {
   // Returns if Piex loader is enabled.
   static void isPiexLoaderEnabled(BooleanCallback callback);
 
-  // Returns list of available providing extensions.
-  static void getProvidingExtensions(GetProvidingExtensionsCallback callback);
+  // Returns list of available providers.
+  static void getProviders(GetProvidersCallback callback);
 
   // Requests adding a new provided file system. If not possible, then an error
   // via chrome.runtime.lastError is returned.
-  static void addProvidedFileSystem(DOMString extension_id,
+  static void addProvidedFileSystem(DOMString provider_id,
                                     SimpleCallback callback);
 
   // Requests configuring an existing volume. If not possible, then returns

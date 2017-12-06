@@ -26,6 +26,16 @@ ProviderId ProviderId::CreateFromNativeId(const std::string& native_id) {
   return ProviderId(native_id, NATIVE);
 }
 
+ProviderId ProviderId::FromString(const std::string& str) {
+  if (str.length() == 0)
+    return ProviderId();  // Invalid.
+
+  if (str[0] == '@')
+    return ProviderId::CreateFromNativeId(str.substr(1));
+
+  return ProviderId::CreateFromExtensionId(str);
+}
+
 const extensions::ExtensionId& ProviderId::GetExtensionId() const {
   CHECK_EQ(EXTENSION, type_);
   return internal_id_;
