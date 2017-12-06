@@ -39,8 +39,9 @@ class MemoryTracker : public base::RefCounted<MemoryTracker> {
 
  protected:
   friend class base::RefCounted<MemoryTracker>;
-  MemoryTracker() {}
-  virtual ~MemoryTracker() {};
+  MemoryTracker() = default;
+  virtual ~MemoryTracker() = default;
+  ;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MemoryTracker);
