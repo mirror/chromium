@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a00d4f30_fee4ca66",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-06T15:28:44Z",
+      "side": 1,
+      "message": "We should probably replace these with web standard terms -- I think this refers to the framed page navigating to a new page at its own origin (as opposed to the parent page driving the navigation by changing the src attribute)",
+      "parentUuid": "dcaccf2e_bd0c89ca",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1041a5b6_a4ffdeaa",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-06T13:30:25Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 33,
+        "startChar": 39,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa8adf5_aed3278d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-06T15:28:44Z",
+      "side": 1,
+      "message": "Similarly, this would mean that the framed content navigates internally to a page at a different origin, so that the origin of the src attribute and the origin of the loaded content no longer match.\n\n(These terms are also used in other feature policy tests, so we should change all of them if we\u0027re changing them here)",
+      "parentUuid": "1041a5b6_a4ffdeaa",
       "range": {
         "startLine": 33,
         "startChar": 39,
