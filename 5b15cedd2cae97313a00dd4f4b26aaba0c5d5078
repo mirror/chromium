@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7929913_0d48e755",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:44:35Z",
+      "side": 1,
+      "message": "`Returns the jump SVG image as a string.`",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "5b15cedd2cae97313a00dd4f4b26aaba0c5d5078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb1ebb2_3194315a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:44:35Z",
+      "side": 1,
+      "message": "`Returns the overlay play button stylesheet content as a string.`",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 57
+      },
+      "revId": "5b15cedd2cae97313a00dd4f4b26aaba0c5d5078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc1b291_6735519c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:44:35Z",
+      "side": 1,
+      "message": "Would it make sense to move this down at the same place where you create `right_jump_arrow_`?",
+      "revId": "5b15cedd2cae97313a00dd4f4b26aaba0c5d5078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ad2139_64cbad27",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modern_jump_image.svg",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-06T13:44:35Z",
+      "side": 1,
+      "message": "Probably no need to prefix with \"modern\" as 6 months from now it will be unclear why :)",
+      "revId": "5b15cedd2cae97313a00dd4f4b26aaba0c5d5078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
