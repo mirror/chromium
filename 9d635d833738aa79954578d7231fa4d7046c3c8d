@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d73e96_21078112",
+        "filename": "services/service_manager/public/cpp/connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T23:50:42Z",
+      "side": 1,
+      "message": "This will just not do anything in the failure case, and connector_ will still be null. Then line 92 below will crash.\n\nI would rewrite this method as:\n\nstd::unique_ptr\u003cConnector\u003e Connector::Clone() {\n  mojom::ConnectorPtrInfo connector;\n  auto request \u003d mojo::MakeRequest(\u0026connector);\n  if (BindConnectorIfNecessary())\n    connector_-\u003eClone(std::move(request));\n  return std::make_unique\u003cConnector\u003e(std::move(connector));\n}",
+      "revId": "9d635d833738aa79954578d7231fa4d7046c3c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
