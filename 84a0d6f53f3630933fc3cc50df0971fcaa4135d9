@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "914a70b4_a6ac9645",
+        "filename": "components/viz/service/display/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-06T16:30:19Z",
+      "side": 1,
+      "message": "That would be fine for me, the key distinction I was arguing for (I think both of us were?) was for this to be a property of the display compositor instead of the layer compositor. It may be that ccameron had more thoughts about making this available to the outputsurface impl.",
+      "parentUuid": "ace1936e_d7995c74",
+      "revId": "84a0d6f53f3630933fc3cc50df0971fcaa4135d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f9b40d_0b4048ef",
         "filename": "components/viz/service/display/display.cc",
         "patchSetId": 5
