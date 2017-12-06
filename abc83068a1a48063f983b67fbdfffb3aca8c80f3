@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "443ed354_e2058856",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-06T23:54:03Z",
+      "side": 0,
+      "message": "It was necessary to remove the change_selection check to fix the bug because it\u0027s computed from checking two VisibleSelections against each other, so it can be false even when the non-normalized selections differ.",
+      "revId": "abc83068a1a48063f983b67fbdfffb3aca8c80f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

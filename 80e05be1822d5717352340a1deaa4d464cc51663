@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ab34cd_4f1a2c60",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-06T23:54:03Z",
+      "side": 1,
+      "message": "Should I also remove this block? I didn\u0027t run into any issues leaving it.",
+      "revId": "80e05be1822d5717352340a1deaa4d464cc51663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
