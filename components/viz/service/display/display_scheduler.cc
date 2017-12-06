@@ -300,15 +300,6 @@ void DisplayScheduler::OnFirstSurfaceActivation(
 
 void DisplayScheduler::OnSurfaceActivated(const SurfaceId& surface_id) {}
 
-void DisplayScheduler::OnSurfaceDestroyed(const SurfaceId& surface_id) {
-  auto it = surface_states_.find(surface_id);
-  if (it == surface_states_.end())
-    return;
-  surface_states_.erase(it);
-  if (UpdateHasPendingSurfaces())
-    ScheduleBeginFrameDeadline();
-}
-
 bool DisplayScheduler::OnSurfaceDamaged(const SurfaceId& surface_id,
                                         const BeginFrameAck& ack) {
   bool damaged = client_->SurfaceDamaged(surface_id, ack);
@@ -318,6 +309,12 @@ bool DisplayScheduler::OnSurfaceDamaged(const SurfaceId& surface_id,
 }
 
 void DisplayScheduler::OnSurfaceDiscarded(const SurfaceId& surface_id) {
+  auto it = surface_states_.find(surface_id);
+  if (it == surface_states_.end())
+    return;
+  surface_states_.erase(it);
+  if (UpdateHasPendingSurfaces())
+    ScheduleBeginFrameDeadline();
   client_->SurfaceDiscarded(surface_id);
 }
 
