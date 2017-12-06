@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "033d8a47_3e1481db",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:49:37Z",
+      "side": 1,
+      "message": "We should probably rename  feature_flags_.ext_texture_norm16 and gpu::Capabilities::texture_norm16 to something that doesn\u0027t seem to imply GL_EXT_texture_norm16 is supported (e.g. texture_r16).",
+      "parentUuid": "f994d189_f5815c1b",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fddad64_258c50ea",
         "filename": "gpu/command_buffer/service/texture_manager.cc",
         "patchSetId": 3
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "I suspect that the problem might have something to do with line 17927 in gles2_cmd_decoder.cc, but I don\u0027t know how it\u0027s supposed to work.",
       "parentUuid": "6b847a89_ca786d44",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d011b86b_5589957f",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T23:49:37Z",
+      "side": 1,
+      "message": "Oh, I think what you\u0027re running into is that we\u0027re using an ES2 context, which has the restriction that format\u003d\u003dinternal_format. GL_EXT_texture_norm16 was not designed for ES2 (it sits on top of ES3), so if we need a compatibility path for ES2 we\u0027d need to add a line like this in kSupportedFormatTypesES2Only, but we also need to add translation to GetTexInternalFormat in ui/gl/gl_gl_api_implementation.cc to restore the R16 internal format (see similar path for R8 etc.)",
+      "parentUuid": "4ce1d3fa_6d05b1b7",
       "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
