@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b1bb5a_ee133ecb",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-06T20:32:15Z",
+      "side": 1,
+      "message": "You may also be able to get this from imageEdgeInsets, if that seems better than reaching down into the imageView.",
+      "revId": "c1ca32c690807707fd75e0dd84f0b32454321bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
