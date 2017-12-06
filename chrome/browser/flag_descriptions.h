@@ -1127,6 +1127,9 @@ extern const char kEnableExpandedAutofillCreditCardPopupLayoutDescription[];
 extern const char kEnableFaviconsFromWebManifestName[];
 extern const char kEnableFaviconsFromWebManifestDescription[];
 
+extern const char kEnableIncognitoSnapshotsName[];
+extern const char kEnableIncognitoSnapshotsDescription[];
+
 extern const char kEnableNtpAssetDownloadSuggestionsName[];
 extern const char kEnableNtpAssetDownloadSuggestionsDescription[];
 

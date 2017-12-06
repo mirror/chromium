@@ -1815,6 +1815,10 @@ const char kEnableDataReductionProxySiteBreakdownName[] =
 const char kEnableDataReductionProxySiteBreakdownDescription[] =
     "Enable the site breakdown on the Data Saver settings page.";
 
+const char kEnableIncognitoSnapshotsName[] = "Enable Incognito Snapshots";
+const char kEnableIncognitoSnapshotsDescription[] =
+    "Enables incognito tabs to be visible in Android's recent snapshots";
+
 const char kEnableOmniboxClipboardProviderName[] =
     "Omnibox clipboard URL suggestions";
 const char kEnableOmniboxClipboardProviderDescription[] =
