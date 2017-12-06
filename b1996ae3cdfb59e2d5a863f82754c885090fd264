@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790a56e4_80f6f1d2",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b60a1a_5faaf222",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "// viz::mojom::InputTargetClient:",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83dc09f_7824846a",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "RenderFrameImpl* const render_frame_;",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7999d61_d7d4d089",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "You should just need a Binding\u003c\u003e. The host shouldn\u0027t connect to the same client more than once at the same time.",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df58fef_df18e2e7",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "This could have a test?",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47881656_045ff525",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "std::make_unique\u003c.\u003e",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29e9e74_3aadf4c2",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-06T23:05:28Z",
+      "side": 1,
+      "message": "This should probably be a separate CL with some test coverage?",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
