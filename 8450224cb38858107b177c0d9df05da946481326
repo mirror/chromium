@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52af5db0_f582f854",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-06T18:56:09Z",
+      "side": 1,
+      "message": "This should be as simple as\nreturn profile-\u003eGetPrefs()-\u003eGetBoolean(prefs::kAbusiveExperienceInterventionEnforce);\n\nThe PrefService makes sure that the policy overrides a user (or default) value.",
+      "revId": "8450224cb38858107b177c0d9df05da946481326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
