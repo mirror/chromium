@@ -31,10 +31,11 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
 
   ~ChromeBrowserMainPartsWin() override;
 
-  // BrowserParts overrides.
+  // BrowserMainParts overrides.
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void PreShutdown() override;
 
   // ChromeBrowserMainParts overrides.
   void ShowMissingLocaleMessageBox() override;
