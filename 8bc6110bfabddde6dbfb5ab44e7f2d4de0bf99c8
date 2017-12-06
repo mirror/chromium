@@ -46,6 +46,30 @@
       "revId": "8bc6110bfabddde6dbfb5ab44e7f2d4de0bf99c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93098fbf_5ac7a8ae",
+        "filename": "third_party/WebKit/Source/core/dom/ModulePendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-06T21:40:39Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "c36cd47c_eb4f070e",
+      "range": {
+        "startLine": 90,
+        "startChar": 26,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "8bc6110bfabddde6dbfb5ab44e7f2d4de0bf99c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
