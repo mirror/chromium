@@ -967,7 +967,8 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
+  if (!SkipInvalidateNodeListCachesInAncestors::InScope())
+    InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
@@ -1659,6 +1660,21 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   }
 }
 
+void ContainerNode::InvalidateNodeListCachesInAncestors() {
+  if (NodeListsNodeData* lists = NodeLists()) {
+    if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+      child_node_list->InvalidateCache();
+    }
+  }
+
+  GetDocument().InvalidateNodeListCaches(nullptr);
+
+  for (ContainerNode* node = this; node; node = node->parentNode()) {
+    if (NodeListsNodeData* lists = node->NodeLists())
+      lists->InvalidateCaches(nullptr);
+  }
+}
+
 HTMLCollection* ContainerNode::getElementsByTagName(
     const AtomicString& qualified_name) {
   DCHECK(!qualified_name.IsNull());
@@ -1745,5 +1761,13 @@ bool ChildAttachedAllowedWhenAttachingChildren(ContainerNode* node) {
   return false;
 }
 #endif
+
+int SkipInvalidateNodeListCachesInAncestors::count_ = 0;
+
+SkipInvalidateNodeListCachesInAncestors::
+    SkipInvalidateNodeListCachesInAncestors(ContainerNode* node) {
+  node->InvalidateNodeListCachesInAncestors();
+  count_++;
+}
 
 }  // namespace blink

@@ -9,6 +9,7 @@ blink_core_sources("html") {
   split_count = 4
 
   sources = [
+    "CollectionItemsCache.cpp",
     "CollectionItemsCache.h",
     "CollectionType.h",
     "CrossOriginAttribute.cpp",

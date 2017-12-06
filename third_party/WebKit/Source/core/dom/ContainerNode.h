@@ -27,6 +27,7 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/Node.h"
+#include "core/html/CollectionItemsCache.h"
 #include "core/html/CollectionType.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/wtf/Vector.h"
@@ -42,6 +43,7 @@ class NameNodeList;
 using StaticElementList = StaticNodeTypeList<Element>;
 class RadioNodeList;
 class WhitespaceAttacher;
+class DisableCollectionCacheScope;
 
 enum DynamicRestyleFlags {
   kChildrenOrSiblingsAffectedByFocus = 1 << 0,
@@ -351,13 +353,10 @@ class CORE_EXPORT ContainerNode : public Node {
   void InvalidateNodeListCachesInAncestors(const QualifiedName* attr_name,
                                            Element* attribute_owner_element,
                                            const ChildrenChange*);
+  void InvalidateNodeListCachesInAncestors();
 
-  void SetFirstChild(Node* child) {
-    first_child_ = child;
-  }
-  void SetLastChild(Node* child) {
-    last_child_ = child;
-  }
+  void SetFirstChild(Node* child) { first_child_ = child; }
+  void SetLastChild(Node* child) { last_child_ = child; }
 
   // Utility functions for NodeListsNodeData API.
   template <typename Collection>
@@ -432,6 +431,22 @@ class CORE_EXPORT ContainerNode : public Node {
 
   TraceWrapperMember<Node> first_child_;
   TraceWrapperMember<Node> last_child_;
+
+  friend class SkipInvalidateNodeListCachesInAncestors;
+};
+
+class SkipInvalidateNodeListCachesInAncestors {
+  STACK_ALLOCATED();
+  DISALLOW_COPY_AND_ASSIGN(SkipInvalidateNodeListCachesInAncestors);
+
+ public:
+  SkipInvalidateNodeListCachesInAncestors(ContainerNode*);
+  ~SkipInvalidateNodeListCachesInAncestors() { count_--; };
+  static bool InScope() { return count_; }
+
+ private:
+  DisableCollectionCacheScope scope;
+  static int count_;
 };
 
 #if DCHECK_IS_ON()
