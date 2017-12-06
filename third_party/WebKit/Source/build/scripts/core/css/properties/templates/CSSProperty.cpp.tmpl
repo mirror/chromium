@@ -21,12 +21,12 @@
 namespace blink {
 namespace {
 
-static constexpr Variable property_csspropertyvariable(CSSPropertyVariable);
+static constexpr Variable property_csspropertyvariable;
 {% for _, property_id, classname, superclass in property_classes_by_property_id %}
-static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
+static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}};
 {% endfor %}
 {% for _, property_id, classname, superclass in alias_classes_by_property_id %}
-static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
+static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}};
 {% endfor %}
 
 const CSSProperty& GetProperty(CSSPropertyID id) {

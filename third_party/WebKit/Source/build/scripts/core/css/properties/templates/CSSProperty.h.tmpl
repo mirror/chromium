@@ -33,13 +33,16 @@ class CSSProperty {
  public:
   CORE_EXPORT static const CSSProperty& Get(CSSPropertyID);
 
-  explicit constexpr CSSProperty(CSSPropertyID id) : id_(id) {}
+  explicit constexpr CSSProperty() {}
 
   // For backwards compatibility when passing around CSSProperty references.
   // In case we need to call a function that hasn't been converted to using
   // property classes yet.
-  CSSPropertyID PropertyID() const { return id_; }
-  bool IDEquals(CSSPropertyID id) const { return id_ == id; }
+  virtual CSSPropertyID PropertyID() const {
+    NOTREACHED();
+    return CSSPropertyInvalid;
+  }
+  bool IDEquals(CSSPropertyID id) const { return PropertyID() == id; }
   virtual const char* GetPropertyName() const {
     NOTREACHED();
     return nullptr;
@@ -104,9 +107,6 @@ class CSSProperty {
       TextDirection,
       WritingMode,
       const StylePropertyShorthand&);
-
- private:
-  const CSSPropertyID id_;
 };
 
 CORE_EXPORT const CSSProperty& GetCSSPropertyVariable();

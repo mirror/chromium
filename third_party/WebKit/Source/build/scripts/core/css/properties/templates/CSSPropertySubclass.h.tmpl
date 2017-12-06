@@ -30,17 +30,18 @@ namespace CSS{{property.superclass}} {
   {% if property.alias_for != None%}
 class {{property_classname}} : public {{property.aliased_property}} {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : {{property.aliased_property}}(id) {}
+  constexpr {{property_classname}}() : {{property.aliased_property}}() {}
   {% else %}
 class {{property_classname}} : public {{property.superclass}} {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : {{property.superclass}}(id) {}
+  constexpr {{property_classname}}() : {{property.superclass}}() {}
   {% endif %}
   const char* GetPropertyName() const override { return "{{property.name}}\0"; }
   const WTF::AtomicString& GetPropertyNameAtomicString() const override {
     static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}\0");
     return name;
   }
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% if property.alias_for == None %}
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
