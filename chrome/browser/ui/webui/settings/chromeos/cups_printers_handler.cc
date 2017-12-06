@@ -18,12 +18,14 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/file_system_provider/provided_file_system_info.h"
 #include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printer_event_tracker.h"
 #include "chrome/browser/chromeos/printing/printer_event_tracker_factory.h"
 #include "chrome/browser/chromeos/printing/printer_info.h"
+#include "chrome/browser/chromeos/smb_client/smb_service.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -524,6 +526,18 @@ void CupsPrintersHandler::OnAutoconfQueried(const std::string& callback_id,
 
 void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   AllowJavascript();
+
+  LOG(ERROR) << "~~~ Hijacking button";
+
+  chromeos::smb_client::SmbService* const service = 
+      chromeos::smb_client::SmbService::Get(Profile::FromBrowserContext(
+        web_ui()->GetWebContents()->GetBrowserContext()));
+
+  chromeos::file_system_provider::MountOptions mo;
+  mo.file_system_id = "foo";
+  mo.display_name = "display name";
+
+  service->Mount(mo);
 
   const base::DictionaryValue* printer_dict = nullptr;
   CHECK(args->GetDictionary(0, &printer_dict));
