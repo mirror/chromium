@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8d37d63_8e604c4f",
+        "filename": "base/android/java/src/org/chromium/base/SysUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:26:19Z",
+      "side": 1,
+      "message": "This doesn\u0027t look thread safe, since there\u0027s no guarantee that #reset() is called on the same thread as #amountOfPhysicalMemoryKB(), which means sAmountOfPhysicalMemoryKB could be reset to null before we invoke .intValue().",
+      "revId": "950ca30eedfcd3a23751492b0013930eb25711fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
