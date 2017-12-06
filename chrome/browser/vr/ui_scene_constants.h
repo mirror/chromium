@@ -20,6 +20,8 @@ static constexpr float kTransientWarningWidthDMM = 0.512f;
 static constexpr float kExitWarningDistance = 0.6f;
 static constexpr float kExitWarningHeight = 0.160f;
 static constexpr float kExitWarningWidth = 0.512f;
+static constexpr float kExitWarningFontHeight =
+    0.512f * 0.048 * kExitWarningDistance;
 
 static constexpr float kContentDistance = 2.5;
 static constexpr float kContentWidthDMM = 0.96f;
