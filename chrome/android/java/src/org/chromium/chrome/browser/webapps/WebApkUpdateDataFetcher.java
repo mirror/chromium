@@ -96,10 +96,11 @@ public class WebApkUpdateDataFetcher extends EmptyTabObserver {
      */
     @CalledByNative
     protected void onDataAvailable(String manifestStartUrl, String scopeUrl, String name,
-            String shortName, String primaryIconUrl, String primaryIconMurmur2Hash,
-            Bitmap primaryIconBitmap, String badgeIconUrl, String badgeIconMurmur2Hash,
-            Bitmap badgeIconBitmap, String[] iconUrls, @WebDisplayMode int displayMode,
-            int orientation, long themeColor, long backgroundColor) {
+            String shortName, String shareUrlTemplate, String primaryIconUrl,
+            String primaryIconMurmur2Hash, Bitmap primaryIconBitmap, String badgeIconUrl,
+            String badgeIconMurmur2Hash, Bitmap badgeIconBitmap, String[] iconUrls,
+            @WebDisplayMode int displayMode, int orientation, long themeColor,
+            long backgroundColor) {
         HashMap<String, String> iconUrlToMurmur2HashMap = new HashMap<String, String>();
         for (String iconUrl : iconUrls) {
             String murmur2Hash = null;
@@ -113,9 +114,10 @@ public class WebApkUpdateDataFetcher extends EmptyTabObserver {
 
         WebApkInfo info = WebApkInfo.create(mOldInfo.id(), mOldInfo.uri().toString(), scopeUrl,
                 new WebApkInfo.Icon(primaryIconBitmap), new WebApkInfo.Icon(badgeIconBitmap), name,
-                shortName, displayMode, orientation, mOldInfo.source(), themeColor, backgroundColor,
-                mOldInfo.apkPackageName(), mOldInfo.shellApkVersion(), mOldInfo.manifestUrl(),
-                manifestStartUrl, iconUrlToMurmur2HashMap, mOldInfo.shouldForceNavigation());
+                shortName, shareUrlTemplate, displayMode, orientation, mOldInfo.source(),
+                themeColor, backgroundColor, mOldInfo.apkPackageName(), mOldInfo.shellApkVersion(),
+                mOldInfo.manifestUrl(), manifestStartUrl, iconUrlToMurmur2HashMap,
+                mOldInfo.shouldForceNavigation());
         mObserver.onGotManifestData(info, primaryIconUrl, badgeIconUrl);
     }
 
