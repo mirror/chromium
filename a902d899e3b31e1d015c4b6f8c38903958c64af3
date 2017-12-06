@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "040dc3ef_3c05b3d8",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-12-06T18:18:33Z",
+      "side": 1,
+      "message": "I had started https://chromium-review.googlesource.com/c/chromium/src/+/802114 but I\u0027m wondering if there is something simpler we can do to unblock this patch?",
+      "parentUuid": "2b874ae3_a8ec8043",
+      "revId": "a902d899e3b31e1d015c4b6f8c38903958c64af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d526bb6b_963beb30",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 5
