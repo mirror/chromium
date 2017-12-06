@@ -70,6 +70,30 @@
       "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84ec43d_d4388b2c",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-06T12:28:14Z",
+      "side": 1,
+      "message": "Here some form of illustration, which I hope has all the relevant bits: https://jsfiddle.net/9wquwn90/",
+      "parentUuid": "622ab2d6_36b48f7c",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 72
+      },
+      "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
