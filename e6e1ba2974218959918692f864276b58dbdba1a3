@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "dc031684_d2d12847",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "It would be more complicated with the new patch to try to have the menu logic inside each of the managers. I\u0027d personally rather have this close to the menu logic that triggers it; I\u0027m open to discussion about this.",
+      "parentUuid": "fe875954_8d95498d",
+      "range": {
+        "startLine": 1888,
+        "startChar": 11,
+        "endLine": 1892,
+        "endChar": 20
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d5406ad_9139b6c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-04T18:54:43Z",
       "side": 1,
       "message": "Same question about rolling into BookmarkUtils.java rather than forking here; and about DownloadUtils below.",
+      "range": {
+        "startLine": 1811,
+        "startChar": 15,
+        "endLine": 1814,
+        "endChar": 24
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ba0c36_33858b06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "8d5406ad_9139b6c4",
       "range": {
         "startLine": 1811,
         "startChar": 15,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f9527577_4fa495a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "Fixed, if not initialized, the items are not shown.",
+      "parentUuid": "7b283b89_8f6ffa80",
+      "range": {
+        "startLine": 216,
+        "startChar": 58,
+        "endLine": 216,
+        "endChar": 91
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "279b64e5_c847f787",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2017-12-04T18:54:43Z",
       "side": 1,
       "message": "Showing these is going to be temporary, after XX clicks, right? Should we add that logic now or in a follow-up CL?",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 218,
+        "endChar": 85
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eaf8685_c9c7f5e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "I was going to add this logic in a follow up, but it\u0027s simple enough to roll it into this patch.",
+      "parentUuid": "279b64e5_c847f787",
       "range": {
         "startLine": 217,
         "startChar": 23,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "7e8cac2d_8b3d3524",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "With the new patch, the bottom nav button is highlighted. I think this would work for a v1 approach or until we have full ux.",
+      "parentUuid": "889b0fda_37b2dfac",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b5138f1_8e39cc4b",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 1
@@ -154,6 +274,24 @@
       "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fe733e_af1c9a37",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-06T23:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5138f1_8e39cc4b",
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
