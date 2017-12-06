@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e1911c_682726b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:00:54Z",
+      "side": 1,
+      "message": "nit: profiles",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22afe68e_683af46e",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:00:54Z",
+      "side": 1,
+      "message": "I presume you\u0027re not testing this in the --diagnostics-recovery branch to allow that to be tested on Linux? Or should we only do this on device in both cases?\n\n(I\u0027m good with either way, just double-checking.)",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
