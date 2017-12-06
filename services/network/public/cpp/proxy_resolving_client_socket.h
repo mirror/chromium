@@ -5,8 +5,8 @@
 // This StreamSocket implementation wraps a ClientSocketHandle that is created
 // from the client socket pool after resolving proxies.
 
-#ifndef JINGLE_GLUE_PROXY_RESOLVING_CLIENT_SOCKET_H_
-#define JINGLE_GLUE_PROXY_RESOLVING_CLIENT_SOCKET_H_
+#ifndef SERVICES_NETWORK_PROXY_RESOLVING_CLIENT_SOCKET_H_
+#define SERVICES_NETWORK_PROXY_RESOLVING_CLIENT_SOCKET_H_
 
 #include <stdint.h>
 
@@ -35,8 +35,7 @@ class HttpNetworkSession;
 class URLRequestContextGetter;
 }  // namespace net
 
-// TODO(sanjeevr): Move this to net/
-namespace jingle_glue {
+namespace network {
 
 class ProxyResolvingClientSocket : public net::StreamSocket {
  public:
@@ -119,6 +118,6 @@ class ProxyResolvingClientSocket : public net::StreamSocket {
   DISALLOW_COPY_AND_ASSIGN(ProxyResolvingClientSocket);
 };
 
-}  // namespace jingle_glue
+}  // namespace network
 
-#endif  // JINGLE_GLUE_PROXY_RESOLVING_CLIENT_SOCKET_H_
+#endif  // SERVICES_NETWORK_PROXY_RESOLVING_CLIENT_SOCKET_H_
