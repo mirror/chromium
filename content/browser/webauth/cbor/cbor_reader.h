@@ -81,6 +81,7 @@ class CONTENT_EXPORT CBORReader {
              const std::vector<uint8_t>::const_iterator end);
   base::Optional<CBORValue> DecodeCBOR(int max_nesting_level);
   bool ReadUnsignedInt(int additional_info, uint64_t* length);
+  base::Optional<CBORValue> ReadSimpleValue(int additional_info);
   base::Optional<CBORValue> ReadBytes(uint64_t num_bytes);
   base::Optional<CBORValue> ReadString(uint64_t num_bytes);
   base::Optional<CBORValue> ReadCBORArray(uint64_t length,

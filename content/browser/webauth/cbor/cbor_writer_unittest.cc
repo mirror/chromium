@@ -197,6 +197,25 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
                                         arraysize(kNestedMapTestCase)));
 }
 
+TEST(CBORWriterTest, TestWriteSimpleValue) {
+  typedef struct {
+    CBORValue::SimpleValue simple_val;
+    const base::StringPiece cbor;
+  } SimpleValTestCase;
+
+  static const SimpleValTestCase kSimpleTestCase[] = {
+      {CBORValue::SimpleValue::FALSE_VALUE, base::StringPiece("\xf4")},
+      {CBORValue::SimpleValue::TRUE_VALUE, base::StringPiece("\xf5")},
+      {CBORValue::SimpleValue::NULL_VALUE, base::StringPiece("\xf6")},
+      {CBORValue::SimpleValue::UNDEFINED, base::StringPiece("\xf7")}};
+
+  for (const SimpleValTestCase& test_case : kSimpleTestCase) {
+    auto cbor = CBORWriter::Write(CBORValue(test_case.simple_val));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
+  }
+}
+
 // For major type 0, 2, 3, empty CBOR array, and empty CBOR map, the nesting
 // depth is expected to be 0 since the CBOR decoder does not need to parse
 // any nested CBOR value elements.
