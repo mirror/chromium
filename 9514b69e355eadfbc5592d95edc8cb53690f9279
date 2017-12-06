@@ -99,6 +99,24 @@
       "revId": "9514b69e355eadfbc5592d95edc8cb53690f9279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d138f411_e9e2b641",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager_gsettings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-06T20:47:00Z",
+      "side": 1,
+      "message": "@erg: Yes I should be using the new API. I had copied this code from the proxy config stuff, but had meant to change to the new API before submitting. Done now.\n\n@Tom: yes, I intend to clean up the proxy config use of gsettings too, but I\u0027ll do that in a different CL.",
+      "parentUuid": "9356562d_8a1c241d",
+      "revId": "9514b69e355eadfbc5592d95edc8cb53690f9279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
