@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c5b7f0_b1b1a8d6",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-06T23:32:22Z",
+      "side": 1,
+      "message": "don\u0027t we want to swap the snapped window in this case?",
+      "revId": "95557043b385e10dd9b40a5b925d2a0cdb59e13f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
