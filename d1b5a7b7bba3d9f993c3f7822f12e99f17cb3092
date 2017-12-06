@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f15cecf_2316a979",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEDisplacementMap.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-12-06T18:57:45Z",
+      "side": 1,
+      "message": "Does OriginTainted() true also imply that the SourceGraphic is used in the InputEffect(1) subgraph? Otherwise, this check may be overly-restrictive. You can have a tainted origin and still use FEDisplacementMap, so long as input 1\u0027s subgraph does not reference SourceGraphic (e.g., using FETurbulence).",
+      "revId": "d1b5a7b7bba3d9f993c3f7822f12e99f17cb3092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
