@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a53e5c_96ba2c34",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-06T23:42:40Z",
+      "side": 0,
+      "message": "My original question was that is there any case, when OnSplitViewStateChanged, the state is NO_SNAP, but we are NOT in overview mode? If yes, we can not simply set header_view_-\u003eSetShouldPaintHeader(false /* paint */) in MaybePaintHeaderForSplitview().",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 64
+      },
+      "revId": "2bc5940e98d34500b994c99c37b45c2f0551e06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
