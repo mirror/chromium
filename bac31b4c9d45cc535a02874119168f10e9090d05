@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7cdfdd03_f01afb62",
+        "filename": "chrome/browser/printing/pwg_raster_converter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T02:59:23Z",
+      "side": 1,
+      "message": "Note to self: Write another test case for use_color \u003d false.",
+      "revId": "bac31b4c9d45cc535a02874119168f10e9090d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918be30e_343d0170",
         "filename": "chrome/common/printing/pdf_to_pwg_raster_converter.mojom",
         "patchSetId": 4
@@ -22,6 +39,30 @@
       "revId": "bac31b4c9d45cc535a02874119168f10e9090d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5df048_b996f2ea",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T02:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918be30e_343d0170",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 12
+      },
+      "revId": "bac31b4c9d45cc535a02874119168f10e9090d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
