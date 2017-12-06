@@ -88,6 +88,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310a3fe0_3d9a6605",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-06T02:25:39Z",
+      "side": 1,
+      "message": "given that isn\u0027t locally reproducable is it worth landing a fix for this?\n\nIf we should land a fix we should probably adress both scenarios: a cleared owner_node_ and a non assigned owner_node_?",
+      "parentUuid": "98502f8e_067b0223",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
