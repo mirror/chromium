@@ -52,6 +52,7 @@ class ArcWallpaperService : public KeyedService,
 
   // WallpaperControllerObserver implementation.
   void OnWallpaperDataChanged() override;
+  void OnCustomWallpaperCancelled(uint32_t image_id) override;
 
   class DecodeRequestSender {
    public:
