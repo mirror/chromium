@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64c0c8e5_cdc1693b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/notification-creation-detached-context.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T14:40:19Z",
+      "side": 1,
+      "message": "Non-persistent notifications can be shown by *constructing* the object, not calling it as a function. I think you\u0027re now triggering a different exception than the one you\u0027re meant to be triggering.\n\n\u003e Notification(\u0027foo\u0027)\nVM112:1 Uncaught TypeError: Failed to construct \u0027Notification\u0027: Please use the \u0027new\u0027 operator, this DOM object constructor cannot be called as a function.\n    at \u003canonymous\u003e:1:1\n\nCan you verify the message of the constructor? (Maybe throw w/o assert_throws?)\n\nAlso please use a lambda for the function, single quotes for the \u0027Title\u0027 string and four space indent for the JavaScript in this file (blocks of lines 22, 23 and 31).",
+      "revId": "d833b3e3dd18662be67455065107b766d1343453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b31f042_7d2d72fa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/notification-creation-detached-context.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T14:40:19Z",
+      "side": 1,
+      "message": "no pink lines pls",
+      "revId": "d833b3e3dd18662be67455065107b766d1343453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b369a5c3_20ecf984",
+        "filename": "third_party/WebKit/public/platform/modules/notifications/notification_service.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-06T14:40:19Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "d833b3e3dd18662be67455065107b766d1343453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
