@@ -34,6 +34,23 @@
       "revId": "f10704ce8e368f7b67bdfde846f966740e02bbf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a23505_4d285298",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-06T02:07:13Z",
+      "side": 1,
+      "message": "WriteBarrierInternal (Blink often uses \"Internal\".)",
+      "revId": "f10704ce8e368f7b67bdfde846f966740e02bbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
