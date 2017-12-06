@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d058167_c97ac2a6",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-06T12:16:49Z",
+      "side": 1,
+      "message": "Could we change this to pass the access point and the reason to this method and remove the setters?",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 19
+      },
+      "revId": "0c7596d107de43ccf9dc472e1d92c1f108656b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
