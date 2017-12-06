@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73828400_5306b296",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T20:00:42Z",
+      "side": 1,
+      "message": "Yes, it\u0027s upper.  Was just checking to make sure you read the comments.  ;)",
+      "parentUuid": "b52516be_4b142d8c",
+      "range": {
+        "startLine": 45,
+        "startChar": 35,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b92da94_fc6b1bb8",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T17:07:32Z",
       "side": 1,
       "message": "On further thought, I don\u0027t think this change is correct. I think it looks like the problem here is that focus changing is not dirtying the scene and is causing visual changes (eg cursor moving). Can we not somehow ensure that changing focus can dirty the scene?",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "fe3afdc686f9f1c13ced7afed4ee6127efc457da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3b5b88_fe70c195",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-06T20:00:42Z",
+      "side": 1,
+      "message": "From offline chat:\n\nI don\u0027t think a focus change in itself should dirty anything.  The layout change is a side-effect of drawing the text texture.  Here, only that texture should really know if a related element moved.  So, if a texture redraws itself, we should consider the scene dirty and continue to the layout step.\n\nSeparate from that, this change introduced a new PrepareToDraw override, which we don\u0027t need, because the Text texture should do this dirty-flagging for us.",
+      "parentUuid": "1b92da94_fc6b1bb8",
       "range": {
         "startLine": 100,
         "startChar": 7,
