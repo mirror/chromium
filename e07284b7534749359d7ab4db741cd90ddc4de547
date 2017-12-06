@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a57e9cde_e7403f15",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "I will try to analyze and work on this in future",
+      "parentUuid": "7e60a82c_d7890e10",
+      "range": {
+        "startLine": 294,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c851cf4c_bfb89f02",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
         "patchSetId": 25
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T19:51:04Z",
       "side": 1,
       "message": "I may have missed some earlier discussion. Which three?\n\nCould you also put them in the comment?",
+      "range": {
+        "startLine": 278,
+        "startChar": 5,
+        "endLine": 278,
+        "endChar": 42
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb4230b_d375b7c3",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "https://www.w3.org/TR/selection-api/#definition mentions as\nEach selection has a direction, forwards, backwards, or directionless.",
+      "parentUuid": "c851cf4c_bfb89f02",
       "range": {
         "startLine": 278,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b9929231_472f9c54",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Did changes. I will submit a seperate refactoring patch.",
+      "parentUuid": "9f8d08f8_f87542ae",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6be070ff_933f36a9",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e0f2e0ec_b0bb430d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be070ff_933f36a9",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 22
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d75ba85_ab51f07f",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
         "patchSetId": 25
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "65edc432_d8bef3b7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditCommand.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d75ba85_ab51f07f",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33cf9389_af8d98f1",
         "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
         "patchSetId": 25
@@ -122,6 +236,30 @@
       "writtenOn": "2017-12-05T19:51:04Z",
       "side": 1,
       "message": "Ah, we have a typo lying here for years.",
+      "range": {
+        "startLine": 1244,
+        "startChar": 5,
+        "endLine": 1244,
+        "endChar": 21
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33eee7e3_0e032d39",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Submitted separate patch",
+      "parentUuid": "33cf9389_af8d98f1",
       "range": {
         "startLine": 1244,
         "startChar": 5,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "0d0b5260_2959602f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d85f4b_3dcda9aa",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d156be8_f110763f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 25
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "1630a3d5_48158f06",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d156be8_f110763f",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 31
+      },
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "958c1bf8_b7a99b9a",
         "filename": "third_party/WebKit/Source/core/editing/commands/UndoStep.h",
         "patchSetId": 25
@@ -188,6 +368,24 @@
       "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681d9ba6_29d48505",
+        "filename": "third_party/WebKit/Source/core/editing/commands/UndoStep.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-06T18:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "958c1bf8_b7a99b9a",
+      "revId": "e07284b7534749359d7ab4db741cd90ddc4de547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
