@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8202e193_7ccb9674",
+        "filename": "ash/resources/vector_icons/shelf_back.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 0,
+      "message": "What do these icon changes do? Maybe loop in estade@ or another good icon reviewer?",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26d69f3_613fde52",
+        "filename": "ash/resources/vector_icons/shelf_back.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 0,
+      "message": "Can you explain these icon changes?",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e953928d_39ae5002",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 0,
+      "message": "Should this still hide the ink drop?",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc8a59c_a6e9bb44",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 0,
+      "message": "Is this no longer true?",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

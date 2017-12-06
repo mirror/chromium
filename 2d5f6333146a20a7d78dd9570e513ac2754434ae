@@ -1,0 +1,616 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "820dd503_75bc1851",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: Avoid \u0027we\u0027, say \"if tablet mode is enabled.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ad4563_a00a2a1d",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: IsTabletModeEnabled",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e10c48_2b62acdc",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Avoid passing the shelf separately, use ShelfView::shelf()",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45068644_97dc9a4b",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: could this just pass shelf_view instead of listener and then remove the listener arg?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088440c7_44f446e1",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "q: Is this necessary? Where was it done before? Maybe do this in the AppListButton ctor instead (like BackButton). Ditto for the back button SetBounds call below.",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf2a8f9_2ff239cc",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: avoid \u0027we\u0027, say \"if tablet mode is enabled, or if a tablet mode animation is ongoing.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1444519_968ea7f8",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "q: does this work in RTL UI too?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c489b64_5aad8dd6",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Can this instead just call canvas-\u003eDrawRoundRect?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019b6cbc_43f59f5a",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: |flags| or |background_flags|",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa1a8f8_bc5b846e",
+        "filename": "ash/shelf/app_list_back_button_background_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fa2fcd_dbc68ccc",
+        "filename": "ash/shelf/app_list_back_button_background_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: \"A view responsible for painting a circle around the app list button, or a rounded rectangle around the back button and app list button in tablet mode.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa877cb_a780f03e",
+        "filename": "ash/shelf/app_list_back_button_background_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: \"Updates |background_color_|\" or \"Updates the background color\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de95b13_c9d9d6ed",
+        "filename": "ash/shelf/app_list_back_button_background_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "\"Called by ShelfView after it finishes a bounds animation.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424a3e19_a92ff596",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Don\u0027t provide values here if they\u0027re provided in the initializer list.",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd00294_fecacd6c",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "optional nit: swap the arg order to match above",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fe0090_15e67254",
+        "filename": "ash/shelf/back_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Should this still handle ET_GESTURE_TAP_CANCEL and call AnimateInkDrop?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4947bdf3_abbd48f1",
+        "filename": "ash/shelf/back_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "This could just be a ui::Event (or EventType), the location is no longer needed. As an aside, I wonder if it\u0027s possible to still select the back button with a key event (from a USB/Bluetooth/virtual-onscreen keyboard etc.)",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e706f7_1f521bfa",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9effb98c_6b3c70e6",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: \"The back button shown on the shelf when tablet mode is enabled.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2036978b_d04c17a7",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: Called by ShelfView (via AppListBackButtonBackgroundView) after it finishes a bounds animation.",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79ed1b1_966e2a7e",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "\"when the back button is pressed.\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebf13ed_0f28d8cc",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Don\u0027t provide values here, they\u0027re provided in the initializer list.",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4356ad_f7bcc590",
+        "filename": "ash/shelf/back_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbc2079_4b5f4430",
+        "filename": "ash/shelf/back_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: disable tablet mode and check that it\u0027s no longer visible",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37acf09_c025b65c",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "optional nit: avoid \u0027we\u0027 here and elsewhere",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0636b701_df2b00ba",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: \"Index 0 refers\"",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f74c7a_1d88c5e1",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Avoid looping and just return app_list_back_button_background_view_-\u003eapp_list_button();",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2a7ed4_d6ae0fde",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Avoid looping and just return app_list_back_button_background_view_-\u003eback_button();",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d02da7f_2b48dd95",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "How does this handle the back button?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77a1183_44d667be",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Should this handle the back button similarly? Does the overflow shelf show a back button?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f443b82_49d2076a",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Should this handle the back button similarly?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf42a1d8_534c2352",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "nit: can we assume this is 0?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ba98cb_7907f5ae",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Is this function ever called with the app list or back button directly?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cc2c60_933b8051",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Should we do the same for the back button? (ie. show the shelf context menu for right-clicks on the back button?)",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6451643a_af0844aa",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "Ditto: Should we do the same for the back button?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59dc1fa3_341cd069",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-06T23:52:17Z",
+      "side": 1,
+      "message": "ditto nit: can we assume this is 0?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
