@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -209,8 +210,21 @@ void AudioSyncReader::Read(AudioBus* dest) {
     // For bitstream formats, we need the real data size and PCM frame count.
     AudioOutputBuffer* buffer =
         reinterpret_cast<AudioOutputBuffer*>(shared_memory_->memory());
-    output_bus_->SetBitstreamDataSize(buffer->params.bitstream_data_size);
-    output_bus_->SetBitstreamFrames(buffer->params.bitstream_frames);
+    uint32_t data_size = buffer->params.bitstream_data_size;
+    uint32_t bitstream_frames = buffer->params.bitstream_frames;
+    if (data_size > static_cast<uint32_t>(AudioBus::CalculateMemorySize(
+                        output_bus_->channels(), output_bus_->frames())) ||
+        base::IsValueInRangeForNumericType<int>(bitstream_frames)) {
+      // Received data doesn't fit in the buffer.
+      // note: frames() and channels() indicate the values that this buffer was
+      // initialized with, and aren't modified after creation, so they are
+      // reliable to determine the amount of memory available allocated for
+      // |dest|.
+      dest->Zero();
+      return;
+    }
+    output_bus_->SetBitstreamDataSize(data_size);
+    output_bus_->SetBitstreamFrames(bitstream_frames);
   }
   output_bus_->CopyTo(dest);
 }
