@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7efb98bf_fe86cae0",
+        "filename": "sandbox/linux/syscall_broker/broker_permission_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-06T22:14:36Z",
+      "side": 1,
+      "message": "nit: Generally I think accessors are the last methods in Chromium C++.",
+      "revId": "175f40a36338e567212f24db108de1fa3c71f424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
