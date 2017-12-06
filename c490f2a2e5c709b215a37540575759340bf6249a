@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b93a1ec_09277d4c",
+        "filename": "ios/web/web_state/navigation_context_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-06T19:30:31Z",
+      "side": 1,
+      "message": "Can you add comments clarifying what specifically differentiates between a normal back/forward and a fast back/forward, and how they should be handled differently?",
+      "range": {
+        "startLine": 57,
+        "startChar": 45,
+        "endLine": 57,
+        "endChar": 62
+      },
+      "revId": "c490f2a2e5c709b215a37540575759340bf6249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
