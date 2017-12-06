@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac2664ca_fcce2922",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-06T21:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e8a229_41e0f822",
+      "range": {
+        "startLine": 592,
+        "startChar": 9,
+        "endLine": 592,
+        "endChar": 37
+      },
+      "revId": "f111f62e2d7811b1c8b4255671a87ade0bd4c6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea72874a_95588265",
         "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0ffe7354_75aa800c",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-06T21:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea72874a_95588265",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "f111f62e2d7811b1c8b4255671a87ade0bd4c6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773dcb09_f5ddd99f",
         "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-06T19:27:22Z",
       "side": 1,
       "message": "Do we need both ExternalAppLauncher and ExternalAppLauncherTabHelper? Do you plan to fold ExternalAppLauncher into ExternalAppLauncherTabHelper in a separate CL?",
+      "range": {
+        "startLine": 37,
+        "startChar": 23,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "f111f62e2d7811b1c8b4255671a87ade0bd4c6e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36decb2c_d9f315a9",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-06T21:45:33Z",
+      "side": 1,
+      "message": "Yes, let\u0027s keep this CL small and digestible. Another CL will fold these two classes.",
+      "parentUuid": "773dcb09_f5ddd99f",
       "range": {
         "startLine": 37,
         "startChar": 23,
