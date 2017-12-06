@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42a2f02d_bba5f4a7",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae40e6c_3ba48723",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0dcdef2_7b9e6d64",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788819bb_137e4ef3",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0dcdef2_7b9e6d64",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f77d8bf0_2ed0aaf7",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "It shouldn\u0027t, unless the callback tries to call Terminate with another callback.  ResetAndReturn seems cleaner though.",
+      "parentUuid": "06d61639_7dae2013",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 36
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ec6466_fb2e9105",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5a7bb5_e7d2131b",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ec6466_fb2e9105",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b1bcf950_36bb224a",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "Yes, to let the WebContents close.",
+      "parentUuid": "4e4a9c0b_05b244ae",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8e0fab_5795565a",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
         "patchSetId": 14
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-04T19:31:57Z",
       "side": 1,
       "message": "no {}",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 40
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5a5bed2_30f4e532",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db8e0fab_5795565a",
       "range": {
         "startLine": 150,
         "startChar": 39,
@@ -160,6 +304,30 @@
       "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b73631_eca60b76",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-06T00:00:29Z",
+      "side": 1,
+      "message": "I forgot this was here.  Removed.",
+      "parentUuid": "0b0abe81_93c65389",
+      "range": {
+        "startLine": 175,
+        "startChar": 3,
+        "endLine": 176,
+        "endChar": 51
+      },
+      "revId": "9f8b0f6c38a3a11aa90b7f8b94653bf218b1d81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
