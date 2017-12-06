@@ -39,6 +39,48 @@
       "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c747bb46_045ba1b7",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T01:30:00Z",
+      "side": 1,
+      "message": "This is what Dan and I came up with. I am open to alternatives.",
+      "parentUuid": "ada6d0e6_9189659c",
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ff364e_869325a9",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-06T01:30:00Z",
+      "side": 1,
+      "message": "Maybe? I would have to audit the settings hierarchy to solve that.",
+      "parentUuid": "1dfcbfbd_ce86c2e6",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 37
+      },
+      "revId": "fb64a2155a5b47118109d4329971889cc183c08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
