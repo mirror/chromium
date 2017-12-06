@@ -109,6 +109,9 @@ static bool ShouldTreatAsUniqueOrigin(const KURL& url) {
   if (SchemeRegistry::ShouldTreatURLSchemeAsNoAccess(relevant_url.Protocol()))
     return true;
 
+  if (SchemeRegistry::ShouldTreatURLSchemeAsLocal(relevant_url.Protocol()))
+    return true;
+
   // This is the common case.
   return false;
 }
