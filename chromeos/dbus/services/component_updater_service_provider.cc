@@ -33,6 +33,14 @@ void ComponentUpdaterServiceProvider::Start(
                  weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&ComponentUpdaterServiceProvider::OnExported,
                  weak_ptr_factory_.GetWeakPtr()));
+
+  exported_object->ExportMethod(
+      kComponentUpdaterServiceInterface,
+      kComponentUpdaterServiceRemoveComponentMethod,
+      base::Bind(&ComponentUpdaterServiceProvider::RemoveComponent,
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind(&ComponentUpdaterServiceProvider::OnExported,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ComponentUpdaterServiceProvider::OnExported(
@@ -78,6 +86,44 @@ void ComponentUpdaterServiceProvider::OnLoadComponent(
     std::unique_ptr<dbus::ErrorResponse> error_response =
         dbus::ErrorResponse::FromMethodCall(method_call, kErrorInternalError,
                                             "Failed to load component");
+    response_sender.Run(std::move(error_response));
+  }
+}
+
+void ComponentUpdaterServiceProvider::RemoveComponent(
+    dbus::MethodCall* method_call,
+    dbus::ExportedObject::ResponseSender response_sender) {
+  dbus::MessageReader reader(method_call);
+  std::string component_name;
+  if (reader.PopString(&component_name)) {
+    delegate_->RemoveComponent(
+        component_name,
+        base::Bind(&ComponentUpdaterServiceProvider::OnRemoveComponent,
+                   weak_ptr_factory_.GetWeakPtr(), method_call,
+                   response_sender));
+  } else {
+    std::unique_ptr<dbus::ErrorResponse> error_response =
+        dbus::ErrorResponse::FromMethodCall(
+            method_call, kErrorInvalidArgs,
+            "Missing component name string argument.");
+    response_sender.Run(std::move(error_response));
+  }
+}
+
+void ComponentUpdaterServiceProvider::OnRemoveComponent(
+    dbus::MethodCall* method_call,
+    dbus::ExportedObject::ResponseSender response_sender,
+    bool is_successful) {
+  if (is_successful) {
+    std::unique_ptr<dbus::Response> response =
+        dbus::Response::FromMethodCall(method_call);
+    dbus::MessageWriter writer(response.get());
+    writer.AppendBool(is_successful);
+    response_sender.Run(std::move(response));
+  } else {
+    std::unique_ptr<dbus::ErrorResponse> error_response =
+        dbus::ErrorResponse::FromMethodCall(method_call, kErrorInternalError,
+                                            "Failed to remove component");
     response_sender.Run(std::move(error_response));
   }
 }

@@ -199,6 +199,13 @@ void BrowserProcessPlatformPart::SetCompatibleCrosComponentPath(
   compatible_cros_components_[name] = path;
 }
 
+void BrowserProcessPlatformPart::UnsetCompatibleCrosComponentPath(
+    const std::string& name) {
+  const auto it = compatible_cros_components_.find(name);
+  if (it != compatible_cros_components_.end())
+    compatible_cros_components_.erase(it);
+}
+
 bool BrowserProcessPlatformPart::IsCompatibleCrosComponent(
     const std::string& name) const {
   return compatible_cros_components_.count(name) > 0;

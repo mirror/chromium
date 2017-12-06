@@ -108,6 +108,9 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   void SetCompatibleCrosComponentPath(const std::string& name,
                                       const base::FilePath& path);
 
+  // Removes the name and install path entry of a component.
+  void UnsetCompatibleCrosComponentPath(const std::string& name);
+
   // Checks if the current installed component is compatible given a component
   // |name|. If compatible, sets |path| to be its installed path.
   bool IsCompatibleCrosComponent(const std::string& name) const;
