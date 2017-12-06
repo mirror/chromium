@@ -22,6 +22,30 @@
       "revId": "080889841b23f27760961298ba34de03237a1af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b70e5be_f48c358b",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-06T21:31:56Z",
+      "side": 1,
+      "message": "Maybe just use ternary operator, to get rid of the extra creation of empty dictionary.",
+      "parentUuid": "76d131aa_a0ebf0a5",
+      "range": {
+        "startLine": 135,
+        "startChar": 23,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "080889841b23f27760961298ba34de03237a1af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
