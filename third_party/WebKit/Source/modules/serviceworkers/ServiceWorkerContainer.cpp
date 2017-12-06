@@ -54,6 +54,7 @@
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/WebString.h"
@@ -68,6 +69,9 @@ namespace blink {
 namespace {
 
 mojom::ServiceWorkerUpdateViaCache ParseUpdateViaCache(const String& value) {
+  // Maintain the old behavior when not runtime-enabled.
+  if (!RuntimeEnabledFeatures::ServiceWorkerUpdateViaCacheEnabled())
+    return mojom::ServiceWorkerUpdateViaCache::kAll;
   if (value == "imports")
     return mojom::ServiceWorkerUpdateViaCache::kImports;
   if (value == "all")
