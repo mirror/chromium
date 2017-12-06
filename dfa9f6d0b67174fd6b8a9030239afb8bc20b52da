@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "69999e65_8cf3c8e6",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:50:08Z",
+      "side": 1,
+      "message": "you should be able to pass a test-specific save card callback, right? Then you\u0027d be able to know if it\u0027s been run or not.",
+      "parentUuid": "9961d09f_29de85c3",
+      "range": {
+        "startLine": 195,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 46
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2564e6b3_14cbf72d",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
         "patchSetId": 13
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "How is that any different or less flaky than what the unit tests do, though?  Feels to me like I shouldn\u0027t need to rely on the AutofillMetrics class for matters that involve accepting/declining the bubble; the bubble should know those things.",
       "parentUuid": "2564e6b3_14cbf72d",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 56
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bc7631_06c8faec",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:50:08Z",
+      "side": 1,
+      "message": "I don\u0027t know what the unit tests do. Are the unit tests flaky? The point is that you can avoid adding test-only code by piggy-backing on code that is already implemented and useful beyond a testing context. UMA is already logging pretty much every circumstance of interest, why reimplement?",
+      "parentUuid": "f84e7a94_8d44f059",
       "range": {
         "startLine": 202,
         "startChar": 2,
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "6e3eea32_31c79f16",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:50:08Z",
+      "side": 1,
+      "message": "as above --- this one doesn\u0027t run the callback, right? Plus you can use histograms again.",
+      "parentUuid": "e9ea4700_b592b9d6",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 47
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc1926cd_bf67f71f",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
         "patchSetId": 13
@@ -206,6 +278,29 @@
         "startChar": 0,
         "endLine": 230,
         "endChar": 52
+      },
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a451a5ee_00f7dacc",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T16:50:08Z",
+      "side": 1,
+      "message": "I didn\u0027t keep notating these but pretty much all of them look like state (including histogram state) can be used to verify expectations.",
+      "range": {
+        "startLine": 240,
+        "startChar": 3,
+        "endLine": 241,
+        "endChar": 55
       },
       "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
