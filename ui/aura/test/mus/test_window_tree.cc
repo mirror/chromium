@@ -37,6 +37,12 @@ TestWindowTree::GetLastNewWindowProperties() {
   return std::move(last_new_window_properties_);
 }
 
+void TestWindowTree::NotifyClientAboutAcceleratedWidget() {
+  const int64_t kSynthesizedDisplayIdStart = 2200000000LL;
+  window_manager_->WmOnAcceleratedWidgetForDisplay(
+      kSynthesizedDisplayIdStart, static_cast<gfx::AcceleratedWidget>(1));
+}
+
 void TestWindowTree::AckAllChanges() {
   while (!changes_.empty()) {
     client_->OnChangeCompleted(changes_[0].id, true);
