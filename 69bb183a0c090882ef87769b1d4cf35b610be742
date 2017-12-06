@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1793a5b0_5e636515",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T00:40:51Z",
+      "side": 1,
+      "message": "Not going to fix this one, because if it was nullptr then the very next line would fail anyway. :) I believe it\u0027s assumed controller is never nullptr in this situation.",
+      "parentUuid": "b0a00a26_911f9e04",
+      "range": {
+        "startLine": 209,
+        "startChar": 4,
+        "endLine": 209,
+        "endChar": 14
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35a0f59_5c649670",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f51aa9_df5da3f6",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T00:40:51Z",
+      "side": 1,
+      "message": "Oh neat, I didn\u0027t know that about the ForTesting suffix!  Done.",
+      "parentUuid": "c35a0f59_5c649670",
+      "range": {
+        "startLine": 98,
+        "startChar": 15,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "95fbeae3_855e5b0b",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T00:40:51Z",
+      "side": 1,
+      "message": "Not sure.  I think the goal was that this was it\u0027s really just an int.  Now that DialogEventWaiter is a templated class, I don\u0027t know if it matters.  +Mathieu, thoughts?",
+      "parentUuid": "0d867253_fb900767",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe53717_dc9b2999",
         "filename": "components/autofill/core/browser/ui/save_card_bubble_controller.h",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f005eb38_3ef2d3ac",
+        "filename": "components/autofill/core/browser/ui/save_card_bubble_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-06T00:40:51Z",
+      "side": 1,
+      "message": "Done; removed the OnFooterShown/OnFooterHidden observer code.  You\u0027re right in that those parts can be tested via the GetFootnoteViewForTesting() state.\n\nI was also originally wary of the added complexity to production code through this approach, but after syncing with mathp@ and hearing about why he and rouslan@ settled on this method for PaymentRequest browsertests, it made sense.  A lot of things like BUBBLE_ACCEPTED vs. BUBBLE_CANCELLED and whether RPCs were sent afterward aren\u0027t something that can be tested purely through state.\n\nThanks!",
+      "parentUuid": "1fe53717_dc9b2999",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
