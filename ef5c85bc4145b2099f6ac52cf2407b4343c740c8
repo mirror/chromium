@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7972fcf6_5bbcd922",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/plugins/webview-plugin-nested-iframe-scroll-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T17:58:42Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "ef5c85bc4145b2099f6ac52cf2407b4343c740c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e9bf3c_36bca50e",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/plugins/webview-plugin-scroll-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-06T17:58:42Z",
+      "side": 1,
+      "message": "I think this is a non-RLS expectation.  Maybe the one in platform/win was meant to be here?",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "ef5c85bc4145b2099f6ac52cf2407b4343c740c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
