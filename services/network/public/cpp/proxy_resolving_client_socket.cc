@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "jingle/glue/proxy_resolving_client_socket.h"
+#include "services/network/public/cpp/proxy_resolving_client_socket.h"
 
 #include <stdint.h>
 #include <string>
@@ -26,19 +26,19 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
-namespace jingle_glue {
+namespace network {
 
 ProxyResolvingClientSocket::ProxyResolvingClientSocket(
     net::ClientSocketFactory* socket_factory,
     const scoped_refptr<net::URLRequestContextGetter>& request_context_getter,
     const net::SSLConfig& ssl_config,
     const net::HostPortPair& dest_host_port_pair)
-    : proxy_resolve_callback_(
-          base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
-                     base::Unretained(this))),
+    : proxy_resolve_callback_(base::BindRepeating(
+          &ProxyResolvingClientSocket::ProcessProxyResolveDone,
+          base::Unretained(this))),
       connect_callback_(
-          base::Bind(&ProxyResolvingClientSocket::ProcessConnectDone,
-                     base::Unretained(this))),
+          base::BindRepeating(&ProxyResolvingClientSocket::ProcessConnectDone,
+                              base::Unretained(this))),
       ssl_config_(ssl_config),
       pac_request_(NULL),
       dest_host_port_pair_(dest_host_port_pair),
@@ -113,7 +113,8 @@ ProxyResolvingClientSocket::~ProxyResolvingClientSocket() {
   Disconnect();
 }
 
-int ProxyResolvingClientSocket::Read(net::IOBuffer* buf, int buf_len,
+int ProxyResolvingClientSocket::Read(net::IOBuffer* buf,
+                                     int buf_len,
                                      const net::CompletionCallback& callback) {
   if (transport_.get() && transport_->socket())
     return transport_->socket()->Read(buf, buf_len, callback);
@@ -155,21 +156,16 @@ int ProxyResolvingClientSocket::Connect(
 
   // First we try and resolve the proxy.
   int status = network_session_->proxy_service()->ResolveProxy(
-      proxy_url_,
-      std::string(),
-      &proxy_info_,
-      proxy_resolve_callback_,
-      &pac_request_,
-      NULL,
-      net_log_);
+      proxy_url_, std::string(), &proxy_info_, proxy_resolve_callback_,
+      &pac_request_, NULL, net_log_);
   if (status != net::ERR_IO_PENDING) {
     // We defer execution of ProcessProxyResolveDone instead of calling it
     // directly here for simplicity. From the caller's point of view,
     // the connect always happens asynchronously.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
-                   weak_factory_.GetWeakPtr(), status));
+        FROM_HERE, base::BindRepeating(
+                       &ProxyResolvingClientSocket::ProcessProxyResolveDone,
+                       weak_factory_.GetWeakPtr(), status));
   }
   user_connect_callback_ = callback;
   return net::ERR_IO_PENDING;
@@ -190,9 +186,9 @@ void ProxyResolvingClientSocket::ProcessProxyResolveDone(int status) {
   if (status == net::OK) {
     // Remove unsupported proxies from the list.
     proxy_info_.RemoveProxiesWithoutScheme(
-        net::ProxyServer::SCHEME_DIRECT |
-        net::ProxyServer::SCHEME_HTTP | net::ProxyServer::SCHEME_HTTPS |
-        net::ProxyServer::SCHEME_SOCKS4 | net::ProxyServer::SCHEME_SOCKS5);
+        net::ProxyServer::SCHEME_DIRECT | net::ProxyServer::SCHEME_HTTP |
+        net::ProxyServer::SCHEME_HTTPS | net::ProxyServer::SCHEME_SOCKS4 |
+        net::ProxyServer::SCHEME_SOCKS5);
 
     if (proxy_info_.is_empty()) {
       // No proxies/direct to choose from. This happens when we don't support
@@ -321,9 +317,9 @@ int ProxyResolvingClientSocket::ReconsiderProxyAfterError(int error) {
   // we might still want to fall back a direct connection).
   if (rv != net::ERR_IO_PENDING) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(&ProxyResolvingClientSocket::ProcessProxyResolveDone,
-                   weak_factory_.GetWeakPtr(), rv));
+        FROM_HERE, base::BindRepeating(
+                       &ProxyResolvingClientSocket::ProcessProxyResolveDone,
+                       weak_factory_.GetWeakPtr(), rv));
     // Since we potentially have another try to go (trying the direct connect)
     // set the return code code to ERR_IO_PENDING.
     rv = net::ERR_IO_PENDING;
@@ -356,8 +352,7 @@ bool ProxyResolvingClientSocket::IsConnectedAndIdle() const {
   return transport_->socket()->IsConnectedAndIdle();
 }
 
-int ProxyResolvingClientSocket::GetPeerAddress(
-    net::IPEndPoint* address) const {
+int ProxyResolvingClientSocket::GetPeerAddress(net::IPEndPoint* address) const {
   if (!transport_.get() || !transport_->socket()) {
     NOTREACHED();
     return net::ERR_SOCKET_NOT_CONNECTED;
@@ -443,4 +438,4 @@ void ProxyResolvingClientSocket::CloseTransportSocket() {
   transport_.reset();
 }
 
-}  // namespace jingle_glue
+}  // namespace network
