@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "677c073f_868d9757",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-06T17:01:12Z",
+      "side": 1,
+      "message": "Could you specify (for me, in the comment) what the relationship between the OS send buffer size and the behavior of SendTo() is?  I could imagine one of two things: a) SendTo() fails if the datagram size is greater than the size specified to this function, or b) a datagram is split up into multiple datagrams to fit.  \n\nActually, now that I think about it, I think that the answer is c) this is the minimum total buffer size the OS allocates for the socket, and the socket will reject datagrams that overrun that buffer size.  Which, if true, makes my discomfort around the interface not specifying a default value less; this is just an implementation/performance issue (specifically because \"man 7 socket\" indicates that the kernel in some cases just allocates double whatever is passed in as   SO_SNDBUF, which means the consumer of this interface can\u0027t count on this actually limiting resources).\n\nBut regardless, if it\u0027s part of this interface, I\u0027d like it clear what it means in the documentation in this interface.",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88e4af30_2208adca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 11
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "I didn\u0027t find any documentation in the existing code on what recommended value is. \nThis is OS dependent. The linux one doesn\u0027t allow one to set a value smaller than 256 bytes, but also doesn\u0027t mention what the default is.\n\nThe existing C++ UDP API doesn\u0027t provide a way to query, so I think we can do without one for now.",
       "parentUuid": "88e4af30_2208adca",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dda001f_a4a676c6",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-06T17:01:12Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable here, but I\u0027m not an experienced user of the UDP API, so I\u0027ll consider my comments suggestions, but am also going to + in Miriam.\n\nFor any given OS, the default is known (and settable).  I.e. for each OS a programmer will both know what the default socket send buffer size is.  This interface will be used across OSes, and it feels uncomfortable to me for it to have less functionality in the general form than it does in the specific form.  \n\nTo put it differently, if the consumer wants predictable behavior across OSes, it seems like they *must* call this interface.  And if they don\u0027t, they might get different behavior across OSes, which will be hard to debug.  It seems like we\u0027d prefer an interface that made it slightly harder to get different cross platform behavior.\n\nWhat does the current //net interface look like?  Can you give me a pointer?  (Note that I may want to improve that interface even if it has the same surface area--one of the points of Mojoification to me is cleaning up sharp interface edges.)",
+      "parentUuid": "d9c1afdb_3a5d4fbc",
       "range": {
         "startLine": 19,
         "startChar": 15,
