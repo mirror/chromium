@@ -1,22 +1,24 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/audio/audio_debug_file_writer.h"
+#include "media/audio/audio_debug_recording_writer.h"
+
+#include "base/bind.h"
+#include "base/files/file_path.h"
+#include "base/memory/ptr_util.h"
+#include "base/single_thread_task_runner.h"
 
 #include <stdint.h>
 #include <array>
 #include <limits>
 #include <utility>
 
-#include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/sys_byteorder.h"
 #include "base/threading/thread_restrictions.h"
 #include "media/base/audio_bus.h"
 #include "media/base/audio_sample_types.h"
-
 namespace media {
 
 namespace {
@@ -138,7 +140,7 @@ void WriteWavHeader(WavHeaderBuffer* buf,
 // Manages the debug recording file and writes to it. Can be created on any
 // thread. All the operations must be executed on a thread that has IO
 // permissions.
-class AudioDebugFileWriter::AudioFileWriter {
+class AudioDebugRecordingWriter::AudioFileWriter {
  public:
   static AudioFileWriterUniquePtr Create(
       const base::FilePath& file_name,
@@ -154,10 +156,9 @@ class AudioDebugFileWriter::AudioFileWriter {
   explicit AudioFileWriter(const AudioParameters& params);
 
   // Write wave header to file. Called on the |task_runner_| twice: on
-  // construction
-  // of AudioFileWriter size of the wave data is unknown, so the header is
-  // written with zero sizes; then on destruction it is re-written with the
-  // actual size info accumulated throughout the object lifetime.
+  // construction of AudioFileWriter size of the wave data is unknown, so the
+  // header is written with zero sizes; then on destruction it is re-written
+  // with the actual size info accumulated throughout the object lifetime.
   void WriteHeader();
 
   void CreateRecordingFile(const base::FilePath& file_name);
@@ -180,8 +181,8 @@ class AudioDebugFileWriter::AudioFileWriter {
 };
 
 // static
-AudioDebugFileWriter::AudioFileWriterUniquePtr
-AudioDebugFileWriter::AudioFileWriter::Create(
+AudioDebugRecordingWriter::AudioFileWriterUniquePtr
+AudioDebugRecordingWriter::AudioFileWriter::Create(
     const base::FilePath& file_name,
     const AudioParameters& params,
     scoped_refptr<base::SequencedTaskRunner> task_runner) {
@@ -192,24 +193,24 @@ AudioDebugFileWriter::AudioFileWriter::Create(
   // |task_runner|.
   task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&AudioFileWriter::CreateRecordingFile,
-                 base::Unretained(file_writer.get()), file_name));
+      base::BindRepeating(&AudioFileWriter::CreateRecordingFile,
+                          base::Unretained(file_writer.get()), file_name));
   return file_writer;
 }
 
-AudioDebugFileWriter::AudioFileWriter::AudioFileWriter(
+AudioDebugRecordingWriter::AudioFileWriter::AudioFileWriter(
     const AudioParameters& params)
     : samples_(0), params_(params), interleaved_data_size_(0) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
-AudioDebugFileWriter::AudioFileWriter::~AudioFileWriter() {
+AudioDebugRecordingWriter::AudioFileWriter::~AudioFileWriter() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (file_.IsValid())
     WriteHeader();
 }
 
-void AudioDebugFileWriter::AudioFileWriter::Write(const AudioBus* data) {
+void AudioDebugRecordingWriter::AudioFileWriter::Write(const AudioBus* data) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_EQ(params_.channels(), data->channels());
   if (!file_.IsValid())
@@ -236,7 +237,7 @@ void AudioDebugFileWriter::AudioFileWriter::Write(const AudioBus* data) {
                           data_size * sizeof(interleaved_data_[0]));
 }
 
-void AudioDebugFileWriter::AudioFileWriter::WriteHeader() {
+void AudioDebugRecordingWriter::AudioFileWriter::WriteHeader() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!file_.IsValid())
     return;
@@ -249,7 +250,7 @@ void AudioDebugFileWriter::AudioFileWriter::WriteHeader() {
   file_.Seek(base::File::FROM_BEGIN, kWavHeaderSize);
 }
 
-void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
+void AudioDebugRecordingWriter::AudioFileWriter::CreateRecordingFile(
     const base::FilePath& file_name) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::AssertBlockingAllowed();
@@ -263,42 +264,69 @@ void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
     return;
   }
 
-  // Note that we do not inform AudioDebugFileWriter that the file creation
+  // Note that we do not inform AudioDebugRecordingWriter that the file creation
   // fails, so it will continue to post data to be recorded, which won't
-  // be written to the file. This also won't be reflected in WillWrite(). It's
-  // fine, because this situation is rare, and all the posting is expected to
-  // happen in case of success anyways. This allows us to save on thread hops
-  // for error reporting and to avoid dealing with lifetime issues. It also
-  // means file_.IsValid() should always be checked before issuing writes to it.
+  // be written to the file. It's fine, because this situation is rare, and all
+  // the posting is expected to happen in case of success anyways. This allows
+  // us to save on thread hops for error reporting and to avoid dealing with
+  // lifetime issues. It also means file_.IsValid() should always be checked
+  // before issuing writes to it.
   PLOG(ERROR) << "Could not open debug recording file, error="
               << file_.error_details();
 }
 
-AudioDebugFileWriter::AudioDebugFileWriter(const AudioParameters& params)
+AudioDebugRecordingWriter::AudioDebugRecordingWriter(
+    const AudioParameters& params,
+    base::OnceClosure on_destruction_closure)
     : params_(params),
-      file_writer_(nullptr, base::OnTaskRunnerDeleter(nullptr)) {
-  DETACH_FROM_SEQUENCE(client_sequence_checker_);
+      file_writer_(nullptr, base::OnTaskRunnerDeleter(nullptr)),
+      recording_enabled_(0),
+      on_destruction_closure_(std::move(on_destruction_closure)),
+      weak_factory_(this) {}
+
+AudioDebugRecordingWriter::~AudioDebugRecordingWriter() {
+  if (on_destruction_closure_)
+    std::move(on_destruction_closure_).Run();
 }
 
-AudioDebugFileWriter::~AudioDebugFileWriter() {
-  // |file_writer_| will be deleted on |task_runner_|.
-}
-
-void AudioDebugFileWriter::Start(const base::FilePath& file_name) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(client_sequence_checker_);
+void AudioDebugRecordingWriter::StartRecording(
+    const base::FilePath& file_name) {
   DCHECK(!file_writer_);
-  file_writer_ = AudioFileWriter::Create(file_name, params_, file_task_runner_);
+  DCHECK(!file_name.empty());
+
+  file_writer_ =
+      AudioFileWriter::Create(file_name.AddExtension(FILE_PATH_LITERAL("wav")),
+                              params_, file_task_runner_);
+
+  base::subtle::NoBarrier_Store(&recording_enabled_, 1);
 }
 
-void AudioDebugFileWriter::Stop() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(client_sequence_checker_);
+void AudioDebugRecordingWriter::StopRecording() {
+  base::subtle::Atomic32 recording_enabled =
+      base::subtle::NoBarrier_Load(&recording_enabled_);
+  if (!recording_enabled)
+    return;
+
+  base::subtle::NoBarrier_Store(&recording_enabled_, 0);
+
   // |file_writer_| is deleted on FILE thread.
   file_writer_.reset();
-  DETACH_FROM_SEQUENCE(client_sequence_checker_);
 }
 
-void AudioDebugFileWriter::Write(std::unique_ptr<AudioBus> data) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(client_sequence_checker_);
+void AudioDebugRecordingWriter::OnData(const AudioBus* source) {
+  // Check if debug recording is enabled to avoid an unecessary copy
+  base::subtle::Atomic32 recording_enabled =
+      base::subtle::NoBarrier_Load(&recording_enabled_);
+  if (!recording_enabled)
+    return;
+
+  // TODO(tommi): This is costly. AudioBus heap allocs and we create a new one
+  // for every callback. We could instead have a pool of bus objects that get
+  // returned to us somehow.
+  std::unique_ptr<AudioBus> audio_bus_copy =
+      AudioBus::Create(source->channels(), source->frames());
+  source->CopyTo(audio_bus_copy.get());
+
   if (!file_writer_)
     return;
 
@@ -306,21 +334,9 @@ void AudioDebugFileWriter::Write(std::unique_ptr<AudioBus> data) {
   file_task_runner_->PostTask(
       FROM_HERE,
       // Callback takes ownership of |data|:
-      base::Bind(&AudioFileWriter::Write, base::Unretained(file_writer_.get()),
-                 base::Owned(data.release())));
-}
-
-bool AudioDebugFileWriter::WillWrite() {
-  // Note that if this is called from any place other than
-  // |client_sequence_checker_| then there is a data race here, but it's fine,
-  // because Write() will check for |file_writer_|. So, we are not very precise
-  // here, but it's fine: we can afford missing some data or scheduling some
-  // no-op writes.
-  return !!file_writer_;
-}
-
-const base::FilePath::CharType* AudioDebugFileWriter::GetFileNameExtension() {
-  return FILE_PATH_LITERAL("wav");
+      base::BindRepeating(&AudioFileWriter::Write,
+                          base::Unretained(file_writer_.get()),
+                          base::Owned(audio_bus_copy.release())));
 }
 
 }  // namespace media
