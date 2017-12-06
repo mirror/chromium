@@ -7,9 +7,12 @@
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
+#include "base/strings/string_number_conversions.h"
 #include "chrome/browser/media/media_engagement_preload.pb.h"
 #include "net/base/lookup_string_in_fixed_set.h"
 #include "url/origin.h"
+#include "url/url_canon.h"
+#include "url/url_constants.h"
 
 const char MediaEngagementPreloadedList::kHistogramCheckResultName[] =
     "Media.Engagement.PreloadedList.CheckResult";
@@ -54,11 +57,6 @@ bool MediaEngagementPreloadedList::LoadFromFile(const base::FilePath& path) {
 
 bool MediaEngagementPreloadedList::CheckOriginIsPresent(
     const url::Origin& origin) const {
-  return CheckStringIsPresent(origin.Serialize());
-}
-
-bool MediaEngagementPreloadedList::CheckStringIsPresent(
-    const std::string& input) const {
   // Check if we have loaded the data.
   if (!loaded()) {
     RecordCheckResult(CheckResult::kListNotLoaded);
@@ -71,13 +69,58 @@ bool MediaEngagementPreloadedList::CheckStringIsPresent(
     return false;
   }
 
-  bool result =
-      net::LookupStringInFixedSet(dafsa_.data(), dafsa_.size(), input.c_str(),
-                                  input.size()) == net::kDafsaFound;
+  // By default we are just searching for the hostname.
+  std::string location(origin.host());
 
-  // Record and return the result.
-  RecordCheckResult(result ? CheckResult::kFound : CheckResult::kNotFound);
-  return result;
+  // Add :<port> if we use a non-default port.
+  if (origin.port() != url::DefaultPortForScheme(origin.scheme().data(),
+                                                 origin.scheme().length())) {
+    location.push_back(':');
+    std::string port(base::UintToString(origin.port()));
+    location.append(std::move(port));
+  }
+
+  // Check the string is present and check the scheme matches.
+  DafsaResult result = CheckStringIsPresent(location);
+  if (!CheckSchemeFromResult(result, origin)) {
+    RecordCheckResult(CheckResult::kNotFound);
+    return false;
+  }
+
+  // Record the results to the histogram.
+  switch (result) {
+    case DafsaResult::kAllowUnsecureOrigins:
+      RecordCheckResult(CheckResult::kFoundAllowUnsecure);
+      break;
+    default:
+      RecordCheckResult(CheckResult::kFound);
+      break;
+  }
+  return true;
+}
+
+MediaEngagementPreloadedList::DafsaResult
+MediaEngagementPreloadedList::CheckStringIsPresent(
+    const std::string& input) const {
+  return static_cast<MediaEngagementPreloadedList::DafsaResult>(
+      net::LookupStringInFixedSet(dafsa_.data(), dafsa_.size(), input.c_str(),
+                                  input.size()));
+}
+
+bool MediaEngagementPreloadedList::CheckSchemeFromResult(
+    DafsaResult result,
+    const url::Origin& origin) const {
+  switch (result) {
+    case DafsaResult::kFound:
+      // Only HTTPS is allowed by default.
+      return origin.scheme() == url::kHttpsScheme;
+    case DafsaResult::kAllowUnsecureOrigins:
+      // Allow either HTTP or HTTPS.
+      return origin.scheme() == url::kHttpScheme ||
+             origin.scheme() == url::kHttpsScheme;
+    default:
+      return false;
+  }
 }
 
 void MediaEngagementPreloadedList::RecordLoadResult(LoadResult result) {

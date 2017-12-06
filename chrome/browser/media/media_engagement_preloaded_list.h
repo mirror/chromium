@@ -58,6 +58,10 @@ class MediaEngagementPreloadedList {
     // The check failed because the list has not been loaded.
     kListNotLoaded,
 
+    // The check succeeded, the string was found and it had metadata that it
+    // allows unsecured origins.
+    kFoundAllowUnsecure,
+
     kCount
   };
 
@@ -80,8 +84,23 @@ class MediaEngagementPreloadedList {
     kCount
   };
 
+  enum class DafsaResult {
+    // The string was not found.
+    kNotFound = -1,
+
+    // The string was found.
+    kFound,
+
+    // The string was found and should allow both HTTP and HTTPS origins.
+    kAllowUnsecureOrigins,
+  };
+
   // Checks if |input| is present in the preloaded data.
-  bool CheckStringIsPresent(const std::string& input) const;
+  DafsaResult CheckStringIsPresent(const std::string& input) const;
+
+  // Checks if the scheme of |origin| matches the rule returned in |result|.
+  bool CheckSchemeFromResult(DafsaResult result,
+                             const url::Origin& origin) const;
 
   // Records |result| to the LoadResult histogram.
   void RecordLoadResult(LoadResult result);
