@@ -33,6 +33,7 @@ class MessageLoopRunner;
 class RenderFrameHost;
 class RenderWidgetHost;
 class Shell;
+class WebContents;
 
 // Generate the file path for testing a particular test.
 // The file for the tests is all located in
@@ -118,6 +119,27 @@ class ShellAddedObserver {
 };
 
 #if defined OS_MACOSX
+// An observer of the RenderWidgetHostViewCocoa which is the NSView
+// corresponding to the page.
+class RenderWidgetHostViewCocoaObserver {
+ public:
+  explicit RenderWidgetHostViewCocoaObserver(WebContents* web_contents);
+  virtual ~RenderWidgetHostViewCocoaObserver();
+
+  // Called when a new NSView is added as a subview of RWHVCocoa.
+  // |rect_in_root_view| represents the bounds of the NSView in RWHVCocoa
+  // coordinates. The view will be dismissed shortly after this call.
+  virtual void DidAddSubviewWillBeDismissed(
+      const gfx::Rect& rect_in_root_view) {}
+
+  WebContents* web_contents() const { return web_contents_; }
+
+ private:
+  WebContents* const web_contents_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewCocoaObserver);
+};
+
 void SetWindowBounds(gfx::NativeWindow window, const gfx::Rect& bounds);
 
 // This method will request the string (word) at |point| inside the |rwh| where
