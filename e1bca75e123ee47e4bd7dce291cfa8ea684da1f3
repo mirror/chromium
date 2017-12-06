@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "215ea0bb_3c5c608f",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T22:26:50Z",
+      "side": 1,
+      "message": "Whoops will fix. I think this comment is stale so will just delete in a followup.",
+      "parentUuid": "0bf42600_bad98d01",
+      "range": {
+        "startLine": 478,
+        "startChar": 46,
+        "endLine": 478,
+        "endChar": 48
+      },
+      "revId": "e1bca75e123ee47e4bd7dce291cfa8ea684da1f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09e3f89d_6ef5f349",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T22:11:14Z",
       "side": 1,
       "message": "Why don\u0027t you grab the end stats from the callback at this time?",
+      "range": {
+        "startLine": 479,
+        "startChar": 47,
+        "endLine": 479,
+        "endChar": 57
+      },
+      "revId": "e1bca75e123ee47e4bd7dce291cfa8ea684da1f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb1bea9_adf5f561",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T22:26:50Z",
+      "side": 1,
+      "message": "Because that would retrieve stats after the finalize time has occurred. We only want the stats between the start and end of a given watch time segment.",
+      "parentUuid": "09e3f89d_6ef5f349",
       "range": {
         "startLine": 479,
         "startChar": 47,
