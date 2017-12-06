@@ -3332,6 +3332,15 @@ public class Tab
         hideMediaDownloadInProductHelp();
     }
 
+    /**
+     * Handle browser controls when a tab modal dialog is shown.
+     */
+    public void onTabModalDialogShown() {
+        if (mFullscreenManager == null) return;
+        mFullscreenManager.setPositionsForTabToNonFullscreen();
+        updateBrowserControlsState(BrowserControlsState.SHOWN, false);
+    }
+
     @CalledByNative
     private void showMediaDownloadInProductHelp(int x, int y, int width, int height) {
         // If we are not currently showing the widget, ask the tracker if we can show it.
