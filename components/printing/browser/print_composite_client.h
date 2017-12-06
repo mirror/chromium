@@ -18,19 +18,32 @@ class PrintCompositeClient
   explicit PrintCompositeClient(content::WebContents* web_contents);
   ~PrintCompositeClient() override;
 
-  void DoComposite(base::SharedMemoryHandle handle,
-                   uint32_t data_size,
-                   mojom::PdfCompositor::CompositePdfCallback callback);
+  void DoCompositeToPdf(int frame_id,
+                        uint32_t page_num,
+                        base::SharedMemoryHandle handle,
+                        uint32_t data_size,
+                        const std::vector<uint32_t>& subframe_content_ids,
+                        mojom::PdfCompositor::CompositeToPdfCallback callback);
 
   void set_for_preview(bool for_preview) { for_preview_ = for_preview; }
   bool for_preview() const { return for_preview_; }
 
  private:
   void CreateConnectorRequest();
+  void OnIsReadyToComposite(
+      int frame_id,
+      uint32_t page_num,
+      base::SharedMemoryHandle handle,
+      uint32_t data_size,
+      const std::vector<uint32_t>& subframe_content_ids,
+      mojom::PdfCompositor::CompositeToPdfCallback callback,
+      bool is_ready);
 
   service_manager::mojom::ConnectorRequest connector_request_;
   std::unique_ptr<service_manager::Connector> connector_;
   bool for_preview_;
+
+  base::WeakPtrFactory<PrintCompositeClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PrintCompositeClient);
 };
