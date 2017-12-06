@@ -68,6 +68,24 @@
       "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ba7eff_5265ed76",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-06T10:32:38Z",
+      "side": 1,
+      "message": "They do vary independently. If the previous state was maximized and you set it to be fullscreen, both is_maximized and is_fullscreen are returned.",
+      "parentUuid": "333f2cdc_0c508683",
+      "revId": "4db2d7aa1666e44be0e4b07cf2f41989ee452570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
