@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6824ffba_92b2f8dc",
+        "filename": "content/renderer/renderer_webcolorchooser_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-06T00:48:55Z",
+      "side": 0,
+      "message": "I might be missing something here, but when the user closes a color chooser from the UI, do we no longer tell Blink that it was closed? I don\u0027t see anything else happening when the pipe gets closed from the browser side.",
+      "revId": "73505ae3cd98481051c5285993713676467ac31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
