@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9db93ba_dc7ce9b5",
+        "filename": "device/bluetooth/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-06T06:23:35Z",
+      "side": 1,
+      "message": "Leaked from previous larger CL.\nRemoved.",
+      "parentUuid": "40629c87_a4e8bbd9",
+      "revId": "1aa1b4831bfefb2614ebbe1a3414e6c0c9952bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1621627_67132fe8",
         "filename": "remoting/base/buffered_socket_writer.cc",
         "patchSetId": 7

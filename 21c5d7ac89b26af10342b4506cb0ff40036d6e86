@@ -357,6 +357,24 @@
       "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58337427_4cd433ed",
+        "filename": "net/socket/socket.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-06T06:23:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9feaf33_a809e182",
+      "revId": "21c5d7ac89b26af10342b4506cb0ff40036d6e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
