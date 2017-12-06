@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d459ef9_9237e75b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8c0098_1041f3c5",
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460aeaf4_8e65512c",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "872a3398_c269661c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for the reminder!",
+      "parentUuid": "460aeaf4_8e65512c",
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04b57e57_4cfa4870",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a83ad32_e192bd0b",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done\n\nI considered moving the detailed description of wrapping to the implementation file, because I figured that interface users should only need an abstract description of what the IDB backing store needs and how to get there. I then decided to postpone moving until I have WASM deserialization code and I pull out the generic bits in a separate CL (like I\u0027m doing here), because IDBValueUnwrappper is still closely tied to the blob-wrapping representation.\n\nPlease let me know if you\u0027d prefer that I do the unwrapping work (and doc moving) in this CL, at the expense of causing it to grow.",
+      "parentUuid": "04b57e57_4cfa4870",
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +153,54 @@
     },
     {
       "key": {
+        "uuid": "6f249785_35a10806",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done.\n\nI think this was written before we trusted the compilers to do copy elision.",
+      "parentUuid": "16c34183_b6e4d99d",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 6
+      },
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dfb93501_b1d810cf",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done.\n\nThank you! I like \"Take\" more.",
+      "parentUuid": "877a35dc_8c1a5dc0",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 14
+      },
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b8058c_9c6ee453",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 3
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "127a6593_515dbdb9",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b8058c_9c6ee453",
+      "range": {
+        "startLine": 142,
+        "startChar": 14,
+        "endLine": 142,
+        "endChar": 25
+      },
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842bc967_da04c8fa",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1759d44_b7fd17e3",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "842bc967_da04c8fa",
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +303,30 @@
       "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0907ed33_9376884c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrappingTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-06T07:28:13Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for noticing! I wanted to use hex for binary data and decimal for sizes, and I did mess up here.",
+      "parentUuid": "926e8aa3_9a4600c0",
+      "range": {
+        "startLine": 438,
+        "startChar": 12,
+        "endLine": 438,
+        "endChar": 18
+      },
+      "revId": "7616c3f22cc18e80b132fe93699609ed56426b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
