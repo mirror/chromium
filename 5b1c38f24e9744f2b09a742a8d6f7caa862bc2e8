@@ -34,6 +34,24 @@
       "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5a7ddd_2080a0e9",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-06T02:59:45Z",
+      "side": 1,
+      "message": "Thanks for adding the newline.",
+      "parentUuid": "38914f42_ba008d73",
+      "revId": "5b1c38f24e9744f2b09a742a8d6f7caa862bc2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
