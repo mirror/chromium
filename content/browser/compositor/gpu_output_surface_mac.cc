@@ -10,30 +10,11 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/common/swap_buffers_complete_params.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
-#include "ui/accelerated_widget_mac/accelerated_widget_mac.h"
-#include "ui/base/cocoa/remote_layer_api.h"
+#include "ui/accelerated_widget_mac/ca_layer_embedder.h"
 #include "ui/compositor/compositor.h"
 #include "ui/display/types/display_snapshot.h"
-#include "ui/gfx/mac/io_surface.h"
 
 namespace content {
-
-struct GpuOutputSurfaceMac::RemoteLayers {
-  void UpdateLayers(CAContextID content_ca_context_id) {
-    if (content_ca_context_id) {
-      if ([content_layer contextId] != content_ca_context_id) {
-        content_layer.reset([[CALayerHost alloc] init]);
-        [content_layer setContextId:content_ca_context_id];
-        [content_layer
-            setAutoresizingMask:kCALayerMaxXMargin | kCALayerMaxYMargin];
-      }
-    } else {
-      content_layer.reset();
-    }
-  }
-
-  base::scoped_nsobject<CALayerHost> content_layer;
-};
 
 GpuOutputSurfaceMac::GpuOutputSurfaceMac(
     gfx::AcceleratedWidget widget,
@@ -52,43 +33,28 @@ GpuOutputSurfaceMac::GpuOutputSurfaceMac(
           GL_RGBA,
           gfx::BufferFormat::RGBA_8888,
           gpu_memory_buffer_manager),
-      widget_(widget),
-      remote_layers_(new RemoteLayers) {}
+      widget_(widget) {}
 
 GpuOutputSurfaceMac::~GpuOutputSurfaceMac() {}
 
 void GpuOutputSurfaceMac::SwapBuffers(viz::OutputSurfaceFrame frame) {
   GpuSurfacelessBrowserCompositorOutputSurface::SwapBuffers(std::move(frame));
-
   if (should_show_frames_state_ ==
       SHOULD_NOT_SHOW_FRAMES_NO_SWAP_AFTER_SUSPENDED) {
     should_show_frames_state_ = SHOULD_SHOW_FRAMES;
+    ui::CALayerEmbedder* ca_layer_embedder =
+        ui::CALayerEmbedder::FromAcceleratedWidget(widget_);
+    if (ca_layer_embedder)
+      ca_layer_embedder->SetSuspended(false);
   }
 }
 
 void GpuOutputSurfaceMac::OnGpuSwapBuffersCompleted(
     const gpu::SwapBuffersCompleteParams& params) {
-  const gfx::CALayerParams& ca_layer_params = params.ca_layer_params;
-  remote_layers_->UpdateLayers(ca_layer_params.ca_context_id);
-  if (should_show_frames_state_ == SHOULD_SHOW_FRAMES) {
-    ui::AcceleratedWidgetMac* widget = ui::AcceleratedWidgetMac::Get(widget_);
-    if (widget) {
-      if (remote_layers_->content_layer) {
-        widget->GotCALayerFrame(
-            base::scoped_nsobject<CALayer>(remote_layers_->content_layer.get(),
-                                           base::scoped_policy::RETAIN),
-            ca_layer_params.pixel_size, ca_layer_params.scale_factor);
-      } else {
-        base::ScopedCFTypeRef<IOSurfaceRef> io_surface(
-            IOSurfaceLookupFromMachPort(ca_layer_params.io_surface_mach_port));
-        if (!io_surface) {
-          LOG(ERROR) << "Unable to open IOSurface for frame.";
-        }
-        widget->GotIOSurfaceFrame(io_surface, ca_layer_params.pixel_size,
-                                  ca_layer_params.scale_factor);
-      }
-    }
-  }
+  ui::CALayerEmbedder* ca_layer_embedder =
+      ui::CALayerEmbedder::FromAcceleratedWidget(widget_);
+  if (ca_layer_embedder)
+    ca_layer_embedder->UpdateCALayerTree(params.ca_layer_params);
   client_->DidReceiveTextureInUseResponses(params.texture_in_use_responses);
   GpuSurfacelessBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
       params);
@@ -101,6 +67,10 @@ void GpuOutputSurfaceMac::SetSurfaceSuspendedForRecycle(bool suspended) {
     // them in GpuProcessHostUIShim, until the browser issues a SwapBuffers for
     // the new content.
     should_show_frames_state_ = SHOULD_NOT_SHOW_FRAMES_SUSPENDED;
+    ui::CALayerEmbedder* ca_layer_embedder =
+        ui::CALayerEmbedder::FromAcceleratedWidget(widget_);
+    if (ca_layer_embedder)
+      ca_layer_embedder->SetSuspended(true);
   } else {
     // Discard the backbuffer before drawing the new frame. This is necessary
     // only when using a ImageTransportSurfaceFBO with a
