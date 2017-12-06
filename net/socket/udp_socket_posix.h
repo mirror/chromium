@@ -157,10 +157,13 @@ class NET_EXPORT UDPSocketPosix {
   // Returns a net error code, or ERR_IO_PENDING if the IO is in progress.
   // If ERR_IO_PENDING is returned, the caller must keep |buf| and |address|
   // alive until the callback is called.
+  // TODO(crbug.com/656607): Remove default value.
   int SendTo(IOBuffer* buf,
              int buf_len,
              const IPEndPoint& address,
-             const CompletionCallback& callback);
+             const CompletionCallback& callback,
+             const NetworkTrafficAnnotationTag& traffic_annotation =
+                 NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Sets the receive buffer size (in bytes) for the socket.
   // Returns a net error code.

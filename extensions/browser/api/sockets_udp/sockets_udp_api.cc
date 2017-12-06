@@ -261,8 +261,10 @@ void SocketsUdpSendFunction::StartSendTo() {
     return;
   }
 
+  // TODO(crbug.com/656607): Add proper annotation.
   socket->SendTo(io_buffer_, io_buffer_size_, addresses_.front(),
-                 base::Bind(&SocketsUdpSendFunction::OnCompleted, this));
+                 base::Bind(&SocketsUdpSendFunction::OnCompleted, this),
+                 NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void SocketsUdpSendFunction::OnCompleted(int net_result) {

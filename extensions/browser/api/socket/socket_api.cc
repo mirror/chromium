@@ -34,6 +34,7 @@
 #include "net/base/network_interfaces.h"
 #include "net/base/url_util.h"
 #include "net/log/net_log_with_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -557,9 +558,10 @@ void SocketWriteFunction::AsyncWorkStart() {
     return;
   }
 
-  socket->Write(io_buffer_,
-                io_buffer_size_,
-                base::Bind(&SocketWriteFunction::OnCompleted, this));
+  // TODO(crbug.com/656607): Add proper annotation.
+  socket->Write(io_buffer_, io_buffer_size_,
+                base::Bind(&SocketWriteFunction::OnCompleted, this),
+                NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void SocketWriteFunction::OnCompleted(int bytes_written) {
@@ -687,9 +689,10 @@ void SocketSendToFunction::StartSendTo() {
     AsyncWorkCompleted();
     return;
   }
-
+  // TODO(crbug.com/656607): Add proper annotation.
   socket->SendTo(io_buffer_, io_buffer_size_, addresses_.front(),
-                 base::Bind(&SocketSendToFunction::OnCompleted, this));
+                 base::Bind(&SocketSendToFunction::OnCompleted, this),
+                 NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void SocketSendToFunction::OnCompleted(int bytes_written) {

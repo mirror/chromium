@@ -22,7 +22,7 @@
 #include "net/socket/next_proto.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/tcp_client_socket.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using testing::_;
@@ -178,9 +178,9 @@ TEST_F(TLSSocketTest, TestTLSSocketWrite) {
   scoped_refptr<net::IOBufferWithSize> io_buffer(
       new net::IOBufferWithSize(256));
   socket_->Write(
-      io_buffer.get(),
-      io_buffer->size(),
-      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)));
+      io_buffer.get(), io_buffer->size(),
+      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)),
+      TRAFFIC_ANNOTATION_FOR_TESTS);
 }
 
 // Simulate a blocked Write, and verify that, when simulating the Write going
@@ -198,9 +198,9 @@ TEST_F(TLSSocketTest, TestTLSSocketBlockedWrite) {
 
   scoped_refptr<net::IOBufferWithSize> io_buffer(new net::IOBufferWithSize(42));
   socket_->Write(
-      io_buffer.get(),
-      io_buffer->size(),
-      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)));
+      io_buffer.get(), io_buffer->size(),
+      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)),
+      TRAFFIC_ANNOTATION_FOR_TESTS);
 
   // After the simulated asynchronous writes come back (via calls to
   // callback.Run()), hander's OnComplete() should get invoked with the total
@@ -232,10 +232,10 @@ TEST_F(TLSSocketTest, TestTLSSocketBlockedWriteReentry) {
   // Send out |kNuMIOs| requests, each with a different size.
   for (int i = 0; i < kNumIOs; i++) {
     io_buffers[i] = new net::IOBufferWithSize(128 + i * 50);
-    socket_->Write(io_buffers[i].get(),
-                   io_buffers[i]->size(),
+    socket_->Write(io_buffers[i].get(), io_buffers[i]->size(),
                    base::Bind(&CompleteHandler::OnComplete,
-                              base::Unretained(&handlers[i])));
+                              base::Unretained(&handlers[i])),
+                   TRAFFIC_ANNOTATION_FOR_TESTS);
 
     // Set up expectations on all |kNumIOs| handlers.
     EXPECT_CALL(handlers[i], OnComplete(io_buffers[i]->size())).Times(1);
@@ -312,9 +312,9 @@ TEST_F(TLSSocketTest, TestTLSSocketLargeWrites) {
     // state until the passed callback (saved in the EXPECT_CALL for
     // |ssl_socket_|'s Write()) is invoked.
     socket_->Write(
-        io_buffers[i].get(),
-        io_buffers[i]->size(),
-        base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)));
+        io_buffers[i].get(), io_buffers[i]->size(),
+        base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)),
+        TRAFFIC_ANNOTATION_FOR_TESTS);
   }
 
   // Invoke callbacks for pending I/Os. These can synchronously invoke more of

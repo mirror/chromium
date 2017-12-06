@@ -13,6 +13,7 @@
 #include "extensions/browser/api/sockets_tcp/tcp_socket_event_dispatcher.h"
 #include "extensions/common/api/sockets/sockets_manifest_data.h"
 #include "net/base/net_errors.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -356,9 +357,10 @@ void SocketsTcpSendFunction::AsyncWorkStart() {
     return;
   }
 
-  socket->Write(io_buffer_,
-                io_buffer_size_,
-                base::Bind(&SocketsTcpSendFunction::OnCompleted, this));
+  // TODO(crbug.com/656607): Add proper annotation.
+  socket->Write(io_buffer_, io_buffer_size_,
+                base::Bind(&SocketsTcpSendFunction::OnCompleted, this),
+                NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void SocketsTcpSendFunction::OnCompleted(int net_result) {
