@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f7dce3e_02f90a66",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "558392d6_f4841e3b",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f2a0119_713257dc",
         "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ca2498b5_96890213",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "\u003e Food for thought: Overall these changes are going to mean a greater glut of indistinguishable \"Subframe: \" row-spam in --site-per-process.\n\nGood point, agreed.  I guess right now the only way to find a subframe entry from a particular tab is to double-click all matching subframe entries until you focus the right tab.  We should try to surface that better, plus even the double-click may be hard to discover for users.\n\n\u003e \n\u003e We should probably rethink how we show things, though it will be an information loss -- maybe a variant of beng\u0027s proposal, back when we last thought this through: one row per subframe process, with an expandable/collapsible list of the tabs. But that would require major UI overhaul, since I don\u0027t think we have a widget capable of that in views/.\n\nYes, I agree this would be a good improvement, though this would still benefit from your other suggestion below, I think.\n\n\u003e \n\u003e Without major UI overhaul, the easiest thing we could do is to reflect the tab\u0027s title/favicon in the Subframe: row text...\n\nYeah, agreed.  It\u0027s not the best experience to show ten identical entries all saying \"Subframe: https://google.com\".  OTOH, this is already a problem for accounts.google.com and isolate-origins enterprise policy, and in practice it\u0027ll probably be annoying only at the higher percentiles for process count.\n\nIs it ok if we pursue this in a followup?  There are more things to iron out (such as how to combine the tab title with subframe\u0027s site URL), and there\u0027ll probably be lots more impact to task manager OOPIF tests.",
+      "parentUuid": "1f2a0119_713257dc",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d72e67d9_54889774",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-06T21:46:00Z",
       "side": 1,
       "message": "I wonder if it would be worthwhile to introduce a trial group (or sub-trial) to use to experiment with these consolidation strategies. The precise effects on the process count may or may not be easy to see just by comparing dashboards across versions -- you\u0027ll need a way to cancel out the uptime effects, for example.",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc96f3f6_4649eb33",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "We could do that - we currently have a 25% unused population in the Default group that we could repurpose for this.  I could introduce a new base::Feature for this.  +Lukasz - WDYT?\n\nOn the other hand, would filtering out by versions be too terrible, if, say, we keep the canary trial for two weeks and land this in time for the second week?  Couldn\u0027t we still compare the 7-day actives process count for first and second weeks?",
+      "parentUuid": "d72e67d9_54889774",
       "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d514dade_0ae5cd47",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "That\u0027s an interesting idea!  I guess this would benefit only --isolate-origins.  It\u0027d probably be a smaller effect than the current change, since we\u0027ll likely have fewer tabs with isolated origin main frames with OOPIFs on them, but still, consolidating those OOPIFs into fewer processes sounds like a good idea.  E.g., all OOPIFs on google.com tabs would get consolidated for --isolate-origins\u003dhttps://google.com.\n\nI think this is a matter of also checking \n    !new_instance_impl-\u003eRequiresDedicatedProcess() \u0026\u0026\n    frame_tree_node_-\u003eparent()-\u003ecurrent_frame_host()-\u003eGetSiteInstance()-\u003eRequiresDedicatedProcess()\n\nhere, but I\u0027m honestly a bit nervous about doing that in this CL. :) Unlike the dedicated-site cases, where we have a reliable site URL, the site URL in new_instance_impl might not be meaningful - foo.com might\u0027ve reused bar.com\u0027s SiteInstance after bar.com navigated to foo.com, and this will result in us putting the foo.com subframe into another bar.com process (which is potentially shared with tons more sites).  Maybe that\u0027s still not a bad thing to do, but I don\u0027t think we\u0027ve used REUSE_PENDING_OR_COMMITTED_SITE in such cases before, so if we do decide to do this, I\u0027d prefer for it to bake in a separate canary. :)",
+      "parentUuid": "6406e551_0c27e782",
+      "range": {
+        "startLine": 1235,
+        "startChar": 6,
+        "endLine": 1235,
+        "endChar": 51
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30c3259f_734330fa",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1f5b6a96_980a4e55",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "That\u0027d be nice, but I think it\u0027s difficult because we can\u0027t apply the final policy here if we don\u0027t know the site.  If the SiteInstance has a lazily-assigned site, we\u0027ll only learn about it at commit time, so I think we\u0027ll have to still make some decisions (e.g., about the process-per-site policy) there.\n\nWe overwrite the reuse policy in some other cases already (e.g., https://cs.chromium.org/chromium/src/content/browser/site_instance_impl.cc?l\u003d123\u0026rcl\u003d4fd18fba5494f2f3c3b23029de8f10fdead68537), so it seems consolidating all this might be a fairly large cleanup.  Would you be ok not doing it in this CL?",
+      "parentUuid": "30c3259f_734330fa",
+      "range": {
+        "startLine": 1236,
+        "startChar": 21,
+        "endLine": 1236,
+        "endChar": 22
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d61f4f2_dfbf665a",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -134,6 +236,24 @@
       "writtenOn": "2017-12-06T21:38:32Z",
       "side": 1,
       "message": "This chooses one of the suitable hosts at random. Because this is limited to RequiresDedicatedProcess(), choosing at random is probably a decent strategy indeed; we already know that there\u0027s no suitable process already in our browsing instance, so we are effectively consolidating with some stranger. The only four criteria I can imagine that might be appropriate here are:\n\n - Resource utilization / memory footprint / some kind of accumulated cost function for the chosen process (\"choose the least busy process\", some kind of best-fit allocation)\n - A bias towards exact matches of |dest_url|\u0027s path (attempt to hit a cache).\n - Age of the last activity in the chosen process (e.g. MRU to avoid paging and avoid screwing up discarding, LRU to obtain even spreading)\n - Connectedness of the process graph / fault isolation: if tab1 has a(b), tab2 has b() [using a second b process], and then tab3 comes along with has c(a(b)) -- we might prefer to put tab3\u0027s \"b\" in tab1\u0027s \"b\" process since tab3 and tab1\u0027s fates are already linked via their shared \"a\" process, whereas choosing tab2\u0027s \"b\" process would comparatively reduce fault isolation among the three tabs.\n\nIt comes down to which dimension of stability or performance we value the most, and it seems like we just don\u0027t really know. Random-choice will avoid on average the worst case in the first three criteria, but may fail on the fourth criteria. That probably good enough for now, let\u0027s try it and learn.",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e8b56e_cc6d945e",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-06T23:57:50Z",
+      "side": 1,
+      "message": "Ack, these are all good strategies to consider for improving on random.",
+      "parentUuid": "5d61f4f2_dfbf665a",
       "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
