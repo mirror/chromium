@@ -689,10 +689,13 @@ bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
 }
 
 Visibility RenderWidgetHostViewAura::GetVisibility() const {
-  if (!window_->IsVisible())
+  if (!window_ || !window_->IsVisible())
     return Visibility::HIDDEN;
-  if (window_->occlusion_state() == aura::Window::OcclusionState::OCCLUDED)
+  // Occlusion isn't updated when |window_| has no root.
+  if (window_->GetRootWindow() &&
+      window_->occlusion_state() == aura::Window::OcclusionState::OCCLUDED) {
     return Visibility::OCCLUDED;
+  }
   return Visibility::VISIBLE;
 }
 

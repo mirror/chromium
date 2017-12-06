@@ -861,11 +861,13 @@ bool RenderWidgetHostViewMac::IsSurfaceAvailableForCopy() const {
 }
 
 Visibility RenderWidgetHostViewMac::GetVisibility() const {
-  if ([cocoa_view_ isHiddenOrHasHiddenAncestor] || ![cocoa_view_ window])
+  if ([cocoa_view_ isHiddenOrHasHiddenAncestor])
     return Visibility::HIDDEN;
-  if ([[cocoa_view_ window] occlusionState] & NSWindowOcclusionStateVisible)
-    return Visibility::VISIBLE;
-  return Visibility::OCCLUDED;
+  if ([cocoa_view_ window] && !([[cocoa_view_ window] occlusionState] &
+                                NSWindowOcclusionStateVisible)) {
+    return Visibility::OCCLUDED;
+  }
+  return Visibility::VISIBLE;
 }
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
