@@ -1,0 +1,694 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0669a6_a264304c",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "This _needs_ to be the two-argument ctor:\n\n Init@0(TimerHost host_ptr) \u003d\u003e ();\n\nyou might need to rebase to get the whole machinery in place.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfeb78d_9819e093",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "A std::move()d variable is left in an unspecified state. You are filling it up afterwards, but I\u0027d rather avoid that wrinkle in the standard: just move this to within the loop.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39942297_74c32ef7",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "maybe emplace_back, since it does perfect forwarding of arguments.",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9b7b5f_962df45b",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "You\u0027re calling loop-\u003eQuit() in every path in CreateTimersCallback. Why don\u0027t you just pass loop.QuitClosure() and run that here instead given that you have a lambda? Otherwise you can do\n\n host_ptr_-\u003eCreateTimers(\n   std::move(arc_timer_requests),\n   base::BindOnce(\u0026FakeTimerInstance::CreateTimersCallback,\n                  base::Unretained(this),\n                  std::move(arc_clocks),\n                  loop.QuitClosure())); // Send the QuitClosure instead of the full RunLoop.",
+      "range": {
+        "startLine": 86,
+        "startChar": 55,
+        "endLine": 86,
+        "endChar": 59
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96f0009_845457a7",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "how about |success|?",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798c134e_3663eb8d",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit:\n\n *status \u003d (result \u003d\u003d mojom::ArcTimerResult::FAILURE);",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe4e8d3_df6eaea0",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit: you can replace all this with just\n\n read_socket_loop.QuitClosure()",
+      "range": {
+        "startLine": 135,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126e6666_36b17a06",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "this doesn\u0027t have to be an lvalue, so just use sizeof(timer_data). Same below (and you might be able to get rid of the static_cast.",
+      "range": {
+        "startLine": 147,
+        "startChar": 61,
+        "endLine": 147,
+        "endChar": 75
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d4d3b3_bd4141bf",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "It would be more readable if the assignment were its own statement.",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3197062_ce1b724f",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "Store this in a variable to avoid evaluating it here once and again in L156.",
+      "range": {
+        "startLine": 153,
+        "startChar": 45,
+        "endLine": 153,
+        "endChar": 62
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da1578b_cdfc1195",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit:\n\n constexpr base::TimeDelta kMaxExpirationJitter \u003d base::TimeDelta::FromMilliseconds(1);\n\nAlso, I\u0027m not convinced you can guarantee this 1ms jitter, so that would cause your test to flake like crazy: http://elixir.free-electrons.com/linux/v4.14.4/source/include/linux/sched/rt.h#L50",
+      "range": {
+        "startLine": 155,
+        "startChar": 20,
+        "endLine": 155,
+        "endChar": 43
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdd4199_494796b1",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit:\n\n !(a \u003c b) ⇔ a \u003e\u003d b\n\n(and the latter is much simpler to understand).",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 7
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d44696_333ef334",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "remove: this is the end of a function, not of a namespace.",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 19
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15307d54_d680044a",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "no pointer here. Pass this parameter by value, using std::move(...) to avoid the copy.",
+      "range": {
+        "startLine": 173,
+        "startChar": 48,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c454035_7969cd28",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "This seems unnecessary. Just use result.value() instead of result_timers, it\u0027s just one more character.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46feaa0a_a27d6c90",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "Timer",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f38aa35_08701585",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit: base::MakeRefCounted\u003cRefCountedFd\u003e(std::move(fd));",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 69
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a72dfc_bf27fde6",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "What happened with using the Timer\u0027s ability to schedule stuff on another thread?",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcd1c61_5e254a96",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "Can you add DCHECKs to ensure this is respected, even in tests?",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c83d21_4ece8d85",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "IIUC if all you\u0027re doing is adding default stuff, you can remove everything.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430b95a4_bc7fc3e4",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "You don\u0027t need it here, so how about inlining |scoped_fd.release()| into L33?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ead5eb_e5fe3ae1",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "unneeded: ScopedHandle has a default constructor that does this for you.",
+      "range": {
+        "startLine": 37,
+        "startChar": 30,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59864538_ed5ab10e",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "You\u0027re just calling this once. Why not just inline it in the ctor?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e4b9ee_1cd6ed32",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit:\n\n arc::WaitForInstanceReady(bridge_service_-\u003etimer());",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ae6837_48d13819",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "unneeded: this is the default arg.",
+      "range": {
+        "startLine": 37,
+        "startChar": 42,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbe5467_30506ec4",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fe9eaa_9835dbc0",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "CloseInstance(timer_instance_.get());",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e05033f_ecc09a95",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "nit: elide braces with one-line-loops.",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b4ef16_b1332001",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "This method is way too long. Any chance you can split it into several methods? Maybe even move part of the logic there to this file.",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 65
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9927a0_a0ff80ef",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-06T20:37:01Z",
+      "side": 1,
+      "message": "Please use conversion factors so this is easier to read.",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
