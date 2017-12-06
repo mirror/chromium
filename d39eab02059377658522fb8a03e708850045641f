@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6de626e_bc41694b",
+        "filename": "chrome/test/data/webui/cr_elements/cr_policy_strings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-06T19:54:12Z",
+      "side": 1,
+      "message": "The comment is clear enough about what it\u0027s doing.\nPlease tell me more about why var is needed here.",
+      "revId": "d39eab02059377658522fb8a03e708850045641f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
