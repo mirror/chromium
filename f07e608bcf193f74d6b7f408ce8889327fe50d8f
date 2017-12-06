@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a729077_674c3bb2",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_paint_fragment.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-06T06:32:46Z",
+      "side": 1,
+      "message": "Name \"yield\" confused me. Since yield is a ES6 feature, I was wondering whether there is\na new C++ feature I am not aware of.",
+      "revId": "f07e608bcf193f74d6b7f408ce8889327fe50d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
