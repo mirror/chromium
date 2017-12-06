@@ -28,14 +28,18 @@
 // This macro invokes the specified method on each observer, passing the
 // variable length arguments as the method's arguments, and removes the observer
 // from the list of observers if the given method returns STOP_OBSERVING.
-#define INVOKE_AND_PRUNE_OBSERVERS(observers, Method, ...)    \
-  for (auto it = observers.begin(); it != observers.end();) { \
-    if ((*it)->Method(__VA_ARGS__) ==                         \
-        PageLoadMetricsObserver::STOP_OBSERVING) {            \
-      it = observers.erase(it);                               \
-    } else {                                                  \
-      ++it;                                                   \
-    }                                                         \
+#define INVOKE_AND_PRUNE_OBSERVERS(observers, Method, ...)      \
+  {                                                             \
+    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("loading"),          \
+                 "PageLoadMetricsObserver::" #Method);          \
+    for (auto it = observers.begin(); it != observers.end();) { \
+      if ((*it)->Method(__VA_ARGS__) ==                         \
+          PageLoadMetricsObserver::STOP_OBSERVING) {            \
+        it = observers.erase(it);                               \
+      } else {                                                  \
+        ++it;                                                   \
+      }                                                         \
+    }                                                           \
   }
 
 namespace page_load_metrics {
