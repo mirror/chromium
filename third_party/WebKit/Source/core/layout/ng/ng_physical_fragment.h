@@ -160,7 +160,7 @@ class CORE_EXPORT NGPhysicalFragment
   String DumpFragmentTree(DumpFlags, unsigned indent = 2) const;
 
 #ifndef NDEBUG
-  void ShowFragmentTree() const;
+  virtual void ShowFragmentTree() const;
 #endif
 
  protected:
