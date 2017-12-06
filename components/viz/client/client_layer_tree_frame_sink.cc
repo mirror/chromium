@@ -151,8 +151,18 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
                                      &tracing_enabled);
 
   mojom::HitTestRegionListPtr hit_test_region_list;
-  if (hit_test_data_provider_)
+  if (hit_test_data_provider_) {
     hit_test_region_list = hit_test_data_provider_->GetHitTestData();
+  } else {
+    // TODO(gklassen): use kHitTestAsk only when there are OOPIFs.
+    // TODO(gklassen): move this code into a hit_test_data_provider. Use
+    //                 SwapPromise if required.
+    // TODO(gklassen): walk the compositor frame to find OOPIFs.
+    hit_test_region_list = mojom::HitTestRegionList::New();
+    hit_test_region_list->flags = mojom::kHitTestAsk;
+    gfx::Size size = frame.size_in_pixels();
+    hit_test_region_list->bounds.SetRect(0, 0, size.width(), size.height());
+  }
 
   compositor_frame_sink_ptr_->SubmitCompositorFrame(
       local_surface_id_, std::move(frame), std::move(hit_test_region_list),
