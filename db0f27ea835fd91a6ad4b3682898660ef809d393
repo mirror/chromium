@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93b6314c_c776ec8b",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T02:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7363f1_a00a2c2f",
+      "range": {
+        "startLine": 266,
+        "startChar": 132,
+        "endLine": 266,
+        "endChar": 139
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "015e38cf_50ed9bf1",
         "filename": "ui/chromeos/ui_chromeos_strings.grd",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T02:21:35Z",
       "side": 1,
       "message": "Suggest appending \"...that is an abstract representation of a lunar landscape. Moonscape is another possible translation.\" to the desc, so translator can choose the right word.",
+      "range": {
+        "startLine": 269,
+        "startChar": 132,
+        "endLine": 269,
+        "endChar": 137
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53bac02a_92d56c8b",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T02:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "015e38cf_50ed9bf1",
       "range": {
         "startLine": 269,
         "startChar": 132,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "3387065e_711d5a66",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T02:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce4e5b7_0040c27e",
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "783e4ad1_dff40158",
         "filename": "ui/chromeos/ui_chromeos_strings.grd",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e432d54e_ade8435d",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T02:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "783e4ad1_dff40158",
+      "range": {
+        "startLine": 275,
+        "startChar": 132,
+        "endLine": 275,
+        "endChar": 136
+      },
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "541d190c_90074b2c",
         "filename": "ui/chromeos/ui_chromeos_strings.grd",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2017-12-06T02:21:35Z",
       "side": 1,
       "message": "containing \u0027Grids\u0027",
+      "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eed5c797_01d09997",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-06T02:40:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541d190c_90074b2c",
       "revId": "db0f27ea835fd91a6ad4b3682898660ef809d393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
