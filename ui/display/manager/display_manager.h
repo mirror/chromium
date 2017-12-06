@@ -98,6 +98,17 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     UNIFIED,
   };
 
+  // The display mode in the previous configuration.
+  // 1) NOT_SET: no mirror mode was set before (e.g. single display or just boot
+  //    up).
+  // 2) MIRROR_ON: previous mirror mode is on.
+  // 3) MIRROR_OFF: previous mirror mode is off.
+  enum class PreviousMirrorMode {
+    NOT_SET,
+    MIRROR_ON,
+    MIRROR_OFF,
+  };
+
   explicit DisplayManager(std::unique_ptr<Screen> screen);
 #if defined(OS_CHROMEOS)
   ~DisplayManager() override;
@@ -321,6 +332,25 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
     return software_mirroring_display_list_;
   }
 
+  // Used in test to prevent previous mirror modes affecting current mode.
+  void ResetPreviousMirrorModesForTest();
+
+  PreviousMirrorMode previous_mirror_mode() const {
+    return previous_mirror_mode_;
+  }
+
+  const std::map<int64_t, bool>& stored_mirror_modes() const {
+    return stored_mirror_modes_;
+  }
+
+  void set_stored_mirror_modes(
+      const std::map<int64_t, bool>& stored_mirror_modes) {
+    stored_mirror_modes_ = stored_mirror_modes;
+  }
+
+  // Update the stored mirror mode for each external display.
+  void UpdateStoredMirrorModes();
+
   // Remove mirroring source and destination displays, so that they will be
   // updated when UpdateDisplaysWith() is called.
   void ClearMirroringSourceAndDestination();
@@ -365,6 +395,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // ID if such internal display doesn't exist. On linux desktop, this returns
   // the first display ID.
   int64_t GetDisplayIdForUIScaling() const;
+
+  // Returns true if mirror mode should be turned on for the specified displays.
+  bool ShouldTurnOnMirrorMode(const DisplayIdList& id_list) const;
 
   // Change the mirror mode.
   void SetMirrorMode(bool mirrored);
@@ -574,6 +607,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // destination and store their ids in this list.
   DisplayIdList hardware_mirroring_display_id_list_;
 
+  // The mirror mode in the previous configuration. This is used to determine
+  // the mirror mode for current configuration.
+  PreviousMirrorMode previous_mirror_mode_ = PreviousMirrorMode::NOT_SET;
+
   // Cached mirror mode for metrics changed notification.
   bool mirror_mode_for_metrics_ = false;
 
@@ -604,6 +641,9 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
 
   // Whether mirroring across multiple displays is enabled.
   bool is_multi_mirroring_enabled_;
+
+  // Stores previous mirror mode for each external display.
+  std::map<int64_t, bool> stored_mirror_modes_;
 
   base::WeakPtrFactory<DisplayManager> weak_ptr_factory_;
 

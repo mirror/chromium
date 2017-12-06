@@ -300,10 +300,6 @@ bool DisplayManager::InitFromCommandLine() {
     info_list.back().set_native(true);
   }
   MaybeInitInternalDisplay(&info_list[0]);
-  if (info_list.size() > 1 &&
-      command_line->HasSwitch(::switches::kEnableSoftwareMirroring)) {
-    SetMultiDisplayMode(MIRRORING);
-  }
   OnNativeDisplaysChanged(info_list);
   return true;
 }
@@ -712,6 +708,24 @@ void DisplayManager::OnNativeDisplaysChanged(
     }
     return;
   }
+
+#if defined(OS_CHROMEOS)
+  if (!configure_displays_ && updated_displays.size() > 1) {
+    // Mirror mode is set by DisplayConfigurator on the device.
+    // Emulate it when running on linux desktop.
+    DisplayIdList list =
+        GenerateDisplayIdList(updated_displays.begin(), updated_displays.end(),
+                              [](const ManagedDisplayInfo& display_info) {
+                                return display_info.id();
+                              });
+    SetMultiDisplayMode(base::CommandLine::ForCurrentProcess()->HasSwitch(
+                            ::switches::kEnableSoftwareMirroring) ||
+                                ShouldTurnOnMirrorMode(list)
+                            ? MIRRORING
+                            : EXTENDED);
+  }
+#endif
+
   DVLOG_IF(1, updated_displays.size() == 1)
       << __func__ << "(1):" << updated_displays[0].ToString();
   DVLOG_IF(1, updated_displays.size() > 1)
@@ -789,21 +803,6 @@ void DisplayManager::OnNativeDisplaysChanged(
           user_rotation, Display::ROTATION_SOURCE_USER);
     }
   }
-
-#if defined(OS_CHROMEOS)
-  if (!configure_displays_ && new_display_info_list.size() > 1) {
-    DisplayIdList list = GenerateDisplayIdList(
-        new_display_info_list.begin(), new_display_info_list.end(),
-        [](const ManagedDisplayInfo& info) { return info.id(); });
-
-    const DisplayLayout& layout =
-        layout_store_->GetRegisteredDisplayLayout(list);
-    // Mirror mode is set by DisplayConfigurator on the device.
-    // Emulate it when running on linux desktop.
-    if (layout.mirrored)
-      SetMultiDisplayMode(MIRRORING);
-  }
-#endif
 
   UpdateDisplaysWith(new_display_info_list);
 }
@@ -1019,6 +1018,15 @@ void DisplayManager::UpdateDisplaysWith(
     mirror_mode_for_metrics_ = mirror_mode;
   }
 
+  // Store the mirror mode which will be used to determine display state when
+  // configuration changes.
+  if (num_connected_displays_ > 1) {
+    previous_mirror_mode_ = mirror_mode ? PreviousMirrorMode::MIRROR_ON
+                                        : PreviousMirrorMode::MIRROR_OFF;
+  } else {
+    previous_mirror_mode_ = PreviousMirrorMode::NOT_SET;
+  }
+
   if (delegate_ && primary_metrics)
     NotifyMetricsChanged(screen_->GetPrimaryDisplay(), primary_metrics);
 
@@ -1088,6 +1096,19 @@ DisplayIdList DisplayManager::GetMirroringDestinationDisplayIdList() const {
   if (IsInHardwareMirrorMode())
     return hardware_mirroring_display_id_list_;
   return DisplayIdList();
+}
+
+void DisplayManager::ResetPreviousMirrorModesForTest() {
+  previous_mirror_mode_ = PreviousMirrorMode::NOT_SET;
+  stored_mirror_modes_.clear();
+}
+
+void DisplayManager::UpdateStoredMirrorModes() {
+  bool mirror = IsInMirrorMode();
+  for (const auto& id : GetCurrentDisplayIdList()) {
+    if (!display::Display::IsInternalDisplayId(id))
+      stored_mirror_modes_[id] = mirror;
+  }
 }
 
 void DisplayManager::ClearMirroringSourceAndDestination() {
@@ -1173,6 +1194,27 @@ int64_t DisplayManager::GetDisplayIdForUIScaling() const {
   // UI Scaling is effective on internal display.
   return Display::HasInternalDisplay() ? Display::InternalDisplayId()
                                        : kInvalidDisplayId;
+}
+
+bool DisplayManager::ShouldTurnOnMirrorMode(
+    const DisplayIdList& id_list) const {
+  if (layout_store_->forced_mirror_mode())
+    return true;
+
+  if (previous_mirror_mode_ == PreviousMirrorMode::NOT_SET) {
+    // Mirror mode should be on if the one of the external display was in mirror
+    // mode before.
+    for (const auto& id : id_list) {
+      auto iter = stored_mirror_modes_.find(id);
+      if (iter == stored_mirror_modes_.end() || !iter->second)
+        continue;
+      return true;
+    }
+    return false;
+  }
+  // Mirror mode should be on if mirror mode is on in the previous
+  // configuration.
+  return previous_mirror_mode_ == PreviousMirrorMode::MIRROR_ON;
 }
 
 void DisplayManager::SetMirrorMode(bool mirror) {
