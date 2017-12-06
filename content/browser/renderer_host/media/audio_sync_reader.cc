@@ -211,6 +211,17 @@ void AudioSyncReader::Read(AudioBus* dest) {
         reinterpret_cast<AudioOutputBuffer*>(shared_memory_->memory());
     output_bus_->SetBitstreamDataSize(buffer->params.bitstream_data_size);
     output_bus_->SetBitstreamFrames(buffer->params.bitstream_frames);
+    if (output_bus_->GetBitstreamDataSize() >
+        static_cast<size_t>(AudioBus::CalculateMemorySize(
+            output_bus_->channels(), output_bus_->frames()))) {
+      // Received data doesn't fit in the buffer.
+      // note: frames() and channels() indicate the values that this buffer was
+      // initialized with, and aren't modified after creation, so they are
+      // reliable to determine the amount of memory available allocated for
+      // |dest|.
+      dest->Zero();
+      return;
+    }
   }
   output_bus_->CopyTo(dest);
 }
