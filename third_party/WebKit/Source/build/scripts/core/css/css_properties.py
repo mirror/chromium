@@ -35,15 +35,14 @@ def check_property_parameters(property_to_check):
         assert not(property_to_check['interpolable']), \
             'Shorthand property (' + property_to_check['name'] + ') ' \
             'cannot be interpolable'
-    if property_to_check['property_class'] is not None:
-        if property_to_check['longhands']:
-            assert 'parseSingleValue' not in property_to_check['property_methods'], \
-                'Shorthand property (' + property_to_check['name'] + ') ' \
-                'should not implement parseSingleValue'
-        else:
-            assert 'parseShorthand' not in property_to_check['property_methods'], \
-                'Longhand property (' + property_to_check['name'] + ') ' \
-                'should not implement parseShorthand'
+    if property_to_check['longhands']:
+        assert 'parseSingleValue' not in property_to_check['property_methods'], \
+            'Shorthand property (' + property_to_check['name'] + ') ' \
+            'should not implement parseSingleValue'
+    else:
+        assert 'parseShorthand' not in property_to_check['property_methods'], \
+            'Longhand property (' + property_to_check['name'] + ') ' \
+            'should not implement parseShorthand'
     assert property_to_check['is_descriptor'] or \
         property_to_check['is_property'], \
         '{} must be a property, descriptor, or both'.format(
@@ -154,22 +153,17 @@ class CSSProperties(object):
         self._properties_including_aliases = self._longhands + \
             self._shorthands + self._aliases
 
-    # TODO(rjwright): inline this once groups are removed (then we can resolve the
-    # aliased property class for an alias here instead of in make_css_property_headers.py)
-    def aliased_property(self, alias):
-        return self._properties_by_id[enum_for_css_property(alias['alias_for'])]
-
     def expand_aliases(self):
         for i, alias in enumerate(self._aliases):
             assert not alias['runtime_flag'], \
                 "Property '{}' is an alias with a runtime_flag, "\
                 "but runtime flags do not currently work for aliases.".format(
                     alias['name'])
-            aliased_property = self.aliased_property(alias)
+            aliased_property = self._properties_by_id[enum_for_css_property(alias['alias_for'])]
             updated_alias = aliased_property.copy()
             updated_alias['name'] = alias['name']
-            updated_alias['property_class'] = alias['property_class']
             updated_alias['alias_for'] = alias['alias_for']
+            updated_alias['aliased_property'] = aliased_property['upper_camel_name']
             updated_alias['property_id'] = enum_for_css_property_alias(
                 alias['name'])
             updated_alias['enum_value'] = aliased_property['enum_value'] + \
