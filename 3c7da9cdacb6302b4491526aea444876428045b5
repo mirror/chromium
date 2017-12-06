@@ -16,6 +16,24 @@
       "revId": "3c7da9cdacb6302b4491526aea444876428045b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26b57be_fd0653e8",
+        "filename": "content/browser/network_service_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T21:20:44Z",
+      "side": 1,
+      "message": "This test always enables network service in the ctor of NetworkServiceBrowserTest.",
+      "parentUuid": "792d2eff_c2445552",
+      "revId": "3c7da9cdacb6302b4491526aea444876428045b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
