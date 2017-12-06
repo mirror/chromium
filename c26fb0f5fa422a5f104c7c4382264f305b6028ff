@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "96b2e406_fabe310f",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T01:09:41Z",
+      "side": 1,
+      "message": "nit: braces.",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d505aa_0fbf0bda",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T01:09:41Z",
+      "side": 1,
+      "message": "BTW, I wonder if UtilityProcessHostClient can go away at some point in the near future.",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "857f240c_70eed062",
         "filename": "chrome/browser/printing/pdf_to_emf_converter.h",
         "patchSetId": 7
@@ -13,6 +47,40 @@
       "writtenOn": "2017-12-06T00:57:22Z",
       "side": 1,
       "message": "Can we do the OnceCallback conversion in a separate CL? We did a bunch of these for printing and one had to be reverted. Feels safer to do things one step at a time.",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d022b98f_d71fdbad",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T01:09:41Z",
+      "side": 1,
+      "message": "Maybe just use the existing block right above?",
+      "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc695da2_cf1e396b",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T01:09:41Z",
+      "side": 1,
+      "message": "Does this need to be initialized to nullptr? Maybe just use a base::LazyInstance here?",
       "revId": "c26fb0f5fa422a5f104c7c4382264f305b6028ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315c8ae1_8c3f35ad",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter_struct_traits.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T01:09:41Z",
+      "side": 0,
+      "message": "Splitting this out can be its CL, will make this one smaller and easier to review.",
+      "revId": "955ba583f11e21c4be789358a1e0dda4649ec7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
