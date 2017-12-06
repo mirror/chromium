@@ -39,9 +39,11 @@ Socket::~Socket() {
 
 void Socket::Write(scoped_refptr<net::IOBuffer> io_buffer,
                    int byte_count,
-                   const CompletionCallback& callback) {
+                   const CompletionCallback& callback,
+                   const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!callback.is_null());
-  write_queue_.push(WriteRequest(io_buffer, byte_count, callback));
+  write_queue_.push(
+      WriteRequest(io_buffer, byte_count, callback, traffic_annotation));
   WriteData();
 }
 
@@ -55,10 +57,10 @@ void Socket::WriteData() {
   DCHECK(request.byte_count >= request.bytes_written);
   io_buffer_write_ = new net::WrappedIOBuffer(request.io_buffer->data() +
                                               request.bytes_written);
-  int result =
-      WriteImpl(io_buffer_write_.get(),
-                request.byte_count - request.bytes_written,
-                base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
+  int result = WriteImpl(
+      io_buffer_write_.get(), request.byte_count - request.bytes_written,
+      base::Bind(&Socket::OnWriteComplete, base::Unretained(this)),
+      net::NetworkTrafficAnnotationTag(request.traffic_annotation));
 
   if (result != net::ERR_IO_PENDING)
     OnWriteComplete(result);
@@ -128,13 +130,16 @@ void Socket::IPEndPointToStringAndPort(const net::IPEndPoint& address,
   }
 }
 
-Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
-                                   int byte_count,
-                                   const CompletionCallback& callback)
+Socket::WriteRequest::WriteRequest(
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const CompletionCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation)
     : io_buffer(io_buffer),
       byte_count(byte_count),
       callback(callback),
-      bytes_written(0) {}
+      bytes_written(0),
+      traffic_annotation(traffic_annotation) {}
 
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 

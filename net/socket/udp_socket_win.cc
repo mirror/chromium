@@ -414,10 +414,13 @@ int UDPSocketWin::Write(IOBuffer* buf,
   return SendToOrWrite(buf, buf_len, remote_address_.get(), callback);
 }
 
-int UDPSocketWin::SendTo(IOBuffer* buf,
-                         int buf_len,
-                         const IPEndPoint& address,
-                         const CompletionCallback& callback) {
+int UDPSocketWin::SendTo(
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint& address,
+    const CompletionCallback& callback,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   return SendToOrWrite(buf, buf_len, &address, callback);
 }
 

@@ -14,7 +14,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/tcp_client_socket.h"
 #include "net/socket/tcp_server_socket.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using testing::_;
@@ -115,8 +115,10 @@ TEST(SocketTest, TestTCPSocketWrite) {
 
   scoped_refptr<net::IOBufferWithSize> io_buffer(
       new net::IOBufferWithSize(256));
-  socket->Write(io_buffer.get(), io_buffer->size(),
-      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)));
+  socket->Write(
+      io_buffer.get(), io_buffer->size(),
+      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)),
+      TRAFFIC_ANNOTATION_FOR_TESTS);
 }
 
 TEST(SocketTest, TestTCPSocketBlockedWrite) {
@@ -135,8 +137,10 @@ TEST(SocketTest, TestTCPSocketBlockedWrite) {
       std::move(tcp_client_socket), FAKE_ID, true));
 
   scoped_refptr<net::IOBufferWithSize> io_buffer(new net::IOBufferWithSize(42));
-  socket->Write(io_buffer.get(), io_buffer->size(),
-      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)));
+  socket->Write(
+      io_buffer.get(), io_buffer->size(),
+      base::Bind(&CompleteHandler::OnComplete, base::Unretained(&handler)),
+      TRAFFIC_ANNOTATION_FOR_TESTS);
 
   // Good. Original call came back unable to complete. Now pretend the socket
   // finished, and confirm that we passed the error back.
@@ -168,8 +172,9 @@ TEST(SocketTest, TestTCPSocketBlockedWriteReentry) {
     scoped_refptr<net::IOBufferWithSize> io_buffer1(
         new net::IOBufferWithSize(42));
     socket->Write(io_buffers[i].get(), io_buffers[i]->size(),
-        base::Bind(&CompleteHandler::OnComplete,
-            base::Unretained(&handlers[i])));
+                  base::Bind(&CompleteHandler::OnComplete,
+                             base::Unretained(&handlers[i])),
+                  TRAFFIC_ANNOTATION_FOR_TESTS);
 
     EXPECT_CALL(handlers[i], OnComplete(io_buffers[i]->size()))
         .Times(1);

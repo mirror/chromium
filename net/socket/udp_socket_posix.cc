@@ -414,13 +414,17 @@ int UDPSocketPosix::Write(
     int buf_len,
     const CompletionCallback& callback,
     const NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   return SendToOrWrite(buf, buf_len, NULL, callback);
 }
 
-int UDPSocketPosix::SendTo(IOBuffer* buf,
-                           int buf_len,
-                           const IPEndPoint& address,
-                           const CompletionCallback& callback) {
+int UDPSocketPosix::SendTo(
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint& address,
+    const CompletionCallback& callback,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   return SendToOrWrite(buf, buf_len, &address, callback);
 }
 
