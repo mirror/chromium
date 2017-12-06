@@ -22,6 +22,30 @@
       "revId": "dbcff5c52a0d2d552886d9d74aa6e5cda51213ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be68b46_c00f11bb",
+        "filename": "components/arc/metrics/arc_metrics_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125664
+      },
+      "writtenOn": "2017-12-06T02:40:23Z",
+      "side": 1,
+      "message": "Good catch! Done",
+      "parentUuid": "00dcc561_e25a67f1",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 52
+      },
+      "revId": "dbcff5c52a0d2d552886d9d74aa6e5cda51213ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
