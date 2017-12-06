@@ -205,6 +205,38 @@ bool VRFrameData::Update(const device::mojom::blink::VRPosePtr& pose,
   return true;
 }
 
+bool VRFrameData::Update(const device::mojom::blink::VRPosePtr& pose,
+                         float depth_near,
+                         float depth_far) {
+  // Build the projection matrices
+  VRFieldOfView fov;
+  fov.SetUpDegrees(45);
+  fov.SetDownDegrees(45);
+  fov.SetLeftDegrees(45);
+  fov.SetRightDegrees(45);
+
+  ProjectionFromFieldOfView(left_projection_matrix_, &fov, depth_near,
+                            depth_far);
+  ProjectionFromFieldOfView(right_projection_matrix_, &fov, depth_near,
+                            depth_far);
+
+  // Build the view matrices
+  MatrixfromRotationTranslation(left_view_matrix_, pose->orientation,
+                                pose->position);
+  if (!MatrixInvert(left_view_matrix_))
+    return false;
+
+  MatrixfromRotationTranslation(right_view_matrix_, pose->orientation,
+                                pose->position);
+  if (!MatrixInvert(right_view_matrix_))
+    return false;
+
+  // Set the pose
+  pose_->SetPose(pose);
+
+  return true;
+}
+
 void VRFrameData::Trace(blink::Visitor* visitor) {
   visitor->Trace(left_projection_matrix_);
   visitor->Trace(left_view_matrix_);
