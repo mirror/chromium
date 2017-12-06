@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4a5b0ba_d04136a4",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Because I\u0027m a moron and changed the wrong line.",
+      "parentUuid": "9ba35335_431537a0",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77bf3c96_2ee5dd69",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T19:55:22Z",
       "side": 1,
       "message": "This doesn\u0027t support R16. GL_EXT_texture_norm16 did. Why change?",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c36928_3825f0ee",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Because I\u0027m a moron and changed the wrong line.",
+      "parentUuid": "77bf3c96_2ee5dd69",
       "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f994d189_f5815c1b",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Good point. I\u0027m removing this extension string for now.",
+      "parentUuid": "ea8320f6_71b0d64f",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fddad64_258c50ea",
         "filename": "gpu/command_buffer/service/texture_manager.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-06T19:55:22Z",
       "side": 1,
       "message": "I think it was correct before. This says \"you can call glTexImage2D(_, _, GL_RED, _, _, _, GL_RED, GL_UNSIGNED_SHORT, _);\" which is neither necessary nor sufficient for GL_EXT_texture_norm16. It does need \"glTexImage2D(_, _, GL_R16_EXT, _, _, _, GL_RED, GL_UNSIGNED_SHORT, _);\" to be supported, so the previous line seemed correct.\n\nNote: GL_RED and GL_RED_EXT have the same value, I\u0027d stick with GL_RED for consistency.",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b847a89_ca786d44",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Ok, but does that mean that ExtractFormatFromStorageFormat() should return GL_R16_EXT (which seems odd) or is something else wrong somewhere?\n\nRight now it seems that the first element in this list must match what ExtractFormatFromStorageFormat() returns. (Which seems a bit weird actually.)",
+      "parentUuid": "6fddad64_258c50ea",
       "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dac215c2_8568ef8b",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3660,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f495ff1d_e623a54a",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b79d8664_b7445b72",
         "filename": "gpu/command_buffer/service/texture_manager.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602fc80c_442d9e92",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3806,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-06T22:36:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79d8664_b7445b72",
+      "revId": "35bed296267b1cf1d2a8c3a2c074eb0e71d72a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
