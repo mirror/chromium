@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce06a47f_b30761ba",
+        "filename": "chrome/browser/policy/policy_helpers.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-06T06:43:23Z",
+      "side": 1,
+      "message": "nit: please revert this change since the file is not being changed.",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e5d3ecd0f078d71b8fb03e82bdba361cf87329ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec538c3_6e5e431f",
+        "filename": "chrome/browser/policy/policy_helpers.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-06T06:43:23Z",
+      "side": 1,
+      "message": "nit: please revert this change since the file is not being changed.",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e5d3ecd0f078d71b8fb03e82bdba361cf87329ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257ad82c_540e4fdb",
+        "filename": "components/policy/core/browser/url_blacklist_manager.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-06T06:43:23Z",
+      "side": 1,
+      "message": "loop maybe?",
+      "range": {
+        "startLine": 182,
+        "startChar": 40,
+        "endLine": 182,
+        "endChar": 44
+      },
+      "revId": "e5d3ecd0f078d71b8fb03e82bdba361cf87329ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
