@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfc6350_26b2a24d",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-06T18:49:37Z",
+      "side": 1,
+      "message": "I think this should bad message crash, no?",
+      "revId": "7ca0390e00cc6d7e9948aa4f7ab1fa4213b295a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
