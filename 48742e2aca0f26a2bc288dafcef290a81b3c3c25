@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d12d3fc9_86f6c6b5",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "We definitely care about apps and will be adding support soon. AppWindows will need to be handled somewhat differently, so we\u0027ll generalize or overload these methods. But I wanted to land a smaller CL to start.\n\nAfter publishing this patch, I\u0027ll upload another to this CL that renames s/Browser/Window in a bunch of places since not every container will be a browser.",
+      "parentUuid": "f05eea9a_d2b5c776",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc6c325c_b609f6d7",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T18:02:54Z",
       "side": 1,
       "message": "What about the case of the window being on another workspace such that the window isn\u0027t visible?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edf77ab_274ae762",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Visibility will be tracked as a separate metric. The workspace question is a good one; I\u0027ll put it through the next batch of metrics for privacy review. Added to go/tab-discarder-features for me to track.",
+      "parentUuid": "bc6c325c_b609f6d7",
       "range": {
         "startLine": 47,
         "startChar": 2,
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "c65c4481_31e601cb",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "\u003e I\u0027m having a hard time seeing what that would be.\n\ncool, I just don\u0027t use statics in functions much so wanted to check\n\n\u003e That said, can you use browser-\u003esession_id().id()?\n\nYeah, it looks like Browser (and AppWindow) has a valid unique ID even if session restore tracking is disabled for the browser. That\u0027s nicer, thanks.",
+      "parentUuid": "dc1e7529_455225e6",
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8ea985_1ff5df6f",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
         "patchSetId": 2
@@ -103,6 +169,30 @@
       "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bf164b_afb160e2",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db8ea985_1ff5df6f",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "6faf3e8b_b921b6ef",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44bc1b9c_4519680c",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10116f54_12747b7e",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
         "patchSetId": 2
@@ -140,6 +254,30 @@
       "writtenOn": "2017-12-05T18:02:54Z",
       "side": 1,
       "message": "If you don\u0027t log something here, how does the server know the window isn\u0027t around anymore?",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7adfd60_c633ddf9",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "We\u0027ll be analyzing Browser events in the context of WebContents events. We don\u0027t particularly care when a Browser is closed.\n\nIf we come up with a use case for this information, we\u0027d still need to request a privacy review before logging a new UKM here.",
+      "parentUuid": "10116f54_12747b7e",
       "range": {
         "startLine": 117,
         "startChar": 2,
@@ -192,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "782ee0a1_a215e6ae",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "It\u0027s used from non-member functions declared the .cc.",
+      "parentUuid": "ad9ed275_91e1c6d0",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ba581f1_f3cac4a2",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
         "patchSetId": 2
@@ -212,6 +374,30 @@
       "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a986aa93_2fa0d1eb",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ba581f1_f3cac4a2",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "93865279_5ab5f4aa",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31eac7a8_cfbf5701",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cc43c45_0af13fab",
         "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
         "patchSetId": 2
@@ -249,6 +459,30 @@
       "writtenOn": "2017-12-05T18:02:54Z",
       "side": 1,
       "message": "Why do you call CreateOrUpdateBrowserMetrics from here? BrowserActivityWatcher logs window states that don\u0027t necessarily call into this function. Shouldn\u0027t BrowserActivityWatcher be responsible for logging at the appropriate times rather than being called from here?",
+      "range": {
+        "startLine": 93,
+        "startChar": 45,
+        "endLine": 93,
+        "endChar": 73
+      },
+      "revId": "48742e2aca0f26a2bc288dafcef290a81b3c3c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ddc73b_70196daa",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-06T23:38:21Z",
+      "side": 1,
+      "message": "Done -- That\u0027s a simpler solution, and since we can plug in the Session ID here we don\u0027t have to query the BrowserActivityWatcher at all.\n\nI\u0027m having a surprisingly hard time observing WindowShowState, to log when the browser is maximized/minimized -- I\u0027ll try to address that in a follow-up.",
+      "parentUuid": "4cc43c45_0af13fab",
       "range": {
         "startLine": 93,
         "startChar": 45,
