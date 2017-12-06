@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17ebc487_3b518b97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-06T17:28:19Z",
+      "side": 1,
+      "message": "\u003e When using an associated interface:\n\u003e \n\u003e Renderer code for a RenderFrameObserver can call render_frame-\u003eGetRemoteAssociatedInterfaces().\n\u003e \n\u003e Browser code can use WebContentsFrameBindingSet.\n\u003e \n\u003e When using a non-associated interface:\n\u003e \n\u003e Renderer code must implement RenderFrameObserver::OnInterfaceRequestForFrame.  This becomes, say 10 lines of code spread between header and implementation rather than 1, and is much less clear or discoverable about what is going on.\n\nThis is not congruent with the example above: GetRemoteAssociatedInterfaces is used by a renderer to *request* an interface from the browser. OnInterfaceRequestForFrame is used by a renderer to *bind* incoming request from the browser.\n\nFrames can just as easily call render_frame-\u003eGetRemoteInterfaces() to request non-associated interfaces from the browser, and meanwhile, binding incoming requests in a renderer looks roughly the same for associated and non-associated interfaces.\n\n\u003e \n\u003e For browser code, I was not able to find any way to register an interface in WebContentsImpl besides using the associated WebContentsFrameBindingSet.\n\nIt is maybe possible that we\u0027re missing some WebContentsFrameBindingSet-equivalent helper for browser-side binding of per-frame non-associated interfaces. Using Channel-associated interfaces on their own was quite cumbersome, and this helper works around that. Using non-associated interfaces on their own is slightly less simple than using WCFBS, but I don\u0027t think it\u0027s gnarly enough to justify yet another helper type.\n\nFor non-associated interfaces, you can handle the incoming interface request directly in WebContentsImpl::OnInterfaceRequest, and you can have the WbeContentsImpl own a mojo::BindingSet to hold interface bindings just like any other non-content mojo interface impl might do.\n\nI don\u0027t think the code delta here is big enough to justify using associated interfaces when FIFO isn\u0027t necessary, and I\u0027d really prefer it if we could change this to use non-associated interfaces. WDYT?",
+      "parentUuid": "ab5b1bb6_3a6fa73a",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e47fc5_bdf81b57",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 13
