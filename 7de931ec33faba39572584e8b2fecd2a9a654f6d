@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c9ed1f9_b3826b98",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-06T16:02:56Z",
+      "side": 1,
+      "message": "If it really needs to be renderer side, can we remove the Credit card sanitization code that this copies from?",
+      "revId": "7de931ec33faba39572584e8b2fecd2a9a654f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ff4003_21cde46b",
         "filename": "components/autofill/content/renderer/form_autofill_util.cc",
         "patchSetId": 7
