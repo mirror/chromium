@@ -34,6 +34,24 @@
       "revId": "6a4a2e2546f6bb8169056a515d8926fd3205e038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a012b196_261cb06d",
+        "filename": "third_party/WebKit/Source/core/frame/DOMVisualViewport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-06T16:49:27Z",
+      "side": 1,
+      "message": "That was exactly my concern. Seems like it is special for the Document when the LayoutView gets created so seems fine to me. Thanks for digging it out.",
+      "parentUuid": "acd245ec_baacc58e",
+      "revId": "6a4a2e2546f6bb8169056a515d8926fd3205e038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
