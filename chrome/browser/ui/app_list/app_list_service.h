@@ -91,13 +91,6 @@ class AppListService {
                                  const std::string& extension_id,
                                  bool start_discovery_tracking) = 0;
 
-  // Shows the app list, and switches to the custom launcher page.
-  virtual void ShowForCustomLauncherPage(Profile* profile) = 0;
-
-  // Hides the custom launcher page if it is currently being shown. Does nothing
-  // otherwise.
-  virtual void HideCustomLauncherPage() = 0;
-
   // Dismiss the app list.
   virtual void DismissAppList() = 0;
 

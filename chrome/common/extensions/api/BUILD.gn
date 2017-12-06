@@ -123,7 +123,6 @@ if (is_chromeos) {
 if (enable_app_list) {
   schema_sources += [
     # TODO(tapted): Move this into chromeos_schema_files.
-    "launcher_page.idl",
   ]
 }
 
