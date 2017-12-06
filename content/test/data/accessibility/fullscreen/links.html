@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<a href="/">link before target</a>
+<div id="target">
+  <button>Enter fullscreen</button>
+  <a href="/">link inside target</a>
+</div>
+<a href="/">link after target</a>
+<script>
+console.log('script start');
+const target = document.getElementById('target');
+
+const button = document.querySelector('button');
+button.addEventListener('click', function() {
+  console.log('click event');
+  target.webkitRequestFullscreen();
+});
+
+document.onwebkitfullscreenchange = function() {
+  console.log('webkitfullscreenchange event');
+  button.textContent = 'Done';
+}
+console.log('script end');
+</script>
