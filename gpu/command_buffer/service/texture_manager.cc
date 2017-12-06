@@ -219,7 +219,7 @@ class FormatTypeValidator {
         {GL_BGRA_EXT, GL_BGRA_EXT, GL_UNSIGNED_BYTE},
 
         // Exposed by GL_EXT_texture_norm16
-        {GL_R16_EXT, GL_RED, GL_UNSIGNED_SHORT},
+        {GL_RED_EXT, GL_RED_EXT, GL_UNSIGNED_SHORT},
     };
 
     static const FormatType kSupportedFormatTypesES2Only[] = {
@@ -3657,6 +3657,8 @@ GLenum TextureManager::ExtractFormatFromStorageFormat(GLenum internalformat) {
       return GL_LUMINANCE;
     case GL_LUMINANCE_ALPHA16F_EXT:
       return GL_LUMINANCE_ALPHA;
+    case GL_R16_EXT:
+      return GL_RED;
     default:
       return GL_NONE;
   }
@@ -3801,6 +3803,8 @@ GLenum TextureManager::ExtractTypeFromStorageFormat(GLenum internalformat) {
       return GL_HALF_FLOAT_OES;
     case GL_BGRA8_EXT:
       return GL_UNSIGNED_BYTE;
+    case GL_R16_EXT:
+      return GL_UNSIGNED_SHORT;
     default:
       return GL_NONE;
   }
