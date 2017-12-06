@@ -137,6 +137,30 @@
       "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9339a0da_7127d799",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-06T17:35:01Z",
+      "side": 1,
+      "message": "I agree. If you need to actually change the frame, you should update constraints and then animate the -layoutIfNeeded call.\n\nOr (and this is probably easiest here) you can set the view\u0027s transform to translate it by |offset| and animate that. The frame stays the same, the view just gets drawn differently. Since transforms don\u0027t affect the layout engine at all they are very fast (just remember that a view whose transform isn\u0027t the identity transform has an undefined frame).",
+      "parentUuid": "8bf24f5f_ea01f9f1",
+      "range": {
+        "startLine": 859,
+        "startChar": 0,
+        "endLine": 859,
+        "endChar": 62
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
