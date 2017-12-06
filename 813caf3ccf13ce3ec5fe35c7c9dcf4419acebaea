@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b335b8a_a44356ce",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "I thought this requirement went away as discussed in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d772426 (and other places)?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47ecd94_0675289f",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "My understanding was basically that we would have clipboard-write always granted without a user gesture, but with focus/active tab requirement and clipboard read gated behind a permission?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ca56ade_5e92b201",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
@@ -13,6 +47,108 @@
       "writtenOn": "2017-12-05T18:14:55Z",
       "side": 1,
       "message": "Nit: there\u0027s generally no need to handle connection errors in the renderer. It would be really odd to me if the browser pre-emptively closed the message pipe to a renderer (for the permission service) for any reason other than a pending process kill or some other unrecoverable error.",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742d8479_55487866",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "Note that currently these permission checks are only happening in the renderer process. We need to ensure the permission checks happen in the browser process as well (or only happen in the browser if possible to avoid confusion). That is, at whatever point we query the clipboard data in the browser process, we should check the permission.",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1e94a5_d5472e1b",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "See above notes about the behavior. I thought that we were just basing it on read/write being granted + focus?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472e76e7_e7f3d367",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "nit: could this just call HandleReadText() ?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ddb8f5_05d56d55",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "Should this return?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d53f162_fa260b97",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "nit: same here, should this return?",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f891e52e_a4785f5b",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-06T05:18:17Z",
+      "side": 1,
+      "message": "nit: same here",
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
