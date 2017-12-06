@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae174074_d54a8603",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T16:18:31Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible these colors conflict with the colors of the contrast theme, so that it\u0027s possible they aren\u0027t visible at all?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c683964_0f8dc89b",
+        "filename": "ui/native_theme/native_theme_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T16:18:31Z",
+      "side": 1,
+      "message": "Early out on 293 is NativeThemeBase::UsesHighContrastColors() is true?",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 50
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2764d3b2_aa76a1a1",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T16:18:31Z",
+      "side": 1,
+      "message": "Is it really worth supporting the switch here? My concern is that none of the system colors are really going to be high contrast, and often times high contrast impacts what is actually drawn. So that supporting the switch here really does very little.",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 627,
+        "endChar": 36
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87b9ae0_574f2bca",
+        "filename": "ui/native_theme/native_theme_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-06T16:18:31Z",
+      "side": 1,
+      "message": "Remove newline (and on 78 too), generally we don\u0027t have newlines in override blocks (this may be in the style guide).",
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
