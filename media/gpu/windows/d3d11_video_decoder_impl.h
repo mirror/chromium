@@ -17,9 +17,9 @@
 #include "base/memory/weak_ptr.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "media/base/video_decoder.h"
-#include "media/gpu/d3d11_h264_accelerator.h"
 #include "media/gpu/gles2_decoder_helper.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/gpu/windows/d3d11_h264_accelerator.h"
 #include "media/gpu/windows/output_with_release_mailbox_cb.h"
 
 namespace media {
@@ -29,7 +29,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
  public:
   D3D11VideoDecoderImpl(
       base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
-      OutputWithReleaseMailboxCB output_cb);
+      deprecated::OutputWithReleaseMailboxCB output_cb);
   ~D3D11VideoDecoderImpl() override;
 
   // VideoDecoder implementation:
@@ -48,9 +48,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
 
   // D3D11VideoDecoderClient implementation.
   D3D11PictureBuffer* GetPicture() override;
-  void OutputResult(D3D11PictureBuffer* buffer,
-                    size_t input_buffer_id) override;
-  size_t input_buffer_id() const override;
+  void OutputResult(D3D11PictureBuffer* buffer) override;
 
   // Return a weak ptr, since D3D11VideoDecoder constructs callbacks for us.
   base::WeakPtr<D3D11VideoDecoderImpl> GetWeakPtr();
@@ -85,7 +83,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoderImpl : public VideoDecoder,
 
   std::vector<std::unique_ptr<D3D11PictureBuffer>> picture_buffers_;
 
-  OutputWithReleaseMailboxCB output_cb_;
+  deprecated::OutputWithReleaseMailboxCB output_cb_;
 
   base::WeakPtrFactory<D3D11VideoDecoderImpl> weak_factory_;
 
