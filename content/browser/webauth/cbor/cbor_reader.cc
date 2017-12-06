@@ -94,6 +94,8 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
       return ReadCBORArray(length, max_nesting_level);
     case CBORValue::Type::MAP:
       return ReadCBORMap(length, max_nesting_level);
+    case CBORValue::Type::SIMPLE_VALUE:
+      return ReadSimpleValue(additional_info);
     case CBORValue::Type::NONE:
       break;
   }
@@ -129,6 +131,23 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
   }
   *length = int_data;
   return CheckUintEncodedByteLength(additional_bytes, int_data);
+}
+
+base::Optional<CBORValue> CBORReader::ReadSimpleValue(int additional_info) {
+  switch (additional_info) {
+    case base::checked_cast<int>(CBORValue::SimpleValue::FALSE_VALUE):
+      return CBORValue(CBORValue::SimpleValue::FALSE_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::TRUE_VALUE):
+      return CBORValue(CBORValue::SimpleValue::TRUE_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::NULL_VALUE):
+      return CBORValue(CBORValue::SimpleValue::NULL_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::UNDEFINED):
+      return CBORValue(CBORValue::SimpleValue::UNDEFINED);
+    default:
+      break;
+  }
+  error_code_ = UNSUPPORTED_MAJOR_TYPE;
+  return base::nullopt;
 }
 
 base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {

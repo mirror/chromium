@@ -23,6 +23,7 @@
 //     * 3: UTF-8 strings.
 //     * 4: Definite-length arrays.
 //     * 5: Definite-length maps.
+//     * 7: Simple values.
 //
 // Requirements for canonical CBOR representation:
 //  - Duplicate keys for map are not allowed.
@@ -39,6 +40,7 @@
 //  - Callers can decode CBOR values with at most 16 nested depth layer. More
 //    strict restrictions on nesting layer size of CBOR values can be enforced
 //    by setting |max_nesting_level|.
+//  - Unassigned/unknown simple value types are treated as errors.
 
 namespace content {
 
@@ -81,6 +83,7 @@ class CONTENT_EXPORT CBORReader {
              const std::vector<uint8_t>::const_iterator end);
   base::Optional<CBORValue> DecodeCBOR(int max_nesting_level);
   bool ReadUnsignedInt(int additional_info, uint64_t* length);
+  base::Optional<CBORValue> ReadSimpleValue(int additional_info);
   base::Optional<CBORValue> ReadBytes(uint64_t num_bytes);
   base::Optional<CBORValue> ReadString(uint64_t num_bytes);
   base::Optional<CBORValue> ReadCBORArray(uint64_t length,
