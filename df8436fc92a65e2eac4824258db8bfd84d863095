@@ -93,6 +93,30 @@
       "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998fb527_d296a2b3",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-06T17:41:37Z",
+      "side": 1,
+      "message": "sorry, I meant removing the readiness bool from NotificationBridgeReadyCallback, not removing the callback completely.",
+      "parentUuid": "2de95323_7b0e97cc",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
