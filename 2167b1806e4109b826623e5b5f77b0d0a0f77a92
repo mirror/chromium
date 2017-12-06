@@ -16,6 +16,24 @@
       "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fad9fc4_cac787a0",
+        "filename": "chrome/browser/experiments/memory_ablation_experiment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-06T00:50:50Z",
+      "side": 1,
+      "message": "I stamp each page with its offset specifically to make all pages different and prevent KSM from coalescing them.",
+      "parentUuid": "3b029845_1c20a4e9",
+      "revId": "2167b1806e4109b826623e5b5f77b0d0a0f77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
