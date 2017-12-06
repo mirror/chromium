@@ -812,6 +812,13 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
 }
 
 Element* Editor::FindEventTargetFromSelection() const {
+  // https://www.w3.org/TR/clipboard-apis/#fire-a-clipboard-event says:
+  //  "Set target to be the element that contains the start of the selection in
+  //   document order, or the body element if there is no selection or cursor."
+  // We treat hidden selections as "no selection or cursor".
+  if (GetFrameSelection().IsHidden())
+    return GetFrameSelection().GetDocument().body();
+
   return FindEventTargetFrom(
       GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
@@ -1171,10 +1178,16 @@ void Editor::Cut(EditorCommandSource source) {
   }
 }
 
-void Editor::Copy(EditorCommandSource) {
+void Editor::Copy(EditorCommandSource source) {
   if (TryDHTMLCopy())
     return;  // DHTML did the whole operation
   if (!CanCopy())
+    return;
+
+  // Since copy is a read-only operation, it works anytime a selection
+  // is visible. In contrast to cut/paste, the selection does not need to be
+  // in focus.
+  if (source == kCommandFromMenuOrKeyBinding && GetFrameSelection().IsHidden())
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
