@@ -157,6 +157,24 @@
       "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d55e53e_1587bcfb",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 67
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-06T04:25:40Z",
+      "side": 1,
+      "message": "While the EGL extension has an ANDROID name, as far as I know it already works identically on recent ChromeOS and reveman@ is intending to use it there. The file descriptor handling code is wrapped inside defined(OS_POSIX) here and elsewhere, but that seemed overkill just for the enum value. Let me know if you feel strongly about it please.",
+      "parentUuid": "a330baff_ef512f1f",
+      "revId": "8b3c17f5b07e1f81f4a05f77635306bf15f0dc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

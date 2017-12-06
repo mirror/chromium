@@ -70,6 +70,30 @@
       "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b6ceb0a_ebd547d9",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 68
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-06T04:25:40Z",
+      "side": 1,
+      "message": "Done, I\u0027ve switched to RepeatingCallback with a comment that it should be a OnceCallback.\n\nI think something similar to BindRepeatingUsedOnce would be nice to have, but it seems OK either way.",
+      "parentUuid": "d279b4ff_d9da9ddb",
+      "range": {
+        "startLine": 981,
+        "startChar": 19,
+        "endLine": 981,
+        "endChar": 65
+      },
+      "revId": "0468c3db313a6d95e149ebe3ce81402b89994f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
