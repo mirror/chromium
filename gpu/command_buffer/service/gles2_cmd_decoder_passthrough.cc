@@ -688,24 +688,15 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   GLint num_texture_units = 0;
   api()->glGetIntegervFn(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,
                          &num_texture_units);
+  if (num_texture_units > static_cast<GLint>(kMaxTextureUnits)) {
+    Destroy(true);
+    LOG(ERROR) << "kMaxTextureUnits (" << kMaxTextureUnits
+               << ") must be at least GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS ("
+               << num_texture_units << ").";
+    return gpu::ContextResult::kFatalFailure;
+  }
 
   active_texture_unit_ = 0;
-  bound_textures_[GL_TEXTURE_2D].resize(num_texture_units);
-  bound_textures_[GL_TEXTURE_CUBE_MAP].resize(num_texture_units);
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
-    bound_textures_[GL_TEXTURE_2D_ARRAY].resize(num_texture_units);
-    bound_textures_[GL_TEXTURE_3D].resize(num_texture_units);
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_textures_[GL_TEXTURE_2D_MULTISAMPLE].resize(num_texture_units);
-  }
-  if (feature_info_->feature_flags().oes_egl_image_external ||
-      feature_info_->feature_flags().nv_egl_stream_consumer_external) {
-    bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units);
-  }
-  if (feature_info_->feature_flags().arb_texture_rectangle) {
-    bound_textures_[GL_TEXTURE_RECTANGLE_ARB].resize(num_texture_units);
-  }
 
   // Initialize the tracked buffer bindings
   bound_buffers_[GL_ARRAY_BUFFER] = 0;
@@ -844,16 +835,14 @@ void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
     pending_read_pixels_.clear();
   }
 
-  if (!have_context) {
-    for (const auto& bound_texture_type : bound_textures_) {
-      for (const auto& bound_texture : bound_texture_type.second) {
-        if (bound_texture.texture) {
-          bound_texture.texture->MarkContextLost();
-        }
+  for (auto& bound_texture_type : bound_textures_) {
+    for (auto& bound_texture : bound_texture_type) {
+      if (!have_context && bound_texture.texture) {
+        bound_texture.texture->MarkContextLost();
       }
+      bound_texture.texture = nullptr;
     }
-  }
-  bound_textures_.clear();
+    }
 
   DeleteServiceObjects(&framebuffer_id_map_, have_context,
                        [this](GLuint client_id, GLuint framebuffer) {
@@ -2007,6 +1996,29 @@ bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
   }
 
   return false;
+}
+
+// static
+GLES2DecoderPassthroughImpl::TextureTarget
+GLES2DecoderPassthroughImpl::GLenumToTextureTarget(GLenum target) {
+  switch (target) {
+    case GL_TEXTURE_2D:
+      return TextureTarget::k2D;
+    case GL_TEXTURE_CUBE_MAP:
+      return TextureTarget::kCubeMap;
+    case GL_TEXTURE_2D_ARRAY:
+      return TextureTarget::k2DArray;
+    case GL_TEXTURE_3D:
+      return TextureTarget::k3D;
+    case GL_TEXTURE_2D_MULTISAMPLE:
+      return TextureTarget::k2DMultisample;
+    case GL_TEXTURE_EXTERNAL_OES:
+      return TextureTarget::kExternal;
+    case GL_TEXTURE_RECTANGLE_ARB:
+      return TextureTarget::kRectangle;
+    default:
+      return TextureTarget::kUnkown;
+  }
 }
 
 #define GLES2_CMD_OP(name)                                               \
