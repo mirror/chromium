@@ -51,6 +51,9 @@ TEST_F(NavigationContextImplTest, NavigationContext) {
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->GetResponseHeaders());
   EXPECT_TRUE(context->IsRendererInitiated());
+  EXPECT_EQ(WKNavigationTypeOther,
+            static_cast<NavigationContextImpl*>(context.get())
+                ->GetWKNavigationType());
 }
 
 // Tests NavigationContextImpl Setters.
@@ -66,6 +69,7 @@ TEST_F(NavigationContextImplTest, Setters) {
   ASSERT_FALSE(context->GetError());
   ASSERT_FALSE(context->IsRendererInitiated());
   ASSERT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
   // SetSameDocument
   context->SetIsSameDocument(true);
@@ -74,6 +78,8 @@ TEST_F(NavigationContextImplTest, Setters) {
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
   EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
   // SetPost
   context->SetIsPost(true);
@@ -82,6 +88,7 @@ TEST_F(NavigationContextImplTest, Setters) {
   EXPECT_FALSE(context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
   EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
   // SetErrorPage
   NSError* error = [[NSError alloc] init];
@@ -91,6 +98,7 @@ TEST_F(NavigationContextImplTest, Setters) {
   EXPECT_EQ(error, context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
   EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
   // SetResponseHeaders
   context->SetResponseHeaders(response_headers_);
@@ -99,6 +107,7 @@ TEST_F(NavigationContextImplTest, Setters) {
   EXPECT_EQ(error, context->GetError());
   EXPECT_FALSE(context->IsRendererInitiated());
   EXPECT_EQ(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
 
   // SetIsRendererInitiated
   context->SetIsRendererInitiated(true);
@@ -107,6 +116,16 @@ TEST_F(NavigationContextImplTest, Setters) {
   EXPECT_EQ(error, context->GetError());
   EXPECT_TRUE(context->IsRendererInitiated());
   EXPECT_EQ(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeOther, context->GetWKNavigationType());
+
+  // SetWKNavigationType
+  context->SetWKNavigationType(WKNavigationTypeBackForward);
+  EXPECT_TRUE(context->IsSameDocument());
+  ASSERT_TRUE(context->IsPost());
+  EXPECT_EQ(error, context->GetError());
+  EXPECT_TRUE(context->IsRendererInitiated());
+  EXPECT_EQ(response_headers_.get(), context->GetResponseHeaders());
+  EXPECT_EQ(WKNavigationTypeBackForward, context->GetWKNavigationType());
 }
 
 }  // namespace web
