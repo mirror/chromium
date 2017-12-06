@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "4103a616_78e3c15a",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "Could you add a comment about ownership here?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7baabc_5f188d1c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "Could you add a comment about ownership here?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc935c60_024457f1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this class ended up being used?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c348e6_36cce012",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "Nit: Why the if-construct? You seem to only want to assert in the other case, so just do the assert here?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3938ae9c_2c5a9e22",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 10
@@ -13,6 +81,64 @@
       "writtenOn": "2017-12-05T22:35:10Z",
       "side": 1,
       "message": "can\u0027t really ensure this never happen here. it depends on how mInternalsHolder is implemented..",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9030c1d6_18cf171f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "True. What should we do in that case? Log an error?",
+      "parentUuid": "3938ae9c_2c5a9e22",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ed158a_53d6798e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "This is the same as getUserDataMap() below, so unnecessary.",
+      "range": {
+        "startLine": 762,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 42
+      },
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9f0331_4dbcd2f1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "Optional: Would this be easier to read if we just did something like:\n\n  if (userDataMap \u003d\u003d null) return null;\n  return (T) userDataMap.get(key);",
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -42,6 +168,23 @@
     },
     {
       "key": {
+        "uuid": "88b7a1b8_5540e265",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "@SuppressWarning for this cast and a comment as to why it\u0027s guaranteed to be safe?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f6b85bd_90c51905",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
         "patchSetId": 10
@@ -53,6 +196,29 @@
       "writtenOn": "2017-12-05T22:35:10Z",
       "side": 1,
       "message": "visibility of this class should be the same as the get/set methods on WebContents. either expose both, or hide both. right now embedder can inherit this, but can\u0027t use it for anything, which is just super odd",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8e8569_84fb7c6e",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "I don\u0027t think this refers to the right class.",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 65
+      },
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +254,24 @@
       "side": 1,
       "message": "\u003e So according to this: https://stackoverflow.com/questions/4409100/how-to-make-a-java-generic-method-static It is possible to make static method generic, it just doesn\u0027t necessarily match the generic type of the class.\n\nThanks for helping out! In fact I faced another issue even if generic static methods worked - how to create an instance of a class type T - which is what |CreateForWebContents| should do. Assuming its constructor always has one parameter |webContents|, I need to do something like below:\n\n        try {\n            Class[] args \u003d new Class[1];\n            args[0] \u003d WebContents.class;\n            T data \u003d clazz.getDeclaredConstructor(args).newInstance(webContents);\n            ((WebContentsImpl) webContents).setUserData(clazz, data);\n        } catch (Exception  e) { \n             // InvocationTargetException, NoSuchMethodException, InstantiationException, \n             // IllegalAccessException,\n            ...\n        }\n\nFor this to work, we need to pass |Class\u003cT\u003e clazz| to |createForWebContents| as well.\n\nI see a few cases in Clank code doing this. So far I\u0027ve tried to avoid creating this situation, not sure if this looks okay. But I doubt there\u0027s any other way.",
       "parentUuid": "939778ba_26166c8b",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cbfa41_2fc7a134",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-06T00:07:43Z",
+      "side": 1,
+      "message": "I was thinking we could do use a constructor reference, where you\u0027d pass YourClass::new as the factory.\nThe constructor reference can match any interface with a single method where the single method\u0027s signature matches the constructor signature.\n\nWe would have to decide on a particular factory interface, but it could be something like: interface UserDataFactory\u003cT\u003e { T create(...); }, and then pass in the YourClass::new as the factory implementation.\n\nTo ensure we don\u0027t always create a new anonymous inner class instance when we invoke the method though, we might want to do something like:\n\n    private static final class UserDataFactoryLazyHolder {\n        private static final UserDataFactory INSTANCE \u003d YourClass::new;\n    }\n\nand then pass in the INSTANCE when we need it?\n\nThere\u0027s more information about constructor references here:\nhttps://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html",
+      "parentUuid": "fad5409c_aa8e0345",
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
