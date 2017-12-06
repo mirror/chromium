@@ -1,5 +1,9 @@
-# Changes to IPC messages require a security review to avoid introducing
-# new sandbox escapes.
+# Changes to IPC messages require a security review to avoid introducing sandbox
+# escapes. Code that uses shared memory also needs review from a security owner.
+#
+# Security team: If you are uncomfortable reviewing a particular bit of code
+# yourself, don't hesitate to seek help from another security team member!
+# Nobody knows everything, and the only way to learn is from experience.
 dcheng@chromium.org
 estark@chromium.org
 kenrb@chromium.org
