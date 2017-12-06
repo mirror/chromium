@@ -1170,8 +1170,12 @@ void UseCounter::UnmuteForInspector() {
 
 void UseCounter::RecordMeasurement(WebFeature feature,
                                    const LocalFrame& source_frame) {
-  if (mute_count_)
+  if (mute_count_ || context_ == kDisabledContext)
     return;
+
+  // No features should be logged for the current page before DidCommitLoad.
+  DCHECK(
+      features_recorded_.QuickGet(static_cast<int>(WebFeature::kPageVisits)));
 
   // PageDestruction is reserved as a scaling factor.
   DCHECK_NE(WebFeature::kOBSOLETE_PageDestruction, feature);
@@ -1182,14 +1186,12 @@ void UseCounter::RecordMeasurement(WebFeature feature,
   if (!features_recorded_.QuickGet(feature_id)) {
     // Note that HTTPArchive tooling looks specifically for this event - see
     // https://github.com/HTTPArchive/httparchive/issues/59
-    if (context_ != kDisabledContext) {
-      TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("blink.feature_usage"),
-                   "FeatureFirstUsed", "feature", feature_id);
-      FeaturesHistogram().Count(feature_id);
-      if (LocalFrameClient* client = source_frame.Client())
-        client->DidObserveNewFeatureUsage(feature);
-      NotifyFeatureCounted(feature);
-    }
+    TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("blink.feature_usage"),
+                 "FeatureFirstUsed", "feature", feature_id);
+    FeaturesHistogram().Count(feature_id);
+    if (LocalFrameClient* client = source_frame.Client())
+      client->DidObserveNewFeatureUsage(feature);
+    NotifyFeatureCounted(feature);
     features_recorded_.QuickSet(feature_id);
   }
 }
@@ -1240,14 +1242,27 @@ void UseCounter::Trace(blink::Visitor* visitor) {
   visitor->Trace(observers_);
 }
 
-void UseCounter::DidCommitLoad(const KURL& url) {
+void UseCounter::DidCommitLoad(const LocalFrame* frame) {
+  // When frame is detatched (i.e. GetDocument() is null), no feature usage
+  // should be measured.
+  if (!frame->GetDocument()) {
+    context_ = kDisabledContext;
+    return;
+  }
+  const KURL url = frame->GetDocument()->Url();
   // Reset state from previous load.
   // Use the protocol of the document being loaded into the main frame to
   // decide whether this page is interesting from a metrics perspective.
+  // Drop usage tracking on view-source pages new-tab-pages. This matches the
+  // policy of page_load_metrics.
   // Note that SVGImage cases always have an about:blank URL
   if (context_ != kSVGImageContext) {
     if (url.ProtocolIs("chrome-extension"))
       context_ = kExtensionContext;
+    else if (frame->GetDocument()->IsViewSource())
+      context_ = kDisabledContext;
+    else if (!frame->Client() || !frame->Client()->ShouldTrackUseCounter(url))
+      context_ = kDisabledContext;
     else if (SchemeRegistry::ShouldTrackUsageMetricsForScheme(url.Protocol()))
       context_ = kDefaultContext;
     else
@@ -1259,6 +1274,7 @@ void UseCounter::DidCommitLoad(const KURL& url) {
   animated_css_recorded_.ClearAll();
   if (context_ != kDisabledContext && !mute_count_) {
     FeaturesHistogram().Count(static_cast<int>(WebFeature::kPageVisits));
+    features_recorded_.QuickSet(static_cast<int>(WebFeature::kPageVisits));
     if (context_ != kExtensionContext) {
       CssHistogram().Count(totalPagesMeasuredCSSSampleId());
       AnimatedCSSHistogram().Count(totalPagesMeasuredCSSSampleId());

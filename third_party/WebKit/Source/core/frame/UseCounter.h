@@ -42,7 +42,6 @@ class CSSStyleSheet;
 class Document;
 class EnumerationHistogram;
 class ExecutionContext;
-class KURL;
 class LocalFrame;
 class StyleSheetContents;
 // Definition for UseCounter features can be found in:
@@ -123,7 +122,7 @@ class CORE_EXPORT UseCounter {
   void AddObserver(Observer*);
 
   // Invoked when a new document is loaded into the main frame of the page.
-  void DidCommitLoad(const KURL&);
+  void DidCommitLoad(const LocalFrame*);
 
   static int MapCSSPropertyIdToCSSSampleIdForHistogram(CSSPropertyID);
 
