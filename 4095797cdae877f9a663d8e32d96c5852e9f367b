@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a77987e_f8438534",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-06T22:46:13Z",
+      "side": 1,
+      "message": "Looks like you can drop all these checks and replace with \n    if response.url.endswith(\u0027html\u0027):\n      if (self.checkLitePageResponse(response)):\n         lite_page_responses \u003d lite_page_responses + 1",
+      "revId": "4095797cdae877f9a663d8e32d96c5852e9f367b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452537f4_81d0391e",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-06T22:46:13Z",
+      "side": 1,
+      "message": "so there could be only video/mp4 in response and below assert never reached if that is ok",
+      "range": {
+        "startLine": 235,
+        "startChar": 26,
+        "endLine": 235,
+        "endChar": 27
+      },
+      "revId": "4095797cdae877f9a663d8e32d96c5852e9f367b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
