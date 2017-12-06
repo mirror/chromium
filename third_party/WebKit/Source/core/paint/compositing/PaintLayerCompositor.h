@@ -38,7 +38,6 @@ namespace blink {
 
 class PaintLayer;
 class GraphicsLayer;
-class IntPoint;
 class JSONObject;
 class LayoutEmbeddedContent;
 class Page;
@@ -168,7 +167,7 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
 
   // Update the geometry of the layers used for clipping and scrolling in
   // frames.
-  void FrameViewDidChangeLocation(const IntPoint& contents_offset);
+  void FrameViewDidChangeLocation(const FloatPoint& contents_offset);
   void FrameViewDidChangeSize();
   void FrameViewDidScroll();
   void FrameViewScrollbarsExistenceDidChange();
