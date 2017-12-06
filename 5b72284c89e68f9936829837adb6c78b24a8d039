@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f041a3f_f60dbec1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T02:30:47Z",
+      "side": 1,
+      "message": "nit: s/callsites/call sites/",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "5b72284c89e68f9936829837adb6c78b24a8d039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8c7948_edd35b14",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T02:30:47Z",
+      "side": 1,
+      "message": "BTW, someday, I hope EphemeralRange ctor doesn\u0027t not take null positions.",
+      "revId": "5b72284c89e68f9936829837adb6c78b24a8d039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a66484_4bc020b7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplateTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T02:30:47Z",
+      "side": 1,
+      "message": "nit: Could you add empty selection case for ComputeRange()?",
+      "revId": "5b72284c89e68f9936829837adb6c78b24a8d039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
