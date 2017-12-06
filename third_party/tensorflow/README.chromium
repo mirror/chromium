@@ -1,0 +1,19 @@
+Name: TensorFlow
+Short Name: tensorflow
+URL: https://github.com/tensorflow/tensorflow
+Version: v1.3.1
+Date: 2017/09/26
+Revision: 48c54eee17b35ebc15e274e36632eccb76072f7d
+License: Apache 2.0
+License File: LICENSE
+Security Critical: yes
+
+Description:
+TensorFlow is an open source software library for numerical computation using
+data flow graphs. The graph nodes represent mathematical operations, while the
+graph edges represent the multidimensional data arrays (tensors) that flow
+between them.  TensorFlow was originally developed or the purposes of
+conducting machine learning and deep neural networks research. The system is
+general enough to be applicable in a wide variety of other domains, as well.
+
+Local Modifications: none
