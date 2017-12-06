@@ -92,6 +92,11 @@ InlineBoxPosition ComputeInlineBoxPositionForInlineAdjustedPosition(
     const PositionInFlatTreeWithAffinity&,
     TextDirection primary_direction);
 
+void AssertSamePrimaryDirection(const PositionWithAffinity&,
+                                const PositionWithAffinity&);
+void AssertSamePrimaryDirection(const PositionInFlatTreeWithAffinity&,
+                                const PositionInFlatTreeWithAffinity&);
+
 // The print for |InlineBoxPosition| is available only for testing
 // in "webkit_unit_tests", and implemented in
 // "core/editing/InlineBoxPositionTest.cpp".
