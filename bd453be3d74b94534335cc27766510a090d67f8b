@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "792089ee_481ad3f9",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-06T22:35:46Z",
+      "side": 1,
+      "message": "That\u0027s a nice catch, I\u0027m moving ldflags over there! Done.",
+      "parentUuid": "d4b0fa99_82a11c5a",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 46
+      },
+      "revId": "bd453be3d74b94534335cc27766510a090d67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf4191e_00f79c4a",
         "filename": "build/config/sanitizers/sanitizers.gni",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "bd453be3d74b94534335cc27766510a090d67f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef56b613_42cb5148",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-06T22:35:46Z",
+      "side": 1,
+      "message": "Very good point! I took a closer look, and it doesn\u0027t seem possible to remove sanitizer_coverage stuff, so having an assert would be helpful. Done.",
+      "parentUuid": "3cf4191e_00f79c4a",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 26
+      },
+      "revId": "bd453be3d74b94534335cc27766510a090d67f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

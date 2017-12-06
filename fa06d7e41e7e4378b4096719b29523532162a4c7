@@ -22,6 +22,30 @@
       "revId": "fa06d7e41e7e4378b4096719b29523532162a4c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b697bb_019f15b7",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-06T22:35:46Z",
+      "side": 1,
+      "message": "No way to remove that as of now",
+      "parentUuid": "17b2b331_f50f3748",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "fa06d7e41e7e4378b4096719b29523532162a4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
