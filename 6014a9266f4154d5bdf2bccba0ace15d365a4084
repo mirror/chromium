@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a1f90d_0f0e2d17",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDeviceInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-06T10:45:00Z",
+      "side": 1,
+      "message": "This class should be responsible for |kind_| to always have a valid value.\nAs is now, the responsibility lies on its client(s), which will lead to repeated code to validate kind when more clients need to use this class.\n\nYou can either change this field to be of type MediaDeviceType and make the string conversion in the kind() method (the approach in the old version of the code), or keep it as a String, but change the constructors to take a MediaDeviceType instead of a String and perform the conversion there.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "6014a9266f4154d5bdf2bccba0ace15d365a4084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e16478_6a5bfaff",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-06T10:45:00Z",
+      "side": 1,
+      "message": "We should move this function to MediaDeviceInfo.cpp.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "6014a9266f4154d5bdf2bccba0ace15d365a4084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac39994_39693f14",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-06T10:45:00Z",
+      "side": 1,
+      "message": "Mojo and MediaDevicesDispatcherHost are implementation details that are not useful to a developer.\n\nLet\u0027s change this to kAbortError and \"enumerateDevices() failed\".",
+      "range": {
+        "startLine": 323,
+        "startChar": 8,
+        "endLine": 323,
+        "endChar": 22
+      },
+      "revId": "6014a9266f4154d5bdf2bccba0ace15d365a4084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

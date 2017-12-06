@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3289e129_8599a7be",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDeviceInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-06T10:45:00Z",
+      "side": 1,
+      "message": "It looks simpler than it should be. |kind| (unlike the other fields) cannot be an arbitrary string, so it should be a MediaDeviceType in all create methods.\nYou can keep the other parameters as String if you so prefer since they can be arbitrary strings and no special conversion from the MediaDeviceInfo fields is needed.",
+      "parentUuid": "4138d0eb_a9e4c2ef",
+      "range": {
+        "startLine": 43,
+        "startChar": 33,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b41fda98_f31d4fef",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Consciously didn\u0027t add a separate method as dispatcher_host_ is accessed only here and nowhere else in the class.\nWould you still like to have this in a method?",
       "parentUuid": "bf07894c_0299161f",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "db0482326ce3cd650cd0974c32a9549bda5db914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a546cf35_9354f58e",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-06T10:45:00Z",
+      "side": 1,
+      "message": "I would prefer a method and change the call below to be\nGetDispatcherHost()-\u003eEnumerateDevices(...)\n\nThe method will unclutter enumerateDevices() and will come in handy when we migrate handling of the devicechange event.",
+      "parentUuid": "4a6afb94_f5060f57",
       "range": {
         "startLine": 145,
         "startChar": 7,
