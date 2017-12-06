@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc02709_d5a87831",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_configuration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-06T14:21:33Z",
+      "side": 1,
+      "message": "I think it\u0027d be cleaner to pass the NTP background color when you generate the snapshot.",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edd1004_aeeeceab",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-06T14:21:33Z",
+      "side": 1,
+      "message": "The caller of this method should probably put the snapshot on top of an appropriately colored view and snapshot their composition.",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
