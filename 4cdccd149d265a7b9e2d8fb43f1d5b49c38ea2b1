@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4e249333_8d95213b",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "Yeah, added a comment (it\u0027s in the .mm file I forgot to add to the patch).",
+      "parentUuid": "8acd80dd_95bbbbf8",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1fa588e_53e92917",
         "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-12-05T23:40:47Z",
       "side": 1,
       "message": "is there anything still calling this? (remove?)",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09b178d_bcf93000",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "Oop .. same deal. Added a comment here too.",
+      "parentUuid": "e1fa588e_53e92917",
       "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "967ac353_e5b51272",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "Agree ;)",
+      "parentUuid": "99c0634e_b78c71a0",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 37
+      },
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "469a0e21_cc909474",
         "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.mm",
         "patchSetId": 2
@@ -105,6 +165,24 @@
       "writtenOn": "2017-12-05T23:40:47Z",
       "side": 1,
       "message": "this feels like more than a setter.. maybe \u0027ProcessCALayerParams\u0027 or \u0027ConsumeCALayerParams\u0027?",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d732d7_a4698db8",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "Changed it to \"UpdateCALayerTree\", since yeah, it\u0027s not \"setting\" something.",
+      "parentUuid": "469a0e21_cc909474",
       "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "3f98c1b2_cf9d5a77",
+        "filename": "ui/accelerated_widget_mac/ca_layer_embedder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "(oop, added missed file).",
+      "parentUuid": "56119ed6_e5c79b3d",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "907cc41c_562b4465",
         "filename": "ui/accelerated_widget_mac/ca_layer_embedder.h",
         "patchSetId": 2
@@ -142,6 +238,24 @@
       "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e12b554_a4e215fb",
+        "filename": "ui/accelerated_widget_mac/ca_layer_embedder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-06T05:54:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907cc41c_562b4465",
+      "revId": "4cdccd149d265a7b9e2d8fb43f1d5b49c38ea2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
