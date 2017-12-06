@@ -24,6 +24,9 @@ class Notification;
 // Profile* passed when constructing an instance must outlive this class, as
 // the service (or internals of the service) may be overridden.
 //
+// TODO(peter): Testing the display service should use the actual
+// NotificationDisplayServiceImpl, but inject a custom bridge into it.
+//
 // This class must only be used for testing purposes.
 class NotificationDisplayServiceTester {
  public:
