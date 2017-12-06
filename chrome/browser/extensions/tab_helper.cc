@@ -35,6 +35,7 @@
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/common/web_application_info_provider.mojom.h"
 #include "content/public/browser/invalidate_type.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
@@ -61,6 +62,7 @@
 #include "extensions/common/feature_switch.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "url/url_constants.h"
 
 #if defined(OS_WIN)
@@ -322,8 +324,6 @@ bool TabHelper::OnMessageReceived(const IPC::Message& message,
                                   content::RenderFrameHost* sender) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(TabHelper, message, sender)
-    IPC_MESSAGE_HANDLER(ChromeFrameHostMsg_DidGetWebApplicationInfo,
-                        OnDidGetWebApplicationInfo)
     IPC_MESSAGE_HANDLER(ExtensionHostMsg_GetAppInstallState,
                         OnGetAppInstallState)
     IPC_MESSAGE_HANDLER(ExtensionHostMsg_ContentScriptsExecuting,
@@ -344,8 +344,7 @@ void TabHelper::DidCloneToNewWebContents(WebContents* old_web_contents,
   new_helper->extension_app_icon_ = extension_app_icon_;
 }
 
-void TabHelper::OnDidGetWebApplicationInfo(content::RenderFrameHost* sender,
-                                           const WebApplicationInfo& info) {
+void TabHelper::OnDidGetWebApplicationInfo(const WebApplicationInfo& info) {
   web_app_info_ = info;
 
   NavigationEntry* entry =
@@ -595,8 +594,11 @@ void TabHelper::GetApplicationInfo(WebAppAction action) {
   last_committed_nav_entry_unique_id_ = entry->GetUniqueID();
 
   content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
-  main_frame->Send(
-      new ChromeFrameMsg_GetWebApplicationInfo(main_frame->GetRoutingID()));
+  chrome::mojom::WebApplicationInfoProviderAssociatedPtr client;
+  main_frame->GetRemoteAssociatedInterfaces()->GetInterface(&client);
+  auto callback = base::Bind(&TabHelper::OnDidGetWebApplicationInfo,
+                             base::Unretained(this));
+  client->GetWebApplicationInfo(callback);
 }
 
 void TabHelper::SetTabId(content::RenderFrameHost* render_frame_host) {

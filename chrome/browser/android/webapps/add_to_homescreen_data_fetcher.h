@@ -70,10 +70,6 @@ class AddToHomescreenDataFetcher : public content::WebContentsObserver {
   ShortcutInfo& shortcut_info() { return shortcut_info_; }
 
  private:
-  // WebContentsObserver:
-  bool OnMessageReceived(const IPC::Message& message,
-                         content::RenderFrameHost* sender) override;
-
   // Called to stop the timeout timer.
   void StopTimer();
 
@@ -114,7 +110,6 @@ class AddToHomescreenDataFetcher : public content::WebContentsObserver {
 
   // Indicates whether to check WebAPK compatibility.
   bool check_webapk_compatibility_;
-  bool is_waiting_for_web_application_info_;
   bool is_waiting_for_manifest_;
 
   base::WeakPtrFactory<AddToHomescreenDataFetcher> weak_ptr_factory_;

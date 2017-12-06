@@ -10,11 +10,11 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
 #include "chrome/common/prerender_types.h"
+#include "chrome/common/web_application_info_provider.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
-
 
 namespace gfx {
 class Size;
@@ -32,7 +32,8 @@ class TranslateHelper;
 // lifetime.
 class ChromeRenderFrameObserver
     : public content::RenderFrameObserver,
-      public chrome::mojom::ChromeRenderFrame {
+      public chrome::mojom::ChromeRenderFrame,
+      public chrome::mojom::WebApplicationInfoProvider {
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
@@ -55,8 +56,13 @@ class ChromeRenderFrameObserver
   void DidMeaningfulLayout(blink::WebMeaningfulLayout layout_type) override;
   void OnDestruct() override;
 
+  // chrome::mojom::WebApplicationInfoProvider:
+  void GetWebApplicationInfo(
+      const GetWebApplicationInfoCallback& callback) override;
+  void OnWebApplicationInfoProviderRequest(
+      chrome::mojom::WebApplicationInfoProviderAssociatedRequest request);
+
   // IPC handlers
-  void OnGetWebApplicationInfo();
   void OnSetIsPrerendering(prerender::PrerenderMode mode);
   void OnRequestThumbnailForContextNode(
       int thumbnail_min_area_pixels,
@@ -101,6 +107,9 @@ class ChromeRenderFrameObserver
 #endif
 
   mojo::AssociatedBindingSet<chrome::mojom::ChromeRenderFrame> bindings_;
+
+  mojo::AssociatedBindingSet<chrome::mojom::WebApplicationInfoProvider>
+      web_application_info_provider_bindings_;
 
   service_manager::BinderRegistry registry_;
 
