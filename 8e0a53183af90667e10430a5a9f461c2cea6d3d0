@@ -22,6 +22,30 @@
       "revId": "8e0a53183af90667e10430a5a9f461c2cea6d3d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697c341c_491f98d1",
+        "filename": "ui/gfx/mojo/gpu_fence_handle.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-06T08:02:38Z",
+      "side": 1,
+      "message": "Done as of ps11.",
+      "parentUuid": "007dc5ed_264fdf11",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "8e0a53183af90667e10430a5a9f461c2cea6d3d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

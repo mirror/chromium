@@ -16,6 +16,24 @@
       "revId": "8819a38c4526d883e6b4fb5aeb00c375bfbe0e85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f81859_038486dc",
+        "filename": "ui/gfx/mojo/gpu_fence_handle.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-06T08:02:38Z",
+      "side": 1,
+      "message": "As far as I understand the exact same EGL calls work on ChromeOS as on Android, it uses the same underlying kernel sync module and EGL extension as the Android version.",
+      "parentUuid": "b9d88901_9fecc0fb",
+      "revId": "8819a38c4526d883e6b4fb5aeb00c375bfbe0e85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
