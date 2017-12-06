@@ -69,6 +69,23 @@
       "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34374543_827cad25",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T22:43:38Z",
+      "side": 1,
+      "message": "I think this (plus code below) restarts chrome with the switch --diagnostics-recovery, so maybe the flag is used outside of tests?",
+      "revId": "d753c6ceec2fe7058bdce97dddfecebd6f80d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
