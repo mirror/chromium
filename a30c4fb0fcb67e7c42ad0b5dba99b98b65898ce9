@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25712f1e_1e27d4fe",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FETile.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-06T04:30:34Z",
+      "side": 1,
+      "message": "The callsite here doesn\u0027t seem safe against a nullptr return value:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/filters/PaintFilterBuilder.cpp?l\u003d85",
+      "revId": "a30c4fb0fcb67e7c42ad0b5dba99b98b65898ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
