@@ -531,7 +531,8 @@ BookmarkAppHelper::BitmapAndSource::~BitmapAndSource() {
 
 BookmarkAppHelper::BookmarkAppHelper(Profile* profile,
                                      WebApplicationInfo web_app_info,
-                                     content::WebContents* contents)
+                                     content::WebContents* contents,
+                                     WebAppInstallSource* install_source)
     : profile_(profile),
       contents_(contents),
       web_app_info_(web_app_info),
@@ -540,6 +541,9 @@ BookmarkAppHelper::BookmarkAppHelper(Profile* profile,
       weak_factory_(this) {
   if (contents)
     installable_manager_ = InstallableManager::FromWebContents(contents);
+
+  install_source_ =
+      install_source ? *install_source : WebAppInstallSource::COUNT;
 
   // Use the last bookmark app creation type. The launch container is decided by
   // the system for desktop PWAs.
@@ -602,6 +606,9 @@ void BookmarkAppHelper::OnDidPerformInstallableCheck(
 
   installable_ =
       data.error_code == NO_ERROR_DETECTED ? INSTALLABLE_YES : INSTALLABLE_NO;
+
+  DCHECK(installable_ == INSTALLABLE_NO ||
+         install_source_ != WebAppInstallSource::COUNT);
 
   UpdateWebAppInfoFromManifest(*data.manifest, &web_app_info_);
 
@@ -729,6 +736,8 @@ void BookmarkAppHelper::OnBubbleCompleted(
   if (user_accepted) {
     web_app_info_ = web_app_info;
     crx_installer_->InstallWebApp(web_app_info_);
+    if (install_source_ != WebAppInstallSource::COUNT)
+      InstallableMetrics::TrackInstallSource(install_source_);
   } else {
     callback_.Run(nullptr, web_app_info_);
   }
