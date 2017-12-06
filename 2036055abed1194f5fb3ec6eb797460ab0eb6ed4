@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2297659_7a5ccbfb",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "All functions are now called on the UI thread. For the I/O operation a separate task runner is used. This should suffice all constraints.",
+      "parentUuid": "107a30c8_e5547f50",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c8f664c_5bd4a8b9",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 16
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "267bd386_c6fbe609",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c8f664c_5bd4a8b9",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee9283b9_45a9ab1f",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 16
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "29d98ffe_1a3b395c",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Same response as above.",
+      "parentUuid": "ee9283b9_45a9ab1f",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc1bc75b_294e8060",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 16
@@ -82,6 +136,30 @@
       "writtenOn": "2017-11-27T19:24:02Z",
       "side": 1,
       "message": "This shouldn\u0027t be true anymore. The ArcTimer instance should never be accessed from the blocking thread, only the FD.",
+      "range": {
+        "startLine": 26,
+        "startChar": 41,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70052b0_87620d1a",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc1bc75b_294e8060",
       "range": {
         "startLine": 26,
         "startChar": 41,
@@ -134,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "8373488f_b6ae75d6",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "350faf8d_ff6f56c3",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3a45836_79fb5e57",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 16
@@ -145,6 +241,30 @@
       "writtenOn": "2017-11-27T19:24:02Z",
       "side": 1,
       "message": "nit: get(). The use of lowercase method names is a convention that the implementation is trivial and can be declared in the .h",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91879aa_ad0337bd",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3a45836_79fb5e57",
       "range": {
         "startLine": 42,
         "startChar": 8,
@@ -174,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "30a0b4b0_af7b13a2",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "This is a remnant before I returned result instead of nullopt. Will change. Done.",
+      "parentUuid": "c3f77bb7_55f0f533",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a67a17e3_5a1d82d4",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 16
@@ -185,6 +323,24 @@
       "writtenOn": "2017-11-27T05:09:32Z",
       "side": 1,
       "message": "missing includes. base/optional.h, vector.\n\nCould you always run \"git cl lint\" and fix all lint errors before each uploading?",
+      "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a48375_7260fa55",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t know that command existed. Will do.",
+      "parentUuid": "a67a17e3_5a1d82d4",
       "revId": "2036055abed1194f5fb3ec6eb797460ab0eb6ed4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

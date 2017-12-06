@@ -571,6 +571,24 @@
     },
     {
       "key": {
+        "uuid": "6776257e_a422e824",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-06T02:52:35Z",
+      "side": 1,
+      "message": "There are just two ArcTimer instances in practice. They are held in memory till the OnInstanceClosed is called, their timers are stopped though as soon as the connection is down. I think for all practical purposes a drop in connection is correlated with the instance shutting down so this should be fine.",
+      "parentUuid": "57225414_9e5fd65e",
+      "revId": "246a51e6147abd12e05735286492bf7cf5d1895e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f77f03c9_09c25d59",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 10
