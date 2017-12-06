@@ -118,6 +118,23 @@
       "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2ecd48_c2171ae9",
+        "filename": "content/test/fuzzer/cbor_reader_fuzzer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-06T01:34:46Z",
+      "side": 1,
+      "message": "Where do the inputs come from? Are they purely random, or do we seed them from a corpus of valid and invalid CBOR objects?",
+      "revId": "a42b6552ae70568db9cafe6253f320194ce1f19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
