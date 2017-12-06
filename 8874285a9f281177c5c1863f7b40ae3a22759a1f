@@ -16,6 +16,29 @@
       "revId": "8874285a9f281177c5c1863f7b40ae3a22759a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48b8cdc_050439b6",
+        "filename": "base/memory/protected_memory_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-06T17:27:17Z",
+      "side": 1,
+      "message": "might need to support PAGE_EXECUTE_READ if at some point in the future we intend to use protected memory to thunk external library calls?",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "8874285a9f281177c5c1863f7b40ae3a22759a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
