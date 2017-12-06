@@ -54,6 +54,11 @@ class NavigationContextImpl : public NavigationContext {
   int GetNavigationItemUniqueID() const;
   void SetNavigationItemUniqueID(int unique_id);
 
+  // Setter and getter for the flag if this is a fast back-forward navigation.
+  // It requires that GetPageTransition() is ui::PAGE_TRANSITION_FORWARD_BACK.
+  void SetIsFastBackForwardNavigation(bool is_fast_back_forward_navigation);
+  bool IsFastBackForwardNavigation() const;
+
  private:
   NavigationContextImpl(WebState* web_state,
                         const GURL& url,
@@ -62,7 +67,10 @@ class NavigationContextImpl : public NavigationContext {
 
   WebState* web_state_ = nullptr;
   GURL url_;
-  ui::PageTransition page_transition_;
+  const ui::PageTransition page_transition_;
+  // If page_transition_ is PAGE_TRANSITION_FORWARD_BACK, this flag indicates if
+  // it is a fast back-forward navigation.
+  bool is_fast_back_forward_navigation_ = false;
   bool is_same_document_ = false;
   bool is_post_ = false;
   base::scoped_nsobject<NSError> error_;
