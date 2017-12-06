@@ -634,7 +634,10 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
   // recovery using the diagnostics module, and then continue on. We fake up a
   // command line to tell it that we want it to recover, and to preserve the
   // original command line.
-  if (command_line.HasSwitch(chromeos::switches::kLoginUser) ||
+
+  // Avoid spamming the log in browser tests. crbug.com/792304.
+  if ((base::SysInfo::IsRunningOnChromeOS() &&
+       command_line.HasSwitch(chromeos::switches::kLoginUser)) ||
       command_line.HasSwitch(switches::kDiagnosticsRecovery)) {
     // The statistics subsystem needs get initialized soon enough for the
     // statistics to be collected.  It's safe to call this more than once.
