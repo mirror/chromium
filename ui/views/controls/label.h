@@ -64,13 +64,13 @@ class VIEWS_EXPORT Label : public View,
   static const gfx::FontList& GetDefaultFontList();
 
   // Gets or sets the fonts used by this label.
-  const gfx::FontList& font_list() const { return render_text_->font_list(); }
+  const gfx::FontList& font_list() const { return unelided_text_->font_list(); }
 
   // TODO(tapted): Replace this with a private method, e.g., OnFontChanged().
   virtual void SetFontList(const gfx::FontList& font_list);
 
   // Get or set the label text.
-  const base::string16& text() const { return render_text_->text(); }
+  const base::string16& text() const { return unelided_text_->text(); }
   virtual void SetText(const base::string16& text);
 
   // Where the label appears in the UI. Passed in from the constructor. This is
@@ -108,7 +108,7 @@ class VIEWS_EXPORT Label : public View,
 
   // Set drop shadows underneath the text.
   void SetShadows(const gfx::ShadowValues& shadows);
-  const gfx::ShadowValues& shadows() const { return render_text_->shadows(); }
+  const gfx::ShadowValues& shadows() const { return unelided_text_->shadows(); }
 
   // Sets whether subpixel rendering is used; the default is true, but this
   // feature also requires an opaque background color.
@@ -119,13 +119,13 @@ class VIEWS_EXPORT Label : public View,
   // Sets the horizontal alignment; the argument value is mirrored in RTL UI.
   void SetHorizontalAlignment(gfx::HorizontalAlignment alignment);
   gfx::HorizontalAlignment horizontal_alignment() const {
-    return render_text_->horizontal_alignment();
+    return unelided_text_->horizontal_alignment();
   }
 
   // Get or set the distance in pixels between baselines of multi-line text.
   // Default is 0, indicating the distance between lines should be the standard
   // one for the label's text, font list, and platform.
-  int line_height() const { return render_text_->min_line_height(); }
+  int line_height() const { return unelided_text_->min_line_height(); }
   void SetLineHeight(int height);
 
   // Get or set if the label text can wrap on multiple lines; default is false.
@@ -139,7 +139,7 @@ class VIEWS_EXPORT Label : public View,
 
   // Get or set if the label text should be obscured before rendering (e.g.
   // should "Password!" display as "*********"); default is false.
-  bool obscured() const { return render_text_->obscured(); }
+  bool obscured() const { return unelided_text_->obscured(); }
   void SetObscured(bool obscured);
 
   // Sets whether multi-line text can wrap mid-word; the default is false.
@@ -301,11 +301,8 @@ class VIEWS_EXPORT Label : public View,
 
   void ResetLayout();
 
-  // Set up |lines_| to actually be painted.
-  void MaybeBuildRenderTextLines() const;
-
-  // Get the text broken into lines as needed to fit the given |width|.
-  std::vector<base::string16> GetLinesForWidth(int width) const;
+  // Set up |display_text_| to actually be painted.
+  void MaybeBuildDisplayText() const;
 
   // Get the text size for the current layout.
   gfx::Size GetTextSize() const;
@@ -313,7 +310,7 @@ class VIEWS_EXPORT Label : public View,
   // Updates text and selection colors from requested colors.
   void RecalculateColors();
 
-  // Applies the foreground color to |lines_|.
+  // Applies the foreground color to |display_text_|.
   void ApplyTextColors() const;
 
   // Updates any colors that have not been explicitly set from the theme.
@@ -321,8 +318,8 @@ class VIEWS_EXPORT Label : public View,
 
   bool ShouldShowDefaultTooltip() const;
 
-  // Empties |lines_| and updates |stored_selection_range_|.
-  void ClearRenderTextLines() const;
+  // Clears |display_text_| and updates |stored_selection_range_|.
+  void ClearDisplayText() const;
 
   // Returns the currently selected text.
   base::string16 GetSelectedText() const;
@@ -336,14 +333,14 @@ class VIEWS_EXPORT Label : public View,
   const int text_context_;
 
   // An un-elided and single-line RenderText object used for preferred sizing.
-  std::unique_ptr<gfx::RenderText> render_text_;
+  std::unique_ptr<gfx::RenderText> unelided_text_;
 
-  // The RenderText instances used to display elided and multi-line text.
-  mutable std::vector<std::unique_ptr<gfx::RenderText>> lines_;
+  // The RenderText instance used for drawing.
+  mutable std::unique_ptr<gfx::RenderText> display_text_;
 
   // Persists the current selection range between the calls to
-  // ClearRenderTextLines() and MaybeBuildRenderTextLines(). Holds an
-  // InvalidRange when not in use.
+  // ClearDisplayText() and MaybeBuildDisplayText(). Holds an InvalidRange when
+  // not in use.
   mutable gfx::Range stored_selection_range_;
 
   SkColor requested_enabled_color_ = SK_ColorRED;
