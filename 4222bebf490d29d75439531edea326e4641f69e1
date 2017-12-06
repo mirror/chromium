@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbb082eb_247c276a",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T18:40:37Z",
+      "side": 1,
+      "message": "Yeah, will do. The caller is basically hijacking the logic that\u0027s used to split a write (or read) over multiple child entries to also just scan over ranges and find one ---- there isn\u0027t even a buffer for buff_len_ to correspond to, and the intermediate result updates are useless,\nsince this will set result_ itself.\n\nIt\u0027s kind of a stretch of a fit, and probably pointless since unlike other ops this isn\u0027t split up into async pieces.... I think...",
+      "parentUuid": "101afcb9_a90db38e",
+      "range": {
+        "startLine": 768,
+        "startChar": 4,
+        "endLine": 768,
+        "endChar": 17
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaebdf67_e8c9bd36",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T18:24:57Z",
       "side": 1,
       "message": "Can you document these, and maybe rename them foo_block?  Sorry to ask for more comments, but this code is fairly obscure.\n\nIf I\u0027m understanding things, block size is 2^10, and we\u0027re dealing with things in increments of block size.  last_bit is the block containing the final byte (The child_offset_ + child_len_ - 1 byte), but may be partially populated.\n\nstart is the first block the child contains.",
+      "range": {
+        "startLine": 785,
+        "startChar": 47,
+        "endLine": 785,
+        "endChar": 58
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4343e08e_9a7ee5a5",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T18:40:37Z",
+      "side": 1,
+      "message": "Hmm, so I was kinda hoping the comment above would give enough context.\n\nBasically, for each child there is a bitmap of used 1 KiB blocks, and also a sub-kb partial write range that always starts at 1 KiB boundary. \n\nThe two may not be adjacent, one instance of which is exactly what the bug was about.\n\nShould I push some of this reply (e.g. explanation of what the bitmap is and the last range to beginning of this comment, may be?)",
+      "parentUuid": "aaebdf67_e8c9bd36",
       "range": {
         "startLine": 785,
         "startChar": 47,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "127741ba_aa6048e2",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T18:40:37Z",
+      "side": 1,
+      "message": "It\u0027s the portion of the child requested, see comment on line 783.",
+      "parentUuid": "f82009c3_aebf2685",
+      "range": {
+        "startLine": 790,
+        "startChar": 44,
+        "endLine": 790,
+        "endChar": 58
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96ac915a_bc681e0b",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f2d0124e_adc75c96",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T18:40:37Z",
+      "side": 1,
+      "message": "Hmm, is it still unclear after my answer above?",
+      "parentUuid": "96ac915a_bc681e0b",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-06T18:24:57Z",
       "side": 1,
       "message": "nit:  use braces.",
+      "range": {
+        "startLine": 796,
+        "startChar": 41,
+        "endLine": 796,
+        "endChar": 0
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483c0ba0_a5b785d6",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-06T18:40:37Z",
+      "side": 1,
+      "message": "Will do once sort out what to do with the comments stuff",
+      "parentUuid": "f7db7bba_81afe9ce",
       "range": {
         "startLine": 796,
         "startChar": 41,
