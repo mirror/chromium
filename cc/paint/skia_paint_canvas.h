@@ -15,6 +15,7 @@
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/paint_text_blob.h"
+#include "cc/paint/scoped_image_flags.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
@@ -26,12 +27,16 @@ class PaintFlags;
 // and then playing back to an SkCanvas.
 class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
  public:
-  explicit SkiaPaintCanvas(SkCanvas* canvas);
+  explicit SkiaPaintCanvas(
+      SkCanvas* canvas,
+      std::unique_ptr<ImageProvider> image_provider = nullptr);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap);
   explicit SkiaPaintCanvas(const SkBitmap& bitmap, const SkSurfaceProps& props);
   // If |target_color_space| is non-nullptr, then this will wrap |canvas| in a
   // SkColorSpaceXformCanvas.
-  SkiaPaintCanvas(SkCanvas* canvas, sk_sp<SkColorSpace> target_color_space);
+  SkiaPaintCanvas(SkCanvas* canvas,
+                  sk_sp<SkColorSpace> target_color_space,
+                  std::unique_ptr<ImageProvider> image_provider = nullptr);
   ~SkiaPaintCanvas() override;
 
   SkMetaData& getMetaData() override;
@@ -124,9 +129,15 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
  private:
   void WrapCanvasInColorSpaceXformCanvas(
       sk_sp<SkColorSpace> target_color_space);
+  void drawBitmap(const SkBitmap& bitmap,
+                  SkScalar left,
+                  SkScalar top,
+                  const PaintFlags& flags);
+
   SkCanvas* canvas_;
   std::unique_ptr<SkCanvas> owned_;
   std::unique_ptr<SkCanvas> color_space_xform_canvas_;
+  std::unique_ptr<ImageProvider> image_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(SkiaPaintCanvas);
 };
