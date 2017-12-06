@@ -311,6 +311,24 @@
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d829789d_53d2541c",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-06T01:26:41Z",
+      "side": 1,
+      "message": "Well but I find \u0027constructor\u0027 part is what effectively replaced the instantiation through complicated reflection (newInstance), and that helps in this case.",
+      "parentUuid": "9c3da167_b0569087",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
