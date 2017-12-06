@@ -106,6 +106,24 @@
       "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0c84c5_f5598407",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-06T08:29:31Z",
+      "side": 1,
+      "message": "The fix addresses both scenarios and the fix lgtm. I just reacted to the wording in the commit message because I didn\u0027t think what was stated could happen.",
+      "parentUuid": "310a3fe0_3d9a6605",
+      "revId": "b95704ab0ca710e9926e0e007247563d94645a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
