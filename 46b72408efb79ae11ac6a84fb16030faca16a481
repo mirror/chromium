@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bab813c_e7d4f97f",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "nit: put this on two lines",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b1278f_cf17784c",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "nit: not need to merge into empty objects. Maybe just assign section_sizes, raw_sybmols here?",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cea1a04_684f7a7a",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "nit: call this \"pak_symbols_by_id\"?\nAlso - assign to None?",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe62f821_fcea6b59",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "nit: Can you add a debug log here to say \"sorting\"",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d80b399_a9b12839",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "nit: why switch the sort order?",
+      "revId": "46b72408efb79ae11ac6a84fb16030faca16a481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

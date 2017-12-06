@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "ee3f4d8d_60f7f419",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-06T16:53:34Z",
+      "side": 1,
+      "message": "Yep, not sure why I thought that then...",
+      "parentUuid": "d3fcab4b_40ca4c78",
+      "revId": "efcf02ac587d179e4a9c3a5c1159da8b2061a4f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257d3121_05fde6d9",
         "filename": "tools/binary_size/libsupersize/archive.py",
         "patchSetId": 1
