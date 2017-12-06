@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3532866c_9b5e0fef",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-06T20:13:19Z",
+      "side": 1,
+      "message": "Done, I think?",
+      "parentUuid": "885b0e1a_9e824446",
+      "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0a289c_b92c38dc",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f103dd_360b2e3f",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-06T20:13:19Z",
+      "side": 1,
+      "message": "I think I\u0027m copying it now... but could try another way if you prefer.",
+      "parentUuid": "0e0a289c_b92c38dc",
+      "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cbe8598d_2d37263a",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-06T20:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b49061_854259a2",
+      "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7e60029_364619d8",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4543b74_9e507d40",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-06T20:13:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7e60029_364619d8",
+      "revId": "538d387174714e030c849ff4633dbe22f40ebc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
