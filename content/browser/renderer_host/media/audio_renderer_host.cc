@@ -10,6 +10,7 @@
 #include "base/bind_helpers.h"
 #include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/media/audio_stream_monitor.h"
@@ -261,6 +262,14 @@ void AudioRendererHost::OnCreateStream(int stream_id,
     SendErrorMessage(stream_id);
     return;
   }
+
+#if !defined(OS_ANDROID)
+  if (params.IsBitstreamFormat()) {
+    // Bitstream formats are only supported on Android.
+    SendErrorMessage(stream_id);
+    return;
+  }
+#endif
 
   // Post a task to the UI thread to check that the |render_frame_id| references
   // a valid render frame. This validation is important for all the reasons
