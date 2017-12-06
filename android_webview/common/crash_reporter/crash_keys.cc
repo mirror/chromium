@@ -16,8 +16,6 @@ namespace crash_keys {
 
 const char kActiveURL[] = "url-chunk";
 
-const char kFontKeyName[] = "font_key_name";
-
 const char kShutdownType[] = "shutdown-type";
 const char kBrowserUnpinTrace[] = "browser-unpin-trace";
 
@@ -25,8 +23,6 @@ const char kAppPackageName[] = "app-package-name";
 const char kAppPackageVersionCode[] = "app-package-version-code";
 
 const char kAndroidSdkInt[] = "android-sdk-int";
-
-const char kInputEventFilterSendFailure[] = "input-event-filter-send-failure";
 
 const char kViewCount[] = "view-count";
 
@@ -56,15 +52,10 @@ size_t RegisterWebViewCrashKeys() {
       {gpu::crash_keys::kGPUGLContextIsVirtual, kSmallSize},
 
       // content/:
-      {"bad_message_reason", kSmallSize},
       {"discardable-memory-allocated", kSmallSize},
       {"discardable-memory-free", kSmallSize},
-      {kFontKeyName, kSmallSize},
-      {"mojo-message-error", kMediumSize},
-      {"ppapi_path", kMediumSize},
       {"subresource_url", kLargeSize},
       {"total-discardable-memory-allocated", kSmallSize},
-      {kInputEventFilterSendFailure, kSmallSize},
       {kViewCount, kSmallSize},
 
       // media/:

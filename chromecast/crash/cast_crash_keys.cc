@@ -42,15 +42,10 @@ size_t RegisterCastCrashKeys() {
       {gpu::crash_keys::kGPUGLContextIsVirtual, ::crash_keys::kSmallSize},
 
       // content/:
-      {"bad_message_reason", ::crash_keys::kSmallSize},
       {"discardable-memory-allocated", ::crash_keys::kSmallSize},
       {"discardable-memory-free", ::crash_keys::kSmallSize},
-      {"font_key_name", ::crash_keys::kSmallSize},
-      {"mojo-message-error", ::crash_keys::kMediumSize},
-      {"ppapi_path", ::crash_keys::kMediumSize},
       {"subresource_url", ::crash_keys::kLargeSize},
       {"total-discardable-memory-allocated", ::crash_keys::kSmallSize},
-      {"input-event-filter-send-failure", ::crash_keys::kSmallSize},
       {"view-count", ::crash_keys::kSmallSize},
 
       // media/:
