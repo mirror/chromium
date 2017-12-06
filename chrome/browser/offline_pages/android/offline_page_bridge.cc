@@ -721,6 +721,15 @@ jboolean OfflinePageBridge::IsOfflinePage(
              web_contents) != nullptr;
 }
 
+jboolean OfflinePageBridge::IsAMP(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const base::android::JavaParamRef<jobject>& j_web_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(j_web_contents);
+  return web_contents && web_contents->IsAMP();
+}
+
 ScopedJavaLocalRef<jobject> OfflinePageBridge::GetOfflinePage(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
