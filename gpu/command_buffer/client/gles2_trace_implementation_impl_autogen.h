@@ -2595,29 +2595,33 @@ void GLES2TraceImplementation::EndRasterCHROMIUM() {
   gl_->EndRasterCHROMIUM();
 }
 
-void GLES2TraceImplementation::CreateTransferCacheEntryCHROMIUM(
+void GLES2TraceImplementation::CreateTransferCacheEntryINTERNAL(
     GLuint64 handle_id,
     GLuint handle_shm_id,
     GLuint handle_shm_offset,
-    const cc::ClientTransferCacheEntry& entry) {
+    GLuint type,
+    GLuint data_shm_id,
+    GLuint data_shm_offset,
+    GLuint data_size) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
-                                "GLES2Trace::CreateTransferCacheEntryCHROMIUM");
-  gl_->CreateTransferCacheEntryCHROMIUM(handle_id, handle_shm_id,
-                                        handle_shm_offset, entry);
+                                "GLES2Trace::CreateTransferCacheEntryINTERNAL");
+  gl_->CreateTransferCacheEntryINTERNAL(handle_id, handle_shm_id,
+                                        handle_shm_offset, type, data_shm_id,
+                                        data_shm_offset, data_size);
 }
 
-void GLES2TraceImplementation::DeleteTransferCacheEntryCHROMIUM(
+void GLES2TraceImplementation::DeleteTransferCacheEntryINTERNAL(
     GLuint64 handle_id) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
-                                "GLES2Trace::DeleteTransferCacheEntryCHROMIUM");
-  gl_->DeleteTransferCacheEntryCHROMIUM(handle_id);
+                                "GLES2Trace::DeleteTransferCacheEntryINTERNAL");
+  gl_->DeleteTransferCacheEntryINTERNAL(handle_id);
 }
 
-void GLES2TraceImplementation::UnlockTransferCacheEntryCHROMIUM(
+void GLES2TraceImplementation::UnlockTransferCacheEntryINTERNAL(
     GLuint64 handle_id) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu",
-                                "GLES2Trace::UnlockTransferCacheEntryCHROMIUM");
-  gl_->UnlockTransferCacheEntryCHROMIUM(handle_id);
+                                "GLES2Trace::UnlockTransferCacheEntryINTERNAL");
+  gl_->UnlockTransferCacheEntryINTERNAL(handle_id);
 }
 
 void GLES2TraceImplementation::TexStorage2DImageCHROMIUM(GLenum target,
