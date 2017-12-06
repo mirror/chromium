@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a282e7c_3d6896c3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-06T19:32:48Z",
+      "side": 1,
+      "message": "There\u0027s a few issues with this:\n1- when we clear the backbuffer (e.g. in DoClear), nothing currently will go and update the clear rect in that image, and so we may force a clear when using the texture for read\n2- since this is not attached to a Framebuffer that would be current, nothing will do a lazy clear in GLES2DecoderImpl::CheckFramebufferValid\n\nThey both could be solved with a fair bit of code in GLES2DecoderImpl::CheckFramebufferValid, but maybe simpler would be to force |zero| to true if |is_cleared| is false.",
+      "revId": "f3aca7c73f55e2454bebf76c7f9084f7f857f6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
