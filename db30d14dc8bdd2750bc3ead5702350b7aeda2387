@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01cd5350_beb54bbd",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T02:56:21Z",
+      "side": 1,
+      "message": "Do we want to do some validation on option somewhere along the way?",
+      "revId": "db30d14dc8bdd2750bc3ead5702350b7aeda2387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f221a5f0_a47a8efc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9824,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-06T02:56:21Z",
+      "side": 1,
+      "message": "pick one",
+      "range": {
+        "startLine": 9824,
+        "startChar": 93,
+        "endLine": 9824,
+        "endChar": 101
+      },
+      "revId": "db30d14dc8bdd2750bc3ead5702350b7aeda2387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
