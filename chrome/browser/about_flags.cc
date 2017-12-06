@@ -3097,6 +3097,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
 #endif  // OS_ANDROID
 
+#if defined(OS_ANDROID)
+    {"enable-incognito-snapshots",
+     flag_descriptions::kEnableIncognitoSnapshotsName,
+     flag_descriptions::kEnableIncognitoSnapshotsDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kIncognitoSnapshots)},
+#endif  // OS_ANDROID
+
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
     {pausetabs::kFeatureName, flag_descriptions::kPauseBackgroundTabsName,
      flag_descriptions::kPauseBackgroundTabsDescription, kOsDesktop,
