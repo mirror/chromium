@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5876e273_661df42b",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: Optional: Early-return if no entry above, to reduce nesting:\n\n  content::NavigationEntry* entry \u003d GetNavigationEntry();\n  if (!entry)\n    return true;\n\n  ...\n\n  Profile* profile \u003d GetProfile();\n  return !profile || !search::IsInstantNTPURL(entry-\u003eGetURL(), profile);",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2a0384_01bf4714",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: Or EXPECT_NE without the !",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054077a1_43a28149",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: Or EXPECT_NE without the !",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7360bc39_2a70cc0b",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: These could be EXPECTs",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d50036_25e90adc",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d to () for this iint; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d1842d_b76f01ff",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: Maybe GetActiveWebContents() rather than assuming [0] is the active one?",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4842df28_f00f9cb3",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-06T20:08:29Z",
+      "side": 1,
+      "message": "Nit: ; or . rather than ,\n\nI\u0027m not sure what we\u0027re to see about this other comment, though -- reading it doesn\u0027t instantly shed light on this one.  Maybe I\u0027m just confused.",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
