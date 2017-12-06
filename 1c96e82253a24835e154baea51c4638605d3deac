@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7d70087_046259a5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-events.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-06T19:57:52Z",
+      "side": 1,
+      "message": "There\u0027s a bunch of old-style indents in this file, could you please re-format it?",
+      "revId": "1c96e82253a24835e154baea51c4638605d3deac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6f28e3_9f7d2c47",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-06T19:57:52Z",
+      "side": 1,
+      "message": "note this should no longer be so with the new framework, so this perhaps can be removed.",
+      "revId": "1c96e82253a24835e154baea51c4638605d3deac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60066323_ac762249",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-resources.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-06T19:57:52Z",
+      "side": 1,
+      "message": "This is not a test, let\u0027s eval separately.",
+      "revId": "1c96e82253a24835e154baea51c4638605d3deac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a412ed_7bd42e7a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/multiple-extensions.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-06T19:57:52Z",
+      "side": 1,
+      "message": "This is not a test -- let\u0027s just inline it instead of nextTest() above?",
+      "revId": "1c96e82253a24835e154baea51c4638605d3deac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
