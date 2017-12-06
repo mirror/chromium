@@ -405,8 +405,7 @@ SDK.ChildTargetManager = class {
 
     parentTarget.registerTargetDispatcher(this);
     this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
-    if (Runtime.experiments.isEnabled('autoAttachToCrossProcessSubframes'))
-      this._targetAgent.setAttachToFrames(true);
+    this._targetAgent.setAttachToFrames(true);
 
     if (!parentTarget.parentTarget()) {
       this._targetAgent.setDiscoverTargets(true);
