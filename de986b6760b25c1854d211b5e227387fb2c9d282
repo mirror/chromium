@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6a3fa49_e5c9dc89",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27abd8f8_567ca453",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 178,
+        "endChar": 31
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b217a30a_2c1b71f0",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "276883c7_c35d8c8b",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": ":)\n\nAck",
+      "parentUuid": "b217a30a_2c1b71f0",
+      "range": {
+        "startLine": 180,
+        "startChar": 10,
+        "endLine": 180,
+        "endChar": 59
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edc0bab0_b6727a94",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-06T11:03:25Z",
       "side": 1,
       "message": "does this somehow end up bouncing to the UI thread? i think it\u0027s appropriate to check g_browser_process-\u003eIsShuttingDown() (on the UI thread) before servicing the notification.",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cb8b2a_0ffaba8d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t come back on the UI thread. Not here and not in NotificationPlatformBridgeWinImpl::OnActivated either (that object lives on a separate thread entirely). I suppose we could jump to the UI thread and back, but with unregistration happening in PreShutdown... that should take care of incoming calls anyway, right?",
+      "parentUuid": "edc0bab0_b6727a94",
       "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "093c5875_86f41813",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Gone! :)",
+      "parentUuid": "5c2d6cdb_a16b8eea",
+      "range": {
+        "startLine": 157,
+        "startChar": 21,
+        "endLine": 157,
+        "endChar": 47
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "303e9631_838d57e2",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8a5767a8_0e602848",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "303e9631_838d57e2",
+      "range": {
+        "startLine": 165,
+        "startChar": 41,
+        "endLine": 165,
+        "endChar": 70
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecace29f_67bd07e1",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
@@ -122,6 +236,24 @@
       "writtenOn": "2017-12-06T11:03:25Z",
       "side": 1,
       "message": "this thing really needs some documentation. i\u0027m trying to figure it out by reading msdn, and i don\u0027t get it. what are the possible scenarios? the reason for all of this is to support activation of something in chrome when the user pokes a native notification, correct? so if there\u0027s a running browser process, COM machinery will create the activator and invoke its Activate method. if there is no browser process, COM will launch one for the purpose of getting the activator. if this is correct, i think more work is needed to make the browser process a proper COM server. for example, i don\u0027t see DllGetClassObject implemented anywhere. how does this work?",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faf7a4b_16c6dab4",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "I took over the CL mid-way and feel like I\u0027m in the same boat because I don\u0027t have a good understanding of how this all works behind the scenes. Maybe Xi can provide more context?\n\nBut I think it is important to not conflate the activation that requires launching Chrome with the one that does not require it. This CL handles only the latter (Xi is working on the former, I think). Clicks on the toasts will be ignored if Chrome is not running, which for the purposes of this CL is fine. Getting activation working when Chrome is not running is out of scope for now (for this CL).",
+      "parentUuid": "ecace29f_67bd07e1",
       "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +280,30 @@
       "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eae029_9bf91c9e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5583bfe_1dd7ba85",
+      "range": {
+        "startLine": 169,
+        "startChar": 22,
+        "endLine": 169,
+        "endChar": 24
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +347,48 @@
     },
     {
       "key": {
+        "uuid": "70dcdf03_29eafbd7",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a98e03d_606f2673",
+      "range": {
+        "startLine": 179,
+        "startChar": 42,
+        "endLine": 179,
+        "endChar": 47
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c78782ed_9afe7591",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e45b162e_745f8235",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22c4c903_4b39f85a",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "d85ca070_1edde9e8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Done. Thank you for this example; very helpful. I\u0027ve fixed it up a bit, but the essence of it is the same.",
+      "parentUuid": "22c4c903_4b39f85a",
+      "range": {
+        "startLine": 181,
+        "startChar": 60,
+        "endLine": 181,
+        "endChar": 75
+      },
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c3e4c10_7d7fdc6b",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
@@ -231,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "bfc0f9e6_bd8172aa",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "Interesting, waiting to see what Rob recommends.",
+      "parentUuid": "5c3e4c10_7d7fdc6b",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a2fd108_b4d29fed",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
         "patchSetId": 5
@@ -242,6 +482,24 @@
       "writtenOn": "2017-12-06T11:03:25Z",
       "side": 1,
       "message": "i think it makes sense to explicitly unregister the class sometime in BrowserProcessImpl::StartTearDown since we don\u0027t want chrome to service notifications once shutdown is underway, no?",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde866ec_461d7a88",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-06T15:36:12Z",
+      "side": 1,
+      "message": "StartTearDown? Would a PreShutdown override in ChromeBrowserMainPartsWin do the trick?",
+      "parentUuid": "4a2fd108_b4d29fed",
       "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
