@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "753e0246_21d0cf0f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T04:48:51Z",
+      "side": 1,
+      "message": "Actually, we want to do what CalcSelectionRangeAndSetSelectionState() doing.\nBut, CalcSelectionRangeAndSetSelectionState() isn\u0027t good shape.\n\nUsage of CalcSelectionInFlatTree() is questionable.\n\n\nThe main idea of |CalcSelection...()| is marking LayoutText or LayoutImage\n(actually layout object of layout object) in selection.\n\nHere is sketch:\n\nLayoutObject* start \u003d nullptr;\nLayoutObject* end \u003d nullptr;\nfor (const Node\u0026 node : selection.Nodes()) {\n  LayoutObject* layout_object \u003d node.GetLayoutObject();\n  if (!layout_object || !layoutobject-\u003eCanBeSelectgionLeaf())\n   continue;\n  start \u003d start ? start : layout_object;\n  end \u003d layout_object;\n}\n\nif (!start)\n  return SelectionInDOMTree();\n\nint start_offset;\nint end_offset;\n... adjust offsets: text case \u003d\u003d collapsed whitespace, and before/after replaced element case.\n\n// TODO: We should have BeforeAnchor/AfterAnchor position\nconst auto\u0026 range \u003d EphemeralrRange(Position(start-\u003eGetNode(), start_offset), Position(end-\u003eGetNode(), end_offset))\n\nif (selection.IsBaseFirst())\n  return SelectionInDOMTree::Builder().SetAsForwardSelection(range).Build();\nreturn SelectionInDOMTree::Builder().SetAsBackwardSelection(range).Build();",
+      "revId": "664e9ff4fcf49f4f00a50b37c8690e1acdb45f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a02a8a8c_98f287df",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.h",
         "patchSetId": 5
@@ -84,6 +101,30 @@
       "side": 1,
       "message": "Since I am using LayoutSelection for calculating FrameSelection::ExtractSelectedText, therefore this code is added. This is just added to avoid the calculation of Comuting the SelectionModes.",
       "parentUuid": "a02a8a8c_98f287df",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "664e9ff4fcf49f4f00a50b37c8690e1acdb45f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deab9b73_f052e358",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-06T04:48:51Z",
+      "side": 1,
+      "message": "Except for execCommand usage of VS::Is{Caret,None,Range}(). I would like to\nuse LayoutSelection::Is{Caret,None,Range}() for source of truth.\n\nI think this is the actual visible canonicalization and allows us away from\n\"legacy\" canonicalization.",
+      "parentUuid": "d4d3988a_2f09c6cb",
       "range": {
         "startLine": 118,
         "startChar": 1,
