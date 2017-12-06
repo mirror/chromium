@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af55dda0_48e20d15",
+        "filename": "ash/wm/window_positioner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-06T19:05:43Z",
+      "side": 1,
+      "message": "I could use kPopupGridSize instead of this, but they mean slightly different things and I think it\u0027s a little clearer to have 2 constants. (For example, we could choose to have the offset be 2 grid steps or 64 pixels.)",
+      "revId": "942495c544d6121cd237909e1e8abac5f0225751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
