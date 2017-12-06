@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfea02d8_dad1630d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:11:22Z",
+      "side": 1,
+      "message": "For the first line of commit messages, please use an imperative sentence, as in \"Remove default traffic annotation from TCPClientSocket::Write\".\n\nThis convention is described internally:\n   go/cl-descriptions",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3045f8dd_7adbaf17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:11:22Z",
+      "side": 1,
+      "message": "value",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9991b913_4b495c94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:11:22Z",
+      "side": 1,
+      "message": "required",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d5aa90_8758106f",
+        "filename": "extensions/browser/api/socket/socket.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-06T19:11:22Z",
+      "side": 1,
+      "message": "I would expect all requests coming from extensions to have a single traffic annotation indicating they came from an extension. And hence not be exposing it as a parameter to the API.\n\nIf that is not the case, can you explain the plan on how to populate different annotations for different extensions? This isn\u0027t obvious to me, since it could involve propagating intent all the way down to the extension author itself (changing how extensions are written or packaged), or doing something special for built-in Google provided extensions vs user installed extensions if that is distinction of concern, etc.\n\nWhatever the case, adding annotations to extensions should be the subject of a separate CL.\nIn this CL I would rather just see the implementation pass NO_TRAFFIC_ANNOTATION_BUG_656607 in places where you have removed the default from TCPClientSocket.\n\nWDYT?",
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
