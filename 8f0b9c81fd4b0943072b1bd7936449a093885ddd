@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209a3941_4eb7115f",
+        "filename": "components/signin/ios/browser/wait_for_network_callback_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-06T19:09:40Z",
+      "side": 1,
+      "message": "trybot is failing because of missing \"override\":\n\n~WaitForNetworkCallbackHelper() override;",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "8f0b9c81fd4b0943072b1bd7936449a093885ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
