@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35d4462b_38b71bfb",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T10:40:53Z",
+      "side": 1,
+      "message": "nit: ui:: not needed. More below",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "457d0a7c75ad1927c6fef852f21bb0bda090e48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4390ed5c_223850be",
+        "filename": "ui/accelerated_widget_mac/ca_layer_embedder.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-06T10:40:53Z",
+      "side": 1,
+      "message": "I think you can just `return AcceleratedWidgetMac::Get(widget);`?",
+      "revId": "457d0a7c75ad1927c6fef852f21bb0bda090e48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
