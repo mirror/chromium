@@ -270,7 +270,11 @@ class AndroidNetworkLibrary {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             NetworkSecurityPolicy policy = NetworkSecurityPolicy.getInstance();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return policy.isCleartextTrafficPermitted(host);
+                try {
+                    return policy.isCleartextTrafficPermitted(host);
+                } catch (IllegalArgumentException e) {
+                    return policy.isCleartextTrafficPermitted();
+                }
             }
             return policy.isCleartextTrafficPermitted();
         }
