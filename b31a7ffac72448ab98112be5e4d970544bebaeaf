@@ -101,6 +101,72 @@
     },
     {
       "key": {
+        "uuid": "7042180d_8039cc5d",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435c4f6b_47abcd22",
+      "range": {
+        "startLine": 233,
+        "startChar": 33,
+        "endLine": 233,
+        "endChar": 47
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64ae05de_c3291b72",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Done. Also changed the timeout to kEventDurationNanosecond since we really expect the event to either be available immediately or not at all.",
+      "parentUuid": "38c09058_2fef8678",
+      "range": {
+        "startLine": 233,
+        "startChar": 7,
+        "endLine": 233,
+        "endChar": 26
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fdc7af4_9648bc9f",
+        "filename": "chrome/browser/process_singleton.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Summarizing offline discussion:\n\nSpent a while trying to make this happen. There\u0027s a bunch of surmountable issues here, but in the end I got stuck on not being able to synthesize a \"GURL\" event that the system would send. These events are opaque and their structure is undocumented (this is why we call AEProcessEvent instead of extracting the event directly).",
+      "parentUuid": "50168819_0553906f",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7837ed70_a61417ee",
         "filename": "chrome/browser/process_singleton_mac.mm",
         "patchSetId": 2
@@ -124,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "004d077f_9b3f3e3f",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7837ed70_a61417ee",
+      "range": {
+        "startLine": 15,
+        "startChar": 40,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef7780bb_95cf025c",
         "filename": "chrome/browser/process_singleton_mac.mm",
         "patchSetId": 2
@@ -138,6 +228,24 @@
       "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1ea853_74525114",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef7780bb_95cf025c",
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +269,30 @@
       "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd48efbd_af626edd",
+        "filename": "chrome/browser/process_singleton_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-06T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4be9807_b91a1dce",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "b31a7ffac72448ab98112be5e4d970544bebaeaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
