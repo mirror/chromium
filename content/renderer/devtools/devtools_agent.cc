@@ -405,8 +405,6 @@ void DevToolsAgent::GotManifest(int session_id,
           new base::DictionaryValue());
       error_value->SetString("message", error->message);
       error_value->SetBoolean("critical", error->critical);
-      error_value->SetInteger("line", error->line);
-      error_value->SetInteger("column", error->column);
       if (error->critical)
         failed = true;
       errors->Append(std::move(error_value));

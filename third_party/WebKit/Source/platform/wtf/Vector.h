@@ -1890,7 +1890,7 @@ inline void Vector<T, inlineCapacity, Allocator>::Reverse() {
 template <typename T, size_t inlineCapacity, typename Allocator>
 inline void swap(Vector<T, inlineCapacity, Allocator>& a,
                  Vector<T, inlineCapacity, Allocator>& b) {
-  a.Swap(b);
+  a.swap(b);
 }
 
 template <typename T,

@@ -139,30 +139,6 @@ TEST_F(WebDocumentTest, ManifestURL) {
   ASSERT_EQ(link_manifest->Href(), static_cast<KURL>(web_doc.ManifestURL()));
 }
 
-TEST_F(WebDocumentTest, ManifestUseCredentials) {
-  LoadURL(std::string(kDefaultOrigin) + kManifestDummyFilePath);
-
-  WebDocument web_doc = TopWebDocument();
-  Document* document = TopDocument();
-  HTMLLinkElement* link_manifest = document->LinkManifest();
-
-  // No crossorigin attribute was set so credentials shouldn't be used.
-  ASSERT_FALSE(link_manifest->FastHasAttribute(HTMLNames::crossoriginAttr));
-  ASSERT_FALSE(web_doc.ManifestUseCredentials());
-
-  // Crossorigin set to a random string shouldn't trigger using credentials.
-  link_manifest->setAttribute(HTMLNames::crossoriginAttr, "foobar");
-  ASSERT_FALSE(web_doc.ManifestUseCredentials());
-
-  // Crossorigin set to 'anonymous' shouldn't trigger using credentials.
-  link_manifest->setAttribute(HTMLNames::crossoriginAttr, "anonymous");
-  ASSERT_FALSE(web_doc.ManifestUseCredentials());
-
-  // Crossorigin set to 'use-credentials' should trigger using credentials.
-  link_manifest->setAttribute(HTMLNames::crossoriginAttr, "use-credentials");
-  ASSERT_TRUE(web_doc.ManifestUseCredentials());
-}
-
 namespace {
 
 const char* g_base_url_origin_a = "http://example.test:0/";
