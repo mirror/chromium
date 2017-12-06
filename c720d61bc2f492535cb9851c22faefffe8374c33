@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8f4856_c8ba1232",
+        "filename": "chrome/test/chromedriver/VERSION",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be changed yet.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "c720d61bc2f492535cb9851c22faefffe8374c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310726c4_757c96da",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 1,
+      "message": "This two tests shouldn\u0027t be added. They have been fixed in v64.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 89
+      },
+      "revId": "c720d61bc2f492535cb9851c22faefffe8374c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55821804_a46028de",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 1,
+      "message": "Please replace tab with spaces",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "c720d61bc2f492535cb9851c22faefffe8374c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ea2fcc_a8c22306",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 1,
+      "message": "Please replace tab with spaces",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 1
+      },
+      "revId": "c720d61bc2f492535cb9851c22faefffe8374c33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e7f541a_7f28985e",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 0,
+      "message": "This need to be moved to _VERSION_SPECIFIC_FILTER[\u002763\u0027] and _VERSION_SPECIFIC_FILTER[\u002764\u0027] (new sections).",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 58
+      },
+      "revId": "47a0fc2e5e2bc0ae3f6fd620102989c57a66600c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aa13ce_5f3e7cc8",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-06T21:18:31Z",
+      "side": 0,
+      "message": "These should be kept. They\u0027re unrelated to PlzNavigate feature.",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 55
+      },
+      "revId": "47a0fc2e5e2bc0ae3f6fd620102989c57a66600c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
