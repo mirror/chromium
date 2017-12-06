@@ -26,11 +26,11 @@ const CSSValue* OutlineColor::ParseSingleValue(
 const blink::Color OutlineColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor result =
-      visited_link ? style.VisitedLinkOutlineColor() : style.OutlineColor();
+  StyleColor result = visited_link ? style.OutlineColorIgnoringUnvisited()
+                                   : style.OutlineColorIgnoringVisited();
   if (!result.IsCurrentColor())
     return result.GetColor();
-  return visited_link ? style.VisitedLinkColor() : style.GetColor();
+  return visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
 }
 
 const CSSValue* OutlineColor::CSSValueFromComputedStyle(
@@ -41,7 +41,7 @@ const CSSValue* OutlineColor::CSSValueFromComputedStyle(
   return allow_visited_style ? cssvalue::CSSColorValue::Create(
                                    style.VisitedDependentColor(*this).Rgb())
                              : ComputedStyleUtils::CurrentColorOrValidColor(
-                                   style, style.OutlineColor());
+                                   style, style.OutlineColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand

@@ -25,10 +25,11 @@ const CSSValue* BackgroundColor::ParseSingleValue(
 const blink::Color BackgroundColor::ColorIncludingFallback(
     bool visited_link,
     const ComputedStyle& style) const {
-  StyleColor style_color = visited_link ? style.VisitedLinkBackgroundColor()
-                                        : style.BackgroundColor();
+  StyleColor style_color = visited_link
+                               ? style.BackgroundColorIgnoringUnvisited()
+                               : style.BackgroundColorIgnoringVisited();
   blink::Color result =
-      visited_link ? style.VisitedLinkColor() : style.GetColor();
+      visited_link ? style.VisitedLinkColor() : style.ColorIgnoringVisited();
   if (!style_color.IsCurrentColor())
     result = style_color.GetColor();
 
@@ -50,10 +51,11 @@ const CSSValue* BackgroundColor::CSSValueFromComputedStyle(
     const LayoutObject* layout_object,
     Node* styled_node,
     bool allow_visited_style) const {
-  return allow_visited_style ? cssvalue::CSSColorValue::Create(
-                                   style.VisitedDependentColor(*this).Rgb())
-                             : ComputedStyleUtils::CurrentColorOrValidColor(
-                                   style, style.BackgroundColor());
+  return allow_visited_style
+             ? cssvalue::CSSColorValue::Create(
+                   style.VisitedDependentColor(*this).Rgb())
+             : ComputedStyleUtils::CurrentColorOrValidColor(
+                   style, style.BackgroundColorIgnoringVisited());
 }
 
 }  // namespace CSSLonghand
