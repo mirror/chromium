@@ -78,6 +78,8 @@ class CounterNode : public RefCounted<CounterNode> {
   // identifier must match the identifier of this counter.
   void RemoveChild(CounterNode*);
 
+  void MoveToLastChildOf(CounterNode*, const AtomicString& identifier);
+
  private:
   CounterNode(LayoutObject&, bool is_reset, int value);
   int ComputeCountInParent() const;
@@ -85,6 +87,7 @@ class CounterNode : public RefCounted<CounterNode> {
   // and in the layoutObjects of all descendants of this counter, if any.
   void ResetThisAndDescendantsLayoutObjects();
   void Recount();
+  void DetachChild(CounterNode*);
 
   bool has_reset_type_;
   int value_;
