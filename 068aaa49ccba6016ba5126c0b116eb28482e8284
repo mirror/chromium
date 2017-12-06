@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ebd4cea_b97d1adf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T16:55:52Z",
+      "side": 1,
+      "message": "Clearing this here will probably lead to heisen-bugs. E.g. if we change the layout dirtying policy, you\u0027ll get different results.\n\nThis bit isn\u0027t local to this node right? Conceptually you need a map for every image on the document, e.g. lots of things not related to this node can affect if a node has overlaying text.",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 297,
+        "endChar": 22
+      },
+      "revId": "068aaa49ccba6016ba5126c0b116eb28482e8284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b27c71c_f465a09b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-06T16:55:52Z",
+      "side": 1,
+      "message": "Depending on how far out the IOv2 stuff is, its probably better to go with that.\n\nE.g. this won\u0027t work for text which is placed over the image after layout? Or text which is just transformed over after layout?",
+      "range": {
+        "startLine": 300,
+        "startChar": 18,
+        "endLine": 300,
+        "endChar": 35
+      },
+      "revId": "068aaa49ccba6016ba5126c0b116eb28482e8284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
