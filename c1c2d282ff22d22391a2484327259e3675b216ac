@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "eaace175_e2082856",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f155db_4213deea",
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d680ef_d5869694",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 25
@@ -220,6 +238,30 @@
       "side": 1,
       "message": "You can add a (maybe default?) move constructor to media::BitstreamBuffer. That way you can define this as\n\n ScopedBitstreamBuffer(media::BitstreamBuffer bitstream_buffer)\n   : bitstream_buffer_(std::move(bitstream_buffer)) {}\n\nThat would create zero copies :D (although the move constructor will be called twice: the price of flexibility). The compiler should be able to optimize most of that away, though.",
       "parentUuid": "75f29f85_8f0b7dca",
+      "range": {
+        "startLine": 92,
+        "startChar": 55,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "c1c2d282ff22d22391a2484327259e3675b216ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf373075_ecbc4122",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "The reason why I want to use rvalue reference here, is to take bitstrem_buffer\u0027s ownership to ScopedBitstreamBuffer.\nEven if the type of argument is lvalue, a caller don\u0027t possibly take the ownership like below.\nBitstreamBuffer b;\nScopedBitstreamBuffer(b); //a caller doesn\u0027t std::move here\n// a caller still has ownership for b.",
+      "parentUuid": "b7d2c77e_2ac588fd",
       "range": {
         "startLine": 92,
         "startChar": 55,

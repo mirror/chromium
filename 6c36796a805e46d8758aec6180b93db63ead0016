@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54834a28_9a8dd397",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9449a42_aa2df1a8",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ecb0043_98d68897",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 28
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "451f772d_b497a4d7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ecb0043_98d68897",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59bc7255_bab9d654",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 28
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-06T08:54:29Z",
       "side": 1,
       "message": "Is this cast needed?",
+      "range": {
+        "startLine": 540,
+        "startChar": 25,
+        "endLine": 540,
+        "endChar": 44
+      },
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b64369d_c729b171",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Hmm, uint32_t can be transited to size_t implicitly if static_cast isn\u0027t used, even though a compiler doesn\u0027t warn at all.\nIs it OK?",
+      "parentUuid": "59bc7255_bab9d654",
       "range": {
         "startLine": 540,
         "startChar": 25,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "c930814d_c2229ed7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "118d3851_2b3ce68a",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7895f7_74b22e0a",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 28
@@ -96,6 +180,24 @@
       "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d8f40c_294886b1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-06T10:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7895f7_74b22e0a",
+      "revId": "6c36796a805e46d8758aec6180b93db63ead0016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
