@@ -111,7 +111,51 @@ bool PaintFlags::SupportsFoldingAlpha() const {
   return true;
 }
 
-SkPaint PaintFlags::ToSkPaint() const {
+namespace {
+
+bool CanSubstituteHairlineForStroke(const SkPaint& paint) {
+  return paint.getStrokeCap() == SkPaint::kDefault_Cap &&
+         paint.getStrokeJoin() == SkPaint::kDefault_Join;
+}
+
+void AdjustAliasedStroke(const SkMatrix& ctm, SkPaint* paint) {
+  // With anti-aliasing turned off, strokes with a device space width in (0, 1)
+  // may not raster at all.  To avoid this, we have two options:
+  //
+  // 1) force a hairline stroke (stroke-width == 0)
+  // 2) force anti-aliasing on
+
+  SkSize scale;
+  if (paint->isAntiAlias() ||  // safe to raster at any scale
+      paint->getStyle() == SkPaint::kFill_Style ||  // not a stroke
+      !paint->getStrokeWidth() ||                   // explicit hairline
+      !ctm.decomposeScale(&scale))                  // cannot decompose
+  {
+    return;
+  }
+
+  const auto stroke = SkSize::Make(paint->getStrokeWidth() * scale.width(),
+                                   paint->getStrokeWidth() * scale.height());
+  if (stroke.width() >= 1 && stroke.height() >= 1)
+    return;  // safe to raster
+
+  if (stroke.width() < 1 && stroke.height() < 1 &&
+      CanSubstituteHairlineForStroke(*paint)) {
+    // Use modulated hairline when possible, as it is faster and produces
+    // results closer to the original intent.
+    paint->setStrokeWidth(0);
+    paint->setAlpha(paint->getAlpha() *
+                    sqrtf(stroke.width() * stroke.height()));
+    return;
+  }
+
+  // Fall back to anti-aliasing.
+  paint->setAntiAlias(true);
+}
+
+}  //  namespace
+
+SkPaint PaintFlags::ToSkPaint(const SkCanvas* canvas) const {
   SkPaint paint;
   paint.setTypeface(typeface_);
   paint.setPathEffect(path_effect_);
@@ -134,6 +178,10 @@ SkPaint PaintFlags::ToSkPaint() const {
   paint.setTextEncoding(static_cast<SkPaint::TextEncoding>(getTextEncoding()));
   paint.setHinting(static_cast<SkPaint::Hinting>(getHinting()));
   paint.setFilterQuality(getFilterQuality());
+
+  if (canvas)
+    AdjustAliasedStroke(canvas->getTotalMatrix(), &paint);
+
   return paint;
 }
 
