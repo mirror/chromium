@@ -22,6 +22,30 @@
       "revId": "b3f9b3a8b02cf0c272585a7007b1fd0ca370152c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3580d3_360fb532",
+        "filename": "build/config/gcc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-06T23:43:20Z",
+      "side": 1,
+      "message": "Right, this would be better to do with adding/removing configs. The right place to put it would be in build/config/BUILD.gn under executable_config, but the symbol visibility configs live as part of the default_compiler_configs, so I don\u0027t think you\u0027ll be able to -\u003d it. I\u0027d maybe ask brettw@ or dpranke@ what they think.",
+      "parentUuid": "b62097d2_89f87eec",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "b3f9b3a8b02cf0c272585a7007b1fd0ca370152c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
