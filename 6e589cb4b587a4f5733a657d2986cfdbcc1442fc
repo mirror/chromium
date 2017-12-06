@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a7426f_aed3e47d",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-06T18:36:17Z",
+      "side": 1,
+      "message": "Why are we changing this in this CL? Makes more sense as part of this to me: https://chromium-review.googlesource.com/c/chromium/src/+/811064",
+      "range": {
+        "startLine": 1000,
+        "startChar": 14,
+        "endLine": 1000,
+        "endChar": 30
+      },
+      "revId": "6e589cb4b587a4f5733a657d2986cfdbcc1442fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
