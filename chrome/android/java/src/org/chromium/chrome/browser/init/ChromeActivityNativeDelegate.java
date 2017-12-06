@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.init;
 
+import android.app.Activity;
 import android.content.Intent;
 
 /**
@@ -51,10 +52,8 @@ public interface ChromeActivityNativeDelegate {
      */
     void onNewIntentWithNative(Intent intent);
 
-    /**
-     * @return The Intent that launched the activity.
-     */
-    Intent getInitialIntent();
+    /** @return The associated activity. */
+    Activity getActivity();
 
     /**
      * Carry out native code dependent tasks that relate to processing an activity result coming to
