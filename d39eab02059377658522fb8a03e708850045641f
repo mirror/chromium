@@ -16,6 +16,24 @@
       "revId": "d39eab02059377658522fb8a03e708850045641f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322547ce_61d95043",
+        "filename": "chrome/test/data/webui/cr_elements/cr_policy_strings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-06T20:01:16Z",
+      "side": 1,
+      "message": "CrPolicyStrings is declared with \"var\" in multiple places on the same global scope.\n\n1) See https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_indicator_behavior.js?l\u003d23\n2) Here.\n\nThis is not allowed with let/const, and results in a runtime error, and subsequently causes tests to fail (you can see previous patches test runs on this CL).\n\nI also posted a related comment at a different CL yesterday about this, see https://chromium-review.googlesource.com/c/chromium/src/+/810044/2/chrome/test/data/webui/settings/settings_main_test.js#52.",
+      "parentUuid": "e6de626e_bc41694b",
+      "revId": "d39eab02059377658522fb8a03e708850045641f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
