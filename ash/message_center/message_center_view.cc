@@ -10,6 +10,7 @@
 #include "ash/message_center/message_center_button_bar.h"
 #include "ash/message_center/message_center_style.h"
 #include "ash/message_center/notifier_settings_view.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -144,8 +145,9 @@ MessageCenterView::MessageCenterView(
 
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
-  SetBackground(views::CreateSolidBackground(kBackgroundColor));
-  SetFocusBehavior(views::View::FocusBehavior::NEVER);
+  if (!switches::IsSidebarEnabled())
+    SetBackground(views::CreateSolidBackground(kBackgroundColor));
+  SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
 
   button_bar_ = new MessageCenterButtonBar(
       this, message_center, initially_settings_visible, GetButtonBarTitle());
@@ -154,7 +156,10 @@ MessageCenterView::MessageCenterView(
   const int button_height = button_bar_->GetPreferredSize().height();
 
   scroller_ = new MessageCenterScrollView(this);
-  scroller_->SetBackgroundColor(kBackgroundColor);
+  if (!switches::IsSidebarEnabled())
+    scroller_->SetBackgroundColor(kBackgroundColor);
+  else
+    scroller_->SetBackgroundColor(SK_ColorTRANSPARENT);
   scroller_->ClipHeightTo(kMinScrollViewHeight, max_height - button_height);
   scroller_->SetVerticalScrollBar(new views::OverlayScrollBar(false));
   scroller_->SetHorizontalScrollBar(new views::OverlayScrollBar(true));
