@@ -61,6 +61,10 @@ class ExtensionFrameHelper
   static content::RenderFrame* GetBackgroundPageFrame(
       const std::string& extension_id);
 
+  static v8::Local<v8::Value> GetV8BackgroundPageMainFrame(
+      v8::Isolate* isolate,
+      const std::string& extension_id);
+
   // Returns true if the given |context| is for any frame in the extension's
   // event page.
   // TODO(devlin): This isn't really used properly, and should probably be

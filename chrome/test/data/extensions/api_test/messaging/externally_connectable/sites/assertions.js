@@ -63,6 +63,7 @@ function clobber(obj, name, qualifiedName) {
   defineProperty(obj, name, new_desc);
 }
 
+if (false) {
 forEach.call(builtinTypes, function(builtin) {
   var prototype = builtin.prototype;
   var typename = '<unknown>';
@@ -78,6 +79,7 @@ forEach.call(builtinTypes, function(builtin) {
   if (builtin.name)
     clobber(window, builtin.name, 'window.' + builtin.name);
 });
+}
 
 // Codes for test results. Must match ExternallyConnectableMessagingTest::Result
 // in c/b/extensions/extension_messages_apitest.cc.
@@ -226,40 +228,53 @@ window.actions = {
 
 window.assertions = {
   canConnectAndSendMessages: function(extensionId, isApp, message) {
+    console.warn('Connecting...');
     if (!checkRuntime())
       return;
 
     if (!message)
       message = kMessage;
 
+    console.warn('message: ' + message);
     function canSendMessage(reply) {
+      console.warn('send message');
       chrome.runtime.sendMessage(extensionId, message, function(response) {
+        console.warn('response');
         if (checkLastError(reply) &&
             checkResponse(response, reply, message, isApp)) {
+          console.warn('reply');
           reply(results.OK);
         }
       });
+      console.warn('Sent');
     }
 
     function canConnectAndSendMessages(reply) {
+      console.warn('connect');
       var port = chrome.runtime.connect(extensionId);
       port.postMessage(message, function() {
+        console.warn('one');
         checkLastError(reply);
       });
       port.postMessage(message, function() {
+        console.warn('two');
         checkLastError(reply);
       });
       var pendingResponses = 2;
       var ok = true;
       port.onMessage.addListener(function(response) {
+        console.warn('received response: ' + response);
         pendingResponses--;
         ok = ok && checkLastError(reply) &&
             checkResponse(response, reply, message, isApp);
-        if (pendingResponses == 0 && ok)
+        if (pendingResponses == 0 && ok) {
+          console.warn('good to go');
           reply(results.OK);
+        }
       });
     }
 
+    console.warn('Testing');
     canSendMessage(function(result) {
       if (result != results.OK)
         sendToBrowser(result);

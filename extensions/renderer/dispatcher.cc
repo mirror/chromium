@@ -638,6 +638,22 @@ void Dispatcher::InvokeModuleSystemMethod(content::RenderFrame* render_frame,
   }
 }
 
+std::unique_ptr<ExtensionBindingsSystem> Dispatcher::CreateBindingsSystem(
+    std::unique_ptr<IPCMessageSender> ipc_sender,
+    ResourceBundleSourceMap* source_map) {
+  std::unique_ptr<ExtensionBindingsSystem> bindings_system;
+  if (base::FeatureList::IsEnabled(features::kNativeCrxBindings)) {
+    auto system = std::make_unique<NativeExtensionBindingsSystem>(
+        std::move(ipc_sender));
+    delegate_->InitializeBindingsSystem(this, system.get());
+    bindings_system = std::move(system);
+  } else {
+    bindings_system = std::make_unique<JsExtensionBindingsSystem>(
+        &source_map_, std::move(ipc_sender));
+  }
+  return bindings_system;
+}
+
 // static
 std::vector<Dispatcher::JsResourceInfo> Dispatcher::GetJsResources() {
   // Libraries.
@@ -695,14 +711,12 @@ std::vector<Dispatcher::JsResourceInfo> Dispatcher::GetJsResources() {
       {"displaySource", IDR_DISPLAY_SOURCE_CUSTOM_BINDINGS_JS},
       {"contextMenus", IDR_CONTEXT_MENUS_CUSTOM_BINDINGS_JS},
       {"contextMenusHandlers", IDR_CONTEXT_MENUS_HANDLERS_JS},
-      {"extension", IDR_EXTENSION_CUSTOM_BINDINGS_JS},
       {"i18n", IDR_I18N_CUSTOM_BINDINGS_JS},
       {"mimeHandlerPrivate", IDR_MIME_HANDLER_PRIVATE_CUSTOM_BINDINGS_JS},
       {"extensions/common/api/mime_handler.mojom", IDR_MIME_HANDLER_MOJOM_JS},
       {"mojoPrivate", IDR_MOJO_PRIVATE_CUSTOM_BINDINGS_JS},
       {"permissions", IDR_PERMISSIONS_CUSTOM_BINDINGS_JS},
       {"printerProvider", IDR_PRINTER_PROVIDER_CUSTOM_BINDINGS_JS},
-      {"runtime", IDR_RUNTIME_CUSTOM_BINDINGS_JS},
       {"webViewRequest", IDR_WEB_VIEW_REQUEST_CUSTOM_BINDINGS_JS},
 
       // Platform app sources that are not API-specific..
@@ -714,6 +728,8 @@ std::vector<Dispatcher::JsResourceInfo> Dispatcher::GetJsResources() {
     resources.push_back({kEventBindings, IDR_EVENT_BINDINGS_JS});
     resources.push_back({"lastError", IDR_LAST_ERROR_JS});
     resources.push_back({"sendRequest", IDR_SEND_REQUEST_JS});
+    resources.push_back({"extension", IDR_EXTENSION_CUSTOM_BINDINGS_JS});
+    resources.push_back({"runtime", IDR_RUNTIME_CUSTOM_BINDINGS_JS});
 
     // Custom types sources.
     resources.push_back({"StorageArea", IDR_STORAGE_AREA_JS});

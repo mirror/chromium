@@ -5,26 +5,31 @@
 var listenOnce = chrome.test.listenOnce;
 var listenForever = chrome.test.listenForever;
 
-JSON.parse = function() {
-  return "JSON.parse clobbered by extension.";
-};
+function clobberJSON() {
+  JSON.parse = function() {
+    return "JSON.parse clobbered by extension.";
+  };
 
-JSON.stringify = function() {
-  return "JSON.stringify clobbered by extension.";
-};
+  JSON.stringify = function() {
+    return "JSON.stringify clobbered by extension.";
+  };
 
-Array.prototype.toJSON = function() {
-  return "Array.prototype.toJSON clobbered by extension.";
-};
+  Array.prototype.toJSON = function() {
+    return "Array.prototype.toJSON clobbered by extension.";
+  };
 
-Object.prototype.toJSON = function() {
-  return "Object.prototype.toJSON clobbered by extension.";
-};
+  Object.prototype.toJSON = function() {
+    return "Object.prototype.toJSON clobbered by extension.";
+  };
+}
 
 // Keep track of the tab that we're running tests in, for simplicity.
 var testTab = null;
 
 chrome.test.getConfig(function(config) {
+  if (!config.nativeCrxBindingsEnabled)
+    clobberJSON();
+
   chrome.test.runTests([
     function setupTestTab() {
       chrome.test.log("Creating tab...");
@@ -232,8 +237,10 @@ chrome.test.getConfig(function(config) {
 
     // Tests sending a request to a tab and receiving a response.
     function sendMessage() {
+      console.warn('\n\n\n\nSending Message!\n\n\n\n');
       chrome.tabs.sendMessage(testTab.id, {step2: 1}, function(response) {
-        chrome.test.assertTrue(response.success);
+        console.warn('Received Response: ' + JSON.stringify(response));
+        chrome.test.assertTrue(!!response.success);
         chrome.test.succeed();
       });
     },
@@ -248,16 +255,18 @@ chrome.test.getConfig(function(config) {
     // Tests that a message which fails to serialize prints an error and
     // doesn't send (http://crbug.com/263077).
     function unserializableMessage() {
+      var expectThrow = config.nativeCrxBindingsEnabled;
       try {
         chrome.tabs.connect(testTab.id).postMessage(function() {
           // This shouldn't ever be called, so it's a bit pointless.
           chrome.test.fail();
         });
         // Didn't crash.
-        chrome.test.succeed();
+        chrome.test.assertFalse(expectThrow);
       } catch (e) {
-        chrome.test.fail(e.stack);
+        chrome.test.assertTrue(expectThrow);
       }
+      chrome.test.succeed();
     },
 
     // Tests that reloading a child frame disconnects the port if it was the
@@ -309,6 +318,7 @@ chrome.test.getConfig(function(config) {
         chrome.extension.sendRequest("hi");
       } catch(e) {
         error = e;
+        console.warn('Caught: ' + e.message);
       }
       chrome.test.assertTrue(error != undefined);
 

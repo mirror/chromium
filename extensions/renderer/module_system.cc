@@ -695,6 +695,7 @@ v8::Local<v8::Value> ModuleSystem::LoadModule(const std::string& module_name) {
 v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
     const std::string& module_name,
     v8::Local<v8::Value> api_bridge) {
+  LOG(WARNING) << "Loading module: " << module_name;
   v8::EscapableHandleScope handle_scope(GetIsolate());
   v8::Local<v8::Context> v8_context = context()->v8_context();
   v8::Context::Scope context_scope(v8_context);
@@ -802,6 +803,7 @@ v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
       return v8::Undefined(GetIsolate());
     }
   }
+  LOG(WARNING) << "Loaded module: " << module_name;
   return handle_scope.Escape(exports);
 }
 
