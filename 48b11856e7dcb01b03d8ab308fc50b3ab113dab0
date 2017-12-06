@@ -70,6 +70,30 @@
       "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9628bb0e_169d4ee0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4558,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-06T23:32:04Z",
+      "side": 1,
+      "message": "I don\u0027t have an iOS 10 device. I tested using iOS 10 simulator and was not able to repro. Glad to remove this patch! :)",
+      "parentUuid": "3601851c_3d9e2d24",
+      "range": {
+        "startLine": 4558,
+        "startChar": 29,
+        "endLine": 4558,
+        "endChar": 0
+      },
+      "revId": "48b11856e7dcb01b03d8ab308fc50b3ab113dab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
