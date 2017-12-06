@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2e43bae_b6107c03",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "It\u0027s probably ok, since in MemoryDumpManager::UnregisterDumpProviderInternal, it checked the unregistered case.",
+      "parentUuid": "91320d60_98eff755",
+      "range": {
+        "startLine": 125,
+        "startChar": 55,
+        "endLine": 125,
+        "endChar": 77
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3118711a_da3b6083",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "25552b7b_0cc98b0e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "Done, make sense.",
+      "parentUuid": "3118711a_da3b6083",
+      "range": {
+        "startLine": 663,
+        "startChar": 2,
+        "endLine": 663,
+        "endChar": 75
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd596561_4877e94c",
         "filename": "components/download/internal/entry.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-04T17:25:10Z",
       "side": 1,
       "message": "Don\u0027t forget the traffic_annotation which, IIUC, is big.",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01d79a0_105a152b",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "It has been changed to a hash code of a string, which is a 32 bit integer.",
+      "parentUuid": "bd596561_4877e94c",
       "range": {
         "startLine": 55,
         "startChar": 14,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0711a106_929f1f9a",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db2b4855_4a054bde",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86e2c64f_b91fbb3a",
         "filename": "components/download/internal/memory_tracker.h",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62bd4e0_cda905cc",
+        "filename": "components/download/internal/memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e2c64f_b91fbb3a",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c1f8e65e_fee7c91a",
+        "filename": "components/download/internal/memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89384038_ffa29b7a",
+      "range": {
+        "startLine": 18,
+        "startChar": 44,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f3fada_eca23a58",
         "filename": "components/download/internal/model_impl.cc",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-04T17:25:10Z",
       "side": 1,
       "message": "Can we add the leveldb usage here?  Also, does this run EstimateMemoryUsage on each entry?",
+      "range": {
+        "startLine": 157,
+        "startChar": 48,
+        "endLine": 157,
+        "endChar": 56
+      },
+      "revId": "aedb09054791adc83e687a94f47a0c104181ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180ea7a6_32dd10ba",
+        "filename": "components/download/internal/model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-06T23:01:30Z",
+      "side": 1,
+      "message": "leveldb_env::DBTracker::GetOrCreateAllocatorDump() can do this but needs ProtoDatabase to expose leveldb::DB pointer. Since leveldb has already its own memory dump in the trace tool, separated by db name, we can use that.\n\nThis does compute all entries, since base::trace_event::EstimateMemoryUsage is a template function to use EstimateMemoryUsage in entry.h.",
+      "parentUuid": "51f3fada_eca23a58",
       "range": {
         "startLine": 157,
         "startChar": 48,
