@@ -31,11 +31,7 @@ class HostBrowserLauncher {
     private static final String LAST_RESORT_HOST_BROWSER_APPLICATION_NAME = "Google Chrome";
     private static final String TAG = "cr_HostBrowserLauncher";
 
-    // Action for launching {@link WebappLauncherActivity}.
-    // TODO(hanxi): crbug.com/737556. Replaces this string with the new WebAPK launch action after
-    // it is propagated to all the Chrome's channels.
-    public static final String ACTION_START_WEBAPK =
-            "com.google.android.apps.chrome.webapps.WebappManager.ACTION_START_WEBAPP";
+    public static final String ACTION_START_WEBAPK = "org.webapk.ACTION_START_WEBAPK";
 
     // Must stay in sync with
     // {@link org.chromium.chrome.browser.ShortcutHelper#REUSE_URL_MATCHING_TAB_ELSE_NEW_TAB}.
