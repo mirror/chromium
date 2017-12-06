@@ -912,8 +912,10 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
   RenderWidgetHostImpl* host_impl =
       RenderWidgetHostImpl::From(render_widget_host);
 
-  if (!host_impl->is_hidden())
+  if (!host_impl->is_hidden()) {
+    base::debug::StackTrace().Print();
     view->Show();
+  }
 
   if (is_mus_browser_plugin_guest_)
     return view;
