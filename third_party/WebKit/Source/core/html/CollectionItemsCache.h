@@ -61,6 +61,22 @@ class CollectionItemsCache : public CollectionIndexCache<Collection, NodeType> {
   HeapVector<Member<NodeType>> cached_list_;
 };
 
+// Within this scope, all CollectionItemCaches will not be validated. Any
+// previously validated caches will still return their cached values, but
+// invalidated caches will stop being validated.
+class DisableCollectionCacheScope {
+  STACK_ALLOCATED();
+  DISALLOW_COPY_AND_ASSIGN(DisableCollectionCacheScope);
+
+ public:
+  DisableCollectionCacheScope() { count_++; }
+  ~DisableCollectionCacheScope() { count_--; }
+  static bool ShouldDisableCollectionCache() { return count_; }
+
+ private:
+  static int count_;
+};
+
 template <typename Collection, typename NodeType>
 CollectionItemsCache<Collection, NodeType>::CollectionItemsCache()
     : list_valid_(false) {}
@@ -83,6 +99,18 @@ unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
   if (this->IsCachedNodeCountValid())
     return this->CachedNodeCount();
 
+  if (DisableCollectionCacheScope::ShouldDisableCollectionCache()) {
+    NodeType* current_node = collection.TraverseToFirst();
+    unsigned current_index = 0;
+    unsigned count = 0;
+    while (current_node) {
+      count++;
+      current_node = collection.TraverseForwardToOffset(
+          current_index + 1, *current_node, current_index);
+    }
+    return count;
+  }
+
   NodeType* current_node = collection.TraverseToFirst();
   unsigned current_index = 0;
   while (current_node) {
@@ -104,7 +132,11 @@ inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
     DCHECK(this->IsCachedNodeCountValid());
     return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
   }
-  return Base::NodeAt(collection, index);
+  NodeType* node = Base::NodeAt(collection, index);
+  if (DisableCollectionCacheScope::ShouldDisableCollectionCache()) {
+    Base::Invalidate();
+  }
+  return node;
 }
 
 }  // namespace blink

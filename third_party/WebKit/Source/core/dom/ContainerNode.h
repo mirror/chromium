@@ -351,13 +351,10 @@ class CORE_EXPORT ContainerNode : public Node {
   void InvalidateNodeListCachesInAncestors(const QualifiedName* attr_name,
                                            Element* attribute_owner_element,
                                            const ChildrenChange*);
+  void InvalidateNodeListCachesInAncestors();
 
-  void SetFirstChild(Node* child) {
-    first_child_ = child;
-  }
-  void SetLastChild(Node* child) {
-    last_child_ = child;
-  }
+  void SetFirstChild(Node* child) { first_child_ = child; }
+  void SetLastChild(Node* child) { last_child_ = child; }
 
   // Utility functions for NodeListsNodeData API.
   template <typename Collection>

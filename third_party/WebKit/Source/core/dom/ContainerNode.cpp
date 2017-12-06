@@ -967,7 +967,8 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
+  if (!DisableCollectionCacheScope::ShouldDisableCollectionCache())
+    InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
@@ -1656,6 +1657,21 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   for (ContainerNode* node = this; node; node = node->parentNode()) {
     if (NodeListsNodeData* lists = node->NodeLists())
       lists->InvalidateCaches(attr_name);
+  }
+}
+
+void ContainerNode::InvalidateNodeListCachesInAncestors() {
+  if (NodeListsNodeData* lists = NodeLists()) {
+    if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+      child_node_list->InvalidateCache();
+    }
+  }
+
+  GetDocument().InvalidateNodeListCaches(nullptr);
+
+  for (ContainerNode* node = this; node; node = node->parentNode()) {
+    if (NodeListsNodeData* lists = node->NodeLists())
+      lists->InvalidateCaches(nullptr);
   }
 }
 

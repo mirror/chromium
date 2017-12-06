@@ -3096,6 +3096,8 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
+  ContainerNode::InvalidateNodeListCachesInAncestors();
+  DisableCollectionCacheScope scope;
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
   if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
           html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
