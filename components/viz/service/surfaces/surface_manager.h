@@ -61,17 +61,13 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   void RequestSurfaceResolution(Surface* surface);
 
   // Creates a Surface for the given SurfaceClient. The surface will be
-  // destroyed when DestroySurface is called, all of its destruction
-  // dependencies are satisfied, and it is not reachable from the root surface.
-  // If LifetimeType=REFERENCES, then a temporary reference will be added to
-  // the new Surface.
+  // destroyed when all of its destruction dependencies are satisfied, and it is
+  // not reachable from the root surface. If LifetimeType=REFERENCES, then a
+  // temporary reference will be added to the new Surface.
   Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
                          const SurfaceInfo& surface_info,
                          BeginFrameSource* begin_frame_source,
                          bool needs_sync_tokens);
-
-  // Destroy the Surface once a set of sequence numbers has been satisfied.
-  void DestroySurface(const SurfaceId& surface_id);
 
   // Called when |surface_id| or one of its descendents is determined to be
   // damaged at aggregation time.
@@ -276,7 +272,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   void MarkOldTemporaryReference();
 
   // Removes the surface from the surface map and destroys it.
-  void DestroySurfaceInternal(const SurfaceId& surface_id);
+  void DestroySurface(const SurfaceId& surface_id);
 
 #if DCHECK_IS_ON()
   // Recursively prints surface references starting at |surface_id| to |str|.

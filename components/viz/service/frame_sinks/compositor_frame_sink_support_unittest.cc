@@ -120,7 +120,6 @@ class CompositorFrameSinkSupportTest : public testing::Test {
   ~CompositorFrameSinkSupportTest() override {
     manager_.InvalidateFrameSinkId(kArbitraryFrameSinkId);
     manager_.surface_manager()->RemoveObserver(&surface_observer_);
-    support_->EvictCurrentSurface();
   }
 
   void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
@@ -517,12 +516,12 @@ TEST_F(CompositorFrameSinkSupportTest, AddDuringEviction) {
         surface_manager->GarbageCollectSurfaces();
       }))
       .WillRepeatedly(testing::Return());
-  support->EvictCurrentSurface();
   manager_.InvalidateFrameSinkId(kAnotherArbitraryFrameSinkId);
 }
 
-// Tests doing an EvictCurrentSurface before shutting down the factory.
-TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
+// Tests doing a garbage collection before shutting down the frame sink.
+TEST_F(CompositorFrameSinkSupportTest,
+       GarbageCollectBeforeDestroyingFrameSink) {
   manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
   manager_.SetFrameSinkDebugLabel(kAnotherArbitraryFrameSinkId,
                                   "kAnotherArbitraryFrameSinkId");
@@ -550,7 +549,6 @@ TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
   EXPECT_TRUE(GetSurfaceForId(id));
   EXPECT_CALL(mock_client, DidReceiveCompositorFrameAck(returned_resources))
       .Times(1);
-  support->EvictCurrentSurface();
   manager_.surface_manager()->GarbageCollectSurfaces();
   EXPECT_FALSE(GetSurfaceForId(id));
   manager_.InvalidateFrameSinkId(kAnotherArbitraryFrameSinkId);
@@ -559,7 +557,7 @@ TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
 // Verify that a temporary reference blocks surface eviction and that when the
 // temporary reference is removed due to frame sink invalidation the surface
 // is deleted.
-TEST_F(CompositorFrameSinkSupportTest, EvictSurfaceWithTemporaryReference) {
+TEST_F(CompositorFrameSinkSupportTest, GarbageCollectWithTemporaryReference) {
   constexpr FrameSinkId parent_frame_sink_id(1234, 5678);
   manager_.RegisterFrameSinkId(parent_frame_sink_id);
   manager_.SetFrameSinkDebugLabel(parent_frame_sink_id, "parent_frame_sink_id");
@@ -576,7 +574,7 @@ TEST_F(CompositorFrameSinkSupportTest, EvictSurfaceWithTemporaryReference) {
 
   // Verify the temporary reference has prevented the surface from getting
   // destroyed.
-  support_->EvictCurrentSurface();
+  manager_.surface_manager()->GarbageCollectSurfaces();
   EXPECT_TRUE(GetSurfaceForId(surface_id));
 
   // Verify the temporary reference is removed when the parent is invalidated.
@@ -633,7 +631,6 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
   EXPECT_FALSE(called2);
   EXPECT_FALSE(called3);
 
-  support_->EvictCurrentSurface();
   local_surface_id_ = LocalSurfaceId();
   manager_.surface_manager()->GarbageCollectSurfaces();
   EXPECT_TRUE(called1);
