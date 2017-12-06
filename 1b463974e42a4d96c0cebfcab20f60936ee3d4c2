@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2bb95c6_5e507497",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 52
+      },
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b27998_060a02dd",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "These includes go below after system includes.",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d391959a_693ddf87",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "Initialize at declaration.",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e64f85_1f39bd50",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "I wonder if we should allow the functions being called from different threads/sequences. What\u0027s the rationale for that?",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d69341c_f7dfcbba",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "|file_writer_| could be concurrently accessed here and in StartRecording(), if they are called from different sequences.",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cc5a0d_21737ccb",
+        "filename": "media/audio/audio_debug_recording_writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-06T12:10:57Z",
+      "side": 1,
+      "message": "Is this still valid with the sequence check removed?",
+      "revId": "1b463974e42a4d96c0cebfcab20f60936ee3d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
