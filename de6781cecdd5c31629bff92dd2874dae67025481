@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e4de55_66b0f618",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-07T14:04:47Z",
+      "side": 0,
+      "message": "This comment is important.  Could you keep the comment?",
+      "revId": "de6781cecdd5c31629bff92dd2874dae67025481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4119b9c_7b6713b0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-07T14:04:47Z",
+      "side": 0,
+      "message": "Could you refrain from changing the behavior?",
+      "revId": "de6781cecdd5c31629bff92dd2874dae67025481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

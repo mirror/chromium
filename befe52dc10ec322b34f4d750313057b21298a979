@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15d9022_9cf6ea9e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-07T14:04:47Z",
+      "side": 1,
+      "message": "We must never hit this due to the default value in the IDL.\nIt\u0027s better to use DCHECK.",
+      "range": {
+        "startLine": 1554,
+        "startChar": 28,
+        "endLine": 1554,
+        "endChar": 43
+      },
+      "revId": "befe52dc10ec322b34f4d750313057b21298a979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0168c5_376dc139",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-07T14:04:47Z",
+      "side": 1,
+      "message": "Could you remove this FIXME as it\u0027s no longer effective?",
+      "revId": "befe52dc10ec322b34f4d750313057b21298a979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5051fb3_2b068b17",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-07T14:04:47Z",
+      "side": 1,
+      "message": "Could you please focus on removing [Custom] in this patch?\nOne change per one patch is easier to maintain, control and revert (if needed).  It\u0027s also good for other developers to follow your changes.",
+      "range": {
+        "startLine": 78,
+        "startChar": 84,
+        "endLine": 78,
+        "endChar": 93
+      },
+      "revId": "befe52dc10ec322b34f4d750313057b21298a979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
