@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ade988_590aed56",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-07T14:29:46Z",
+      "side": 1,
+      "message": "Can the scope of allow_blocking be limited to this statement?",
+      "revId": "31528ba830265aa38f810ee433fc3a9d0b49cf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
