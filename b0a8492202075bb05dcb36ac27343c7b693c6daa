@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4e356a71_8f1a5d43",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-07T16:39:42Z",
+      "side": 1,
+      "message": "Also renamed this function to MaybeSet...",
+      "parentUuid": "a9a9337f_f25fdc54",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "b0a8492202075bb05dcb36ac27343c7b693c6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795bc7aa_9677dd8b",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 6
