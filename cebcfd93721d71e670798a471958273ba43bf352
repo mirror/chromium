@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aca6908_28f5596d",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T17:01:09Z",
+      "side": 1,
+      "message": "Are these the only hosts it throws an exception with?  What about \"\\x1\", \"/\", \"foo:1\", or \"\\\\\"?  Admittedly, net probably won\u0027t send any of those through this code, just not sure there aren\u0027t any other things that GURL will let us get away with that NetworkSecurityPolicyProxy will not.",
+      "range": {
+        "startLine": 301,
+        "startChar": 17,
+        "endLine": 301,
+        "endChar": 27
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7972df3_62275f58",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T17:01:09Z",
+      "side": 1,
+      "message": "Do we still need this, now that this doesn\u0027t depend on android::BuildInfo / SDK_VERSION_MARSHMALLOW?",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7e9a05_7adb32a4",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T17:01:09Z",
+      "side": 1,
+      "message": "nit:  While you\u0027re here, this should const and named kCase or kTestCases.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 4,
+        "endLine": 1470,
+        "endChar": 9
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec415543_3d8aa6e5",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T17:01:09Z",
+      "side": 1,
+      "message": "What is this the call count of?",
+      "range": {
+        "startLine": 1501,
+        "startChar": 22,
+        "endLine": 1501,
+        "endChar": 69
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
