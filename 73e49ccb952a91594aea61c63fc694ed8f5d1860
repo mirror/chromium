@@ -34,6 +34,24 @@
       "revId": "73e49ccb952a91594aea61c63fc694ed8f5d1860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f8afca_e1ff4562",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T22:25:05Z",
+      "side": 1,
+      "message": "When we implement this on other platfors we can make this non CrOS specific. Otherwise in the meanwhile this seems like a timebomb - someone might use this in non CrOS specific code but only test on CrOS. At minium there should be a TODO comment here.",
+      "parentUuid": "011537fe_232dc9bd",
+      "revId": "73e49ccb952a91594aea61c63fc694ed8f5d1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

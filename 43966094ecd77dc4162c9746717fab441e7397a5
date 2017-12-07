@@ -164,6 +164,30 @@
       "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a147d26_51ffe602",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T22:25:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0432ab3d_0be6d763",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
