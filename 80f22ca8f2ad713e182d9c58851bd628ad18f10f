@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fee3bf6_fcae9245",
+        "filename": "media/gpu/v4l2/generic_v4l2_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-12-07T09:42:43Z",
+      "side": 1,
+      "message": "The header guards need to be modified as well.",
+      "revId": "80f22ca8f2ad713e182d9c58851bd628ad18f10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
