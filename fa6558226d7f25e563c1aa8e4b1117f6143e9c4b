@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d2df71_bf762a70",
+        "filename": "components/arc/common/app_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:53:44Z",
+      "side": 1,
+      "message": "Please don\u0027t use default in switch, since it suppresses compiler warnings for new enumerator values.",
+      "revId": "fa6558226d7f25e563c1aa8e4b1117f6143e9c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
