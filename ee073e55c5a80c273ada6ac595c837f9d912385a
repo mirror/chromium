@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9b2c69f_662e354b",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T16:45:21Z",
+      "side": 1,
+      "message": "nit: \"in rapid back/forward navigations |handle| sometimes won\u0027t have a cert\" (? if that\u0027s right? IIRC this was a race and didn\u0027t happen reliably... maybe also include a link to the bug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d727892)",
+      "range": {
+        "startLine": 1292,
+        "startChar": 18,
+        "endLine": 1292,
+        "endChar": 23
+      },
+      "revId": "ee073e55c5a80c273ada6ac595c837f9d912385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693de546_4f0e513b",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T16:45:21Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this case. Is this the case where we lose the navigation handle and then it gets recreated (without a cert)?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 0,
+        "endLine": 1296,
+        "endChar": 79
+      },
+      "revId": "ee073e55c5a80c273ada6ac595c837f9d912385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
