@@ -22,6 +22,30 @@
       "revId": "892028554b39fcdd36f04bec6377720739712515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b533191_5fc36ead",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-07T19:59:36Z",
+      "side": 1,
+      "message": "No they aren\u0027t https://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/tab_manager.cc?l\u003d390\u0026rcl\u003dad33ed3adb4ffc05903c1d4095ff264579583437\n\nCould we change that without violating the contract for autoDiscardable in https://developer.chrome.com/extensions/tabs ?",
+      "parentUuid": "2b5d388a_84b98570",
+      "range": {
+        "startLine": 85,
+        "startChar": 38,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "892028554b39fcdd36f04bec6377720739712515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
