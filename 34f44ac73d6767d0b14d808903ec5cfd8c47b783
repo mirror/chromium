@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89eb3ecc_88790f16",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T23:26:10Z",
+      "side": 1,
+      "message": "This CL might cause slight behavior changes around the early return for FetchImport() \u003d\u003d nullptr case (in Line 118).\n\n- Previously, CreateLoader() and CreateChild() are not called if FetchImport() is null.\n- After this CL, they are called even if FetchImport() is null.\n\nCreateLoader() does two things:\n1. HTMLImportLoader::Create(this) (which looks harmless when FetchImport() returns nullptr, as HTMLImportLoader ctor only sets some members and thus is safe to create and have GCed)\n2. And adds the new loader to |loaders_|.\n\nI\u0027m wondering that the second part of CreateLoader() and CreateChild() might cause behavioral changes.\n(Anyway FetchImport() null cases might be something like Document is to be GCed etc and we don\u0027t have to care much about leaving inconsistent state after that though.)\n\nHow about:\n\n\u003e HTMLImportLoader* loader \u003d HTMLImportLoader::Create(this);\n\u003e ResourceFetcher* fetcher \u003d parent-\u003eGetDocument()-\u003eFetcher();\n\u003e if (!RawResource::FetchImport(params, fetcher, loader))\n\u003e    return nullptr;\n\u003e loader_.push_back(loader);\n\u003e HTMLImportChild* child \u003d CreateChild(url, loader, parent, client);\n\u003e child-\u003eDidStartLoading();\n\nThe behavior changes of this proposal are:\n- HTMLImportLoader::Create(this) is called before early return, but this looks harmless.\n- loader_.push_back() and CreateChild() is called after SetResource(), but this should be safe provided RawResourceClient is always notified asynchronously.",
+      "revId": "34f44ac73d6767d0b14d808903ec5cfd8c47b783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
