@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6d991b_6da20f03",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-07T22:29:56Z",
+      "side": 1,
+      "message": "Comment is still referring to SSL interstitial. Could you update it to match safe browsing?",
+      "revId": "eded734eb96540a5666987bda5db6da70072d3e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
