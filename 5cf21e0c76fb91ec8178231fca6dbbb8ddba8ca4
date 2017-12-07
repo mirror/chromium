@@ -117,6 +117,30 @@
       "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ee15a6_c003b68c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-07T06:18:14Z",
+      "side": 1,
+      "message": "thanks @fs.\nupdated the code based on spec.",
+      "parentUuid": "8342189a_ab648e5b",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "5cf21e0c76fb91ec8178231fca6dbbb8ddba8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
