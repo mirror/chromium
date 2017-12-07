@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb48d661_855bbe4f",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T20:02:56Z",
+      "side": 1,
+      "message": "1. s/clamp/Clamp/\n2. Also move to anonymous namespace as per the style guide.\n3. Can you add function-level comments to each function?",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85cfc325_c4f6815d",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T20:02:56Z",
+      "side": 1,
+      "message": "This function is specific to NGPhysicalTextFragment only for StartOffset() and EndOffset(), correct?\n\nCan we move this logic to somewhere else...probably FrameSelection?...and give StartOffset() and EndOffset() to it?",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6c7539_3e4f88de",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T20:02:56Z",
+      "side": 1,
+      "message": "start_in_block maybe \u003c StartOffset() but always \u003c\u003d EndOffset(), no? Blindly clamping is likely to hide problems, how about DCHECK?\n\nSame below.",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e344509_bfd6eca8",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T20:02:56Z",
+      "side": 1,
+      "message": "TextRun is legacy, we shouldn\u0027t use it.\n\nWe should probably copy the logic to here or somewhere else, the logic seems to be small.\n\nThen to get CharacterRange, pass text_fragment.TextShapeResult() to the static version of ShapeResultBuffer::GetCharacterRange().",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
