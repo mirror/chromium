@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70255621_c4fbbd16",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T19:30:11Z",
+      "side": 1,
+      "message": "BeginMainFrameStartToReadyToCommit?\n\nAlso, try to cache and reuse the estimates since it calls RollingTimeDeltaHistory::Percentile, which is a bit involved. It might make sense to implement caching within RollingTimeDeltaHistory at this point. If you go that route, feel free to make it a follow up patch.",
+      "range": {
+        "startLine": 429,
+        "startChar": 34,
+        "endLine": 429,
+        "endChar": 77
+      },
+      "revId": "4947c62493dd93172b297d4bc2cebc6cd53943ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
