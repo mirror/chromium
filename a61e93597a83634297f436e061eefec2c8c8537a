@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c35f7483_52df83db",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:26:43Z",
+      "side": 1,
+      "message": "Can you make this `// TODO(mkwst):` and perhaps drop the \"It is not necessarily correct...\" sentence? Something like:\n\n```\n// TODO(mkwst): Perhaps this should use a unique origin as the requestor\n// origin rather than the origin of the dragged data URL?\n```",
+      "revId": "a61e93597a83634297f436e061eefec2c8c8537a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
