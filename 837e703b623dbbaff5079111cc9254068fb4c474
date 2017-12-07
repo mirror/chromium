@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e26e4f88_cc63a9a4",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "I\u0027m confused.  Won\u0027t this mean \"switch to the index of the tab I found in |browser|, but do so in |current_browser| instead\"?  That can\u0027t be right.",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22f1ded_1d17b867",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Do we need this disposition check?  Wouldn\u0027t this be correct (necessary?) for SINGLETON_TAB too?",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eca47b6_248a20cb",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "This isn\u0027t the right thing to check.  This will close any tab with no session history, but we never want to close non-NTP tabs with no history (common for tabs opened via middle-click or alt-enter, which basically means all my tabs).",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acdfb9b7_2eed3ed5",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Why is this necessary/correct?  We don\u0027t do this when e.g. opening a new tab with alt-enter.  I don\u0027t see why focus should leave the address bar in this tab; navigation will reset the omnibox, which is all we want.",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a309b2_92d468c8",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Nit: GetIndexOfExistingTab()?",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a025b6d5_e1de6818",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Maybe, maybe not.  If the shift key is already down when we focus the omnibox, we arguably shouldn\u0027t respect it (sort of like how we intentionally don\u0027t respect the ctrl key for ctrl-enter when it was already pressed for some other purpose before hitting the enter key).",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b22d5e9_df786721",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Nit: This comment feels slightly misleading now that OpenMatch() doesn\u0027t do anything special with this.  I might just remove it entirely.",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0846ca2_3d5d6659",
+        "filename": "components/omnibox/browser/omnibox_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Nit: Usually inlined setters like this would be named set_shift_key_pressed()\n\nAlso, I recommend naming all this stuff \"down\" rather than \"pressed\", because \"pressed\" can read like past tense of \"press\", i.e. \"the shift key has at some point been pressed\", rather than \"the shift key is currently down\".  This matches how we name the ControlKeyState values.",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e9eb6f_f2391879",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T10:37:37Z",
+      "side": 1,
+      "message": "Can you be clearer about \"clean up\"?  May also want to detail how this differs behaviorally from SINGLETON_TAB.",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
