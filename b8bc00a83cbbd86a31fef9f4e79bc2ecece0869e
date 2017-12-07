@@ -22,6 +22,30 @@
       "revId": "b8bc00a83cbbd86a31fef9f4e79bc2ecece0869e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aad832e_eb82c122",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-07T19:35:40Z",
+      "side": 1,
+      "message": "You are right. However, hit testing as written here is a best effort/best match search. We can have multiple nodes that match a hit point. The idea here is to find something that mtaches better than an offscreen or partially offscreen node.\n\nIn practice, the example I\u0027m working with is Google search which uses a partially offscreen node that is also 800x1800 (essentially the entire page). At some point, we might want some notion of z-order as well. Until then, I think this is good for now considering performance.",
+      "parentUuid": "8d9f1028_784472f2",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 33
+      },
+      "revId": "b8bc00a83cbbd86a31fef9f4e79bc2ecece0869e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
