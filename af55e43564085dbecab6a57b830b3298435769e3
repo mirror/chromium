@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b934cf6_16953549",
+        "filename": "third_party/webrtc_overrides/rtc_base/gtest_prod_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-07T13:21:58Z",
+      "side": 1,
+      "message": "The WebRTC file this file overrides claims to be a copy of Chromium\u0027s alike, but they are not quite like. For example FAILS_ is included in the WebRTC file. I\u0027m not sure if this is intentional or if they have deviated over time.\n\nI want to make sure nothing breaks, and check if maybe time to update the WebRTC file?",
+      "revId": "af55e43564085dbecab6a57b830b3298435769e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
