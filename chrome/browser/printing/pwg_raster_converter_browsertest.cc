@@ -75,7 +75,7 @@ void ComparePwgFiles(const base::FilePath& expected,
 class PdfToPwgRasterBrowserTest : public InProcessBrowserTest {
  public:
   PdfToPwgRasterBrowserTest()
-      : converter_(PWGRasterConverter::CreateDefault()) {}
+      : converter_(PwgRasterConverter::CreateDefault()) {}
   ~PdfToPwgRasterBrowserTest() override {}
 
   void Convert(base::RefCountedMemory* pdf_data,
@@ -95,7 +95,7 @@ class PdfToPwgRasterBrowserTest : public InProcessBrowserTest {
   }
 
  private:
-  std::unique_ptr<PWGRasterConverter> converter_;
+  std::unique_ptr<PwgRasterConverter> converter_;
 };
 
 }  // namespace
