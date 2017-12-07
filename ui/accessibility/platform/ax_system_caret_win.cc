@@ -25,21 +25,11 @@ AXSystemCaretWin::AXSystemCaretWin(gfx::AcceleratedWidget event_target)
   // According to MSDN, "Edit" should be the name of the caret object.
   data_.SetName(L"Edit");
   data_.offset_container_id = -1;
-
-  if (event_target_) {
-    ::NotifyWinEvent(EVENT_OBJECT_CREATE, event_target_, OBJID_CARET,
-                     -data_.id);
-  }
 }
 
 AXSystemCaretWin::~AXSystemCaretWin() {
   caret_->Destroy();
-  // We shouldn't set |caret_| to nullptr because event clients might try to
-  // retrieve the destroyed object in this stack frame.
-  if (event_target_) {
-    ::NotifyWinEvent(EVENT_OBJECT_DESTROY, event_target_, OBJID_CARET,
-                     -data_.id);
-  }
+  caret_ = nullptr;
 }
 
 Microsoft::WRL::ComPtr<IAccessible> AXSystemCaretWin::GetCaret() const {
