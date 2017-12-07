@@ -824,9 +824,18 @@ void AutofillAgent::OnInferredFormSubmission(SubmissionSource source) {
     return;
   }
 
-  FormData form_data;
-  if (GetSubmittedForm(&form_data)) {
-    FireHostSubmitEvents(form_data, /*known_success=*/true);
+  if (source == SubmissionSource::FRAME_DETACHED) {
+    // Shouldn't access frame, just use cached form.
+    if (!last_interacted_form_.IsNull()) {
+      FireHostSubmitEvents(last_interacted_form_, /*known_success=*/true);
+    } else if (constructed_form_) {
+      FireHostSubmitEvents(*constructed_form_, /*known_success=*/true);
+    }
+  } else {
+    FormData form_data;
+    if (GetSubmittedForm(&form_data)) {
+      FireHostSubmitEvents(form_data, /*known_success=*/true);
+    }
   }
   ResetLastInteractedElements();
 }
