@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d8ea6f5_e034cee2",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-07T17:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5015044_2ccdcae0",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bb6454e_e12b2a91",
         "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T23:40:00Z",
       "side": 1,
       "message": "BTW, after this CL, I will look into changing this to not take a file. There\u0027s a few bugs for issues with temp files.",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a5c50b7_5e2a60fd",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-07T17:07:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5bb6454e_e12b2a91",
       "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -50,6 +86,24 @@
       "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1c35fb_a3359c75",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-07T17:07:15Z",
+      "side": 1,
+      "message": "Oh yeah, I broke it by making the components/printing/service/public deps Windows only when enable_basic_printing is true. Fixed.",
+      "parentUuid": "b3848178_e264bdf3",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "39998f38_291d0e72",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-07T17:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b7d45d_70673dfe",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5141888_595e2c22",
         "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
         "patchSetId": 12
@@ -90,6 +168,24 @@
       "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52dff7c_6450b4fc",
+        "filename": "chrome/utility/printing/pdf_to_emf_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-07T17:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5141888_595e2c22",
+      "revId": "0adb5b75c3a674a06f10552c5229eef5242950e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
