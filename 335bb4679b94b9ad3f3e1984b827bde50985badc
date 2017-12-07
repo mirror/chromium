@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ba3d79f_9fa82225",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-07T03:31:57Z",
+      "side": 1,
+      "message": "inlinestyle/properties/transform.html is hitting this DCHECK...",
+      "revId": "335bb4679b94b9ad3f3e1984b827bde50985badc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

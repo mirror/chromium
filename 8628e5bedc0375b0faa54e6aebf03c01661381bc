@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f902f0a1_6de9e463",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSTranslation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-07T03:31:57Z",
+      "side": 0,
+      "message": "You still have a failing LayoutTest for this. Aside from that, what does it mean to have a percent for Z? AFAIK regular translate3D can\u0027t have a percent in Z...",
+      "revId": "8628e5bedc0375b0faa54e6aebf03c01661381bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
