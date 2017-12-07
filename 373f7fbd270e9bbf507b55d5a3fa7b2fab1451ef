@@ -139,6 +139,24 @@
       "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8263e0de_2aa4d1cb",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "It looks like going from Profile-\u003eAccountId is better supported than AccountId-\u003eProfile since it seems that I need to go through the UserManager to get this information.  Since I\u0027m performing teardown in the ChromeUserManagerImpl already, I don\u0027t I\u0027m not sure what the benefit would be (since it doesn\u0027t depend on other services).",
+      "parentUuid": "4a43fe80_efe01ff5",
+      "revId": "373f7fbd270e9bbf507b55d5a3fa7b2fab1451ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "870e2d2d_fb4cd72a",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5fe95bd_7c7cb503",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91744bc8_a5c8278e",
         "filename": "chrome/browser/chromeos/printing/external_printers_observer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4e12bc_f88b2518",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "Nope",
+      "parentUuid": "91744bc8_a5c8278e",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "756ccace_00aa3e81",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca4e4bf_0f49d9b4",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba107b31_005d5425",
         "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f393723_dc0f8b76",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "I\u0027ll keep that in mind.  However, this is how it\u0027s defined in the policy so I\u0027d like it to match.",
+      "parentUuid": "ba107b31_005d5425",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "4afdadc1_0af760c3",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f07f41db_768c21b2",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 25
+      },
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7775605_7c622a31",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 2
@@ -121,6 +217,30 @@
       "writtenOn": "2017-12-05T19:19:01Z",
       "side": 1,
       "message": "Polcy?",
+      "range": {
+        "startLine": 239,
+        "startChar": 11,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7e2389_9f77c579",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T00:18:14Z",
+      "side": 1,
+      "message": "I don\u0027t understand the question",
+      "parentUuid": "c7775605_7c622a31",
       "range": {
         "startLine": 239,
         "startChar": 11,
