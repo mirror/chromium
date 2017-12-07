@@ -41,9 +41,15 @@ namespace content {
 class LayoutTestDevToolsBindings::SecondaryObserver
     : public WebContentsObserver {
  public:
-  explicit SecondaryObserver(LayoutTestDevToolsBindings* bindings)
+  explicit SecondaryObserver(LayoutTestDevToolsBindings* bindings,
+                             bool is_startup_test)
       : WebContentsObserver(bindings->inspected_contents()),
-        bindings_(bindings) {}
+        bindings_(bindings) {
+    if (is_startup_test) {
+      bindings_->NavigateDevToolsFrontend();
+      bindings_ = nullptr;
+    }
+  }
 
   // WebContentsObserver implementation.
   void DocumentAvailableInMainFrame() override {
@@ -139,6 +145,11 @@ void LayoutTestDevToolsBindings::EvaluateInFrontend(int call_id,
       base::UTF8ToUTF16(source));
 }
 
+void LayoutTestDevToolsBindings::Inspect() {
+  ShellDevToolsBindings::Inspect();
+  EvaluateInFrontend(0, "TestRunner.onInspect();");
+}
+
 LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* devtools_contents,
     WebContents* inspected_contents,
@@ -148,14 +159,18 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
       frontend_url_(frontend_url) {
   SetPreferences(settings);
-
   if (new_harness) {
-    secondary_observer_ = std::make_unique<SecondaryObserver>(this);
-    NavigationController::LoadURLParams params(
-        GetInspectedPageURL(frontend_url));
-    params.transition_type = ui::PageTransitionFromInt(
-        ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-    inspected_contents->GetController().LoadURLWithParams(params);
+    is_startup_test_ =
+        frontend_url.query().find("/startup/") != std::string::npos;
+    secondary_observer_ =
+        std::make_unique<SecondaryObserver>(this, is_startup_test_);
+    if (!is_startup_test_) {
+      NavigationController::LoadURLParams params(
+          GetInspectedPageURL(frontend_url));
+      params.transition_type = ui::PageTransitionFromInt(
+          ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+      inspected_contents->GetController().LoadURLWithParams(params);
+    }
   } else {
     NavigateDevToolsFrontend();
   }
@@ -168,12 +183,26 @@ void LayoutTestDevToolsBindings::HandleMessageFromDevToolsFrontend(
   std::string method;
   base::DictionaryValue* dict = nullptr;
   std::unique_ptr<base::Value> parsed_message = base::JSONReader::Read(message);
-  if (parsed_message && parsed_message->GetAsDictionary(&dict) &&
-      dict->GetString("method", &method) && method == "readyForTest") {
+  if (!parsed_message || !parsed_message->GetAsDictionary(&dict) ||
+      !dict->GetString("method", &method)) {
+    return;
+  }
+
+  if (method == "readyForTest") {
     ready_for_test_ = true;
     for (const auto& pair : pending_evaluations_)
       EvaluateInFrontend(pair.first, pair.second);
     pending_evaluations_.clear();
+    return;
+  }
+
+  int request_id = 0;
+  dict->GetInteger("id", &request_id);
+
+  // Respond to getPreferences to allow DevTools UI be initialized before
+  // the DevTools session has started in startup tests.
+  if (method == "getPreferences" && is_startup_test_) {
+    SendMessageAck(request_id, preferences());
     return;
   }
 
@@ -188,6 +217,12 @@ void LayoutTestDevToolsBindings::RenderProcessGone(
 void LayoutTestDevToolsBindings::RenderFrameCreated(
     RenderFrameHost* render_frame_host) {
   BlinkTestController::Get()->HandleNewRenderFrameHost(render_frame_host);
+}
+
+void LayoutTestDevToolsBindings::DocumentAvailableInMainFrame() {
+  if (is_startup_test_)
+    return;
+  ShellDevToolsBindings::Inspect();
 }
 
 }  // namespace content
