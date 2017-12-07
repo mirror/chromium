@@ -42,7 +42,6 @@ class ChromeHttpUserAgentSettings;
 class ChromeNetworkDelegate;
 class ChromeURLRequestContextGetter;
 class ChromeExpectCTReporter;
-class ExtensionCookieNotifier;
 class HostContentSettingsMap;
 class ProtocolHandlerRegistry;
 
@@ -325,7 +324,6 @@ class ProfileIOData {
     scoped_refptr<net::SSLConfigService> ssl_config_service;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     scoped_refptr<extensions::InfoMap> extension_info_map;
-    std::unique_ptr<ExtensionCookieNotifier> extension_cookie_notifier;
 #endif
     std::unique_ptr<chrome_browser_net::LoadingPredictorObserver>
         loading_predictor_observer_;
@@ -626,7 +624,6 @@ class ProfileIOData {
   // Is NULL if switches::kDisableExtensionsHttpThrottling is on.
   mutable std::unique_ptr<extensions::ExtensionThrottleManager>
       extension_throttle_manager_;
-  mutable std::unique_ptr<ExtensionCookieNotifier> extension_cookie_notifier_;
 #endif
 
   mutable std::unique_ptr<certificate_transparency::TreeStateTracker>

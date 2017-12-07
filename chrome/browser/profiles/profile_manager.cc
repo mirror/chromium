@@ -1223,6 +1223,7 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
     extensions_enabled = true;
   }
 #endif
+  extensions::ExtensionSystem::Get(profile)->Init(extensions_enabled);
   extensions::ExtensionSystem::Get(profile)->InitForRegularProfile(
       extensions_enabled);
 
