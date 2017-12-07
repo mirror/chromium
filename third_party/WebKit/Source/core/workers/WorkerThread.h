@@ -97,7 +97,9 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   void Start(std::unique_ptr<GlobalScopeCreationParams>,
              const WTF::Optional<WorkerBackingThreadStartupData>&,
              std::unique_ptr<GlobalScopeInspectorCreationParams>,
-             ParentFrameTaskRunners*);
+             ParentFrameTaskRunners*,
+             const String& source_code = String(),
+             std::unique_ptr<Vector<char>> cached_meta_data = nullptr);
 
   // Closes the global scope and terminates the underlying thread. Called on the
   // main thread.
@@ -237,7 +239,9 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   void InitializeOnWorkerThread(
       std::unique_ptr<GlobalScopeCreationParams>,
       const WTF::Optional<WorkerBackingThreadStartupData>&,
-      std::unique_ptr<GlobalScopeInspectorCreationParams>);
+      std::unique_ptr<GlobalScopeInspectorCreationParams>,
+      String source_code,
+      std::unique_ptr<Vector<char>> cached_meta_data);
 
   // These are called in this order during worker thread termination.
   void PrepareForShutdownOnWorkerThread();
