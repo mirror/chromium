@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "6f53ccde_0f57628e",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-07T05:31:20Z",
+      "side": 1,
+      "message": "OK - I\u0027ve replaced the original icons with the 16x16 versions below, except for the content paste icon which looks different. I wasn\u0027t able to test all the UI surfaces the icons are used on to check stuff still looks OK though (e.g. the VR changes).\n\nAs for the padding, I can do that in a follow-up patchset (I assume you mean to reduce the 18x18 icons to 17x17, then add 1 dip of padding?) for the other PermissionPromptImpls icons (which is the other UI surface that uses these icons at 18x18).",
+      "parentUuid": "0fb590fd_0c1dc327",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd32ca0_fb2397e9",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 14
