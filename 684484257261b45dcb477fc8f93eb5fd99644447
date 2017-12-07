@@ -140,6 +140,24 @@
       "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "090085d7_6d8d40ec",
+        "filename": "content/common/color_chooser.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-07T15:38:14Z",
+      "side": 1,
+      "message": "I meant that the logic would still be on WebContents, but the mojo method would be dispatched on RenderFrameHostImpl (to avoid an extra interface) and that would call out to its delegate (WebContentsImpl).\n\nPerhaps what we need is an interface from RenderFrame to WebContents. With old IPC, this automatically works (i.e. send an ipc in renderframeimpl, it gets dispatched in WebContents). With mojo we\u0027d need a separate interface.\n\nDoesn\u0027t have to be done in this cl, but I suspect there\u0027ll be a lot more cases like this and we don\u0027t want a one-method interface for each.",
+      "parentUuid": "5a5bb3a1_c6b31403",
+      "revId": "684484257261b45dcb477fc8f93eb5fd99644447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
