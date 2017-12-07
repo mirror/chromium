@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbee91d6_3b8a4fa9",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/cssom-setproperty-undefined-value.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-07T09:56:25Z",
+      "side": 1,
+      "message": "Can you move this test to LayoutTests/external/wpt/css/cssom/? It looks like it\u0027s only testing what\u0027s already prescribed by the spec.\n\nAlso, can you test the use of null, and test the change of the priority argument. Presumably, at least WebKit would also fail some of these tests.",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "2baed25330f167a0213d90359a93c6678b540a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
