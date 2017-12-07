@@ -54,6 +54,7 @@ void OfflineContentAggregator::UnregisterProvider(
 
   OfflineContentProvider* provider = provider_it->second;
   providers_.erase(provider_it);
+  pending_providers_.erase(provider);
 
   // Only clean up the connection to the provider if the provider isn't
   // associated with any other namespace.
@@ -119,32 +120,64 @@ void OfflineContentAggregator::ResumeDownload(const ContentId& id,
                         base::Unretained(it->second), id, has_user_gesture));
 }
 
-const OfflineItem* OfflineContentAggregator::GetItemById(const ContentId& id) {
+void OfflineContentAggregator::GetItemById(const ContentId& id,
+                                           const SingleItemCallback& callback) {
   auto it = providers_.find(id.name_space);
-
   if (it == providers_.end() || !it->second->AreItemsAvailable())
-    return nullptr;
+    return;
 
-  return it->second->GetItemById(id);
+  it->second->GetItemById(
+      id, base::Bind(&OfflineContentAggregator::OnGetItemByIdDone,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
-OfflineContentProvider::OfflineItemList
-OfflineContentAggregator::GetAllItems() {
-  // Create a set of unique providers to iterate over.
-  std::set<OfflineContentProvider*> providers;
-  for (auto provider_it : providers_)
-    providers.insert(provider_it.second);
+void OfflineContentAggregator::OnGetItemByIdDone(
+    const SingleItemCallback& callback,
+    const OfflineItem* item) {
+  callback.Run(item);
+}
 
-  OfflineItemList items;
-  for (auto* provider : providers) {
+void OfflineContentAggregator::GetAllItems(
+    const MultipleItemCallback& callback) {
+  // If there is already a call in progress, queue up the callback and wait for
+  // the results.
+  if (!multiple_item_get_callbacks_.empty()) {
+    multiple_item_get_callbacks_.push_back(callback);
+    return;
+  }
+
+  DCHECK(aggregated_items_.empty());
+  for (auto provider_it : providers_) {
+    std::string name_space = provider_it.first;
+    auto* provider = provider_it.second;
     if (!provider->AreItemsAvailable())
       continue;
 
-    OfflineItemList provider_items = provider->GetAllItems();
-    items.insert(items.end(), provider_items.begin(), provider_items.end());
+    provider->GetAllItems(
+        base::Bind(&OfflineContentAggregator::OnGetAllItemsDone,
+                   weak_ptr_factory_.GetWeakPtr(), provider));
+    pending_providers_.insert(provider);
   }
 
-  return items;
+  multiple_item_get_callbacks_.push_back(callback);
+}
+
+void OfflineContentAggregator::OnGetAllItemsDone(
+    OfflineContentProvider* provider,
+    const OfflineItemList& items) {
+  aggregated_items_.insert(aggregated_items_.end(), items.begin(), items.end());
+  pending_providers_.erase(provider);
+  if (!pending_providers_.empty()) {
+    return;
+  }
+
+  auto item_vec = aggregated_items_;
+  aggregated_items_.clear();
+  auto callbacks = multiple_item_get_callbacks_;
+  multiple_item_get_callbacks_.clear();
+
+  for (auto& callback : callbacks)
+    callback.Run(item_vec);
 }
 
 void OfflineContentAggregator::GetVisualsForItem(
@@ -187,6 +220,14 @@ void OfflineContentAggregator::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
+void OfflineContentAggregator::NotifyItemsAdded(const OfflineItemList& items) {
+  if (items.empty())
+    return;
+
+  for (auto* observer : signaled_observers_)
+    observer->OnItemsAdded(items);
+}
+
 void OfflineContentAggregator::OnItemsAvailable(
     OfflineContentProvider* provider) {
   // Flush any pending actions that should be mirrored to the provider.
@@ -196,11 +237,9 @@ void OfflineContentAggregator::OnItemsAvailable(
   // initialized.  Just treat this as an OnItemsAdded and notify those observers
   // of the new items.
   if (signaled_observers_.size() > 0) {
-    OfflineItemList items = provider->GetAllItems();
-    if (items.size() > 0) {
-      for (auto* observer : signaled_observers_)
-        observer->OnItemsAdded(items);
-    }
+    provider->GetAllItems(
+        base::Bind(&OfflineContentAggregator::NotifyItemsAdded,
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   // Check if there were any observers who haven't been told that this class is

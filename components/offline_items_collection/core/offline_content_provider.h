@@ -27,6 +27,8 @@ class OfflineContentProvider {
   using OfflineItemList = std::vector<OfflineItem>;
   using VisualsCallback =
       base::Callback<void(const ContentId&, const OfflineItemVisuals*)>;
+  using MultipleItemCallback = base::Callback<void(const OfflineItemList&)>;
+  using SingleItemCallback = base::Callback<void(const OfflineItem*)>;
 
   // An observer class that should be notified of relevant changes to the
   // underlying data source.
@@ -80,10 +82,11 @@ class OfflineContentProvider {
   // Returns an OfflineItem represented by |id| or |nullptr| if none exists.
   // The caller should not hold ownership of the returned item beyond the scope
   // of the function call.
-  virtual const OfflineItem* GetItemById(const ContentId& id) = 0;
+  virtual void GetItemById(const ContentId& id,
+                           const SingleItemCallback& callback) = 0;
 
   // Returns all OfflineItems for this particular provider.
-  virtual OfflineItemList GetAllItems() = 0;
+  virtual void GetAllItems(const MultipleItemCallback& callback) = 0;
 
   // Asks for an OfflineItemVisuals struct for an OfflineItem represented by
   // |id| or |nullptr| if one doesn't exist.  The implementer should post any
