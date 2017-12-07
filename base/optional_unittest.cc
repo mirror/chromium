@@ -93,7 +93,7 @@ void swap(TestObject& lhs, TestObject& rhs) {
 }
 
 class NonTriviallyDestructible {
-  ~NonTriviallyDestructible() {}
+  ~NonTriviallyDestructible() = default;
 };
 
 }  // anonymous namespace

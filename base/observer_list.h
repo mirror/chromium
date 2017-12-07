@@ -201,7 +201,7 @@ class ObserverList
 
   const_iterator end() const { return const_iterator(); }
 
-  ObserverList() {}
+  ObserverList() = default;
   explicit ObserverList(ObserverListPolicy policy) : policy_(policy) {}
 
   ~ObserverList() {
