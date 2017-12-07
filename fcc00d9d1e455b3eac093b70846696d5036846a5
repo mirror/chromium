@@ -22,6 +22,30 @@
       "revId": "fcc00d9d1e455b3eac093b70846696d5036846a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9730c0ae_f524fe14",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferencesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-07T10:16:38Z",
+      "side": 1,
+      "message": "Good idea!\nI just made sure the strings with the added entry still remain in the test itself, following the advice of go/tott-503.\n\nAlso, two of the already existing tests cleaned up the passwords on exit by calling:\n        handler.setSavedPasswords(null);\nThe new tests did not and it is not needed, because every test influenced by the state of the password lists should set it up properly, overriding what may be left. So I removed that clean-up from the two existing tests to be consistent.",
+      "parentUuid": "3919b0f0_f2285409",
+      "range": {
+        "startLine": 451,
+        "startChar": 8,
+        "endLine": 462,
+        "endChar": 11
+      },
+      "revId": "fcc00d9d1e455b3eac093b70846696d5036846a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
