@@ -189,6 +189,7 @@ void TestOtherProcess(TestPaths::Architecture architecture) {
 }
 
 TEST(ProcessInfo, OtherProcess) {
+  DISABLED_TEST();  // TODO(scottmg): https://crbug.com/792619.
   TestOtherProcess(TestPaths::Architecture::kDefault);
 }
 
