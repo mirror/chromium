@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5be731f_8f4ea66a",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "I\u0027ve considered but didn\u0027t do so based on:\n1. the enum I added will not be exposed out of offline_pages, so it shouldn\u0027t be in offline_page_types.h\n2. the enum isn\u0027t part of store.. so shouldn\u0027t be part of offline_store_types.h\n\nWhat about merging offline_store_types.h and this file and name it something like offline_page_internal_types.h (open to other names)?",
+      "parentUuid": "07299cf4_122a8ec0",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 71
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8181483d_fafb64fb",
         "filename": "components/offline_pages/core/model/offline_page_model_types.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T23:35:20Z",
       "side": 1,
       "message": "Not sure what Sync stands for.\n\nAlso, this one is missing a proper UMA related documentation",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74fc01e_1ae1edb1",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "doc added.\nThe \u0027Sync\u0027 is for consistency with the \u0027sync\u0027 prefix used in tasks since the enum represents the results of synchronous operation in those Sync* methods.",
+      "parentUuid": "8181483d_fafb64fb",
       "range": {
         "startLine": 10,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cd613a60_a719433d",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "I was thinking this can represent the case that store* is nullptr when we create the task, but since we have a DCHECK for it in most of the task constructors, i think this can be removed.",
+      "parentUuid": "4115a3ea_a4fde475",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0673fe1_47798421",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "f167510c40df5493d37383f7386de77a199d735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b20dfa_fd7f9c14",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0673fe1_47798421",
+      "range": {
+        "startLine": 124,
+        "startChar": 32,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +224,30 @@
       "writtenOn": "2017-12-06T23:35:20Z",
       "side": 1,
       "message": "Is there a reason we are not testing at least one of the other ones?\nI understand that transaction problems testing might not be possible now, but others?",
+      "range": {
+        "startLine": 193,
+        "startChar": 44,
+        "endLine": 193,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce740e7_2e6b0b9b",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "I think it\u0027s because the testing utilities are not good enough yet, as I didn\u0027t see a way to invalidate a db pointer/make store returns certain value when doing something/fail file deletion etc...\nBut I agree it definitely needs improvement, I\u0027m opening a bug for it crbug.com/792729",
+      "parentUuid": "d8a9ae9e_e342dc15",
       "range": {
         "startLine": 193,
         "startChar": 44,
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "65c1d26d_53527409",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3afc9b_faca8904",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 3
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc29016a_cc8b984f",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 2
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "7adc67eb_a962ef55",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc29016a_cc8b984f",
+      "range": {
+        "startLine": 184,
+        "startChar": 20,
+        "endLine": 184,
+        "endChar": 31
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee723ee_65486787",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
         "patchSetId": 2
@@ -220,6 +388,30 @@
       "writtenOn": "2017-12-06T23:35:20Z",
       "side": 1,
       "message": "same comment as with previous file.",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220c63b9_d21e7d29",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Replied in the other file:\nI think it\u0027s because the testing utilities are not good enough yet, as I didn\u0027t see a way to invalidate a db pointer/make store returns certain value when doing something/fail file deletion etc...\nBut I agree it definitely needs improvement, I\u0027m opening a bug for it crbug.com/792729",
+      "parentUuid": "1ee723ee_65486787",
       "range": {
         "startLine": 153,
         "startChar": 44,
@@ -249,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "66418ff6_aedb58b3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30905,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4893cbde_4236ac4b",
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a54ac72f_730488bc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -260,6 +470,30 @@
       "writtenOn": "2017-12-06T23:35:20Z",
       "side": 1,
       "message": "Is there a chance that this enum (in UMA and C++ code) should be named to be more consistency check specific?",
+      "range": {
+        "startLine": 54001,
+        "startChar": 10,
+        "endLine": 54001,
+        "endChar": 41
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20e7024_06f3ea95",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54001,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-07T00:34:44Z",
+      "side": 1,
+      "message": "Actually i\u0027m thinking to do a larger refactoring within tasks:\n- Replace boolean values returned by file/db operations into this enum\n- Use the enum to determine what return values should be used before calling the callbacks of the tasks\n- In this way maybe we can have a better logging against multiple failures.\n\nSince this will also be used by other tasks, I didn\u0027t name them more specific to consistency check... We can chat offline to see if it should be done or not.",
+      "parentUuid": "a54ac72f_730488bc",
       "range": {
         "startLine": 54001,
         "startChar": 10,
