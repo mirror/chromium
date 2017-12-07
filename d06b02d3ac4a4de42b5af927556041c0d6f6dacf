@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aadae5c_2909c653",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "I prefer this taking ResourceRequestBody* instead if it\u0027s going to be mutated (so the arg is in/out)",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150ed073_747c89d9",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataConsumerHandle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "(Is this change not really related but to unconfuse in general?)",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23faf96b_11a6af47",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataPipeGetter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "I think we usually have these after the primary header but before other blink/chrome headers?",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142707b1_4cae980f",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "Should we use either the term \u0027string\u0027 or \u0027data\u0027 but not both?",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb3230a_cb704bb6",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "Should we have the code to copy now, and have a TODO to make it more efficient if no mutation happens, or at least add a mechanism (e.g. have a Freeze() method?) to DCHECK on unexpected modifications?",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beacae5e_46dce443",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "Can we have a comment? This is probably confusing enough. E.g. we might be creating a new WebHTTPBody with data pipes from outside Blink, while we shouldn\u0027t be reading the WebHTTPBody out which has data pipes in the current code.",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418e5495_2408b50d",
+        "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T04:30:02Z",
+      "side": 1,
+      "message": "DeepCopy seems to be mostly used for Inspector support for XHR and cross-thread posting. The former looks fine for SW cases, I\u0027m not 100% sure about the latter, we don\u0027t support it in the current code iirc so it\u0027s fine?",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
