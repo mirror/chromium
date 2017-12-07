@@ -535,6 +535,10 @@ UI.ToolbarButton = class extends UI.ToolbarItem {
       this.element.style.width = width + 'px';
   }
 
+  focus() {
+    this.element.focus();
+  }
+
   /**
    * @param {!Event} event
    */

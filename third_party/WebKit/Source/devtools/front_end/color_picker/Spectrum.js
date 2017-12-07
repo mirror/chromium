@@ -123,6 +123,8 @@ ColorPicker.Spectrum = class extends UI.VBox {
     /** @type {!Map.<string, !ColorPicker.Spectrum.Palette>} */
     this._palettes = new Map();
     this._palettePanel = this.contentElement.createChild('div', 'palette-panel');
+    /** @type {?UI.ToolbarButton} */
+    this._palettePanelCloseButton = null;
     this._palettePanelShowing = false;
     this._paletteSectionContainer = this.contentElement.createChild('div', 'spectrum-palette-container');
     this._paletteContainer = this._paletteSectionContainer.createChild('div', 'spectrum-palette');
@@ -213,9 +215,10 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var title = this._palettePanel.createChild('div', 'palette-title');
     title.textContent = Common.UIString('Color Palettes');
     var toolbar = new UI.Toolbar('', this._palettePanel);
-    var closeButton = new UI.ToolbarButton('Return to color picker', 'largeicon-delete');
-    closeButton.addEventListener(UI.ToolbarButton.Events.Click, this._togglePalettePanel.bind(this, false));
-    toolbar.appendToolbarItem(closeButton);
+    this._palettePanelCloseButton = new UI.ToolbarButton('Return to color picker', 'largeicon-delete');
+    this._palettePanelCloseButton.addEventListener(
+        UI.ToolbarButton.Events.Click, this._togglePalettePanel.bind(this, false));
+    toolbar.appendToolbarItem(this._palettePanelCloseButton);
     for (var palette of this._palettes.values())
       this._palettePanel.appendChild(this._createPreviewPaletteElement(palette));
   }
@@ -228,9 +231,18 @@ ColorPicker.Spectrum = class extends UI.VBox {
       return;
     if (show)
       this._updatePalettePanel();
-    this._focus();
-    this._palettePanelShowing = show;
     this.contentElement.classList.toggle('palette-panel-showing', show);
+
+    this._palettePanelShowing = show;
+
+    if (show && this._palettePanelCloseButton) {
+      // If we focus too early, the whole widget gets scrolled and it makes everything look terrible.
+      // Once preventScroll is available we can use that instead.
+      this._palettePanel.addEventListener('transitionend', () => this._palettePanelCloseButton.focus());
+    }
+
+    if (!show)
+      this._focus();
   }
 
   _focus() {
@@ -291,7 +303,6 @@ ColorPicker.Spectrum = class extends UI.VBox {
     }
 
     this._togglePalettePanel(false);
-    this._focus();
   }
 
   /**
