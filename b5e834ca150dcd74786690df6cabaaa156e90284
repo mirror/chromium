@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca4f1b7_2403df75",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "This is not used in any HTML template currently. Is it passed to other elements? Trying to understand whether this needs to be a Polymer property.",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 21
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0234f66_bb4eaa38",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Is this temporary? Maybe mention this in a comment, to remove any confusion until the real value is used.",
+      "range": {
+        "startLine": 348,
+        "startChar": 38,
+        "endLine": 348,
+        "endChar": 39
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9478a540_8cbe5b7b",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "I am afraid that every call to notifyPath() here, is triggering a new call to updateSettingsAvailable_(). Not sure what we can do about this, but seems a bit wasteful.",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 49
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c81d2b_627184da",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Nit (optional): Maybe rename to updateStickySettings_?",
+      "range": {
+        "startLine": 353,
+        "startChar": 9,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d41488_0b1a773c",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Same question about measurementSystem here. Is it involved in some data binding?",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 41
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa559f09_f5bfb495",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Is this possible, given we already check for the empty string at line 367?",
+      "range": {
+        "startLine": 371,
+        "startChar": 4,
+        "endLine": 372,
+        "endChar": 13
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c414a3e9_033659a4",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Should we be using SettingsBehavior#setSetting() throughout this file?",
+      "range": {
+        "startLine": 374,
+        "startChar": 5,
+        "endLine": 374,
+        "endChar": 56
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a189be_7cc5c5c3",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T23:29:41Z",
+      "side": 1,
+      "message": "Nit: Perhaps we can eliminate some redundancy in this function as follows, but I am not sure if this is better, because we lose some type coverage. Up to you.\n\n\nlet updateIfDefined \u003d (key1, key2) \u003d\u003e {\n  if (savedSettings[\u0027key1\u0027] !\u003d undefined)\n      this.set(`settings.${key1}.value`, savedSettings[key2]);\n}\n\n[\n  [\u0027mediaSize\u0027, \u0027mediaSize\u0027],\n  [\u0027marginsType\u0027, \u0027marginsType\u0027],\n  [\u0027color\u0027, \u0027isColorEnabled\u0027],\n  ...\n].forEach(keys \u003d\u003e updateIfDefined(keys[0], keys[1]);",
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
