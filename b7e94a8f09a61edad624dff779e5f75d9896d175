@@ -69,6 +69,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468002bc_5889d13d",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T20:27:21Z",
+      "side": 1,
+      "message": "I don\u0027t have enough context to answer that. What does \u0027double-click setting set to menu\u0027 mean? Might it that the menu is showing up but immediately closing?",
+      "parentUuid": "90fa89b2_7db91c2e",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
