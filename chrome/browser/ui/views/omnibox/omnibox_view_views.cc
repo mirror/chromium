@@ -15,7 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
 #include "chrome/browser/ui/view_ids.h"
@@ -115,7 +115,7 @@ const char OmniboxViewViews::kViewClassName[] = "OmniboxViewViews";
 
 OmniboxViewViews::OmniboxViewViews(OmniboxEditController* controller,
                                    std::unique_ptr<OmniboxClient> client,
-                                   CommandUpdater* command_updater,
+                                   CommandUpdaterProxy* command_updater_proxy,
                                    bool popup_window_mode,
                                    LocationBarView* location_bar,
                                    const gfx::FontList& font_list)
@@ -331,7 +331,7 @@ void OmniboxViewViews::ExecuteCommand(int command_id, int event_flags) {
       model()->PasteAndGo(GetClipboardText());
       return;
     case IDC_EDIT_SEARCH_ENGINES:
-      location_bar_view_->command_updater()->ExecuteCommand(command_id);
+      location_bar_view_->command_updater_proxy()->ExecuteCommand(command_id);
       return;
 
     // These commands do invoke the popup.
@@ -346,7 +346,7 @@ void OmniboxViewViews::ExecuteCommand(int command_id, int event_flags) {
         return;
       }
       OnBeforePossibleChange();
-      location_bar_view_->command_updater()->ExecuteCommand(command_id);
+      location_bar_view_->command_updater_proxy()->ExecuteCommand(command_id);
       OnAfterPossibleChange(true);
       return;
   }
@@ -857,7 +857,8 @@ bool OmniboxViewViews::IsCommandIdEnabled(int command_id) const {
   if (command_id == IDS_PASTE_AND_GO)
     return !read_only() && model()->CanPasteAndGo(GetClipboardText());
   return Textfield::IsCommandIdEnabled(command_id) ||
-         location_bar_view_->command_updater()->IsCommandEnabled(command_id);
+         location_bar_view_->command_updater_proxy()->IsCommandEnabled(
+             command_id);
 }
 
 base::string16 OmniboxViewViews::GetSelectionClipboardText() const {

@@ -9,7 +9,7 @@
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 
 class Browser;
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 namespace autofill {
 
@@ -20,7 +20,8 @@ class SaveCardBubbleControllerImpl;
 // it.
 class SaveCardIconView : public BubbleIconView {
  public:
-  SaveCardIconView(CommandUpdater* command_updater, Browser* browser);
+  SaveCardIconView(CommandUpdaterProxy* command_updater_proxy,
+                   Browser* browser);
   ~SaveCardIconView() override;
 
  protected:
