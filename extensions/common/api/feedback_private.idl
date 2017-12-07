@@ -14,6 +14,11 @@ namespace feedbackPrivate {
   dictionary SystemInformation {
     DOMString key;
     DOMString value;
+
+    // If this exists and the value is non-empty, display this string instead.
+    // Intended for feedback strings that are large and wouldn't make any sense
+    // to the user anyway.
+    DOMString? displayValue;
   };
 
   // Supported feedback flows.
