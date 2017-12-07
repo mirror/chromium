@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac807f18_09f93057",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "Nit: Rename to kNonMinimalCBOREncoding to match NON_MINIMAL_CBOR_ENCODING.",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e717871_c4b722dd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "I might make sense to error out early, above the for loop?\n\n  if (!CanConsume(additional_bytes))\n    return false;\n  for ...\n\nAnd, should you set an error code if there are not enough additional bytes?\n\n  if (!CanConsume(additional_bytes)) {\n    error_code_ \u003d INCOMPLETE_CBOR_DATA;\n    return false;\n  }\n  for ...",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90d489e_33ff285d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "Do you need to set an error code here, too? (And in ReadBytes?)",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc318cc_5c6a9197",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "Same question about error code here, and in ReadCBORMap.",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7199cadf_9bacdaa8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "Nit: Space before \"(CBOR)\"",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0afe1e_5a94b7da",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-07T23:00:30Z",
+      "side": 1,
+      "message": "Minor readability nit:\n\n  using Bytes \u003d std::vector\u003cuint8_t\u003e;\n\nmight make things easier to read. Your call.",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
