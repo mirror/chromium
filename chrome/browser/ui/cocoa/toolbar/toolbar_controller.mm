@@ -524,6 +524,9 @@ class NotificationBridge : public AppMenuIconController::Delegate {
   [[locationBar_ cell]
       accessibilitySetOverrideValue:description
                        forAttribute:NSAccessibilityDescriptionAttribute];
+  [[locationBar_ cell]
+      accessibilitySetOverrideValue:@"\u2318L"  // Expose Cmd+L shortcut.
+                       forAttribute:NSAccessibilityHelpAttribute];
   description = l10n_util::GetNSStringWithFixup(IDS_ACCNAME_APP);
   [[appMenuButton_ cell]
       accessibilitySetOverrideValue:description

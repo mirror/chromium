@@ -630,7 +630,13 @@ bool AlsoUseShowMenuActionForDefaultAction(const ui::AXNodeData& data) {
 }
 
 - (NSString*)AXHelp {
-  return [self getStringAttribute:ui::AX_ATTR_DESCRIPTION];
+  NSString* desc = [self getStringAttribute:ui::AX_ATTR_DESCRIPTION];
+  NSString* key = [self getStringAttribute:ui::AX_ATTR_KEY_SHORTCUTS];
+  if (!desc.length)
+    return key.length ? key : @"";
+  if (!key.length)
+    return desc;
+  return [NSString stringWithFormat:@"%@ %@", desc, key];
 }
 
 - (id)AXValue {
