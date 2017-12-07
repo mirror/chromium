@@ -5,14 +5,18 @@
 package org.chromium.chrome.browser.preferences.password;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -244,6 +248,143 @@ public class SavePasswordsPreferencesTest {
     }
 
     /**
+     * Check that if there are no saved passwords, the export menu item is disabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportMenuDisabled() throws Exception {
+        // Use the fake handler to ensure there are no saved passwords reported to settings.
+        FakePasswordManagerHandler handler =
+                new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
+                        handler);
+            }
+        });
+
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        // The text matches a text view, but the disabled entity is some wrapper two levels up in
+        // the view hierarchy, hence the two withParent matchers.
+        Espresso.onView(allOf(withText(R.string.save_password_preferences_export_action_title),
+                                withParent(withParent(not(isEnabled())))))
+                .check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that if there are saved passwords, the export menu item is enabled.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportMenuEnabled() throws Exception {
+        // Use the fake handler to present one saved password to settings to enable the menu option.
+        FakePasswordManagerHandler handler =
+                new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
+        entries.add(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        handler.setSavedPasswords(entries);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
+                        handler);
+            }
+        });
+
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        // The text matches a text view, but the potentially disabled entity is some wrapper two
+        // levels up in the view hierarchy, hence the two withParent matchers.
+        Espresso.onView(allOf(withText(R.string.save_password_preferences_export_action_title),
+                                withParent(withParent(isEnabled()))))
+                .check(matches(isDisplayed()));
+    }
+
+    /**
+     * Check that if "password-export" feature is not explicitly enabled, there is no menu item to
+     * export passwords.
+     * TODO(crbug.com/788701): Add the @DisableFeatures annotation once exporting gets enabled by
+     * default, and remove completely once the feature is gone.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    public void testExportMenuMissing() throws Exception {
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        // Ideally this would need the same matcher (Espresso.OVERFLOW_BUTTON_MATCHER) as used
+        // inside Espresso.openActionBarOverflowOrOptionsMenu(), but that is private to Espresso.
+        // Matching the overflow menu with the class name "OverflowMenuButton" won't work on
+        // obfuscated release builds, so matching the description remains. The
+        // OVERFLOW_BUTTON_MATCHER specifies the string directly, not via string resource, so this
+        // is also done below.
+        Espresso.onView(withContentDescription("More options")).check(doesNotExist());
+    }
+
+    /**
+     * Check that tapping the export menu requests the passwords to be serialised in the background.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Preferences"})
+    @EnableFeatures("password-export")
+    public void testExportTriggersSerialization() throws Exception {
+        // Use the fake handler to present one saved password to settings to enable the menu option.
+        FakePasswordManagerHandler handler =
+                new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
+        entries.add(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        handler.setSavedPasswords(entries);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
+                        handler);
+            }
+        });
+
+        ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
+        ReauthenticationManager.setScreenLockSetUpOverride(
+                ReauthenticationManager.OverrideState.AVAILABLE);
+
+        final Preferences preferences =
+                PreferencesTest.startPreferences(InstrumentationRegistry.getInstrumentation(),
+                        SavePasswordsPreferences.class.getName());
+
+        Espresso.openActionBarOverflowOrOptionsMenu(
+                InstrumentationRegistry.getInstrumentation().getTargetContext());
+        // Before tapping the menu item for export, pretend that the last successful
+        // reauthentication just happened. This will allow the export flow to continue.
+        ReauthenticationManager.setLastReauthTimeMillis(System.currentTimeMillis());
+        Espresso.onView(withText(R.string.save_password_preferences_export_action_title))
+                .perform(click());
+
+        Assert.assertTrue(handler.getSerializePasswordsCalled());
+    }
+
+    /**
      * Check that the export menu item is included and hidden behind the overflow menu. Check that
      * the menu displays the warning before letting the user export passwords.
      */
@@ -252,6 +393,20 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuItem() throws Exception {
+        // Use the fake handler to present one saved password to settings to enable the menu option.
+        FakePasswordManagerHandler handler =
+                new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
+        entries.add(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        handler.setSavedPasswords(entries);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
+                        handler);
+            }
+        });
+
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
                 ReauthenticationManager.OverrideState.AVAILABLE);
@@ -280,6 +435,20 @@ public class SavePasswordsPreferencesTest {
     @Feature({"Preferences"})
     @EnableFeatures("password-export")
     public void testExportMenuItemNoLock() throws Exception {
+        // Use the fake handler to present one saved password to settings to enable the menu option.
+        FakePasswordManagerHandler handler =
+                new FakePasswordManagerHandler(PasswordManagerHandlerProvider.getInstance());
+        ArrayList<SavedPasswordEntry> entries = new ArrayList<SavedPasswordEntry>();
+        entries.add(new SavedPasswordEntry("https://example.com", "test user", "password"));
+        handler.setSavedPasswords(entries);
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PasswordManagerHandlerProvider.getInstance().setPasswordManagerHandlerForTest(
+                        handler);
+            }
+        });
+
         ReauthenticationManager.setApiOverride(ReauthenticationManager.OverrideState.AVAILABLE);
         ReauthenticationManager.setScreenLockSetUpOverride(
                 ReauthenticationManager.OverrideState.UNAVAILABLE);
