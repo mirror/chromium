@@ -357,6 +357,30 @@
     },
     {
       "key": {
+        "uuid": "29e77de4_73b5d8ee",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-07T18:15:32Z",
+      "side": 1,
+      "message": "2 bits \u003d bit [0] of bitmap and bit [1] of bitmap (however exactly they\u0027re packed into the underlying memory).\n\nI am getting an urge to copy-paste most of what you wrote there into a comment :)\n\nOne potentially important thing, though: this isn\u0027t really about reading but asking what\u0027s available (so that HTTP code can figure out what to get from cache and what to fetch from network); the similarity with reading is probably why it\u0027s structured the way it is WRT to the caller.\n\nlast_block (plus last_block_len) does always describe a partially filled block (or last_block is -1).\n\nAs for what to return, there are actually 2 things that are outputs for the API method: \n\n  virtual int GetAvailableRange(int64_t offset,\n                                int len,\n                                int64_t* start,\n                                const CompletionCallback\u0026 callback)\n\nthe return value is the length of the interval (or a net error); this is wired up to return_ here, and there is also *start to specify the beginning; that would be offset_ in how this is hooked up...\n\nSo if you only have a part of the data, the thing to return would be to return the range describing what\u0027s available (so, again, HTTP code can fetch the rest); except of course\nthere can be multiple discontinuous parts, in which case the earlier one by position is the \none to return.",
+      "parentUuid": "6404c6c6_bc5d469a",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
