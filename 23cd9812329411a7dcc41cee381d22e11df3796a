@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e368eb3_c2adaa5f",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-07T00:08:11Z",
+      "side": 1,
+      "message": "With this patch, I didn\u0027t see this DCHECK failure.\nInstead, I saw a deserialization failure at the receiver side. It was because that the IPEndpoint it receives is invalid.\n\nSo it seems likely that the test setup code doesn\u0027t properly set the recvfrom address.",
+      "parentUuid": "bb931142_cc87bd2e",
+      "revId": "23cd9812329411a7dcc41cee381d22e11df3796a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3c728b_2b7709de",
         "filename": "services/network/udp_socket_unittest.cc",
         "patchSetId": 16
