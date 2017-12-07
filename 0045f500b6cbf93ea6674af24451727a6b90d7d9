@@ -16,6 +16,24 @@
       "revId": "0045f500b6cbf93ea6674af24451727a6b90d7d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ad495b_d5f06046",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-07T00:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f17fdb3_2d40f8f9",
+      "revId": "0045f500b6cbf93ea6674af24451727a6b90d7d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
