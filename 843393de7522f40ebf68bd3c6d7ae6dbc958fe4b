@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fc19ff2_19fa46b7",
+        "filename": "extensions/renderer/script_context_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-07T20:21:18Z",
+      "side": 1,
+      "message": "Without this patch, this test crashes with the same stack seen in the bug report:\n\n [4265:4265:1207/151747.428665:1615751207809:FATAL:V8Initializer.cpp(84)] \n #0 0x7f76a2027c0d base::debug::StackTrace::StackTrace()\n #1 0x7f76a202603c base::debug::StackTrace::StackTrace()\n #2 0x7f76a20adbfa logging::LogMessage::~LogMessage()\n #3 0x7f768f8fc245 blink::ReportFatalErrorInMainThread()\n #4 0x7f769ef8724c v8::Utils::ReportApiFailure()\n #5 0x7f769f43d979 v8::internal::HandleScope::Extend()\n #6 0x7f769ef8a210 v8::HandleScope::CreateHandle()\n #7 0x7f768f84e1d9 blink::ScopedPersistent\u003c\u003e::NewLocal()\n #8 0x7f768f851633 blink::ScriptState::GetContext()\n #9 0x7f76902d7c2b blink::WebLocalFrameImpl::MainWorldScriptContext()\n #10 0x000004eb578a extensions::ScriptContextSet::GetMainWorldContextForFrame()",
+      "revId": "843393de7522f40ebf68bd3c6d7ae6dbc958fe4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
