@@ -656,6 +656,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
     const ResourceFactory& factory,
+    ResourceClient* client,
+    const SubstituteData& substitute_data) {
+  Resource* resource = RequestResource(params, factory, substitute_data);
+  if (client)
+    client->SetResource(resource);
+  return resource;
+}
+
+Resource* ResourceFetcher::RequestResource(
+    FetchParameters& params,
+    const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();
   ResourceRequest& resource_request = params.MutableResourceRequest();
@@ -768,6 +779,9 @@ Resource* ResourceFetcher::RequestResource(
     // TODO(yoav): I'd expect the stated scenario to not go here, as its policy
     // would be Use.
   }
+
+  if (!params.IntegrityMetadata().IsEmpty())
+    resource->SetIntegrityMetadata(params.IntegrityMetadata());
 
   // If only the fragment identifiers differ, it is the same resource.
   DCHECK(EqualIgnoringFragmentIdentifier(resource->Url(), params.Url()));
