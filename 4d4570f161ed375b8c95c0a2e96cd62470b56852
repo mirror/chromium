@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05dcacc5_2b577fb1",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T01:20:45Z",
+      "side": 1,
+      "message": "It does not let me do that. The class it too complicated (e.g. having template members) and chromium style doesn\u0027t like the default constructor in that case.",
+      "parentUuid": "9ba3bce5_b7372ccf",
+      "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2867f3d9_2051d862",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 11
@@ -69,6 +87,24 @@
       "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0276dcc1_025032af",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T01:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d98266b_43d3541c",
+      "revId": "4d4570f161ed375b8c95c0a2e96cd62470b56852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

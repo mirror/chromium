@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "2b4c2d84_a2d285e5",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T01:20:45Z",
+      "side": 1,
+      "message": "But the client doesn\u0027t know that. From the clients perspective it serves whoever connects to this. I had a dynamic object creation before which was creating one of these for every pipe. We discussed in the earlier comment we agreed on using a BindingSet. Is that fair enough or do you still feel we should be using only a Binding?",
+      "parentUuid": "a7999d61_d7d4d089",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7df58fef_df18e2e7",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 17
@@ -81,6 +99,24 @@
       "writtenOn": "2017-12-06T23:05:28Z",
       "side": 1,
       "message": "This could have a test?",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f167597_6dee1fe6",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T01:20:45Z",
+      "side": 1,
+      "message": "This does have a test. The test I\u0027m touching does test this path and without this it is failing on a subset of bots.",
+      "parentUuid": "7df58fef_df18e2e7",
       "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +151,24 @@
       "writtenOn": "2017-12-06T23:05:28Z",
       "side": 1,
       "message": "This should probably be a separate CL with some test coverage?",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee1670e_ff6a3b00",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T01:20:45Z",
+      "side": 1,
+      "message": "This is causing the HitTest test to fail on Android or in HighDPI on Linux. So I need to have this to fix the tests. But I\u0027m still struggling with the Android test again. It seems that page scale factor is not correctly passed into an OOPIF renderer or something. But still investigating.",
+      "parentUuid": "c29e9e74_3aadf4c2",
       "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
