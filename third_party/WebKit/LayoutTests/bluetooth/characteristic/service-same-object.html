@@ -6,15 +6,16 @@
 <script src="../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
-bluetooth_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
+const test_desc = '[SameObject] test for BluetoothRemoteGATTCharacteristic\'s ' +
+  'service.';
+
+bluetooth_test(() => getHealthThermometerDevice()
     .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: ['heart_rate']}]}))
+      filters: [{services: ['health_thermometer']}]}))
     .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService('heart_rate'))
-    .then(service => service.getCharacteristic('body_sensor_location'))
+    .then(gattServer => gattServer.getPrimaryService('health_thermometer'))
+    .then(service => service.getCharacteristic('temperature_measurement'))
     .then(characteristic => {
       assert_equals(characteristic.service, characteristic.service);
-    });
-}, "[SameObject] test for BluetoothRemoteGATTCharacteristic's service.");
+}), test_desc);
 </script>
