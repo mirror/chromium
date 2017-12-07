@@ -2,6 +2,132 @@
   "comments": [
     {
       "key": {
+        "uuid": "e42f1de8_4027a97d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "There are a few typos in this message:\n - ChromeHomeMenuItemsExpansSheet\n - downaloads\n - dispite",
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288ee3e7_9a27a8e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "I think this should just be disk reads, since writing preferences using #apply() writes to disk asynchronously. \n\nhttps://cs.chromium.org/chromium/src/third_party/android_tools/sdk/sources/android-25/android/content/SharedPreferences.java?type\u003dcs\u0026q\u003dSharedPreferences.Editor\u0026sq\u003dpackage:chromium\u0026l\u003d202",
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01dec69_33f167bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "Can the BottomSheetContentController handle highlighting the correct view?",
+      "range": {
+        "startLine": 1955,
+        "startChar": 3,
+        "endLine": 1972,
+        "endChar": 5
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbfae58_02c1430d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "The Chrome Home promo header should take precedence still. The header logic is a bit complex... we want to show the data saver header if we are done showing the IPH menu header below. If we end up adding the nav menu items back to the menu instead of the IPH menu header, and the early return is here, then we incorrectly suppress the data saver header while the menu items are showing.\n\nI think the best spot for this early return is with the checks to see if the control container is visible, etc. around line 1676 below.",
+      "range": {
+        "startLine": 1647,
+        "startChar": 16,
+        "endLine": 1650,
+        "endChar": 17
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48be4c5_c013fa67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "Can this be configurable via a server-side experiment? We can grab a param using the feature name through ChromeFeatureList#getFieldTrialParamByFeatureAsInt()",
+      "range": {
+        "startLine": 481,
+        "startChar": 31,
+        "endLine": 481,
+        "endChar": 60
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214e23d7_203bc4b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "Writing preferences shouldn\u0027t cause a strict mode violation.. just reading.",
+      "range": {
+        "startLine": 490,
+        "startChar": 54,
+        "endLine": 490,
+        "endChar": 87
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "222c60c3_d549f241",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
         "patchSetId": 5
@@ -18,6 +144,76 @@
         "startChar": 8,
         "endLine": 492,
         "endChar": 9
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736bfec5_738fc0a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "That seems fine. I might actually only gate it on the chromeHomeMenuItemFlagEnabled check, which should give us sufficient control for clearing this SharedPreference if we need to. That would allow us to do an early \"return true\" at the top of the method if Chrome Home is not enabled. That has the additional benefit of not forcing users into the experiment groups associated with CHROME_HOME_MENU_ITEMS_EXPAND_SHEET unless Chrome Home is enabled (experiment groups are assigned when the flag is checked).",
+      "parentUuid": "222c60c3_d549f241",
+      "range": {
+        "startLine": 488,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 9
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f35884d_9429b7ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "nit: s/was/have been",
+      "range": {
+        "startLine": 452,
+        "startChar": 73,
+        "endLine": 452,
+        "endChar": 76
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710fe73c_36de9ebd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "s/is/were",
+      "range": {
+        "startLine": 468,
+        "startChar": 77,
+        "endLine": 468,
+        "endChar": 79
       },
       "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ff3f756b_37263636",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T18:48:01Z",
+      "side": 1,
+      "message": "The manager methods could take a simple boolean fromMenu that controls whether the sheet is shown at at full or half-height when opening to show history, etc. fromMenu could be piped all the way through the content controller, which could decide what height to open the sheet.\n\nI think that would be sufficiently simple, and prevent the logic for how to open these surfaces from creeping into ChromeActivity/ChromeTabbedActivity.",
+      "parentUuid": "dc031684_d2d12847",
+      "range": {
+        "startLine": 1888,
+        "startChar": 11,
+        "endLine": 1892,
+        "endChar": 20
+      },
+      "revId": "e6e1ba2974218959918692f864276b58dbdba1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d5406ad_9139b6c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
