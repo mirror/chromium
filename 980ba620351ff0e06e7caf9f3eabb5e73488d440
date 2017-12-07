@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b9c0b07_506e851d",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-07T19:07:29Z",
+      "side": 1,
+      "message": "nit: platform-specific includes go at the bottom",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "980ba620351ff0e06e7caf9f3eabb5e73488d440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
