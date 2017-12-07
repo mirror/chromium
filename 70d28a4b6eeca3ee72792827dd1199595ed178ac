@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e96aa78_95e4c4ed",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T23:37:07Z",
+      "side": 1,
+      "message": "Do we still need this pragma mark?",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019e8425_13794ed0",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T23:37:07Z",
+      "side": 1,
+      "message": "How about this name that follows Coding Guidelines for Cocoa?:\n- (void)handlerDidChengeForMailtoHandlerManager:(MailtoHandlerManager*)manager",
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74e35f5_394e3d0f",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T23:37:07Z",
+      "side": 1,
+      "message": "The old include order was correct",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a47ae5d_2c56a76e",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T23:37:07Z",
+      "side": 1,
+      "message": "Can we use a local variable to improve the formatting?",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 29
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
