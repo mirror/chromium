@@ -598,4 +598,98 @@ V8ScriptValueDeserializer::GetWasmModuleFromId(v8::Isolate* isolate,
   return v8::MaybeLocal<v8::WasmCompiledModule>();
 }
 
+v8::MemorySpan<const uint8_t> V8ScriptValueDeserializer::OpenBundle(
+    uint32_t bundle_type) {
+  if (!bundle_array_)
+    return v8::MemorySpan<const uint8_t>();
+
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_opened_) << "OpenBundle() called twice without CloseBundle()";
+#endif  // DCHECK_IS_ON()
+
+  DCHECK(bundle_array_);
+  if (next_opened_bundle_index_ >= bundle_array_->size())
+    return v8::MemorySpan<const uint8_t>();
+
+  opened_bundle_ = &(*bundle_array_)[next_opened_bundle_index_];
+  next_opened_bundle_index_ += 1;
+#if DCHECK_IS_ON()
+  bundle_opened_ = true;
+#endif  // DCHECK_IS_ON()
+
+  DCHECK_EQ(opened_bundle_->type, bundle_type)
+      << "OpenBundle() called with mismatching bundle type";
+
+  size_t next_index = 0;
+  for (const auto& bundle_item : opened_bundle_->items) {
+    bundle_item_indices_.insert(bundle_item.id, next_index);
+    ++next_index;
+  }
+
+  return v8::MemorySpan<const uint8_t>(opened_bundle_->version.data(),
+                                       opened_bundle_->version.size());
+}
+
+v8::Maybe<size_t> V8ScriptValueDeserializer::OpenItem(uint64_t item_id) {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_opened_) << "OpenItem() called without OpenBundle()";
+  DCHECK(!bundle_item_opened_) << "OpenItem() called twice without CloseItem()";
+#endif  // DCHECK_IS_ON()
+
+  HashMap<uint64_t, size_t>::iterator it = bundle_item_indices_.find(item_id);
+  if (it == bundle_item_indices_.end())
+    return v8::Nothing<size_t>();
+  size_t item_index = it->value;
+
+  opened_bundle_item_ = &opened_bundle_->items[item_index];
+  DCHECK(SerializedScriptValue::Bundle::PredicateIsTrue(
+      opened_bundle_item_->predicate, opened_bundle_->type,
+      opened_bundle_->version))
+      << "OpenItem() called on item whose predicate is false";
+
+#if DCHECK_IS_ON()
+  bundle_item_opened_ = true;
+#endif  // DCHECK_IS_ON()
+  return v8::Just<size_t>(opened_bundle_item_->data.size());
+}
+
+v8::MemorySpan<const uint8_t> V8ScriptValueDeserializer::NextItemBuffer() {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_opened_) << "NextItemBuffer() called without OpenItem()";
+  DCHECK(!bundle_item_buffer_locked_)
+      << "NextItemBuffer() called twice without ReleaseItemBuffer()";
+  bundle_item_buffer_locked_ = true;
+#endif  // DCHECK_IS_ON()
+
+  return v8::MemorySpan<const uint8_t>(opened_bundle_item_->data.data(),
+                                       opened_bundle_item_->data.size());
+}
+
+void V8ScriptValueDeserializer::ReleaseItemBuffer() {
+#if DCHECK_IS_ON()
+  DCHECK(bundle_item_buffer_locked_)
+      << "ReleaseItemBuffer() called without NextItemBuffer()";
+  bundle_item_buffer_locked_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
+void V8ScriptValueDeserializer::CloseItem() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_buffer_locked_)
+      << "CloseItem() called before ReleaseItemBuffer()";
+  DCHECK(bundle_item_opened_) << "CloseItem() called without OpenItem()";
+  bundle_item_opened_ = false;
+#endif  // DCHECK_IS_ON()
+}
+
+void V8ScriptValueDeserializer::CloseBundle() {
+#if DCHECK_IS_ON()
+  DCHECK(!bundle_item_opened_) << "CloseBundle() called before CloseItem()";
+  DCHECK(bundle_opened_) << "CloseBundle() called without OpenBundle()";
+  bundle_opened_ = false;
+#endif  // DCHECK_IS_ON()
+
+  bundle_item_indices_.clear();
+}
+
 }  // namespace blink
