@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0623751_3bdcabb3",
+        "filename": "chromecast/media/cma/backend/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-12-07T19:39:20Z",
+      "side": 1,
+      "message": "I\u0027d prefer cast_audio_json to be a separate target. IIRC, the only dependency volume_map has on cast_audio_json is a string constant.",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 24
+      },
+      "revId": "43e7b33ab86936f36329323acca372a0de7000c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
