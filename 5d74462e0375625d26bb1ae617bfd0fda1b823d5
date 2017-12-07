@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "661cbe71_3503ebd4",
+        "filename": "services/ui/public/interfaces/arc.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T12:44:24Z",
+      "side": 1,
+      "message": "more than 80 chars?",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 90
+      },
+      "revId": "5d74462e0375625d26bb1ae617bfd0fda1b823d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2515432_c9933829",
+        "filename": "services/viz/privileged/interfaces/gl/gpu_service.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T12:44:24Z",
+      "side": 1,
+      "message": "VideoDecodeAcceleratorDeprecated",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "5d74462e0375625d26bb1ae617bfd0fda1b823d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb4a7b9_1ea47d15",
+        "filename": "services/viz/privileged/interfaces/gl/gpu_service.mojom",
+        "patchSetId": 32
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T12:44:24Z",
+      "side": 1,
+      "message": "more than 80 chars?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 92
+      },
+      "revId": "5d74462e0375625d26bb1ae617bfd0fda1b823d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
