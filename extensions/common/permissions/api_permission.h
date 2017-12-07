@@ -129,7 +129,7 @@ class APIPermission {
     kIdentity,
     kIdentityEmail,
     kIdentityPrivate,
-    kIdltest,
+    kDeleted_Idltest,
     kIdle,
     kImeWindowEnabled,
     kInlineInstallPrivate,

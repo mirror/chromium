@@ -381,10 +381,6 @@
     ],
     "location": "component"
   },
-  "idltest": {
-    "channel": "trunk",
-    "extension_types": ["extension"]
-  },
   "input": {
     "channel": "stable",
     "extension_types": ["extension", "legacy_packaged_app"],
