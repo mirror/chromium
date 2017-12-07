@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f62109d_e479ddcf",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T13:02:47Z",
+      "side": 1,
+      "message": "Having an additional state is meant to allow codifying what we \"know\" (memento) - in this case for instance that we\u0027ve seen \"REGION\\s*\", and when we do that we transition to kRegion. When in the kRegion state, we no longer need to look for \"REGION\\s*\" and can focus on processing data as well as checking for input that will make us transition to a different state. As such, having two states \"be the same\" (like this) is an anti-pattern since we don\u0027t gain this reduction. Consider starting out by making a copy of VTTParser::CollectWebVTTBlock where you assume that \"state_ \u003d\u003d kRegion\" is true - this would be the \"state handler\" for kRegion. With that in place you can then perform a similar simplification on the original function, only reversing the predicate (\"state_ !\u003d kRegion\", or \"state_ \u003d\u003d kHeader\".)",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 18
+      },
+      "revId": "79670f855026713260d731426c47e0e1bc7423da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
