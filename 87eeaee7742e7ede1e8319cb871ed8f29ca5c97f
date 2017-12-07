@@ -22,6 +22,29 @@
       "revId": "87eeaee7742e7ede1e8319cb871ed8f29ca5c97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0649c50_497499b2",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-07T15:39:13Z",
+      "side": 1,
+      "message": "Can we test that a credit card field that is the initiating field, but filled with formatting characters (e.g. ____-____-____-____), will still Autofill?",
+      "range": {
+        "startLine": 795,
+        "startChar": 27,
+        "endLine": 795,
+        "endChar": 49
+      },
+      "revId": "87eeaee7742e7ede1e8319cb871ed8f29ca5c97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
