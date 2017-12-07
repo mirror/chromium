@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1f0e58c_c6e2f2f1",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-07T20:10:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this works as a requirement.\n\nThis is global state.  How is a new caller supposed to ensure that their usage of the factory is sequenced w.r.t some other random part of the code base?\n\nI think we usually get away with calls-must-be-sequenced requirements for object instances that are expected to have a single owner (or a small tightly controlled group of users that have some shared guarantees about sequencing).",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "001e28309d540d278de559aab58bcb42ae98e537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942b6587_1d9b73bd",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-07T20:10:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand what \"should not be retained\" means in this context.  Presumably it means that at some point in the future it might become invalidated, but given that the user of this API will need to use the returned pointer for *something*, this doesn\u0027t really let the caller know what\u0027s expected of them.",
+      "revId": "001e28309d540d278de559aab58bcb42ae98e537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b828b2b_175fad9e",
+        "filename": "chrome/browser/chromeos/printing/external_printers_pref_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-07T20:10:28Z",
+      "side": 1,
+      "message": "Should these registrations be undone on destruction?",
+      "revId": "001e28309d540d278de559aab58bcb42ae98e537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

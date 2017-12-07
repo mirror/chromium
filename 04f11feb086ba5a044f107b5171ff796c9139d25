@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "5f5de261_7ca41a72",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-07T20:10:28Z",
+      "side": 1,
+      "message": "I think the structure you have now is reasonable iff you have sufficient concurrency guarantees around the ExternalPrinters structures.  And I think this is probably a case where you\u0027re going to need to get into locking instead of sequence-based concurrency guarantees.  At least, I don\u0027t see any reasonable design for this that doesn\u0027t involve making the ExternalPrinters structures (and the per-user tracking map in ExternalPrintersFactory) thread-safe -- you just have different pieces of the system accessing these global structures in ways that are going to make enforcing sequencing guarantees very, very difficult.  \n\nYou could maybe get away with declaring all access to ExternalPrinters to be thread-affine to the UI thread, but that seems a lot worse than adding locking.\n\nIf my concerns here aren\u0027t clear, I\u0027m happy to chat about it sometime.",
+      "parentUuid": "6dfd334a_3c500ec7",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07f41db_768c21b2",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 2
@@ -259,6 +277,30 @@
       "side": 1,
       "message": "I don\u0027t understand the question",
       "parentUuid": "c7775605_7c622a31",
+      "range": {
+        "startLine": 239,
+        "startChar": 11,
+        "endLine": 239,
+        "endChar": 17
+      },
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84649d74_a225220c",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-07T20:10:28Z",
+      "side": 1,
+      "message": "Did you mean to write Policy?",
+      "parentUuid": "0d7e2389_9f77c579",
       "range": {
         "startLine": 239,
         "startChar": 11,
