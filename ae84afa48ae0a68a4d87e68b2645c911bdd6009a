@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cdd089a_1fc6c9ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T09:04:10Z",
+      "side": 1,
+      "message": "WindowClosing triggers immediately after OnWidgetDestroying, so technically you could call OnWidgetClosing from WindowClosing.. but not much uses WindowClosing -- it\u0027s more consistent to override both OnWidgetFoo*",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13491fd_341b8d4a",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T09:04:10Z",
+      "side": 1,
+      "message": "can this move too? -- I don\u0027t think there\u0027s any benefit to overriding  OnWidgetDestroying() as well as WindowClosing(), nor delaying this OnBubbleClosing call until the asynchronous close completes.",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b848597d_4ece09be",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T09:04:10Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
