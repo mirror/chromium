@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a3d437_4d5a4410",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-07T22:35:12Z",
+      "side": 1,
+      "message": "Could you please replace all usage of fieldName in checkIfSuggestionsAvailableForForm, retrieveSuggestionsForForm, didSelectSuggestion with fieldIdentifier?",
+      "range": {
+        "startLine": 668,
+        "startChar": 54,
+        "endLine": 668,
+        "endChar": 69
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805f5097_bfd45fff",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-07T22:35:12Z",
+      "side": 1,
+      "message": "Could you please change to __gCrWeb.common.getFieldIdentifier?",
+      "range": {
+        "startLine": 139,
+        "startChar": 25,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bfec64_96b0925a",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-07T22:35:12Z",
+      "side": 1,
+      "message": "Just for my information: why do we need to consider separately formless case? \nOn upstream there is no such differentiating between form and non-form cases https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.cpp?type\u003dcs\u0026q\u003dHTMLFormControlElement::NameForAutofill\u0026l\u003d661",
+      "range": {
+        "startLine": 493,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 27
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa3ed56_7dda4290",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-07T22:35:12Z",
+      "side": 1,
+      "message": "Nit: you can write ancestor.querySelectorAll(element.tagName);",
+      "range": {
+        "startLine": 528,
+        "startChar": 8,
+        "endLine": 528,
+        "endChar": 71
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
