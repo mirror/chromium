@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa9bb70e_46986bd9",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:42:08Z",
+      "side": 1,
+      "message": "Done in that separate patch.",
+      "parentUuid": "a93ecfec_76731ae1",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e77cab3d_53420ea6",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 6
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3ca2f18f_1d8e668d",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:42:08Z",
+      "side": 1,
+      "message": "I put these in a separate patch, here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/815679",
+      "parentUuid": "4b0e7c32_be294234",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b2c89b1_025d1866",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 6
@@ -121,6 +157,24 @@
       "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9b0639_d218cdba",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:42:08Z",
+      "side": 1,
+      "message": "Done in that separate patch.",
+      "parentUuid": "5b2c89b1_025d1866",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "9bbf0ae9_675f8a87",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:42:08Z",
+      "side": 1,
+      "message": "Done in that separate patch.",
+      "parentUuid": "cef2053b_47168fbf",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c4edd6_37ec0ba0",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 6
@@ -173,6 +245,24 @@
       "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5aa29b2_80fb77ee",
+        "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:42:08Z",
+      "side": 1,
+      "message": "Done in that separate patch.",
+      "parentUuid": "10c4edd6_37ec0ba0",
+      "revId": "1117e6908c7f2856f68ea653df9177f89bf462db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
