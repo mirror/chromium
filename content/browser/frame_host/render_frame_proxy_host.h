@@ -12,6 +12,7 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "content/browser/site_instance_impl.h"
+#include "content/common/render_frame_proxy.mojom.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
@@ -146,6 +147,9 @@ class RenderFrameProxyHost
 
   // This RenderFrameProxyHost's routing id.
   int routing_id_;
+
+  // Pointer to the mojo interface representing RenderFrameHost in the renderer.
+  content::mojom::RenderFrameProxyAssociatedPtr proxy_ptr_;
 
   // The SiteInstance this proxy is associated with.
   scoped_refptr<SiteInstance> site_instance_;

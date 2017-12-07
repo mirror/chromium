@@ -9,9 +9,11 @@
 #include "base/memory/ref_counted.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "content/common/content_export.h"
+#include "content/common/render_frame_proxy.mojom.h"
 #include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
@@ -68,21 +70,25 @@ class MusEmbeddedFrame;
 // RenderFrameProxy will be deleted when the node in the frame tree is deleted
 // or when navigating the frame causes it to return to this process and a new
 // RenderFrame is created for it.
-class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
-                                        public IPC::Sender,
+class CONTENT_EXPORT RenderFrameProxy
+    : public IPC::Listener,
+      public IPC::Sender,
 #if defined(USE_AURA)
-                                        public MusEmbeddedFrameDelegate,
+      public MusEmbeddedFrameDelegate,
 #endif
-                                        public blink::WebRemoteFrameClient {
+      public blink::WebRemoteFrameClient,
+      public content::mojom::RenderFrameProxy {
  public:
   // This method should be used to create a RenderFrameProxy, which will replace
   // an existing RenderFrame during its cross-process navigation from the
   // current process to a different one. |routing_id| will be ID of the newly
-  // created RenderFrameProxy. |frame_to_replace| is the frame that the new
-  // proxy will eventually swap places with.
+  // created RenderFrameProxy. It's to be replaced with |proxy_request|.
+  // |frame_to_replace| is the frame that the new proxy will eventually swap
+  // places with.
   static RenderFrameProxy* CreateProxyToReplaceFrame(
       RenderFrameImpl* frame_to_replace,
       int routing_id,
+      content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
       blink::WebTreeScopeType scope);
 
   // This method should be used to create a RenderFrameProxy, when there isn't
@@ -99,6 +105,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // RenderFrame) because a new child of a local frame should always start out
   // as a frame, not a proxy.
   static RenderFrameProxy* CreateFrameProxy(
+      content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
       int routing_id,
       int render_view_routing_id,
       blink::WebFrame* opener,
@@ -190,7 +197,9 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnDidStartLoading();
 
  private:
-  RenderFrameProxy(int routing_id);
+  RenderFrameProxy(
+      content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
+      int routing_id);
 
   void Init(blink::WebRemoteFrame* frame,
             RenderViewImpl* render_view,
@@ -205,7 +214,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   bool OnMessageReceived(const IPC::Message& msg) override;
 
   // IPC handlers
-  void OnDeleteProxy();
   void OnChildFrameProcessGone();
   void OnCompositorFrameSwapped(const IPC::Message& message);
   void OnSetChildFrameSurface(const viz::SurfaceInfo& surface_info,
@@ -226,13 +234,16 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnDidUpdateOrigin(const url::Origin& origin,
                          bool is_potentially_trustworthy_unique_origin);
   void OnSetPageFocus(bool is_focused);
-  void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
-  void OnScrollRectToVisible(
-      const gfx::Rect& rect_to_scroll,
-      const blink::WebRemoteScrollProperties& properties);
   void OnResizeDueToAutoResize(uint64_t sequence_number);
+
+  // content::mojom::RenderFrameProxy:
+  void DeleteProxy() override;
+  void SetFocusedFrame() override;
+  void ScrollRectToVisible(
+      const gfx::Rect& rect_to_scroll,
+      const blink::WebRemoteScrollProperties& properties) override;
 
 #if defined(USE_AURA)
   // MusEmbeddedFrameDelegate
@@ -244,6 +255,9 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   // The routing ID by which this RenderFrameProxy is known.
   const int routing_id_;
+
+  // Binding of the interface used in the browser process.
+  mojo::AssociatedBinding<RenderFrameProxy> binding_;
 
   // The routing ID of the provisional RenderFrame (if any) that is meant to
   // replace this RenderFrameProxy in the frame tree.

@@ -588,6 +588,7 @@ mojom("mojo_bindings") {
     "push_messaging.mojom",
     "quota_dispatcher_host.mojom",
     "render_frame_message_filter.mojom",
+    "render_frame_proxy.mojom",
     "render_message_filter.mojom",
     "render_widget_window_tree_client_factory.mojom",
     "renderer.mojom",

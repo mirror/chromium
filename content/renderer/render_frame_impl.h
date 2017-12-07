@@ -965,6 +965,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnBeforeUnload(bool is_reload);
   void OnSwapIn();
   void OnSwapOut(int proxy_routing_id,
+                 mojo::MessagePipeHandle proxy_request_pipe_handle,
                  bool is_loading,
                  const FrameReplicationState& replicated_frame_state);
   void OnDeleteFrame();

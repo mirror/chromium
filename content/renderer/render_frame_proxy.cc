@@ -66,10 +66,12 @@ base::LazyInstance<FrameMap>::DestructorAtExit g_frame_map =
 RenderFrameProxy* RenderFrameProxy::CreateProxyToReplaceFrame(
     RenderFrameImpl* frame_to_replace,
     int routing_id,
+    content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
     blink::WebTreeScopeType scope) {
   CHECK_NE(routing_id, MSG_ROUTING_NONE);
 
-  std::unique_ptr<RenderFrameProxy> proxy(new RenderFrameProxy(routing_id));
+  std::unique_ptr<RenderFrameProxy> proxy(
+      new RenderFrameProxy(std::move(proxy_request), routing_id));
   proxy->unique_name_ = frame_to_replace->unique_name();
 
   // When a RenderFrame is replaced by a RenderProxy, the WebRemoteFrame should
@@ -93,6 +95,7 @@ RenderFrameProxy* RenderFrameProxy::CreateProxyToReplaceFrame(
 }
 
 RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
+    content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
     int routing_id,
     int render_view_routing_id,
     blink::WebFrame* opener,
@@ -108,7 +111,8 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
       return nullptr;
   }
 
-  std::unique_ptr<RenderFrameProxy> proxy(new RenderFrameProxy(routing_id));
+  std::unique_ptr<RenderFrameProxy> proxy(
+      new RenderFrameProxy(std::move(proxy_request), routing_id));
   RenderViewImpl* render_view = nullptr;
   RenderWidget* render_widget = nullptr;
   blink::WebRemoteFrame* web_frame = nullptr;
@@ -182,8 +186,11 @@ RenderFrameProxy* RenderFrameProxy::FromWebFrame(
   return nullptr;
 }
 
-RenderFrameProxy::RenderFrameProxy(int routing_id)
+RenderFrameProxy::RenderFrameProxy(
+    content::mojom::RenderFrameProxyAssociatedRequest proxy_request,
+    int routing_id)
     : routing_id_(routing_id),
+      binding_(this, std::move(proxy_request)),
       provisional_frame_routing_id_(MSG_ROUTING_NONE),
       web_frame_(nullptr),
       render_view_(nullptr),
@@ -344,7 +351,7 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
 
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(RenderFrameProxy, msg)
-    IPC_MESSAGE_HANDLER(FrameMsg_DeleteProxy, OnDeleteProxy)
+    IPC_MESSAGE_HANDLER(FrameMsg_DeleteProxy, DeleteProxy)
     IPC_MESSAGE_HANDLER(FrameMsg_ChildFrameProcessGone, OnChildFrameProcessGone)
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
@@ -368,11 +375,11 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateOrigin, OnDidUpdateOrigin)
     IPC_MESSAGE_HANDLER(InputMsg_SetFocus, OnSetPageFocus)
     IPC_MESSAGE_HANDLER(FrameMsg_ResizeDueToAutoResize, OnResizeDueToAutoResize)
-    IPC_MESSAGE_HANDLER(FrameMsg_SetFocusedFrame, OnSetFocusedFrame)
+    IPC_MESSAGE_HANDLER(FrameMsg_SetFocusedFrame, SetFocusedFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_WillEnterFullscreen, OnWillEnterFullscreen)
     IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
-    IPC_MESSAGE_HANDLER(FrameMsg_ScrollRectToVisible, OnScrollRectToVisible)
+    IPC_MESSAGE_HANDLER(FrameMsg_ScrollRectToVisible, ScrollRectToVisible)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -382,11 +389,6 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
 
 bool RenderFrameProxy::Send(IPC::Message* message) {
   return RenderThread::Get()->Send(message);
-}
-
-void RenderFrameProxy::OnDeleteProxy() {
-  DCHECK(web_frame_);
-  web_frame_->Detach();
 }
 
 void RenderFrameProxy::OnChildFrameProcessGone() {
@@ -472,12 +474,6 @@ void RenderFrameProxy::OnSetPageFocus(bool is_focused) {
   render_view_->SetFocus(is_focused);
 }
 
-void RenderFrameProxy::OnSetFocusedFrame() {
-  // This uses focusDocumentView rather than setFocusedFrame so that blur
-  // events are properly dispatched on any currently focused elements.
-  render_view_->webview()->FocusDocumentView(web_frame_);
-}
-
 void RenderFrameProxy::OnWillEnterFullscreen() {
   web_frame_->WillEnterFullscreen();
 }
@@ -486,15 +482,26 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
   web_frame_->SetHasReceivedUserGesture();
 }
 
-void RenderFrameProxy::OnScrollRectToVisible(
-    const gfx::Rect& rect_to_scroll,
-    const blink::WebRemoteScrollProperties& properties) {
-  web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
-}
-
 void RenderFrameProxy::OnResizeDueToAutoResize(uint64_t sequence_number) {
   pending_resize_params_.sequence_number = sequence_number;
   WasResized();
+}
+
+void RenderFrameProxy::DeleteProxy() {
+  DCHECK(web_frame_);
+  web_frame_->Detach();
+}
+
+void RenderFrameProxy::SetFocusedFrame() {
+  // This uses focusDocumentView rather than setFocusedFrame so that blur
+  // events are properly dispatched on any currently focused elements.
+  render_view_->webview()->FocusDocumentView(web_frame_);
+}
+
+void RenderFrameProxy::ScrollRectToVisible(
+    const gfx::Rect& rect_to_scroll,
+    const blink::WebRemoteScrollProperties& properties) {
+  web_frame_->ScrollRectToVisible(rect_to_scroll, properties);
 }
 
 #if defined(USE_AURA)

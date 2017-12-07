@@ -612,7 +612,8 @@ void RenderViewImpl::Initialize(
   // routing IDs...
   if (params->proxy_routing_id != MSG_ROUTING_NONE) {
     CHECK(params->swapped_out);
-    RenderFrameProxy::CreateFrameProxy(params->proxy_routing_id, GetRoutingID(),
+    RenderFrameProxy::CreateFrameProxy(std::move(params->proxy_request),
+                                       params->proxy_routing_id, GetRoutingID(),
                                        opener_frame, MSG_ROUTING_NONE,
                                        params->replicated_frame_state);
   }

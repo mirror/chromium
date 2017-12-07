@@ -805,6 +805,7 @@ mojom("mojo_bindings") {
     "platform/modules/websockets/websocket.mojom",
     "platform/oom_intervention.mojom",
     "platform/referrer.mojom",
+    "platform/remote_scroll_properties.mojom",
     "platform/reporting.mojom",
     "platform/site_engagement.mojom",
     "web/console_message.mojom",

@@ -1916,6 +1916,7 @@ void RenderFrameImpl::OnBeforeUnload(bool is_reload) {
 
 void RenderFrameImpl::OnSwapOut(
     int proxy_routing_id,
+    mojo::MessagePipeHandle proxy_request_pipe_handle,
     bool is_loading,
     const FrameReplicationState& replicated_frame_state) {
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::OnSwapOut",
@@ -1933,8 +1934,12 @@ void RenderFrameImpl::OnSwapOut(
   // There should always be a proxy to replace this RenderFrame.  Create it now
   // so its routing id is registered for receiving IPC messages.
   CHECK_NE(proxy_routing_id, MSG_ROUTING_NONE);
+  mojo::ScopedMessagePipeHandle scoped_handle(proxy_request_pipe_handle);
+  content::mojom::RenderFrameProxyAssociatedPtrInfo frame_proxy_info(
+      std::move(scoped_handle), 0);
   proxy = RenderFrameProxy::CreateProxyToReplaceFrame(
-      this, proxy_routing_id, replicated_frame_state.scope);
+      this, proxy_routing_id, MakeRequest(&frame_proxy_info),
+      replicated_frame_state.scope);
 
   // Synchronously run the unload handler before sending the ACK.
   // TODO(creis): Call dispatchUnloadEvent unconditionally here to support

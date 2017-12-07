@@ -367,6 +367,7 @@ class EmbeddedWorkerTestHelper::MockRendererInterface : public mojom::Renderer {
     MockEmbeddedWorkerInstanceClient::Bind(helper_, std::move(client_request));
   }
   void CreateFrameProxy(
+      content::mojom::RenderFrameProxyAssociatedRequest proxy,
       int32_t routing_id,
       int32_t render_view_routing_id,
       int32_t opener_routing_id,

@@ -1,0 +1,24 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "third_party/WebKit/public/platform/remote_scroll_properties.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// An interface for communicating between browser and RenderFrameProxy class.
+interface RenderFrameProxy {
+  // Requests the corresponding RenderFrameProxy to be deleted and removed from
+  // the frame tree.
+  DeleteProxy();
+
+  // Notifies this frame or proxy that it is now focused.  This is used to
+  // support cross-process focused frame changes.
+  SetFocusedFrame();
+
+  // Sent to the parent process of a cross-process frame to request scrolling.
+  ScrollRectToVisible(gfx.mojom.Rect rect_to_scroll,
+                      blink.mojom.RemoteScrollProperties properties);
+};
+

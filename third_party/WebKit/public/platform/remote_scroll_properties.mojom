@@ -1,0 +1,44 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+// WebRemoteScrollProperties::Alignment
+enum RemoteScrollAlignment {
+  kCenterIfNeeded,
+  kToEdgeIfNeeded,
+  kCenterAlways,
+  kTopAlways,
+  kBottomAlways,
+  kLeftAlways,
+  kRightAlways
+};
+
+// WebRemoteScrollProperties::Type
+enum RemoteScrollType {
+  kUser,
+  kProgrammatic,
+  kClamping,
+  kCompositor,
+  kAnchoring,
+  kSequenced
+};
+
+// WebRemoteScrollProperties::Behavior
+enum RemoteScrollBehavior {
+  kAuto,
+  kInstant,
+  kSmooth
+};
+
+// WebRemoteScrollProperties
+struct RemoteScrollProperties {
+  RemoteScrollAlignment align_x;
+  RemoteScrollAlignment align_y;
+  RemoteScrollType type;
+  bool make_visible_in_visual_viewport;
+  RemoteScrollBehavior behavior;
+  bool is_for_scroll_sequence;
+};
+
