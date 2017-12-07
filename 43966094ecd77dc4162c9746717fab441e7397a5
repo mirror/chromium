@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b2c62b8_ccf81e75",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8243dc4c_34c7d407",
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ebe3436_ecd5d3d1",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee320b6_b1a0bdb6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ebe3436_ecd5d3d1",
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +131,30 @@
       "side": 1,
       "message": "This sounds reasonable to me, but I\u0027m wondering if we should replace the service after login? That said, I can\u0027t think of any reason off hand why having this tied to the signin profile would be a problem.",
       "parentUuid": "a63c1fa0_950ca0aa",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0432ab3d_0be6d763",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 1,
+      "message": "that sounds a little bit perilous because a notification could be shown during login (using the special signin profile) then closed after login, and if the value returned by NDS::GetForSystemNotifications changes the closing wouldn\u0027t happen.",
+      "parentUuid": "879cd049_557cc736",
       "range": {
         "startLine": 38,
         "startChar": 1,

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc4dab3d_ac8dd860",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 0,
+      "message": "yea. It does use the word \"synchronously\" one time in there but it\u0027s admittedly a bit buried. Tried to improve the docs.",
+      "parentUuid": "cc06a8c6_3d959ae0",
+      "revId": "440d1395b1b592f1a19f8597f4acb10089d084ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3dbb0cb_5561fb17",
         "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "440d1395b1b592f1a19f8597f4acb10089d084ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca04ffc7_563afe73",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 0,
+      "message": "alas, if only all unused variables stood out as much as this one",
+      "parentUuid": "f3dbb0cb_5561fb17",
+      "revId": "440d1395b1b592f1a19f8597f4acb10089d084ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

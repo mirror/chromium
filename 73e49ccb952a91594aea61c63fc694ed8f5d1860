@@ -16,6 +16,24 @@
       "revId": "73e49ccb952a91594aea61c63fc694ed8f5d1860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011537fe_232dc9bd",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:01:55Z",
+      "side": 1,
+      "message": "Actually I think other platforms will want to implement this as well, although use it more rarely than Chrome OS. WebUsbDetector is one example. Other platforms would probably just use the primary or last active user.",
+      "parentUuid": "b3690b7b_f6362be3",
+      "revId": "73e49ccb952a91594aea61c63fc694ed8f5d1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
