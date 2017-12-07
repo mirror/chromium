@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "093246ec_14ad1b58",
+        "filename": "gpu/command_buffer/service/client_service_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-07T21:45:00Z",
+      "side": 1,
+      "message": "nit: the invalid_service_id is a compile-time constant, so you could pass it as a non-type template parameter, defaulting to std::numeric_limits\u003cServiceType\u003e::max(), and save a field, and some code.\n\ntemplate \u003ctypename ClientType, typename ServiceType, ServiceType invalid_service_id \u003d std::numeric_limits\u003cServiceType\u003e::max()\u003e class ClientServiceMap ...",
+      "revId": "7cb3c1bc971a0dfea1020276516ec8c247e5a1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
