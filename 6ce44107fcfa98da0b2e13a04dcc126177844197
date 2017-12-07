@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b17473c_0d52bdfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-07T15:31:58Z",
+      "side": 1,
+      "message": "In the cases that we don\u0027t implement: should we add a comment to clarify that, repetitive as it may be?",
+      "revId": "6ce44107fcfa98da0b2e13a04dcc126177844197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b0b440_ccc3b6ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-07T15:31:58Z",
+      "side": 1,
+      "message": "We\u0027d log EXIF_ORIENTATION_NORMAL for every image that doesn\u0027t have an explicit value set as well. Should we change the default value on line 138 to ORIENTATION_UNDEFINED and *not* log anything in that case?",
+      "revId": "6ce44107fcfa98da0b2e13a04dcc126177844197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
