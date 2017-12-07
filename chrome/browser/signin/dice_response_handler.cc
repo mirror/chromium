@@ -172,7 +172,8 @@ void DiceResponseHandler::DiceTokenFetcher::OnTimeout() {
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
   dice_response_handler_->OnTokenExchangeFailure(
-      this, GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
+      this, std::move(delegate_),
+      GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
   // |this| may be deleted at this point.
 }
 
@@ -191,7 +192,8 @@ void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthFailure(
   RecordDiceFetchTokenResult(kFetchFailure);
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
-  dice_response_handler_->OnTokenExchangeFailure(this, error);
+  dice_response_handler_->OnTokenExchangeFailure(this, std::move(delegate_),
+                                                 error);
   // |this| may be deleted at this point.
 }
 
@@ -410,8 +412,8 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
 
 void DiceResponseHandler::OnTokenExchangeFailure(
     DiceTokenFetcher* token_fetcher,
+    std::unique_ptr<ProcessDiceHeaderDelegate> delegate,
     const GoogleServiceAuthError& error) {
-  // TODO(droger): Handle authentication errors.
-  VLOG(1) << "[Dice] OAuth failed with error: " << error.ToString();
+  delegate->HandleTokenExchangeFailure(token_fetcher->email(), error);
   DeleteTokenFetcher(token_fetcher);
 }
