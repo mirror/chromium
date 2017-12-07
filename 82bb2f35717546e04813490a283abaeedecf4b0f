@@ -371,6 +371,30 @@
     },
     {
       "key": {
+        "uuid": "bec61454_e210c3ec",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T20:49:31Z",
+      "side": 1,
+      "message": "I\u0027m not following.\n\nSuppose we\u0027re trying to use foo.com.  We try to use DoH resolution for foo.com.  This triggers an HTTP connection to foo.com.  To do this, the new HTTP request tries to resolve foo.com.  To do this, we need to connect to foo.com.  So we need to resolve foo.com, etc.\n\nI guess the DNS code merges requests for the same domain, but merging the request to resolve foo.com for two requests, when one request is nested as part of the other, seems not great - while there may not be any re-entrancy issues there, I\u0027m not confident of it, and just thinking about it makes by brain hurt.",
+      "parentUuid": "ddb8e64f_6d85c9be",
+      "range": {
+        "startLine": 316,
+        "startChar": 21,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "333194ad_024f869b",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 6
