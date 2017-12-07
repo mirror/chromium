@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2170d575_00875c63",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-07T02:13:20Z",
+      "side": 1,
+      "message": "Let\u0027s note somewhere that the major type 7 handling only supports simple data types and not floating points numbers.",
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
