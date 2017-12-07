@@ -253,3 +253,9 @@ may be more efficient in memory if the total number of sample values is small
 compared to the range of their values.
 
 For more information, see [sparse_histograms.h](https://cs.chromium.org/chromium/src/base/metrics/sparse_histogram.h).
+
+### Enum labels
+
+All histograms, including sparse histograms, may have enum labels provided via
+[enums.xml](./enums.xml). Using labels is encouraged whenever labels would be
+clearer than raw numeric values.
