@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3690b7b_f6362be3",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:41:10Z",
+      "side": 1,
+      "message": "Should we just make this chromeos only instead of returning nullptr on other platforms? It seems to me that other platforms shouldn\u0027t be calling this?",
+      "revId": "73e49ccb952a91594aea61c63fc694ed8f5d1860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
