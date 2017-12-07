@@ -22,6 +22,57 @@
       "revId": "c3984c6f9dbf370e601557b38b3a173828e2ed38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829de710_1370fe60",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-07T16:23:13Z",
+      "side": 1,
+      "message": "How about adding \n tester.ExpectTotalCount(\"Arc.NativeBridge\", 1);\nright after this line? (just to make sure ReportNativeBridge() does NOT record UMA.)",
+      "revId": "c3984c6f9dbf370e601557b38b3a173828e2ed38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335f3820_b3bdee3c",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-07T16:23:13Z",
+      "side": 1,
+      "message": "same",
+      "revId": "c3984c6f9dbf370e601557b38b3a173828e2ed38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc801059_8de24538",
+        "filename": "components/arc/metrics/arc_metrics_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-07T16:23:13Z",
+      "side": 1,
+      "message": "same",
+      "revId": "c3984c6f9dbf370e601557b38b3a173828e2ed38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
