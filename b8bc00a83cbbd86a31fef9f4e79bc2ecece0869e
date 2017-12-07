@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9f1028_784472f2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T17:28:07Z",
+      "side": 1,
+      "message": "I believe node can be partially onscreen even if it\u0027s left or top are less than 0 -- imagine a node size (200, 200) at location (-50, -50). It is clipped, but it isn\u0027t fully offscreen, so it shouldn\u0027t be ignored.\n\nCan you check node.state.offscreen instead?",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 33
+      },
+      "revId": "b8bc00a83cbbd86a31fef9f4e79bc2ecece0869e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
