@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb32184e_963ebadc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:13:24Z",
+      "side": 1,
+      "message": "It\u0027s helpful to have a link to the full CL; in this case CL:777707, correct?",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ce0a4a_4d2e927d",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 3
