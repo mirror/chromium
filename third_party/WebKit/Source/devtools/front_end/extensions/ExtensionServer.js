@@ -1006,3 +1006,8 @@ defineCommonExtensionSymbols(Extensions.extensionAPI);
 
 /** @type {!Extensions.ExtensionServer} */
 Extensions.extensionServer;
+
+(function disableLoggingForTest() {
+  if (Runtime.queryParam('test'))
+    console.warn = () => undefined;
+})();

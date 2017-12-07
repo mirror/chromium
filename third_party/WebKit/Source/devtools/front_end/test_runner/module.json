@@ -2,7 +2,8 @@
     "dependencies": [
         "sdk",
         "workspace",
-        "ui"
+        "ui",
+        "main"
     ],
     "scripts": [
         "TestRunner.js"
