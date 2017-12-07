@@ -54,6 +54,10 @@ bool DataReductionProxyServer::IsCoreProxy() const {
   return proxy_type_ == ProxyServer_ProxyType_CORE;
 }
 
+bool DataReductionProxyServer::IsSecureProxy() const {
+  return proxy_server_.is_https() || proxy_server_.is_quic();
+}
+
 ProxyServer_ProxyType DataReductionProxyServer::GetProxyTypeForTesting() const {
   return proxy_type_;
 }

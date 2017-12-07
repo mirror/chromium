@@ -37,6 +37,8 @@ class DataReductionProxyServer {
 
   bool IsCoreProxy() const;
 
+  bool IsSecureProxy() const;
+
   // Returns |proxy_type_| for verification by tests.
   ProxyServer_ProxyType GetProxyTypeForTesting() const;
 

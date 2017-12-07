@@ -77,6 +77,10 @@ class NetworkPropertiesManager {
                                   bool is_core_proxy,
                                   bool warmup_url_probe_failed);
 
+  bool ShouldFetchWarmupURL(bool secure_proxy, bool is_core_proxy) const;
+
+  void OnWarmupFetchInitiated(bool secure_proxy, bool is_core_proxy);
+
  private:
   // Map from network IDs to network properties.
   typedef std::map<std::string, NetworkProperties> NetworkPropertiesContainer;
@@ -107,6 +111,19 @@ class NetworkPropertiesManager {
   NetworkProperties network_properties_;
 
   std::unique_ptr<PrefManager> pref_manager_;
+
+  bool has_warmup_url_succeded_secure_core_;
+  bool has_warmup_url_succeded_secure_non_core_;
+  bool has_warmup_url_succeded_insecure_core_;
+  bool has_warmup_url_succeded_insecure_non_core_;
+
+  // 0'th index represents is_secure proxy.
+  // column represents is_core.
+  // So,
+  size_t failed_warmup_url_fetch_counts_secure_core_;
+  size_t failed_warmup_url_fetch_counts_secure_non_core_;
+  size_t failed_warmup_url_fetch_counts_insecure_core_;
+  size_t failed_warmup_url_fetch_counts_insecure_non_core_;
 
   // Should be dereferenced only on the UI thread.
   base::WeakPtr<PrefManager> pref_manager_weak_ptr_;

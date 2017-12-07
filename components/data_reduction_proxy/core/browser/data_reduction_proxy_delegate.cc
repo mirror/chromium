@@ -97,6 +97,29 @@ void DataReductionProxyDelegate::OnResolveProxy(
                      }),
       proxies_for_http.end());
 
+  base::Optional<
+      std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+      warmup_proxy = config_->GetInFlightWarmupProxyDetails();
+
+  if (warmup_proxy && url.host() == "check.googlezip.net" &&
+      url.path() == "/generate_204") {
+    // This is a request to fetch the warmup (aka probe) URL.
+    // |is_secure_drp_proxy| and |is_core_proxy| indicate the properties of the
+    // proxy that is being currently probed.
+    bool is_secure_drp_proxy = warmup_proxy->first;
+    bool is_core_proxy = warmup_proxy->second;
+    // Remove the proxies with properties that do not match the properties of
+    // the proxy that is being probed.
+    proxies_for_http.erase(
+        std::remove_if(proxies_for_http.begin(), proxies_for_http.end(),
+                       [is_secure_drp_proxy,
+                        is_core_proxy](const DataReductionProxyServer& proxy) {
+                         return proxy.IsSecureProxy() != is_secure_drp_proxy ||
+                                proxy.IsCoreProxy() != is_core_proxy;
+                       }),
+        proxies_for_http.end());
+  }
+
   net::ProxyConfig proxy_config = configurator_->CreateProxyConfig(
       config_->GetNetworkPropertiesManager(), proxies_for_http);
 

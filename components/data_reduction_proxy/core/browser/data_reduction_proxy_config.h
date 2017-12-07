@@ -20,6 +20,7 @@
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/core/browser/secure_proxy_checker.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
+#include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "components/previews/core/previews_experiments.h"
 #include "net/base/network_change_notifier.h"
 #include "net/log/net_log_with_source.h"
@@ -201,14 +202,11 @@ class DataReductionProxyConfig
   // saver proxy is currently allowed or not.
   const NetworkPropertiesManager& GetNetworkPropertiesManager() const;
 
- protected:
-  // Should be called when there is a change in the status of the availability
-  // of the insecure data saver proxies triggered due to fetching of the warmup
-  // URL. |is_core_proxy| indicates if the warmup URL was fetched over a core
-  // data saver proxy or not.
-  void OnInsecureProxyWarmupURLProbeStatusChange(bool insecure_proxies_allowed,
-                                                 bool is_core_proxy);
+  base::Optional<
+      std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+  GetInFlightWarmupProxyDetails() const;
 
+ protected:
   virtual base::TimeTicks GetTicksNow() const;
 
   // Updates the Data Reduction Proxy configurator with the current config.
@@ -229,6 +227,10 @@ class DataReductionProxyConfig
   // not.
   void HandleWarmupFetcherResponse(const net::ProxyServer& proxy_server,
                                    bool success_response);
+
+  base::Optional<
+      std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+  GetProxyConnectionToWarmup() const;
 
  private:
   friend class MockDataReductionProxyConfig;
@@ -343,6 +345,12 @@ class DataReductionProxyConfig
 
   // The current connection type.
   net::NetworkChangeNotifier::ConnectionType connection_type_;
+
+  // Stores the properties of the proxy which is currently being probed. The
+  // values are valid only if a probe (or warmup URL) fetch is currently
+  // in-flight.
+  bool warmup_url_fetch_in_flight_secure_proxy_;
+  bool warmup_url_fetch_in_flight_core_proxy_;
 
   // Should be accessed only on the IO thread. Guaranteed to be non-null during
   // the lifetime of |this| if accessed on the IO thread.
