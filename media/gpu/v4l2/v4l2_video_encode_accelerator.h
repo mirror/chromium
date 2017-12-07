@@ -19,8 +19,8 @@
 #include "base/threading/thread.h"
 #include "base/time/time.h"
 #include "media/gpu/media_gpu_export.h"
-#include "media/gpu/v4l2_device.h"
-#include "media/gpu/v4l2_image_processor.h"
+#include "media/gpu/v4l2/v4l2_device.h"
+#include "media/gpu/v4l2/v4l2_image_processor.h"
 #include "media/video/video_encode_accelerator.h"
 #include "ui/gfx/geometry/size.h"
 

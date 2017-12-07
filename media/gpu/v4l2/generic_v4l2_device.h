@@ -16,7 +16,7 @@
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "media/gpu/features.h"
-#include "media/gpu/v4l2_device.h"
+#include "media/gpu/v4l2/v4l2_device.h"
 
 namespace media {
 
