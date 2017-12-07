@@ -16,6 +16,24 @@
       "revId": "6be6e1ff7d13d81cf27a8d8a67e51bde3010f01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbaa2452_ee226fb3",
+        "filename": "cc/test/scheduler_test_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-07T19:37:44Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I found some tests that use main frame recovery latency triggering to verify our bmf_to_activate estimate. But it didn\u0027t look as obvious, so I added a test which directly verifies that commit duration estimate affects whether critical begin main frame to activate is detected to be fast.",
+      "parentUuid": "5d5e626d_222b3211",
+      "revId": "6be6e1ff7d13d81cf27a8d8a67e51bde3010f01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
