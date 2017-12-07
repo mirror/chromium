@@ -6,8 +6,8 @@
 #define GPU_COMMAND_BUFFER_COMMON_DISCARDABLE_HANDLE_H_
 
 #include "base/memory/ref_counted.h"
+#include "gpu/command_buffer/common/gpu_common_utils_export.h"
 #include "gpu/command_buffer/common/id_type.h"
-#include "gpu/gpu_export.h"
 
 namespace gpu {
 
@@ -32,7 +32,7 @@ class Buffer;
 //         └───────────<──────────┘
 //
 // Note that a handle can be locked multiple times, and stores a lock-count.
-class GPU_EXPORT DiscardableHandleBase {
+class GPU_COMMON_UTILS_EXPORT DiscardableHandleBase {
  public:
   int32_t shm_id() const { return shm_id_; }
   uint32_t byte_offset() const { return byte_offset_; }
@@ -65,7 +65,8 @@ class GPU_EXPORT DiscardableHandleBase {
 
 // ClientDiscardableHandle enables the instantiation of a new discardable
 // handle (via the constructor), and can Lock an existing handle.
-class GPU_EXPORT ClientDiscardableHandle : public DiscardableHandleBase {
+class GPU_COMMON_UTILS_EXPORT ClientDiscardableHandle
+    : public DiscardableHandleBase {
  public:
   using Id = IdType<ClientDiscardableHandle,
                     uint64_t,
@@ -97,7 +98,8 @@ class GPU_EXPORT ClientDiscardableHandle : public DiscardableHandleBase {
 
 // ServiceDiscardableHandle can wrap an existing handle (via the constructor),
 // and can unlock and delete this handle.
-class GPU_EXPORT ServiceDiscardableHandle : public DiscardableHandleBase {
+class GPU_COMMON_UTILS_EXPORT ServiceDiscardableHandle
+    : public DiscardableHandleBase {
  public:
   ServiceDiscardableHandle(scoped_refptr<Buffer> buffer,
                            uint32_t byte_offset,
