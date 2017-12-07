@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d1ebdb_4e33d4f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "This subject line is a bit hard to understand. Can you describe specifically the change?\n\n    [registerProtocolHandler] Only substitute the first \"%s\" placeholder",
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4778ed85_247ee147",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "s/has changed/substitutes/",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b3b2a7_f3f2bc28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "This line is just re-stating the summary, it can be deleted.",
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8e5858_90d609db",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "Good test, thanks.",
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30908eba_9f2a661a",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "s/can/should/",
+      "range": {
+        "startLine": 1002,
+        "startChar": 73,
+        "endLine": 1002,
+        "endChar": 76
+      },
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78a84b8_54d6c0b3",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T03:48:35Z",
+      "side": 1,
+      "message": "Drop the word \"custom\" here. It\u0027s just a URL.",
+      "range": {
+        "startLine": 1003,
+        "startChar": 26,
+        "endLine": 1003,
+        "endChar": 32
+      },
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
