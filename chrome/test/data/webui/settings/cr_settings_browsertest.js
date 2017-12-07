@@ -569,7 +569,7 @@ CrSettingsChromeCleanupPageTest.prototype = {
   ]),
 };
 
-TEST_F('CrSettingsChromeCleanupPageTest', 'All', function() {
+TEST_F('CrSettingsChromeCleanupPageTest', 'All', function(done) {
   mocha.run();
 });
 GEN('#endif');
