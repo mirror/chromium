@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62245622_023c322a",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-07T17:07:26Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "9f21341e_c583e270",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3b633c_a41252af",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T16:56:05Z",
       "side": 1,
       "message": "The only concern I have about this CL is that only one report is allowed to be served at a time, how about I want to generate two reports and view them side by side (for example, one without my patch and one with the patch)?",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27bf99a_be8e7ba8",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-07T17:07:26Z",
+      "side": 1,
+      "message": "Reverted, i agree.",
+      "parentUuid": "2c3b633c_a41252af",
       "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-07T16:56:05Z",
       "side": 1,
       "message": "This is not needed because --filters is a required argument, I think it can be simplified to:\n\nabsolute_filter_paths \u003d _VerifyPathsAndReturnAbsolutes(args.filters)",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece19c84_01cf7069",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-07T17:07:26Z",
+      "side": 1,
+      "message": "No making it optional, we should leave it to user. And later fix messaging that it is important to specify this for performance.",
+      "parentUuid": "5256bdd9_eb468ed3",
       "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
