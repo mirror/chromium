@@ -22,6 +22,30 @@
       "revId": "abd87374f8fae8db33ebbb420b420e709b00eab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533406d6_b7af10e4",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-07T17:44:02Z",
+      "side": 1,
+      "message": "Right, my bad! Thank you Oliver!",
+      "parentUuid": "340657a2_bdf1fd06",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "abd87374f8fae8db33ebbb420b420e709b00eab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
