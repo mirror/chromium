@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d6abeed_4ea7c14d",
+        "filename": "media/capture/video/shared_memory_handle_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-07T18:13:16Z",
+      "side": 1,
+      "message": "rockot@, I am getting a presubmit error when this is included:\n\nmedia/capture/video/shared_memory_handle_provider_unittest.cc\n    Illegal include: \"mojo/edk/embedder/embedder.h\"\n  Because of no rule applying.\n\nAny idea on what is the right way for initializing mojo EDK for testing?",
+      "revId": "26d509c2cc49c81ca6a5a19d3ae73d94b829cb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
