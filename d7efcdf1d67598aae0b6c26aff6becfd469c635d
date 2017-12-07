@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "146f0923_77894cde",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-07T19:21:02Z",
+      "side": 1,
+      "message": "Couldn\u0027t do exactly that because using ParentForSublayers mover all sorts of stuff to the wrong place on screen. Still, I cleaned it up some.",
+      "parentUuid": "d25c9a2f_c7935a0f",
+      "revId": "d7efcdf1d67598aae0b6c26aff6becfd469c635d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f29e8bea_15948b69",
         "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "d7efcdf1d67598aae0b6c26aff6becfd469c635d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb62b0e2_7eb27c52",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-07T19:21:02Z",
+      "side": 1,
+      "message": "Done. I reverted the change and added the rounding back to the caller, and updated the DCHECK.",
+      "parentUuid": "f29e8bea_15948b69",
+      "revId": "d7efcdf1d67598aae0b6c26aff6becfd469c635d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
