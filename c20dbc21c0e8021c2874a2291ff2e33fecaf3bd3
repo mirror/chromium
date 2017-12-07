@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fdb34d1_e69dd84f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "This looks like it tests the same thing as the block above it.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90bab87_9af19224",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Should add a test here for the case where we see a \"--\u003e\" - preferably with something that \"id\"ish just before it too.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a83b1ac_29aa1d21",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Undo these changes.",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea33ee71_998d9a5f",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "\"If ...map.\" (I.e try to keep comments as proper sentences.)\n\nAlso, |region_map_| if referring to a member/variable. I think this comment is fairly obvious though, so you can probably drop it - especially if you move this code to a separate method.",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 61
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cfb3b5_63723723",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "After doing this current_region_ can be cleared. (If we need it we\u0027ll find it through the map.) I think doing that in a method (\"FinalizeRegion\", \"FlushRegion\" or something like that) could improve readability.",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 62
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c1ebe8_67390d06",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Suggest you write this as:\n\nif (line...)\n  return RecoverCue(...);\nreturn kHeader;\n\nThis may need to handle an invalid timing line though (kBadCue), so maybe it\u0027d be good to make a new method for handling that case.",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 18
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d24696_1e781f41",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Make this \"return kRegion;\" (in general, prefer to always return an explicit value in a state handler.)",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 224,
+        "endChar": 16
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6d04e9_596b419e",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Make a proper sentence.",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 67
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833c490e_18ea6fef",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "I\u0027d suggest moving the matching of \"REGION\\s*\" to a helper function. And then check the feature flag and the return from that function in the same if condition.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 49
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f20e6a_76d68ef3",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "return kRegion",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b545b278_24db267b",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "No need to store state_ here. This could also be simplified to just:\n\ncurrent_id_ \u003d AtomicString(previous_line_);\nreturn CollectTimingsAndSettings(line);\n\nI think. Like above (in CollectRegionSettings) we probably need to handle an invalid timing line. Hopefully these two places could use the same helper function for that (potentially passing the state to go to on failure.)",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 15
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e15368_01e1ad58",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Store",
+      "range": {
+        "startLine": 259,
+        "startChar": 5,
+        "endLine": 259,
+        "endChar": 11
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccd37d3_f29ad004",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "return kHeader;",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 16
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30499734_83eddeb2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T15:28:23Z",
+      "side": 1,
+      "message": "Like above, you can drop the VTTParser:: qualification here (since we are within VTTParser already.) Also, it would make sense to have these declarations together with other similar method (i.e above.)",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
