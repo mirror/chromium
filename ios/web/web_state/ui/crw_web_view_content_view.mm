@@ -5,6 +5,8 @@
 #import "ios/web/public/web_state/ui/crw_web_view_content_view.h"
 
 #import <WebKit/WebKit.h>
+#include <cmath>
+#include <limits>
 
 #include "base/logging.h"
 
@@ -116,6 +118,9 @@ const CGFloat kBackgroundRGBComponents[] = {0.75f, 0.74f, 0.76f};
 }
 
 - (void)setTopContentPadding:(CGFloat)newTopPadding {
+  CGFloat delta = std::fabs(_topContentPadding - newTopPadding);
+  if (delta <= std::numeric_limits<CGFloat>::epsilon())
+    return;
   if (!self.shouldUseInsetForTopPadding) {
     if (_topContentPadding != newTopPadding) {
       // Update the content offset of the scroll view to match the padding
