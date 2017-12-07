@@ -65,7 +65,7 @@ DedicatedWorkerMessagingProxy::~DedicatedWorkerMessagingProxy() = default;
 void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
     const KURL& script_url,
     const String& user_agent,
-    const String& source_code,
+    String source_code,
     ReferrerPolicy referrer_policy,
     const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
@@ -83,9 +83,8 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
   auto global_scope_creation_params =
       std::make_unique<GlobalScopeCreationParams>(
-          script_url, user_agent, source_code, nullptr, csp->Headers().get(),
-          referrer_policy, starter_origin, ReleaseWorkerClients(),
-          document->AddressSpace(),
+          script_url, user_agent, csp->Headers().get(), referrer_policy,
+          starter_origin, ReleaseWorkerClients(), document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
           std::make_unique<WorkerSettings>(document->GetSettings()),
           kV8CacheOptionsDefault,
@@ -94,7 +93,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url, stack_id);
+                         script_url, stack_id, std::move(source_code));
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(

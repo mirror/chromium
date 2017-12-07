@@ -43,7 +43,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   // These methods should only be used on the parent context thread.
   void StartWorkerGlobalScope(const KURL& script_url,
                               const String& user_agent,
-                              const String& source_code,
+                              String source_code,
                               ReferrerPolicy,
                               const v8_inspector::V8StackTraceId&);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
