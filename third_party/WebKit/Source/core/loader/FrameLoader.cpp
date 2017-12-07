@@ -918,9 +918,14 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
     return;
 
   const KURL& url = request.GetResourceRequest().Url();
-  FrameLoadType new_load_type = (frame_load_type == kFrameLoadTypeStandard)
-                                    ? DetermineFrameLoadType(request)
-                                    : frame_load_type;
+  FrameLoadType new_load_type = frame_load_type;
+  if (frame_load_type == kFrameLoadTypeStandard &&
+      (!frame_->GetSettings()->GetBrowserSideNavigationEnabled() ||
+       request.GetResourceRequest().CheckForBrowserSideNavigation())) {
+    // PlzNavigate: do not recompute the load type for requests the browser
+    // process asks to commit.
+    new_load_type = DetermineFrameLoadType(request);
+  }
   bool same_document_history_navigation =
       IsBackForwardLoadType(new_load_type) &&
       history_load_type == kHistorySameDocumentLoad;
