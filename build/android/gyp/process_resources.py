@@ -130,6 +130,10 @@ def _ParseArgs(args):
       '--app-as-shared-lib',
       action='store_true',
       help='Make a resource package that can be loaded as shared library.')
+  parser.add_option(
+      '--shared-resources-whitelist',
+      help='A whitelist of resources that should have their package id '
+      'changed as part of the onResourcesLoaded method in R.java')
 
   parser.add_option('--resource-dirs',
                     default='[]',
@@ -811,6 +815,7 @@ def main(args):
     options.srcjar_out,
     options.proguard_file,
     options.proguard_file_main_dex,
+    options.shared_resources_whitelist,
   ]
   output_paths = [x for x in possible_output_paths if x]
 

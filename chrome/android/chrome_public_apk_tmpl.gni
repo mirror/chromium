@@ -112,9 +112,12 @@ template("monochrome_public_apk_tmpl") {
     }
 
     alternative_android_sdk_jar = webview_framework_jar
-    app_as_shared_lib = true
     use_chromium_linker = false
     requires_sdk_api_level_23 = true
+
+    # whitelist required shared resources
+    app_as_shared_lib = true
+    shared_resources_whitelist_target = "//android_webview:system_webview_apk"
 
     # Webview supports all locales (has no omitted ones).
     aapt_locale_whitelist = locales
