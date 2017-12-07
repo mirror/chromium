@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>EventSource.url test for USVString</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+  </head>
+  <body>
+    <div id="log"></div>
+    <script>
+    test(function () {
+        var url = '\uD899';
+        source = new EventSource(url);
+        assert_equals(source.url.substr(-('%EF%BF%BD'.length)), '%EF%BF%BD');
+        source.close();
+    }, "unpaired surrogate codepoint should be replaced with U+FFFD");
+    </script>
+  </body>
+</html>
+
