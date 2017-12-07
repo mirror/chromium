@@ -119,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "6216445a_8da6e756",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:47:49Z",
+      "side": 1,
+      "message": "No particular need for a C++-side enum.  enums.xml just provides metadata/labels for the dashboard.  It\u0027s compatible with boolean, enumerated, and sparse histograms.  I personally find UMA_HISTOGRAM_BOOLEAN to be clearer in the C++ code, but either way is fine.",
+      "parentUuid": "329ca1ff_57fc399a",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 19
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c27f21fb_9b1039c9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:47:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cdf55cc_0bcd4151",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 9
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429e417c_0afe6bd7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
