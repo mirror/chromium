@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc26f395_b4ab9d4f",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-07T04:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f412a649_c4a01e67",
+      "revId": "29bac1753eb523768c219f0c0251d22a984da9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66158a32_1ed6d77c",
         "filename": "chrome/browser/chromeos/file_system_provider/service.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad3f2ed5_bdf9966a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-07T04:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66158a32_1ed6d77c",
+      "revId": "29bac1753eb523768c219f0c0251d22a984da9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "587ccb7a_b547ca48",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-06T14:19:50Z",
       "side": 1,
       "message": "Where would this string get displayed? If it never is, does it still need localization?",
+      "revId": "29bac1753eb523768c219f0c0251d22a984da9c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9679c151_29a97c79",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-12-07T04:42:25Z",
+      "side": 1,
+      "message": "It will be displayed in the \"+ Add new services\" in Files app.",
+      "parentUuid": "587ccb7a_b547ca48",
       "revId": "29bac1753eb523768c219f0c0251d22a984da9c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
