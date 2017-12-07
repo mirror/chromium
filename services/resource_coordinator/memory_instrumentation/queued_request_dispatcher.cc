@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/pattern.h"
+#include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "services/resource_coordinator/memory_instrumentation/graph_processor.h"
@@ -17,11 +18,18 @@
 #include "base/mac/mac_util.h"
 #endif
 
+using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpLevelOfDetail;
+using base::trace_event::TracedValue;
 
 namespace memory_instrumentation {
 
 namespace {
+
+const char kTypeScalar[] = "scalar";
+const char kTypeString[] = "string";
+const char kUnitsBytes[] = "bytes";
+const char kUnitsObjects[] = "objects";
 
 // Returns the private memory footprint calculated from given |os_dump|.
 //
@@ -99,6 +107,116 @@ mojom::ChromeMemDumpPtr CreateDumpSummary(
       GetDumpsSumKb("partition_alloc/partitions/*", process_memory_dump);
   result->blink_gc_total_kb = GetDumpsSumKb("blink_gc", process_memory_dump);
   return result;
+}
+
+void NodeAsValueIntoRecursively(const GlobalDumpGraph::Node& node,
+                                TracedValue* value,
+                                std::vector<base::StringPiece>* path) {
+  // Don't dump the root node.
+  if (!path->empty()) {
+    std::string string_conversion_buffer;
+    std::string name = base::JoinString(*path, "/");
+
+    value->BeginDictionaryWithCopiedName(name);
+
+    if (!node.guid().empty())
+      value->SetString("guid", node.guid().ToString());
+
+    value->BeginDictionary("attrs");
+    for (const auto& name_to_entry : node.const_entries()) {
+      const auto& entry = name_to_entry.second;
+      value->BeginDictionaryWithCopiedName(name_to_entry.first);
+      switch (entry.type) {
+        case GlobalDumpGraph::Node::Entry::kUInt64:
+          base::SStringPrintf(&string_conversion_buffer, "%" PRIx64,
+                              entry.value_uint64);
+          value->SetString("type", kTypeScalar);
+          value->SetString("value", string_conversion_buffer);
+          break;
+        case GlobalDumpGraph::Node::Entry::kString:
+          value->SetString("type", kTypeString);
+          value->SetString("value", entry.value_string);
+          break;
+      }
+      switch (entry.units) {
+        case GlobalDumpGraph::Node::Entry::ScalarUnits::kBytes:
+          value->SetString("units", kUnitsBytes);
+          break;
+        case GlobalDumpGraph::Node::Entry::ScalarUnits::kObjects:
+          value->SetString("units", kUnitsObjects);
+          break;
+      }
+      value->EndDictionary();
+    }
+    value->EndDictionary();  // "attrs": { ... }
+
+    if (node.is_weak())
+      value->SetInteger("flags", MemoryAllocatorDump::Flags::WEAK);
+
+    value->EndDictionary();  // "allocator_name/heap_subheap": { ... }
+  }
+
+  for (const auto& name_to_child : node.const_children()) {
+    path->push_back(name_to_child.first);
+    NodeAsValueIntoRecursively(*name_to_child.second, value, path);
+    path->pop_back();
+  }
+}
+
+bool AddChromeDumpToTraceIfEnabled(
+    const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::ProcessId pid,
+    const GlobalDumpGraph::Process& process,
+    TracingObserver* observer) {
+  if (!observer->ShouldAddToTrace(args))
+    return false;
+
+  std::unique_ptr<TracedValue> traced_value = std::make_unique<TracedValue>();
+  if (!process.root()->const_children().empty()) {
+    traced_value->BeginDictionary("allocators");
+    std::vector<base::StringPiece> path;
+    NodeAsValueIntoRecursively(*process.root(), traced_value.get(), &path);
+    traced_value->EndDictionary();
+  }
+  observer->AddToTrace(args, pid, std::move(traced_value));
+
+  return true;
+}
+
+bool AddChromeDumpAndGlobalAndEdgesToTraceIfEnabled(
+    const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::ProcessId pid,
+    const GlobalDumpGraph::Process& process,
+    const GlobalDumpGraph::Process& global_process,
+    const std::forward_list<GlobalDumpGraph::Edge>& edges,
+    TracingObserver* observer) {
+  if (!observer->ShouldAddToTrace(args))
+    return false;
+
+  std::unique_ptr<TracedValue> traced_value = std::make_unique<TracedValue>();
+  bool surpress_graphs = process.root()->const_children().empty() &&
+                         global_process.root()->const_children().empty();
+
+  if (!surpress_graphs) {
+    traced_value->BeginDictionary("allocators");
+    std::vector<base::StringPiece> path;
+    NodeAsValueIntoRecursively(*process.root(), traced_value.get(), &path);
+    NodeAsValueIntoRecursively(*global_process.root(), traced_value.get(),
+                               &path);
+    traced_value->EndDictionary();
+  }
+  traced_value->BeginArray("allocators_graph");
+  for (const auto& edge : edges) {
+    traced_value->BeginDictionary();
+    traced_value->SetString("source", edge.source()->guid().ToString());
+    traced_value->SetString("target", edge.target()->guid().ToString());
+    traced_value->SetInteger("importance", edge.priority());
+    traced_value->EndDictionary();
+  }
+  traced_value->EndArray();
+  observer->AddToTrace(args, pid, std::move(traced_value));
+
+  return true;
 }
 
 }  // namespace
@@ -275,8 +393,23 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
     mojom::OSMemDumpPtr os_dump = CreatePublicOSDump(*raw_os_dump);
     os_dump->shared_footprint_kb = shared_footprints[pid] / 1024;
     if (request->add_to_trace) {
-      tracing_observer->AddOsDumpToTraceIfEnabled(
+      bool success = tracing_observer->AddOsDumpToTraceIfEnabled(
           request->args, pid, os_dump.get(), &raw_os_dump->memory_maps);
+      if (raw_chrome_dump && success) {
+        const GlobalDumpGraph::Process& process =
+            *global_graph->process_dump_graphs().find(pid)->second;
+
+        if (pid_to_process_type[pid] == mojom::ProcessType::BROWSER) {
+          success = AddChromeDumpAndGlobalAndEdgesToTraceIfEnabled(
+              request->args, pid, process, *global_graph->shared_memory_graph(),
+              global_graph->edges(), tracing_observer);
+        } else {
+          success = AddChromeDumpToTraceIfEnabled(request->args, pid, process,
+                                                  tracing_observer);
+        }
+      }
+      if (!success)
+        request->failed_memory_dump_count++;
     }
 
     if (request->args.level_of_detail ==
