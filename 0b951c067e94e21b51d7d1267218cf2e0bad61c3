@@ -50,6 +50,23 @@
       "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984efc7f_0cea72ac",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 33
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-07T19:53:38Z",
+      "side": 1,
+      "message": "It may be recommended to verify the availability of SSE2 before calling the SIMD optimized version (and fallback to the non-accelerated version accordingly, similar to the approach implemented for InflateBack).\n\nNot a concern for Chromium per si, as the minimal requirements for Intel is SSE2... but maybe for other libs that rely on our zlib (e.g. pdfium, skia, etc).",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
