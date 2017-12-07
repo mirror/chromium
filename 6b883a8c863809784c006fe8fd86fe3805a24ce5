@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a909c4_27689d8a",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_dirty_framebuffer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-07T00:33:49Z",
+      "side": 1,
+      "message": "(Complete unfamiliarity with WebGL ahead)\n\nDoes this need to be called on every frame? I.e. if the next requestFrame call ran gl.clear again, but didn\u0027t call bindFramebuffer, is a frame supposed to be submitted or no? Either way, a test that it does what it\u0027s supposed to would be good.\n\nSimilarly, if bindFramebuffer is called but nothing is actually done to the canvas, is the framebuffer considered dirty/should a frame be submitted?\n\nFinally, more of a question for clarification: is whether a framebuffer is considered dirty or not completely handled by WebGL, or are we doing some things ourselves? If it\u0027s completely handled by WebGL, then I think it\u0027s safe to assume that everything works fine with a simple case like this. If we are doing any of our own dirtiness checking, we should add more tests that try different operations and ensure they do or don\u0027t dirty the buffer.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
