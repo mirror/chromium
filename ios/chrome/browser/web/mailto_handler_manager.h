@@ -2,26 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_WEB_MAILTO_URL_REWRITER_H_
-#define IOS_CHROME_BROWSER_WEB_MAILTO_URL_REWRITER_H_
+#ifndef IOS_CHROME_BROWSER_WEB_MAILTO_HANDLER_MANAGER_H_
+#define IOS_CHROME_BROWSER_WEB_MAILTO_HANDLER_MANAGER_H_
 
 #import <Foundation/Foundation.h>
 
 @class MailtoHandler;
-@class MailtoURLRewriter;
+@class MailtoHandlerManager;
 class GURL;
 
-// Protocol that must be implemented by observers of MailtoURLRewriter object.
-@protocol MailtoURLRewriterObserver<NSObject>
+// Protocol that must be implemented by observers of MailtoHandlerManager
+// object.
+@protocol MailtoHandlerManagerObserver<NSObject>
 // The default mailto: handler has been changed.
-- (void)rewriterDidChange:(MailtoURLRewriter*)rewriter;
+- (void)handlerDidChange:(MailtoHandlerManager*)rewriter;
 @end
 
-// An abstract base class for objects that manage the available Mail client
-// apps. The currently selected Mail client to handle mailto: URL is available
-// through -defaultHandlerID property. If the corresponding app is no longer
-// installed, the system-provided Mail client app will be used.
-@interface MailtoURLRewriter : NSObject
+// An object that manages the available Mail client apps. The currently selected
+// Mail client to handle mailto: URL is stored in a key in NSUserDefaults. If a
+// default has not been set in NSUserDefaults, nil may be returned from some of
+// the public APIs of MailtoHandlerManager.
+@interface MailtoHandlerManager : NSObject
 
 // The unique ID of the Mail client app that handles mailto: URL scheme.
 // This has a value of nil if default has not been set.
@@ -32,7 +33,7 @@ class GURL;
 @property(nonatomic, strong) NSArray<MailtoHandler*>* defaultHandlers;
 
 // Observer object that will be called when |defaultHandlerID| is changed.
-@property(nonatomic, weak) id<MailtoURLRewriterObserver> observer;
+@property(nonatomic, weak) id<MailtoHandlerManagerObserver> observer;
 
 // Returns the NSString* key to store state in NSUserDefaults.
 + (NSString*)userDefaultsKey;
@@ -42,7 +43,7 @@ class GURL;
 
 // Convenience method to return a new instance of this class initialized with
 // a standard set of MailtoHandlers.
-+ (instancetype)mailtoURLRewriterWithStandardHandlers;
++ (instancetype)mailtoHandlerManagerWithStandardHandlers;
 
 // Returns the name of the application that handles mailto: URLs. Returns nil
 // if a default has not been set.
@@ -59,4 +60,4 @@ class GURL;
 
 @end
 
-#endif  // IOS_CHROME_BROWSER_WEB_MAILTO_URL_REWRITER_H_
+#endif  // IOS_CHROME_BROWSER_WEB_MAILTO_HANDLER_MANAGER_H_
