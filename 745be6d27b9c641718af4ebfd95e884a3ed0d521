@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5223a576_5e710e35",
+        "filename": "device/vr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-07T04:58:46Z",
+      "side": 1,
+      "message": "Just use the short label \"//third_party/libovr\"",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc4f83c_7dbd4d09",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-07T04:58:46Z",
+      "side": 1,
+      "message": "Can you add a comment above this about needing the SDK, how it works for Googlers, and where non-Googlers should put it if they want to build with this?",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700a256d_7d614dab",
+        "filename": "third_party/libovr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-07T04:58:46Z",
+      "side": 1,
+      "message": "Unless you\u0027re going to change things, there\u0027s no need to have this as a separate config. You can just put the cflags \u003d ... line in the static library.\n\nYou only need to use a config to apply flags to multiple targets or dependent targets.",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e9708f2_2bb43016",
         "filename": "third_party/libovr/LICENSE",
         "patchSetId": 3
