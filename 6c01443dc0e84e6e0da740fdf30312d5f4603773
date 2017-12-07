@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fda0cdb0_a408a4e3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T19:20:38Z",
+      "side": 1,
+      "message": "please add a TODO in the empty body above that links to a bug tracking this",
+      "parentUuid": "cccaa1a1_adadc8eb",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8378f04_1fc896ee",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "eff9b193_b877ee00",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T19:20:38Z",
+      "side": 1,
+      "message": "can you remove this check, in that case?",
+      "parentUuid": "caea0296_ae565480",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "543c4b8a_720f95cf",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "Thanks for reminding me of this. I agree.\nI filed a bug earlier to improve unit testing (788467) and keep track of this effort.",
       "parentUuid": "543c4b8a_720f95cf",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bde0d8a_29be7a98",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T19:20:38Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "d8f90023_f003c38f",
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -311,6 +365,24 @@
       "side": 1,
       "message": "This class is to put all methods in one umbrella so we can friend them in OnDemandUpdater:\n\nhttps://cs.chromium.org/chromium/src/components/component_updater/component_updater_service.h?q\u003ddemandupdate\u0026sq\u003dpackage:chromium\u0026l\u003d163",
       "parentUuid": "5c038ed5_64d94f2d",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e801b0a9_c9cf9f3c",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T19:20:38Z",
+      "side": 1,
+      "message": "can you add a sentence to the class comment here documenting that that\u0027s why this exists, then?",
+      "parentUuid": "c93a9eef_3abc2cd4",
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -510,6 +582,24 @@
       "side": 1,
       "message": "is_successful is set in CrOSComponent::UnloadComponent. It is set to be false, either |component_name| does not exist or UnregisterComponent call returns false. Otherwise, it is set to be true.",
       "parentUuid": "844ac8ca_e4bbe048",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5129af08_acfe8a55",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T19:20:38Z",
+      "side": 1,
+      "message": "sorry if i was unclear, but i was wondering why it\u0027s part of the d-bus API. i don\u0027t see \"false\" ever being written to the d-bus message: either you write true (in this branch) or you return a d-bus error instead of a normal response.\n\nif the d-bus arg is never false, can you remove it?",
+      "parentUuid": "6b2ed555_a5c38ab3",
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
