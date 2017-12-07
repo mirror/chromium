@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ba4866f8_3367dd50",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:19:51Z",
+      "side": 1,
+      "message": "Sorry, should have been clearer (Wasn\u0027t even obvious to me what I meant...) I mean why do we allow tagging sockets before they\u0027ve been connected in the TCP path only?",
+      "parentUuid": "f34ec3b0_d920ad8d",
+      "range": {
+        "startLine": 351,
+        "startChar": 9,
+        "endLine": 351,
+        "endChar": 12
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95d1ab6_93533d77",
         "filename": "net/socket/tcp_client_socket.cc",
         "patchSetId": 18
