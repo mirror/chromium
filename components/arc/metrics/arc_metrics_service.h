@@ -65,6 +65,10 @@ class ArcMetricsService : public KeyedService,
                           mojom::BootType boot_type) override;
   void ReportNativeBridge(mojom::NativeBridgeType native_bridge_type) override;
 
+  // Records native bridge UMA according to value received from the
+  // container or as UNKNOWN if the value has not been recieved yet.
+  void RecordNativeBridgeUMA();
+
   NativeBridgeType native_bridge_type_for_testing() const {
     return native_bridge_type_;
   }
