@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "577fae8b_f5933b27",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T19:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd1c9ef_0bc959d4",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1cf35e6_ac8c5738",
         "filename": "ios/build/bots/scripts/run.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "75c03cc5_4e6f0fed",
+        "filename": "ios/build/bots/scripts/run.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T19:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1cf35e6_ac8c5738",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3794e914_df117574",
         "filename": "ios/build/bots/scripts/test_runner.py",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6c9c6d_a53ce7b6",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T19:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3794e914_df117574",
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +194,54 @@
         "startChar": 10,
         "endLine": 891,
         "endChar": 16
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a8cdd3_2c8b1c4d",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T19:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8b76b28_084b6511",
+      "range": {
+        "startLine": 891,
+        "startChar": 10,
+        "endLine": 891,
+        "endChar": 16
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "031281c3_0f014d0d",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T19:11:37Z",
+      "side": 1,
+      "message": "Thanks for the comments!  Pulled them into a different function and added tests.  The 8 cases logic are all covered by theses checks.  For case #5 \"test_filter empty, test_shards empty, invert true\",  instead of \"run 0 tests\", it should run all tests(do nothing).  It should be similar to case#6,  app crashed at startup.",
+      "parentUuid": "39f00d1b_2c6e308a",
+      "range": {
+        "startLine": 891,
+        "startChar": 26,
+        "endLine": 891,
+        "endChar": 55
       },
       "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
