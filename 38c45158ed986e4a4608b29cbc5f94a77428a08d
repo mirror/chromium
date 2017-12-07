@@ -46,6 +46,30 @@
       "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ebd244_04a91e3d",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T23:05:28Z",
+      "side": 1,
+      "message": "BlinkTransferableMessageStructTraits.{cc,h} should use this too, if possible.\n\nThough I just had an interesting thought--is it really OK to #include v8-inspector.h in a file #included from browser-side code? This particular struct is pretty basic and probably fine, but there\u0027s probably a lot of other things in v8-inspector.h that wouldn\u0027t belong in the browser process, right?",
+      "parentUuid": "adbee190_9ad5c4ec",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
