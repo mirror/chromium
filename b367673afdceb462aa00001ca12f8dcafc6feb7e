@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e39c32_faf6bc56",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "We should take the cert error into account when matching here... I suggest the following rules (in conjunction with my comment inline on the proto file about using an enum for the cert error):\n- if MatchSSLInfoWithHashes() and ssl_info.cert_error is CERT_ERROR_NONE, then consider it a match\n- if MatchSSLInfoWithHashes() and ssl_info.cert_error is present in ssl_info.cert_status, then consider it a match\n- otherwise don\u0027t consider it a match",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 30
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1711367d_dab5cceb",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Mustafa: do you remember why it\u0027s important this only include leaf certs?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cf91d7_786248e3",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Two requests:\n- Can you please add a high-level comment here describing what UrgentInterstitial is and how it differs from MITMSoftware/CaptivePortalCert? (namely, that UrgentInterstitial is meant to be more flexible and trigger a number of different interstitials based on a number of different characteristics, where MITMSoftware/CaptivePortalCert trigger a single type of interstitial based on a particular characteristic)\n- I think eventually we can deprecate MITMSoftware and CaptivePortalCert and just use UrgentInterstitial in their place, is that right? If so, maybe add a TODO about that.",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6834233b_e91ebcbf",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "nit: I think it would be good to be a little more specific here. I\u0027m guessing it\u0027s one of these two options, but correct me if I\u0027m wrong:\n\n\"If any certificate in the certificate chain matches any one of the hashes...\"\n\n-or-\n\n\"If the leaf certificate matches any one of the hashes...\"",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66234f1_3103f343",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "nit: a -\u003e an",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a893e0_a466789c",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "nit: typo, certificate",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b368a7_3ce46300",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Let\u0027s make this an enum and enumerate the cert errors we support. You can copy the list at https://cs.chromium.org/chromium/src/components/certificate_reporting/cert_logger.proto?q\u003dcert_logger.proto\u0026dr\u0026l\u003d108\n\nThen in ssl_error_assistant.proto, we can map this enum to net::CertStatus flags and check for the flag in ssl_info.cert_status.\n\nAnd if you could expand the comment to explain how the matching works, that\u0027d be helpful too.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4133c21b_979f9d15",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "nit: could we define an enum in the proto for this? see https://cs.chromium.org/chromium/src/components/certificate_reporting/cert_logger.proto?q\u003dcert_logger.\u0026sq\u003dpackage:chromium\u0026l\u003d29 for an example",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5780f182_a3f6a87d",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Just for my understanding, are you planning to add the other fields here as a follow-up? (common name regex, etc.)",
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48eb50e7_d1727b3e",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Does this need to be passed in? Could we use cert_error_ instead as on line 534?",
+      "range": {
+        "startLine": 541,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 18
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bef2ba_db2644e8",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "Looks like this is supposed to be |\u003d? Also, we probably want SOFT_OVERRIDE_DISABLED here.",
+      "range": {
+        "startLine": 542,
+        "startChar": 36,
+        "endLine": 542,
+        "endChar": 0
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5127aa_c2c48c5e",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:49:59Z",
+      "side": 1,
+      "message": "I feel like urgent interstitials works as a project name, but is a little bit vague to use in code. WDYT about ConfigurableInterstitial or DynamicInterstitial as an alternative? Or maybe this proto should be called DynamicInterstitialConfig, since it\u0027s really a config for dynamically triggering an interstitial.",
+      "range": {
+        "startLine": 738,
+        "startChar": 2,
+        "endLine": 738,
+        "endChar": 20
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
