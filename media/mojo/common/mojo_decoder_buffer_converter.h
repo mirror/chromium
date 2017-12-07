@@ -18,6 +18,8 @@
 namespace media {
 
 class DecoderBuffer;
+class MojoDataPipeReader;
+class MojoDataPipeWriter;
 
 // Combines mojom::DecoderBuffers with data read from a DataPipe to produce
 // media::DecoderBuffers (counterpart of MojoDecoderBufferWriter).
@@ -53,25 +55,20 @@ class MojoDecoderBufferReader {
   void CancelReadCB(ReadCB read_cb);
   void CompleteCurrentRead();
   void ScheduleNextRead();
-  void OnPipeReadable(MojoResult result, const mojo::HandleSignalsState& state);
-  void ReadDecoderBufferData();
-  void OnPipeError(MojoResult result);
+  void OnError();
 
-  // Read side of the DataPipe for receiving DecoderBuffer data.
-  mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+  // The callback called when |data_pipe_reader_| completes a reading request.
+  void OnBufferRead(bool success);
 
-  // Provides notification about |consumer_handle_| readiness.
-  mojo::SimpleWatcher pipe_watcher_;
-  bool armed_;
+  // Holds the consumer handle and can asynchronously read a chunk of data from
+  // the mojo data pipe by request.
+  std::unique_ptr<MojoDataPipeReader> data_pipe_reader_;
 
   // Buffers waiting to be read in sequence.
   base::circular_deque<scoped_refptr<DecoderBuffer>> pending_buffers_;
 
   // Callbacks for pending buffers.
   base::circular_deque<ReadCB> pending_read_cbs_;
-
-  // Number of bytes already read into the current buffer.
-  uint32_t bytes_read_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoDecoderBufferReader);
 };
@@ -108,22 +105,17 @@ class MojoDecoderBufferWriter {
 
  private:
   void ScheduleNextWrite();
-  void OnPipeWritable(MojoResult result, const mojo::HandleSignalsState& state);
-  void WriteDecoderBufferData();
-  void OnPipeError(MojoResult result);
+  void OnError();
 
-  // Write side of the DataPipe for sending DecoderBuffer data.
-  mojo::ScopedDataPipeProducerHandle producer_handle_;
+  // The callback called when |data_pipe_writing_| completes a writing request.
+  void OnBufferWritten(bool success);
 
-  // Provides notifications about |producer_handle_| readiness.
-  mojo::SimpleWatcher pipe_watcher_;
-  bool armed_;
+  // Holds the producer handle and can asynchronously write a chunk of data to
+  // the mojo data pipe by request.
+  std::unique_ptr<MojoDataPipeWriter> data_pipe_writer_;
 
   // Buffers waiting to be written in sequence.
   base::circular_deque<scoped_refptr<DecoderBuffer>> pending_buffers_;
-
-  // Number of bytes already written from the current buffer.
-  uint32_t bytes_written_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoDecoderBufferWriter);
 };
