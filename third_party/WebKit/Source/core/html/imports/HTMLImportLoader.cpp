@@ -60,8 +60,9 @@ void HTMLImportLoader::Dispose() {
   ClearResource();
 }
 
-void HTMLImportLoader::StartLoading(RawResource* resource) {
-  SetResource(resource);
+void HTMLImportLoader::StartLoading(FetchParameters& params,
+                                    ResourceFetcher* fetcher) {
+  RawResource::FetchImport(params, fetcher, this);
 }
 
 void HTMLImportLoader::ResponseReceived(

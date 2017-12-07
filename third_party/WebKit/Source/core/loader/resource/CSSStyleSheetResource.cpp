@@ -30,6 +30,7 @@
 #include "core/frame/WebFeature.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
+#include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
@@ -42,12 +43,13 @@
 namespace blink {
 
 CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
-                                                    ResourceFetcher* fetcher) {
+                                                    ResourceFetcher* fetcher,
+                                                    ResourceClient* client) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextStyle);
   CSSStyleSheetResource* resource = ToCSSStyleSheetResource(
-      fetcher->RequestResource(params, CSSStyleSheetResourceFactory()));
+      fetcher->RequestResource(params, client, CSSStyleSheetResourceFactory()));
   // TODO(kouhei): Dedupe this logic w/ ScriptResource::fetch
   if (resource && !params.IntegrityMetadata().IsEmpty())
     resource->SetIntegrityMetadata(params.IntegrityMetadata());
@@ -56,13 +58,19 @@ CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
 
 CSSStyleSheetResource* CSSStyleSheetResource::CreateForTest(
     const KURL& url,
-    const WTF::TextEncoding& encoding) {
+    const WTF::TextEncoding& encoding,
+    ResourceClient* client) {
   ResourceRequest request(url);
   request.SetFetchCredentialsMode(network::mojom::FetchCredentialsMode::kOmit);
   ResourceLoaderOptions options;
   TextResourceDecoderOptions decoder_options(
       TextResourceDecoderOptions::kCSSContent, encoding);
-  return new CSSStyleSheetResource(request, options, decoder_options);
+  CSSStyleSheetResource* resource =
+      new CSSStyleSheetResource(request, options, decoder_options);
+  resource->SetStatus(ResourceStatus::kPending);
+  if (client)
+    client->SetResource(resource, nullptr);
+  return resource;
 }
 
 CSSStyleSheetResource::CSSStyleSheetResource(

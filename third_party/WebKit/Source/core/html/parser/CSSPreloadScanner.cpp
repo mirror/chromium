@@ -265,7 +265,9 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                   ? kScanAndPreload
                   : kScanOnly),
       preloader_(preloader) {
-  SetResource(resource);
+  SetResource(resource, preloader->GetDocument()
+                            ->GetTaskRunner(TaskType::kUnspecedLoading)
+                            .get());
 }
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}

@@ -41,9 +41,8 @@ class CORE_EXPORT ClassicPendingScript final : public PendingScript,
                                      ScriptElementBase*,
                                      FetchParameters::DeferOption);
 
-  // For a script from an external file, with a supplied ScriptResource.
-  static ClassicPendingScript* CreateExternalForTest(ScriptElementBase*,
-                                                     ScriptResource*);
+  // For a script from an external file.
+  static ClassicPendingScript* CreateExternalForTest(ScriptElementBase*);
 
   // For an inline script.
   static ClassicPendingScript* CreateInline(ScriptElementBase*,

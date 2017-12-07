@@ -46,22 +46,21 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   //
   // Note: |element_document| corresponds to the settings object.
   ScriptResource* resource =
-      ScriptResource::Fetch(params, element_document.Fetcher());
+      ScriptResource::Fetch(params, element_document.Fetcher(), pending_script);
   if (!resource)
     return nullptr;
-  pending_script->SetResource(resource);
   pending_script->CheckState();
   return pending_script;
 }
 
 ClassicPendingScript* ClassicPendingScript::CreateExternalForTest(
-    ScriptElementBase* element,
-    ScriptResource* resource) {
-  DCHECK(resource);
+    ScriptElementBase* element) {
   ClassicPendingScript* pending_script = new ClassicPendingScript(
       element, TextPosition(), ScriptSourceLocationType::kExternalFile,
       ScriptFetchOptions(), true /* is_external */);
-  pending_script->SetResource(resource);
+  ScriptResource* resource = ScriptResource::CreateForTest(
+      KURL("http://example.com/"), UTF8Encoding(), pending_script);
+  resource->SetStatus(ResourceStatus::kPending);
   pending_script->CheckState();
   return pending_script;
 }
@@ -115,7 +114,7 @@ void ClassicPendingScript::Prefinalize() {
 
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
-  SetResource(nullptr);
+  ClearResource();
   integrity_failure_ = false;
   CancelStreaming();
 }

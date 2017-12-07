@@ -44,9 +44,12 @@ class CORE_EXPORT CSSStyleSheetResource final : public TextResource {
  public:
   enum class MIMETypeCheck { kStrict, kLax };
 
-  static CSSStyleSheetResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static CSSStyleSheetResource* Fetch(FetchParameters&,
+                                      ResourceFetcher*,
+                                      ResourceClient*);
   static CSSStyleSheetResource* CreateForTest(const KURL&,
-                                              const WTF::TextEncoding&);
+                                              const WTF::TextEncoding&,
+                                              ResourceClient*);
 
   ~CSSStyleSheetResource() override;
   void Trace(blink::Visitor*) override;

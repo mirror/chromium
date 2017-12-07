@@ -202,7 +202,7 @@ class CORE_EXPORT DocumentLoader
   void DispatchLinkHeaderPreloads(ViewportDescriptionWrapper*,
                                   LinkLoader::MediaPreloadPolicy);
 
-  Resource* StartPreload(Resource::Type, FetchParameters&);
+  Resource* StartPreload(Resource::Type, FetchParameters&, ResourceClient*);
 
   void SetServiceWorkerNetworkProvider(
       std::unique_ptr<WebServiceWorkerNetworkProvider>);
@@ -311,6 +311,8 @@ class CORE_EXPORT DocumentLoader
   bool IsRedirectAfterPost(const ResourceRequest&, const ResourceResponse&);
 
   bool ShouldContinueForResponse() const;
+
+  RawResource* GetMainResource() const { return ToRawResource(GetResource()); }
 
   Member<LocalFrame> frame_;
   Member<ResourceFetcher> fetcher_;

@@ -699,7 +699,7 @@ bool ScriptLoader::FetchClassicScript(
     return false;
 
   prepared_pending_script_ = pending_script;
-  resource_keep_alive_ = pending_script->GetResource();
+  resource_keep_alive_ = ToScriptResource(pending_script->GetResource());
 
   return true;
 }

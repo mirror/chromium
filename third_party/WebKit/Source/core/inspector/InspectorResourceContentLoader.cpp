@@ -37,8 +37,6 @@ class InspectorResourceContentLoader::ResourceClient final
   explicit ResourceClient(InspectorResourceContentLoader* loader)
       : loader_(loader) {}
 
-  void WaitForResource(Resource* resource) { SetResource(resource); }
-
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(loader_);
     RawResourceClient::Trace(visitor);
@@ -96,14 +94,13 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      Resource* resource = RawResource::Fetch(params, document->Fetcher());
-      if (resource) {
-        // Prevent garbage collection by holding a reference to this resource.
+      ResourceClient* resource_client = new ResourceClient(this);
+      pending_resource_clients_.insert(resource_client);
+      Resource* resource =
+          RawResource::Fetch(params, document->Fetcher(), resource_client);
+      // Prevent garbage collection by holding a reference to this resource.
+      if (resource)
         resources_.push_back(resource);
-        ResourceClient* resource_client = new ResourceClient(this);
-        pending_resource_clients_.insert(resource_client);
-        resource_client->WaitForResource(resource);
-      }
     }
 
     HeapVector<Member<CSSStyleSheet>> style_sheets;
@@ -121,15 +118,13 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      Resource* resource =
-          CSSStyleSheetResource::Fetch(params, document->Fetcher());
-      if (!resource)
-        continue;
-      // Prevent garbage collection by holding a reference to this resource.
-      resources_.push_back(resource);
       ResourceClient* resource_client = new ResourceClient(this);
       pending_resource_clients_.insert(resource_client);
-      resource_client->WaitForResource(resource);
+      Resource* resource = CSSStyleSheetResource::Fetch(
+          params, document->Fetcher(), resource_client);
+      // Prevent garbage collection by holding a reference to this resource.
+      if (resource)
+        resources_.push_back(resource);
     }
   }
 

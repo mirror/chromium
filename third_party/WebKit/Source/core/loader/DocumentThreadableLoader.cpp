@@ -1203,12 +1203,12 @@ void DocumentThreadableLoader::LoadRequestAsync(
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
       request.GetRequestContext() == WebURLRequest::kRequestContextAudio) {
-    SetResource(RawResource::FetchMedia(new_params, fetcher));
+    RawResource::FetchMedia(new_params, fetcher, this);
   } else if (request.GetRequestContext() ==
              WebURLRequest::kRequestContextManifest) {
-    SetResource(RawResource::FetchManifest(new_params, fetcher));
+    RawResource::FetchManifest(new_params, fetcher, this);
   } else {
-    SetResource(RawResource::Fetch(new_params, fetcher));
+    RawResource::Fetch(new_params, fetcher, this);
   }
   if (GetResource())
     checker_.WillAddClient();
@@ -1218,7 +1218,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
         GetExecutionContext(), client_);
     ThreadableLoaderClient* client = client_;
     Clear();
-    // setResource() might call notifyFinished() and thus clear()
+    // Fetching might call NotifyFinished() and thus clear()
     // synchronously, and in such cases ThreadableLoaderClient is already
     // notified and |client| is null.
     if (!client)

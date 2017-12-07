@@ -76,7 +76,7 @@ void HTMLResourcePreloader::Preload(
   if (!document_->Loader())
     return;
 
-  Resource* resource = preload->Start(document_);
+  Resource* resource = preload->Start(document_, nullptr);
 
   // Don't scan a Resource more than once, to avoid a self-referencing
   // stlyesheet causing infinite recursion.
