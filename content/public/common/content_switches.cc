@@ -300,6 +300,8 @@ const char kDisableV8IdleTasks[]            = "disable-v8-idle-tasks";
 const char kDisableWebGLImageChromium[]     = "disable-webgl-image-chromium";
 
 // Don't enforce the same-origin policy. (Used by people testing their sites.)
+// This switch has no effect unless --user-data-dir (as defined by the content
+// embedder) is also present.
 const char kDisableWebSecurity[]            = "disable-web-security";
 
 // Disables Blink's XSSAuditor. The XSSAuditor mitigates reflective XSS.
