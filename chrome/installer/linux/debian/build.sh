@@ -135,7 +135,7 @@ cleanup() {
 
 usage() {
   echo "usage: $(basename $0) [-a target_arch] [-b 'dir'] -c channel"
-  echo "                      -d branding [-f] [-o 'dir'] -s 'dir'"
+  echo "                      -d branding [-f] [-o 'dir'] -s 'dir' -t target_os"
   echo "-a arch     package architecture (ia32 or x64)"
   echo "-b dir      build input directory    [${BUILDDIR}]"
   echo "-c channel  the package channel (unstable, beta, stable)"
@@ -144,6 +144,7 @@ usage() {
   echo "-h          this help message"
   echo "-o dir      package output directory [${OUTPUTDIR}]"
   echo "-s dir      /path/to/sysroot"
+  echo "-t platform target platform"
 }
 
 # Check that the channel name is one of the allowable ones.
@@ -171,7 +172,7 @@ verify_channel() {
 }
 
 process_opts() {
-  while getopts ":a:b:c:d:fho:s:" OPTNAME
+  while getopts ":a:b:c:d:fho:s:t:" OPTNAME
   do
     case $OPTNAME in
       a )
@@ -199,6 +200,9 @@ process_opts() {
         ;;
       s )
         SYSROOT="$OPTARG"
+        ;;
+      t )
+        TARGET_OS="$OPTARG"
         ;;
      \: )
         echo "'-$OPTARG' needs an argument."
