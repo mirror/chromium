@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f14e64cd_2b8cc975",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 69619,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:15:04Z",
+      "side": 1,
+      "message": "Optional nit: I\u0027d omit this sentence, as it should be clear from the dashboards... and if I were the one maintaining this code, I\u0027d definitely forget to update this sentence later \u003d}.  That said, feel free to include it if you\u0027re pretty sure you won\u0027t forget to come back to it later!",
+      "range": {
+        "startLine": 69619,
+        "startChar": 20,
+        "endLine": 69619,
+        "endChar": 75
+      },
+      "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
