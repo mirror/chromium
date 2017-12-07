@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1980c30b_38c86b90",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-07T16:12:31Z",
+      "side": 1,
+      "message": "I updated the bug #id because PRESUBMIT check failed. I\u0027ve also updated the comment as the bug mention this is not working on iOS 9/10 either and do not mention iOS 11 status.",
+      "revId": "9347997444dc0c1695d0c71988cf01bdae325b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
