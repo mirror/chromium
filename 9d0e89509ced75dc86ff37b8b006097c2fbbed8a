@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc99913_8e68fdb7",
+        "filename": "chromeos/network/network_state_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T00:46:55Z",
+      "side": 1,
+      "message": "Maybe try to shorten this name a little? :)",
+      "revId": "9d0e89509ced75dc86ff37b8b006097c2fbbed8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
