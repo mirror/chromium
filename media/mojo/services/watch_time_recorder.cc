@@ -8,12 +8,18 @@
 
 #include "base/metrics/histogram_functions.h"
 #include "base/strings/string_piece.h"
+#include "media/base/limits.h"
 #include "media/base/watch_time_keys.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace media {
+
+// The minimum amount of media playback which can elapse before we'll report
+// watch time metrics for a playback.
+constexpr base::TimeDelta kMinimumElapsedWatchTime =
+    base::TimeDelta::FromSeconds(limits::kMinimumElapsedWatchTimeSecs);
 
 static bool ShouldReportToUma(WatchTimeKey key) {
   switch (key) {
@@ -83,24 +89,32 @@ static bool ShouldReportToUma(WatchTimeKey key) {
   return false;
 }
 
-static void RecordWatchTimeInternal(base::StringPiece key,
-                                    base::TimeDelta value,
-                                    bool is_mtbr = false) {
-  base::UmaHistogramCustomTimes(
-      key.as_string(), value,
-      // There are a maximum of 5 underflow events possible in a given 7s
-      // watch time period, so the minimum value is 1.4s.
-      is_mtbr ? base::TimeDelta::FromSecondsD(1.4)
-              : base::TimeDelta::FromSeconds(7),
-      base::TimeDelta::FromHours(10), 50);
+static void RecordWatchTimeInternal(
+    base::StringPiece key,
+    base::TimeDelta value,
+    base::TimeDelta minimum = kMinimumElapsedWatchTime) {
+  DCHECK(!key.empty());
+  base::UmaHistogramCustomTimes(key.as_string(), value, minimum,
+                                base::TimeDelta::FromHours(10), 50);
 }
 
 static void RecordMeanTimeBetweenRebuffers(base::StringPiece key,
                                            base::TimeDelta value) {
-  RecordWatchTimeInternal(key, value, true);
+  DCHECK(!key.empty());
+
+  // There are a maximum of 5 underflow events possible in a given 7s watch time
+  // period, so the minimum value is 1.4s.
+  RecordWatchTimeInternal(key, value, base::TimeDelta::FromSecondsD(1.4));
+}
+
+static void RecordDiscardedWatchTime(base::StringPiece key,
+                                     base::TimeDelta value) {
+  DCHECK(!key.empty());
+  RecordWatchTimeInternal(key, value, base::TimeDelta());
 }
 
 static void RecordRebuffersCount(base::StringPiece key, int underflow_count) {
+  DCHECK(!key.empty());
   base::UmaHistogramCounts100(key.as_string(), underflow_count);
 }
 
@@ -124,22 +138,22 @@ class WatchTimeRecorderProvider : public mojom::WatchTimeRecorderProvider {
 
 WatchTimeRecorder::WatchTimeRecorder(mojom::PlaybackPropertiesPtr properties)
     : properties_(std::move(properties)),
-      rebuffer_keys_(
+      extended_metrics_keys_(
           {{WatchTimeKey::kAudioSrc, kMeanTimeBetweenRebuffersAudioSrc,
-            kRebuffersCountAudioSrc},
+            kRebuffersCountAudioSrc, kDiscardedWatchTimeAudioSrc},
            {WatchTimeKey::kAudioMse, kMeanTimeBetweenRebuffersAudioMse,
-            kRebuffersCountAudioMse},
+            kRebuffersCountAudioMse, kDiscardedWatchTimeAudioMse},
            {WatchTimeKey::kAudioEme, kMeanTimeBetweenRebuffersAudioEme,
-            kRebuffersCountAudioEme},
+            kRebuffersCountAudioEme, kDiscardedWatchTimeAudioEme},
            {WatchTimeKey::kAudioVideoSrc,
             kMeanTimeBetweenRebuffersAudioVideoSrc,
-            kRebuffersCountAudioVideoSrc},
+            kRebuffersCountAudioVideoSrc, kDiscardedWatchTimeAudioVideoSrc},
            {WatchTimeKey::kAudioVideoMse,
             kMeanTimeBetweenRebuffersAudioVideoMse,
-            kRebuffersCountAudioVideoMse},
+            kRebuffersCountAudioVideoMse, kDiscardedWatchTimeAudioVideoMse},
            {WatchTimeKey::kAudioVideoEme,
             kMeanTimeBetweenRebuffersAudioVideoEme,
-            kRebuffersCountAudioVideoEme}}) {}
+            kRebuffersCountAudioVideoEme, kDiscardedWatchTimeAudioVideoEme}}) {}
 
 WatchTimeRecorder::~WatchTimeRecorder() {
   FinalizeWatchTime({});
@@ -172,8 +186,19 @@ void WatchTimeRecorder::FinalizeWatchTime(
       continue;
     }
 
-    if (ShouldReportToUma(kv.first))
-      RecordWatchTimeInternal(WatchTimeKeyToString(kv.first), kv.second);
+    if (ShouldReportToUma(kv.first)) {
+      if (kv.second >= kMinimumElapsedWatchTime) {
+        RecordWatchTimeInternal(WatchTimeKeyToString(kv.first), kv.second);
+      } else if (kv.second > base::TimeDelta()) {
+        auto it = std::find_if(extended_metrics_keys_.begin(),
+                               extended_metrics_keys_.end(),
+                               [kv](const ExtendedMetricsKeyMap& map) {
+                                 return map.watch_time_key == kv.first;
+                               });
+        if (it != extended_metrics_keys_.end())
+          RecordDiscardedWatchTime(it->discard_key, kv.second);
+      }
+    }
 
     // At finalize, update the aggregate entry.
     aggregate_watch_time_info_[kv.first] += kv.second;
@@ -194,7 +219,7 @@ void WatchTimeRecorder::FinalizeWatchTime(
   // report the MTBR value using watch_time / |underflow_count|. Do this only
   // for foreground reporters since we only have UMA keys for foreground.
   if (!properties_->is_background) {
-    for (auto& mapping : rebuffer_keys_) {
+    for (auto& mapping : extended_metrics_keys_) {
       auto it = watch_time_info_.find(mapping.watch_time_key);
       if (it == watch_time_info_.end())
         continue;
@@ -324,17 +349,21 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   aggregate_watch_time_info_.clear();
 }
 
-WatchTimeRecorder::RebufferMapping::RebufferMapping(const RebufferMapping& copy)
-    : RebufferMapping(copy.watch_time_key,
-                      copy.mtbr_key,
-                      copy.smooth_rate_key) {}
+WatchTimeRecorder::ExtendedMetricsKeyMap::ExtendedMetricsKeyMap(
+    const ExtendedMetricsKeyMap& copy)
+    : ExtendedMetricsKeyMap(copy.watch_time_key,
+                            copy.mtbr_key,
+                            copy.smooth_rate_key,
+                            copy.discard_key) {}
 
-WatchTimeRecorder::RebufferMapping::RebufferMapping(
+WatchTimeRecorder::ExtendedMetricsKeyMap::ExtendedMetricsKeyMap(
     WatchTimeKey watch_time_key,
     base::StringPiece mtbr_key,
-    base::StringPiece smooth_rate_key)
+    base::StringPiece smooth_rate_key,
+    base::StringPiece discard_key)
     : watch_time_key(watch_time_key),
       mtbr_key(mtbr_key),
-      smooth_rate_key(smooth_rate_key) {}
+      smooth_rate_key(smooth_rate_key),
+      discard_key(discard_key) {}
 
 }  // namespace media
