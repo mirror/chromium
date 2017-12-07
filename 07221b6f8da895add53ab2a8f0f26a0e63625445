@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af04af97_7284ddfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "Could you please add a \"Bug: \" line to the CL description?",
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1a6efb_00c18cc9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/queueing_time_estimator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "nit: Could you please file a bug for this work, and link to it here?",
+      "range": {
+        "startLine": 245,
+        "startChar": 53,
+        "endLine": 245,
+        "endChar": 0
+      },
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0301fcba_bbd96952",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2279,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "UMA_HISTOGRAM_* macros may only be used with runtime-constant histogram names, which doesn\u0027t seem to be the case here.  Please use base::UmaHistogramCustomCounts, which supports variable names.",
+      "range": {
+        "startLine": 2279,
+        "startChar": 2,
+        "endLine": 2279,
+        "endChar": 29
+      },
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60702555_1931b509",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "Optional nit: This phrasing feels odd.  I think you\u0027re trying to say that there\u0027s a [0, 1) bucket present in the histogram?  That bucket is an implicit underflow bucket, present for any histogram, so it feels a bit weird to explicitly call it out here.  I would simplify this comment to something like \"The lowest bucket for ...\", and leave the really nitty gritty details implicit.  Ditto below.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 15
+      },
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7d587b_78d3a138",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "nit: It\u0027s probably helpful to document what the units are.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1a0a2f_269e7ef8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 69495,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T00:12:31Z",
+      "side": 1,
+      "message": "nit: Please document when this is recorded.",
+      "range": {
+        "startLine": 69491,
+        "startChar": 0,
+        "endLine": 69495,
+        "endChar": 20
+      },
+      "revId": "07221b6f8da895add53ab2a8f0f26a0e63625445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
