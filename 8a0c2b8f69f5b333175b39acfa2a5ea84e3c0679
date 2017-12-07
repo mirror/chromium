@@ -16,6 +16,24 @@
       "revId": "8a0c2b8f69f5b333175b39acfa2a5ea84e3c0679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17801d8_1b7a0c00",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-07T00:21:48Z",
+      "side": 1,
+      "message": "Done.  The blink style guide recommends to leave out names if redundant.  I guess I\u0027ve spent more time in blink code and I\u0027ve kind of got used to doing that.",
+      "parentUuid": "dd7d3656_66b5865d",
+      "revId": "8a0c2b8f69f5b333175b39acfa2a5ea84e3c0679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
