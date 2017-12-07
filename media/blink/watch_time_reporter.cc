@@ -26,19 +26,23 @@ static bool IsOnBatteryPower() {
 
 WatchTimeReporter::WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
                                      GetMediaTimeCB get_media_time_cb,
+                                     GetStatsCB get_stats_cb,
                                      mojom::WatchTimeRecorderProvider* provider)
     : WatchTimeReporter(std::move(properties),
                         false /* is_background */,
                         std::move(get_media_time_cb),
+                        std::move(get_stats_cb),
                         provider) {}
 
 WatchTimeReporter::WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
                                      bool is_background,
                                      GetMediaTimeCB get_media_time_cb,
+                                     GetStatsCB get_stats_cb,
                                      mojom::WatchTimeRecorderProvider* provider)
     : properties_(std::move(properties)),
       is_background_(is_background),
-      get_media_time_cb_(std::move(get_media_time_cb)) {
+      get_media_time_cb_(std::move(get_media_time_cb)),
+      get_stats_cb_(std::move(get_stats_cb)) {
   DCHECK(!get_media_time_cb_.is_null());
   DCHECK(properties_->has_audio || properties_->has_video);
   DCHECK_EQ(is_background, properties_->is_background);
@@ -59,7 +63,7 @@ WatchTimeReporter::WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
   prop_copy->is_background = true;
   background_reporter_.reset(
       new WatchTimeReporter(std::move(prop_copy), true /* is_background */,
-                            get_media_time_cb_, provider));
+                            get_media_time_cb_, get_stats_cb_, provider));
 }
 
 WatchTimeReporter::~WatchTimeReporter() {
@@ -256,7 +260,13 @@ void WatchTimeReporter::MaybeStartReportingTimer(
   if (reporting_timer_.IsRunning())
     return;
 
+  if (properties_->has_video) {
+    last_stats_ = start_stats_ = get_stats_cb_.Run();
+    end_stats_ = PipelineStatistics();
+  }
+
   underflow_count_ = 0;
+  pending_underflow_events_.clear();
   last_media_timestamp_ = last_media_power_timestamp_ =
       last_media_controls_timestamp_ = end_timestamp_for_power_ =
           last_media_display_type_timestamp_ = end_timestamp_for_display_type_ =
@@ -278,6 +288,8 @@ void WatchTimeReporter::MaybeFinalizeWatchTime(FinalizeTime finalize_time) {
   // Don't trample an existing finalize; the first takes precedence.
   if (end_timestamp_ == kNoTimestamp) {
     end_timestamp_ = get_media_time_cb_.Run();
+    if (properties_->has_video)
+      end_stats_ = get_stats_cb_.Run();
     DCHECK_NE(end_timestamp_, kInfiniteDuration);
     DCHECK_GE(end_timestamp_, base::TimeDelta());
   }
@@ -460,6 +472,23 @@ void WatchTimeReporter::UpdateWatchTime() {
 
     recorder_->UpdateUnderflowCount(underflow_count_);
     pending_underflow_events_.clear();
+  }
+
+  if (properties_->has_video) {
+    // Update decoder stats for the current watch time segment. Take care that
+    // we only report stats belonging to the current segment and ignore values
+    // which have accumulated before the current segment.
+    PipelineStatistics stats = is_finalizing ? end_stats_ : get_stats_cb_.Run();
+    if (last_stats_.video_frames_decoded < stats.video_frames_decoded ||
+        last_stats_.video_frames_dropped < stats.video_frames_dropped) {
+      last_stats_ = stats;
+
+      // Update video frame statistics after rebasing them on top of the
+      // starting values.
+      recorder_->UpdateVideoFrameStats(
+          last_stats_.video_frames_decoded - start_stats_.video_frames_decoded,
+          last_stats_.video_frames_dropped - start_stats_.video_frames_dropped);
+    }
   }
 
   // Always send finalize, even if we don't currently have any data, it's

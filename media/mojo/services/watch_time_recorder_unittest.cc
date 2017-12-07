@@ -253,6 +253,9 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideo) {
 
   constexpr base::TimeDelta kWatchTime = base::TimeDelta::FromSeconds(54);
   wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoAll, kWatchTime);
+  const uint32_t kDecodedFrames = 100u;
+  const uint32_t kDroppedFrames = 5u;
+  wtr_->UpdateVideoFrameStats(kDecodedFrames, kDroppedFrames);
   wtr_.reset();
   base::RunLoop().RunUntilIdle();
 
@@ -271,6 +274,8 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideo) {
     EXPECT_UKM(UkmEntry::kIsMSEName, properties->is_mse);
     EXPECT_UKM(UkmEntry::kLastPipelineStatusName, PIPELINE_OK);
     EXPECT_UKM(UkmEntry::kRebuffersCountName, 0);
+    EXPECT_UKM(UkmEntry::kDecodedVideoFramesName, kDecodedFrames);
+    EXPECT_UKM(UkmEntry::kDroppedVideoFramesName, kDroppedFrames);
     EXPECT_UKM(UkmEntry::kVideoNaturalWidthName,
                properties->natural_size.width());
     EXPECT_UKM(UkmEntry::kVideoNaturalHeightName,

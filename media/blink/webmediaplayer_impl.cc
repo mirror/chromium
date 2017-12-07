@@ -2577,6 +2577,8 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
           pipeline_metadata_.natural_size, top_origin, is_top_frame),
       base::BindRepeating(&WebMediaPlayerImpl::GetCurrentTimeInternal,
                           base::Unretained(this)),
+      base::BindRepeating(&WebMediaPlayerImpl::GetPipelineStatistics,
+                          base::Unretained(this)),
       watch_time_recorder_provider_));
   watch_time_reporter_->OnVolumeChange(volume_);
 
