@@ -258,6 +258,30 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69782f4a_761eb4b3",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T09:29:16Z",
+      "side": 1,
+      "message": "This is not the hidden property. It is a custom property of the toolbar buttons.\nThe hidden property is:\nbutton.hidden \u003d button.hiddenInCurrentState \u0026\u0026 button.hiddenInCurrentSizeClass;",
+      "parentUuid": "31488817_c9704265",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
