@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20fb9ec_8559d131",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T18:48:05Z",
+      "side": 1,
+      "message": "I still don\u0027t think it makes sense to exclude Android. Views is not built on that platform and almost certainly never will. Searching the code there are three appearances of OS_ANDROID in views code for some reason, but they\u0027re all in unit test files.",
+      "revId": "cdc95cca58e1f42bcfe5bfdd0c5963ec76f4c8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
