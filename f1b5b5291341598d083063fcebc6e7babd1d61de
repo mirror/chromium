@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ba6759f_d32231ac",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "Here\u0027s the actual interface to the proxy.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "f1b5b5291341598d083063fcebc6e7babd1d61de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658b1f25_960f22c7",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "This one isn\u0027t exposed anymore, but it\u0027s still here commented out because I\u0027m thinking of leaving it on for tests (command_updater_for_tests()) - WDYT?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 68
+      },
+      "revId": "f1b5b5291341598d083063fcebc6e7babd1d61de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a58b4a4_df81d140",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "There\u0027s a bit of a naming problem with this one as ExecuteCommandWithDisposition already exists in this class, unsure how to deal with it.",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "f1b5b5291341598d083063fcebc6e7babd1d61de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c71a27d_1eab7650",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "Maybe use something more generic like command_updater_state_locked?",
+      "range": {
+        "startLine": 197,
+        "startChar": 7,
+        "endLine": 197,
+        "endChar": 28
+      },
+      "revId": "f1b5b5291341598d083063fcebc6e7babd1d61de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
