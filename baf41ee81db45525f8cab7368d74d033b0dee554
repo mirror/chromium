@@ -94,6 +94,30 @@
       "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db2d905_4eb5bc57",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T12:35:15Z",
+      "side": 1,
+      "message": "Made something slightly more involved, trying to reflect my expectation of how \u0027offset-anchor\u0027 is supposed to work: https://jsfiddle.net/ugxjxuxp/1/\n\n(Also implement to \"work\" in the latest PS. I guess it may come down to what coordinate space the offset-path is in.)",
+      "parentUuid": "b84ec43d_d4388b2c",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 72
+      },
+      "revId": "baf41ee81db45525f8cab7368d74d033b0dee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
