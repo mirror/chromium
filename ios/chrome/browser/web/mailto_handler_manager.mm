@@ -2,21 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/mailto_handler_manager.h"
 
-#import <UIKit/UIKit.h>
-
-#import "base/logging.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_handler_gmail.h"
 #import "ios/chrome/browser/web/mailto_handler_inbox.h"
 #import "ios/chrome/browser/web/mailto_handler_system_mail.h"
 
+#import <UIKit/UIKit.h>
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-@interface NullableMailtoURLRewriter ()
+NSString* const kMailtoHandlerManagerUserDefaultsKey =
+    @"UserChosenDefaultMailApp";
+
+@interface MailtoHandlerManager ()
 
 // Dictionary keyed by the unique ID of the Mail client. The value is
 // the MailtoHandler object that can rewrite a mailto: URL.
@@ -25,22 +27,9 @@
 
 @end
 
-@implementation NullableMailtoURLRewriter
+@implementation MailtoHandlerManager
+@synthesize observer = _observer;
 @synthesize handlers = _handlers;
-
-+ (NSString*)userDefaultsKey {
-  // This key in NSUserDefaults stores the default handler ID stored.
-  return @"UserChosenDefaultMailApp";
-}
-
-+ (instancetype)mailtoURLRewriterWithStandardHandlers {
-  id result = [[NullableMailtoURLRewriter alloc] init];
-  [result setDefaultHandlers:@[
-    [[MailtoHandlerSystemMail alloc] init], [[MailtoHandlerGmail alloc] init],
-    [[MailtoHandlerInbox alloc] init]
-  ]];
-  return result;
-}
 
 - (instancetype)init {
   self = [super init];
@@ -48,6 +37,21 @@
     _handlers = [NSMutableDictionary dictionary];
   }
   return self;
+}
+
++ (NSString*)systemMailApp {
+  // This is the App Store ID for Apple Mail app.
+  // See https://itunes.apple.com/us/app/mail/id1108187098?mt=8
+  return @"1108187098";
+}
+
++ (instancetype)mailtoHandlerManagerWithStandardHandlers {
+  id result = [[MailtoHandlerManager alloc] init];
+  [result setDefaultHandlers:@[
+    [[MailtoHandlerSystemMail alloc] init], [[MailtoHandlerGmail alloc] init],
+    [[MailtoHandlerInbox alloc] init]
+  ]];
+  return result;
 }
 
 - (NSArray<MailtoHandler*>*)defaultHandlers {
@@ -66,7 +70,7 @@
 
 - (NSString*)defaultHandlerID {
   NSString* value = [[NSUserDefaults standardUserDefaults]
-      stringForKey:[[self class] userDefaultsKey]];
+      stringForKey:kMailtoHandlerManagerUserDefaultsKey];
   if (value) {
     if ([_handlers[value] isAvailable])
       return value;
@@ -85,15 +89,16 @@
 
 - (void)setDefaultHandlerID:(NSString*)appStoreID {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-  NSString* defaultsKey = [[self class] userDefaultsKey];
   if (appStoreID) {
-    if ([appStoreID isEqual:[defaults objectForKey:defaultsKey]])
+    if ([appStoreID
+            isEqual:[defaults
+                        objectForKey:kMailtoHandlerManagerUserDefaultsKey]])
       return;
-    [defaults setObject:appStoreID forKey:defaultsKey];
+    [defaults setObject:appStoreID forKey:kMailtoHandlerManagerUserDefaultsKey];
   } else {
-    [defaults removeObjectForKey:defaultsKey];
+    [defaults removeObjectForKey:kMailtoHandlerManagerUserDefaultsKey];
   }
-  [self.observer rewriterDidChange:self];
+  [self.observer handlerDidChange:self];
 }
 
 - (NSString*)defaultHandlerName {
