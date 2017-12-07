@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f421173_3277b370",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-07T06:02:59Z",
+      "side": 1,
+      "message": "Since you\u0027ve got a boolean here anyway, why not actually store the dse setting before it was disabled? That way you can actually restore it instead of guessing conservatively it was BLOCK.",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
