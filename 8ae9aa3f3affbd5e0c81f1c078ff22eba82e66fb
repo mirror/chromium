@@ -22,6 +22,29 @@
       "revId": "8ae9aa3f3affbd5e0c81f1c078ff22eba82e66fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920847a0_6a768c51",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/PaintFilterBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-07T23:53:03Z",
+      "side": 1,
+      "message": "Woops. I missed the comment above which explicitly states that even if the orig_filter is null, we might still need a filter for the color transform. I think its better to leave this method as-is, since the caller now copes with a null filter by not adding it to FilterOperations.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "8ae9aa3f3affbd5e0c81f1c078ff22eba82e66fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
