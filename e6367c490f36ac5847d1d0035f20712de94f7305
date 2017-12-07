@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caeb1c27_97a2602d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T21:55:21Z",
+      "side": 1,
+      "message": "Do you mind also making sure we actually end up using native NV12 on eve with SW video decoding?",
+      "revId": "e6367c490f36ac5847d1d0035f20712de94f7305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
