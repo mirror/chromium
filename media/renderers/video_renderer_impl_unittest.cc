@@ -771,9 +771,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingRealtimeIncapable) {
       .WillRepeatedly(Return(base::TimeDelta::FromSeconds(4)));
 
   StartPlayingFrom(0);
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
 
   renderer_->OnTimeProgressing();
@@ -786,9 +786,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingRealtimeIncapable) {
   event.RunAndWait();
 
   // No buffering should have been triggered due to speed.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
   Destroy();
 }
@@ -830,9 +830,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingMemoryPressure) {
       .WillRepeatedly(Return(base::TimeDelta::FromMilliseconds(100)));
 
   StartPlayingFrom(0);
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
 
   renderer_->OnTimeProgressing();
@@ -845,10 +845,10 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingMemoryPressure) {
   event.RunAndWait();
 
   // No buffering should have been triggered due to memory pressure.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
 
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
   Destroy();
 }
@@ -874,9 +874,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingBackgroundRendering) {
       .WillRepeatedly(Return(base::TimeDelta::FromMilliseconds(100)));
 
   StartPlayingFrom(0);
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
 
   renderer_->OnTimeProgressing();
@@ -889,9 +889,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingBackgroundRendering) {
   event.RunAndWait();
 
   // No buffering should have been triggered due to background rendering.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
   Destroy();
 }
@@ -915,9 +915,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBuffering) {
   StartPlayingFrom(0);
 
   // Prior to playback start no extended buffering should be triggered.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
 
   renderer_->OnTimeProgressing();
@@ -930,9 +930,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBuffering) {
     EXPECT_CALL(mock_cb_, FrameReceived(HasTimestampMatcher(1000)))
         .WillOnce(RunClosure(event.GetClosure()));
     event.RunAndWait();
-    EXPECT_EQ(limits::kMaxVideoFrames,
+    EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
               renderer_->min_buffered_frames_for_testing());
-    EXPECT_EQ(limits::kMaxVideoFrames,
+    EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
               renderer_->max_buffered_frames_for_testing());
   }
 
@@ -950,9 +950,9 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBuffering) {
   Flush();
 
   // Ensure min/max buffered frames is reset.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->min_buffered_frames_for_testing());
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
   Destroy();
 }
@@ -976,7 +976,7 @@ TEST_F(VideoRendererImplTest, ComplexityBasedBufferingUnderflow) {
   StartPlayingFrom(0);
 
   // Prior to playback start no extended buffering should be triggered.
-  EXPECT_EQ(limits::kMaxVideoFrames,
+  EXPECT_EQ(static_cast<size_t>(limits::kMaxVideoFrames),
             renderer_->max_buffered_frames_for_testing());
 
   renderer_->OnTimeProgressing();
