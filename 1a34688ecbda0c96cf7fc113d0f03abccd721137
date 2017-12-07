@@ -88,6 +88,24 @@
       "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317235b5_54f92fe4",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T03:36:39Z",
+      "side": 1,
+      "message": "How about adding DCHECKs in ServiceWorkerVersion::StartWorker() to verify pre-conditions instead? (e.g., DCHECK(request_timeouts_.empty()))",
+      "parentUuid": "f0153f16_a68e1caf",
+      "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
