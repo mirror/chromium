@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d15b6429_6f9e756b",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-07T05:39:53Z",
+      "side": 1,
+      "message": "Thank you for explanation.\nIt seems like there is no GetTestInterface() other than for Fake, so I moved.\n\n(off topic): BTW, what\u0027s the background to introduce TestInterface?\nAs named, IIUC, it is the interface just for testing (incl ChromeOS chrome on linux impl),\nand we\u0027d expect Fake implementations, then it sounds like out of focus of production Client interface to me, so static_cast\u003c\u003eing sounds enough...?",
+      "parentUuid": "dc0947c2_0938a70b",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90b55a13_4641c55e",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8d2d9e29_efba13da",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-07T05:39:53Z",
+      "side": 1,
+      "message": "Done.\n\nstd::string() is preferred to \"\", IIUC.\ncf) https://codereview.chromium.org/13145003",
+      "parentUuid": "90b55a13_4641c55e",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe678341_b2b81837",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -65,6 +101,24 @@
       "writtenOn": "2017-12-05T19:33:57Z",
       "side": 1,
       "message": "Even though this is similar to the previous test, the initial conditions are a bit different so we should add the EXPECT_FALSE from line 828 here also.",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545f4dcb_c9e1f3ee",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-07T05:39:53Z",
+      "side": 1,
+      "message": "The entry should be kept, IIUC, as old code does not have DeleteEntry()?\nActually, I checked the value of HasService(), and it returns true (as I personally expected).",
+      "parentUuid": "fe678341_b2b81837",
       "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
