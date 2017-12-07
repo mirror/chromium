@@ -149,6 +149,9 @@ CdmMessageType ToMediaMessageType(cdm::MessageType message_type) {
       return CdmMessageType::LICENSE_RENEWAL;
     case cdm::kLicenseRelease:
       return CdmMessageType::LICENSE_RELEASE;
+    // TODO(xhwang): Support kIndividualizationRequest.
+    case cdm::kIndividualizationRequest:
+      return CdmMessageType::LICENSE_REQUEST;
   }
 
   NOTREACHED() << "Unexpected cdm::MessageType " << message_type;
@@ -1167,6 +1170,12 @@ void CdmAdapter::RequestStorageId(uint32_t version) {
 
   helper_->GetStorageId(version, base::Bind(&CdmAdapter::OnStorageIdObtained,
                                             weak_factory_.GetWeakPtr()));
+}
+
+cdm::CdmProxy* CdmAdapter::CreateCdmProxy() {
+  // TODO(xhwang): Implement this!
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 void CdmAdapter::OnStorageIdObtained(uint32_t version,
