@@ -81,7 +81,7 @@ class MEDIA_EXPORT CdmProxy {
                        ProcessCB process_cb) = 0;
 
   // Callback for CreateMediaCryptoSession().
-  // On suceess:
+  // On success:
   // |crypto_session_id| is the ID for the created crypto session.
   // |output_data| is extra value, if any.
   using CreateMediaCryptoSessionCB = base::OnceCallback<
