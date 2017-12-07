@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493847c7_cf74892b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-07T15:53:40Z",
+      "side": 1,
+      "message": "Do you still need \"webkit-image-set\"??",
+      "range": {
+        "startLine": 403,
+        "startChar": 20,
+        "endLine": 403,
+        "endChar": 38
+      },
+      "revId": "2498001e91a61bd66fc5f0d29cce6c79b1dd2327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
