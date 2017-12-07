@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "95bbf712_e28bea68",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T22:29:59Z",
+      "side": 1,
+      "message": "Store result and DCHECK it.",
+      "parentUuid": "c2c35dfa_42900240",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "950ada18_c3fd9348",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 4
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "11df8f44_ddccd926",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T22:29:59Z",
+      "side": 1,
+      "message": "Ack. I hadn\u0027t seen that pattern used before.",
+      "parentUuid": "2766747f_2389bcf0",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9fe73d3_49644475",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 4
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Kk. Had it that way before but since there was only one use of the constant, Tomasz changed it to this. Now that there\u0027s multiple uses, I\u0027ll change it back. \n\nShould smb be a constant or should the entire ProviderId be a constant since here we always create it with the same native_id?",
       "parentUuid": "c9fe73d3_49644475",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2085eee7_ee8b73b7",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T22:29:59Z",
+      "side": 1,
+      "message": "I was just thinking the string. But now that I look at it. Isn\u0027t this already GetId()/provider_id_? If so just use that. I don\u0027t really mind the string not being a constant if it is only use once in the constructor.",
+      "parentUuid": "f6935052_f8d3c910",
       "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
