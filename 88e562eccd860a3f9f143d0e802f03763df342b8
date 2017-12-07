@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1148bfe0_25202bd4",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T03:36:35Z",
+      "side": 1,
+      "message": "Is it always guaranteed here that it\u0027s going to be an EGLContext?\nIf that\u0027s the case, can we DCHECK on it in some way?",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f570e781_e99f1b90",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T03:36:35Z",
+      "side": 1,
+      "message": "This image goes away, we usually keep track on the GPU service side of all images attached to a client texture.\nWould it make sense to do the same here (bind_image_cb_.Run...)?",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a6b01d_352fc3b1",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T03:36:35Z",
+      "side": 1,
+      "message": "What\u0027s the point of base_image? Could you just use image?",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae3588f_5722098e",
+        "filename": "ui/gfx/linux/native_pixmap_dmabuf.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T03:36:35Z",
+      "side": 1,
+      "message": "Wouldn\u0027t planes_ \u003d handle.planes work here?",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
