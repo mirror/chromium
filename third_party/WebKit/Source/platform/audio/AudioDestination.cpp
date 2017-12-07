@@ -56,7 +56,7 @@ namespace blink {
 // CreateAudioDevice. Clamping may be tricky though as the buffer size is
 // dependent on the sample rate for some platforms and we're passing in a time
 // value and not a buffer size in the latencyHint. See: crbug.com/737047
-const size_t kFIFOSize = 8192;
+const size_t kFIFOSize = 96 * 128;
 
 scoped_refptr<AudioDestination> AudioDestination::Create(
     AudioIOCallback& callback,
@@ -272,7 +272,8 @@ bool AudioDestination::CheckBufferSize() {
   // Check if the requested buffer size is too large.
   bool is_buffer_size_valid =
       callback_buffer_size_ + AudioUtilities::kRenderQuantumFrames <= kFIFOSize;
-  DCHECK(is_buffer_size_valid);
+  DCHECK_LE(callback_buffer_size_ + AudioUtilities::kRenderQuantumFrames,
+            kFIFOSize);
   return is_buffer_size_valid;
 }
 }  // namespace blink
