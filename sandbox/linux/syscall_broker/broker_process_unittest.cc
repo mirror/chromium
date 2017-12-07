@@ -1013,5 +1013,91 @@ TEST(BrokerProcess, ReadlinkFileHost) {
   TestReadlinkHelper(false);
 }
 
+void TestMkdirHelper(bool fast_check_in_client) {
+  std::string path;
+  {
+    // Generate name and ensure it does not exist upon scope exit.
+    ScopedTemporaryFile file;
+    path = file.full_file_name();
+  }
+  const char* path_name = path.c_str();
+  const char* nonesuch_name = "/mbogo/nonesuch";
+
+  std::vector<BrokerFilePermission> ro_permissions = {
+      BrokerFilePermission::ReadOnly(path_name),
+      BrokerFilePermission::ReadOnly(nonesuch_name)};
+
+  std::vector<BrokerFilePermission> rw_permissions = {
+      BrokerFilePermission::ReadWrite(path_name),
+      BrokerFilePermission::ReadWrite(nonesuch_name)};
+
+  {
+    // Actual file with permissions to use but command itself not allowed.
+    BrokerProcess open_broker(kFakeErrnoSentinel, BrokerCommandSet(),
+                              rw_permissions, fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-kFakeErrnoSentinel, open_broker.Mkdir(path_name, 0600));
+  }
+
+  BrokerCommandSet command_set;
+  command_set.set(COMMAND_MKDIR);
+
+  {
+    // Nonexistent file with no permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set,
+                              std::vector<BrokerFilePermission>(),
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-kFakeErrnoSentinel, open_broker.Mkdir(nonesuch_name, 0600));
+  }
+  {
+    // Actual file with no permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set,
+                              std::vector<BrokerFilePermission>(),
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-kFakeErrnoSentinel, open_broker.Mkdir(path_name, 0600));
+  }
+  {
+    // Nonexistent file with insufficient permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set, ro_permissions,
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-kFakeErrnoSentinel, open_broker.Mkdir(nonesuch_name, 0600));
+  }
+  {
+    // Actual file with insufficient permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set, ro_permissions,
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-kFakeErrnoSentinel, open_broker.Mkdir(path_name, 0600));
+  }
+  {
+    // Nonexistent file with permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set, rw_permissions,
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(-ENOENT, open_broker.Mkdir(nonesuch_name, 0600));
+  }
+  {
+    // Actual file with permissions to see file.
+    BrokerProcess open_broker(kFakeErrnoSentinel, command_set, rw_permissions,
+                              fast_check_in_client);
+    ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
+    EXPECT_EQ(0, open_broker.Mkdir(path_name, 0600));
+  }
+
+  // Cleanup.
+  rmdir(path_name);
+}
+
+TEST(BrokerProcess, MkdirClient) {
+  TestMkdirHelper(true);
+}
+
+TEST(BrokerProcess, MkdirHost) {
+  TestMkdirHelper(false);
+}
+
 }  // namespace syscall_broker
 }  // namespace sandbox
