@@ -13,6 +13,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 
 using content::WebContents;
+using ImageType = ContentSettingImageModel::ImageType;
 
 typedef InProcessBrowserTest ContentSettingImageModelBrowserTest;
 
@@ -34,24 +35,25 @@ IN_PROC_BROWSER_TEST_F(ContentSettingImageModelBrowserTest, CreateBubbleModel) {
 
   // Test that image models tied to a single content setting create bubbles tied
   // to the same setting.
-  static const ContentSettingsType content_settings_to_test[] = {
-      CONTENT_SETTINGS_TYPE_COOKIES,
-      CONTENT_SETTINGS_TYPE_IMAGES,
-      CONTENT_SETTINGS_TYPE_JAVASCRIPT,
-      CONTENT_SETTINGS_TYPE_PLUGINS,
-      CONTENT_SETTINGS_TYPE_POPUPS,
-      CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
-      CONTENT_SETTINGS_TYPE_PPAPI_BROKER,
-      CONTENT_SETTINGS_TYPE_GEOLOCATION,
-      CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS,
-      CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
-  };
+  static constexpr ContentSettingImageModel::ImageType
+      content_settings_to_test[] = {
+          ImageType::COOKIES,
+          ImageType::IMAGES,
+          ImageType::JAVASCRIPT,
+          ImageType::PLUGINS,
+          ImageType::POPUPS,
+          ImageType::MIXEDSCRIPT,
+          ImageType::PPAPI_BROKER,
+          ImageType::GEOLOCATION,
+          ImageType::PROTOCOL_HANDLERS,
+          ImageType::MIDI_SYSEX,
+      };
 
   Profile* profile = browser()->profile();
-  for (ContentSettingsType type : content_settings_to_test) {
+  for (auto type : content_settings_to_test) {
+    auto model = ContentSettingImageModel::CreateForContentType(type);
     std::unique_ptr<ContentSettingBubbleModel> bubble(
-        ContentSettingSimpleImageModel::CreateForContentTypeForTesting(type)
-            ->CreateBubbleModel(nullptr, web_contents, profile));
+        model->CreateBubbleModel(nullptr, web_contents, profile));
 
     // All of the above content settings should create a
     // ContentSettingSimpleBubbleModel that is tied to a particular setting,
@@ -59,7 +61,9 @@ IN_PROC_BROWSER_TEST_F(ContentSettingImageModelBrowserTest, CreateBubbleModel) {
     ContentSettingSimpleBubbleModel* simple_bubble =
         bubble->AsSimpleBubbleModel();
     ASSERT_TRUE(simple_bubble);
-    EXPECT_EQ(type, simple_bubble->content_type());
+    EXPECT_EQ(static_cast<ContentSettingSimpleImageModel*>(model.get())
+                  ->content_type(),
+              simple_bubble->content_type());
   }
 
   // For other models, we can only test that they create a valid bubble.
@@ -79,9 +83,8 @@ IN_PROC_BROWSER_TEST_F(ContentSettingImageModelBrowserTest,
   WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
 
-  std::unique_ptr<ContentSettingImageModel> model =
-      ContentSettingSimpleImageModel::CreateForContentTypeForTesting(
-          CONTENT_SETTINGS_TYPE_IMAGES);
+  auto model =
+      ContentSettingImageModel::CreateForContentType(ImageType::IMAGES);
 
   EXPECT_TRUE(model->ShouldRunAnimation(web_contents));
   model->SetAnimationHasRun(web_contents);
