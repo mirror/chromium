@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f0dedb6_db504535",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-07T23:42:31Z",
+      "side": 1,
+      "message": "Let\u0027s ignore the 80-character width rules for the filter lists, and put this into one line. That should make it easier to search for disabled tests.",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 51
+      },
+      "revId": "7ea187a6c018cc51988e8afbff384adbd04a21de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15797133_2823966b",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-07T23:42:31Z",
+      "side": 1,
+      "message": "This should be followed by a comma, to make future additions easier.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 68
+      },
+      "revId": "7ea187a6c018cc51988e8afbff384adbd04a21de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
