@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb5110d7_2a56500c",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-07T14:23:13Z",
+      "side": 1,
+      "message": "This is confusing. |parallel_writing_pattern| is only necessary some of the time? Why don\u0027t we always set it?",
+      "range": {
+        "startLine": 524,
+        "startChar": 56,
+        "endLine": 524,
+        "endChar": 77
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1263d4_d8ea8bdc",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-07T14:23:13Z",
+      "side": 1,
+      "message": "please remove newline",
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b75b1b_ebbce8d3",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-07T14:23:13Z",
+      "side": 1,
+      "message": "Can we rename this to \u0027initial_writing_pattern_\u0027?",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "156c88a6_8f63aa76",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 9
@@ -37,6 +100,30 @@
       "side": 1,
       "message": "This is used when t1 that created writers was, say, partial and a full request t2 wants to join writers. It cannot and must be able to get the reason for the same.",
       "parentUuid": "156c88a6_8f63aa76",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 38
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62d7cb1b_248a2d46",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-07T14:23:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "997c32f4_fef3a80d",
       "range": {
         "startLine": 247,
         "startChar": 0,
@@ -93,6 +180,30 @@
       "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74af0c50_ce286d45",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-07T14:23:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6096330f_8c8d46cb",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "f62f93f5995bc0a675f160010886781b4145d8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
