@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6160e76_70ca5da0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "You should never put logic inside a DCHECK. When you build without DCHECK on the statement inside will not execute. Do you need to call StringToInt outside the DCHECK macro",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950ada18_c3fd9348",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "Probably should still return a generic error rather than success here.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a1a515_13d31a4a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "Wrap chromeos::DBusThreadManager::Get()-\u003eGetSmbProviderClient() into helper method \n GetClient(). All the rest of it is noise. You\u0027ll be calling this quite a lot so\n\nGetClient()-\u003eUnmount(...) will be a lot cleaner and easier to read.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e821e99_18c8d16b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "I\u0027d just put Translate error inside Run() call. No need for a temporary?\n\nAlso std::move on a POD (Plain old data) type is meaningless. It will still compile but it isn\u0027t doing anything. You should remove since it will make the reader believe that this type contains some kind of resource (memory, file handle etc).\n\nThe point of move is that it allows contents of a class to be duplicated more efficiently than deep copying. ie copying a pointer (4/8 bytes) rather than allocating memory and copying the contents of that memory (n bytes + allocation).\n\nSince POD types like ints, enums, bools, pointers etc are already just \u003c8 byte integers they are already being copied as efficiently as possible so move couldn\u0027t do anything more efficient - there also isn\u0027t a move constructor on POD types to be invoked anyway.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0bde82_7ceaaa27",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "Add a sanity check DCHECK that mount_id \u003e\u003d 0",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135d9e4b_4b3c054f",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "No move needed on the error (see more detailed explanation above).\n\nCalling move on the callback here doesn\u0027t do anything either. It would only make sense if you are passing it to a function or returning it. Right now it\u0027s being cast to an rvalue reference but it\u0027s not in a context that is moving or copying so it doesn\u0027t do anything.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fe73d3_49644475",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "Lets make a helper method GetProviderId() with the call to CreateFromNativeId inside. Also should smb into a constant.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4cfaae_58e81f21",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T16:59:20Z",
+      "side": 1,
+      "message": "No moves needed. See above.",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
