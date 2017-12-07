@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2af42236_6cd93b7e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T19:36:17Z",
+      "side": 1,
+      "message": "CHECK is actually appropriate here, so no further action needed.",
+      "parentUuid": "63c29e66_00d2f6a4",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 7
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e015848_40d714ce",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 7
