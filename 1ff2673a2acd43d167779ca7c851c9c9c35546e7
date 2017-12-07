@@ -22,6 +22,30 @@
       "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29684cd5_4b7b2633",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 69619,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-12-07T21:19:07Z",
+      "side": 1,
+      "message": "I thought this is what you meant when you asked to document when this is recorded. Leaving for now, I\u0027ll update this when we start recording all splits.",
+      "parentUuid": "f14e64cd_2b8cc975",
+      "range": {
+        "startLine": 69619,
+        "startChar": 20,
+        "endLine": 69619,
+        "endChar": 75
+      },
+      "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
