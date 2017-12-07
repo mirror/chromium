@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2c35dfa_42900240",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Is it better to wrap this call in an if statement with a NOTREACHED() if it fails, or to store the result and then DCHECK on it?",
+      "parentUuid": "c6160e76_70ca5da0",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "950ada18_c3fd9348",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55c801a_be8e1618",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "950ada18_c3fd9348",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cbb757d5_7d8b5c31",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a1a515_13d31a4a",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e821e99_18c8d16b",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007bd03b_daa4e33a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e821e99_18c8d16b",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "040af41b_b6718132",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d0bde82_7ceaaa27",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "135d9e4b_4b3c054f",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2766747f_2389bcf0",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Removing the move call on the Error. The std::move() call for the callback has to be there since it\u0027s a OnceCallback to ensure it\u0027s not Run twice.",
+      "parentUuid": "135d9e4b_4b3c054f",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f6935052_f8d3c910",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Kk. Had it that way before but since there was only one use of the constant, Tomasz changed it to this. Now that there\u0027s multiple uses, I\u0027ll change it back. \n\nShould smb be a constant or should the entire ProviderId be a constant since here we always create it with the same native_id?",
+      "parentUuid": "c9fe73d3_49644475",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b4cfaae_58e81f21",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b074aa_03a45a24",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-12-07T18:19:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b4cfaae_58e81f21",
+      "revId": "305b3af667821fa69a5190c10de5b9fcca72e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
