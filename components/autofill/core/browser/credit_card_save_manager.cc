@@ -88,6 +88,8 @@ CreditCardSaveManager::CreditCardSaveManager(
 CreditCardSaveManager::~CreditCardSaveManager() {}
 
 void CreditCardSaveManager::OfferCardLocalSave(const CreditCard& card) {
+  if (observer_for_testing_)
+    observer_for_testing_->OnOfferLocalSave();
   client_->ConfirmSaveCreditCardLocally(
       card, base::Bind(base::IgnoreResult(
                            &PersonalDataManager::SaveImportedCreditCard),
@@ -156,6 +158,8 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
   if (upload_decision_metrics) {
     LogCardUploadDecisions(upload_decision_metrics);
     pending_upload_request_origin_ = url::Origin();
+    if (observer_for_testing_)
+      observer_for_testing_->OnDecideToNotRequestUploadSave();
     return;
   }
 
@@ -169,15 +173,20 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
   }
 
   // All required data is available, start the upload process.
+  if (observer_for_testing_)
+    observer_for_testing_->OnDecideToRequestUploadSave();
   payments_client_->GetUploadDetails(upload_request_.profiles,
                                      upload_request_.active_experiments,
                                      app_locale_);
 }
 
 bool CreditCardSaveManager::IsCreditCardUploadEnabled() {
-  return ::autofill::IsCreditCardUploadEnabled(
-      client_->GetPrefs(), client_->GetSyncService(),
-      client_->GetIdentityProvider()->GetActiveUsername());
+  // If observer_for_testing_ is set, assume we are in a browsertest and
+  // credit card upload should be enabled by default.
+  return observer_for_testing_ ||
+         ::autofill::IsCreditCardUploadEnabled(
+             client_->GetPrefs(), client_->GetSyncService(),
+             client_->GetIdentityProvider()->GetActiveUsername());
 }
 
 void CreditCardSaveManager::OnDidUploadCard(
@@ -201,6 +210,8 @@ void CreditCardSaveManager::OnDidGetUploadDetails(
     AutofillClient::PaymentsRpcResult result,
     const base::string16& context_token,
     std::unique_ptr<base::DictionaryValue> legal_message) {
+  if (observer_for_testing_)
+    observer_for_testing_->OnReceivedGetUploadDetailsResponse();
   int upload_decision_metrics;
   if (result == AutofillClient::SUCCESS) {
     // Do *not* call payments_client_->Prepare() here. We shouldn't send
@@ -228,6 +239,8 @@ void CreditCardSaveManager::OnDidGetUploadDetails(
     // the upload details request will consistently fail and if we don't fall
     // back to a local save then the user will never be offered any kind of
     // credit card save.
+    if (observer_for_testing_)
+      observer_for_testing_->OnOfferLocalSave();
     client_->ConfirmSaveCreditCardLocally(
         upload_request_.card,
         base::Bind(
@@ -425,6 +438,8 @@ void CreditCardSaveManager::OnDidGetUploadRiskData(
 }
 
 void CreditCardSaveManager::SendUploadCardRequest() {
+  if (observer_for_testing_)
+    observer_for_testing_->OnSentUploadCardRequest();
   upload_request_.app_locale = app_locale_;
   // If the upload request does not have card CVC, populate it with the value
   // provided by the user:
