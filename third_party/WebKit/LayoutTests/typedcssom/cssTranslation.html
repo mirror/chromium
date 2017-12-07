@@ -54,15 +54,6 @@ for (let params of testParams) {
 }
 
 test(() => {
-  assert_throws(new TypeError(), () => {
-    new CSSTranslation(CSS.px(0), CSS.px(0), CSS.percent(10));
-  });
-  assert_throws(new TypeError(), () => {
-    new CSSTranslation(CSS.percent(10), CSS.percent(10), CSS.percent(10));
-  });
-}, "Constructor throws when z argument contains percent.");
-
-test(() => {
   assert_throws(new TypeError(), () => { new CSSTranslation(); });
   assert_throws(new TypeError(), () => { new CSSTranslation(CSS.px(0)); });
 }, "Invalid number of arguments to constructor throws an exception.");
