@@ -941,6 +941,8 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
     return nullptr;
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
+  // LOG(ERROR) << " ==> PRELOAD MATCHED! " <<
+  // resource->Url().GetString().Utf8();
   return resource;
 }
 
@@ -992,7 +994,6 @@ ResourceFetcher::DetermineRevalidationPolicy(
     bool is_static_data) const {
   RevalidationPolicy policy = DetermineRevalidationPolicyInternal(
       type, fetch_params, existing_resource, is_static_data);
-
   TRACE_EVENT_INSTANT1("blink", "ResourceFetcher::DetermineRevalidationPolicy",
                        TRACE_EVENT_SCOPE_THREAD, "revalidationPolicy", policy);
 
