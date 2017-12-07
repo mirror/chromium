@@ -22,6 +22,30 @@
       "revId": "4947c62493dd93172b297d4bc2cebc6cd53943ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d091bf_05aad0ab",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-07T20:21:00Z",
+      "side": 1,
+      "message": "I added a cache in RollingTimeDeltaHistory. This looks like something that is easy to miss in other cases as well.\n\nAnd added a test for the estimates used here.",
+      "parentUuid": "70255621_c4fbbd16",
+      "range": {
+        "startLine": 429,
+        "startChar": 34,
+        "endLine": 429,
+        "endChar": 77
+      },
+      "revId": "4947c62493dd93172b297d4bc2cebc6cd53943ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
