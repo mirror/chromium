@@ -46,6 +46,30 @@
       "revId": "4be3aa923dd4195c60840ca7405e1a253344f586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4df364dc_88b6f274",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:51:55Z",
+      "side": 1,
+      "message": "Aha, thanks for letting me know that the docs are unclear!  PTAL at https://chromium-review.googlesource.com/#/c/chromium/src/+/815543 and let me know if you think that clarifies enough, and/or whether it\u0027s better to mention this somewhere else in the docs \u003d)",
+      "parentUuid": "eb882bb6_e0a65d5d",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 61
+      },
+      "revId": "4be3aa923dd4195c60840ca7405e1a253344f586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
