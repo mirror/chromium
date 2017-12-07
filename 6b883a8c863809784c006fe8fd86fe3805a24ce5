@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a07830d6_64a471b3",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_dirty_framebuffer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-07T18:03:56Z",
+      "side": 1,
+      "message": "Good questions:\n\n\u003e Does this need to be called on every frame?\n\nIt\u0027s part of the context state, so the framebuffer will stay bound until gl.bindFramebuffer is called with something else, even across frames. WebXR does nothing to alter this behavior. I can add a test to ensure it\u0027s still bound on the next frame, though.\n\n\u003e if bindFramebuffer is called but nothing is actually done to the canvas, is the framebuffer considered dirty?\n\nNope. It\u0027s only marked dirty if an operation is run that actually alters the pixels the framebuffer contains. (Mostly clear, drawArrays, and drawElements) I\u0027ll add a simple test to ensure just binding doesn\u0027t trigger a submit frame, though.\n\n\u003e is whether a framebuffer is considered dirty or not completely handled by WebGL, or are we doing some things ourselves?\n\nWebGL already had logic to mark the cavnas dirty on draw operations, which is what we\u0027re relying on here. The new part of the code is that it perviously early-terminated if a non-default framebuffer was bound, but as of this CL it will also mark bound framebuffers as dirty under the same conditions.",
+      "parentUuid": "92a909c4_27689d8a",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "577f6a34_ec4fb603",
         "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
         "patchSetId": 3
