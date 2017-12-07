@@ -22,6 +22,30 @@
       "revId": "3097d7b0fc8a2607a3a78d708638d9f17623840b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352efff6_f9cc842f",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-07T00:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfeeb1f2_ee4b1521",
+      "range": {
+        "startLine": 147,
+        "startChar": 20,
+        "endLine": 147,
+        "endChar": 26
+      },
+      "revId": "3097d7b0fc8a2607a3a78d708638d9f17623840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
