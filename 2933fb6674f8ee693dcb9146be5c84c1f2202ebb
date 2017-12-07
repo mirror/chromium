@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "4435b0f6_f008880f",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-07T21:17:06Z",
+      "side": 1,
+      "message": "Replaced with set_movement_disabled.",
+      "parentUuid": "440a4fa5_2a240376",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13324cbf_83eced50",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 2
