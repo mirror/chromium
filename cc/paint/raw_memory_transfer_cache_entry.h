@@ -15,11 +15,10 @@ namespace cc {
 // backed by raw memory, with no conversion during serialization or
 // deserialization.
 class CC_PAINT_EXPORT ClientRawMemoryTransferCacheEntry
-    : public ClientTransferCacheEntry {
+    : public ClientTransferCacheEntryBase<TransferCacheEntryType::kRawMemory> {
  public:
   explicit ClientRawMemoryTransferCacheEntry(std::vector<uint8_t> data);
   ~ClientRawMemoryTransferCacheEntry() override;
-  TransferCacheEntryType Type() const override;
   size_t SerializedSize() const override;
   bool Serialize(size_t size, uint8_t* data) const override;
 
@@ -28,11 +27,10 @@ class CC_PAINT_EXPORT ClientRawMemoryTransferCacheEntry
 };
 
 class CC_PAINT_EXPORT ServiceRawMemoryTransferCacheEntry
-    : public ServiceTransferCacheEntry {
+    : public ServiceTransferCacheEntryBase<TransferCacheEntryType::kRawMemory> {
  public:
   ServiceRawMemoryTransferCacheEntry();
   ~ServiceRawMemoryTransferCacheEntry() override;
-  TransferCacheEntryType Type() const override;
   size_t Size() const override;
   bool Deserialize(GrContext* context, size_t size, uint8_t* data) override;
   const std::vector<uint8_t>& data() { return data_; }

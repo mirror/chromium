@@ -16,7 +16,7 @@ namespace cc {
 // for transferring image data. On the client side, this is a CPU SkPixmap,
 // on the service side the image is uploaded and is a GPU SkImage.
 class CC_PAINT_EXPORT ClientImageTransferCacheEntry
-    : public ClientTransferCacheEntry {
+    : public ClientTransferCacheEntryBase<TransferCacheEntryType::kImage> {
  public:
   explicit ClientImageTransferCacheEntry(
       const SkPixmap* pixmap,
@@ -24,7 +24,6 @@ class CC_PAINT_EXPORT ClientImageTransferCacheEntry
   ~ClientImageTransferCacheEntry() override;
 
   // ClientTransferCacheEntry implementation:
-  TransferCacheEntryType Type() const override;
   size_t SerializedSize() const override;
   bool Serialize(size_t size, uint8_t* data) const override;
 
@@ -34,13 +33,12 @@ class CC_PAINT_EXPORT ClientImageTransferCacheEntry
 };
 
 class CC_PAINT_EXPORT ServiceImageTransferCacheEntry
-    : public ServiceTransferCacheEntry {
+    : public ServiceTransferCacheEntryBase<TransferCacheEntryType::kImage> {
  public:
   ServiceImageTransferCacheEntry();
   ~ServiceImageTransferCacheEntry() override;
 
   // ServiceTransferCacheEntry implementation:
-  TransferCacheEntryType Type() const override;
   size_t Size() const override;
   bool Deserialize(GrContext* context, size_t size, uint8_t* data) override;
 
