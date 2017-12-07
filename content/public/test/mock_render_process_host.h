@@ -42,7 +42,8 @@ class MockRenderProcessHost : public RenderProcessHost {
  public:
   using InterfaceBinder = base::Callback<void(mojo::ScopedMessagePipeHandle)>;
 
-  explicit MockRenderProcessHost(BrowserContext* browser_context);
+  explicit MockRenderProcessHost(BrowserContext* browser_context,
+                                 StoragePartition* storage_partition = nullptr);
   ~MockRenderProcessHost() override;
 
   // Provides access to all IPC messages that would have been sent to the
@@ -192,6 +193,7 @@ class MockRenderProcessHost : public RenderProcessHost {
   int id_;
   bool has_connection_;
   BrowserContext* browser_context_;
+  StoragePartition* storage_partition_;
   base::ObserverList<RenderProcessHostObserver> observers_;
 
   int prev_routing_id_;
@@ -224,7 +226,8 @@ class MockRenderProcessHostFactory : public RenderProcessHostFactory {
   ~MockRenderProcessHostFactory() override;
 
   RenderProcessHost* CreateRenderProcessHost(
-      BrowserContext* browser_context) const override;
+      BrowserContext* browser_context,
+      StoragePartition* storage_partition = nullptr) const override;
 
   // Removes the given MockRenderProcessHost from the MockRenderProcessHost list
   // without deleting it. When a test deletes a MockRenderProcessHost, we need
