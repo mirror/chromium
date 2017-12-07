@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<style>
+.container {
+    position: relative;
+    display: inline-block;
+    width: 320px;
+    height: 240px;
+}
+.cue {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+.cue.start {
+    text-align: end;
+}
+.cue > span {
+    font-family: sans-serif;
+    background: green;
+    color: green;
+    font-size: 50px;
+    padding: 2px;
+}
+</style>
+<script src="/common/reftest-wait.js"></script>
+<div class="container">
+<div class="cue start"><span>&#x5d0;&#x5d1;&#x5d2;</span></div></div>
+</div>
