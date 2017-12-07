@@ -34,6 +34,24 @@
       "revId": "41ae7a17bbfa9fae92addac2b89b28d2fc468f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4418758_fae717dc",
+        "filename": "ios/chrome/browser/prerender/prerender_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T16:54:03Z",
+      "side": 1,
+      "message": "I don\u0027t know of an easy way to do this, maybe Rohit or Justin knows.",
+      "parentUuid": "5ddfda1e_d47a0665",
+      "revId": "41ae7a17bbfa9fae92addac2b89b28d2fc468f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
