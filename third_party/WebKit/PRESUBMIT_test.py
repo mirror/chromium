@@ -73,6 +73,23 @@ class PresubmitTest(unittest.TestCase):
         # pylint: disable=E1101
         subprocess.Popen.assert_not_called()
 
+    @mock.patch('subprocess.Popen')
+    def testCheckChangeOnUploadWithExcludedFiles(self, _):
+        """This verifies that CheckChangeOnUpload will skip calling
+        check-webkit-style on excluded files (e.g. third-party libraries).
+        """
+        diff_file = ['some diff']
+        mock_input_api = MockInputApi()
+        mock_input_api.files = [MockAffectedFile(
+            'third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/pep8.py',
+            diff_file
+        )]
+        # Access to a protected member _CheckStyle
+        # pylint: disable=W0212
+        PRESUBMIT._CheckStyle(mock_input_api, MockOutputApi())
+        # pylint: disable=E1101
+        subprocess.Popen.assert_not_called()
+
     def testCheckPublicHeaderWithBlinkMojo(self):
         """This verifies that _CheckForWrongMojomIncludes detects -blink mojo
         headers in public files.
