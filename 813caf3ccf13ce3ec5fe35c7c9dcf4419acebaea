@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a17c37b5_845c0387",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b335b8a_a44356ce",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e47ecd94_0675289f",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27014899_e251c4fa",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Yes, although read access requires that the page be currently visible (although not necessarily the active/foreground app).",
+      "parentUuid": "e47ecd94_0675289f",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17381a24_6fd9a76b",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca56ade_5e92b201",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "742d8479_55487866",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2982ead2_c0ed06d2",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "This permission is (initially) only covering the new Async Clipboard API which is always in the Renderer.\n\nI\u0027m not aware of any clipboard access in the browser process other than UI cut/copy/paste buttons, for which we auto-grant access (ie: no change in behavior from current).\n\nThe native clipboard code is in the browser process because its a shared resource, but programmatic clipboard access is always through the RendererClipboardDelegate.",
+      "parentUuid": "742d8479_55487866",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c41e9770_096fb764",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Updated based on latest comments on the Privacy bug.",
+      "parentUuid": "5a1e94a5_d5472e1b",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472e76e7_e7f3d367",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1b6942_c581a71d",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "It could, but they will be very different in the future (since HandleRead() will need to handle various data types), so there\u0027s no point merging them now.",
+      "parentUuid": "472e76e7_e7f3d367",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "268ef394_9f5631a9",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done.. (I made some last minute changes after testing :-( )",
+      "parentUuid": "e3ddb8f5_05d56d55",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d53f162_fa260b97",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b603307_d88a253d",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d53f162_fa260b97",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0403002b_0060e6e3",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f891e52e_a4785f5b",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b809048e_fa99c6f9",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.h",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d18b78b_34f06d06",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-07T23:04:55Z",
+      "side": 1,
+      "message": "Done.\n\nI assume that this comment was for the .h file only, and that \"using mojom::blink\" is fine in the .cpp file. Let me know if that\u0027s not the case.",
+      "parentUuid": "b809048e_fa99c6f9",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
