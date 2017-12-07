@@ -68,6 +68,12 @@ ResultExpr NetworkProcessPolicy::EvaluateSyscall(int sysno) const {
 #if defined(__NR_readlinkat)
     case __NR_readlinkat:
 #endif
+#if defined(__NR_mkdir)
+    case __NR_mkdir:
+#endif
+#if defined(__NR_mkdirat)
+    case __NR_mkdirat:
+#endif
       return Trap(BrokerProcess::SIGSYS_Handler,
                   SandboxLinux::GetInstance()->broker_process());
     default:
