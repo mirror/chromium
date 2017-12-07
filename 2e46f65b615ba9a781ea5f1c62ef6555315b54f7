@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acbf6af_4c40260c",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T17:05:07Z",
+      "side": 1,
+      "message": "Have you rebased? This method is not removed in PS2.",
+      "revId": "2e46f65b615ba9a781ea5f1c62ef6555315b54f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fa4391_b2987e52",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T17:05:07Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary. FindFolderItem is actually FindItem + item type check. We can just do one FindItem here..",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "2e46f65b615ba9a781ea5f1c62ef6555315b54f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

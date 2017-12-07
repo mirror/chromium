@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fa24d94e_5ae63ce8",
+        "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T17:05:07Z",
+      "side": 1,
+      "message": "That is okay since those are in the to-be-removed list.",
+      "parentUuid": "4154e608_1e90b133",
+      "range": {
+        "startLine": 27,
+        "startChar": 62,
+        "endLine": 27,
+        "endChar": 64
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8357dd_3dc45eca",
         "filename": "chrome/browser/ui/app_list/app_list_model_updater.h",
         "patchSetId": 1
@@ -401,6 +425,24 @@
     },
     {
       "key": {
+        "uuid": "3abff22b_76ea23b7",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T17:05:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28845ee9_c27b94e9",
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69131937_5804910d",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.cc",
         "patchSetId": 1
@@ -694,6 +736,30 @@
       "side": 1,
       "message": "AppListSyncableService is not calling the following functions. This \u0027friend\u0027 is used to exposed the two model pointers to AppListSyncableService.\n\nMaybe we can add public getters for them?",
       "parentUuid": "23c7178c_2e8bb4d8",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc86a5e9_cb01943e",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T17:05:07Z",
+      "side": 1,
+      "message": "If it is temporary, I am okay to leave the friend here. But please add comment to document why it is needed and a TODO to get rid of it becuase AppListSyncableService should not directly access models.",
+      "parentUuid": "7b2526d0_3e7e0700",
       "range": {
         "startLine": 67,
         "startChar": 2,
