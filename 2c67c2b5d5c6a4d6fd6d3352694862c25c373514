@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "594814de_96725b11",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T18:27:29Z",
+      "side": 1,
+      "message": "comment here. I don\u0027t know what cwnd is",
+      "revId": "2c67c2b5d5c6a4d6fd6d3352694862c25c373514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26799bab_ec5aa648",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T18:27:29Z",
+      "side": 1,
+      "message": "This variable and the one below are poorly named. I think this is \"estimate the upper bound of the http rtt of a hanging request by scaling transport rtt by this\"\n\nI think shifting http_rtt to be before upper_bound would be best.\n\nMaybe:\nhanging_request_http_rtt_upper_bound_transport_rtt_multiplier\n\nsame below.",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 67
+      },
+      "revId": "2c67c2b5d5c6a4d6fd6d3352694862c25c373514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8970c403_0f755f57",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T18:27:29Z",
+      "side": 1,
+      "message": "Comment",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 22
+      },
+      "revId": "2c67c2b5d5c6a4d6fd6d3352694862c25c373514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
