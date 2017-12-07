@@ -11,11 +11,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ShortcutHelper;
+import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
@@ -86,4 +88,34 @@ public class WebApkInstallService {
         notificationManager.cancel(
                 WEBAPK_INSTALL_NOTIFICATION_TAG_PREFIX + notificationId, PLATFORM_ID);
     }
+
+    @CalledByNative
+    private static void checkFreeSpaceAndSetStatus(long nativeWebApkInstallService) {
+        new AsyncTask<Void, Void, Void>() {
+            long mAvailableSpaceInByte = 0;
+            long mCacheSizeInByte = 0;
+            @Override
+            protected Void doInBackground(Void... params) {
+                mAvailableSpaceInByte = WebApkUma.getAvailableSpaceAboveLowSpaceLimit();
+                if (mAvailableSpaceInByte < 0) mCacheSizeInByte = WebApkUma.getCacheDirSize();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                int spaceStatus = SpaceStatus.UNDERDETERMINED;
+                if (mAvailableSpaceInByte > 0) {
+                    spaceStatus = SpaceStatus.ENOUGH_SPACE;
+                } else if (mAvailableSpaceInByte + mCacheSizeInByte > 0) {
+                    spaceStatus = SpaceStatus.ENOUGH_SPACE_AFTER_FREE_UP_CACHE;
+                } else {
+                    spaceStatus = SpaceStatus.NOT_ENOUGH_SPACE;
+                }
+
+                nativeSetSpaceStatus(nativeWebApkInstallService, spaceStatus);
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private static native void nativeSetSpaceStatus(long nativeWebApkInstallService, int status);
 }

@@ -29,6 +29,10 @@ class BrowserContext;
 class WebContents;
 }
 
+namespace {
+class WebApkInstallSpaceManager;
+}
+
 struct ShortcutInfo;
 class SkBitmap;
 
@@ -41,6 +45,15 @@ enum class WebApkInstallResult {
   // the install service so it is possible that the install will complete some
   // time in the future.
   PROBABLE_FAILURE = 2
+};
+
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.webapps
+enum SpaceStatus {
+  ENOUGH_SPACE = 0,
+  ENOUGH_SPACE_AFTER_FREE_UP_CACHE = 1,
+  NOT_ENOUGH_SPACE = 2,
+  UNDERDETERMINED = 3,
 };
 
 // Service which talks to Chrome WebAPK server and Google Play to generate a
@@ -80,6 +93,15 @@ class WebApkInstallService : public KeyedService {
   void UpdateAsync(const base::FilePath& update_request_path,
                    const FinishCallback& finish_callback);
 
+  // Check if there is enough space to install WebAPK. This should be called
+  // before calling InstallAsync.
+  void TriggerFreeSpaceCheck();
+
+  // Set the space status.
+  void SetSpaceStatus(JNIEnv* env,
+                      const base::android::JavaParamRef<jobject>& obj,
+                      int status);
+
  private:
   // Observes the lifetime of a WebContents.
   class LifetimeObserver : public content::WebContentsObserver {
@@ -113,6 +135,8 @@ class WebApkInstallService : public KeyedService {
 
   // In progress installs.
   std::set<GURL> installs_;
+
+  WebApkInstallSpaceManager* space_manager_;  // delete itself once done
 
   // Used to get |weak_ptr_|.
   base::WeakPtrFactory<WebApkInstallService> weak_ptr_factory_;
