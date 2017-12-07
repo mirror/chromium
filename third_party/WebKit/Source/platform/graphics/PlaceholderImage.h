@@ -25,13 +25,13 @@ class ImageObserver;
 class PLATFORM_EXPORT PlaceholderImage final : public Image {
  public:
   static scoped_refptr<PlaceholderImage> Create(ImageObserver* observer,
-                                                const IntSize& size) {
+                                                const FloatSize& size) {
     return base::AdoptRef(new PlaceholderImage(observer, size));
   }
 
   ~PlaceholderImage() override;
 
-  IntSize Size() const override { return size_; }
+  FloatSize Size() const override { return size_; }
 
   void Draw(PaintCanvas*,
             const PaintFlags&,
@@ -48,7 +48,7 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
   bool IsPlaceholderImage() const override { return true; }
 
  private:
-  PlaceholderImage(ImageObserver*, const IntSize&);
+  PlaceholderImage(ImageObserver*, const FloatSize&);
 
   bool CurrentFrameHasSingleSecurityOrigin() const override { return true; }
 
@@ -66,7 +66,7 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
                    const FloatRect& dest_rect,
                    const FloatSize& repeat_spacing) override;
 
-  const IntSize size_;
+  const FloatSize size_;
 
   // Lazily initialized.
   sk_sp<PaintRecord> paint_record_for_current_frame_;

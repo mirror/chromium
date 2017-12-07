@@ -85,7 +85,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
   std::unique_ptr<OffscreenCanvasResourceProvider>
       offscreen_canvas_resource_provider_;
 
-  bool VerifyImageSize(const IntSize);
+  bool VerifyImageSize(const FloatSize);
   void PostImageToPlaceholderIfNotBlocked(scoped_refptr<StaticBitmapImage>,
                                           unsigned resource_id);
   // virtual for testing

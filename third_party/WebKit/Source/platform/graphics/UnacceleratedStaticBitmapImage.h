@@ -18,7 +18,7 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
   static scoped_refptr<UnacceleratedStaticBitmapImage> Create(PaintImage);
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
-  IntSize Size() const override;
+  FloatSize Size() const override;
   bool IsPremultiplied() const override;
   scoped_refptr<StaticBitmapImage> MakeAccelerated(
       base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_wrapper)

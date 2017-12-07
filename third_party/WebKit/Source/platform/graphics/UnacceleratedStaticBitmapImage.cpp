@@ -38,8 +38,8 @@ UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(PaintImage image)
 
 UnacceleratedStaticBitmapImage::~UnacceleratedStaticBitmapImage() {}
 
-IntSize UnacceleratedStaticBitmapImage::Size() const {
-  return IntSize(paint_image_.width(), paint_image_.height());
+FloatSize UnacceleratedStaticBitmapImage::Size() const {
+  return FloatSize(paint_image_.width(), paint_image_.height());
 }
 
 bool UnacceleratedStaticBitmapImage::IsPremultiplied() const {

@@ -21,7 +21,8 @@
 
 namespace blink {
 
-PlaceholderImage::PlaceholderImage(ImageObserver* observer, const IntSize& size)
+PlaceholderImage::PlaceholderImage(ImageObserver* observer,
+    const FLoatSize& size)
     : Image(observer), size_(size) {}
 
 PlaceholderImage::~PlaceholderImage() {}
@@ -30,7 +31,7 @@ PaintImage PlaceholderImage::PaintImageForCurrentFrame() {
   auto builder = CreatePaintImageBuilder().set_completion_state(
       PaintImage::CompletionState::DONE);
 
-  const IntRect dest_rect(0, 0, size_.Width(), size_.Height());
+  const FloatRect dest_rect(0, 0, size_.Width(), size_.Height());
   if (paint_record_for_current_frame_) {
     return builder
         .set_paint_record(paint_record_for_current_frame_, dest_rect,
@@ -39,9 +40,9 @@ PaintImage PlaceholderImage::PaintImageForCurrentFrame() {
   }
 
   PaintRecorder paint_recorder;
-  Draw(paint_recorder.beginRecording(FloatRect(dest_rect)), PaintFlags(),
-       FloatRect(dest_rect), FloatRect(dest_rect),
-       kDoNotRespectImageOrientation, kClampImageToSourceRect, kSyncDecode);
+  Draw(paint_recorder.beginRecording(dest_rect), PaintFlags(),
+       dest_rect, dest_rect, kDoNotRespectImageOrientation,
+       kClampImageToSourceRect, kSyncDecode);
 
   paint_record_for_current_frame_ = paint_recorder.finishRecordingAsPicture();
   paint_record_content_id_ = PaintImage::GetNextContentId();
@@ -58,9 +59,8 @@ void PlaceholderImage::Draw(PaintCanvas* canvas,
                             RespectImageOrientationEnum respect_orientation,
                             ImageClampingMode image_clamping_mode,
                             ImageDecodingMode decode_mode) {
-  if (!src_rect.Intersects(FloatRect(0.0f, 0.0f,
-                                     static_cast<float>(size_.Width()),
-                                     static_cast<float>(size_.Height())))) {
+  if (!src_rect.Intersects(FloatRect(0.0f, 0.0f, size_.Width(),
+                                     size_.Height()))) {
     return;
   }
 
@@ -96,7 +96,7 @@ void PlaceholderImage::Draw(PaintCanvas* canvas,
   // visible (e.g. when replacing a large image that's scaled down to a small
   // area) and so that all placeholder images on the same page look consistent.
   canvas->drawImageRect(icon_image->PaintImageForCurrentFrame(),
-                        IntRect(IntPoint::Zero(), icon_image->Size()),
+                        FloatRect(FloatPoint::Zero(), icon_image->Size()),
                         icon_dest_rect, &base_flags,
                         PaintCanvas::kFast_SrcRectConstraint);
 }

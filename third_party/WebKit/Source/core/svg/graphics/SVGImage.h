@@ -67,7 +67,7 @@ class CORE_EXPORT SVGImage final : public Image {
   LayoutReplaced* EmbeddedReplacedContent() const;
 
   bool IsSVGImage() const override { return true; }
-  IntSize Size() const override { return intrinsic_size_; }
+  FloatSize Size() const override { return FloatSize(intrinsic_size_); }
 
   void CheckLoaded() const;
   bool CurrentFrameHasSingleSecurityOrigin() const override;
@@ -170,7 +170,7 @@ class CORE_EXPORT SVGImage final : public Image {
   void PopulatePaintRecordForCurrentFrameForContainer(
       PaintImageBuilder&,
       const KURL&,
-      const IntSize& container_size);
+      const FloatSize& container_size);
 
   // Paints the current frame. If a PaintCanvas is passed, paints into that
   // canvas and returns nullptr.

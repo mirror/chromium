@@ -181,14 +181,14 @@ void BitmapImage::UpdateSize() const {
   have_size_ = true;
 }
 
-IntSize BitmapImage::Size() const {
+FloatSize BitmapImage::Size() const {
   UpdateSize();
-  return size_;
+  return FloatSize(size_);
 }
 
-IntSize BitmapImage::SizeRespectingOrientation() const {
+FloatSize BitmapImage::SizeRespectingOrientation() const {
   UpdateSize();
-  return size_respecting_orientation_;
+  return FloatSize(size_respecting_orientation_);
 }
 
 bool BitmapImage::GetHotSpot(IntPoint& hot_spot) const {

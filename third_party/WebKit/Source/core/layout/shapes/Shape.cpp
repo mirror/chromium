@@ -244,8 +244,8 @@ static bool ExtractImageData(Image* image,
   // for layout, which is not allowed. See https://crbug.com/429346
   ImageObserverDisabler disabler(image);
   PaintFlags flags;
-  IntRect image_source_rect(IntPoint(), image->Size());
-  IntRect image_dest_rect(IntPoint(), image_size);
+  FloatRect image_source_rect(FloatPoint(), image->Size());
+  FloatRect image_dest_rect(FloatPoint(), image_size);
   // TODO(ccameron): No color conversion is required here.
   image->Draw(image_buffer->Canvas(), flags, image_dest_rect, image_source_rect,
               kDoNotRespectImageOrientation,

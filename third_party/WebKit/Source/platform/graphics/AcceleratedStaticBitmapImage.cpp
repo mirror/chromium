@@ -126,8 +126,8 @@ void AcceleratedStaticBitmapImage::RetainOriginalSkImageForCopyOnWrite() {
   original_skia_image_task_runner_ = thread->GetWebTaskRunner();
 }
 
-IntSize AcceleratedStaticBitmapImage::Size() const {
-  return texture_holder_->Size();
+FloatSize AcceleratedStaticBitmapImage::Size() const {
+  return FloatSize(texture_holder_->Size());
 }
 
 scoped_refptr<StaticBitmapImage>

@@ -14,7 +14,7 @@ class StubImage : public Image {
   StubImage() {}
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode) override { return false; }
-  IntSize Size() const override { return IntSize(10, 10); }
+  FloatSize Size() const override { return FloatSize(10, 10); }
   void DestroyDecodedData() override {}
   PaintImage PaintImageForCurrentFrame() override { return PaintImage(); }
   void Draw(PaintCanvas*,
