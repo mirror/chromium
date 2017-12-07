@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "b9572bca_4e839b02",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "yes, tested manually",
+      "parentUuid": "b1444519_968ea7f8",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c489b64_5aad8dd6",
         "filename": "ash/shelf/app_list_back_button_background_view.cc",
         "patchSetId": 6
@@ -132,6 +150,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 1,
       "message": "Can this instead just call canvas-\u003eDrawRoundRect?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4e882f_b97374b0",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "this way handles the case where only one button is showing (circle background).\n\ndoes DrawRoundRect draw a perfect circle with radius kAppListButtonRadius if we do:\ncanvas-\u003eDrawRoundRect(rect(x, y, diameter, diamter), kAppListButtonRadius) ?",
+      "parentUuid": "0c489b64_5aad8dd6",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -495,6 +531,24 @@
     },
     {
       "key": {
+        "uuid": "4898eed9_56cbce16",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "the back button has no tooltip, its tablet only so the tooltip would be rarely shown. also it didn\u0027t have one before :-P, so i think its ok to omit for now",
+      "parentUuid": "0d02da7f_2b48dd95",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c77a1183_44d667be",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -506,6 +560,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 1,
       "message": "Should this handle the back button similarly? Does the overflow shelf show a back button?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2b1b67_0d9b7dfb",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "ditto. the overflow has no back button",
+      "parentUuid": "c77a1183_44d667be",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -529,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "19fd0ea3_09813002",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "all back buttons events are handled in back_button.cc, so it can get the index -1 and get ignored here",
+      "parentUuid": "2f443b82_49d2076a",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf42a1d8_534c2352",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -546,6 +636,24 @@
     },
     {
       "key": {
+        "uuid": "b4023903_3dcec5ac",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "i think this is safer and not that much expensive (maybe for whatever reason the app list button gets moved to last? )\n\nthough having said that i should change my uses of index \u003d\u003d 0 in the focus code",
+      "parentUuid": "cf42a1d8_534c2352",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ba98cb_7907f5ae",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -557,6 +665,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 1,
       "message": "Is this function ever called with the app list or back button directly?",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76dc336_778b2fed",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 1,
+      "message": "it\u0027s called by app list (though i think not needed) but that would get handled at 758 (return -1)\n\ni think we can remove this",
+      "parentUuid": "c6ba98cb_7907f5ae",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

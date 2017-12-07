@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "759562a2_e0c132b5",
+        "filename": "ash/resources/vector_icons/shelf_back.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 0,
+      "message": "FLIPS_IN_RTL was added in the old impl since we couldn\u0027t just flip the whole button.\n\nlines 7 to 11 drew a unneeded square around the back button. I\u0027ve have it happen a couple times using the .png -\u003e .icon converter. This is why line 13 was needed instead of setting the colour in .cc file as supposed to (estade@ told em that was the way before).",
+      "parentUuid": "a26d69f3_613fde52",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e953928d_39ae5002",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "818a2bba_878c5143",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 0,
+      "message": "the ink drop now moves with the button",
+      "parentUuid": "e953928d_39ae5002",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fc8a59c_a6e9bb44",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 0,
       "message": "Is this no longer true?",
+      "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cbd93f_9f82a145",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T00:45:43Z",
+      "side": 0,
+      "message": "yes, this is the reason for the split. ux wanted the drop to move along with the button, which is does now.",
+      "parentUuid": "5fc8a59c_a6e9bb44",
       "revId": "b66bfc649e1f0efc0d9ce1a129ef6b799b511376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
