@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "063ddac0_491a4271",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-07T11:56:06Z",
+      "side": 1,
+      "message": "See other comment.",
+      "parentUuid": "af346b92_d6941488",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 77
+      },
+      "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc59e21_1eef86de",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-06T15:35:34Z",
       "side": 1,
       "message": "should this just go into the args?\nOr does some of the other API become too awkward then?",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d35d3f_6dbe34c5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-07T11:56:06Z",
+      "side": 1,
+      "message": "PTAL at new revision + https://chromium-review.googlesource.com/813836 as well. The other CL removes the base callers so we can add it to the struct. We should discuss how we want the interaction between memoryinstrumentation class and coordinator.",
+      "parentUuid": "2dc59e21_1eef86de",
       "range": {
         "startLine": 59,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "41ec0277_749cf8b9",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-07T11:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4939ac50_55dd5e77",
+      "range": {
+        "startLine": 79,
+        "startChar": 12,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5512d795_ee09c176",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e2bdad6d_8ac32f16",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-07T11:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5512d795_ee09c176",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49768f06_14f4731a",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbed776_87cd23f7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-07T11:56:06Z",
+      "side": 1,
+      "message": "Made the test simpler. Didn\u0027t really need to do part of it.",
+      "parentUuid": "49768f06_14f4731a",
+      "range": {
+        "startLine": 807,
+        "startChar": 0,
+        "endLine": 807,
+        "endChar": 57
+      },
+      "revId": "3409faddf7b1301cfa950cd67dfdb7106f5846a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
