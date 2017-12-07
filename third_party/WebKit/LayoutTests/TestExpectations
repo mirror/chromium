@@ -544,8 +544,6 @@ crbug.com/635619 [ Win10 ]  virtual/layout_ng/fast/block/float/overhanging-float
 crbug.com/635619 [ Win10 ]  virtual/layout_ng/fast/block/float/overhanging-float-add-in-static-position-block2.html [ Failure ]
 crbug.com/635619 [ Win10 ]  virtual/layout_ng/fast/block/float/overhanging-float-remove-from-absolute-position-block.html [ Failure ]
 crbug.com/635619 [ Win10 ]  virtual/layout_ng/fast/block/float/overhanging-float-remove-from-absolute-position-block2.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/overhanging-float-remove-from-fixed-position-block.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/overhanging-float-remove-from-fixed-position-block2.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/overlapping-floats-paint-hittest-order-1.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/overlapping-floats-paint-hittest-order-2.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/overhanging-tall-block.html [ Failure ]
