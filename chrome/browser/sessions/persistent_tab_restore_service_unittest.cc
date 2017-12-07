@@ -82,9 +82,8 @@ class PersistentTabRestoreServiceTest : public ChromeRenderViewHostTestHarness {
   SessionID window_id() const { return window_id_; }
 
  protected:
-  enum {
-    kMaxEntries = sessions::TabRestoreServiceHelper::kMaxEntries,
-  };
+  static constexpr size_t kMaxEntries =
+      sessions::TabRestoreServiceHelper::kMaxEntries;
 
   // testing::Test:
   void SetUp() override {
