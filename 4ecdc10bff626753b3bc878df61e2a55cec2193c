@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9f8da68c_51b0ecab",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T00:51:05Z",
+      "side": 1,
+      "message": "Thus, after automatic password submission it doesn\u0027t require any reauth ever. However, in this scenario where user reauthenticated once, you\u0027ll require him to reauth again at random point in time. Does it look consistent to you?\n\nI already said at some point that I\u0027m against any sort of timeouts for the bubble. The one implemented currently (bound to the tab) makes the least sense out of all options to me.\nThe desired behavior:\n- somehow bubble opens. At the creation time we determine if the reauth will be needed or not (automatic submission, manual fallback without autofilled values, reopened after reauth) for the lifetime of the bubble.\nThere are other more complex options: reauth every time for controversial bubbles (manual bubble, manual fallback with existing credentials), timeout per bubble. However, I don\u0027t any value in those approaches.",
+      "parentUuid": "ee6f48bd_547b3ae2",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b16d509_8acf6144",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 18
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "\u003e Can we pull this value on creation and return a const member here instead?\n\nI have to clear |password_is_revealed_by_default_| after bubble reopening. \nOtherwise, if a user passes re-auth, closes the bubble, opens the bubble, then the password will be always revealed because password_is_revealed_by_default_ is true and we cannot change it.",
       "parentUuid": "4fed214d_50c99672",
+      "range": {
+        "startLine": 570,
+        "startChar": 9,
+        "endLine": 570,
+        "endChar": 63
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa26412_5747e656",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T00:51:05Z",
+      "side": 1,
+      "message": "So the answer to my question is \"Yes, we can\" ;-)\nYou can still clear the value after bubble opening in the controller.",
+      "parentUuid": "b66aeb7e_069162a5",
       "range": {
         "startLine": 570,
         "startChar": 9,
@@ -449,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "f3f41491_21fcf21a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T00:51:05Z",
+      "side": 1,
+      "message": "The method shouldn\u0027t clear the flag. When you get a signal that the bubble was opened (ManagePasswordsUIController::OnBubbleShown) you could clear the flag.",
+      "parentUuid": "569775a2_a7f8e87c",
+      "range": {
+        "startLine": 147,
+        "startChar": 36,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2979f6b5_18f3e367",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
@@ -608,6 +680,24 @@
       "side": 1,
       "message": "My concern was that the function name \"AuthenticateUser\" does not reflect what the function does. It authenticates the user and does a couple of other things (opening another bubble and revealing passwords).",
       "parentUuid": "2d4c4b28_df5a413c",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7a0b9f_70579127",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T00:51:05Z",
+      "side": 1,
+      "message": "The problem is that AuthenticateUser() may take 10 minutes before it returns something. Chrome (at least on Win) probably continues handling messages. Therefore, you don\u0027t know a lot about the state of the bubble/tab and so on.\n\nMy proposal was to make the function fast. If it returns true then the password is just revealed. If it returns false then it\u0027s a signal to the caller \"I\u0027m doing a reauth and after it I\u0027ll take care of the password UI. Don\u0027t do anything for now\".",
+      "parentUuid": "78ec2241_dc0d11bc",
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -909,6 +999,30 @@
       "side": 1,
       "message": "\u003e That\u0027s a dangerous interface. It may return true because the bubble should show the password right away. It may also return true 1 minute later when the bubble is already destroyed and should not attempt to access |this|.\n\nI agree. Any ideas what we can do instead?",
       "parentUuid": "38f87e23_6816168b",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f977f3a_366863e8",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T00:51:05Z",
+      "side": 1,
+      "message": "See another comment inside this function.",
+      "parentUuid": "7fcf0cca_4ab7c0c3",
       "range": {
         "startLine": 117,
         "startChar": 10,
