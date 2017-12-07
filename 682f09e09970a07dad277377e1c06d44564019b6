@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "865d2cfb_fb517f1b",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:44:05Z",
+      "side": 1,
+      "message": "Moved this and the one in CSSStylesheetResource to ResourceFetcher::RequestResource(), near the other state that gets put on a newly created Resource.",
+      "parentUuid": "69748719_d54840b3",
+      "revId": "682f09e09970a07dad277377e1c06d44564019b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8400fae2_a9cf3073",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "682f09e09970a07dad277377e1c06d44564019b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93222856_38a2997c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:44:05Z",
+      "side": 1,
+      "message": "Correct. If https://chromium-review.googlesource.com/c/chromium/src/+/814938 happesn to land first, it\u0027ll be unnecessary.",
+      "parentUuid": "8400fae2_a9cf3073",
+      "revId": "682f09e09970a07dad277377e1c06d44564019b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
