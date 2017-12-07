@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d18ac72c_f2a48370",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-07T21:50:25Z",
+      "side": 1,
+      "message": "It must, because controller-\u003eShowBubbleForLocalSave on line 210 and controller-\u003eShowBubbleForUpload on line 236 would have always been failing otherwise.\n\nBut besides that, I actually reverted this code in patch set 14, so it\u0027s no longer an issue anyway. :)",
+      "parentUuid": "3a5d8023_e9ccf57e",
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a00a26_911f9e04",
         "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
         "patchSetId": 11
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "052426bb_237bd69f",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-07T21:50:25Z",
+      "side": 1,
+      "message": "Nope, because we only know bank name for cards that have already been synced *down* to Chrome, not for anything we\u0027re about to Upstream.  Thanks for checking though.",
+      "parentUuid": "b96d5832_784543af",
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35a0f59_5c649670",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
         "patchSetId": 11
@@ -144,6 +180,24 @@
       "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc2d098_9d74243a",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-07T21:50:25Z",
+      "side": 1,
+      "message": "This is the RPC that checks if Upstream should be offered.  If that RPC fails for some reason *or* gets a \"don\u0027t offer to save\" response from Payments, Chrome will not offer to save.\n\n(To answer the rest of your question, if the user accepts the prompt to Upstream but the Upstream fails, they\u0027re not re-prompted, it\u0027s just a silent failure.  It\u0027s always been that way, especially because card auths might fail or something.)",
+      "parentUuid": "11890e33_a316030b",
+      "revId": "69bb183a0c090882ef87769b1d4cf35b610be742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
