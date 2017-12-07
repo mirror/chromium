@@ -16,6 +16,24 @@
       "revId": "202844c08ddc700e81d283b5725c64783888cbe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614aca38_ae1fcb8f",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b5f3e3c_0892c9ba",
+      "revId": "202844c08ddc700e81d283b5725c64783888cbe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
