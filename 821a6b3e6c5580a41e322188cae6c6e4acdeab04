@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "5077d020_6723bdfe",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-07T07:15:32Z",
+      "side": 1,
+      "message": "\u003e Using just \u0027unsigned short\u0027 for child_shadow_root_count might be better.\n\nYeah, will do so.",
+      "parentUuid": "e085307a_b00cf92b",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40802cd5_4ae13c30",
         "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
         "patchSetId": 9
