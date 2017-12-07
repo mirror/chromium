@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff39e2f_ff16d147",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T23:36:21Z",
+      "side": 1,
+      "message": "Can you add a comment for why \"main_thread_missed\" is an exception.",
+      "revId": "16613ec1dd2e6bb533a9cc67bd221cb381672758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e8357b_aa417f25",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T23:36:21Z",
+      "side": 1,
+      "message": "wdyt about renaming this and associated methods to \"should_defer_invalidation_for_fast_main_frame_\" to differentiate it from SchedulerStateMachine::ShouldDeferInvalidatingForMainFrame.",
+      "range": {
+        "startLine": 646,
+        "startChar": 7,
+        "endLine": 646,
+        "endChar": 48
+      },
+      "revId": "16613ec1dd2e6bb533a9cc67bd221cb381672758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
