@@ -5,14 +5,28 @@
 #include "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.h"
 
 #include <errno.h>
+#include <sync/sync.h>
 
 #include "base/bind.h"
+#include "base/posix/eintr_wrapper.h"
+#include "base/task_scheduler/post_task.h"
 #include "ui/gfx/presentation_feedback.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
 #include "ui/ozone/platform/drm/gpu/scanout_buffer.h"
 
 namespace ui {
+
+namespace {
+
+void WaitForPlaneFences(const ui::OverlayPlaneList& planes) {
+  for (const auto& plane : planes) {
+    if (plane.fence->data.is_valid())
+      sync_wait(plane.fence->data.get(), -1);
+  }
+}
+
+}  // namespace
 
 HardwareDisplayPlaneManagerLegacy::HardwareDisplayPlaneManagerLegacy() {
 }
@@ -118,6 +132,26 @@ bool HardwareDisplayPlaneManagerLegacy::ValidatePrimarySize(
   DCHECK(primary.buffer.get());
 
   return primary.buffer->GetSize() == gfx::Size(mode.hdisplay, mode.vdisplay);
+}
+
+void HardwareDisplayPlaneManagerLegacy::RequestPlanesReadyCallback(
+    const OverlayPlaneList& planes,
+    base::OnceClosure callback) {
+  bool has_plane_fences = false;
+
+  for (const auto& plane : planes)
+    has_plane_fences |= plane.fence->data.is_valid();
+
+  if (has_plane_fences) {
+    base::OnceClosure plane_wait_task =
+        base::BindOnce(&WaitForPlaneFences, planes);
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        std::move(plane_wait_task), std::move(callback));
+  } else {
+    std::move(callback).Run();
+  }
 }
 
 bool HardwareDisplayPlaneManagerLegacy::SetPlaneData(

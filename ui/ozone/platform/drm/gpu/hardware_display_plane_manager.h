@@ -103,6 +103,9 @@ class HardwareDisplayPlaneManager {
     return planes_;
   }
 
+  virtual void RequestPlanesReadyCallback(const OverlayPlaneList& planes,
+                                          base::OnceClosure callback) = 0;
+
   // Returns all formats which can be scanned out by this PlaneManager. Use
   // IsFormatSupported to find if a given format is supported on a particular
   // plane for a given crtc.

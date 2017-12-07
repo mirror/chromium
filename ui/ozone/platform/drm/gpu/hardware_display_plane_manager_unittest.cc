@@ -3,13 +3,19 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+#include <unistd.h>
 
 #include <memory>
 
+#include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/posix/eintr_wrapper.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/fake_plane_info.h"
+#include "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.h"
+#include "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.h"
 #include "ui/ozone/platform/drm/gpu/mock_drm_device.h"
 #include "ui/ozone/platform/drm/gpu/mock_hardware_display_plane_manager.h"
 #include "ui/ozone/platform/drm/gpu/mock_scanout_buffer.h"
@@ -226,6 +232,118 @@ TEST(HardwareDisplayPlaneManagerLegacyTest, UnusedPlanesAreReleased) {
   EXPECT_EQ(0, drm->get_overlay_clear_call_count());
   EXPECT_TRUE(drm->plane_manager()->Commit(&hdpl, false));
   EXPECT_EQ(1, drm->get_overlay_clear_call_count());
+}
+
+class FakeFenceFD {
+ public:
+  FakeFenceFD();
+
+  base::ScopedFD dup() const;
+  void signal() const;
+
+ private:
+  base::ScopedFD read_fd;
+  base::ScopedFD write_fd;
+};
+
+FakeFenceFD::FakeFenceFD() {
+  int fds[2];
+  base::CreateLocalNonBlockingPipe(fds);
+  read_fd = base::ScopedFD(fds[0]);
+  write_fd = base::ScopedFD(fds[1]);
+}
+
+base::ScopedFD FakeFenceFD::dup() const {
+  return base::ScopedFD(HANDLE_EINTR(::dup(read_fd.get())));
+}
+
+void FakeFenceFD::signal() const {
+  base::WriteFileDescriptor(write_fd.get(), "a", 1);
+}
+
+class HardwareDisplayPlaneManagerPlanesReadyTest : public testing::Test {
+ protected:
+  HardwareDisplayPlaneManagerPlanesReadyTest() = default;
+
+  void UseLegacyManager();
+  void UseAtomicManager();
+  void RequestPlanesReady(const ui::OverlayPlaneList& planes);
+
+  std::unique_ptr<ui::HardwareDisplayPlaneManager> plane_manager_;
+  bool callback_called = false;
+  base::test::ScopedTaskEnvironment task_env_{
+      base::test::ScopedTaskEnvironment::MainThreadType::DEFAULT,
+      base::test::ScopedTaskEnvironment::ExecutionMode::QUEUED};
+  const scoped_refptr<ui::ScanoutBuffer> scanout_buffer{
+      new ui::MockScanoutBuffer(kDefaultBufferSize)};
+  const FakeFenceFD fake_fence_fd1;
+  const FakeFenceFD fake_fence_fd2;
+
+  const ui::OverlayPlaneList planes_without_fences_{
+      ui::OverlayPlane(scanout_buffer, base::ScopedFD()),
+      ui::OverlayPlane(scanout_buffer, base::ScopedFD())};
+  const ui::OverlayPlaneList planes_with_fences_{
+      ui::OverlayPlane(scanout_buffer, fake_fence_fd1.dup()),
+      ui::OverlayPlane(scanout_buffer, fake_fence_fd2.dup())};
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(HardwareDisplayPlaneManagerPlanesReadyTest);
+};
+
+void HardwareDisplayPlaneManagerPlanesReadyTest::RequestPlanesReady(
+    const ui::OverlayPlaneList& planes) {
+  auto set_true = [](bool* b) { *b = true; };
+  plane_manager_->RequestPlanesReadyCallback(
+      planes, base::BindOnce(set_true, &callback_called));
+}
+
+void HardwareDisplayPlaneManagerPlanesReadyTest::UseLegacyManager() {
+  plane_manager_ = std::make_unique<ui::HardwareDisplayPlaneManagerLegacy>();
+}
+
+void HardwareDisplayPlaneManagerPlanesReadyTest::UseAtomicManager() {
+  plane_manager_ = std::make_unique<ui::HardwareDisplayPlaneManagerAtomic>();
+}
+
+TEST_F(HardwareDisplayPlaneManagerPlanesReadyTest,
+       LegacyWithoutFencesDoesNotWait) {
+  UseLegacyManager();
+  RequestPlanesReady(planes_without_fences_);
+
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerPlanesReadyTest,
+       LegacyWithFencesWaitsAsynchronouslyForFencesReady) {
+  UseLegacyManager();
+  RequestPlanesReady(planes_with_fences_);
+
+  EXPECT_FALSE(callback_called);
+
+  fake_fence_fd1.signal();
+  fake_fence_fd2.signal();
+
+  EXPECT_FALSE(callback_called);
+
+  task_env_.RunUntilIdle();
+
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerPlanesReadyTest,
+       AtomicWithoutFencesDoesNotWait) {
+  UseAtomicManager();
+  RequestPlanesReady(planes_without_fences_);
+
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerPlanesReadyTest,
+       AtomicWithFencesDoesNotWait) {
+  UseAtomicManager();
+  RequestPlanesReady(planes_with_fences_);
+
+  EXPECT_TRUE(callback_called);
 }
 
 }  // namespace

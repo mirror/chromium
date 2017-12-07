@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/files/scoped_file.h"
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -22,13 +23,15 @@ typedef std::vector<OverlayPlane> OverlayPlaneList;
 
 struct OverlayPlane {
   // Simpler constructor for the primary plane.
-  explicit OverlayPlane(const scoped_refptr<ScanoutBuffer>& buffer);
+  explicit OverlayPlane(const scoped_refptr<ScanoutBuffer>& buffer,
+                        base::ScopedFD fence = base::ScopedFD());
 
   OverlayPlane(const scoped_refptr<ScanoutBuffer>& buffer,
                int z_order,
                gfx::OverlayTransform plane_transform,
                const gfx::Rect& display_bounds,
-               const gfx::RectF& crop_rect);
+               const gfx::RectF& crop_rect,
+               base::ScopedFD fence = base::ScopedFD());
   OverlayPlane(const OverlayPlane& other);
 
   bool operator<(const OverlayPlane& plane) const;
@@ -43,6 +46,7 @@ struct OverlayPlane {
   gfx::OverlayTransform plane_transform;
   gfx::Rect display_bounds;
   gfx::RectF crop_rect;
+  scoped_refptr<base::RefCountedData<base::ScopedFD>> fence;
 };
 
 }  // namespace ui

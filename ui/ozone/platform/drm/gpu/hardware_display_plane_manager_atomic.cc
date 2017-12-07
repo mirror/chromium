@@ -44,7 +44,7 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
           static_cast<HardwareDisplayPlaneAtomic*>(plane);
       atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                  gfx::Rect(), gfx::Rect(),
-                                 gfx::OVERLAY_TRANSFORM_NONE);
+                                 gfx::OVERLAY_TRANSFORM_NONE, -1);
     }
   }
 
@@ -101,7 +101,7 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
         static_cast<HardwareDisplayPlaneAtomic*>(plane);
     atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                gfx::Rect(), gfx::Rect(),
-                               gfx::OVERLAY_TRANSFORM_NONE);
+                               gfx::OVERLAY_TRANSFORM_NONE, -1);
   }
   // The list of crtcs is only useful if flags contains DRM_MODE_PAGE_FLIP_EVENT
   // to get the pageflip callback. In this case we don't need to be notified
@@ -124,6 +124,12 @@ bool HardwareDisplayPlaneManagerAtomic::ValidatePrimarySize(
   return true;
 }
 
+void HardwareDisplayPlaneManagerAtomic::RequestPlanesReadyCallback(
+    const OverlayPlaneList& planes,
+    base::OnceClosure callback) {
+  std::move(callback).Run();
+}
+
 bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
     HardwareDisplayPlaneList* plane_list,
     HardwareDisplayPlane* hw_plane,
@@ -138,7 +144,8 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
                                 : overlay.buffer->GetOpaqueFramebufferId();
   if (!atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
-          overlay.display_bounds, src_rect, overlay.plane_transform)) {
+          overlay.display_bounds, src_rect, overlay.plane_transform,
+          overlay.fence->data.get())) {
     LOG(ERROR) << "Failed to set plane properties";
     return false;
   }
