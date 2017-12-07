@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "d926ed91_647c8e9e",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T19:08:36Z",
+      "side": 1,
+      "message": "Yes. However there seems to be another issue here. ScopedObjCClassSwizzler does not have a copy constructor nor does it implement a move constructor/semantics. I could not get it to compile without using the std::unique_ptr.",
+      "parentUuid": "23de64ce_762b8335",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a071aacd_fbbf0680",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -462,6 +486,30 @@
     },
     {
       "key": {
+        "uuid": "a4dd224b_2964533e",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T19:08:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d73780f_6b5e83fd",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 48
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fbccf3c_006ba3e7",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -521,6 +569,30 @@
       "side": 1,
       "message": "Hmmmm.. You\u0027re right. Let\u0027s go with this.",
       "parentUuid": "2f9e0101_9ac7693c",
+      "range": {
+        "startLine": 191,
+        "startChar": 11,
+        "endLine": 191,
+        "endChar": 26
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25ab91aa_aa7dd31d",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T19:08:36Z",
+      "side": 1,
+      "message": "There is also ui/events/test/cocoa_test_event_utils.h which has a method for creating this event but I wasn\u0027t sure if it would be worth adding the dependency to that library.",
+      "parentUuid": "e4569989_42a012c9",
       "range": {
         "startLine": 191,
         "startChar": 11,
