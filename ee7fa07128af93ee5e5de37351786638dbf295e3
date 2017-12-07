@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8a23c318_ffe75c01",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-07T14:24:00Z",
+      "side": 1,
+      "message": "If possible I\u0027d keep them here as\n1) \"ambient-light-sensor\" and \"magnetometer\" features are specified the same way as the features for other sensor classes.\n2) IMO it is better to keep a single \u0027SensorExtraClasses\u0027 feature for enabling Magnetometer and AmbientLightSensor without having to ask for FeaturePolicyExperimentalFeatures.\n\nAFAIK the list of the existing feature policies is not exposed to the user so it should not cause any issues. WDYT?",
+      "parentUuid": "a16ec176_59057078",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b21f15c_c2e87a64",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
         "patchSetId": 5
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "a5a1d6a8_fe805074",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-07T14:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b21f15c_c2e87a64",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dea9f333_6315f6b1",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
         "patchSetId": 5
@@ -67,6 +103,24 @@
       "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bfeb2d_3ac552e8",
+        "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-07T14:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea9f333_6315f6b1",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
