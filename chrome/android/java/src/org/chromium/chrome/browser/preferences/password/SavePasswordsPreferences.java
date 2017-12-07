@@ -21,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ContentUriUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordManagerHandler;
@@ -36,6 +38,13 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.TextMessagePreference;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.widget.Toast;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 /**
  * The "Save passwords" screen in Settings, which allows the user to enable or disable password
@@ -78,6 +87,11 @@ public class SavePasswordsPreferences
     // True if the user triggered the password export flow and this fragment is waiting for the
     // result of the user's reauthentication.
     private boolean mExportRequested;
+    // True if the user just finished the UI flow for confirming a password export.
+    private boolean mExportConfirmed;
+    // CSV-encoded saved passwords for export.
+    private String mExportedPasswords;
+
     private Preference mLinkPref;
     private ChromeSwitchPreference mSavePasswordsSwitch;
     private ChromeBaseCheckBoxPreference mAutoSignInSwitch;
@@ -149,16 +163,63 @@ public class SavePasswordsPreferences
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == AlertDialog.BUTTON_POSITIVE) {
-                    exportAfterWarning();
+                    mExportConfirmed = true;
+                    tryExporting();
                 }
             }
         });
         exportWarningDialogFragment.show(getFragmentManager(), null);
     }
 
-    private void exportAfterWarning() {
-        // TODO(crbug.com/788701): Synchronise with obtaining serialised passwords and pass them to
-        // the intent.
+    /**
+     * Starts the exporting intent if both blocking events are completed: serializing and the
+     * confirmation flow.
+     */
+    private void tryExporting() {
+        if (mExportConfirmed && mExportedPasswords != null) sendExportIntent();
+    }
+
+    /**
+     * Grabs the exported passwords and passes them into an implicit intent, so that the user can
+     * use a storage app to save the exported passwords.
+     */
+    private void sendExportIntent() {
+        File tempFile = null;
+        try {
+            // TODO(vabr): Figure out how to make the path "/passwords/password-export.csv" work
+            // instead. Just adding <files-path name="passwords" path="passwords/" /> into
+            // chrome/android/java/res/xml/file_paths.xml does not seem to work -- the file is
+            // shared with the correct permissions but reported empty (good consumer app with
+            // diagnostics is GMail).
+            tempFile = new File(ContextUtils.getApplicationContext().getFilesDir()
+                    + "/images/password-export.csv");
+            tempFile.deleteOnExit();
+            BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(tempFile), Charset.forName("UTF-8")));
+            tempWriter.write(mExportedPasswords);
+            tempWriter.close();
+        } catch (IOException e) {
+            // TODO(crbug.com/788701): Handle the error.
+        }
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/csv");
+        Uri fileUri;
+        try {
+            fileUri = ContentUriUtils.getContentUriFromFile(tempFile);
+        } catch (IllegalArgumentException ex) {
+            fileUri = Uri.fromFile(tempFile);
+        }
+        send.putExtra(Intent.EXTRA_STREAM, fileUri);
+
+        try {
+            Intent chooser = Intent.createChooser(send, null);
+            chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ContextUtils.getApplicationContext().startActivity(chooser);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // If no app handles it, do nothing.
+        }
+        mExportedPasswords = null;
+        mExportConfirmed = false;
     }
 
     /**
@@ -285,6 +346,8 @@ public class SavePasswordsPreferences
     @Override
     public void serializedPasswordsAvailable(String serializedPasswords) {
         // TODO(crbug.com/788701): Synchronise with end of the UI flow and pass the data.
+        mExportedPasswords = serializedPasswords;
+        tryExporting();
     }
 
     @Override
