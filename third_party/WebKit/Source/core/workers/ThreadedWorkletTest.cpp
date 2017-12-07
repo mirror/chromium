@@ -146,16 +146,15 @@ class ThreadedWorkletMessagingProxyForTest
 
   void Start() {
     Document* document = ToDocument(GetExecutionContext());
-    std::unique_ptr<Vector<char>> cached_meta_data = nullptr;
     Vector<CSPHeaderAndType> content_security_policy_headers;
     WorkerClients* worker_clients = nullptr;
     std::unique_ptr<WorkerSettings> worker_settings = nullptr;
     InitializeWorkerThread(
         std::make_unique<GlobalScopeCreationParams>(
-            document->Url(), document->UserAgent(), "" /* source_code */,
-            std::move(cached_meta_data), &content_security_policy_headers,
-            document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-            worker_clients, document->AddressSpace(),
+            document->Url(), document->UserAgent(),
+            &content_security_policy_headers, document->GetReferrerPolicy(),
+            document->GetSecurityOrigin(), worker_clients,
+            document->AddressSpace(),
             OriginTrialContext::GetTokens(document).get(),
             std::move(worker_settings), kV8CacheOptionsDefault),
         WTF::nullopt, document->Url(), v8_inspector::V8StackTraceId());
