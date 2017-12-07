@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a003c93d_74ed070f",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-07T10:22:19Z",
+      "side": 1,
+      "message": "Would it make sense to have `return !!submitter_ || !!client_;`? (or `return submitter_ || client_;` if that compiles)",
+      "revId": "7d58c8b61ddfc94e673e7ff99262ad42e970935d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6debc125_f1406ebb",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-07T10:22:19Z",
+      "side": 1,
+      "message": "style: no need for { }",
+      "revId": "7d58c8b61ddfc94e673e7ff99262ad42e970935d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
