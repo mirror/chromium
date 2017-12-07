@@ -154,3 +154,22 @@ chrome.metricsPrivate.recordSparseValue = function(metricName, value) {};
  * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordValue
  */
 chrome.metricsPrivate.recordValue = function(metric, value) {};
+
+/**
+ * Records a boolean value to the given metric.
+ * @param {string} metricName
+ * @param {boolean} value
+ * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordBoolean
+ */
+chrome.metricsPrivate.recordBoolean = function(metricName, value) {};
+
+/**
+ * Records an enumeration value to the given metric.
+ * @param {string} metricName
+ * @param {boolean} value
+ * @param {number} enumMin
+ * @param {number} enumMax
+ * @param {number} enumSize
+ * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordEnumerationValue
+ */
+chrome.metricsPrivate.recordEnumerationValue = function(metricName, value, enumMin, enumMax, enumSize) {};
