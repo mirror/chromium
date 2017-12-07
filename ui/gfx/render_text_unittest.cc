@@ -3928,6 +3928,39 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmoji) {
   EXPECT_EQ("[0][1->2][3][4]", GetRunListStructureString());
 }
 
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmojiVariationSelectors) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // ☎ (U+260E, a black telephone emoji) and U+FE0F (a variation selector)
+  // combine to form (on some platforms), ☎️, a red telephone. The run can not
+  // break between the codepoints, or the incorrect glyph will be chosen.
+  render_text->SetText(WideToUTF16(L"\u260E\uFE0F"));
+  render_text->SetDisplayRect(Rect(1000, 1000));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"☎️"}), GetRunListStrings());
+  EXPECT_EQ("[0->1]", GetRunListStructureString());
+
+  // Also move the cursor across the telephone.
+  const int width = render_text->GetStringSize().width();
+  EXPECT_EQ(gfx::Range(0, 0), render_text->selection());
+  EXPECT_EQ(0, render_text->GetUpdatedCursorBounds().x());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+  EXPECT_EQ(gfx::Range(0, 2), render_text->selection());
+  EXPECT_EQ(width, render_text->GetUpdatedCursorBounds().x());
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_OrphanedVariationSelector) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // ☎ (U+260E, a black telephone emoji) and U+FE0F (a variation selector)
+  // combine to form (on some platforms), ☎️, a red telephone. The run can not
+  // break between the codepoints, or the incorrect glyph will be chosen.
+  render_text->SetText(WideToUTF16(L"x\u260E\uFE0F"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"☎️"}), GetRunListStrings());
+  EXPECT_EQ("[0->1]", GetRunListStructureString());
+}
+
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByAscii) {
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
 
