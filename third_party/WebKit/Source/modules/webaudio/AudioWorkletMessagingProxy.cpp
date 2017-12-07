@@ -4,6 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 
+#include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/MessagePort.h"
 #include "modules/webaudio/AudioWorklet.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
@@ -25,7 +26,8 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 
 void AudioWorkletMessagingProxy::CreateProcessor(
     AudioWorkletHandler* handler,
-    MessagePortChannel message_port_channel) {
+    MessagePortChannel message_port_channel,
+    scoped_refptr<SerializedScriptValue> node_options) {
   DCHECK(IsMainThread());
   GetWorkerThread()
       ->GetTaskRunner(TaskType::kMiscPlatformAPI)
@@ -38,7 +40,8 @@ void AudioWorkletMessagingProxy::CreateProcessor(
               CrossThreadUnretained(handler),
               handler->Name(),
               handler->Context()->sampleRate(),
-              std::move(message_port_channel)));
+              std::move(message_port_channel),
+              std::move(node_options)));
 }
 
 void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
@@ -46,12 +49,14 @@ void AudioWorkletMessagingProxy::CreateProcessorOnRenderingThread(
     AudioWorkletHandler* handler,
     const String& name,
     float sample_rate,
-    MessagePortChannel message_port_channel) {
+    MessagePortChannel message_port_channel,
+    scoped_refptr<SerializedScriptValue> node_options) {
   DCHECK(worker_thread->IsCurrentThread());
   AudioWorkletGlobalScope* global_scope =
       ToAudioWorkletGlobalScope(worker_thread->GlobalScope());
   AudioWorkletProcessor* processor =
-      global_scope->CreateProcessor(name, sample_rate, message_port_channel);
+      global_scope->CreateProcessor(name, sample_rate,
+                                    message_port_channel, node_options);
   handler->SetProcessorOnRenderThread(processor);
 }
 
