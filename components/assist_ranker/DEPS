@@ -1,6 +1,10 @@
 include_rules = [
+  "+chrome/browser/android",
+  "+content/public/browser",
   "+components/data_use_measurement/core",
   "+components/keyed_service/core",
   "+components/metrics",
+  "+components/ukm/content",
   "+net",
+  "+services/metrics/public",
 ]
