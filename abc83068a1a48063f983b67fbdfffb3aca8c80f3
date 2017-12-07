@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "18c28fe3_8d5b3757",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T04:09:10Z",
+      "side": 0,
+      "message": "Is there any scenario where a canonicalized selection is expected here?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 43
+      },
+      "revId": "abc83068a1a48063f983b67fbdfffb3aca8c80f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "443ed354_e2058856",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
