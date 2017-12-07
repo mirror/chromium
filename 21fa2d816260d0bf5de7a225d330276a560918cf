@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cf1386a_beecfa9b",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/transform.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-07T22:13:06Z",
+      "side": 0,
+      "message": "This assertion is wrong. Had to remove this because the last perspective test string was normalizing (correctly) to a CSSPerspective. Everything was fine before because we didn\u0027t support calc values.",
+      "revId": "21fa2d816260d0bf5de7a225d330276a560918cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
