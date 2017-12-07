@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test cross-thread passing of AudioWorkletNodeOptions
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../../webaudio-resources/audit.js"></script>
+    <script src="audio-worklet-common.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // TODO(hongchan): remove this assertion when AudioWorklet shipped.
+      assertAudioWorklet();
+
+      const audit = Audit.createTaskRunner();
+      const context = new AudioContext();
+
+      // Create a OptionTestProcessor and feed |processorData| to it. The
+      // processor should echo the received data to the node's |onmessage|
+      // handler.
+      audit.define('setup', (task, should) => {
+        context.audioWorklet.addModule('option-test-processor.js').then(() => {
+          let processorData = {
+            description: 'foo',
+            payload: [0, 1, 2, 3]
+          };
+
+          let optionTestNode =
+              new AudioWorkletNode(context, 'option-test-processor', {
+                processorData: processorData
+              });
+
+          optionTestNode.port.onmessage = (event) => {
+            should(event.data.description,
+                   '|description| field in data from processor ("' +
+                       event.data.description + '")')
+                .beEqualTo(processorData.description,
+                           'the field in node constructor options ("' +
+                           processorData.description + '")');
+            should(event.data.payload,
+                   '|payload| array in data from processor ([' +
+                       event.data.payload + '])')
+                .beEqualToArray([0, 1, 2, 3],
+                                'the array in node constructor options ([' +
+                                event.data.payload + '])');
+            task.done();
+          };
+        });
+      });
+
+      audit.run();
+    </script>
+  </body>
+</html>
