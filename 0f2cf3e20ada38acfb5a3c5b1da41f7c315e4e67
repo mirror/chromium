@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af684737_aba122a1",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T00:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d740c1f6_03a0002a",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "627a65c9_3ba9fd43",
         "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T00:44:08Z",
       "side": 1,
       "message": "Might be clearer as \"HasNonEmptyStringAtIndex\" ?",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa4d663_380a771d",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T00:52:18Z",
+      "side": 1,
+      "message": "So, I thought about something like that, the reason I didn\u0027t go with that, is that this type doesn\u0027t necessary correspond to something we think of as a string, right. navigation_id is number. It just happens to be that it\u0027s stored inside the ListValue as a string. Also the navigation is confusing.",
+      "parentUuid": "627a65c9_3ba9fd43",
       "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7580ee_94d012d8",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T00:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa7df0d_ef6d8b82",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
