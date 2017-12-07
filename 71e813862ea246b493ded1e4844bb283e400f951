@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d80c369_8561679e",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T20:49:51Z",
+      "side": 1,
+      "message": "Maybe call this \"should_defer_invalidation_for_fast_main_frame_\" to differentiate it from the method name \"ShouldDeferInvalidatingForMainFrame\"?",
+      "range": {
+        "startLine": 646,
+        "startChar": 7,
+        "endLine": 646,
+        "endChar": 48
+      },
+      "revId": "71e813862ea246b493ded1e4844bb283e400f951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9930c9e5_d2423618",
+        "filename": "cc/trees/layer_tree_host_unittest_scroll.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T20:49:51Z",
+      "side": 1,
+      "message": "Should SchedulerStateMachine give up on the main thread and invalidate if it thinks the main threa is fast, but ends up being slow?\n\nWould that remove the need for SetImplSideInvalidationForcedForTesting?",
+      "range": {
+        "startLine": 2196,
+        "startChar": 37,
+        "endLine": 2196,
+        "endChar": 76
+      },
+      "revId": "71e813862ea246b493ded1e4844bb283e400f951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
