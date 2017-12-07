@@ -52,6 +52,24 @@
       "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82977912_a2714839",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T18:05:06Z",
+      "side": 1,
+      "message": "I\u0027m OK with DoNotUse or Unused. Technically \"obsolete\" is supposed to mean the same thing, but people do tend to misunderstand it as a synonym for \"deprecated\" or \"obsolescent\".",
+      "parentUuid": "920e341b_57f9b76c",
+      "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
