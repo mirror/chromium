@@ -8,8 +8,38 @@
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/device/public/interfaces/hid.mojom.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace device {
+
+class MockHidConnection : public device::mojom::HidConnection {
+ public:
+  explicit MockHidConnection(device::mojom::HidDeviceInfoPtr device,
+                             device::mojom::HidConnectionRequest request);
+
+  ~MockHidConnection() override;
+  MOCK_METHOD0(ReadPtr, void());
+  MOCK_METHOD3(WritePtr,
+               void(uint8_t report_id,
+                    const std::vector<uint8_t>& buffer,
+                    WriteCallback& callback));
+
+  void Read(ReadCallback callback) override;
+
+  void Write(uint8_t report_id,
+             const std::vector<uint8_t>& buffer,
+             WriteCallback callback) override;
+
+  void GetFeatureReport(uint8_t report_id,
+                        GetFeatureReportCallback callback) override;
+  void SendFeatureReport(uint8_t report_id,
+                         const std::vector<uint8_t>& buffer,
+                         SendFeatureReportCallback callback) override;
+
+ private:
+  mojo::Binding<device::mojom::HidConnection> binding_;
+  device::mojom::HidDeviceInfoPtr device_;
+};
 
 class FakeHidConnection : public device::mojom::HidConnection {
  public:

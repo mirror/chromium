@@ -3,8 +3,39 @@
 // found in the LICENSE file.
 
 #include "device/u2f/fake_hid_impl_for_testing.h"
+#include "base/optional.h"
 
 namespace device {
+
+MockHidConnection::MockHidConnection(
+    device::mojom::HidDeviceInfoPtr device,
+    device::mojom::HidConnectionRequest request)
+    : binding_(this, std::move(request)), device_(std::move(device)) {}
+
+MockHidConnection::~MockHidConnection() {}
+
+void MockHidConnection::Read(ReadCallback callback) {
+  std::move(callback).Run(true, 0,
+                          base::make_optional<std::vector<uint8_t>>({0x01}));
+  ReadPtr();
+}
+
+void MockHidConnection::Write(uint8_t report_id,
+                              const std::vector<uint8_t>& buffer,
+                              WriteCallback callback) {
+  return WritePtr(report_id, buffer, callback);
+}
+
+void MockHidConnection::GetFeatureReport(uint8_t report_id,
+                                         GetFeatureReportCallback callback) {
+  NOTREACHED();
+}
+
+void MockHidConnection::SendFeatureReport(uint8_t report_id,
+                                          const std::vector<uint8_t>& buffer,
+                                          SendFeatureReportCallback callback) {
+  NOTREACHED();
+}
 
 bool FakeHidConnection::mock_connection_error_ = false;
 

@@ -74,6 +74,7 @@ void U2fHidDevice::Transition(std::unique_ptr<U2fApduCommand> command,
     default:
       base::WeakPtr<U2fHidDevice> self = weak_factory_.GetWeakPtr();
       callback.Run(false, nullptr);
+
       // Executing callbacks may free |this|. Check |self| first.
       while (self && !pending_transactions_.empty()) {
         // Respond to any pending requests
@@ -134,6 +135,7 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
     Transition(nullptr, callback);
     return;
   }
+
   // Channel allocation response is defined as:
   // 0: 8 byte nonce
   // 8: 4 byte channel id
@@ -148,12 +150,14 @@ void U2fHidDevice::OnAllocateChannel(std::vector<uint8_t> nonce,
     Transition(nullptr, callback);
     return;
   }
-
-  std::vector<uint8_t> received_nonce(std::begin(payload),
-                                      std::begin(payload) + 8);
-  if (nonce != received_nonce) {
-    state_ = State::DEVICE_ERROR;
-    Transition(nullptr, callback);
+  auto received_nonce = base::span<uint8_t>(payload).first(8);
+  // Received a broadcast message for a different client. Disregard and continue
+  // reading.
+  if (base::span<uint8_t>(nonce) != received_nonce) {
+    ArmTimeout(callback);
+    ReadMessage(base::BindOnce(&U2fHidDevice::OnAllocateChannel,
+                               weak_factory_.GetWeakPtr(), nonce,
+                               std::move(command), callback));
     return;
   }
 
@@ -215,6 +219,7 @@ void U2fHidDevice::OnRead(U2fHidMessageCallback callback,
   }
 
   DCHECK(buf);
+
   std::unique_ptr<U2fMessage> read_message =
       U2fMessage::CreateFromSerializedData(*buf);
 

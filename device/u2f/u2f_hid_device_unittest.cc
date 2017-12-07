@@ -12,12 +12,15 @@
 #include "device/u2f/u2f_apdu_command.h"
 #include "device/u2f/u2f_apdu_response.h"
 #include "device/u2f/u2f_hid_device.h"
+#include "device/u2f/u2f_message.h"
 #include "device/u2f/u2f_packet.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/cpp/hid/hid_device_filter.h"
 #include "services/device/public/interfaces/hid.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using ::testing::_;
 
 namespace {
 
@@ -295,6 +298,72 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
   EXPECT_EQ(nullptr, response1);
   EXPECT_EQ(nullptr, response2);
   EXPECT_EQ(nullptr, response3);
+};
+
+TEST_F(U2fHidDeviceTest, TestRetryChannelAllocation) {
+  // Setup and enumerate mock device
+  U2fDeviceEnumerate callback(hid_manager_.get());
+
+  auto c_info = device::mojom::HidCollectionInfo::New();
+  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
+
+  auto hid_device = device::mojom::HidDeviceInfo::New();
+  hid_device->guid = "A";
+  hid_device->product_name = "Test Fido device";
+  hid_device->serial_number = "123FIDO";
+  hid_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
+  hid_device->collections.push_back(std::move(c_info));
+  hid_device->max_input_report_size = 64;
+  hid_device->max_output_report_size = 64;
+
+  fake_hid_manager_->AddDevice(std::move(hid_device));
+  hid_manager_->GetDevices(callback.callback());
+
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
+      callback.WaitForCallback();
+
+  ASSERT_EQ(static_cast<size_t>(1), u2f_devices.size());
+  auto& device = u2f_devices.front();
+
+  // Replace device HID connection with custom client connection bound to mock
+  // server-side mojom connection.
+  device::mojom::HidConnectionPtr connection_client;
+  MockHidConnection mock_connection(device->device_info_.Clone(),
+                                    mojo::MakeRequest(&connection_client));
+  device->connection_ = std::move(connection_client);
+
+  static const std::vector<uint8_t> nonce_set_by_client = {
+      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+  static const std::vector<uint8_t> buffer_with_incorrect_nonce = {
+      // clang-format off
+      0x00, 0x00, 0x00, 0x00, 0x00, // packet header
+      0x00, 0x11, // payload size (17)
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // Incorrect nonce
+      0x01, 0x02, 0x03, 0x04,        // Dummy channel id
+      0x00, 0x00, 0x00, 0x00, 0x00,  // Device version data
+      // zero padding for HID packet below
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      // clang-format on
+  };
+
+  // Once OnAllocateChannel is invoked, Read() must be invoked since mock hid
+  // connection will response with a different nonce value.
+  EXPECT_CALL(mock_connection, ReadPtr());
+  TestDeviceCallback cb0;
+  device->OnAllocateChannel(
+      nonce_set_by_client, nullptr, std::move(cb0.callback()), true,
+      U2fMessage::CreateFromSerializedData(buffer_with_incorrect_nonce));
+
+  // To prevent proceeding to next step in device level transition, set state to
+  // error.
+  device->state_ = U2fHidDevice::State::DEVICE_ERROR;
+  // Dispatch mojom request
+  base::RunLoop().RunUntilIdle();
+  // Wait for device request to finish (will take 3000ms).
+  cb0.WaitForCallback();
 };
 
 }  // namespace device
