@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "0b4df3f3_4202a10d",
+        "filename": "components/feedback/feedback_util_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-07T23:11:08Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this would be useful for other platforms since they shouldn\u0027t be generating data as obscure as we do on Chrome OS -- the only reason we do it is because vendors are involved.\n\nI can move this into the other file but I figured it would be nicer to avoid the intra-file conditional compilation. It\u0027s more clear to me that we should only be including this header and using its functions on Chrome OS.",
+      "parentUuid": "12af48f3_8575e240",
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c54bc95_1a2285b8",
         "filename": "components/feedback/feedback_util_chromeos.h",
         "patchSetId": 4
