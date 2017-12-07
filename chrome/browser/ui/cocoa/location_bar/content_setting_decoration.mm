@@ -316,7 +316,6 @@ bool ContentSettingDecoration::OnMousePressed(NSRect frame, NSPoint location) {
                                           anchoredAt:anchor];
     bubbleWindow_.reset([[bubbleController window] retain]);
   }
-
   return true;
 }
 
