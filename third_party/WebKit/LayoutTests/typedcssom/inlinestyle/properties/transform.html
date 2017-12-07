@@ -129,8 +129,6 @@ for (let inputString in crashTestStrings) {
   test(() => {
     testElement.style.transform = inputString;
     let result = testElement.attributeStyleMap.get('transform');
-    assert_equals(result.constructor, CSSStyleValue,
-        'result is a base CSSStyleValue');
     assert_equals(result.toString(), crashTestStrings[inputString]);
   }, "Getting transform when it is set to " + inputString + " does not crash");
 }
