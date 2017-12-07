@@ -30,6 +30,7 @@ public class GvrKeyboardLoaderClient {
 
     private static IGvrKeyboardLoader sLoader = null;
     private static ClassLoader sRemoteClassLoader = null;
+    private static KeyboardContextWrapper sContextWrapper = null;
 
     @CalledByNative
     public static long loadKeyboardSDK() {
@@ -86,8 +87,10 @@ public class GvrKeyboardLoaderClient {
 
     @CalledByNative
     public static Context getContextWrapper() {
+        if (sContextWrapper != null) return sContextWrapper;
         Context context = ContextUtils.getApplicationContext();
-        return new KeyboardContextWrapper(getRemoteContext(context), context);
+        sContextWrapper = new KeyboardContextWrapper(getRemoteContext(context), context);
+        return sContextWrapper;
     }
 
     @CalledByNative
