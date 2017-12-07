@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d525c7a2_282b6efa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/support/send-file-form-helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-07T09:27:37Z",
+      "side": 1,
+      "message": "you always seem to pass the same fileNameSource, fileBaseName and expectedEncodedBaseName... Is that intentional (or am I missing something)? It\u0027s not quite clear why those parameters exist if they\u0027re always the same...",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "2e6a737d17833044001030642d49800f2ebd74dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
