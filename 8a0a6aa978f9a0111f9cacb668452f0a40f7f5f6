@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bd607b1_28eae15e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "From https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions and http://dev.chromium.org/developers/contributing-code/-bug-syntax, the syntax is `:\u0027. Added `Test:\u0027 field and also the manual testing steps, in addition to the automated test steps.\nFrom the above guidelines however, I don\u0027t think automated test filters are required here.",
+      "parentUuid": "b75d9298_8dd13fc6",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635c1355_19799e78",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72dd2a7_cffe3a96",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635c1355_19799e78",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7f65f96e_b81dea08",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8226fb29_45f4df50",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3174e957_123306d9",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3da6481_0f3f1f67",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3174e957_123306d9",
+      "range": {
+        "startLine": 4524,
+        "startChar": 7,
+        "endLine": 4524,
+        "endChar": 35
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "08b1c09f_6ba221fa",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4529,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6007b0_bd730261",
+      "range": {
+        "startLine": 4529,
+        "startChar": 23,
+        "endLine": 4529,
+        "endChar": 28
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4081339_f5efef07",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4ea4ad_7aed23ef",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4531,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4081339_f5efef07",
+      "range": {
+        "startLine": 4531,
+        "startChar": 23,
+        "endLine": 4531,
+        "endChar": 27
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,54 @@
     },
     {
       "key": {
+        "uuid": "d7f468e3_3f10058f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4537,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80cfbbf7_cef2e40b",
+      "range": {
+        "startLine": 4537,
+        "startChar": 21,
+        "endLine": 4537,
+        "endChar": 60
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7059985c_a47d00f4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4537,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e1ff48_e537c049",
+      "range": {
+        "startLine": 4537,
+        "startChar": 74,
+        "endLine": 4537,
+        "endChar": 79
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "794827b1_e7933b32",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ae0d9d0f_0d869b1f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4538,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794827b1_e7933b32",
+      "range": {
+        "startLine": 4538,
+        "startChar": 86,
+        "endLine": 4538,
+        "endChar": 92
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274de51b_7366171e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 11
@@ -229,6 +445,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767e5b4a_2661e9cd",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4539,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274de51b_7366171e",
+      "range": {
+        "startLine": 4539,
+        "startChar": 59,
+        "endLine": 4539,
+        "endChar": 69
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,54 @@
     },
     {
       "key": {
+        "uuid": "e3ebd527_1b2383c0",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c505dd34_90bbf64d",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3131def5_05f048d4",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "clang format did this. Reverted to this when I indented 2 spaces.",
+      "parentUuid": "e3fc5287_46b4449f",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 2
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe6a46da_adaa9ab8",
         "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
         "patchSetId": 11
@@ -324,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "353f0f24_278304a4",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Sorry for the misleading comment. Yes, I have tested this to be true.\n\nThis policy is triggered on the sign in screen but since this is a user policy with no default value, the value returned is null, which is gracefully handled by my code.",
+      "parentUuid": "d710b473_da9852d8",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921d21e2_ecf2515f",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 11
@@ -344,6 +656,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65587dc_e42b7cc8",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Random. Just like |kAccountId| above. Just had to use a number for testing.",
+      "parentUuid": "921d21e2_ecf2515f",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +706,30 @@
     },
     {
       "key": {
+        "uuid": "166f8047_c0506122",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36305216_e8100c3d",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4568f43e_2d875877",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 11
@@ -390,6 +750,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070fee4f_3cf6f68b",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Yes, the method is weirdly named :) Passing |is_header_request| as false generates a cookie instead of a header.",
+      "parentUuid": "4568f43e_2d875877",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "5fb7af42_c5cec1cd",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "652b6449_0d0c3d29",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7922c58_5a24362b",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 11
@@ -439,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "2770b65d_cbb4b026",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7922c58_5a24362b",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ae5019_2c2f975f",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 11
@@ -459,6 +891,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09b5d3c_aa9c1fc4",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T18:43:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32ae5019_2c2f975f",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 11
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
