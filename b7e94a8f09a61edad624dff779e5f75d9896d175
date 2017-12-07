@@ -93,6 +93,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c009d62_66e0ab3c",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-07T20:34:23Z",
+      "side": 1,
+      "message": "I mean when I set the GTK setting for double-click to \"menu\" instead of \"toggle-maximize\" or similar.\n\nWhen DesktopLinuxBrowserFrameView gets the MouseEvent, it doesn\u0027t have EF_IS_DOUBLE_CLICK even though it is a double click, because of this code.",
+      "parentUuid": "468002bc_5889d13d",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
