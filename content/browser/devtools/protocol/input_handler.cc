@@ -66,7 +66,7 @@ int GetEventModifiers(int modifiers,
                       bool auto_repeat,
                       bool is_keypad,
                       int location) {
-  int result = 0;
+  int result = blink::WebInputEvent::kFromDebugger;
   if (auto_repeat)
     result |= blink::WebInputEvent::kIsAutoRepeat;
   if (is_keypad)
@@ -253,7 +253,7 @@ void SendSynthesizeScrollGestureResponse(
 InputHandler::InputHandler()
     : DevToolsDomainHandler(Input::Metainfo::domainName),
       host_(nullptr),
-      input_queued_(false),
+      input_queued_(0),
       page_scale_factor_(1.0),
       last_id_(0),
       weak_factory_(this) {}
@@ -287,25 +287,40 @@ void InputHandler::SetRenderer(RenderProcessHost* process_host,
 }
 
 void InputHandler::OnInputEvent(const blink::WebInputEvent& event) {
-  input_queued_ = true;
+  if ((event.GetModifiers() & blink::WebInputEvent::kFromDebugger) == 0 &&
+      !blink::WebInputEvent::IsGestureEventType(event.GetType()))
+    return;
+  input_queued_++;
+  if (event.GetType() == blink::WebInputEvent::kGestureTapUnconfirmed)
+    input_queued_++;
 }
 
 void InputHandler::OnInputEventAck(InputEventAckSource source,
                                    InputEventAckState state,
                                    const blink::WebInputEvent& event) {
-  if (blink::WebInputEvent::IsKeyboardEventType(event.GetType()) &&
-      !pending_key_callbacks_.empty()) {
-    pending_key_callbacks_.front()->sendSuccess();
-    pending_key_callbacks_.pop_front();
+  if ((event.GetModifiers() & blink::WebInputEvent::kFromDebugger) == 0 &&
+      !blink::WebInputEvent::IsGestureEventType(event.GetType()))
     return;
-  }
-  if ((blink::WebInputEvent::IsMouseEventType(event.GetType()) ||
-       event.GetType() == blink::WebInputEvent::kMouseWheel) &&
-      !pending_mouse_callbacks_.empty()) {
-    pending_mouse_callbacks_.front()->sendSuccess();
-    pending_mouse_callbacks_.pop_front();
+  input_queued_--;
+  if (event.GetType() == blink::WebInputEvent::kGestureTap)
+    input_queued_--;
+  if (event.GetType() == blink::WebInputEvent::kGestureDoubleTap)
+    input_queued_--;
+
+  if (input_queued_ < 0)
+    input_queued_ = 0;
+
+  if (input_queued_)
     return;
-  }
+  for (auto& callback : pending_key_callbacks_)
+    callback->sendSuccess();
+  pending_key_callbacks_.clear();
+  for (auto& callback : pending_mouse_callbacks_)
+    callback->sendSuccess();
+  pending_mouse_callbacks_.clear();
+  for (auto& callback : pending_touch_callbacks_)
+    callback->sendSuccess();
+  pending_touch_callbacks_.clear();
 }
 
 void InputHandler::Wire(UberDispatcher* dispatcher) {
@@ -410,13 +425,11 @@ void InputHandler::DispatchKeyEvent(
     event.skip_in_browser = true;
 
   host_->GetRenderWidgetHost()->Focus();
-  input_queued_ = false;
-  pending_key_callbacks_.push_back(std::move(callback));
   host_->GetRenderWidgetHost()->ForwardKeyboardEvent(event);
-  if (!input_queued_) {
-    pending_key_callbacks_.back()->sendSuccess();
-    pending_key_callbacks_.pop_back();
-  }
+  if (!input_queued_)
+    callback->sendSuccess();
+  else
+    pending_key_callbacks_.push_back(std::move(callback));
 }
 
 void InputHandler::DispatchMouseEvent(
@@ -488,17 +501,17 @@ void InputHandler::DispatchMouseEvent(
   }
 
   host_->GetRenderWidgetHost()->Focus();
-  input_queued_ = false;
-  pending_mouse_callbacks_.push_back(std::move(callback));
   if (wheel_event)
     host_->GetRenderWidgetHost()->ForwardWheelEvent(*wheel_event);
   else
     host_->GetRenderWidgetHost()->ForwardMouseEvent(*mouse_event);
-  if (!input_queued_) {
-    pending_mouse_callbacks_.back()->sendSuccess();
-    pending_mouse_callbacks_.pop_back();
-  } else if (wheel_event && base::FeatureList::IsEnabled(
-                                features::kTouchpadAndWheelScrollLatching)) {
+  if (!input_queued_)
+    callback->sendSuccess();
+  else
+    pending_mouse_callbacks_.push_back(std::move(callback));
+
+  if (input_queued_ && wheel_event &&
+      base::FeatureList::IsEnabled(features::kTouchpadAndWheelScrollLatching)) {
     // Send a synthetic wheel event with phaseEnded to finish scrolling.
     wheel_event->delta_x = 0;
     wheel_event->delta_y = 0;
@@ -628,8 +641,6 @@ void InputHandler::DispatchTouchEvent(
   host_->GetRenderWidgetHost()->GetTouchEmulator()->Enable(
       TouchEmulator::Mode::kInjectingTouchEvents,
       ui::GestureProviderConfigType::CURRENT_PLATFORM);
-  base::OnceClosure closure = base::BindOnce(
-      &DispatchTouchEventCallback::sendSuccess, std::move(callback));
   for (size_t i = 0; i < events.size(); i++) {
     events[i].dispatch_type =
         events[i].GetType() == blink::WebInputEvent::kTouchCancel
@@ -638,9 +649,12 @@ void InputHandler::DispatchTouchEvent(
     events[i].moved_beyond_slop_region = true;
     events[i].unique_touch_event_id = ui::GetNextTouchEventId();
     host_->GetRenderWidgetHost()->GetTouchEmulator()->InjectTouchEvent(
-        events[i],
-        i == events.size() - 1 ? std::move(closure) : base::OnceClosure());
+        events[i], base::OnceClosure());
   }
+  if (!input_queued_)
+    callback->sendSuccess();
+  else
+    pending_touch_callbacks_.push_back(std::move(callback));
 }
 
 Response InputHandler::EmulateTouchFromMouseEvent(const std::string& type,
@@ -936,6 +950,9 @@ void InputHandler::ClearInputState() {
   for (auto& callback : pending_mouse_callbacks_)
     callback->sendSuccess();
   pending_mouse_callbacks_.clear();
+  for (auto& callback : pending_touch_callbacks_)
+    callback->sendSuccess();
+  pending_touch_callbacks_.clear();
   // TODO(dgozman): cleanup touch callbacks as well?
   touch_points_.clear();
 }
