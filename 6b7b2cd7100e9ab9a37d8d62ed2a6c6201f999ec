@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a85acb_967652bd",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1171444
+      },
+      "writtenOn": "2017-12-07T17:02:21Z",
+      "side": 1,
+      "message": "You can use my chromium account jianj@chromium.org",
+      "range": {
+        "startLine": 2089,
+        "startChar": 16,
+        "endLine": 2089,
+        "endChar": 32
+      },
+      "revId": "6b7b2cd7100e9ab9a37d8d62ed2a6c6201f999ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
