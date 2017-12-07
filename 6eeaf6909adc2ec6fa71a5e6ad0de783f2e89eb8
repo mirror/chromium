@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b779363d_92a8f312",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "This whole file should only be included if this is true, so you can remove it.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4618f6_a8e50e93",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "7",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7e0ccb_36d59e88",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f491d655_5d912bc2",
+        "filename": "components/arc/common/video.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "7",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85132899_b15032d6",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "nit: Can you avoid the temporary? It doesn\u0027t make the code more readable.\n\n std::move(pending_flush_callbacks_.front())\n     .Run(...);\n pending_flush_callbacks_.pop();\n\n\nSame throughout the code.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 31
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d5d070_817e0df9",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-07T17:16:49Z",
+      "side": 1,
+      "message": "components/arc is only included if the OS is chromeos, which implies OS_LINUX, so this is unnecessary.",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 551,
+        "endChar": 22
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
