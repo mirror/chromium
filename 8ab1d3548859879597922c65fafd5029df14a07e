@@ -134,6 +134,30 @@
     },
     {
       "key": {
+        "uuid": "e833f1e2_8024eb69",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-07T02:19:41Z",
+      "side": 1,
+      "message": "As discuss, it would be keep the InstallerPolicy class to solely implement the ComponentInstallerPolicy, and have another class that implement the event observer, and manage the component and its interactions with Chrome.",
+      "parentUuid": "86146cc3_2f01d2e4",
+      "range": {
+        "startLine": 66,
+        "startChar": 66,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6448a0f_4586f504",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
         "patchSetId": 3
@@ -173,6 +197,29 @@
         "startChar": 58,
         "endLine": 122,
         "endChar": 62
+      },
+      "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59ed5c1_f30e4964",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-07T02:19:41Z",
+      "side": 1,
+      "message": "These members presumably can go away in the new design idea suggested above. It is undesirable to have more than one instance of the SwReporterInstallerPolicy, since the object is 1:1 associated with a ComponentInstaller which should be 1:1 with a given component, such as the swreporter.\n\nAlso, there are concerns related to reentrancy and concurrency, therefore we must be careful with using static members.",
+      "range": {
+        "startLine": 123,
+        "startChar": 36,
+        "endLine": 123,
+        "endChar": 51
       },
       "revId": "8ab1d3548859879597922c65fafd5029df14a07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
