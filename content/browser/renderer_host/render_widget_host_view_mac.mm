@@ -747,33 +747,39 @@ void RenderWidgetHostViewMac::Show() {
   ScopedCAActionDisabler disabler;
   [cocoa_view_ setHidden:NO];
 
+  if (GetVisibility() == Visibility::VISIBLE) {
+    DCHECK(!render_widget_host_->is_hidden());
+
+    // If there is not a frame being currently drawn, kick one, so that the
+    // below pause will have a frame to wait on.
+    render_widget_host_->ScheduleComposite();
+    PauseForPendingResizeOrRepaintsAndDraw();
+  }
+}
+
+void RenderWidgetHostViewMac::DoHide() {
+  ScopedCAActionDisabler disabler;
+  [cocoa_view_ setHidden:YES];
+}
+
+void RenderWidgetHostViewMac::WasShown() {
+  // Do nothing if Destroy() was called.
+  if (!browser_compositor_ || !render_widget_host_)
+    return;
+
   browser_compositor_->SetRenderWidgetHostIsHidden(false);
 
   ui::LatencyInfo renderer_latency_info;
   renderer_latency_info.AddLatencyNumber(
       ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(), 0);
   render_widget_host_->WasShown(renderer_latency_info);
-
-  // If there is not a frame being currently drawn, kick one, so that the below
-  // pause will have a frame to wait on.
-  render_widget_host_->ScheduleComposite();
-  PauseForPendingResizeOrRepaintsAndDraw();
 }
 
-void RenderWidgetHostViewMac::Hide() {
-  ScopedCAActionDisabler disabler;
-  [cocoa_view_ setHidden:YES];
+void RenderWidgetHostViewMac::WasHidden() {
+  // Do nothing if Destroy() was called.
+  if (!browser_compositor_ || !render_widget_host_)
+    return;
 
-  render_widget_host_->WasHidden();
-  browser_compositor_->SetRenderWidgetHostIsHidden(true);
-}
-
-void RenderWidgetHostViewMac::WasUnOccluded() {
-  browser_compositor_->SetRenderWidgetHostIsHidden(false);
-  render_widget_host_->WasShown(ui::LatencyInfo());
-}
-
-void RenderWidgetHostViewMac::WasOccluded() {
   render_widget_host_->WasHidden();
   browser_compositor_->SetRenderWidgetHostIsHidden(true);
 }
@@ -861,13 +867,11 @@ bool RenderWidgetHostViewMac::IsSurfaceAvailableForCopy() const {
 }
 
 Visibility RenderWidgetHostViewMac::GetVisibility() const {
-  if ([cocoa_view_ isHiddenOrHasHiddenAncestor])
+  if ([cocoa_view_ isHiddenOrHasHiddenAncestor] || ![cocoa_view_ window])
     return Visibility::HIDDEN;
-  if ([cocoa_view_ window] && !([[cocoa_view_ window] occlusionState] &
-                                NSWindowOcclusionStateVisible)) {
-    return Visibility::OCCLUDED;
-  }
-  return Visibility::VISIBLE;
+  if ([[cocoa_view_ window] occlusionState] & NSWindowOcclusionStateVisible)
+    return Visibility::VISIBLE;
+  return Visibility::OCCLUDED;
 }
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
@@ -2831,6 +2835,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
         removeObserver:self
                   name:NSWindowDidResignKeyNotification
                 object:oldWindow];
+    [notificationCenter
+        removeObserver:self
+                  name:NSWindowDidChangeOcclusionStateNotification
+                object:oldWindow];
   }
   if (newWindow) {
     [notificationCenter
@@ -2855,6 +2863,10 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     [notificationCenter addObserver:self
                            selector:@selector(windowDidResignKey:)
                                name:NSWindowDidResignKeyNotification
+                             object:newWindow];
+    [notificationCenter addObserver:self
+                           selector:@selector(windowChangedOcclusionState:)
+                               name:NSWindowDidChangeOcclusionStateNotification
                              object:newWindow];
   }
 }
@@ -2940,6 +2952,24 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
   if ([[self window] firstResponder] == self)
     renderWidgetHostView_->SetActive(false);
+}
+
+- (void)viewWillMoveToSuperview:(NSView*)newSuperview {
+  // Moving to a new superview can effectively hide the view without triggering
+  // viewDidHide.
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)windowChangedOcclusionState:(NSNotification*)notification {
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)viewDidHide {
+  renderWidgetHostView_->VisibilityChanged();
+}
+
+- (void)viewDidUnhide {
+  renderWidgetHostView_->VisibilityChanged();
 }
 
 - (BOOL)becomeFirstResponder {
@@ -3519,6 +3549,8 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
 }
 
 - (void)viewDidMoveToWindow {
+  renderWidgetHostView_->VisibilityChanged();
+
   if ([self window])
     [self updateScreenProperties];
   renderWidgetHostView_->browser_compositor_->SetNSViewAttachedToWindow(
