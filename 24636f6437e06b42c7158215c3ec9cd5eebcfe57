@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97b644c6_08ca0ffa",
+        "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-07T19:54:09Z",
+      "side": 1,
+      "message": "Based on KeyboardClickableInputTypeView we use \u0027\\r\u0027 everywhere here. (I assume by this layer of the code everything has been normalized.)",
+      "parentUuid": "a133dfa5_efc5c658",
+      "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b05fce_27cf8755",
         "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T19:41:31Z",
       "side": 1,
       "message": "Why are HandleKeyupEvent and HandleKeypressEvent similar but different? I don\u0027t know this area of code.",
+      "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45f063e_255c9668",
+        "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-07T19:54:09Z",
+      "side": 1,
+      "message": "The code is new to me as well. It makes more sense if you look at KeyboardClickableInputTypeView though. The default behavior there shared by input type\u003dsubmit etc is:\n\nkeydown: if space, mark as active\nkeypress: if enter, do click\nkeyup: if space and was active, mark inactive and do click\n\nSo this overrides to say \"don\u0027t do the enter logic on keypress and do it on keyup instead\". (I was thinking about making KeyboardClickableInputTypeView parameterizable but the attribute can be modified dynamically, so that\u0027d wait for us making this non-conditional. Other approaches welcome, I don\u0027t have an opinion.)\n\n...\n\nIf you mean \"why \\r vs. Enter?\" that\u0027s down to the difference between a physical key action (which is what keyup/down correspond to) and the generated character (which is what keypress corresponds to). Yay keyboard events.",
+      "parentUuid": "c9b05fce_27cf8755",
       "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
