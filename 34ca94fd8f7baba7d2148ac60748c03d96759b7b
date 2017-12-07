@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9879230c_3d709a69",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:08:13Z",
+      "side": 1,
+      "message": "I looked into that and it\u0027s not easy, because often it\u0027s the grandparent or some other ancestor that has to react, and modifying every view to actually respond to ChildPreferredSizeChanged with its own PreferredSizeChanged is pretty onerous.",
+      "parentUuid": "89ddec4a_6d6a4c58",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99401544_0cb516c7",
         "filename": "ui/message_center/views/message_popup_collection.cc",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2017-12-07T04:17:29Z",
       "side": 1,
       "message": "optional nit: EXPECT_EQ(\u003cexpected\u003e, \u003cactual\u003e)",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227237be_a2d20fb1",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:08:13Z",
+      "side": 1,
+      "message": "I agree generally, but it\u0027s not obvious to me in this case what is the expectation and what\u0027s the actual, since neither is hardcoded",
+      "parentUuid": "2c389615_27bb6dac",
       "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
