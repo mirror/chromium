@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8cdf9d21_74f87caa",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-07T09:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f28aab_51afcd9a",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ab8ed50_fdcbae86",
         "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Chatted with Hongchan offline.  If the user requests latency x, we should provide a value greater than or equal to x, but clamped to some maximum of course.  Thus, if output_buffer_size is 240 (like on some Android devices), and the requested size is 300 (sample rate * hint), we would currently get rounded_buffer_size \u003d 240, which becomes the final size.  This is lower than requested.  If we take the ceiling, the rounded size is 480, so the latency is higher than requested.  But probably better in terms of glitching and power consumption. (Not so good for latency, but you\u0027re supposed to know what you\u0027re doing when you set a numeric latency value.)",
       "parentUuid": "92e954e7_ad1bbb3b",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5618ff7f_84e63689",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-07T09:29:17Z",
+      "side": 1,
+      "message": "That makes sense to me, though if we change it here to use ceiling we should probably also do the same in AudioLatency::GetExactBufferSize, otherwise it will cause strange behavior like this:\n\na \u003d new AudioContext({\u0027latencyHint\u0027: 3950/44100})\na.baseLatency*a.sampleRate (-\u003e 7680)\n\na \u003d new AudioContext({\u0027latencyHint\u0027: 4095/44100})\na.baseLatency*a.sampleRate (-\u003e 4096)\n\nThe first one is because 3950 is requested from the hardware, which uses rounding and sets the buffer size to 3840, then this new function uses ceiling and since 3840 \u003c 3950 it forces it up to the next multiple of the current hardware buffer size of 3840, so 7680.\n\nJust wanted to make sure that you mean for me to update it in AudioLatency as well. Thanks!",
+      "parentUuid": "8f768cab_246025b9",
       "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
