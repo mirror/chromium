@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad5b70b_efcf120c",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-07T17:26:14Z",
+      "side": 1,
+      "message": "I wonder why do we use \"//\" here? I never used double \"/\" locally, and the documentation seems to use `gn gen out/coverage` syntax as well: https://chromium.googlesource.com/chromium/src/+/master/docs/linux_build_instructions.md#build-chromium",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "aa3e3944164d7209599ed4f54558d1a3fe72dd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
