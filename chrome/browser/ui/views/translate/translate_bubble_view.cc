@@ -205,20 +205,8 @@ bool TranslateBubbleView::ShouldShowCloseButton() const {
 }
 
 void TranslateBubbleView::WindowClosing() {
-  // The operations for |model_| are valid only when a WebContents is alive.
-  // TODO(hajimehoshi): TranslateBubbleViewModel(Impl) should not hold a
-  // WebContents as a member variable because the WebContents might be destroyed
-  // while the TranslateBubbleViewModel(Impl) is still alive. Instead,
-  // TranslateBubbleViewModel should take a reference of a WebContents at each
-  // method. (crbug/320497)
   if (web_contents())
     model_->OnBubbleClosing();
-
-  // We have to reset |translate_bubble_view_| here, not in our destructor,
-  // because we'll be destroyed asynchronously and the shown state will be
-  // checked before then.
-  DCHECK_EQ(translate_bubble_view_, this);
-  translate_bubble_view_ = NULL;
 }
 
 bool TranslateBubbleView::AcceleratorPressed(
@@ -339,6 +327,18 @@ void TranslateBubbleView::OnWidgetClosing(views::Widget* widget) {
     model_->DeclineTranslation();
     translate::ReportUiAction(translate::CLOSE_BUTTON_CLICKED);
   }
+
+  // We have to reset |translate_bubble_view_| here, not in our destructor,
+  // because we'll be destroyed asynchronously and the shown state will be
+  // checked before then.
+  DCHECK_EQ(translate_bubble_view_, this);
+  translate_bubble_view_ = NULL;
+
+  widget->RemoveObserver(this);
+}
+
+void TranslateBubbleView::OnWidgetDestroying(views::Widget* widget) {
+  OnWidgetClosing(widget);
 }
 
 TranslateBubbleModel::ViewState TranslateBubbleView::GetViewState() const {

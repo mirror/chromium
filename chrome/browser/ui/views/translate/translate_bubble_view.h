@@ -126,6 +126,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
 
   // Overridden from views::WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
+  void OnWidgetDestroying(views::Widget* widget) override;
 
   // Returns the current view state.
   TranslateBubbleModel::ViewState GetViewState() const;
