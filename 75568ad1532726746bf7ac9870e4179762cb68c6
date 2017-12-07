@@ -306,6 +306,30 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f218d8b_84b0c4c6",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T09:41:06Z",
+      "side": 1,
+      "message": "Sorry I misunderstood your question.\nThis class is the WebToolbar, displayed when visiting a web page. It is not displayed on the NTP. On the NTP, it is another toolbar which has almost the same properties except it has no omnibox and the back button is only shown when the forward button is enabled.\nAlso, the appearance of the toolbar is different.\n\nWe are keeping two different toolbar implementation for now as we are not sure about how the NTP one\u0027s will behave once the adaptive toolbar is implemented.",
+      "parentUuid": "45a46894_43b76d8f",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
