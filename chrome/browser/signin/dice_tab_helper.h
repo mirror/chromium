@@ -10,6 +10,9 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
+namespace content {
+class RenderFrameHost;
+}
 // Tab helper used for DICE to mark that sync should start after a web sign-in
 // with a Google account.
 class DiceTabHelper : public content::WebContentsUserData<DiceTabHelper>,
@@ -36,6 +39,8 @@ class DiceTabHelper : public content::WebContentsUserData<DiceTabHelper>,
   // content::WebContentsObserver:
   void DidStartNavigation(
       content::NavigationHandle* navigation_handle) override;
+  void DidFinishLoad(content::RenderFrameHost* render_frame_host,
+                     const GURL& validated_url) override;
 
  private:
   friend class content::WebContentsUserData<DiceTabHelper>;
@@ -44,6 +49,7 @@ class DiceTabHelper : public content::WebContentsUserData<DiceTabHelper>,
   signin_metrics::AccessPoint signin_access_point_;
   signin_metrics::Reason signin_reason_;
   bool should_start_sync_after_web_signin_;
+  bool did_finish_initial_load_;
 
   DISALLOW_COPY_AND_ASSIGN(DiceTabHelper);
 };

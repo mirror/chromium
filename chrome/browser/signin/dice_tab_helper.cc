@@ -5,6 +5,7 @@
 #include "chrome/browser/signin/dice_tab_helper.h"
 
 #include "base/logging.h"
+#include "base/metrics/user_metrics.h"
 #include "chrome/browser/signin/dice_tab_helper.h"
 #include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -29,6 +30,13 @@ void DiceTabHelper::InitializeSigninFlow(
   signin_access_point_ = access_point;
   signin_reason_ = reason;
   should_start_sync_after_web_signin_ = true;
+  did_finish_initial_load_ = false;
+
+  if (signin_reason_ == signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT) {
+    signin_metrics::LogSigninAccessPointStarted(access_point);
+    signin_metrics::RecordSigninUserActionForAccessPoint(access_point);
+    base::RecordAction(base::UserMetricsAction("Signin_SigninPage_Loading"));
+  }
 }
 
 void DiceTabHelper::DidStartNavigation(
@@ -63,4 +71,16 @@ void DiceTabHelper::DidStartNavigation(
   //  // Avoid starting sync if the navigations comes from the browser.
   //  should_start_sync_after_web_signin_ = false;
   //}
+}
+
+void DiceTabHelper::DidFinishLoad(content::RenderFrameHost* render_frame_host,
+                                  const GURL& validated_url) {
+  LOG(ERROR) << "DID finish load " << validated_url.spec();
+  if (!should_start_sync_after_web_signin_ || did_finish_initial_load_)
+    return;
+
+  if (validated_url.GetOrigin() == GaiaUrls::GetInstance()->gaia_url()) {
+    did_finish_initial_load_ = true;
+    base::RecordAction(base::UserMetricsAction("Signin_SigninPage_Shown"));
+  }
 }
