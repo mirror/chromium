@@ -88,6 +88,7 @@ ServiceWorkerRegistrationInfo::ServiceWorkerRegistrationInfo(
 
 ServiceWorkerRegistrationInfo::ServiceWorkerRegistrationInfo(
     const GURL& pattern,
+    blink::mojom::ServiceWorkerUpdateViaCache update_via_cache,
     int64_t registration_id,
     DeleteFlag delete_flag,
     const ServiceWorkerVersionInfo& active_version,
@@ -95,6 +96,7 @@ ServiceWorkerRegistrationInfo::ServiceWorkerRegistrationInfo(
     const ServiceWorkerVersionInfo& installing_version,
     int64_t stored_version_size_bytes)
     : pattern(pattern),
+      update_via_cache(update_via_cache),
       registration_id(registration_id),
       delete_flag(delete_flag),
       active_version(active_version),
