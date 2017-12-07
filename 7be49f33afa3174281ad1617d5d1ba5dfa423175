@@ -46,6 +46,30 @@
       "revId": "7be49f33afa3174281ad1617d5d1ba5dfa423175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38becc9e_30746ef9",
+        "filename": "chrome/browser/interstitials/security_interstitial_page_test_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T17:54:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4b2e7dcd_ad47e1ba",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "7be49f33afa3174281ad1617d5d1ba5dfa423175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
