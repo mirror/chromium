@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f21341e_c583e270",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-07T16:56:05Z",
+      "side": 1,
+      "message": "nit: s/return/returns.",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3b633c_a41252af",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-07T16:56:05Z",
+      "side": 1,
+      "message": "The only concern I have about this CL is that only one report is allowed to be served at a time, how about I want to generate two reports and view them side by side (for example, one without my patch and one with the patch)?",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8422eb6_7d85ff30",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-07T16:56:05Z",
+      "side": 1,
+      "message": "s/Serve/Serves.",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5256bdd9_eb468ed3",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-07T16:56:05Z",
+      "side": 1,
+      "message": "This is not needed because --filters is a required argument, I think it can be simplified to:\n\nabsolute_filter_paths \u003d _VerifyPathsAndReturnAbsolutes(args.filters)",
+      "revId": "c04402c224cc6e160f9db56340b6a123b69427a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
