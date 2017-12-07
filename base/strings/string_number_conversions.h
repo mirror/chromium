@@ -39,6 +39,13 @@
 namespace base {
 
 // Number -> string conversions ------------------------------------------------
+//
+// No "long" variants are supported. It varies between compilers and
+// architectures whether these types are the same as or different from the
+// corresponding sized type. Our overloads need to match this exactly since if
+// an overloaded is provided when the compiler things the types are the same,
+// it gives a multiple definition error, and if no overloaded is provided when
+// the compiler things the types are different, calls will not compile.
 
 // Ignores locale! see warning above.
 BASE_EXPORT std::string NumberToString(int32_t value);
@@ -83,12 +90,6 @@ inline std::string Int64ToString(int64_t value) {
   return NumberToString(value);
 }
 inline string16 Int64ToString16(int64_t value) {
-  return NumberToString16(value);
-}
-inline std::string Uint64ToString(uint64_t value) {
-  return NumberToString(value);
-}
-inline string16 Uint64ToString16(uint64_t value) {
   return NumberToString16(value);
 }
 
