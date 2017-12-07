@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baec226e_3b7803ce",
+        "filename": "services/shape_detection/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T21:35:47Z",
+      "side": 1,
+      "message": "This source list can be combined with the mac one above and moved out of the conditionals because GN knows how to filter sources by platform automatically.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 5
+      },
+      "revId": "3a47433b45f6be7a9a2097d9648c1be5b11c6f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7d9f72_e987a2d1",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T21:35:47Z",
+      "side": 1,
+      "message": "if (FAILED(hr) || !is_supported)",
+      "revId": "3a47433b45f6be7a9a2097d9648c1be5b11c6f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9352bb00_0f63e0df",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T21:35:47Z",
+      "side": 1,
+      "message": "size_t",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "3a47433b45f6be7a9a2097d9648c1be5b11c6f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
