@@ -917,6 +917,8 @@ int SimpleEntryImpl::ReadDataInternal(bool sync_possible,
     if (stream_1_prefetch_data_) {
       int rv =
           ReadFromBuffer(stream_1_prefetch_data_.get(), offset, buf_len, buf);
+      if (offset + buf_len == stream_1_prefetch_data_->capacity())
+	      stream_1_prefetch_data_ = nullptr;
       return PostToCallbackIfNeeded(sync_possible, callback, rv);
     }
   }
