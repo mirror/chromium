@@ -22,6 +22,30 @@
       "revId": "7be49f33afa3174281ad1617d5d1ba5dfa423175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2e7dcd_ad47e1ba",
+        "filename": "chrome/browser/interstitials/security_interstitial_page_test_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 0,
+      "message": "SG. Can you add this as a comment?",
+      "parentUuid": "a1ce7824_dcfd59b3",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "7be49f33afa3174281ad1617d5d1ba5dfa423175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

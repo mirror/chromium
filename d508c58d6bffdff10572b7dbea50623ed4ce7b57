@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a688d6df_cd8d5e1d",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "optional nit: return tab-\u003eGetInterstitialPage() !\u003d nullptr instead",
+      "range": {
+        "startLine": 444,
+        "startChar": 16,
+        "endLine": 444,
+        "endChar": 35
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48659011_2d0fd0b5",
         "filename": "chrome/browser/ssl/ssl_browsertest.cc",
         "patchSetId": 7
@@ -25,6 +48,109 @@
     },
     {
       "key": {
+        "uuid": "a44ca3b1_836726bb",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "nit: Wrap with braces, or add a blank line after this.",
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c28500_b8a20882",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "Do we need to look for IDS_ strings? How about just hardcoding the string \"Connect to\"? That would make changing the string a bit difficult since the person that changes it will need to modify this test, but it also prevents them from changing it to a value that\u0027s too generic (\u0027e.g. privacy error\u0027 which most interstitials use)",
+      "range": {
+        "startLine": 469,
+        "startChar": 65,
+        "endLine": 469,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7de04d5_5f24f573",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "same here (brace or blank line)",
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bc15f8_16bab076",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 508,
+        "startChar": 44,
+        "endLine": 508,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca24f23_89fd880d",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "nit: applicate -\u003e applicable to?",
+      "range": {
+        "startLine": 1566,
+        "startChar": 54,
+        "endLine": 1566,
+        "endChar": 57
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71d1f697_1d563681",
         "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
         "patchSetId": 7
@@ -41,6 +167,53 @@
         "startChar": 24,
         "endLine": 14,
         "endChar": 43
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18cd43a5_5ca7d3c4",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "Is the logic change below so that the tests work properly? Or is it to fix another bug?",
+      "parentUuid": "71d1f697_1d563681",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaf0e4d_7354d58b",
+        "filename": "components/security_interstitials/core/bad_clock_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T02:06:57Z",
+      "side": 1,
+      "message": "Not sure why this change is required?",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 0
       },
       "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
