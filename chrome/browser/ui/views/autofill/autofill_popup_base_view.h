@@ -35,6 +35,8 @@ class AutofillPopupBaseView : public views::WidgetDelegateView,
   // Hide the widget and delete |this|.
   void DoHide();
 
+  virtual gfx::Rect GetUpdatedBounds();
+
   // Update size of popup and paint (virtual for testing).
   virtual void DoUpdateBoundsAndRedrawPopup();
 

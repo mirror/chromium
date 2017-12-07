@@ -123,13 +123,8 @@ void AutofillPopupBaseView::RemoveObserver() {
   views::WidgetFocusManager::GetInstance()->RemoveFocusChangeListener(this);
 }
 
-void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
+gfx::Rect AutofillPopupBaseView::GetUpdatedBounds() {
   gfx::Rect bounds = delegate_->popup_bounds();
-
-  // |bounds| is in screen space and we want the bounds relative to the parent
-  // view. Since the parent is the scroll container, this will always be at
-  // position 0, 0 with dimensions specified by |bounds|.
-  SetSize(bounds.size());
 
   // Compute the space available for the popup. It's the space between its top
   // and the bottom of its parent view, minus some margin space.
@@ -149,6 +144,18 @@ void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
   // Account for the scroll view's border so that the content has enough space.
   bounds.set_height(bounds.height() + 2 * kPopupBorderThicknessDp);
   bounds.set_width(bounds.width() + 2 * kPopupBorderThicknessDp);
+
+  return bounds;
+}
+
+void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
+  gfx::Rect bounds = GetUpdatedBounds();
+
+  // |bounds| is in screen space and we want the bounds relative to the parent
+  // view. Since the parent is the scroll container, this will always be at
+  // position 0, 0 with dimensions specified by |bounds|.
+  SetSize(bounds.size());
+
   GetWidget()->SetBounds(bounds);
   SchedulePaint();
 }
