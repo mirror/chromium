@@ -3366,7 +3366,7 @@ void LayoutObject::SetNeedsBoundariesUpdate() {
   if (IsSVGChild()) {
     // The boundaries affect mask clip.
     auto* resources = SVGResourcesCache::CachedResourcesForLayoutObject(this);
-    if (resources && resources->Masker())
+    if (resources && (resources->Masker() || resources->Clipper()))
       SetNeedsPaintPropertyUpdate();
   }
   if (LayoutObject* layout_object = Parent())

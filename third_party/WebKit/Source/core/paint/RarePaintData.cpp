@@ -96,6 +96,15 @@ PropertyTreeState RarePaintData::ContentsProperties() const {
   return contents;
 }
 
+PropertyTreeState RarePaintData::ClipPathProperties() const {
+  DCHECK(paint_properties_);
+  DCHECK(paint_properties_->MaskClip());
+  DCHECK(paint_properties_->ClipPath());
+  return PropertyTreeState(paint_properties_->MaskClip()->LocalTransformSpace(),
+                           paint_properties_->MaskClip(),
+                           paint_properties_->ClipPath());
+}
+
 RarePaintData::RarePaintData(const LayoutPoint& location_in_backing)
     : unique_id_(NewUniqueObjectId()),
       location_in_backing_(location_in_backing) {}

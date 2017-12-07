@@ -79,6 +79,10 @@ class CORE_EXPORT RarePaintData {
   // overflow clip, scroll translation) that apply to contents.
   PropertyTreeState ContentsProperties() const;
 
+  // This is the complete set of property nodes that can be used to
+  // paint the mask-based clip-path of this fragment.
+  PropertyTreeState ClipPathProperties() const;
+
   // The pagination offset is the additional factor to add in to map
   // from flow thread coordinates relative to the enclosing pagination
   // layer, to visual coordiantes relative to that pagination layer.
