@@ -14,7 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/shared_memory.h"
 #include "base/trace_event/memory_allocator_dump.h"
-#include "gpu/gpu_export.h"
+#include "gpu/command_buffer/common/gpu_common_utils_export.h"
 
 namespace base {
 
@@ -25,7 +25,7 @@ class SharedMemoryHandle;
 
 namespace gpu {
 
-class GPU_EXPORT BufferBacking {
+class GPU_COMMON_UTILS_EXPORT BufferBacking {
  public:
   virtual ~BufferBacking() {}
   virtual base::SharedMemoryHandle shared_memory_handle() const;
@@ -33,7 +33,7 @@ class GPU_EXPORT BufferBacking {
   virtual size_t GetSize() const = 0;
 };
 
-class GPU_EXPORT SharedMemoryBufferBacking : public BufferBacking {
+class GPU_COMMON_UTILS_EXPORT SharedMemoryBufferBacking : public BufferBacking {
  public:
   SharedMemoryBufferBacking(std::unique_ptr<base::SharedMemory> shared_memory,
                             size_t size);
@@ -50,7 +50,8 @@ class GPU_EXPORT SharedMemoryBufferBacking : public BufferBacking {
 };
 
 // Buffer owns a piece of shared-memory of a certain size.
-class GPU_EXPORT Buffer : public base::RefCountedThreadSafe<Buffer> {
+class GPU_COMMON_UTILS_EXPORT Buffer
+    : public base::RefCountedThreadSafe<Buffer> {
  public:
   explicit Buffer(std::unique_ptr<BufferBacking> backing);
 
@@ -93,9 +94,8 @@ static inline scoped_refptr<Buffer> MakeBufferFromSharedMemory(
 }
 
 // Generates GUID which can be used to trace buffer using an Id.
-GPU_EXPORT base::trace_event::MemoryAllocatorDumpGuid GetBufferGUIDForTracing(
-    uint64_t tracing_process_id,
-    int32_t buffer_id);
+GPU_COMMON_UTILS_EXPORT base::trace_event::MemoryAllocatorDumpGuid
+GetBufferGUIDForTracing(uint64_t tracing_process_id, int32_t buffer_id);
 
 }  // namespace gpu
 
