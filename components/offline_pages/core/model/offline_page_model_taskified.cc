@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -21,6 +22,8 @@
 #include "components/offline_pages/core/model/delete_page_task.h"
 #include "components/offline_pages/core/model/get_pages_task.h"
 #include "components/offline_pages/core/model/mark_page_accessed_task.h"
+#include "components/offline_pages/core/model/offline_page_model_types.h"
+#include "components/offline_pages/core/model/offline_page_model_utils.h"
 #include "components/offline_pages/core/model/persistent_pages_consistency_check_task.h"
 #include "components/offline_pages/core/model/temporary_pages_consistency_check_task.h"
 #include "components/offline_pages/core/offline_page_metadata_store.h"
@@ -275,6 +278,10 @@ void OfflinePageModelTaskified::InformSavePageDone(
     const SavePageCallback& callback,
     SavePageResult result,
     const OfflinePageItem& page) {
+  base::UmaHistogramEnumeration(
+      "OfflinePages.SavePageCount",
+      model_utils::ToNamespaceEnum(page.client_id.name_space),
+      OfflinePageNamespace::RESULT_COUNT);
   if (result == SavePageResult::ARCHIVE_CREATION_FAILED)
     CreateArchivesDirectoryIfNeeded();
   if (!callback.is_null())
@@ -354,6 +361,10 @@ void OfflinePageModelTaskified::OnDeleteDone(
     DeletePageResult result,
     const std::vector<OfflinePageModel::DeletedPageInfo>& infos) {
   for (const auto& info : infos) {
+    base::UmaHistogramEnumeration(
+        "OfflinePages.DeletePageCount",
+        model_utils::ToNamespaceEnum(info.client_id.name_space),
+        OfflinePageNamespace::RESULT_COUNT);
     for (Observer& observer : observers_)
       observer.OfflinePageDeleted(info);
   }
