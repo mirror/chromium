@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ef20c3_3536d63c",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T09:00:43Z",
+      "side": 0,
+      "message": "Why are you removing these animations?",
+      "revId": "159e6021c076e410e2c1c3dc64c15bb244d1e9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e2bc4f_9729d735",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T09:00:43Z",
+      "side": 0,
+      "message": "why do you remove this delay?",
+      "range": {
+        "startLine": 262,
+        "startChar": 41,
+        "endLine": 262,
+        "endChar": 51
+      },
+      "revId": "159e6021c076e410e2c1c3dc64c15bb244d1e9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc59ec4_239f8104",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T09:00:43Z",
+      "side": 0,
+      "message": "Why do you remove the completion?",
+      "range": {
+        "startLine": 264,
+        "startChar": 10,
+        "endLine": 264,
+        "endChar": 32
+      },
+      "revId": "159e6021c076e410e2c1c3dc64c15bb244d1e9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5b6d49_7edf7ad5",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T09:00:43Z",
+      "side": 0,
+      "message": "Where did this completion code go?",
+      "range": {
+        "startLine": 334,
+        "startChar": 52,
+        "endLine": 334,
+        "endChar": 65
+      },
+      "revId": "159e6021c076e410e2c1c3dc64c15bb244d1e9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

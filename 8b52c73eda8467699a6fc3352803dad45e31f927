@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6b5861_dc2a1b23",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T09:00:43Z",
+      "side": 1,
+      "message": "I think this should not be in the animation block.",
+      "revId": "8b52c73eda8467699a6fc3352803dad45e31f927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
