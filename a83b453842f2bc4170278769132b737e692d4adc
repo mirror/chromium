@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa750e7_42dbb1ba",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:08:39Z",
+      "side": 1,
+      "message": "nit: get rid of the local var?\n\n  chromeos::DBusThreadManager::Get()-\u003eGetImageLoaderClient()-\u003e\n      UnmountComponent(...);",
+      "revId": "a83b453842f2bc4170278769132b737e692d4adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f801f9c7_67aae3bc",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:08:39Z",
+      "side": 1,
+      "message": "nit: get rid of the local var and just access this where you need it:\n\n  chromeos::DBusThreadManager::Get()-\u003eGetImageLoaderClient()-\u003e\n      LoadComponentAtPath(...);",
+      "revId": "a83b453842f2bc4170278769132b737e692d4adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c92f5b_679dfa54",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:08:39Z",
+      "side": 1,
+      "message": "nit: initialize in declaration:\n\n  base::FilePath path \u003d g_browser_process-\u003e...;",
+      "revId": "a83b453842f2bc4170278769132b737e692d4adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a3d4ff_ec08cb04",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:08:39Z",
+      "side": 1,
+      "message": "nit: manage",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "a83b453842f2bc4170278769132b737e692d4adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590df58a_dfc09244",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:08:39Z",
+      "side": 1,
+      "message": "nit: (returns empty response on success and error response on failure)",
+      "revId": "a83b453842f2bc4170278769132b737e692d4adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
