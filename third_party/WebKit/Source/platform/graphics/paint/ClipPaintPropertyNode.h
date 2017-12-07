@@ -34,12 +34,9 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
   static scoped_refptr<ClipPaintPropertyNode> Create(
       scoped_refptr<const ClipPaintPropertyNode> parent,
       scoped_refptr<const TransformPaintPropertyNode> local_transform_space,
-      const FloatRoundedRect& clip_rect,
-      CompositingReasons direct_compositing_reasons =
-          CompositingReason::kNone) {
+      const FloatRoundedRect& clip_rect) {
     return base::AdoptRef(new ClipPaintPropertyNode(
-        std::move(parent), std::move(local_transform_space), clip_rect,
-        direct_compositing_reasons));
+        std::move(parent), std::move(local_transform_space), clip_rect));
   }
 
   bool Update(
@@ -67,9 +64,8 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
   // The clone function is used by FindPropertiesNeedingUpdate.h for recording
   // a clip node before it has been updated, to later detect changes.
   scoped_refptr<ClipPaintPropertyNode> Clone() const {
-    return base::AdoptRef(
-        new ClipPaintPropertyNode(Parent(), local_transform_space_, clip_rect_,
-                                  direct_compositing_reasons_));
+    return base::AdoptRef(new ClipPaintPropertyNode(
+        Parent(), local_transform_space_, clip_rect_));
   }
 
   // The equality operator is used by FindPropertiesNeedingUpdate.h for checking
@@ -77,8 +73,7 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
   bool operator==(const ClipPaintPropertyNode& o) const {
     return Parent() == o.Parent() &&
            local_transform_space_ == o.local_transform_space_ &&
-           clip_rect_ == o.clip_rect_ &&
-           direct_compositing_reasons_ == o.direct_compositing_reasons_;
+           clip_rect_ == o.clip_rect_;
   }
 
   String ToTreeString() const;
@@ -86,20 +81,14 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
 
   std::unique_ptr<JSONObject> ToJSON() const;
 
-  bool HasDirectCompositingReasons() const {
-    return direct_compositing_reasons_ != CompositingReason::kNone;
-  }
-
  private:
   ClipPaintPropertyNode(
       scoped_refptr<const ClipPaintPropertyNode> parent,
       scoped_refptr<const TransformPaintPropertyNode> local_transform_space,
-      const FloatRoundedRect& clip_rect,
-      CompositingReasons direct_compositing_reasons)
+      const FloatRoundedRect& clip_rect)
       : PaintPropertyNode(std::move(parent)),
         local_transform_space_(std::move(local_transform_space)),
-        clip_rect_(clip_rect),
-        direct_compositing_reasons_(direct_compositing_reasons) {}
+        clip_rect_(clip_rect) {}
 
   // For access to GetClipCache();
   friend class GeometryMapper;
@@ -117,7 +106,6 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
 
   scoped_refptr<const TransformPaintPropertyNode> local_transform_space_;
   FloatRoundedRect clip_rect_;
-  CompositingReasons direct_compositing_reasons_;
 
   std::unique_ptr<GeometryMapperClipCache> geometry_mapper_clip_cache_;
 };
