@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ffe6367_c982d61f",
+        "filename": "components/subresource_filter/core/common/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "Why not windows?",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc09691_bd35d039",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "This would be much more readable as a string literal:\nconst char* help_string \u003d R\"(\n ...\n)\";",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a212f97f_8f82665e",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "Why not make every branch \u0027return\u0027?\n\nif (type \u003d\u003d \"other\")\n  return ELEMENT_TYPE_OTHER;\nif (type \u003d\u003d \"script\")\n...",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b50c30_b91d7623",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "nit: Would prefer if this takes in the DocumentSubresourceFilter directly. This would be useful for a batch mode which shares an origin.",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da12968c_19e85d65",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "What is an \"Id\"? Can you comment.",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66810bd5_880eeb9a",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "base::MakeRefCounted.",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0692d51_4175e9ff",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 155,
+        "startChar": 50,
+        "endLine": 155,
+        "endChar": 59
+      },
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9724b38_9f9a95e0",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "Accessing anything beyond args[1] could cause a crash right? I think we need range checks.",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab47550_54c64072",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "Seems like you want SPLIT_WANT_NONEMPTY",
+      "range": {
+        "startLine": 183,
+        "startChar": 48,
+        "endLine": 183,
+        "endChar": 62
+      },
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f4fc58_1edc8fe3",
+        "filename": "components/subresource_filter/core/common/tool/filter_tool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T20:10:14Z",
+      "side": 1,
+      "message": "if (line.empty()), and put it above the SplitStringPiece.",
+      "revId": "be066c2e6e75fc32ccf24060b2ec0337c13b69cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
