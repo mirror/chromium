@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8b4b233_e57aacef",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T18:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7294b25a_cc5157e9",
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc70a8e0_934d9ee3",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db112c73_73d851fd",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T18:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc70a8e0_934d9ee3",
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0a5a81cf_285b0c43",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T18:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e470d5b_a9c7a753",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18bf0a52_d521e7d9",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 17
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6b02c52f_41fb80ce",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T18:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18bf0a52_d521e7d9",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "935aaa68_72a629b5",
         "filename": "chrome/browser/resources/pdf/metrics.js",
         "patchSetId": 17
@@ -102,6 +186,30 @@
       "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7edc244_6ceb978c",
+        "filename": "chrome/browser/resources/pdf/metrics.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T18:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935aaa68_72a629b5",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 12
+      },
+      "revId": "416401298ffa557b6cba9fa0b7a30088ceb8bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
