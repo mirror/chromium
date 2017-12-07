@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171c0569_133dc65b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T23:21:35Z",
+      "side": 1,
+      "message": "I feel like there\u0027s a reasonable chance we might end up moving this back to the browser process anyway.",
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e644fb67_c9f8ed98",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T23:21:35Z",
+      "side": 1,
+      "message": "Nit: this can be omitted",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7254da9_e5cba577",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T23:21:35Z",
+      "side": 1,
+      "message": "Rather than do this intermediate conversion, maybe we can just fold the iteration through the items directly in here?",
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
