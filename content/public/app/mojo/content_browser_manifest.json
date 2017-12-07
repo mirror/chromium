@@ -18,7 +18,6 @@
           "ui::mojom::Gpu"
         ],
         "renderer": [
-          "blink::mojom::BackgroundFetchService",
           "blink::mojom::BackgroundSyncService",
           "blink::mojom::BlobRegistry",
           "blink::mojom::BroadcastChannelProvider",
@@ -122,6 +121,7 @@
           // impossible this week. Remove once sky/ken fix this.
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
+          "blink::mojom::BackgroundFetchService",
           "blink::mojom::DedicatedWorkerFactory",
           "blink::mojom::GeolocationService",
           "blink::mojom::InsecureInputService",
@@ -188,6 +188,7 @@
     "navigation:service_worker": {
       "provides": {
         "renderer": [
+          "blink::mojom::BackgroundFetchService",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
