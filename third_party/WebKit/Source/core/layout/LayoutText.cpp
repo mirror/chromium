@@ -1885,6 +1885,30 @@ LayoutRect LayoutText::LocalVisualRectIgnoringVisibility() const {
   return UnionRect(VisualOverflowRect(), LocalSelectionRect());
 }
 
+static const NGPaintFragment* FindNGPaintFragmentInternal(const NGPaintFragment* parent,
+  const LayoutObject* layout_object, bool return_parent) {
+  if (!parent)
+    return nullptr;
+  for (const auto& child : parent->Children()) {
+    if (child->GetLayoutObject() == layout_object)
+      return return_parent ? parent : child.get();
+    if (const NGPaintFragment* fragment = FindNGPaintFragmentInternal(child.get(),
+      layout_object, return_parent))
+      return fragment;
+  }
+  return nullptr;
+}
+
+static const NGPaintFragment* FindNGPaintFragment(const LayoutObject* layout_object,
+  bool return_parent = false) {
+  if (LayoutBlockFlow* block_flow = layout_object->EnclosingNGBlockFlow()) {
+    // TODO: Implement Mix-in template function.
+    LayoutNGBlockFlow* layout_ng = ToLayoutNGBlockFlow(block_flow);
+    return FindNGPaintFragmentInternal(layout_ng->PaintFragment(), layout_object, return_parent);
+  }
+  return nullptr;
+}
+
 LayoutRect LayoutText::LocalSelectionRect() const {
   DCHECK(!NeedsLayout());
 
@@ -1922,6 +1946,18 @@ LayoutRect LayoutText::LocalSelectionRect() const {
 
   if (start_pos == end_pos)
     return rect;
+
+  /*if (const NGPaintFragment* ng_paint_fragment = FindNGPaintFragment(this, true)) {
+    const NGPhysicalSize& ng_size = ng_paint_fragment->PhysicalFragment().Size();
+    return { {0,0},LayoutSize(ng_size.width, ng_size.height) };
+  }*/
+  if (RuntimeEnabledFeatures::LayoutNGEnabled()) {
+    // TODO(yoichio): We should consider selection start/end.
+    NGPhysicalOffsetRect visual_rect;
+    if (LayoutNGBlockFlow::LocalVisualRectFor(this->Parent(), &visual_rect))
+      return visual_rect.ToLayoutRect();
+    return LocalVisualRectIgnoringVisibility();
+  }
 
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
     rect.Unite(box->LocalSelectionRect(start_pos, end_pos));
@@ -2214,6 +2250,10 @@ scoped_refptr<AbstractInlineTextBox> LayoutText::FirstAbstractInlineTextBox() {
 void LayoutText::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
   ObjectPaintInvalidator paint_invalidator(*this);
+  if (const NGPaintFragment* paint_fragment = FindNGPaintFragment(this)) {
+    paint_invalidator.InvalidateDisplayItemClient(*paint_fragment, invalidation_reason);
+    return;
+  }
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
