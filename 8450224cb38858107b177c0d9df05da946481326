@@ -34,6 +34,24 @@
       "revId": "8450224cb38858107b177c0d9df05da946481326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c194b10_6348f853",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T10:58:21Z",
+      "side": 1,
+      "message": "The PrefService is designed as a set of layers. You enter at the top and return the first value that is not unset:\n1) Enterprise Policy [true/false/unset]\n2) User preference - in your case always unset.\n3) Default value - in your case always true.\n\nI think that it absolutely makes sense to change this code to\nreturn profile-\u003eGetPrefs()-\u003eGetBoolean(prefs::kAbusiveExperienceInterventionEnforce);",
+      "parentUuid": "dc75d6d2_6c3f6b8f",
+      "revId": "8450224cb38858107b177c0d9df05da946481326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
