@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f22ad6_7229e09b",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-07T20:51:50Z",
+      "side": 1,
+      "message": "I am not very familiar with extensions, but I am wondering:\n\nIs there a mechanism to bundle extensions directly as part of Chrome, such that the extensions are not user or enterprise installed, but rather are intrinsic features of Chrome shipped by Google?\n\nIf that is the case, would it mean that although Chrome-browser initiated networking from C++ code gets covered by network traffic annotations, one could bypass it by splitting the feature into an extension and bundling that with Chrome? I guess if we have bundled extensions, we could handle them separately by scanning their set of permissions in the manifests, and adding that to the privacy auditing process?",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
