@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc943a1_f1446616",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/resources/tc001-iso2022jp3.vtt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T13:18:11Z",
+      "side": 1,
+      "message": "Consider renaming these to drop the tcNNN- prefixes.",
+      "revId": "b148bb4b28570f30c9325a79a495d731cda9b357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fc2881_36f0fe3d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-webvtt-tc001-utf8.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T13:18:11Z",
+      "side": 1,
+      "message": "Same thing here about the tcNNN bit of the filename.",
+      "revId": "b148bb4b28570f30c9325a79a495d731cda9b357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8dfe9f_47a0dd24",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/track-webvtt-tc001-utf8.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T13:18:11Z",
+      "side": 1,
+      "message": "Maybe update (or remove) this parenthesis.",
+      "range": {
+        "startLine": 3,
+        "startChar": 124,
+        "endLine": 3,
+        "endChar": 160
+      },
+      "revId": "b148bb4b28570f30c9325a79a495d731cda9b357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
