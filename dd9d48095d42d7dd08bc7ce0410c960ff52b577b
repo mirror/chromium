@@ -16,6 +16,24 @@
       "revId": "dd9d48095d42d7dd08bc7ce0410c960ff52b577b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0863b1cf_dc564fdd",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-07T21:48:05Z",
+      "side": 1,
+      "message": "ImageDataInCanvasColorSettings is called by HTMLCanvasElement::getImageData. Canvas is always premul, but by definition ImageData is unpremul. Therefore, we have to unpremul the pixels here.",
+      "parentUuid": "0f1afda4_42550c0f",
+      "revId": "dd9d48095d42d7dd08bc7ce0410c960ff52b577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
