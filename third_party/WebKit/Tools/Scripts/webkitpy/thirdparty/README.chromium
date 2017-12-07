@@ -26,6 +26,26 @@ Security Critical: no
 Description: code coverage metrics gathering for test-webkitpy.
 Local Modifications: None
 
+Name: google-api-python-client
+Short Name: googleapiclient
+URL: https://pypi.python.org/packages/b4/b3/f9be3f2ec31491c8f74e5c7905fabe890dedb4e1e8db5c951df3c167be41/google-api-python-client-1.6.4.tar.gz#md5=d2485fd185d3f8ce1379da12aa1f20f0
+Version: 1.6.4
+License: Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Client library for accessing Google APIs including Monorail.
+Local Modifications: None
+
+Name: httplib2
+Short Name: httplib2
+URL: https://pypi.python.org/packages/e4/2e/a7e27d2c36076efeb8c0e519758968b20389adf57a9ce3af139891af2696/httplib2-0.10.3.tar.gz#md5=709c305e1b00e9c0af49ee816429569c
+Version: 0.10.3
+License: MIT
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of google-api-python-client.
+Local Modifications: Removed test subdirectory (which failed presubmit checks).
+
 Name: mod_pywebsocket
 Short Name: mod_pywebsocket
 URL: https://code.google.com/p/pywebsocket/
@@ -35,6 +55,16 @@ License File: NOT_SHIPPED
 Security Critical: no
 Description: used by run-webkit-tests and run-webkit-httpd to test web sockets
 Local Modifications: None
+
+Name: oauth2client
+Short Name: oauth2client
+URL: https://pypi.python.org/packages/50/30/f89a4fc014a03e180840d432e73ffb96da422f2a8094ff3539f0f0c46661/oauth2client-4.1.2.tar.gz#md5=bc30976cd1e859cd6199264a50c5ba72
+Version: 4.1.2
+License: Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of google-api-python-client.
+Local Modifications: Removed contrib subdirectory (which failed presubmit checks).
 
 Name: pep8 - A Python style guide checker
 Short Name: pep8
@@ -47,6 +77,26 @@ Description: Used during presubmit checks and via lint-webkitpy and format-webki
     overlap between pep8 and pylint, but pep8 catches a bunch of stylistic
 	issues that pylint doesn't (e.g., warning about blank lines, various whitespace issues, etc.).
 Local Modifications: None
+
+Name: rsa
+Short Name: rsa
+URL: https://pypi.python.org/packages/14/89/adf8b72371e37f3ca69c6cb8ab6319d009c4a24b04a31399e5bd77d9bb57/rsa-3.4.2.tar.gz#md5=b315f47882c24030ee6b5aad628cccdb
+Version: 3.4.2
+License: Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of oauth2client.
+Local Modifications: None
+
+Name: uritemplate
+Short Name: uritemplate
+URL: https://pypi.python.org/packages/cd/db/f7b98cdc3f81513fb25d3cbe2501d621882ee81150b745cdd1363278c10a/uritemplate-3.0.0.tar.gz#md5=1ec31e0d8a2eec72357b2cef4bce5945
+Version: 3.0.0
+License: BSD & Apache 2.0
+License File: NOT_SHIPPED
+Security Critical: no
+Description: Dependency of google-api-python-client.
+Local Modifications: None.
 
 Name: web-platform-tests - Test Suites for Web Platform specifications
 Short Name: wpt

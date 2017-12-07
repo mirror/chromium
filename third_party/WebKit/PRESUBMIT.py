@@ -11,7 +11,6 @@ for more details about the presubmit API built into gcl.
 import imp
 import inspect
 import os
-import re
 
 try:
     # pylint: disable=C0103
@@ -25,8 +24,8 @@ except IOError:
 
 
 _EXCLUDED_PATHS = (
-    # This directory is created and updated via a script.
-    r'^third_party[\\\/]WebKit[\\\/]Tools[\\\/]Scripts[\\\/]webkitpy[\\\/]thirdparty[\\\/]wpt[\\\/]wpt[\\\/].*',
+    # Exclude third-party Python libraries.
+    r'^third_party[\\\/]WebKit[\\\/]Tools[\\\/]Scripts[\\\/]webkitpy[\\\/]thirdparty[\\\/].*',
 )
 
 
@@ -89,14 +88,19 @@ def _CommonChecks(input_api, output_api):
 
 def _CheckStyle(input_api, output_api):
     # Files that follow Chromium's coding style do not include capital letters.
-    re_chromium_style_file = re.compile(r'\b[a-z_]+\.(cc|h)$')
+    re_chromium_style_file = input_api.re.compile(r'\b[a-z_]+\.(cc|h)$')
+    re_excluded_paths = [input_api.re.compile(rule) for rule in _EXCLUDED_PATHS]
     style_checker_path = input_api.os_path.join(input_api.PresubmitLocalPath(),
                                                 'Tools', 'Scripts', 'check-webkit-style')
     args = [input_api.python_executable, style_checker_path, '--diff-files']
+    file_filter = lambda f: (
+        # Filter out files that follow Chromium's coding style.
+        not re_chromium_style_file.search(f.LocalPath()) and
+        # Filter out files in _EXCLUDED_PATHS.
+        not any(regex.match(f.LocalPath()) for regex in re_excluded_paths)
+    )
     files = [input_api.os_path.join('..', '..', f.LocalPath())
-             for f in input_api.AffectedFiles()
-             # Filter out files that follow Chromium's coding style.
-             if not re_chromium_style_file.search(f.LocalPath())]
+             for f in input_api.AffectedFiles(file_filter=file_filter)]
     # Do not call check-webkit-style with empty affected file list if all
     # input_api.AffectedFiles got filtered.
     if not files:
