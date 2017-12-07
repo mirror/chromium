@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "dbdaa63c_421ae35c",
+        "filename": "cc/paint/scoped_raster_flags.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-07T21:15:41Z",
+      "side": 1,
+      "message": "Hmm.. Yeah maybe a pointer is better. FWIW, with that comment I think we\u0027re OK regardless, so feel free to leave it as is.",
+      "parentUuid": "6eea357c_e067e8f0",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a713d08d_5a244efa",
         "filename": "cc/paint/scoped_raster_flags_unittest.cc",
         "patchSetId": 11
