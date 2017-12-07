@@ -71,7 +71,7 @@ const size_t kDurationHistorySize = 60;
 const double kBeginMainFrameQueueDurationEstimationPercentile = 90.0;
 const double kBeginMainFrameQueueDurationCriticalEstimationPercentile = 90.0;
 const double kBeginMainFrameQueueDurationNotCriticalEstimationPercentile = 90.0;
-const double kBeginMainFrameStartToCommitEstimationPercentile = 90.0;
+const double kBeginMainFrameStartToReadyToCommitEstimationPercentile = 90.0;
 const double kCommitToReadyToActivateEstimationPercentile = 90.0;
 const double kPrepareTilesEstimationPercentile = 90.0;
 const double kActivateEstimationPercentile = 90.0;
@@ -469,7 +469,8 @@ CompositorTimingHistory::CompositorTimingHistory(
       begin_main_frame_queue_duration_critical_history_(kDurationHistorySize),
       begin_main_frame_queue_duration_not_critical_history_(
           kDurationHistorySize),
-      begin_main_frame_start_to_commit_duration_history_(kDurationHistorySize),
+      begin_main_frame_start_to_ready_to_commit_duration_history_(
+          kDurationHistorySize),
       commit_to_ready_to_activate_duration_history_(kDurationHistorySize),
       prepare_tiles_duration_history_(kDurationHistorySize),
       activate_duration_history_(kDurationHistorySize),
@@ -507,8 +508,8 @@ void CompositorTimingHistory::AsValueInto(
       "begin_main_frame_queue_not_critical_estimate_ms",
       BeginMainFrameQueueDurationNotCriticalEstimate().InMillisecondsF());
   state->SetDouble(
-      "begin_main_frame_start_to_commit_estimate_ms",
-      BeginMainFrameStartToCommitDurationEstimate().InMillisecondsF());
+      "begin_main_frame_start_to_ready_to_commit_estimate_ms",
+      BeginMainFrameStartToReadyToCommitDurationEstimate().InMillisecondsF());
   state->SetDouble("commit_to_ready_to_activate_estimate_ms",
                    CommitToReadyToActivateDurationEstimate().InMillisecondsF());
   state->SetDouble("prepare_tiles_estimate_ms",
@@ -576,9 +577,10 @@ CompositorTimingHistory::BeginMainFrameQueueDurationNotCriticalEstimate()
 }
 
 base::TimeDelta
-CompositorTimingHistory::BeginMainFrameStartToCommitDurationEstimate() const {
-  return begin_main_frame_start_to_commit_duration_history_.Percentile(
-      kBeginMainFrameStartToCommitEstimationPercentile);
+CompositorTimingHistory::BeginMainFrameStartToReadyToCommitDurationEstimate()
+    const {
+  return begin_main_frame_start_to_ready_to_commit_duration_history_.Percentile(
+      kBeginMainFrameStartToReadyToCommitEstimationPercentile);
 }
 
 base::TimeDelta
@@ -677,6 +679,12 @@ void CompositorTimingHistory::BeginMainFrameAborted() {
   begin_main_frame_frame_time_ = base::TimeTicks();
 }
 
+void CompositorTimingHistory::NotifyReadyToCommit() {
+  DCHECK_NE(begin_main_frame_sent_time_, base::TimeTicks());
+  begin_main_frame_start_to_ready_to_commit_duration_history_.InsertSample(
+      Now() - begin_main_frame_start_time_);
+}
+
 void CompositorTimingHistory::DidCommit() {
   DCHECK_EQ(base::TimeTicks(), pending_tree_main_frame_time_);
   DCHECK_EQ(pending_tree_creation_time_, base::TimeTicks());
@@ -736,8 +744,6 @@ void CompositorTimingHistory::DidBeginMainFrame(
       begin_main_frame_queue_duration_not_critical_history_.InsertSample(
           begin_main_frame_queue_duration);
     }
-    begin_main_frame_start_to_commit_duration_history_.InsertSample(
-        begin_main_frame_start_to_commit_duration);
   }
 
   if (begin_main_frame_needed_continuously_) {

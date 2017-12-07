@@ -93,7 +93,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   // as expected.
   base::TimeDelta begin_main_frame_queue_duration =
       base::TimeDelta::FromMilliseconds(1);
-  base::TimeDelta begin_main_frame_start_to_commit_duration =
+  base::TimeDelta begin_main_frame_start_to_ready_to_commit_duration =
       base::TimeDelta::FromMilliseconds(1);
   base::TimeDelta prepare_tiles_duration = base::TimeDelta::FromMilliseconds(2);
   base::TimeDelta prepare_tiles_end_to_ready_to_activate_duration =
@@ -106,7 +106,8 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   timing_history_.WillBeginMainFrame(true, Now());
   AdvanceNowBy(begin_main_frame_queue_duration);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
+  timing_history_.NotifyReadyToCommit();
   timing_history_.DidCommit();
   timing_history_.WillPrepareTiles();
   AdvanceNowBy(prepare_tiles_duration);
@@ -129,8 +130,9 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationNotCriticalEstimate());
 
-  EXPECT_EQ(begin_main_frame_start_to_commit_duration,
-            timing_history_.BeginMainFrameStartToCommitDurationEstimate());
+  EXPECT_EQ(
+      begin_main_frame_start_to_ready_to_commit_duration,
+      timing_history_.BeginMainFrameStartToReadyToCommitDurationEstimate());
 
   EXPECT_EQ(commit_to_ready_to_activate_duration,
             timing_history_.CommitToReadyToActivateDurationEstimate());
@@ -145,7 +147,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
 
   base::TimeDelta begin_main_frame_queue_duration =
       base::TimeDelta::FromMilliseconds(1);
-  base::TimeDelta begin_main_frame_start_to_commit_duration =
+  base::TimeDelta begin_main_frame_start_to_ready_to_commit_duration =
       base::TimeDelta::FromMilliseconds(1);
   base::TimeDelta prepare_tiles_duration = base::TimeDelta::FromMilliseconds(2);
   base::TimeDelta prepare_tiles_end_to_ready_to_activate_duration =
@@ -156,7 +158,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   timing_history_.WillBeginMainFrame(false, Now());
   AdvanceNowBy(begin_main_frame_queue_duration);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
   // BeginMainFrameAborted counts as a commit complete.
   timing_history_.BeginMainFrameAborted();
   timing_history_.WillPrepareTiles();
@@ -179,9 +181,6 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationNotCriticalEstimate());
 
-  EXPECT_EQ(begin_main_frame_start_to_commit_duration,
-            timing_history_.BeginMainFrameStartToCommitDurationEstimate());
-
   EXPECT_EQ(prepare_tiles_duration,
             timing_history_.PrepareTilesDurationEstimate());
   EXPECT_EQ(activate_duration, timing_history_.ActivateDurationEstimate());
@@ -194,19 +193,19 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrame_CriticalFaster) {
       base::TimeDelta::FromMilliseconds(1);
   base::TimeDelta begin_main_frame_queue_duration_not_critical =
       base::TimeDelta::FromMilliseconds(2);
-  base::TimeDelta begin_main_frame_start_to_commit_duration =
+  base::TimeDelta begin_main_frame_start_to_ready_to_commit_duration =
       base::TimeDelta::FromMilliseconds(1);
 
   timing_history_.WillBeginMainFrame(true, Now());
   AdvanceNowBy(begin_main_frame_queue_duration_critical);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
   timing_history_.BeginMainFrameAborted();
 
   timing_history_.WillBeginMainFrame(false, Now());
   AdvanceNowBy(begin_main_frame_queue_duration_not_critical);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
   timing_history_.BeginMainFrameAborted();
 
   // Since the critical BeginMainFrames are faster than non critical ones,
@@ -215,8 +214,6 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrame_CriticalFaster) {
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
   EXPECT_EQ(begin_main_frame_queue_duration_not_critical,
             timing_history_.BeginMainFrameQueueDurationNotCriticalEstimate());
-  EXPECT_EQ(begin_main_frame_start_to_commit_duration,
-            timing_history_.BeginMainFrameStartToCommitDurationEstimate());
 }
 
 TEST_F(CompositorTimingHistoryTest, BeginMainFrames_OldCriticalSlower) {
@@ -227,14 +224,14 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_OldCriticalSlower) {
       base::TimeDelta::FromMilliseconds(2);
   base::TimeDelta begin_main_frame_queue_duration_not_critical =
       base::TimeDelta::FromMilliseconds(1);
-  base::TimeDelta begin_main_frame_start_to_commit_duration =
+  base::TimeDelta begin_main_frame_start_to_ready_to_commit_duration =
       base::TimeDelta::FromMilliseconds(1);
 
   // A single critical frame that is slow.
   timing_history_.WillBeginMainFrame(true, Now());
   AdvanceNowBy(begin_main_frame_queue_duration_critical);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
   // BeginMainFrameAborted counts as a commit complete.
   timing_history_.BeginMainFrameAborted();
 
@@ -243,7 +240,7 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_OldCriticalSlower) {
     timing_history_.WillBeginMainFrame(false, Now());
     AdvanceNowBy(begin_main_frame_queue_duration_not_critical);
     timing_history_.BeginMainFrameStarted(Now());
-    AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+    AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
     // BeginMainFrameAborted counts as a commit complete.
     timing_history_.BeginMainFrameAborted();
   }
@@ -254,9 +251,6 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_OldCriticalSlower) {
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
   EXPECT_EQ(begin_main_frame_queue_duration_not_critical,
             timing_history_.BeginMainFrameQueueDurationNotCriticalEstimate());
-
-  EXPECT_EQ(begin_main_frame_start_to_commit_duration,
-            timing_history_.BeginMainFrameStartToCommitDurationEstimate());
 }
 
 TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
@@ -267,14 +261,14 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
       base::TimeDelta::FromMilliseconds(2);
   base::TimeDelta begin_main_frame_queue_duration_not_critical =
       base::TimeDelta::FromMilliseconds(1);
-  base::TimeDelta begin_main_frame_start_to_commit_duration =
+  base::TimeDelta begin_main_frame_start_to_ready_to_commit_duration =
       base::TimeDelta::FromMilliseconds(1);
 
   // A single non critical frame that is fast.
   timing_history_.WillBeginMainFrame(false, Now());
   AdvanceNowBy(begin_main_frame_queue_duration_not_critical);
   timing_history_.BeginMainFrameStarted(Now());
-  AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+  AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
   timing_history_.BeginMainFrameAborted();
 
   // A bunch of slower critical frames that are newer.
@@ -282,7 +276,7 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
     timing_history_.WillBeginMainFrame(true, Now());
     AdvanceNowBy(begin_main_frame_queue_duration_critical);
     timing_history_.BeginMainFrameStarted(Now());
-    AdvanceNowBy(begin_main_frame_start_to_commit_duration);
+    AdvanceNowBy(begin_main_frame_start_to_ready_to_commit_duration);
     timing_history_.BeginMainFrameAborted();
   }
 
@@ -292,9 +286,6 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
   EXPECT_EQ(begin_main_frame_queue_duration_critical,
             timing_history_.BeginMainFrameQueueDurationNotCriticalEstimate());
-
-  EXPECT_EQ(begin_main_frame_start_to_commit_duration,
-            timing_history_.BeginMainFrameStartToCommitDurationEstimate());
 }
 
 void TestAnimationUMA(
