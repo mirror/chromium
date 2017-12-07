@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "452e9ebd_e7da4772",
+        "filename": "chrome/browser/ssl/bad_clock_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "Optional, feel free to do this in another CL:\n\nWould it make sense to push all the code from line 128 to line 143 SSLBlockingPageBase so that we don\u0027t repeat it in subclasses? Something like:\n\nclass SSLBlockingPageBase {\n...\nvirtual void HandleCommand() \u003d 0;\n};\n\nvoid SSLBlockingPageBase::CommandReceived() {\n  if (command \u003d\u003d \"\\\"pageLoadComplete\\\"\") {\n    // content::WaitForRenderFrameReady sends this message when the page\n    // load completes. Ignore it.\n    return;\n  }\n\n  int cmd \u003d 0;\n  bool retval \u003d base::StringToInt(command, \u0026cmd);\n  DCHECK(retval);\n\n  // Let the CertReportHelper handle commands first, This allows it to get set\n  // up to send reports, so that the report is populated properly if\n  // BadClockErrorUI\u0027s command handling triggers a report to be sent.\n  cert_report_helper()-\u003eHandleReportingCommands(\n      static_cast\u003csecurity_interstitials::SecurityInterstitialCommand\u003e(cmd),\n      controller()-\u003eGetPrefService());\n  HandleCommand(cmd);\n}\n\nThen here:\n\nvoid BadClockBlockingPage::CommandReceived(SecurityInterstitialCommand command) override {\n  bad_clock_ui_-\u003eHandleCommand(\n      static_cast\u003csecurity_interstitials::SecurityInterstitialCommand\u003e(cmd))\n}",
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4c7cdc_144424f1",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "nit: true /* value */\n\n(Perhaps if this should be renamed to SetExtendedReportingEnabledAndMetric and the second param should be renamed to enabled)",
+      "range": {
+        "startLine": 124,
+        "startChar": 29,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cc2410_b757fe4d",
+        "filename": "chrome/browser/ssl/cert_report_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "tiny nit, not sure if this is cl format\u0027s output: Newline before - FinishCertCollection so that it looks like a bulleted list.",
+      "range": {
+        "startLine": 34,
+        "startChar": 29,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70d3c14_3cdb69e0",
+        "filename": "chrome/browser/ssl/ssl_blocking_page_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "fwd declare base::Time?",
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646d05ab_e5a5fd58",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "nit:\n\nif (blocking_page_for_currently_committed_navigation_)\n  blocking_page_for_currently_committed_navigation_-\u003eOnInterstitialClosing();",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faa1274_1548061f",
+        "filename": "components/security_interstitials/content/security_interstitial_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:57:21Z",
+      "side": 1,
+      "message": "Can this be a const method?",
+      "range": {
+        "startLine": 68,
+        "startChar": 63,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
