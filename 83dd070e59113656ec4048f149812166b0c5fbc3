@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d46518e5_38ea9808",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "The main reason we have this phase, separated from latter phase, is the fact that we have multiple components.\nIf we had only one component, then we could introduce a routine to resolve those references after collector.collect_from_idl_files() is run, and it is what we will need in the next phase in real process.",
+      "parentUuid": "46a0b66c_1daafe7b",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 76
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7144ef_2b19d133",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d4db67_f729bc59",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7144ef_2b19d133",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c9c51cf1_b4165ec8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b70038_31019790",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4b39184_acded707",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 23
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-29T10:33:46Z",
       "side": 1,
       "message": "I\u0027m not 100% sure, but IIUC, Python doesn\u0027t support a scope for private symbols or even doesn\u0027t support the concept of \"private\".  It\u0027s just a convention that symbols starting with an underscore are considered as private.\n\nThus, IIUC, if foo.py defined _Metadata and bar.py also defined _Metadata, they conflict.  (I\u0027ve not tested it for myself.)  Thus, we\u0027d better to avoid a general name like _Metadata.\n\nThat\u0027s why I recommended something like _Collection_Metadata.",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 15
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ea0095_17c568c0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Should the conflict happens iff a script imports both classes explicitly, like\n\nfrom foo import _Metadata\nfrom bar import _Metadata\n\n?",
+      "parentUuid": "d4b39184_acded707",
       "range": {
         "startLine": 157,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0c855cd9_cb168bfc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb6cf610_151be9ec",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49d11b82_610bc8ae",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
         "patchSetId": 23
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5b7add3d_8ce77b5b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49d11b82_610bc8ae",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a5b07e7_21acc43d",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
         "patchSetId": 23
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "b9d3cfb8_794826b7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5b07e7_21acc43d",
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce963c7d_8af8b559",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
         "patchSetId": 23
@@ -171,6 +333,24 @@
       "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a20a76_97de76b8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 23
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-07T06:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce963c7d_8af8b559",
+      "revId": "83dd070e59113656ec4048f149812166b0c5fbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
