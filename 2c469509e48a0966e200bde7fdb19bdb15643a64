@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a9b9312_d423b9d4",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "This class is big enough that you should put it in its own .h/.cc file",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d95d2e_afc34820",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Use Chromium types - base::OnceCallback, since std::function is banned in Chromium.",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed80f4c3_dfe0433a",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "This should be a base::OnceCallback. std::function is banned in Chromium (http://chromium-cpp.appspot.com/)",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c894f4f_e56ca0aa",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Does this method block until it\u0027s finished? It seems to me that it triggers an AsyncTask, which will run on the background whilst the execution flow continues here. Meaning that the space status won\u0027t be calculated correctly the first time?\n\nMore generally, this method should never be called with space_manager_ \u003d\u003d nullptr, since you should always trigger a space check beforehand. What this needs to check is that the space check isn\u0027t stale - if it\u0027s too old it needs to be invalidated and checked again since space can change so quickly.",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afcfa65c_7d6e20f6",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "This shouldn\u0027t call the fallback in this way. It should run WebApkInstallService::OnFinishedInstall with WebApkInstallResult::FAILURE, since that already runs the fallback shortcut install. It should also do this after inserting into installs_, since this is skipping the metrics recording on line 112 that is triggered by other installation fallback cases.",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65c5c93_0baa4bbe",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Use base::BindOnce and base::OnceCallback.",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 69
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4321c8_f26724f7",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Nit: use std::make_unique",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 40
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e08ebd_8ffd8e36",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Bare new is very strongly discouraged, and since you don\u0027t ever free this, it\u0027s a memory leak.. Use a std::unique_ptr, which is automatically freed on destruction.",
+      "range": {
+        "startLine": 140,
+        "startChar": 19,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fd07f1_5a0b2c24",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Only use bare pointers if objects are not owned by this. At the very least, this should be std::unique_ptr",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9accfac4_dcbf163f",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T00:59:45Z",
+      "side": 1,
+      "message": "Nit: add braces since this is a multi-line conditional",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
