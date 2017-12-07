@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb7a6740_0bf74033",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-07T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d1ebdb_4e33d4f1",
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4778ed85_247ee147",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "906860eb_880a7cf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-07T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4778ed85_247ee147",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1b3b2a7_f3f2bc28",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab28afb6_bc5731c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-07T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b3b2a7_f3f2bc28",
+      "revId": "764b853d4b41e010fb2837b1dee442c4f5d0086c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
