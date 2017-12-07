@@ -17,7 +17,8 @@ class RenderProcessHostFactory {
  public:
   virtual ~RenderProcessHostFactory() {}
   virtual RenderProcessHost* CreateRenderProcessHost(
-      BrowserContext* browser_context) const = 0;
+      BrowserContext* browser_context,
+      StoragePartition* storage_partition = nullptr) const = 0;
 };
 
 }  // namespace content

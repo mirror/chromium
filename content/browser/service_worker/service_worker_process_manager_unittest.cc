@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_features.h"
@@ -28,6 +29,8 @@ class ServiceWorkerProcessManagerTest : public testing::Test {
     browser_context_.reset(new TestBrowserContext);
     process_manager_.reset(
         new ServiceWorkerProcessManager(browser_context_.get()));
+    process_manager_->set_storage_partition(static_cast<StoragePartitionImpl*>(
+        BrowserContext::GetDefaultStoragePartition(browser_context_.get())));
     pattern_ = GURL("http://www.example.com/");
     script_url_ = GURL("http://www.example.com/sw.js");
     render_process_host_factory_.reset(new MockRenderProcessHostFactory());
@@ -43,7 +46,9 @@ class ServiceWorkerProcessManagerTest : public testing::Test {
   }
 
   std::unique_ptr<MockRenderProcessHost> CreateRenderProcessHost() {
-    return std::make_unique<MockRenderProcessHost>(browser_context_.get());
+    return std::make_unique<MockRenderProcessHost>(
+        browser_context_.get(),
+        BrowserContext::GetDefaultStoragePartition(browser_context_.get()));
   }
 
  protected:

@@ -32,6 +32,7 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/push_messaging/push_messaging_router.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
+#include "content/browser/site_instance_impl.h"
 #include "content/browser/storage_partition_impl_map.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/blob_handle.h"
@@ -268,6 +269,10 @@ StoragePartition* BrowserContext::GetStoragePartition(
   bool in_memory = false;
 
   if (site_instance) {
+    SiteInstanceImpl* impl = static_cast<SiteInstanceImpl*>(site_instance);
+    if (impl->is_for_service_worker())
+      return impl->storage_partition_for_service_worker();
+
     GetContentClient()->browser()->GetStoragePartitionConfigForSite(
         browser_context, site_instance->GetSiteURL(), true,
         &partition_domain, &partition_name, &in_memory);
@@ -305,6 +310,7 @@ void BrowserContext::ForEachStoragePartition(
   partition_map->ForEach(callback);
 }
 
+// static
 StoragePartition* BrowserContext::GetDefaultStoragePartition(
     BrowserContext* browser_context) {
   return GetStoragePartition(browser_context, nullptr);
