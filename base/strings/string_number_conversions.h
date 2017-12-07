@@ -38,30 +38,55 @@
 
 namespace base {
 
+namespace internal {
+BASE_EXPORT std::string Int64ToString(int64_t value);
+BASE_EXPORT std::string Uint64ToString(uint64_t value);
+BASE_EXPORT string16 Int64ToString16(int64_t value);
+BASE_EXPORT string16 Uint64ToString16(uint64_t value);
+}  // namespace internal
+
 // Number -> string conversions ------------------------------------------------
 
 // Ignores locale! see warning above.
 BASE_EXPORT std::string NumberToString(int32_t value);
 BASE_EXPORT std::string NumberToString(uint32_t value);
-BASE_EXPORT std::string NumberToString(int64_t value);
-BASE_EXPORT std::string NumberToString(uint64_t value);
 BASE_EXPORT std::string NumberToString(double value);
 
 BASE_EXPORT base::string16 NumberToString16(int32_t value);
 BASE_EXPORT base::string16 NumberToString16(uint32_t value);
-BASE_EXPORT base::string16 NumberToString16(int64_t value);
-BASE_EXPORT base::string16 NumberToString16(uint64_t value);
 BASE_EXPORT base::string16 NumberToString16(double value);
 
-// Compilers seem to disagree about whether size_t is a different name for
-// uint32_t/uint64_t, or whether it's a completely different type that requires
-// a conversion. Therefore, a size_t version must exist for some compilers (to
-// avoid ambiguous call errors), but must not exist for others (to avoid
-// multiple definition errors).
-#if defined(OS_MACOSX)
-BASE_EXPORT std::string NumberToString(size_t value);
-BASE_EXPORT base::string16 NumberToString16(size_t value);
-#endif
+template <typename T,
+          typename std::enable_if_t<std::is_integral<T>::value &&
+                                    !std::is_unsigned<T>::value &&
+                                    sizeof(T) == 8>* = nullptr>
+std::string NumberToString(T value) {
+  return internal::Int64ToString(value);
+}
+
+template <typename T,
+          typename std::enable_if_t<std::is_integral<T>::value &&
+                                    std::is_unsigned<T>::value &&
+                                    sizeof(T) == 8>* = nullptr>
+std::string NumberToString(T value) {
+  return internal::Uint64ToString(value);
+}
+
+template <typename T,
+          typename std::enable_if_t<std::is_integral<T>::value &&
+                                    !std::is_unsigned<T>::value &&
+                                    sizeof(T) == 8>* = nullptr>
+string16 NumberToString16(T value) {
+  return internal::Int64ToString16(value);
+}
+
+template <typename T,
+          typename std::enable_if_t<std::is_integral<T>::value &&
+                                    std::is_unsigned<T>::value &&
+                                    sizeof(T) == 8>* = nullptr>
+string16 NumberToString16(T value) {
+  return internal::Uint64ToString16(value);
+}
 
 // Type-specific naming for backwards compatibility.
 //
@@ -83,12 +108,6 @@ inline std::string Int64ToString(int64_t value) {
   return NumberToString(value);
 }
 inline string16 Int64ToString16(int64_t value) {
-  return NumberToString16(value);
-}
-inline std::string Uint64ToString(uint64_t value) {
-  return NumberToString(value);
-}
-inline string16 Uint64ToString16(uint64_t value) {
   return NumberToString16(value);
 }
 
