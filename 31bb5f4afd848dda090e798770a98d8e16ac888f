@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74525c3b_9ab9192a",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3577,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-07T00:40:00Z",
+      "side": 1,
+      "message": "This would allow accidentally passing a storage ID key for google chrome. Can we do it in a way that cdm_storage_id_key will only be used if CDM_STORAGE_ID_KEY is not defined?",
+      "revId": "31bb5f4afd848dda090e798770a98d8e16ac888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
