@@ -33,6 +33,24 @@
       "revId": "2e04daf0bd360c1fea1e81cdc0b407812203119b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b2abbf_d74e1301",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/Linker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-07T15:50:04Z",
+      "side": 1,
+      "message": "thank you for reminder, I will incorporate these examples into the comment, or the other relevant comment that this gets moved to",
+      "parentUuid": "9ffa237d_941e7a56",
+      "revId": "2e04daf0bd360c1fea1e81cdc0b407812203119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
