@@ -16,6 +16,24 @@
       "revId": "167647cf3a2e538b5eeba1f64ef6a3f23e3b4109",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fc072c_ca79cb47",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-07T13:44:11Z",
+      "side": 1,
+      "message": "Gotcha. Seems ok, and I see why you\u0027d want to keep the definition of AutocompleteStatus near the other omnibox stuff. Makes me wonder if we could (in a future CL) find a more generic way to represent bundle-of-model-stuff we want to shove through a single binding when any part of the bundle changes.",
+      "parentUuid": "0fb85bbe_82f5e252",
+      "revId": "167647cf3a2e538b5eeba1f64ef6a3f23e3b4109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
