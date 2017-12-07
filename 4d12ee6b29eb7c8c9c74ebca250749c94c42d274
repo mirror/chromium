@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc5964a0_d729e593",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-07T18:57:32Z",
+      "side": 1,
+      "message": "added some comment wording to point out the scope of committed_type here.\nSeparately we might try to get offline pages and redirection setting this\ntoo but don\u0027t want that complication in this iteration.",
+      "parentUuid": "d0c5823a_0165a26b",
+      "range": {
+        "startLine": 824,
+        "startChar": 51,
+        "endLine": 824,
+        "endChar": 65
+      },
+      "revId": "4d12ee6b29eb7c8c9c74ebca250749c94c42d274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed302cc_faec6c5f",
         "filename": "components/previews/content/previews_content_util.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "4d12ee6b29eb7c8c9c74ebca250749c94c42d274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f59a1a9_8ffe588f",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-07T18:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed302cc_faec6c5f",
+      "revId": "4d12ee6b29eb7c8c9c74ebca250749c94c42d274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
