@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14c815e_2a65d5d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "Didn\u0027t understand this.",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf33e21_871e4895",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "Must add explicit",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b23fe10_171f6b43",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "braces optional, but up to you. Also in other parts of this file.",
+      "range": {
+        "startLine": 391,
+        "startChar": 13,
+        "endLine": 391,
+        "endChar": 14
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d209045_12442cf9",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "I think this one should be a DCHECK_GT(written, 0)\nIs there a security issue if |written| is 0?",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 7
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e015848_40d714ce",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "use CHECK_LT",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 7
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0542b7_3aeea5cb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "a reply -\u003e |reply|\n\nAlternatively, a reply -\u003e a reply callback",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2c9e1d_d4405410",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f7f6cf_9c9543b6",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "actually -\u003e actual",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa9e255_477f7391",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "a reply -\u003e |reply|",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 15
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508fb5f5_dff2455e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "a reply -\u003e |reply|",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f631fc7b_c34dbb20",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "only -\u003e only if",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1026cfeb_fab6ef72",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "Replace the last sentence with something like:\n\"In the edge case that neither log file exists, false will be returned\".\n\nThe rest just makes it harder to understand.",
+      "range": {
+        "startLine": 134,
+        "startChar": 46,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0478864_535459b1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "a reply -\u003e |reply|.\nWhat does invoking |reply| mean in this case?\nHow do you unset the observer? By passing null?",
+      "range": {
+        "startLine": 147,
+        "startChar": 9,
+        "endLine": 147,
+        "endChar": 10
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b7f33f_cb863328",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "This method should use CamelCase naming convention.\nThe underscore convention is for simple inline getters/setters.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b84edc4_de29775a",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:06:19Z",
+      "side": 1,
+      "message": "You are already in content::",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
