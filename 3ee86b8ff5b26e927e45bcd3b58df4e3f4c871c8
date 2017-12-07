@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "65621346_466274b1",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T20:32:58Z",
+      "side": 1,
+      "message": "\u003e Repurposing should work -- you shouldn\u0027t need to rename the group if you also filter by version \u003e\u003d {whenever this CL lands}, though. Right?\n\nI think so.\n\n\u003e I\u0027m definitely also fine landing now and trying to get a rough extraction of the effect manually.\n\nYes, we\u0027ve discussed this some more at the trial meeting.  We weren\u0027t sure we need to separate out the effect of this change now, as compared to other changes (e.g., hosted apps fixes).  We may care about that for tab discarding later, but for now it seems ok to land this as-is, and add a separate trial later that disables this optimization if we do need to measure its impact more precisely.  Since we\u0027ll extend the trials until next Friday, we\u0027ll be able to get a week\u0027s worth of data with the optimization in place, which is the data we need most.  So, I\u0027ll go ahead and CQ.\n\n\u003e \n\u003e Longer term I think we should build ourselves some flexibility to tinker with these and other heuristics, and a/b test the results.\n\nAgreed.  We could have a new base::Feature with params which define the process allocation policies.",
+      "parentUuid": "52350232_3771f4b6",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ade602_99aa9ccc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
