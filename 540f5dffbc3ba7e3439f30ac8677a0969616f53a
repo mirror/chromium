@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b13c3627_389e2af1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T19:33:53Z",
+      "side": 1,
+      "message": "Can this new OWNERS file point to the non-test widget/OWNERS file?",
+      "revId": "540f5dffbc3ba7e3439f30ac8677a0969616f53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
