@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c3bcfbd6_181f7b70",
+        "filename": "third_party/WebKit/Source/core/editing/InlineBoxPosition.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T09:05:04Z",
+      "side": 1,
+      "message": "What does this DCHECK want to catch?\n\nIf you want to catch an existing caller of CIBP(pos, primary_direction) where |primary_direction| is different from the primary direction of |pos|, this patch doesn\u0027t catch it, because |passed_primary_direction| is always computed from |position|.",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab16966a_92a1210d",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
         "patchSetId": 4
@@ -48,6 +65,24 @@
       "writtenOn": "2017-12-07T09:02:53Z",
       "side": 1,
       "message": "For \"abc|\" \u003d\u003e Right \"|DEF\" case,\n|position_on_left\" \u003d \"DEF\"@0\n- Pass primary_direction \u003d\u003d LTR, offset \u003d 3; due by primary_direction !\u003d inline_box.direction\n- Not pass: primary_direction \u003d\u003d RTL from \"DEF\": offset \u003d 0\n\nNote:\nRootInlineBox::Block() :\u003d LineLayoutBLockFlow(GetLineLayoutItem())\n\nRootInlineBox* LayoutBlockFlow::CreateRootInlineBox() {\n  return new RootInlineBox(LineLayoutItem(this));\n}\n\nPrimaryDirectionOf(Node) :\u003d Loop from Node::GetLayoutObject() to IsBlockFlow().",
+      "parentUuid": "bf2c0189_37aae8e3",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01253e22_dc5b396c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T09:05:04Z",
+      "side": 1,
+      "message": "Oh, I see what\u0027s going on.\n\nComputeInlineBoxPosition() doesn\u0027t navigate to a block with a different primary direction, but SelectionModifier does. Therefore,\n\nBefore this patch: CIBP(position_on_left) takes the previously computed primary direction, which can be different from the primary direction of |position_on_left|\n\nAfter this patch: CIBP(position_on_left) computes primary direction from |position_on_left|, and hence, never hits the DCHECK added by this patch",
       "parentUuid": "bf2c0189_37aae8e3",
       "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
