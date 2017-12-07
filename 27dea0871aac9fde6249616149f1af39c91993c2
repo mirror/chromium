@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9ea4a7_dcb81724",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "Need to apply the same effect node hack here.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0246ff_a62ee7cc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "I think fragment.background_rect should be used instead.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffdd20a_b1bd1b51",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338d4500_09e7a7db",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "And here too.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f608e268_c6cd96fe",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "Need to apply the same effect node hack as below.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9793b89_0d2c621e",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerPropertyUpdater.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-07T03:24:52Z",
+      "side": 1,
+      "message": "Sorry I made an oversight here. The effect used here must also bypass the filter. Otherwise it will hit assertion with mask-based clip-path:\n[1:1:1206/191113.276575:FATAL:PaintChunksToCcLayer.cpp(243)] Check failed: state_stack_.size(). Error: Chunk layerized into a layer with an effect that\u0027s too deep.\n\nI would write a RarePaintData helper like this:\nconst EffectPaintPropertyNode* RarePaintData::GetPreFilter() const {\n  if (!paint_properties_)\n    return local_border_box_properties_-\u003eEffect();\n  if (paint_properties_-\u003eFilter())\n    return paint_properties_-\u003eFilter()-\u003eParent();\n  return local_border_box_properties_-\u003eEffect();\n}\n\nAnd use rare_paint_data-\u003eGetPreFilter() here.",
+      "revId": "27dea0871aac9fde6249616149f1af39c91993c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
