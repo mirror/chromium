@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c68afdd_91d26cf7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 4525,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T12:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b364b9e0_73651d0d",
+      "range": {
+        "startLine": 4525,
+        "startChar": 4,
+        "endLine": 4525,
+        "endChar": 32
+      },
+      "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77024e33_353ca0fb",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd95dd7f_f58dbf4b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 4539,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T12:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77024e33_353ca0fb",
+      "range": {
+        "startLine": 4539,
+        "startChar": 102,
+        "endLine": 4539,
+        "endChar": 11
+      },
+      "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4cbfa184_eabb84f0",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T12:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ba6bbe_2c1628bf",
+      "range": {
+        "startLine": 154,
+        "startChar": 3,
+        "endLine": 154,
+        "endChar": 10
+      },
+      "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604f92a3_d3a31233",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "87a3f66e_9972c5e4",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T12:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "604f92a3_d3a31233",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452b6cc6_4dc3af83",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3753b40_560d0add",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 12026,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-07T12:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "452b6cc6_4dc3af83",
+      "range": {
+        "startLine": 12026,
+        "startChar": 26,
+        "endLine": 12026,
+        "endChar": 48
+      },
+      "revId": "f48d24f51427b7f9d59983d6ec5dff7769bf4cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
