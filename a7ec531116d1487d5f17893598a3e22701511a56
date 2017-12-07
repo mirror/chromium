@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "069848f3_f3e00f84",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T11:09:54Z",
+      "side": 1,
+      "message": "Does base::Bind not work?",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0dec997_c5d760ef",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T11:09:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38502769_5301e64e",
+        "filename": "third_party/WebKit/public/platform/WebThread.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T11:09:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95bc75f_9a83227b",
+        "filename": "third_party/WebKit/public/platform/scheduler/child/single_thread_idle_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T11:09:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s worth keeping this alias though.",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
