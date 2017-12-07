@@ -2,6 +2,282 @@
   "comments": [
     {
       "key": {
+        "uuid": "b75d9298_8dd13fc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "I think we tend to use BUG\u003d ? not sure.\nAnyway, please add TEST\u003d, e.g.\nTEST\u003dunit_tests --gtest_filter\u003d...",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635c1355_19799e78",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Can you use TypeCheckingPolicyHandler instead of ConfigurationPolicyHandler as base class to not have to implement this kind of type validation here?",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8226fb29_45f4df50",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: If you re-use TypeCheckingPolicyHandler, it might not be necessary to test this anymore (or maybe we can move it to a test of TypeCheckingPolicyHandler if we don\u0027t have that yet).",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3174e957_123306d9",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Note that this is not documenting but setting a default value for managed users.\nI.e. if a user is managed but their admin did not set SecondaryGoogleAccountSigninEnabled, the SecondaryGoogleAccountSigninPolicyHandler will still receive a policy value set to \u0027True\u0027.\n\nThis means that with this flag, we can easily build something that behaves differently for unmanaged users and managed users without this policy. That\u0027s why I\u0027d be happier if we could do without this flag (unless there\u0027s a good reason to).\n\nThe default of kAccountConsistencyMirrorRequired seems to be false[1] so this should be fine without the flag.\n\n[1] https://cs.chromium.org/chromium/src/components/signin/core/browser/profile_management_switches.cc?rcl\u003d2aead702eb3edab66f5bcd197e799b5055ef9bb2\u0026l\u003d85",
+      "range": {
+        "startLine": 4524,
+        "startChar": 7,
+        "endLine": 4524,
+        "endChar": 35
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6007b0_bd730261",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4529,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Hrm, are you sure about this? E.g. in a multi-profile scenario (adding a secondary user), will this not work? The profiles have separate PrefStores and separate Policies.\nUsually the reason to set this to false is if it somehow affects shared state that affects all profiles.",
+      "range": {
+        "startLine": 4529,
+        "startChar": 23,
+        "endLine": 4529,
+        "endChar": 28
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4081339_f5efef07",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4531,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Please set this to False, as this is the example value the admin will want to set.",
+      "range": {
+        "startLine": 4531,
+        "startChar": 23,
+        "endLine": 4531,
+        "endChar": 27
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e1ff48_e537c049",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4537,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: block",
+      "range": {
+        "startLine": 4537,
+        "startChar": 74,
+        "endLine": 4537,
+        "endChar": 79
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cfbbf7_cef2e40b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4537,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "I don\u0027t really get this. Could you explain? Which policies would not apply with multiple sign-in?",
+      "range": {
+        "startLine": 4537,
+        "startChar": 21,
+        "endLine": 4537,
+        "endChar": 60
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794827b1_e7933b32",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4538,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: Maybe we\u0027ll need to use one of those placeholders here (PH_..)",
+      "range": {
+        "startLine": 4538,
+        "startChar": 86,
+        "endLine": 4538,
+        "endChar": 92
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274de51b_7366171e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4539,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: signing in to a different account ?",
+      "range": {
+        "startLine": 4539,
+        "startChar": 59,
+        "endLine": 4539,
+        "endChar": 69
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c505dd34_90bbf64d",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: an empty |account_id|\n(also in line 156)",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fc5287_46b4449f",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: indent :-)",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 2
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe6a46da_adaa9ab8",
         "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
         "patchSetId": 11
@@ -18,6 +294,167 @@
         "startChar": 53,
         "endLine": 156,
         "endChar": 68
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d710b473_da9852d8",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Have we tested this \u003d\u003d is it true? What about Guest session?\nAlso, is this code triggered on the sign-in screen? (if yes, I\u0027d expect account_id to be empty too)",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921d21e2_ecf2515f",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "Please add a comment to explain what this means.",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36305216_e8100c3d",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: #include \"url/gurl.h\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4568f43e_2d875877",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "accounts_cookie?\nAlso, is this \"cookie\" because |is_header_request| param is false?",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652b6449_0d0c3d29",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: Consider repeating this comment for each EXPECT_.* individually, so the reader understands better what is being tested.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7922c58_5a24362b",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "I can\u0027t spot the difference between this and GaiaIdIncludedWithMirrorDisabled, except for this change.\nDid I miss something or is it supposed to behave in the same way w.r.t \"id\u003d\", indepently of this argument\u0027s value?\nIf yes, maybe we can parametrize it, or move the verification part to a function we just invoke twice?",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ae5019_2c2f975f",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-07T13:54:55Z",
+      "side": 1,
+      "message": "nit: I think we tend to repeat the #if expression instead of inverting it, (but both ways it\u0027s confusing :-))",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 11
       },
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
