@@ -101,8 +101,10 @@ CastMediaSinkService::~CastMediaSinkService() {
     dns_sd_registry_->RemoveObserver(this);
     dns_sd_registry_ = nullptr;
   }
-  if (impl_)
-    impl_->task_runner()->DeleteSoon(FROM_HERE, impl_.release());
+  if (impl_) {
+    CastMediaSinkServiceImpl* impl_ptr = impl_.release();
+    impl_ptr->task_runner()->DeleteSoon(FROM_HERE, impl_ptr);
+  }
 }
 
 void CastMediaSinkService::Start(
