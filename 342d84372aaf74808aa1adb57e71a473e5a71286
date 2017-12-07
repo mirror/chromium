@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cebff3_dbffeb3f",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "nit: \"Prefer sizeof(varname) to sizeof(type).\" (https://google.github.io/styleguide/cppguide.html#sizeof)",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e7fc32_189e2d67",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "nit: \"Use C++-style casts\" (https://google.github.io/styleguide/cppguide.html#Casting)",
+      "range": {
+        "startLine": 71,
+        "startChar": 25,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab85b7b8_9639c78e",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "NULL -\u003e nullptr here and elsewhere",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc59e37_47db840b",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "nit: cast",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93a8e9e_4935a840",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "*sa",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 42
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ece6eb4_023e1555",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T14:16:14Z",
+      "side": 1,
+      "message": "wrap this in ASSERT_NO_FATAL_FAILURE since the function uses ASSERT_* macros.",
+      "range": {
+        "startLine": 546,
+        "startChar": 2,
+        "endLine": 546,
+        "endChar": 42
+      },
+      "revId": "342d84372aaf74808aa1adb57e71a473e5a71286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
