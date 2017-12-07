@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69748719_d54840b3",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T22:36:36Z",
+      "side": 1,
+      "message": "Could you move SetIntegrityMetadata() call to just after Resource creation (in a separate CL)?\n\nThis should be done before Resource::NotifyFinished(), i.e. before integrity is checked.\nThe current patchset is still safe, because when the clients are notified synchronously, the Resource is cached and thus the integrity is already set and the SetIntegrityMetadata() is virtually no-op. (And also client notification timing doesn\u0027t directly corresponds to integrity check timing)\n\nBut the possibility of SetIntegrityMetadata() possibly after ResourceClient::NotifyFinished() is alarming, so I want to clean up this code first.\n+kouhei@ who left TODO() in the corresponding line in CSSStylesheetResource.\nhttps://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d51",
+      "revId": "682f09e09970a07dad277377e1c06d44564019b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8400fae2_a9cf3073",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T22:36:36Z",
+      "side": 1,
+      "message": "Needed as we change RequestResource() signature in this CL, right?\nThen this looks good even though this is not script-related.",
+      "revId": "682f09e09970a07dad277377e1c06d44564019b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
