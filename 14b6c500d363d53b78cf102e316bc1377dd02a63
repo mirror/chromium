@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c7cc1f6_fd9b4571",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-12-07T01:33:28Z",
+      "side": 0,
+      "message": "I\u0027m not clear on when this gets called.  If it\u0027s when we spawn a renderer, then this looks like it\u0027s used to disable CSD Phishing when the user disables Safe Browsing... and we shouldn\u0027t remove that functionality.\n\nJialiu -- Are you familiar with this flow?",
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15ef1bf7_dddfdfdc",
         "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
         "patchSetId": 2
