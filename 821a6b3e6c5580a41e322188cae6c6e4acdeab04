@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e085307a_b00cf92b",
+        "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-12-07T06:58:04Z",
+      "side": 1,
+      "message": "2048 doesn\u0027t sound good enough.\nMaybe you might want to stop to use bit fields for child_shadow_root_count.\nUsing 13 bits here doen\u0027t make sense to me, given that the total is 19 bits.\n\nUsing just \u0027unsigned short\u0027 for child_shadow_root_count might be better.",
+      "parentUuid": "e2440ff5_45efffda",
+      "revId": "821a6b3e6c5580a41e322188cae6c6e4acdeab04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40802cd5_4ae13c30",
         "filename": "third_party/WebKit/Source/core/dom/ShadowRoot.h",
         "patchSetId": 9
