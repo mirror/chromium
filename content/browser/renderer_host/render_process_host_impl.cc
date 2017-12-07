@@ -969,6 +969,7 @@ class UnmatchedServiceWorkerProcessTracker
                 kUnmatchedServiceWorkerProcessTrackerKey));
     if (!tracker)
       return nullptr;
+
     return tracker->TakeFreshestProcessForSite(site_url);
   }
 
@@ -1243,14 +1244,14 @@ RenderProcessHost* RenderProcessHostImpl::CreateRenderProcessHost(
     StoragePartitionImpl* storage_partition_impl,
     SiteInstance* site_instance,
     bool is_for_guests_only) {
-  if (g_render_process_host_factory_) {
-    return g_render_process_host_factory_->CreateRenderProcessHost(
-        browser_context);
-  }
-
   if (!storage_partition_impl) {
     storage_partition_impl = static_cast<StoragePartitionImpl*>(
         BrowserContext::GetStoragePartition(browser_context, site_instance));
+  }
+
+  if (g_render_process_host_factory_) {
+    return g_render_process_host_factory_->CreateRenderProcessHost(
+        browser_context, storage_partition_impl);
   }
 
   return new RenderProcessHostImpl(browser_context, storage_partition_impl,
@@ -3541,7 +3542,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
       if (render_process_host)
         is_unmatched_service_worker = false;
       break;
-    default:
+    case SiteInstanceImpl::ProcessReusePolicy::DEFAULT:
       break;
   }
 
@@ -3584,6 +3585,9 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
     // RenderProcessHostFactory may not instantiate a StoragePartition, and
     // creating one here with GetStoragePartition() can run into cross-thread
     // issues as TestBrowserContext initialization is done on the main thread.
+    // (Note that |site_instance| might already be associated with a
+    // StoragePartition, in the case of service worker, in which case we'll use
+    // that one.)
     render_process_host = CreateOrUseSpareRenderProcessHost(
         browser_context, nullptr, site_instance, is_for_guests_only);
   }

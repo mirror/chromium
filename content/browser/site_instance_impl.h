@@ -32,12 +32,22 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
     virtual void RenderProcessGone(SiteInstanceImpl* site_instance) = 0;
   };
 
+  // See the documentation in SiteInstance for the functions of the same name.
   static scoped_refptr<SiteInstanceImpl> Create(
       BrowserContext* browser_context);
   static scoped_refptr<SiteInstanceImpl> CreateForURL(
       BrowserContext* browser_context,
       const GURL& url);
   static bool ShouldAssignSiteForURL(const GURL& url);
+
+  // Like CreateForURL(), but used when creating a SiteInstance for finding a
+  // renderer process to start a service worker in. |script_url| is the URL of
+  // the service worker script. |storage_partition| is the StoragePartition the
+  // service worker is from (may be null in tests).
+  static scoped_refptr<SiteInstanceImpl> CreateForServiceWorker(
+      BrowserContext* browser_context,
+      const GURL& script_url,
+      StoragePartitionImpl* storage_partition);
 
   // See SiteInstance::IsSameWebSite.
   // This version allows comparing URLs without converting them to effective
@@ -103,8 +113,11 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // chosen existing process is reused because of the process limit, the process
   // will be tracked as having an unmatched service worker until reused by
   // another SiteInstance from the same site.
-  void set_is_for_service_worker() { is_for_service_worker_ = true; }
   bool is_for_service_worker() const { return is_for_service_worker_; }
+  StoragePartitionImpl* storage_partition_for_service_worker() const {
+    DCHECK(is_for_service_worker_);
+    return storage_partition_for_service_worker_;
+  }
 
   // Returns the URL which was used to set the |site_| for this SiteInstance.
   // May be empty if this SiteInstance does not have a |site_|.
@@ -256,6 +269,8 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
 
   // Whether the SiteInstance was created for a service worker.
   bool is_for_service_worker_;
+  // May be null even when |is_for_service_worker_| is true in tests.
+  StoragePartitionImpl* storage_partition_for_service_worker_;
 
   base::ObserverList<Observer, true> observers_;
 
