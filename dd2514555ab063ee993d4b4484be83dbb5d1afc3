@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "59689888_ecef7543",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T22:56:47Z",
+      "side": 1,
+      "message": "The comment in ui::Compositor spells this out, but I didn\u0027t copy that comment everywhere. I copied it to layer_tree_host.h and added a comment here too.",
+      "parentUuid": "869d93dc_21a2ebd1",
+      "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0dc6f80_23dba329",
         "filename": "cc/trees/layer_tree_host.h",
         "patchSetId": 5

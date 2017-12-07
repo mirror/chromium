@@ -16,6 +16,24 @@
       "revId": "6932b2e17112e88c17387809a9176d374bf27436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616aa3d2_516343be",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T22:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aacd51e_cc3b9e72",
+      "revId": "6932b2e17112e88c17387809a9176d374bf27436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
