@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d321e24_75445cbb",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "nit: BrowserContext::GetDefaultStoragePartition (and everywhere below)",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 25
+      },
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f079e9d5_883fb24e",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "Why did this need to change?  Doesn\u0027t look like site_instance3 was for a ServiceWorker.  The comment above also says this is for a navigation.",
+      "range": {
+        "startLine": 216,
+        "startChar": 24,
+        "endLine": 216,
+        "endChar": 46
+      },
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595dc4e1_7fb0051b",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "nit: I think a short comment on what this test is for and a reference to 781313 would be helpful. :)",
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6252bb07_4e11670d",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "optional: if I understand the bug correctly, it involves a SW in a \u003cwebview\u003e\u0027s StoragePartition.  In that case, if you wanted to stay closer to what the bug would do, you could attach a non-default SW to the SW SiteInstance (using modified_client + GetStoragePartitionForSite), then restore regular_client and do site_instance-\u003eGetProcess().  That\u0027d let you verify that the SW stayed in a non-default StoragePartition.",
+      "range": {
+        "startLine": 886,
+        "startChar": 25,
+        "endLine": 886,
+        "endChar": 51
+      },
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c4d226_fa91bf24",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "nit: SiteInstance",
+      "range": {
+        "startLine": 898,
+        "startChar": 15,
+        "endLine": 898,
+        "endChar": 28
+      },
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d5aa57_dcb4b99d",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "Just for completeness, can we also check that a non-SW SiteInstance still respects the new StoragePartition for kUrl?  I.e., that the process for a SiteInstanceImpl::CreateForURL(browser_context(), kUrl) has a different StoragePartition than |storage_partition|?",
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baedef8a_b5dcc568",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-07T02:08:26Z",
+      "side": 1,
+      "message": "nit: \"May be\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 5,
+        "endLine": 175,
+        "endChar": 10
+      },
+      "revId": "32d104952d17af1efa44b34c035c8c17fb618974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
