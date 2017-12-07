@@ -93,6 +93,29 @@
       "revId": "dcff4d090d02ef60f5079885e2520534d894f3fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1fb8922_028a4795",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingRequirementsUpdater.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-12-07T06:59:27Z",
+      "side": 1,
+      "message": "Just noticed this on your other CL, you can delete these blank lines now (when there\u0027s no macro at the start of the class).",
+      "range": {
+        "startLine": 76,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 7
+      },
+      "revId": "dcff4d090d02ef60f5079885e2520534d894f3fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
