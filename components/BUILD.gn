@@ -36,6 +36,20 @@ if (is_ios) {
 }
 
 # To add a unit test to this target, make a "unit_test" source_set in your
+
+if (is_linux || is_mac) {
+  executable("filtertool") {
+    sources = [
+      "//components/subresource_filter/tools/filter_tool.cc",
+    ]
+    deps = [
+      "//base",
+      "//build/config:exe_and_shlib_deps",
+      "//components/subresource_filter/core/common",
+    ]
+  }
+}
+
 # component (it's important to use a source_set instead of a static library or
 # no tests will run) and add a reference here. You can add more than one unit
 # test target if convenient.
@@ -469,7 +483,9 @@ if (!is_ios) {
     }
 
     if (is_android) {
-      sources += [ "test/android/browsertests_apk/components_browser_tests_jni_onload.cc" ]
+      sources += [
+        "test/android/browsertests_apk/components_browser_tests_jni_onload.cc",
+      ]
       sources -= [ "autofill/content/browser/risk/fingerprint_browsertest.cc" ]
       deps += [
         "//content/public/test/android:layouttest_java_support",
@@ -526,7 +542,9 @@ if (!is_ios) {
     ]
 
     if (!is_ios) {
-      sources += [ "discardable_memory/common/discardable_shared_memory_heap_perftest.cc" ]
+      sources += [
+        "discardable_memory/common/discardable_shared_memory_heap_perftest.cc",
+      ]
       deps += [ "//components/discardable_memory/common" ]
     }
   }
