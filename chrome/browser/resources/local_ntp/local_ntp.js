@@ -77,8 +77,9 @@ var CLASSES = {
   // Vertically centers the most visited section for a non-Google provided page.
   NON_GOOGLE_PAGE: 'non-google-page',
   NON_WHITE_BG: 'non-white-bg',
-  RTL: 'rtl',              // Right-to-left language text.
-  SHOW_LOGO: 'show-logo',  // Marks logo/doodle that should be shown.
+  NOT_INITED: 'not-inited',  // Hides the body until init() is done.
+  RTL: 'rtl',                // Right-to-left language text.
+  SHOW_LOGO: 'show-logo',    // Marks logo/doodle that should be shown.
 };
 
 
@@ -732,6 +733,17 @@ function init() {
   };
 
   window.addEventListener('message', handlePostMessage);
+
+  document.body.classList.remove(CLASSES.NOT_INITED);
+}
+
+
+function loadConfig() {
+  var configScript = document.createElement('script');
+  configScript.type = 'text/javascript';
+  configScript.src = 'chrome-search://local-ntp/config.js';
+  configScript.onload = init;
+  document.head.appendChild(configScript);
 }
 
 
@@ -739,7 +751,7 @@ function init() {
  * Binds event listeners.
  */
 function listen() {
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', loadConfig);
 }
 
 

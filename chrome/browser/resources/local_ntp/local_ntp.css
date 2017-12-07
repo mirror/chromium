@@ -61,6 +61,10 @@ body {
   overflow-x: hidden;
 }
 
+body.not-inited {
+  display: none;
+}
+
 /* Button defaults vary by platform. Reset CSS so that the NTP can use buttons
  * as a kind of clickable div. */
 button {
