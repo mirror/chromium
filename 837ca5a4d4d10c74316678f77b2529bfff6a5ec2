@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a271602_6f0e5401",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view_interactive_uitest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T23:46:43Z",
+      "side": 1,
+      "message": "This expectation doesn\u0027t belong here. Move it to the test body before SetupAutoSignin.",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 44
+      },
+      "revId": "837ca5a4d4d10c74316678f77b2529bfff6a5ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c12ab3_10618ed7",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view_interactive_uitest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T23:46:43Z",
+      "side": 1,
+      "message": "Add a comment that the handler is called on IO.",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "837ca5a4d4d10c74316678f77b2529bfff6a5ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8bbdef_29d60c00",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T23:46:43Z",
+      "side": 1,
+      "message": "Add a comment that the handler is called on IO.",
+      "range": {
+        "startLine": 168,
+        "startChar": 32,
+        "endLine": 168,
+        "endChar": 45
+      },
+      "revId": "837ca5a4d4d10c74316678f77b2529bfff6a5ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0ad749_8f29a3d0",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-07T23:46:43Z",
+      "side": 1,
+      "message": "Move to the test.",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 42
+      },
+      "revId": "837ca5a4d4d10c74316678f77b2529bfff6a5ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
