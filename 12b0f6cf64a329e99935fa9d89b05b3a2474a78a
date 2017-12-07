@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e5802cf_f2daeab7",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-07T22:57:10Z",
+      "side": 1,
+      "message": "Done. And moved into the struct to be closer to the field declarations.",
+      "parentUuid": "bf8ace94_759f4119",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 50
+      },
+      "revId": "12b0f6cf64a329e99935fa9d89b05b3a2474a78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec49edae_c46a19ad",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e2b57a4c_07b96632",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-07T22:57:10Z",
+      "side": 1,
+      "message": "Er... right, if we\u0027re observing BrowserList we need to check that.\n\n(As in the other CL, the UKM service is disabled and metrics are wiped whenever an OTR profile exists. but you\u0027re right, we should definitely ignore those browsers at this level too)",
+      "parentUuid": "ec49edae_c46a19ad",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "12b0f6cf64a329e99935fa9d89b05b3a2474a78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e32150f4_ab65795b",
         "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-07T18:05:29Z",
       "side": 1,
       "message": "Move to private section?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "12b0f6cf64a329e99935fa9d89b05b3a2474a78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58eaa4a5_36160a08",
+        "filename": "chrome/browser/ui/tabs/browser_activity_watcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-07T22:57:10Z",
+      "side": 1,
+      "message": "It\u0027s used from non-member functions declared the .cc. (I don\u0027t think those should be moved into the class just to make this private.)",
+      "parentUuid": "e32150f4_ab65795b",
       "range": {
         "startLine": 25,
         "startChar": 2,
