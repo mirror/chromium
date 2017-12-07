@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c599035_64d30e1d",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-07T23:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d516bc_9530a81f",
+      "range": {
+        "startLine": 25,
+        "startChar": 40,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fddd9d32_04b48d48",
         "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T16:27:14Z",
       "side": 1,
       "message": "WeakPtr since UsersCommitPendingWriteOnExit could be released before the write calls back.",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cde043_dcd69d2f",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-07T23:20:34Z",
+      "side": 1,
+      "message": "I realized that we don\u0027t need an object here at all.",
+      "parentUuid": "fddd9d32_04b48d48",
       "range": {
         "startLine": 35,
         "startChar": 52,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "54f807c4_e2564e92",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-07T23:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46e9d6d5_688de97c",
+      "range": {
+        "startLine": 15,
+        "startChar": 38,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e10d3e_d2c59fc7",
         "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88fe64e_a5913acc",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-07T23:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e10d3e_d2c59fc7",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
