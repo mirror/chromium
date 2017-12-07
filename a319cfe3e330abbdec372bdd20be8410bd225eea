@@ -45,6 +45,30 @@
       "revId": "a319cfe3e330abbdec372bdd20be8410bd225eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edc7d526_cca5b54e",
+        "filename": "third_party/WebKit/public/platform/WebRTCCertificateGenerator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T07:27:43Z",
+      "side": 1,
+      "message": "Oops, sorry but I missed this comment. I don\u0027t have a strong opinion on this. Just including might be better.",
+      "parentUuid": "bfb5c8b5_2877342f",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "a319cfe3e330abbdec372bdd20be8410bd225eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
