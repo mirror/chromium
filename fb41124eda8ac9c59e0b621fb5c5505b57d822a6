@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9c49aa_428e930c",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-07T16:21:13Z",
+      "side": 1,
+      "message": "nit: this include now seems unnecessary",
+      "revId": "fb41124eda8ac9c59e0b621fb5c5505b57d822a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
