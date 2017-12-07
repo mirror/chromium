@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2817a97_f8c9ab39",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-07T07:19:00Z",
+      "side": 1,
+      "message": "This will be changed once gMock supports mocking of function with move only type parameters.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f41c01_76a60c07",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-07T07:19:00Z",
+      "side": 1,
+      "message": "In order for callback for U2fHidDevice::OnAllocateChannel() to complete, we should wait until timeout callback for U2fHidDevice::AllocateChannel() is invoked. This is because all Read() function within U2fHidDevice::AllocateChannel() is mocked using MockHidConnection. \n\nThus, currently, it takes 3000ms for this test to complete. Is this an acceptable behavior? \nPlease let me know if there is a better approach! :)",
+      "range": {
+        "startLine": 357,
+        "startChar": 36,
+        "endLine": 357,
+        "endChar": 61
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -22,6 +22,30 @@
       "revId": "615be70cb92ba6c0cd0b7a9a99e739c056b8dd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffd01ce_cb886b2a",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-07T07:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b04268_9c9bed21",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "615be70cb92ba6c0cd0b7a9a99e739c056b8dd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
