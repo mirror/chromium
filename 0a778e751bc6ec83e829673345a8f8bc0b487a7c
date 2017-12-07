@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb9fe1f1_904d8654",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T17:05:32Z",
+      "side": 1,
+      "message": "Explain why!",
+      "revId": "0a778e751bc6ec83e829673345a8f8bc0b487a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2973f4be_84209704",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-07T17:05:32Z",
+      "side": 1,
+      "message": "Add the comment like in the main service.\n\n// Gets the singleton instance for the |context|.",
+      "revId": "0a778e751bc6ec83e829673345a8f8bc0b487a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
