@@ -34,7 +34,7 @@ class VRWebGLDrawingBuffer final
   WebGLFramebuffer* framebuffer() const { return framebuffer_; }
   const IntSize& size() const { return size_; }
 
-  bool antialias() const { return antialias_; }
+  bool antialias() const { return anti_aliasing_mode_ != kNone; }
   bool depth() const { return depth_; }
   bool stencil() const { return stencil_; }
   bool alpha() const { return alpha_; }
@@ -42,7 +42,13 @@ class VRWebGLDrawingBuffer final
 
   void Resize(const IntSize&);
 
-  void MarkFramebufferComplete(bool complete);
+  // Activate marks the framebuffer as complete and clears it's changed bit.
+  void Activate();
+  // Finish marks the framebuffer as incomplete and returns whether it was
+  // changed while active.
+  bool Finish();
+
+  gpu::MailboxHolder GetMailbox();
 
   virtual void Trace(blink::Visitor*);
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
@@ -76,7 +82,7 @@ class VRWebGLDrawingBuffer final
   GLuint depth_stencil_buffer_ = 0;
   IntSize size_;
 
-  bool antialias_;
+  bool discard_framebuffer_supported_;
   bool depth_;
   bool stencil_;
   bool alpha_;
