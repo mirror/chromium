@@ -17,6 +17,7 @@
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
@@ -744,6 +745,9 @@ void RenderWidgetHostViewMac::UpdateBackingStoreProperties() {
 }
 
 void RenderWidgetHostViewMac::Show() {
+  LOG(ERROR) << "Show";
+  base::debug::StackTrace().Print();
+
   ScopedCAActionDisabler disabler;
   [cocoa_view_ setHidden:NO];
 

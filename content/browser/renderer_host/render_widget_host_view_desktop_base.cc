@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_host/render_widget_host_view_desktop_base.h"
 
+#include "base/debug/stack_trace.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 
@@ -13,6 +14,8 @@ RenderWidgetHostViewDesktopBase::~RenderWidgetHostViewDesktopBase() = default;
 RenderWidgetHostViewDesktopBase::RenderWidgetHostViewDesktopBase() = default;
 
 void RenderWidgetHostViewDesktopBase::Hide() {
+  LOG(ERROR) << "Hide";
+  base::debug::StackTrace().Print();
   DoHide();
   DCHECK_EQ(Visibility::HIDDEN, GetVisibility());
 
