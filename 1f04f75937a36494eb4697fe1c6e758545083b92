@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0490ff7f_0c7d655a",
+        "filename": "tools/metrics/histograms/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-07T22:03:09Z",
+      "side": 1,
+      "message": "This probably should be integrated into the \"Documenting Histograms\" section.",
+      "revId": "1f04f75937a36494eb4697fe1c6e758545083b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
