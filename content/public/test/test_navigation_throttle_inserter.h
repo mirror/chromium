@@ -21,9 +21,14 @@ using ThrottleInsertionCallback =
         NavigationHandle*)>;
 
 // This class is instantiated with a NavigationThrottle factory callback, and
-//  - Calls the callback in every DidStartNavigation.
+//  - Inserts an "inserter" throttle at DidStartNavigation.
+//  - Calls the callback in WillStartRequest in the inserter.
 //  - If the throttle is successfully created, registers it with the given
 //    navigation.
+//
+//  Throttles need to be inserted at WillStartRequest to ensure that the
+//  ThrottleInsertionCallback has all the necessary information to know
+//  whether to instantiate the throttle.
 class TestNavigationThrottleInserter : public WebContentsObserver {
  public:
   TestNavigationThrottleInserter(WebContents* web_contents,
