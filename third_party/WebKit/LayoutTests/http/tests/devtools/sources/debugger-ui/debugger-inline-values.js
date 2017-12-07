@@ -17,11 +17,37 @@
           a.l = window;
           b[1]++;
           b[2] = document.body;
+          var custom = { custom: true, name: 'formatCustom'};
+          return custom;
       }
+  `);
+
+  await TestRunner.evaluateInPagePromise(`
+    var formatter = {
+      header: function(x)
+        {
+            if (!x.custom)
+                return null;
+
+            return ["span", {}, "Custom: ", x.name];
+        },
+
+        hasBody: function(x)
+        {
+            return true;
+        },
+
+        body: function(x)
+        {
+            return ["span", {}, "This should not be shown ", x.name]
+        }
+    };
+    window.devtoolsFormatters = [formatter];
   `);
 
   SourcesTestRunner.startDebuggerTest(runTestFunction);
   SourcesTestRunner.setQuiet(true);
+  TestRunner.mainTarget.runtimeAgent().setCustomObjectFormatterEnabled(true);
 
   var stepCount = 0;
 
@@ -36,7 +62,7 @@
 
   function dumpAndContinue(textEditor, lineNumber) {
     TestRunner.addResult('=========== 11< ==========');
-    for (var i = 11; i < 21; ++i) {
+    for (var i = 11; i < 22; ++i) {
       var output = ['[' + (i < 10 ? ' ' : '') + i + ']'];
       output.push(i == lineNumber ? '>' : ' ');
       output.push(textEditor.line(i));
@@ -46,7 +72,7 @@
     }
 
     TestRunner.addSniffer(Sources.JavaScriptSourceFrame.prototype, 'setExecutionLocation', onSetExecutionLocation);
-    if (++stepCount < 10)
+    if (++stepCount < 11)
       SourcesTestRunner.stepOver();
     else
       SourcesTestRunner.completeDebuggerTest();

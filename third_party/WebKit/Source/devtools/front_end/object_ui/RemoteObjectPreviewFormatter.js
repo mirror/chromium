@@ -33,6 +33,15 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
 
   /**
    * @param {!Element} parentElement
+   * @param {!SDK.RemoteObject} object
+   */
+  appendCustomPreview(parentElement, object) {
+    var customPreview = new ObjectUI.CustomHeaderComponent(object).element;
+    parentElement.appendChild(customPreview);
+  }
+
+  /**
+   * @param {!Element} parentElement
    * @param {!Protocol.Runtime.ObjectPreview} preview
    * @param {boolean} isEntry
    */

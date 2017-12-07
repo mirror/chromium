@@ -7,9 +7,14 @@
 ObjectUI.CustomPreviewSection = class {
   /**
    * @param {!SDK.RemoteObject} object
+   * @param {boolean} showBody
    */
-  constructor(object) {
-    this._sectionElement = createElementWithClass('span', 'custom-expandable-section');
+  constructor(object, showBody = true) {
+    if (showBody)
+      this._sectionElement = createElementWithClass('span', 'custom-expandable-section');
+    else
+      this._sectionElement = createElement('span');
+
     this._object = object;
     this._expanded = false;
     this._cachedContent = null;
@@ -27,7 +32,7 @@ ObjectUI.CustomPreviewSection = class {
       return;
     }
 
-    if (customPreview.hasBody) {
+    if (showBody && customPreview.hasBody) {
       this._header.classList.add('custom-expandable-section-header');
       this._header.addEventListener('click', this._onClick.bind(this), false);
       this._expandIcon = UI.Icon.create('smallicon-triangle-right', 'custom-expand-icon');
@@ -241,3 +246,17 @@ ObjectUI.CustomPreviewComponent = class {
 };
 
 ObjectUI.CustomPreviewSection._tagsWhiteList = new Set(['span', 'div', 'ol', 'li', 'table', 'tr', 'td']);
+
+/**
+ * @unrestricted
+ */
+ObjectUI.CustomHeaderComponent = class {
+  /**
+   * @param {!SDK.RemoteObject} object
+   */
+  constructor(object) {
+    this._object = object;
+    this._customPreviewSection = new ObjectUI.CustomPreviewSection(object, false /* showBody */);
+    this.element = this._customPreviewSection.element();
+  }
+};
