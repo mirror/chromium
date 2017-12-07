@@ -22,6 +22,8 @@ void PrintUsage() {
       " set in the simulated application's environment.\n"
       "  -t  Specifies a test or test suite that should be included in the"
       "test run. All other tests will be excluded from this run.\n"
+      "  -i  Inverts tests that are specified by -t. These tests will be "
+      "excluded from this run.  Run all tests if no test is specified,\n"
       "  -c  Specifies command line flags to pass to application.\n"
       "  -p  Print the device's home directory, does not run a test.\n"
       "  -s  Specifies the SDK version to use (e.g '9.3'). Will use system "
@@ -230,7 +232,8 @@ int RunApplication(NSString* app_path,
                    NSString* udid,
                    NSMutableDictionary* app_env,
                    NSString* cmd_args,
-                   NSMutableArray* tests_filter) {
+                   NSMutableArray* tests_filter,
+                   bool invert) {
   NSString* tempFilePath = [NSTemporaryDirectory()
       stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
   [[NSFileManager defaultManager] createFileAtPath:tempFilePath
@@ -275,7 +278,11 @@ int RunApplication(NSString* app_path,
   }
 
   if ([tests_filter count] > 0) {
-    [testTargetName setObject:tests_filter forKey:@"OnlyTestIdentifiers"];
+    if (invert) {
+      [testTargetName setObject:tests_filter forKey:@"SkipTestIdentifiers"];
+    } else {
+      [testTargetName setObject:tests_filter forKey:@"OnlyTestIdentifiers"];
+    }
   }
 
   [testTargetName setObject:testingEnvironmentVariables
@@ -334,6 +341,7 @@ int main(int argc, char* const argv[]) {
   NSString* xctest_path = nil;
   NSString* cmd_args = nil;
   NSString* device_name = @"iPhone 6s";
+  bool wants_invert = false;
   bool wants_wipe = false;
   bool wants_print_home = false;
   NSDictionary* simctl_list = GetSimulatorList();
@@ -346,7 +354,7 @@ int main(int argc, char* const argv[]) {
   NSMutableArray* tests_filter = [NSMutableArray array];
 
   int c;
-  while ((c = getopt(argc, argv, "hs:d:u:t:e:c:pwl")) != -1) {
+  while ((c = getopt(argc, argv, "hs:d:u:t:e:c:pwil")) != -1) {
     switch (c) {
       case 's':
         sdk_version = [NSString stringWithUTF8String:optarg];
@@ -359,6 +367,9 @@ int main(int argc, char* const argv[]) {
         break;
       case 'c':
         cmd_args = [NSString stringWithUTF8String:optarg];
+        break;
+      case 'i':
+        wants_invert = true;
         break;
       case 't': {
         NSString* test = [NSString stringWithUTF8String:optarg];
@@ -442,7 +453,7 @@ int main(int argc, char* const argv[]) {
   }
 
   int return_code = RunApplication(app_path, xctest_path, udid, app_env,
-                                   cmd_args, tests_filter);
+                                   cmd_args, tests_filter, wants_invert);
   KillSimulator();
   return return_code;
 }
