@@ -3737,6 +3737,13 @@ void RenderFrameImpl::DidCreateDocumentLoader(
     blink::WebDocumentLoader* document_loader) {
   bool content_initiated = !pending_navigation_params_.get();
 
+  for (auto& r : webpackage_requests_) {
+    // These are the requests included in the associated web package.
+    if (r.second != "GET")
+      continue;
+    document_loader->PreloadResource(blink::WebURL(r.first));
+  }
+
   // Make sure any previous redirect URLs end up in our new data source.
   if (pending_navigation_params_.get() && !IsBrowserSideNavigationEnabled()) {
     for (const auto& i :
@@ -4681,7 +4688,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   // that don't go through here.
   if (!skip_throttler_requests_.empty()) {
     std::pair<GURL, std::string> req(
-        GURL(request.Url()), base::ToLowerASCII(request.HttpMethod().Ascii()));
+        GURL(request.Url()), base::ToUpperASCII(request.HttpMethod().Ascii()));
     if (skip_throttler_requests_.find(req) == skip_throttler_requests_.end()) {
       extra_data->set_url_loader_throttles(std::move(throttles));
     } else {
@@ -6381,10 +6388,12 @@ void RenderFrameImpl::NavigateInternal(
 
     if (webpackage_subresource_info) {
       auto& requests = webpackage_subresource_info->requests;
-      std::vector<std::pair<GURL, std::string>> reqs(requests.size());
+      auto& reqs = webpackage_requests_;
+      reqs.clear();
+      reqs.resize(requests.size());
       for (size_t i = 0; i < requests.size(); ++i) {
         reqs[i] = std::make_pair(requests[i]->url,
-                                 base::ToLowerASCII(requests[i]->method));
+                                 base::ToUpperASCII(requests[i]->method));
       }
       skip_throttler_requests_.insert(reqs.begin(), reqs.end());
 

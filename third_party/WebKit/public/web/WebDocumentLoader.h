@@ -140,6 +140,8 @@ class BLINK_EXPORT WebDocumentLoader {
   virtual void SetSourceLocation(const WebSourceLocation&) = 0;
   virtual void ResetSourceLocation() = 0;
 
+  virtual void PreloadResource(const WebURL&) = 0;
+
  protected:
   ~WebDocumentLoader() {}
 };

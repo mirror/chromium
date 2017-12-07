@@ -21,6 +21,19 @@ namespace blink {
 
 namespace {
 
+const char* const kFontMimeTypes[] = {"font/woff2",
+                                      "application/x-font-woff",
+                                      "application/font-woff",
+                                      "application/font-woff2",
+                                      "font/x-woff",
+                                      "application/x-font-ttf",
+                                      "font/woff",
+                                      "font/ttf",
+                                      "application/x-font-otf",
+                                      "x-font/woff",
+                                      "application/font-sfnt",
+                                      "application/font-ttf"};
+
 struct MimeRegistryPtrHolder {
  public:
   MimeRegistryPtrHolder() {
@@ -186,6 +199,18 @@ bool MIMETypeRegistry::IsSupportedStyleSheetMIMEType(const String& mime_type) {
 }
 
 bool MIMETypeRegistry::IsSupportedFontMIMEType(const String& mime_type) {
+  CString mime_type_ascii = mime_type.Ascii();
+  bool found =
+      std::any_of(std::begin(kFontMimeTypes), std::end(kFontMimeTypes),
+                  [&mime_type_ascii](const std::string& mime) {
+                    return net::MatchesMimeType(
+                        mime,
+                        std::string(mime_type_ascii.data(),
+                                    mime_type_ascii.length()));
+                  });
+  if (found)
+    return true;
+
   static const unsigned kFontLen = 5;
   if (!mime_type.StartsWithIgnoringASCIICase("font/"))
     return false;

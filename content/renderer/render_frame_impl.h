@@ -1583,6 +1583,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // Service is enabled.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
 
+  // We want both order-preserving vector and a cheap set for looking up.
+  std::vector<std::pair<GURL, std::string>> webpackage_requests_;
   base::flat_set<std::pair<GURL, std::string>> skip_throttler_requests_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.

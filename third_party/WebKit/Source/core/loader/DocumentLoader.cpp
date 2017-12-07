@@ -691,6 +691,8 @@ void DocumentLoader::CommitNavigation(const AtomicString& mime_type,
   frame_->GetDocument()->MaybeHandleHttpRefresh(
       response_.HttpHeaderField(HTTPNames::Refresh),
       Document::kHttpRefreshFromHeader);
+
+  PerformPreload();
 }
 
 void DocumentLoader::CommitData(const char* bytes, size_t length) {
@@ -1171,6 +1173,48 @@ void DocumentLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   // Append() might lead to a detach.
   if (parser_)
     parser_->Finish();
+}
+
+void DocumentLoader::AddPreloadRequest(const KURL& url) {
+  preload_requests_.push_back(url);
+}
+
+void DocumentLoader::PerformPreload() {
+  for (auto& url : preload_requests_) {
+    String path = url.GetPath();
+    int index = path.ReverseFind('.');
+    if (index == -1)
+      continue;
+    String mime_type =
+        MIMETypeRegistry::GetMIMETypeForExtension(path.Substring(index + 1));
+    Optional<Resource::Type> resource_type = WTF::nullopt;
+    if (MIMETypeRegistry::IsSupportedImagePrefixedMIMEType(mime_type))
+      resource_type = Resource::kImage;
+    else if (MIMETypeRegistry::IsSupportedJavaScriptMIMEType(mime_type))
+      resource_type = Resource::kScript;
+    else if (MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type))
+      resource_type = Resource::kCSSStyleSheet;
+    else if (MIMETypeRegistry::IsSupportedMediaMIMEType(mime_type, String()))
+      resource_type = Resource::kMedia;
+    else if (MIMETypeRegistry::IsSupportedFontMIMEType(mime_type))
+      resource_type = Resource::kFont;
+    else
+      continue;
+    ResourceRequest resource_request(url);
+    resource_request.SetRequestContext(ResourceFetcher::DetermineRequestContext(
+        resource_type.value(), ResourceFetcher::kImageNotImageSet, false));
+    Document& document = *frame_->GetDocument();
+    ResourceLoaderOptions options;
+    options.initiator_info.name = FetchInitiatorTypeNames::link;
+    FetchParameters fetch_params(resource_request, options);
+    fetch_params.SetCharset(document.Encoding());
+    fetch_params.SetLinkPreload(true);  // Just for now.
+    if (resource_type == Resource::kFont)
+      fetch_params.SetCrossOriginAccessControl(
+          document.GetSecurityOrigin(),
+          kCrossOriginAttributeAnonymous);
+    StartPreload(resource_type.value(), fetch_params);
+  }
 }
 
 DEFINE_WEAK_IDENTIFIER_MAP(DocumentLoader);
