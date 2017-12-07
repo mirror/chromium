@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffcd67db_43deb2a1",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-07T17:43:14Z",
+      "side": 1,
+      "message": "Maybe something like:\n\n  assert binary_absolute_path.startswith(os.path.abspath(BUILD_DIR)), (\n         \u0027Target executable ......\u0027)\n\n\nso it would be still readable, but without IF .. THEN assert?",
+      "range": {
+        "startLine": 409,
+        "startChar": 6,
+        "endLine": 411,
+        "endChar": 70
+      },
+      "revId": "5482bbf6d27aa5c848e78647b7e7f958d993fc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
