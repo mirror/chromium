@@ -473,6 +473,29 @@
       "revId": "4222bebf490d29d75439531edea326e4641f69e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd307819_cfaa9950",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1910,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T20:44:23Z",
+      "side": 1,
+      "message": "Are there any tests where we query",
+      "range": {
+        "startLine": 1910,
+        "startChar": 23,
+        "endLine": 1910,
+        "endChar": 24
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
