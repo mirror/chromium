@@ -329,12 +329,15 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::ThrottleableTaskQueue() {
 scoped_refptr<TaskQueue> WebFrameSchedulerImpl::DeferrableTaskQueue() {
   DCHECK(parent_web_view_scheduler_);
   if (!deferrable_task_queue_) {
-    deferrable_task_queue_ = renderer_scheduler_->NewTaskQueue(
-        MainThreadTaskQueue::QueueCreationParams(
-            MainThreadTaskQueue::QueueType::kFrameThrottleable)
-            .SetShouldReportWhenExecutionBlocked(true)
-            .SetCanBeDeferred(true)
-            .SetCanBePaused(true));
+    MainThreadTaskQueue::QueueCreationParams queue_creation_params(
+        MainThreadTaskQueue::QueueType::kFrameThrottleable);
+    queue_creation_params.SetShouldReportWhenExecutionBlocked(true)
+        .SetCanBeDeferred(true)
+        .SetCanBePaused(true);
+    if (RuntimeEnabledFeatures::StopNonTimersInBackgroundEnabled())
+      queue_creation_params.SetCanBeStopped(true);
+    deferrable_task_queue_ =
+        renderer_scheduler_->NewTaskQueue(queue_creation_params);
     deferrable_task_queue_->SetBlameContext(blame_context_);
     deferrable_task_queue_->SetFrameScheduler(this);
     deferrable_queue_enabled_voter_ =
@@ -347,11 +350,14 @@ scoped_refptr<TaskQueue> WebFrameSchedulerImpl::DeferrableTaskQueue() {
 scoped_refptr<TaskQueue> WebFrameSchedulerImpl::PausableTaskQueue() {
   DCHECK(parent_web_view_scheduler_);
   if (!pausable_task_queue_) {
-    pausable_task_queue_ = renderer_scheduler_->NewTaskQueue(
-        MainThreadTaskQueue::QueueCreationParams(
-            MainThreadTaskQueue::QueueType::kFramePausable)
-            .SetShouldReportWhenExecutionBlocked(true)
-            .SetCanBePaused(true));
+    MainThreadTaskQueue::QueueCreationParams queue_creation_params(
+        MainThreadTaskQueue::QueueType::kFramePausable);
+    queue_creation_params.SetShouldReportWhenExecutionBlocked(true)
+        .SetCanBePaused(true);
+    if (RuntimeEnabledFeatures::StopNonTimersInBackgroundEnabled())
+      queue_creation_params.SetCanBeStopped(true);
+    pausable_task_queue_ =
+        renderer_scheduler_->NewTaskQueue(queue_creation_params);
     pausable_task_queue_->SetBlameContext(blame_context_);
     pausable_task_queue_->SetFrameScheduler(this);
     pausable_queue_enabled_voter_ =
@@ -503,7 +509,7 @@ void WebFrameSchedulerImpl::UpdateThrottlingState() {
 
 WebFrameScheduler::ThrottlingState
 WebFrameSchedulerImpl::CalculateThrottlingState() const {
-  if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled() &&
+  if (RuntimeEnabledFeatures::StopLoadingInBackgroundEnabled() &&
       page_stopped_) {
     DCHECK(!page_visible_);
     return WebFrameScheduler::ThrottlingState::kStopped;
