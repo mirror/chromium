@@ -22,6 +22,30 @@
       "revId": "ba1a72116354b18540abd4ddb3e66303539b8be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ddb5d5_c66146ec",
+        "filename": "chrome/common/extensions/api/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-07T03:51:14Z",
+      "side": 1,
+      "message": "Yes. Will remove it.",
+      "parentUuid": "aae7440c_7b35f9f9",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 22
+      },
+      "revId": "ba1a72116354b18540abd4ddb3e66303539b8be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
