@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60ac1469_e9e74536",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-07T11:42:33Z",
+      "side": 1,
+      "message": "As @xiaochengh suggested we should remove the refactoring with the mechanincal changes for moving is_directional to FrameSelection.\nPrevious patch sets had FrameSelection being passed.\nShall i do this refactoring once this patch goes ahead ?",
+      "parentUuid": "83244d17_faa96ab6",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28e70fca_7fdbe184",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 27
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96e29a9e_38f07d8f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-07T11:42:33Z",
+      "side": 1,
+      "message": "Once this patch goes ahead, shall I do the refactoring by passing position, as was done in the previous patch set.",
+      "parentUuid": "28e70fca_7fdbe184",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4b7b963_3bd44959",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 27
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-07T11:32:40Z",
       "side": 1,
       "message": "Since EndingSelection() is a caret, see L795, we should pass Position to\navoid passing bool argument. If we do so, SelectionModifier doesn\u0027t need\nto have bool parameter.",
+      "range": {
+        "startLine": 813,
+        "startChar": 47,
+        "endLine": 813,
+        "endChar": 78
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eb7f0f_9ee80070",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-07T11:42:33Z",
+      "side": 1,
+      "message": "Shall I do the refactoring once this patch goes ahead ?",
+      "parentUuid": "b4b7b963_3bd44959",
       "range": {
         "startLine": 813,
         "startChar": 47,
