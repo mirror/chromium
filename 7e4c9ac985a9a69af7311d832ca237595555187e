@@ -192,6 +192,24 @@
       "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d099ebb_92232439",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-07T23:12:23Z",
+      "side": 1,
+      "message": "I sorta wondered about that, but I thought you had to do something special to make the Garbage collection kick in.",
+      "parentUuid": "82c39fd4_d5211bcf",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
