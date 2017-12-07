@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "871f6e35_43f2cff3",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T21:43:37Z",
+      "side": 1,
+      "message": "Please add proper documentation to the new constructors.",
+      "range": {
+        "startLine": 49,
+        "startChar": 1,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff63f05_4dcfbdf4",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T21:43:37Z",
+      "side": 1,
+      "message": "Default parameters are discouraged (but still allowed).\n\nI prefer overloads.",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 77
+      },
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
