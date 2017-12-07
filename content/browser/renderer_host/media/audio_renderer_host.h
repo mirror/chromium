@@ -65,6 +65,12 @@ class AudioSystem;
 }
 
 namespace content {
+namespace audio_renderer_host_unittest {
+class AudioRendererHostTest;
+class MockAudioRendererHost;
+FORWARD_DECLARE_TEST(AudioRendererHostTest, CreateMockStream);
+FORWARD_DECLARE_TEST(AudioRendererHostTest, MockStreamDataConversation);
+}  // namespace audio_renderer_host_unittest
 
 class AudioMirroringManager;
 class MediaStreamManager;
@@ -95,10 +101,10 @@ class CONTENT_EXPORT AudioRendererHost
   void OverrideDevicePermissionsForTesting(bool has_access);
 
  private:
-  friend class AudioRendererHostTest;
+  friend class audio_renderer_host_unittest::AudioRendererHostTest;
   friend class BrowserThread;
   friend class base::DeleteHelper<AudioRendererHost>;
-  friend class MockAudioRendererHost;
+  friend class audio_renderer_host_unittest::MockAudioRendererHost;
   friend class TestAudioRendererHost;
   FRIEND_TEST_ALL_PREFIXES(AudioRendererHostTest, CreateMockStream);
   FRIEND_TEST_ALL_PREFIXES(AudioRendererHostTest, MockStreamDataConversation);

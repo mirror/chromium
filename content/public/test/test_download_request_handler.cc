@@ -171,6 +171,8 @@ void StoreValueAndInvokeClosure(const base::Closure& closure,
   closure.Run();
 }
 
+namespace test_download_request_handler {
+
 // Xorshift* PRNG from https://en.wikipedia.org/wiki/Xorshift
 uint64_t XorShift64StarWithIndex(uint64_t seed, uint64_t index) {
   const uint64_t kMultiplier = UINT64_C(2685821657736338717);
@@ -180,6 +182,8 @@ uint64_t XorShift64StarWithIndex(uint64_t seed, uint64_t index) {
   x ^= x >> 27;
   return x * kMultiplier;
 }
+
+}  // namespace test_download_request_handler
 
 void RespondToOnStartedCallbackWithStaticHeaders(
     const std::string& headers,
@@ -666,7 +670,8 @@ void TestDownloadRequestHandler::GetPatternBytes(int seed,
   int64_t seed_offset = starting_offset / sizeof(int64_t);
   int64_t first_byte_position = starting_offset % sizeof(int64_t);
   while (length > 0) {
-    uint64_t data = XorShift64StarWithIndex(seed, seed_offset);
+    uint64_t data = test_download_request_handler::XorShift64StarWithIndex(
+        seed, seed_offset);
     int length_to_copy =
         std::min(length, static_cast<int>(sizeof(data) - first_byte_position));
     memcpy(buffer, reinterpret_cast<char*>(&data) + first_byte_position,

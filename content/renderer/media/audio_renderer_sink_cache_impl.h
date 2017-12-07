@@ -16,6 +16,10 @@
 
 namespace content {
 
+namespace audio_renderer_sink_cache_unittest {
+class AudioRendererSinkCacheTest;
+}
+
 // AudioRendererSinkCache implementation.
 class CONTENT_EXPORT AudioRendererSinkCacheImpl
     : public AudioRendererSinkCache {
@@ -48,7 +52,7 @@ class CONTENT_EXPORT AudioRendererSinkCacheImpl
   void ReleaseSink(const media::AudioRendererSink* sink_ptr) final;
 
  private:
-  friend class AudioRendererSinkCacheTest;
+  friend class audio_renderer_sink_cache_unittest::AudioRendererSinkCacheTest;
   friend class CacheEntryFinder;
 
   struct CacheEntry;
