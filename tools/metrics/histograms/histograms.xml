@@ -22452,6 +22452,57 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="Extensions.BrowsingInstanceViolation.IsBackgroundSourceOrTarget"
+    units="Boolean">
+  <owner>lukasza@chromium.org</owner>
+  <summary>
+    When an extension violates browsing instance boundaries, this metric records
+    whether either source or the target frame was of the extension view type of
+    VIEW_TYPE_BACKGROUND_CONTENTS.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.BrowsingInstanceViolation.SourceExtensionType"
+    enum="ExtensionType">
+  <owner>lukasza@chromium.org</owner>
+  <summary>
+    When an extension violates browsing instance boundaries, this metric records
+    the extension type of the source frame.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.BrowsingInstanceViolation.SourceExtensionViewType"
+    enum="ExtensionViewType">
+  <owner>lukasza@chromium.org</owner>
+  <summary>
+    When an extension violates browsing instance boundaries, this metric records
+    the extension view type of the source frame.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.BrowsingInstanceViolation.TargetExtensionType"
+    enum="ExtensionType">
+  <owner>lukasza@chromium.org</owner>
+  <summary>
+    When an extension violates browsing instance boundaries, this metric records
+    the extension type of the found frame.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.BrowsingInstanceViolation.TargetExtensionViewType"
+    enum="ExtensionViewType">
+  <owner>lukasza@chromium.org</owner>
+  <summary>
+    When an extension violates browsing instance boundaries, this metric records
+    the extension view type of the found frame.
+
+    This metric should help confirm or deny the theory that violating browsing
+    instance boundaries is only needed for looking up background contents /
+    pages (of VIEW_TYPE_BACKGROUND_CONTENTS type).
+  </summary>
+</histogram>
+
 <histogram name="Extensions.CheckForExternalUpdatesTime" units="ms">
   <owner>rkaplow@chromium.org</owner>
   <summary>
