@@ -16,6 +16,24 @@
       "revId": "32fbd7b7b28d7b0d24334dd404e5bc23fc1bbfd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a838ddb1_0bc72958",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-07T01:23:01Z",
+      "side": 1,
+      "message": "for whatever reason, that\u0027s how emacs decides to indent it",
+      "parentUuid": "4329a818_e7ee2f76",
+      "revId": "32fbd7b7b28d7b0d24334dd404e5bc23fc1bbfd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
