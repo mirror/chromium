@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b4bce6_86571242",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-07T03:01:38Z",
+      "side": 1,
+      "message": "Add this method, s.t. the future logic to change ensure files can use it as well.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fc948a_1467c2ed",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-07T03:01:38Z",
+      "side": 1,
+      "message": "Not involve changing ensure file logic before the CIPD issue got resolved.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ed1b4b_fb1b8d90",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-07T03:01:38Z",
+      "side": 1,
+      "message": "Set \u0027--package\u0027 as required since changing file logic needing package name explicitly.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8292df32_6c19ce56",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-07T03:01:38Z",
+      "side": 1,
+      "message": ":) Seems like it simply worked with \u0027check_call\u0027 without the output issue.\nUpdating it in next patch.",
+      "revId": "6fbe59a02360d3020b800e5450a1c19ea3c051ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
