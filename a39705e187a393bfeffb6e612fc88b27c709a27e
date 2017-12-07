@@ -1,0 +1,277 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ca1a89_56c634e5",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Not sure what the comment (and the original on line 468) refers to.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b744274a_10b6b0a2",
+        "filename": "chrome/browser/printing/print_job_worker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Add a comment since the #if is a bit far away.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcc66de_cd0c5bfe",
+        "filename": "chrome/browser/printing/print_job_worker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Move this into an anonymous namespace.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2dd8b1_f2e85873",
+        "filename": "chrome/browser/printing/print_job_worker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "OnNewPage()",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5714e570_e756c509",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "this check",
+      "range": {
+        "startLine": 150,
+        "startChar": 26,
+        "endLine": 150,
+        "endChar": 37
+      },
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a7e490_95b65ef9",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "You may want to remove the files printed_page_win.{cc,h} so it\u0027s obvious they are for Windows.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bac31f_30375638",
+        "filename": "printing/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "This doesn\u0027t have to be nested?",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808ee495_7921c25e",
+        "filename": "printing/printed_document.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "I\u0027d just turn this into a DCHECK. We should be able to trust the 1 and only caller in the same file to do the right thing.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef21206_ca9da61d",
+        "filename": "printing/printed_document.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Do we want to use the same names on both side of the equation? i.e. mutable.foo_ \u003d foo. Pick a name and stick with it.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ee467a_de48d3fb",
+        "filename": "printing/printed_document.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Stick with #if defined(OS_WIN) ... #else ... #endif ?",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3690172_c32633c1",
+        "filename": "printing/printed_document.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "(Same as original) No need to mention ownership with unique_ptrs.",
+      "range": {
+        "startLine": 59,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57775804_409e421b",
+        "filename": "printing/printed_document.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "RenderPrintedDocument maybe?",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0ed341_dc658c5e",
+        "filename": "printing/printed_document.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "This can be unnested.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a6bbd4_0069fea6",
+        "filename": "printing/printed_document_chromeos.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Combine into:\n\nreturn context-\u003ePageDone() \u003d\u003d PrintingContext::OK;",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9fa700_e3f6423c",
+        "filename": "printing/printed_document_mac.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:20:50Z",
+      "side": 1,
+      "message": "Not sure what this is means exactly.",
+      "revId": "a39705e187a393bfeffb6e612fc88b27c709a27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
