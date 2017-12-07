@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f7e5eb5_27bd73d0",
+        "filename": "content/renderer/input/prediction/kalman_filter/axis_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-12-07T15:29:07Z",
+      "side": 1,
+      "message": "Do you know can we use varying dt in kalman filter? Or it has to be an constant value?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "ea8071956d5bd22aeb165f06c519a9c2d02fb8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
