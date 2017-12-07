@@ -7,13 +7,13 @@
 
 #include <memory>
 
+#include "base/macros.h"
 #include "core/dom/Document.h"
 #include "core/paint/FirstMeaningfulPaintDetector.h"
 #include "core/paint/PaintEvent.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/Noncopyable.h"
 #include "public/platform/WebLayerTreeView.h"
 
 namespace blink {
@@ -25,7 +25,6 @@ class LocalFrame;
 class CORE_EXPORT PaintTiming final
     : public GarbageCollectedFinalized<PaintTiming>,
       public Supplement<Document> {
-  WTF_MAKE_NONCOPYABLE(PaintTiming);
   USING_GARBAGE_COLLECTED_MIXIN(PaintTiming);
   friend class FirstMeaningfulPaintDetector;
   using ReportTimeCallback =
@@ -160,6 +159,7 @@ class CORE_EXPORT PaintTiming final
   double first_meaningful_paint_candidate_ = 0.0;
 
   Member<FirstMeaningfulPaintDetector> fmp_detector_;
+  DISALLOW_COPY_AND_ASSIGN(PaintTiming);
 
   FRIEND_TEST_ALL_PREFIXES(FirstMeaningfulPaintDetectorTest, NoFirstPaint);
   FRIEND_TEST_ALL_PREFIXES(FirstMeaningfulPaintDetectorTest, OneLayout);

@@ -27,6 +27,7 @@
 #define CompositedLayerMapping_h
 
 #include <memory>
+#include "base/macros.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerPaintingInfo.h"
 #include "core/paint/compositing/GraphicsLayerUpdater.h"
@@ -84,7 +85,7 @@ enum GraphicsLayerUpdateScope {
 // - Otherwise the PaintLayer doesn't own or directly reference any
 //   CompositedLayerMapping.
 class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
-  WTF_MAKE_NONCOPYABLE(CompositedLayerMapping);
+  DISALLOW_COPY_AND_ASSIGN(CompositedLayerMapping);
   USING_FAST_MALLOC(CompositedLayerMapping);
 
  public:
