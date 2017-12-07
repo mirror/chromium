@@ -42,8 +42,8 @@ void PrintedDocument::RenderPrintedPage(
   DCHECK(context);
 
   const PageSetup& page_setup = immutable_.settings_.page_setup_device_units();
-  gfx::Rect content_area =
-      page.GetCenteredPageContentRect(page_setup.physical_size());
+  gfx::Rect content_area = GetCenteredPageContentRect(
+      page_setup.physical_size(), page.page_size(), page.page_content_rect());
 
   // Save the state to make sure the context this function call does not modify
   // the device context.
