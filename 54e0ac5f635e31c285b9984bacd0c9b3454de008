@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "ba70247b_f0e2ad26",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T13:09:16Z",
+      "side": 1,
+      "message": "I wouldn\u0027t expect ServerExecutable alone to work. Setting both certainly will -- I see many instances in the registry on my \u0027puter.\n\nIs there a test for launching Chrome via the toast (or via the activation COM interface)? If there were, you could rely on the trybots to test it for you.",
+      "parentUuid": "68704336_78b441bd",
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1ff7f02_1d174404",
         "filename": "chrome/installer/setup/setup_util_unittest.cc",
         "patchSetId": 48

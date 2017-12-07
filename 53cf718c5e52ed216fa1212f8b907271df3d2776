@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c2a028_e7fe0538",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-07T13:09:16Z",
+      "side": 1,
+      "message": "this shouldn\u0027t be appended as a path component, but rather appended to the string following value() below.",
+      "revId": "53cf718c5e52ed216fa1212f8b907271df3d2776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
