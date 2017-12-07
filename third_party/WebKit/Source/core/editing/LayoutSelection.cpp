@@ -670,6 +670,8 @@ void LayoutSelection::Commit() {
   if (!HasPendingSelection())
     return;
   has_pending_selection_ = false;
+  if (true)
+    return;
 
   DCHECK(!frame_selection_->GetDocument().NeedsLayoutTreeUpdate());
   DCHECK_GE(frame_selection_->GetDocument().Lifecycle().GetState(),
