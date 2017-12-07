@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059db019_479075e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-07T09:24:10Z",
+      "side": 1,
+      "message": "The \"Bug:\" line is sufficient. You can omit \"bug 775073\" here.\n\nThe contents above the first empty line are treated as a subject. I suggest that you note that this would also add yourself to the AUTHORS file in the main text, and explain only the change in the code in the subject.",
+      "revId": "ee777fbc8d39ec563f0db2ed45a47aa867bafaed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
