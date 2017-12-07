@@ -40,6 +40,7 @@ namespace {
 
 NSString* const kTestFormName = @"FormName";
 NSString* const kTestFieldName = @"FieldName";
+NSString* const kTestFieldIdentifier = @"FieldIdentifier";
 NSString* const kTestFieldValue = @"FieldValue";
 
 }  // namespace
@@ -161,6 +162,7 @@ TEST_F(CWVAutofillControllerTest, FocusCallback) {
       web::FormActivityParams params;
       params.form_name = base::SysNSStringToUTF8(kTestFormName);
       params.field_name = base::SysNSStringToUTF8(kTestFieldName);
+      params.field_identifier = base::SysNSStringToUTF8(kTestFieldIdentifier);
       params.value = base::SysNSStringToUTF8(kTestFieldValue);
       params.type = "focus";
       web_state_.OnFormActivity(params);
@@ -186,6 +188,7 @@ TEST_F(CWVAutofillControllerTest, InputCallback) {
       web::FormActivityParams params;
       params.form_name = base::SysNSStringToUTF8(kTestFormName);
       params.field_name = base::SysNSStringToUTF8(kTestFieldName);
+      params.field_identifier = base::SysNSStringToUTF8(kTestFieldIdentifier);
       params.value = base::SysNSStringToUTF8(kTestFieldValue);
       params.type = "input";
       web_state_.OnFormActivity(params);
@@ -210,6 +213,7 @@ TEST_F(CWVAutofillControllerTest, BlurCallback) {
     web::FormActivityParams params;
     params.form_name = base::SysNSStringToUTF8(kTestFormName);
     params.field_name = base::SysNSStringToUTF8(kTestFieldName);
+    params.field_identifier = base::SysNSStringToUTF8(kTestFieldIdentifier);
     params.value = base::SysNSStringToUTF8(kTestFieldValue);
     params.type = "blur";
     web_state_.OnFormActivity(params);
