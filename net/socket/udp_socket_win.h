@@ -121,7 +121,9 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
   int SendTo(IOBuffer* buf,
              int buf_len,
              const IPEndPoint& address,
-             const CompletionCallback& callback);
+             const CompletionCallback& callback,
+             const NetworkTrafficAnnotationTag& traffic_annotation =
+                 NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Sets the receive buffer size (in bytes) for the socket.
   // Returns a net error code.
