@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75eb442d_4660e50e",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c1600b0_95646489",
+      "range": {
+        "startLine": 135,
+        "startChar": 24,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b786fa_ff64bbd3",
         "filename": "cc/paint/scoped_raster_flags.cc",
         "patchSetId": 11
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "fd114b20_7d633e87",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f51049_849a60dc",
+      "range": {
+        "startLine": 146,
+        "startChar": 38,
+        "endLine": 146,
+        "endChar": 43
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4be3e131_718fdb6e",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b786fa_ff64bbd3",
+      "range": {
+        "startLine": 146,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 14
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8cf0b44_1e8854b2",
         "filename": "cc/paint/scoped_raster_flags.h",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aad0d514_dc4db4ed",
+        "filename": "cc/paint/scoped_raster_flags.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d love to reduce these variants, but the annoying bit about flags() is it can return nullptr and has to be checked...\n\nOn second thought, it looks like we immediately bail after a decode failure, so we would never call flags() internally and expect to see nullptr.\n\nDone.",
+      "parentUuid": "a8cf0b44_1e8854b2",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 27
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77aa5ee9_629d14f0",
         "filename": "cc/paint/scoped_raster_flags.h",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-07T18:28:03Z",
       "side": 1,
       "message": "I think this should be a copy since the ctor to ensure that even if we pass a temporary to construction, this doesn\u0027t dangle.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eea357c_e067e8f0",
+        "filename": "cc/paint/scoped_raster_flags.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Hmm, since we\u0027re now passing every single PaintFlags through this, I\u0027m kinda wary of making so many copies.  Per header docs \"|flags| and |image_provider| must outlive this class\", same as before, so we\u0027re not changing lifespan semantics.\n\nMaybe change the ctor to take const PaintFlags* like before, to make clients more aware - WDYT?",
+      "parentUuid": "77aa5ee9_629d14f0",
       "range": {
         "startLine": 71,
         "startChar": 2,
@@ -137,6 +257,30 @@
       "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4491571_faee313a",
+        "filename": "cc/paint/scoped_raster_flags_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T19:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a713d08d_5a244efa",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
