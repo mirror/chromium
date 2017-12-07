@@ -16,6 +16,24 @@
       "revId": "95da5dfc1c459c0105a0d661b2a93ebb559b48b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e67cf1f_d7d65328",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-07T23:02:51Z",
+      "side": 1,
+      "message": "The panel animates on-screen: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/color_picker/spectrum.css?q\u003dspectrum.css\u0026sq\u003dpackage:chromium\u0026l\u003d496",
+      "parentUuid": "5dfcfc41_e03fbcf8",
+      "revId": "95da5dfc1c459c0105a0d661b2a93ebb559b48b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
