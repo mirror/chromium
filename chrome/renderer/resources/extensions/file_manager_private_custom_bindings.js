@@ -72,6 +72,19 @@ binding.registerCustomHook(function(bindingsAPI) {
     });
   });
 
+  apiFunctions.setHandleRequest('createIsolatedEntries',
+                                function(entries, callback) {
+    var urls = entries.map(function(entry) {
+      return fileManagerPrivateNatives.GetEntryURL(entry);
+    });
+    fileManagerPrivateInternal.createIsolatedEntries(urls, function(
+        entryDescriptions) {
+      callback(entryDescriptions.map(function(description) {
+        return GetExternalFileEntry(description);
+      }));
+    });
+  });
+
   apiFunctions.setHandleRequest('getEntryProperties',
                                 function(entries, names, callback) {
     var urls = entries.map(function(entry) {
