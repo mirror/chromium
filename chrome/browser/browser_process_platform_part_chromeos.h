@@ -19,6 +19,7 @@ class ChromeSessionManager;
 class ChromeUserManager;
 class ProfileHelper;
 class TimeZoneResolver;
+class UsersCommitPendingWriteOnExit;
 }
 
 namespace chromeos {
@@ -118,6 +119,8 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   ui::InputDeviceControllerClient* GetInputDeviceControllerClient();
 
+  void StartCommitPendingWriteOnExit(base::OnceClosure on_finish);
+
  private:
   void CreateProfileHelper();
 
@@ -151,6 +154,9 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   std::unique_ptr<ui::InputDeviceControllerClient>
       input_device_controller_client_;
 #endif
+
+  std::unique_ptr<chromeos::UsersCommitPendingWriteOnExit>
+      commit_pending_write_on_exit_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

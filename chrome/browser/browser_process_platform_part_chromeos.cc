@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/net/delay_network_call.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/prefs/pref_connector_service.h"
+#include "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/automatic_reboot_manager.h"
@@ -230,4 +231,14 @@ void BrowserProcessPlatformPart::CreateProfileHelper() {
   DCHECK(!created_profile_helper_ && !profile_helper_);
   created_profile_helper_ = true;
   profile_helper_.reset(new chromeos::ProfileHelper());
+}
+
+void BrowserProcessPlatformPart::StartCommitPendingWriteOnExit(
+    base::OnceClosure on_finish) {
+  if (commit_pending_write_on_exit_)
+    return;
+
+  commit_pending_write_on_exit_ =
+      std::make_unique<chromeos::UsersCommitPendingWriteOnExit>();
+  commit_pending_write_on_exit_->Start(std::move(on_finish));
 }
