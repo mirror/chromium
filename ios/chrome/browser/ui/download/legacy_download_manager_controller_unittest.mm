@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/download/download_manager_controller.h"
+#import "ios/chrome/browser/ui/download/legacy_download_manager_controller.h"
 
 #import <UIKit/UIKit.h>
 
@@ -29,7 +29,7 @@
 using net::HttpResponseHeaders;
 using net::URLRequestStatus;
 
-@interface DownloadManagerController (ExposedForTesting)
+@interface LegacyDownloadManagerController (ExposedForTesting)
 - (UIView*)documentContainer;
 - (UIView*)progressBar;
 - (UIImageView*)documentIcon;
@@ -51,7 +51,7 @@ namespace {
 
 const GURL kTestURL = GURL("http://www.example.com/test_download_file.txt");
 
-class DownloadManagerControllerTest : public ChromeWebTest {
+class LegacyDownloadManagerControllerTest : public ChromeWebTest {
  protected:
   void SetUp() override {
     ChromeWebTest::SetUp();
@@ -62,14 +62,14 @@ class DownloadManagerControllerTest : public ChromeWebTest {
         [OCMockObject niceMockForProtocol:@protocol(StoreKitLauncher)];
     helper->SetLauncher(mock_launcher);
     _controller =
-        [[DownloadManagerController alloc] initWithWebState:web_state()
-                                                downloadURL:kTestURL];
+        [[LegacyDownloadManagerController alloc] initWithWebState:web_state()
+                                                      downloadURL:kTestURL];
   }
   std::unique_ptr<net::TestURLFetcherFactory> _fetcher_factory;
-  __strong DownloadManagerController* _controller;
+  __strong LegacyDownloadManagerController* _controller;
 };
 
-TEST_F(DownloadManagerControllerTest, TestXibViewConnections) {
+TEST_F(LegacyDownloadManagerControllerTest, TestXibViewConnections) {
   EXPECT_TRUE([_controller documentContainer]);
   EXPECT_TRUE([_controller progressBar]);
   EXPECT_TRUE([_controller documentIcon]);
@@ -86,7 +86,7 @@ TEST_F(DownloadManagerControllerTest, TestXibViewConnections) {
   EXPECT_TRUE([_controller googleDriveButton]);
 }
 
-TEST_F(DownloadManagerControllerTest, TestStart) {
+TEST_F(LegacyDownloadManagerControllerTest, TestStart) {
   [_controller start];
   EXPECT_TRUE(
       [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible]);
@@ -95,7 +95,7 @@ TEST_F(DownloadManagerControllerTest, TestStart) {
   EXPECT_EQ(kTestURL, fetcher->GetOriginalURL());
 }
 
-TEST_F(DownloadManagerControllerTest, TestOnHeadFetchCompleteSuccess) {
+TEST_F(LegacyDownloadManagerControllerTest, TestOnHeadFetchCompleteSuccess) {
   [_controller start];
   net::TestURLFetcher* fetcher = _fetcher_factory->GetFetcherByID(0);
 
@@ -119,7 +119,7 @@ TEST_F(DownloadManagerControllerTest, TestOnHeadFetchCompleteSuccess) {
   EXPECT_FALSE([_controller downloadButton].hidden);
 }
 
-TEST_F(DownloadManagerControllerTest, TestOnHeadFetchCompleteFailure) {
+TEST_F(LegacyDownloadManagerControllerTest, TestOnHeadFetchCompleteFailure) {
   [_controller start];
   net::TestURLFetcher* fetcher = _fetcher_factory->GetFetcherByID(0);
 
