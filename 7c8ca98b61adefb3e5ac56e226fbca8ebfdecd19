@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf71251_32369fad",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2988,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-07T16:46:08Z",
+      "side": 1,
+      "message": "Could we separate TakeNavigationHandleForCommit in a same-document + corrs-document versions? There\u0027s some amount of code specific to each case in the function, and I think it\u0027s different enough that it could warrant being split.",
+      "revId": "7c8ca98b61adefb3e5ac56e226fbca8ebfdecd19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2b14f1_4d94b050",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2994,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-07T16:46:08Z",
+      "side": 1,
+      "message": "This is used for POST navigations, which shouldn\u0027t be same-document.",
+      "revId": "7c8ca98b61adefb3e5ac56e226fbca8ebfdecd19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cf6c32_d9cf3bfd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 4312,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-07T16:46:08Z",
+      "side": 1,
+      "message": "We still end up with a lot of copied code. Could we consider making a UpdateStateAfterNavigation function that groups all of this and is called from DidCommitProvisionalLoad and here? Then we can leave the parts that differ where they are.",
+      "revId": "7c8ca98b61adefb3e5ac56e226fbca8ebfdecd19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acce5e80_0694bb98",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-07T16:46:08Z",
+      "side": 1,
+      "message": "Can this function stays at the same level as SendDidCommitProvisionalLoad so that there is less code movement in the .cc file? This will be easier to review.",
+      "revId": "7c8ca98b61adefb3e5ac56e226fbca8ebfdecd19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

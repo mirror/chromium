@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e776606d_b867d83c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-07T16:46:08Z",
+      "side": 0,
+      "message": "This is likely the cause of https://crbug.com/776274 -\u003e it shouldn\u0027t be done for same document navigations so there\u0027s no need to factor this out in a function.",
+      "revId": "812775b6197a36df4c5b41ce095d98853ba13eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
