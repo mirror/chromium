@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70bdafea_66a09b61",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-07T20:59:41Z",
+      "side": 1,
+      "message": "Isn\u0027t it more optimized this way? Since if element-\u003eValue().IsEmpty() is true, it will save us from Computing the Sanitize function, and the element-\u003eVlaue().IsEmpty() is O(1).",
+      "parentUuid": "90c92623_d34c4149",
+      "revId": "a6fbc61f5b1201f22434edab7f135437c9ccaa9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "155dbcf0_61ec1aba",
         "filename": "components/autofill/content/renderer/form_autofill_util.cc",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-07T16:21:33Z",
       "side": 1,
       "message": "it\u0027s a bit of a shame that WebString (returned by element-\u003eValue()) doesn\u0027t seem to let you iterate over it\u0027s contents without copying the string via Utf16() or Utf8().\n\n:(\n\nOh well.",
+      "range": {
+        "startLine": 806,
+        "startChar": 31,
+        "endLine": 806,
+        "endChar": 55
+      },
+      "revId": "a6fbc61f5b1201f22434edab7f135437c9ccaa9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3952d4b6_d600777b",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-07T20:59:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "155dbcf0_61ec1aba",
       "range": {
         "startLine": 806,
         "startChar": 31,
@@ -56,6 +98,24 @@
       "revId": "a6fbc61f5b1201f22434edab7f135437c9ccaa9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7479c18f_15840c9b",
+        "filename": "components/autofill/core/common/autofill_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-07T20:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde4cbc1_345dd655",
+      "revId": "a6fbc61f5b1201f22434edab7f135437c9ccaa9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
