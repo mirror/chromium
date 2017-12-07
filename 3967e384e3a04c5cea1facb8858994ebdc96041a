@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a79b04fd_db31f40a",
+        "filename": "content/browser/renderer_host/media/media_stream_track_metrics_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-07T13:07:15Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f629c3a1_5c9f5c6d",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b22752a2_5b691b88",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42acdf3c_1648f162",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-07T13:07:15Z",
+      "side": 1,
+      "message": "This patch only aims at IPC to mojo migration.\n\nCan we take up this discussion in a separate thread? I can create a new bug and we can discuss about this there. We can include the owners of WebRTC as well into the discussion.",
+      "parentUuid": "b22752a2_5b691b88",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bb99af42_acb7bdca",
+        "filename": "content/common/media/media_stream_track_metrics_host_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-07T13:07:15Z",
+      "side": 1,
+      "message": "Removed this file.",
+      "parentUuid": "852d3147_4978033f",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9973a514_6eb47775",
         "filename": "content/renderer/media/webrtc/media_stream_track_metrics.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03905248_b027db49",
+        "filename": "content/renderer/media/webrtc/media_stream_track_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1252483
+      },
+      "writtenOn": "2017-12-07T13:07:15Z",
+      "side": 1,
+      "message": "Done. Thank you.",
+      "parentUuid": "9973a514_6eb47775",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
