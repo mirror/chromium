@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "045e3b75_0d80036d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/CustomPreviewComponent.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117689
+      },
+      "writtenOn": "2017-12-07T21:19:53Z",
+      "side": 1,
+      "message": "It won\u0027t let me add that for a non-object.",
+      "parentUuid": "76f2e779_bb79231f",
+      "range": {
+        "startLine": 10,
+        "startChar": 22,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "812f83276b1ce496e567c4480090ac7954a7a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0042068_519b1fad",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "812f83276b1ce496e567c4480090ac7954a7a9cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff46e64_1e544492",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1117689
+      },
+      "writtenOn": "2017-12-07T21:19:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0042068_519b1fad",
+      "range": {
+        "startLine": 973,
+        "startChar": 20,
+        "endLine": 973,
+        "endChar": 39
+      },
+      "revId": "812f83276b1ce496e567c4480090ac7954a7a9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
