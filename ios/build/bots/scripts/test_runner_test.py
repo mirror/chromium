@@ -204,6 +204,37 @@ class SimulatorTestRunnerTest(TestCase):
     with self.assertRaises(test_runner.AppLaunchError):
       tr.launch()
 
+  def test_get_launch_command(self):
+    """Ensures test filters are set correctly for launch command"""
+    tr = test_runner.SimulatorTestRunner(
+      'fake-app',
+      'fake-iossim',
+      'platform',
+      'os',
+      'xcode-version',
+      'xcode-build',
+      'out-dir',
+    )
+    tr.xctest_path = 'fake.xctest'
+    # Cases test_filter is not empty, with empty/non-empty self.test_cases.
+    tr.test_cases = []
+    test_filter = ['a']
+    cmd = tr.get_launch_command(test_filter, invert=False)
+    self.assertTrue('-t' in cmd and 'a' in cmd)
+
+    tr.test_cases = ['a', 'b']
+    cmd = tr.get_launch_command(test_filter, invert=False)
+    self.assertTrue('-t' in cmd and 'a' in cmd and '-b' not in cmd)
+
+    # Cases test_filter is empty, with empty/non-empty self.test_cases.
+    tr.test_cases = []
+    cmd = tr.get_launch_command(test_filter=None, invert=False)
+    self.assertTrue('-t' not in cmd)
+
+    tr.test_cases = ['a', 'b']
+    cmd = tr.get_launch_command(test_filter=None, invert=False)
+    self.assertTrue('-t' in cmd and 'a' in cmd and 'b' in cmd)
+
   def test_relaunch(self):
     """Ensures test is relaunched on test crash until tests complete."""
     def set_up(self):
@@ -256,6 +287,85 @@ class SimulatorTestRunnerTest(TestCase):
     )
     tr.launch()
     self.assertTrue(tr.logs)
+
+
+class DeviceTestRunnerTest(TestCase):
+  def setUp(self):
+    super(DeviceTestRunnerTest, self).setUp()
+
+    def install_xcode(build, mac_toolchain_cmd, xcode_app_path):
+      return True
+
+    self.mock(test_runner.find_xcode, 'find_xcode',
+              lambda _: {'found': True})
+    self.mock(test_runner.find_xcode, 'get_current_xcode_info', lambda: {
+        'version': 'test version', 'build': 'test build', 'path': 'test/path'})
+    self.mock(test_runner, 'install_xcode', install_xcode)
+    self.mock(test_runner.subprocess, 'check_output',
+              lambda _: 'fake-bundle-id')
+    self.mock(os.path, 'abspath', lambda path: '/abs/path/to/%s' % path)
+    self.mock(os.path, 'exists', lambda _: True)
+
+  def test_test_filter(self):
+    """Ensures test filters are set correctly"""
+    tr = test_runner.DeviceTestRunner(
+        'fake-app',
+        'xcode-version',
+        'xcode-build',
+        'out-dir',
+    )
+
+    # Cases when test_filter is not empty, with empty/non-empty self.test_cases
+    # and True/False invert.
+    test_filter = ['a', 'b']
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = []
+    tr.set_xctest_filters(test_filter, invert=False)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['OnlyTestIdentifiers'],
+                     test_filter)
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = []
+    tr.set_xctest_filters(test_filter, invert=True)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['SkipTestIdentifiers'],
+                     test_filter)
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = ['a', 'b', 'c', 'd']
+    tr.set_xctest_filters(test_filter, invert=False)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['OnlyTestIdentifiers'],
+                     test_filter)
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = ['a', 'b', 'c', 'd']
+    tr.set_xctest_filters(test_filter, invert=True)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['OnlyTestIdentifiers'],
+                     ['c', 'd'])
+
+    # Cases test_filter is empty, with different self.test_cases and invert.
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = []
+    tr.set_xctest_filters([], invert=False)
+    self.assertFalse(
+        tr.xctestrun_data['TestTargetName'].get('OnlyTestIdentifiers'))
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = []
+    tr.set_xctest_filters([], invert=True)
+    self.assertFalse(
+         tr.xctestrun_data['TestTargetName'].get('OnlyTestIdentifiers'))
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = ['a', 'b', 'c', 'd']
+    tr.set_xctest_filters([], invert=False)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['OnlyTestIdentifiers'],
+                     tr.test_cases)
+
+    tr.xctestrun_data = {'TestTargetName':{}}
+    tr.test_cases = ['a', 'b', 'c', 'd']
+    tr.set_xctest_filters([], invert=True)
+    self.assertEqual(tr.xctestrun_data['TestTargetName']['OnlyTestIdentifiers'],
+                     tr.test_cases)
 
 
 if __name__ == '__main__':
