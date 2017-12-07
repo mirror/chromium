@@ -22,6 +22,30 @@
       "revId": "b92512f05cd69a6886adfa852ec5343adc59175f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b4eb0d_12f33af4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T23:58:01Z",
+      "side": 1,
+      "message": "thanks, scott; i missed this. i agree that it looks like this should just return bool.",
+      "parentUuid": "06299bc3_271a2643",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 75
+      },
+      "revId": "b92512f05cd69a6886adfa852ec5343adc59175f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
