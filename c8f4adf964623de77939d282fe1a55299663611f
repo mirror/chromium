@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f4b561f_ef4c3a32",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/0001.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:43:50Z",
+      "side": 1,
+      "message": "Would you mind moving this into a \"resources\" directory, along with the test data? Some `.js` files end up being tests themselves (`.any.js` is special, and runs both as a worker and as an HTML page via WPT server magic).",
+      "revId": "c8f4adf964623de77939d282fe1a55299663611f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604c687f_15190572",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/cookie-http-state-template.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:43:50Z",
+      "side": 1,
+      "message": "Reaching into the frame and poking at its `contentDocument` will only work so long as the iframe is same-origin with the parent. That\u0027s the case for all the tests you\u0027ve done so far, but I think it won\u0027t hold for all the tests.\n\nDid you consider using `postMessage` to push the intersting bits of content up to the parent? It looks like you need `innerText` and `cookie`, so maybe changing the frame to something like:\n\n```\n\u003cdiv id\u003d\"data\"\u003e[DUMP EXPECTATION FILE HERE]\u003c/div\u003e\n\u003cscript\u003e\n  window.top.postMessage({\n    \"cookies\": document.cookie,\n    \"expectation\": document.querySelector(\u0027#data\u0027).innerText\n  }, \"*\");\n\u003c/script\u003e\n```\n\nand changing the test to listen for the message? Like:\n\n```\nreturn new Promise((resolve, reject) \u003d\u003e {\n  const iframe \u003d document.createElement(\u0027iframe\u0027);\n  iframe.src \u003d whatever;\n  let diff_tool \u003d CookieDiffTool();\n\n  window.addEventListener(\"message\", t.step_func(e \u003d\u003e {\n    let actual_cookies \u003d diff_tool.diff_with(e.data.cookies);\n    let expected_cookies \u003d strip_prefix_and_whitespace(e.data.expectation);\n    assert_equals(actual_cookies, expected_cookies);\n    resolve();\n  }));\n\n  document.body.appendChild(iframe);\n});\n```\n\nI haven\u0027t tried that, but it might work! :)",
+      "revId": "c8f4adf964623de77939d282fe1a55299663611f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6e8000_f1c7537e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/cookie-http-state-template.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:43:50Z",
+      "side": 1,
+      "message": "0002 probably shouldn\u0027t be hard-coded here.",
+      "revId": "c8f4adf964623de77939d282fe1a55299663611f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14829b89_6293d18a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/cookie-http-state-template.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:43:50Z",
+      "side": 1,
+      "message": "You\u0027re feeding this into a `promise_test`, so you don\u0027t need to tell the test that it\u0027s done. It\u0027s simply waiting for the promise to resolve or reject.",
+      "revId": "c8f4adf964623de77939d282fe1a55299663611f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
