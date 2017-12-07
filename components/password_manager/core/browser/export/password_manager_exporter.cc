@@ -8,6 +8,7 @@
 
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/autofill/core/common/password_form.h"
@@ -32,8 +33,10 @@ namespace password_manager {
 
 PasswordManagerExporter::PasswordManagerExporter(
     password_manager::CredentialProviderInterface*
-        credential_provider_interface)
+        credential_provider_interface,
+    ProgressCallback on_progress)
     : credential_provider_interface_(credential_provider_interface),
+      on_progress_(std::move(on_progress)),
       task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::TaskPriority::USER_VISIBLE, base::MayBlock()})),
       weak_factory_(this) {}
@@ -71,6 +74,8 @@ void PasswordManagerExporter::Export() {
   UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
                        password_list_.size());
 
+  on_progress_.Run(ExportProgressStatus::IN_PROGRESS, std::string());
+
   base::PostTaskAndReplyWithResult(
       task_runner_.get(), FROM_HERE,
       base::BindOnce(&password_manager::PasswordCSVWriter::SerializePasswords,
@@ -86,7 +91,10 @@ void PasswordManagerExporter::Export() {
 void PasswordManagerExporter::OnPasswordsSerialised(
     std::unique_ptr<Destination> destination,
     const std::string& serialised) {
-  destination->Write(serialised);
+  std::string error = base::UTF16ToUTF8(destination->Write(serialised));
+  on_progress_.Run(error.empty() ? ExportProgressStatus::COMPLETED
+                                 : ExportProgressStatus::FAILED,
+                   std::move(error));
 }
 
 }  // namespace password_manager
