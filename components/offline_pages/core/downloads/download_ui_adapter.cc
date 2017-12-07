@@ -245,23 +245,32 @@ void DownloadUIAdapter::TemporaryHiddenStatusChanged(
   }
 }
 
-std::vector<OfflineItem> DownloadUIAdapter::GetAllItems() {
-  std::vector<OfflineItem> result;
+void DownloadUIAdapter::GetAllItems(
+    OfflineContentProvider::MultipleItemCallback callback) {
+  std::vector<OfflineItem> items;
   for (const auto& item : items_) {
     if (delegate_->IsTemporarilyHiddenInUI(item.second->client_id))
       continue;
-    result.push_back(*(item.second->ui_item));
+    items.push_back(*(item.second->ui_item));
   }
-  return result;
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(std::move(callback), items));
 }
 
-const OfflineItem* DownloadUIAdapter::GetItemById(const ContentId& id) {
+void DownloadUIAdapter::GetItemById(
+    const ContentId& id,
+    OfflineContentProvider::SingleItemCallback callback) {
   OfflineItems::const_iterator it = items_.find(id.id);
   if (it == items_.end() ||
       delegate_->IsTemporarilyHiddenInUI(it->second->client_id)) {
-    return nullptr;
+    std::move(callback).Run(nullptr);
+    return;
   }
-  return it->second->ui_item.get();
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(std::move(callback), it->second->ui_item.get()));
 }
 
 bool DownloadUIAdapter::AreItemsAvailable() {
@@ -269,7 +278,11 @@ bool DownloadUIAdapter::AreItemsAvailable() {
 }
 
 void DownloadUIAdapter::OpenItem(const ContentId& id) {
-  const OfflineItem* item = GetItemById(id);
+  OfflineItems::const_iterator it = items_.find(id.id);
+  if (it == items_.end())
+    return;
+
+  const OfflineItem* item = it->second->ui_item.get();
   if (!item)
     return;
 
