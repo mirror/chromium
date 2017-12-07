@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f072ffd5_b1f64088",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T23:04:25Z",
+      "side": 1,
+      "message": "Could you split this part to a separate CL?\n\nI\u0027d like to review the SetIntegrityMetedata() part carefully (with additional reviewers), while the other parts of this CL is relatively straightforward.",
+      "parentUuid": "865d2cfb_fb517f1b",
+      "revId": "682f09e09970a07dad277377e1c06d44564019b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8400fae2_a9cf3073",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 2
