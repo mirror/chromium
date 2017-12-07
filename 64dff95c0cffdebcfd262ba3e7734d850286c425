@@ -22,6 +22,30 @@
       "revId": "64dff95c0cffdebcfd262ba3e7734d850286c425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a509686_98ad6ecd",
+        "filename": "content/browser/webrtc/webrtc_audio_debug_recordings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-07T15:23:09Z",
+      "side": 1,
+      "message": "Done. Also fixed in some other places.",
+      "parentUuid": "bef49ec9_8abe6b0c",
+      "range": {
+        "startLine": 321,
+        "startChar": 45,
+        "endLine": 321,
+        "endChar": 51
+      },
+      "revId": "64dff95c0cffdebcfd262ba3e7734d850286c425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
