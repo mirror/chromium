@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "25c8df46_e99f81cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "I have added a teardown() method and made sure all native calls were guarded.",
+      "parentUuid": "55eba0ad_bcab8ede",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "166dc1e5_73ff4c61",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 4
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "932a3600_2ccbe166",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Added supportsSource() here.\nMoved next to protected ctor.\nAdded comment.",
+      "parentUuid": "166dc1e5_73ff4c61",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 50
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6915ff96_b8d16085",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 4
@@ -155,6 +203,30 @@
       "writtenOn": "2017-12-02T02:31:59Z",
       "side": 1,
       "message": "nit: Should these empty methods be abstract?\n\njoinRoute and sendStringMessage are not needed for RemotePlayback so could have default implementation.",
+      "range": {
+        "startLine": 147,
+        "startChar": 65,
+        "endLine": 147,
+        "endChar": 67
+      },
+      "revId": "ed9136ff663a360f06eacc5321946ac1fb24497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3dc14d_16b307cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Converted to abstract :)",
+      "parentUuid": "6915ff96_b8d16085",
       "range": {
         "startLine": 147,
         "startChar": 65,

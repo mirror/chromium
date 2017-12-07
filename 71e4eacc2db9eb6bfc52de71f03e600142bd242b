@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c5f70b3_00da89d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7014fb50_ba62eebe",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "124a6d03_68c6f0ad",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4426ffbd_81e078d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "124a6d03_68c6f0ad",
+      "range": {
+        "startLine": 51,
+        "startChar": 60,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0f8aa5b3_db01ca2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965b7e37_496533a3",
+      "range": {
+        "startLine": 60,
+        "startChar": 49,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8db8fdc1_277ec269",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95973760_e2644ffa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "CastMediaSource expects sourceId to be non null, so I have added @Nonnull annotations appropriately.",
+      "parentUuid": "8db8fdc1_277ec269",
+      "range": {
+        "startLine": 69,
+        "startChar": 34,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "30af2eb5_b45c4bcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a015bdd8_d653729a",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad6e3534_ce408d08",
         "filename": "chrome/browser/media/android/router/media_router_android_bridge.cc",
         "patchSetId": 5
@@ -131,6 +251,24 @@
       "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a561da67_4a17aee3",
+        "filename": "chrome/browser/media/android/router/media_router_android_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-07T03:40:40Z",
+      "side": 1,
+      "message": "Added comments.",
+      "parentUuid": "ad6e3534_ce408d08",
+      "revId": "71e4eacc2db9eb6bfc52de71f03e600142bd242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
