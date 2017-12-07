@@ -28,6 +28,7 @@
 
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/InlineBoxPosition.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
@@ -67,18 +68,19 @@ bool SelectionModifier::ShouldAlwaysUseDirectionalSelection(LocalFrame* frame) {
          frame->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
 }
 
+SelectionModifier::SelectionModifier(const Position& position)
+    : frame_(position.GetDocument()->GetFrame()),
+      current_selection_(
+          SelectionInDOMTree::Builder().Collapse(position).Build()),
+      x_pos_for_vertical_arrow_navigation_(NoXPosForVerticalArrowNavigation()) {
+}
 SelectionModifier::SelectionModifier(
-    const LocalFrame& frame,
-    const SelectionInDOMTree& selection,
+    const FrameSelection& frame_selection,
     LayoutUnit x_pos_for_vertical_arrow_navigation)
-    : frame_(const_cast<LocalFrame*>(&frame)),
-      current_selection_(selection),
+    : frame_(frame_selection.GetFrame()),
+      current_selection_(frame_selection.GetSelectionInDOMTree()),
       x_pos_for_vertical_arrow_navigation_(
           x_pos_for_vertical_arrow_navigation) {}
-
-SelectionModifier::SelectionModifier(const LocalFrame& frame,
-                                     const SelectionInDOMTree& selection)
-    : SelectionModifier(frame, selection, NoXPosForVerticalArrowNavigation()) {}
 
 VisibleSelection SelectionModifier::Selection() const {
   return CreateVisibleSelection(current_selection_);

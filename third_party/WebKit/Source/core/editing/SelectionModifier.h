@@ -35,6 +35,7 @@
 
 namespace blink {
 
+class FrameSelection;
 class LocalFrame;
 
 enum class SelectionModifyAlteration { kMove, kExtend };
@@ -46,10 +47,8 @@ class SelectionModifier {
 
  public:
   // |frame| is used for providing settings.
-  SelectionModifier(const LocalFrame& /* frame */,
-                    const SelectionInDOMTree&,
-                    LayoutUnit);
-  SelectionModifier(const LocalFrame&, const SelectionInDOMTree&);
+  SelectionModifier(const Position&);
+  SelectionModifier(const FrameSelection&, LayoutUnit pos = LayoutUnit::Min());
 
   LayoutUnit XPosForVerticalArrowNavigation() const {
     return x_pos_for_vertical_arrow_navigation_;

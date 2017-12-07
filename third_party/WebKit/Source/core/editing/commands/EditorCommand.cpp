@@ -204,8 +204,7 @@ StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
     SelectionModifyDirection direction,
     TextGranularity granularity) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  SelectionModifier selection_modifier(
-      frame, frame.Selection().GetSelectionInDOMTree());
+  SelectionModifier selection_modifier(frame.Selection());
   if (selection_modifier.Selection().IsCaret())
     selection_modifier.Modify(SelectionModifyAlteration::kExtend, direction,
                               granularity);
@@ -1247,8 +1246,7 @@ bool ModifySelectionyWithPageGranularity(
     SelectionModifyAlteration alter,
     unsigned vertical_distance,
     SelectionModifyVerticalDirection direction) {
-  SelectionModifier selection_modifier(
-      frame, frame.Selection().GetSelectionInDOMTree());
+  SelectionModifier selection_modifier(frame.Selection());
   if (!selection_modifier.ModifyWithPageGranularity(alter, vertical_distance,
                                                     direction)) {
     return false;
