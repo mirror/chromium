@@ -240,7 +240,14 @@ WebFloatPoint WebFrameWidgetBase::ViewportToRootFrame(
 }
 
 WebViewImpl* WebFrameWidgetBase::View() const {
-  return ToWebLocalFrameImpl(LocalRoot())->ViewImpl();
+  if (auto* local_root = LocalRoot())
+    return ToWebLocalFrameImpl(local_root)->ViewImpl();
+
+  // In main frame navigations, RenderViewImpl is swaps in after
+  // WebViewFrameWidget is attached to it. Therefore, there is a short interval
+  // where WebViewFrameWidget::LocalRoot() == nullptr. This could be an issue in
+  // selection updates (see https://crbug.com/792345).
+  return nullptr;
 }
 
 Page* WebFrameWidgetBase::GetPage() const {
