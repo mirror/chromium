@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829eaaa8_da8545ef",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 0,
+      "message": "nit: cite these bugs, just in case they resurface?",
+      "revId": "f28f29f4bc751439a347c129a3b6ba5a43980d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f40b19_2dc80ed9",
+        "filename": "ui/message_center/views/message_view_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 0,
+      "message": "ditto nit: cite this bug?",
+      "revId": "f28f29f4bc751439a347c129a3b6ba5a43980d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad4004e_56b02071",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 1,
+      "message": "Should Remove be called when the view is deleted or similar?",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ddec4a_6d6a4c58",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 1,
+      "message": "I wonder if the parent of MessageView could handle this appropriately, since it\u0027s already notified via ChildPreferredSizeChanged. Ditto for the other(s).",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99401544_0cb516c7",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 1,
+      "message": "Is this intentional? Maybe comment since it looks like the code below is an impl?",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6f2403_9b01fa26",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 1,
+      "message": "ditto: Remove anywhere?",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c389615_27bb6dac",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T04:17:29Z",
+      "side": 1,
+      "message": "optional nit: EXPECT_EQ(\u003cexpected\u003e, \u003cactual\u003e)",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
