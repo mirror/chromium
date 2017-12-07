@@ -244,6 +244,11 @@ void D3D11TextureHelper::SetBackbuffer(
   render_state_.target_texture_ = back_buffer;
 }
 
+Microsoft::WRL::ComPtr<ID3D11Device> D3D11TextureHelper::GetDevice() {
+  EnsureInitialized();
+  return render_state_.d3d11_device_;
+}
+
 bool D3D11TextureHelper::EnsureInitialized() {
   if (render_state_.d3d11_device_ &&
       SUCCEEDED(render_state_.d3d11_device_->GetDeviceRemovedReason()))

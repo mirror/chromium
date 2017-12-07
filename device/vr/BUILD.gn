@@ -63,7 +63,9 @@ if (enable_vr) {
         "//third_party/WebKit/public:blink_headers",
       ]
       ldflags = [ "-landroid" ]
-      libs = [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
+      libs = [
+        "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a",
+      ]
       configs += [ "//third_party/gvr-android-sdk:libgvr_config" ]
     }
 
@@ -87,13 +89,34 @@ if (enable_vr) {
       ]
     }
 
-    if (is_win && enable_openvr) {
+    if (is_win && (enable_openvr || enable_oculus_vr)) {
       libs = [ "d3d11.lib" ]
       sources += [
         "windows/d3d11_texture_helper.cc",
         "windows/d3d11_texture_helper.h",
         "windows/flip_pixel_shader.h",
         "windows/flip_vertex_shader.h",
+      ]
+    }
+
+    if (enable_oculus_vr) {
+      deps += [
+        "//device/gamepad",
+        "//device/gamepad/public/cpp:shared_with_blink",
+        "//third_party/libovr:libovr",
+      ]
+
+      sources += [
+        "oculus/oculus_device.cc",
+        "oculus/oculus_device.h",
+        "oculus/oculus_device_provider.cc",
+        "oculus/oculus_device_provider.h",
+        "oculus/oculus_gamepad_data_fetcher.cc",
+        "oculus/oculus_gamepad_data_fetcher.h",
+        "oculus/oculus_render_loop.cc",
+        "oculus/oculus_render_loop.h",
+        "oculus/oculus_type_converters.cc",
+        "oculus/oculus_type_converters.h",
       ]
     }
   }

@@ -26,6 +26,7 @@ class D3D11TextureHelper {
   void AllocateBackBuffer();
   Microsoft::WRL::ComPtr<ID3D11Texture2D> GetBackbuffer();
   void SetBackbuffer(Microsoft::WRL::ComPtr<ID3D11Texture2D> back_buffer);
+  Microsoft::WRL::ComPtr<ID3D11Device> GetDevice();
 
  private:
   bool CopyTextureWithFlip();
