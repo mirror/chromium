@@ -45,6 +45,54 @@
       "revId": "6f1aab8f9f919c2de4c19247b34fee3227cb6850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b80b38_ce556e8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-12-07T03:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693c1e31_d71156f0",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 42
+      },
+      "revId": "6f1aab8f9f919c2de4c19247b34fee3227cb6850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a918c24e_d79d2ac5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-12-07T03:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4300845_9d641a89",
+      "range": {
+        "startLine": 299,
+        "startChar": 54,
+        "endLine": 299,
+        "endChar": 63
+      },
+      "revId": "6f1aab8f9f919c2de4c19247b34fee3227cb6850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
