@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a604b8e0_b6bf5895",
+        "filename": "content/renderer/loader/web_url_request_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aadae5c_2909c653",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150ed073_747c89d9",
         "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataConsumerHandle.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98813a1_841ccb1a",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataConsumerHandle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Right. I think it was confusing and probably just a typo.",
+      "parentUuid": "150ed073_747c89d9",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b8cfb36_1b74b3d2",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataPipeGetter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Done, also fixed the code in BytesConsumerForConsumerHandle.",
+      "parentUuid": "23faf96b_11a6af47",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "142707b1_4cae980f",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbd01e7_d7421dd5",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Ah, good catch. Standardized on \"data\".",
+      "parentUuid": "142707b1_4cae980f",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c32a157e_75346259",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "I could do it, but it might be better in a follow-up patch? I don\u0027t think form data can mutate yet because this is only used for ServiceWorker\u0027s FetchEvent. (I wasn\u0027t worried about performance, just trying to break the patch up into smaller pieces.)",
+      "parentUuid": "dfb3230a_cb704bb6",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beacae5e_46dce443",
         "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0bb08b52_ed22a846",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Yea it\u0027s confusing. Added a comment.",
+      "parentUuid": "beacae5e_46dce443",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "418e5495_2408b50d",
         "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffea3a0d_9fca50c1",
+        "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:08:52Z",
+      "side": 1,
+      "message": "Collapsed the TODO into the NOTREACHED.",
+      "parentUuid": "418e5495_2408b50d",
+      "revId": "d06b02d3ac4a4de42b5af927556041c0d6f6dacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
