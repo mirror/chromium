@@ -12069,8 +12069,6 @@ INSTANTIATE_TEST_CASE_P(
     ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
 
 TEST_P(SlimmingPaintWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-
   InitializeWithHTML(*WebView()->MainFrameImpl()->GetFrame(),
                      "<style>"
                      "  #scrollable {"
@@ -12128,8 +12126,6 @@ TEST_P(SlimmingPaintWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
 }
 
 TEST_P(SlimmingPaintWebFrameTest, FrameViewScroll) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-
   InitializeWithHTML(*WebView()->MainFrameImpl()->GetFrame(),
                      "<style>"
                      "  #forceScroll {"
