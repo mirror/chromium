@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60050d94_3218609e",
+        "filename": "base/metrics/histogram_functions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-07T14:37:56Z",
+      "side": 1,
+      "message": "Nit: No base:: prefix here and on line below.",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "5e542ccee0d6bcb4a63ffde11034bee8e34136bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
