@@ -52,6 +52,24 @@
       "revId": "2f884bc64f983edde39c8621a141ae17077aa67e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56ec019_124e8098",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T12:58:40Z",
+      "side": 1,
+      "message": "The point of this patch was that these throttles are taking too long to compute their policy. It\u0027s critical that this is easily discoverable from glancing around a trace imo. I would be happy to add a timestamp to the STEP macros but I don\u0027t want to remove the standard ones.",
+      "parentUuid": "73f6cf30_1b89e4a4",
+      "revId": "2f884bc64f983edde39c8621a141ae17077aa67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
