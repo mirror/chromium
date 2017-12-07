@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ca6481_49733dd6",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T08:29:15Z",
+      "side": 1,
+      "message": "would still prefer the comment say because Get worker thread may return null.\nOtherwise the reader doesn\u0027t really know why it\u0027s being avoided.\n\nor should we just call Get worker thread and if null exit?",
+      "revId": "b21b2fe3b3f34802c4f94687277f0d9bc448f673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
