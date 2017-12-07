@@ -36,7 +36,7 @@ void VP8Decoder::SetStream(const uint8_t* ptr, size_t size) {
   DVLOG(4) << "New input stream at: " << (void*)ptr << " size: " << size;
 }
 
-void VP8Decoder::Reset() {
+bool VP8Decoder::Reset() {
   curr_pic_ = nullptr;
   curr_frame_hdr_ = nullptr;
   curr_frame_start_ = nullptr;
@@ -48,6 +48,8 @@ void VP8Decoder::Reset() {
 
   if (state_ == kDecoding)
     state_ = kAfterReset;
+
+  return true;
 }
 
 VP8Decoder::DecodeResult VP8Decoder::Decode() {

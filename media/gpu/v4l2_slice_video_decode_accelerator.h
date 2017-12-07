@@ -56,7 +56,7 @@ class MEDIA_GPU_EXPORT V4L2SliceVideoDecodeAccelerator
       const gfx::GpuMemoryBufferHandle& gpu_memory_buffer_handle) override;
   void ReusePictureBuffer(int32_t picture_buffer_id) override;
   void Flush() override;
-  void Reset() override;
+  bool Reset() override;
   void Destroy() override;
   bool TryToSetupDecodeOnSeparateThread(
       const base::WeakPtr<Client>& decode_client,
