@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64729f0c_91ba048a",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T19:36:26Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a more efficient way to find the |source_view_type|.  Is there?",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

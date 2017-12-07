@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7237948e_8871c4fe",
+        "filename": "base/test/histogram_tester.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T19:36:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6610c54f_516642ca",
+      "revId": "1c20606c3c54922c46c7c5884ee03e0d12dc01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9ad0068_8c7c4545",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1c20606c3c54922c46c7c5884ee03e0d12dc01d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bc7bbc_d8dcfdff",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T19:36:26Z",
+      "side": 1,
+      "message": "Argh... thanks for catching this.  I missed this when rebasing.  Done.",
+      "parentUuid": "a9ad0068_8c7c4545",
+      "revId": "1c20606c3c54922c46c7c5884ee03e0d12dc01d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
