@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "312aec58_1654b577",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:49:58Z",
+      "side": 1,
+      "message": "If we allow re-connecting them, please do.  I didn\u0027t realize we did.",
+      "parentUuid": "a62e6cae_722834e5",
+      "range": {
+        "startLine": 389,
+        "startChar": 29,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4ab26ba_f240ca9b",
         "filename": "net/socket/tcp_client_socket.cc",
         "patchSetId": 18
