@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74dba4c8_d7b323ff",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-07T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a794eb63_ebba4c59",
+      "revId": "b230a6bef942831f43107df0d555eb34517595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f3bff5_2670a980",
         "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b230a6bef942831f43107df0d555eb34517595ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dcbf0f_3af99641",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-07T20:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f3bff5_2670a980",
+      "revId": "b230a6bef942831f43107df0d555eb34517595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
