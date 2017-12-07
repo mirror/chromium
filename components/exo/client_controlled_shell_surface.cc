@@ -26,9 +26,6 @@
 #include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/coordinate_conversion.h"
-////#include "ui/wm/core/shadow.h"
-//#include "ui/wm/core/shadow_controller.h"
-//#include "ui/wm/core/shadow_types.h"
 #include "ui/wm/core/window_util.h"
 
 namespace exo {
@@ -70,12 +67,12 @@ Orientation SizeToOrientation(const gfx::Size& size) {
 ClientControlledShellSurface::ClientControlledShellSurface(Surface* surface,
                                                            bool can_minimize,
                                                            int container)
-    : ShellSurface(surface,
-                   BoundsMode::CLIENT,
-                   gfx::Point(),
-                   true,
-                   can_minimize,
-                   container),
+    : ShellSurfaceBase(surface,
+                       BoundsMode::CLIENT,
+                       gfx::Point(),
+                       true,
+                       can_minimize,
+                       container),
       primary_display_id_(
           display::Screen::GetScreen()->GetPrimaryDisplay().id()) {
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
@@ -85,6 +82,55 @@ ClientControlledShellSurface::ClientControlledShellSurface(Surface* surface,
 ClientControlledShellSurface::~ClientControlledShellSurface() {
   WMHelper::GetInstance()->RemoveDisplayConfigurationObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
+}
+
+void ClientControlledShellSurface::SetMaximized() {
+  TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMaximized");
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_MAXIMIZED);
+
+  // Note: This will ask client to configure its surface even if already
+  // maximized.
+  ScopedConfigure scoped_configure(this, true);
+  widget_->Maximize();
+}
+
+void ClientControlledShellSurface::SetMinimized() {
+  TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMinimized");
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_MINIMIZED);
+
+  // Note: This will ask client to configure its surface even if already
+  // minimized.
+  ScopedConfigure scoped_configure(this, true);
+  widget_->Minimize();
+}
+
+void ClientControlledShellSurface::SetRestored() {
+  TRACE_EVENT0("exo", "ClientControlledShellSurface::SetRestored");
+
+  if (!widget_)
+    return;
+
+  // Note: This will ask client to configure its surface even if not already
+  // maximized or minimized.
+  ScopedConfigure scoped_configure(this, true);
+  widget_->Restore();
+}
+
+void ClientControlledShellSurface::SetFullscreen(bool fullscreen) {
+  TRACE_EVENT1("exo", "ClientControlledShellSurface::SetFullscreen",
+               "fullscreen", fullscreen);
+
+  if (!widget_)
+    CreateShellSurfaceWidget(ui::SHOW_STATE_FULLSCREEN);
+
+  // Note: This will ask client to configure its surface even if fullscreen
+  // state doesn't change.
+  ScopedConfigure scoped_configure(this, true);
+  widget_->SetFullscreen(fullscreen);
 }
 
 void ClientControlledShellSurface::SetPinned(ash::mojom::WindowPinType type) {
@@ -183,7 +229,7 @@ float ClientControlledShellSurface::GetScale() const {
 // SurfaceDelegate overrides:
 
 void ClientControlledShellSurface::OnSurfaceCommit() {
-  ShellSurface::OnSurfaceCommit();
+  ShellSurfaceBase::OnSurfaceCommit();
   if (widget_) {
     // Apply new top inset height.
     if (pending_top_inset_height_ != top_inset_height_) {
