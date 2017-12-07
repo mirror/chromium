@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4033d91b_67e39365",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T14:01:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8add8e1c_77dcece7",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 3
+      },
+      "revId": "08296611dcdab94ad6645ac68a0a36b387e59180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cdccce1_bb72f21c",
         "filename": "cc/paint/scoped_raster_flags.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T10:13:55Z",
       "side": 1,
       "message": "What about dashes?",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 61
+      },
+      "revId": "08296611dcdab94ad6645ac68a0a36b387e59180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d02e17b_b10f7915",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T14:01:34Z",
+      "side": 1,
+      "message": "Dashes seem to be supported with hariline, and also look much sharper than with AA: https://fiddle.skia.org/c/ab2b0b8bea1c72c91de9e69eb20aaad4",
+      "parentUuid": "7cdccce1_bb72f21c",
       "range": {
         "startLine": 140,
         "startChar": 6,
