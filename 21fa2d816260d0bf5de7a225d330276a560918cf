@@ -16,6 +16,24 @@
       "revId": "21fa2d816260d0bf5de7a225d330276a560918cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c60c34e_17b97986",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/transform.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-07T23:38:00Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0cf1386a_beecfa9b",
+      "revId": "21fa2d816260d0bf5de7a225d330276a560918cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
