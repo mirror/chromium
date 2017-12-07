@@ -16,6 +16,24 @@
       "revId": "9e2cf9fcc4ac1af18e5920c984959adb12de574c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccba84cd_be351762",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordReauthenticationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-12-07T09:00:27Z",
+      "side": 1,
+      "message": "Done.\nJust out of curiosity, is this something Java-specific? In C++ I would make variables const if they won\u0027t change, both to help readability (\"this is just a shorthand\") and the compiler to be efficient.",
+      "parentUuid": "e4d4db69_31842b82",
+      "revId": "9e2cf9fcc4ac1af18e5920c984959adb12de574c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
