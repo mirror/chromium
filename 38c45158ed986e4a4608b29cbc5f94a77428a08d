@@ -70,6 +70,30 @@
       "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3aa625c_d7d0cc9e",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-07T23:55:05Z",
+      "side": 1,
+      "message": "That\u0027s a valid concern. However, splitting this struct out of v8-inspector.h is a very unusual thing for v8, so I doubt we\u0027ll do it.\n\nAlso, this data is never used in browser process, being passed opaquely to another renderer. Perhaps, it makes sense to send it as byte array then?",
+      "parentUuid": "88ebd244_04a91e3d",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
