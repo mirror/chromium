@@ -22,8 +22,12 @@ enum class WindowOpenDisposition {
   SAVE_TO_DISK,
   OFF_THE_RECORD,
   IGNORE_ACTION,
+  // Indicates that the URL may exist and, if so, switch to it and reset the
+  // Omnibox or close the tab if there's no history. Unlike SINGLETON_TAB, this
+  // will navigate in this tab if not found, or do the above clean up.
+  SWITCH_TO_TAB,
   // Update when adding a new disposition.
-  MAX_VALUE = IGNORE_ACTION
+  MAX_VALUE = SWITCH_TO_TAB
 };
 
 namespace ui {
