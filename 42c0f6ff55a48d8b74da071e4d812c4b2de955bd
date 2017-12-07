@@ -16,6 +16,24 @@
       "revId": "42c0f6ff55a48d8b74da071e4d812c4b2de955bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff1feaf_c22c21ef",
+        "filename": "content/renderer/media/webrtc/peer_connection_dependency_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T11:19:15Z",
+      "side": 1,
+      "message": "Yeah, sounds a good idea.",
+      "parentUuid": "6b705f28_3f20b4e1",
+      "revId": "42c0f6ff55a48d8b74da071e4d812c4b2de955bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
