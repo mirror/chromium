@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82f970b_40291d84",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "nit: OnPlanesReadyForPageFlip?",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee5ec0d_1cf1dcba",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "nit: weak_ptr_factory_",
+      "range": {
+        "startLine": 160,
+        "startChar": 34,
+        "endLine": 160,
+        "endChar": 47
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa55f863_da90b44d",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "it\u0027s a bit surprising that RequestPlanesReadyCallback calls the callback immediately. can we instead always past a task that runs the callback or have this return false to indicate that no callback is pending?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf14b0ef_9eeb3006",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "can we merge all fences into one fd and wait for that instead?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d615714d_f1c4549f",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "maybe a merged fence fd here that starts out as -1 and then we just pass that to the WaitForPlaneFences callback?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91222497_2c3fb81c",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer to to no have a default value here to ensure that we\u0027re aware of all call sites that might need to be updated",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 63
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33aaca3b_5436cb08",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c6a9c2_3f511e05",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T19:31:29Z",
+      "side": 1,
+      "message": "hm, what\u0027s preventing us from just using \"base::ScopedFD fence_fd\" here?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
