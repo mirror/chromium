@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e2fff6e0_54d13704",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-07T22:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3131c7ff_10c6f278",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 42
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afafed3c_a17bac14",
         "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
         "patchSetId": 14
