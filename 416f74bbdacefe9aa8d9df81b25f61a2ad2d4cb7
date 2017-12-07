@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40330ac_bdb1ec7c",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:25:25Z",
+      "side": 1,
+      "message": "This seems fairly uncommon. Can you explain why it is necessary?",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 3
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7948d413_652665ef",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:25:25Z",
+      "side": 1,
+      "message": "margin: 0;",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4484e0b1_a73d0e36",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:25:25Z",
+      "side": 1,
+      "message": "Why is this necessary? Could you remove this, and just turn #content to flex: 1?",
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005161f0_9c814acd",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:25:25Z",
+      "side": 1,
+      "message": "Could the pageNumber text be inserted here directly?\n\u003cspan class\u003d\u0027pageNumber\u0027\u003e${options.pageNumber}\u003c/span\u003e\n\nAnd avoid the for loops at lines 87-90? Similar question for title, url, date, totalPages.",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1efc701_cdbb89d2",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:25:25Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as |header| from line 65? Similar question for next line.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
