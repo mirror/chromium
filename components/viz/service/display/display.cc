@@ -612,6 +612,10 @@ void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
         // region is defined in the quad content space.
         quad = pass->quad_list.EraseAndInvalidateAllPointers(quad);
 
+      } else if (occlusion_in_quad_content_space.Intersects(
+                     quad->visible_rect)) {
+        quad->visible_rect.Subtract(occlusion_in_quad_content_space);
+        ++quad;
       } else if (occlusion_in_quad_content_space.IsEmpty() &&
                  occlusion_in_target_space.Contains(
                      cc::MathUtil::MapEnclosingClippedRect(
