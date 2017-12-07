@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb717ee_8b8343fc",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T04:32:05Z",
+      "side": 1,
+      "message": "Q: Why do we need to have this DCHECK? |adjusted| can be in\ndifferent block than |position|.",
+      "revId": "844f2cf77f7091d332daad356ddd31017c6e4ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba88d46_bdf8a4cb",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T04:32:05Z",
+      "side": 1,
+      "message": "Same as L704.",
+      "revId": "844f2cf77f7091d332daad356ddd31017c6e4ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
