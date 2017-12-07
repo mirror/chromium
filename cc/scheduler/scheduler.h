@@ -170,6 +170,10 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
 
   viz::BeginFrameAck CurrentBeginFrameAckForActiveTree() const;
 
+  void set_impl_side_invalidation_forced_for_testing(bool forced) {
+    impl_side_invalidation_forced_for_testing_ = forced;
+  }
+
  protected:
   // Virtual for testing.
   virtual base::TimeTicks Now() const;
@@ -206,6 +210,8 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
       SchedulerStateMachine::Action::NONE;
 
   bool stopped_ = false;
+
+  bool impl_side_invalidation_forced_for_testing_ = false;
 
  private:
   void ScheduleBeginImplFrameDeadline();

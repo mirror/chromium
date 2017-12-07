@@ -98,6 +98,7 @@ class CC_EXPORT ProxyImpl : public LayerTreeHostImplClient,
   void OnDrawForLayerTreeFrameSink(bool resourceless_software_draw) override;
   void NeedsImplSideInvalidation(bool needs_first_draw_on_activation) override;
   void NotifyImageDecodeRequestFinished() override;
+  void SetImplSideInvalidationForcedForTesting(bool forced) override;
 
   // SchedulerClient implementation
   void WillBeginImplFrame(const viz::BeginFrameArgs& args) override;
