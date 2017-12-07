@@ -6,7 +6,7 @@
 
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
@@ -14,8 +14,9 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
-ManagePasswordsIconViews::ManagePasswordsIconViews(CommandUpdater* updater)
-    : BubbleIconView(updater, IDC_MANAGE_PASSWORDS_FOR_PAGE),
+ManagePasswordsIconViews::ManagePasswordsIconViews(
+    CommandUpdaterProxy* command_updater_proxy)
+    : BubbleIconView(command_updater_proxy, IDC_MANAGE_PASSWORDS_FOR_PAGE),
       state_(password_manager::ui::INACTIVE_STATE) {
 #if defined(OS_MACOSX)
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);

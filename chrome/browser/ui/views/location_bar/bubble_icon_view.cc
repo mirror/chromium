@@ -4,7 +4,7 @@
 
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
@@ -27,9 +27,10 @@ void BubbleIconView::Init() {
   SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
 }
 
-BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
+BubbleIconView::BubbleIconView(CommandUpdaterProxy* command_updater_proxy,
+                               int command_id)
     : image_(new views::ImageView()),
-      command_updater_(command_updater),
+      command_updater_proxy_(command_updater_proxy),
       command_id_(command_id),
       active_(false),
       suppress_mouse_released_action_(false) {}
@@ -200,8 +201,8 @@ void BubbleIconView::OnWidgetVisibilityChanged(views::Widget* widget,
 
 void BubbleIconView::ExecuteCommand(ExecuteSource source) {
   OnExecuting(source);
-  if (command_updater_)
-    command_updater_->ExecuteCommand(command_id_);
+  if (command_updater_proxy_)
+    command_updater_proxy_->ExecuteCommand(command_id_);
 }
 
 void BubbleIconView::OnBoundsChanged(const gfx::Rect& previous_bounds) {

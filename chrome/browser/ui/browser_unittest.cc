@@ -105,7 +105,7 @@ TEST_F(BrowserUnitTest, DisablePrintOnCrashedTab) {
   WebContentsTester::For(contents)->NavigateAndCommit(GURL("about:blank"));
 
   CommandUpdater* command_updater =
-      browser()->command_controller()->command_updater();
+      browser()->command_controller()->command_updater_for_tests();
 
   EXPECT_FALSE(contents->IsCrashed());
   EXPECT_TRUE(command_updater->IsCommandEnabled(IDC_PRINT));
@@ -131,7 +131,7 @@ TEST_F(BrowserUnitTest, DisableZoomOnCrashedTab) {
                                             GetDefaultZoomLevel()));
 
   CommandUpdater* command_updater =
-      browser()->command_controller()->command_updater();
+      browser()->command_controller()->command_updater_for_tests();
 
   EXPECT_TRUE(zoom_controller->IsAtDefaultZoom());
   EXPECT_FALSE(contents->IsCrashed());

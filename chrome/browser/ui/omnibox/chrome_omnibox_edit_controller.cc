@@ -6,7 +6,7 @@
 
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -25,8 +25,8 @@ void ChromeOmniboxEditController::OnAutocompleteAccept(
     AutocompleteMatchType::Type match_type) {
   OmniboxEditController::OnAutocompleteAccept(destination_url, disposition,
                                               transition, match_type);
-  if (command_updater_)
-    command_updater_->ExecuteCommand(IDC_OPEN_CURRENT_URL);
+  if (command_updater_proxy_)
+    command_updater_proxy_->ExecuteCommand(IDC_OPEN_CURRENT_URL);
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::MaybeShowExtensionControlledSearchNotification(
@@ -83,7 +83,7 @@ bool ChromeOmniboxEditController::SwitchToTabWithURL(const std::string& url,
 }
 
 ChromeOmniboxEditController::ChromeOmniboxEditController(
-    CommandUpdater* command_updater)
-    : command_updater_(command_updater) {}
+    CommandUpdaterProxy* command_updater_proxy)
+    : command_updater_proxy_(command_updater_proxy) {}
 
 ChromeOmniboxEditController::~ChromeOmniboxEditController() {}

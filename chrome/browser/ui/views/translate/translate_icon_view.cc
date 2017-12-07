@@ -16,8 +16,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
-TranslateIconView::TranslateIconView(CommandUpdater* command_updater)
-    : BubbleIconView(command_updater, IDC_TRANSLATE_PAGE) {
+TranslateIconView::TranslateIconView(CommandUpdaterProxy* command_updater_proxy)
+    : BubbleIconView(command_updater_proxy, IDC_TRANSLATE_PAGE) {
   set_id(VIEW_ID_TRANSLATE_BUTTON);
   SetTooltipText(l10n_util::GetStringUTF16(IDS_TOOLTIP_TRANSLATE));
 }
