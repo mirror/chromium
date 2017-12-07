@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68ff23e_e20e901a",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 43
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "Should this also do net::MetricsDelegate::SetInstance(nullptr)?",
+      "range": {
+        "startLine": 533,
+        "startChar": 2,
+        "endLine": 533,
+        "endChar": 40
+      },
+      "revId": "41d6fc619a59e765ca5aa9663704b7d9c76df9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b6bf02_afc2bb71",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 43
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "Can we just inline \"task_metrics_map_.find(metrics-\u003etask)\" here?",
+      "range": {
+        "startLine": 225,
+        "startChar": 10,
+        "endLine": 225,
+        "endChar": 24
+      },
+      "revId": "41d6fc619a59e765ca5aa9663704b7d9c76df9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb49235_fea16f80",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 43
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "If you do early return, then you don\u0027t need {} and else clause.",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 14
+      },
+      "revId": "41d6fc619a59e765ca5aa9663704b7d9c76df9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46730315_8413e056",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 43
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-07T18:08:58Z",
+      "side": 1,
+      "message": "Do we have any expectations about metrics being reported or not?",
+      "range": {
+        "startLine": 311,
+        "startChar": 4,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "41d6fc619a59e765ca5aa9663704b7d9c76df9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
