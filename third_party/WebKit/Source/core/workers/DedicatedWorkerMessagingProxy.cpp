@@ -167,15 +167,21 @@ void DedicatedWorkerMessagingProxy::DispatchErrorEvent(
   if (!worker_object_)
     return;
 
-  // We don't bother checking the askedToTerminate() flag here, because
-  // exceptions should *always* be reported even if the thread is terminated.
-  // This is intentionally different than the behavior in MessageWorkerTask,
-  // because terminated workers no longer deliver messages (section 4.6 of the
-  // WebWorker spec), but they do report exceptions.
-
+  // We don't bother checking the AskedToTerminate() flag here, because
+  // exceptions should *always* be reported even if the thread is terminated as
+  // the spec says:
+  //
+  // "Thus, error reports propagate up to the chain of dedicated workers up to
+  // the original Document, even if some of the workers along this chain have
+  // been terminated and garbage collected."
+  // https://html.spec.whatwg.org/multipage/workers.html#runtime-script-errors-2
   ErrorEvent* event =
       ErrorEvent::Create(error_message, location->Clone(), nullptr);
   if (worker_object_->DispatchEvent(event) != DispatchEventResult::kNotCanceled)
+    return;
+
+  // Avoid posting a task when the worker has been requested to terminate.
+  if (AskedToTerminate())
     return;
 
   // The HTML spec requires to queue an error event using the DOM manipulation
