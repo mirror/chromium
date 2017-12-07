@@ -22,6 +22,30 @@
       "revId": "99b7b91ec527a50ee3d123370e3af08f43d02c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b29075d_6c2b5d7b",
+        "filename": "headless/test/headless_render_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1237241
+      },
+      "writtenOn": "2017-12-07T08:27:27Z",
+      "side": 1,
+      "message": "Oops, forgot to remove them :) Distracted by the Windows issue.",
+      "parentUuid": "e0a0baa1_a4b89edf",
+      "range": {
+        "startLine": 1327,
+        "startChar": 4,
+        "endLine": 1327,
+        "endChar": 15
+      },
+      "revId": "99b7b91ec527a50ee3d123370e3af08f43d02c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
