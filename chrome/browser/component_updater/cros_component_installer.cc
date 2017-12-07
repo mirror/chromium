@@ -52,6 +52,10 @@ using content::BrowserThread;
 
 namespace component_updater {
 
+namespace {
+static void LogCustomUninstall(base::Optional<bool> result) {}
+}  // namespace
+
 using ConfigMap = std::map<std::string, std::map<std::string, std::string>>;
 
 ComponentConfig::ComponentConfig(const std::string& name,
@@ -102,6 +106,14 @@ CrOSComponentInstallerPolicy::OnCustomInstall(
 }
 
 void CrOSComponentInstallerPolicy::OnCustomUninstall() {
+  g_browser_process->platform_part()->UnregisterCompatibleCrosComponentPath(
+      name);
+
+  chromeos::ImageLoaderClient* loader =
+      chromeos::DBusThreadManager::Get()->GetImageLoaderClient();
+  if (loader) {
+    loader->UnmountComponent(name, base::BindOnce(&LogCustomUninstall));
+  }
 }
 
 void CrOSComponentInstallerPolicy::ComponentReady(
@@ -111,7 +123,7 @@ void CrOSComponentInstallerPolicy::ComponentReady(
   std::string min_env_version;
   if (manifest && manifest->GetString("min_env_version", &min_env_version)) {
     if (IsCompatible(env_version, min_env_version)) {
-      g_browser_process->platform_part()->SetCompatibleCrosComponentPath(
+      g_browser_process->platform_part()->RegisterCompatibleCrosComponentPath(
           GetName(), path);
     }
   }
@@ -223,7 +235,7 @@ void CrOSComponent::InstallComponent(
     base::OnceCallback<void(const std::string&)> load_callback) {
   const ConfigMap components = CONFIG_MAP_CONTENT;
   const auto it = components.find(name);
-  if (name.empty() || it == components.end()) {
+  if (it == components.end()) {
     base::PostTask(FROM_HERE,
                    base::BindOnce(std::move(load_callback), std::string()));
     return;
@@ -250,6 +262,26 @@ void CrOSComponent::LoadComponent(
     // A compatible component is intalled, load it directly.
     LoadComponentInternal(name, std::move(load_callback));
   }
+}
+
+void CrOSComponent::UnloadComponent(
+    const std::string& name,
+    base::OnceCallback<void(bool)> remove_callback) {
+  const ConfigMap components = CONFIG_MAP_CONTENT;
+  const auto it = components.find(name);
+  if (it == components.end()) {
+    // Component |name| does not exist.
+    base::PostTask(FROM_HERE,
+                   base::BindOnce(std::move(remove_callback), false));
+    return;
+  }
+  component_updater::ComponentUpdateService* updater =
+      g_browser_process->component_updater();
+  const std::string id = crx_file::id_util::GenerateIdFromHex(
+                             it->second.find("sha2hashstr")->second)
+                             .substr(0, 32);
+  bool success = updater->UnregisterComponent(id);
+  PostTask(FROM_HERE, base::BindOnce(std::move(remove_callback), success));
 }
 
 std::vector<ComponentConfig> CrOSComponent::GetInstalledComponents() {
