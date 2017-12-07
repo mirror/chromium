@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a376c350_2684be0b",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Uh thanks! My signature typo of course!",
+      "parentUuid": "7cf2d240_82f17360",
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee6ef6e6_439dd374",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ada22c_85b11a07",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Done, but alternatively, I made this a class member.",
+      "parentUuid": "ee6ef6e6_439dd374",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bddb05a2_8fe56063",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbac37fa_362fca70",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54af5a6_7b66bda9",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0345edfc_616695a5",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "I dropped this class altogether and instead keep a map of string to std::unqiue_ptr\u003cScopedObjCClassSwizzler\u003e.",
+      "parentUuid": "c54af5a6_7b66bda9",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00bfa34e_8350f3dc",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-06T16:20:25Z",
       "side": 1,
       "message": "A set of unique_ptrs is useful if you need to extract items back out of the set. Since this is set up once and only modified by destroying the whole thing, can you directly put the wrappers into the set?",
+      "range": {
+        "startLine": 66,
+        "startChar": 19,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d97fe8_bcf6c2e3",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Now I am using a std::map\u003cstring, ScopedObjCClassSwizzler\u003e and I believe for a map we need a default constructor which swizzler class is missing.",
+      "parentUuid": "00bfa34e_8350f3dc",
       "range": {
         "startLine": 66,
         "startChar": 19,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "71e2462e_08892263",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Yes they could, but I would have to add helper methods to observer and implementation.",
+      "parentUuid": "a071aacd_fbbf0680",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bd8721e_073dd2ac",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -145,6 +283,30 @@
       "writtenOn": "2017-12-06T16:20:25Z",
       "side": 1,
       "message": "On this line and many of the lines below, why do you qualify with content::? This code, being in content, should find all of those types without qualification.",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 11
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf36f094_89df3c7b",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "The Objective-C code is not in content. I don\u0027t think we can put objc inside c++ namespaces. This is the same in \u0027render_widget_host_view_mac.[h|mm]\u0027.",
+      "parentUuid": "1bd8721e_073dd2ac",
       "range": {
         "startLine": 169,
         "startChar": 2,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "223ac94e_1ef4ea67",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "Done, but I think the |rwhv_mac| should never be null. If something goes wrong and somehow |rwhv_mac| is null (idk how), would it not be better to crash here as opposed to failing the test due to timing out?",
+      "parentUuid": "d6e66003_789d44cc",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 48
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fbccf3c_006ba3e7",
         "filename": "content/public/test/content_browser_test_utils_mac.mm",
         "patchSetId": 6
@@ -191,6 +377,30 @@
       "writtenOn": "2017-12-06T16:20:25Z",
       "side": 1,
       "message": "This seems out of place; inside of the callback\u0027s DidAddSubviewWillBeDismissed is where this belongs.",
+      "range": {
+        "startLine": 191,
+        "startChar": 11,
+        "endLine": 191,
+        "endChar": 26
+      },
+      "revId": "788b500a655a9ef7ca481416c4befc3e8566c042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f9e0101_9ac7693c",
+        "filename": "content/public/test/content_browser_test_utils_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-07T04:36:54Z",
+      "side": 1,
+      "message": "I completely agree but I also could not find a cleaner solution. This is why I named the observer call DidAddSubvewWillBeDismissed.\n\nThe problem I had was that after calling the observer it can call Quit() on its own RunLoop, but, the RunLoop will never quit unless the popup goes away (maybe the popup becomes a nested loop or maybe something else blocks the RunLoop completely). For this reason I need to dismiss the popup.\n\nAlso, dismissing it has to be done from an \u0027mm\u0027 file due to Objective C code which cannot be the test file in this case. Unless I create a new Mac only test file web_view_interactive_tests_mac.mm.\n\nI am open to any suggestions. Thanks!",
+      "parentUuid": "5fbccf3c_006ba3e7",
       "range": {
         "startLine": 191,
         "startChar": 11,
