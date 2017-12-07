@@ -10,8 +10,9 @@ namespace password_manager {
 // This represents the controller for the UI flow of exporting passwords.
 class ExportFlow {
  public:
-  // Store exported passwords to the export destination.
-  virtual void Store() = 0;
+  // Store exported passwords to the export destination. Returns false if the
+  // request was rejected, i.e. an export is already in progress.
+  virtual bool Store() = 0;
 
  protected:
   virtual ~ExportFlow() {}
