@@ -77,6 +77,11 @@ void CommandUpdater::UpdateCommandEnabled(int id, bool enabled) {
     observer.EnabledStateChangedForCommand(id, enabled);
 }
 
+void CommandUpdater::DisableAllCommands() {
+  for (const auto& command_pair : commands_)
+    UpdateCommandEnabled(command_pair.first, false);
+}
+
 CommandUpdater::Command* CommandUpdater::GetCommand(int id, bool create) {
   bool supported = SupportsCommand(id);
   if (supported)
