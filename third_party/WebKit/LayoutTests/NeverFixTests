@@ -1820,6 +1820,17 @@ external/wpt/css/css-color/t424-hsl-parsing-f.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 
+# https://github.com/w3c/web-platform-tests/issues/8547
+external/wpt/css/mediaqueries/device-aspect-ratio-001.html [ WontFix ]
+external/wpt/css/mediaqueries/device-aspect-ratio-005.html [ WontFix ]
+
+# Media queries do not support calc() for internal CSS length values. https://crbug.com/421909
+external/wpt/css/mediaqueries/mq-calc-001.html [ WontFix ]
+external/wpt/css/mediaqueries/mq-calc-002.html [ WontFix ]
+external/wpt/css/mediaqueries/mq-calc-003.html [ WontFix ]
+external/wpt/css/mediaqueries/mq-calc-004.html [ WontFix ]
+external/wpt/css/mediaqueries/mq-calc-005.html [ WontFix ]
+
 # Requires --use-fake-ui-for-media-stream to run.
 external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html [ WontFix ]
 
