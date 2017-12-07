@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "604bc2b7_c73f98cc",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T04:23:58Z",
+      "side": 1,
+      "message": "It seems there are DOM mutation.\n\nSee fast/events/ime-composition-events-001.html in\n\nhttps://storage.googleapis.com/chromium-layout-test-archives/linux_chromium_rel_ng/603899/layout-test-results/results.html",
+      "range": {
+        "startLine": 406,
+        "startChar": 37,
+        "endLine": 406,
+        "endChar": 67
+      },
+      "revId": "80e05be1822d5717352340a1deaa4d464cc51663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4ab34cd_4f1a2c60",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 2
