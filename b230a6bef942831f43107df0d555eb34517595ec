@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a794eb63_ebba4c59",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:26:56Z",
+      "side": 1,
+      "message": "Would it be possible to just get rid of Update() and make this a constructor parameter?",
+      "revId": "b230a6bef942831f43107df0d555eb34517595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f3bff5_2670a980",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:26:56Z",
+      "side": 1,
+      "message": "Is there any possibility of combining this very similar block with the previous one? Maybe we could just assign a default matrix if the supplied eye params are null and reuse the previous block? IT seems unfortunate to duplicate this.",
+      "revId": "b230a6bef942831f43107df0d555eb34517595ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
