@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48cee2bf_e986bb6b",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:56:39Z",
+      "side": 1,
+      "message": "I guess that\u0027s more consistent with the old code. Done.",
+      "parentUuid": "da594754_d9da5cd2",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e7e5aa_be47fc28",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c871070c_89055ce9",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:56:39Z",
+      "side": 1,
+      "message": "Yep, I\u0027ll be updating this clause in https://chromium-review.googlesource.com/c/chromium/src/+/815391. Whichever lands last will remove WaitForResource().",
+      "parentUuid": "72e7e5aa_be47fc28",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c95cbecb_51cbd875",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2968734e_1e28edc5",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0253fcc1_6217ef94",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 2
@@ -85,6 +139,24 @@
       "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5936d5e_584c5af4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T22:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0253fcc1_6217ef94",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
