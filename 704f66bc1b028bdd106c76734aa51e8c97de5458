@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9b245de_653711a8",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "nit: (4, 0);",
+      "range": {
+        "startLine": 105,
+        "startChar": 40,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e17aee_3e1c5290",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "nit: (0, 14);",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 60
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a562f114_d09f2015",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "kGoogleBlue500, or something from the native theme",
+      "range": {
+        "startLine": 109,
+        "startChar": 48,
+        "endLine": 109,
+        "endChar": 67
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29423653_e21b3197",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "nit: SkColorSetA(0xB8, SK_ColorWHITE);",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3db4728_df0a7738",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "document these please.",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5969ec6d_5a4f7149",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "this prevents clicking on the things under the filter, but what\u0027s stopping a user from keyboard interaction (tabbing)?",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b370c7_9a3a5442",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "this one is double initialized.",
+      "range": {
+        "startLine": 286,
+        "startChar": 6,
+        "endLine": 286,
+        "endChar": 26
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53818917_f05faec4",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "hard coding is rarely, if ever, the right way to set a font size, even if a specific number is written into a mock. I haven\u0027t kept up with the typography spec but I gather you can set a context, or at the very least you could use DeriveWithSizeDelta so that if a user changes the system font size (e.g. for a11y reasons) this respects that.",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 53
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb55a57_a15f89ae",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "if you use the version that takes gfx::Insets and you use the Insets ctor that has 2 params, you don\u0027t have to repeat the params here.",
+      "range": {
+        "startLine": 321,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 59
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5218cf88_cb5a0ef9",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "It makes me nervous how this is unowned until it\u0027s added to the view hierarchy, which is pretty far away in a different function. It\u0027s not trivial to verify that the other fn is actually guaranteed to be called. I also worry about possibilities like enabled() changing and this view getting orphaned, or not existing when it should. Can you move the initialization down to GridChanged?",
+      "range": {
+        "startLine": 333,
+        "startChar": 28,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6daff0b_6ed5c837",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "do you need separate !enabled() blocks? I think you can add a column then add the view in the same block.",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 440,
+        "endChar": 17
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c523b58_8f4bb1aa",
+        "filename": "ash/message_center/notifier_settings_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "\u003d nullptr?",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da345d1f_51485f07",
+        "filename": "chrome/browser/notifications/extension_notifier_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "so an admin can force-install an extension, but I can still disable notifications for it? Seems odd.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32c3977_28bb44bf",
+        "filename": "chrome/browser/notifications/web_page_notifier_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T18:02:48Z",
+      "side": 1,
+      "message": "what about other types like SUPERVISED? wouldn\u0027t you want to respect superviser settings?",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 62
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
