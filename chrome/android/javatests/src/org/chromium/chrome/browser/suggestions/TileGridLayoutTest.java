@@ -115,6 +115,9 @@ public class TileGridLayoutTest {
     private final CallbackHelper mLoadCompleteHelper = new CallbackHelper();
 
     @Test
+    // TODO(fhorschig): Potentially flaky due to https://crbug.com/791865.
+    // Remove RetryOnFailure once the underlying problem is fixed.
+    @RetryOnFailure
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageIsMovedToFirstPositionWhenMultipleRowsExist() throws Exception {
@@ -129,6 +132,9 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    // TODO(fhorschig): Potentially flaky due to https://crbug.com/791865.
+    // Remove RetryOnFailure once the underlying problem is fixed.
+    @RetryOnFailure
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageRemainsAsLastElementInOnlyRow() throws Exception {
@@ -146,6 +152,9 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    // TODO(fhorschig): Potentially flaky due to https://crbug.com/791865.
+    // Remove RetryOnFailure once the underlying problem is fixed.
+    @RetryOnFailure
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageKeepsPositionInOnlyRow() throws Exception {
@@ -161,6 +170,9 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    // TODO(fhorschig): Potentially flaky due to https://crbug.com/791865.
+    // Remove RetryOnFailure once the underlying problem is fixed.
+    @RetryOnFailure
     @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     public void testTileGridAppearance() throws Exception {
