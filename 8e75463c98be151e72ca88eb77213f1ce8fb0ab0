@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db3f0d57_0d970663",
+        "filename": "device/vr/oculus/oculus_device_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-07T22:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b4d362_ff68f2a9",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d61c51_84d2d345",
         "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304c1c74_6bc4de59",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-07T22:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d61c51_84d2d345",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "89f8fb02_9d0188b7",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-07T22:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f83ba6_547a6b27",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dcfd32f_555667b6",
         "filename": "device/vr/oculus/oculus_render_loop.cc",
         "patchSetId": 1
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a1160e21_afb5c041",
+        "filename": "device/vr/oculus/oculus_render_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-07T22:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dcfd32f_555667b6",
+      "range": {
+        "startLine": 132,
+        "startChar": 35,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d708aba4_03e6b9c6",
         "filename": "device/vr/oculus/oculus_type_converters.h",
         "patchSetId": 1
@@ -93,6 +177,24 @@
       "writtenOn": "2017-12-05T19:19:41Z",
       "side": 1,
       "message": "Is there a reason to use type converters rather than a typemap? Is it because we might want to support multiple VR toolkits on one platform?",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f4c545_7696ffcf",
+        "filename": "device/vr/oculus/oculus_type_converters.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-07T22:35:38Z",
+      "side": 1,
+      "message": "Yes, we\u0027ll be supporting both Oculus and OpenVR APIs on desktop Windows.\n\nThe type converter was recommended for the OpenVR implementation.  Should I not be using TypeConverters?",
+      "parentUuid": "d708aba4_03e6b9c6",
       "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
