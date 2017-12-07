@@ -75,3 +75,57 @@ TEST_F(ChromeResourceDispatcherHostDelegateTest,
           delegate->GetNavigationData(fake_request.get()));
   EXPECT_FALSE(chrome_navigation_data->GetDataReductionProxyData());
 }
+
+TEST_F(ChromeResourceDispatcherHostDelegateTest,
+       DetermineCommittedPreviewsForServerPreview) {
+  content::PreviewsState enabled_previews =
+      content::SERVER_LITE_PAGE_ON | content::SERVER_LOFI_ON |
+      content::CLIENT_LOFI_ON | content::NOSCRIPT_ON;
+  std::unique_ptr<net::URLRequestContext> context(new net::URLRequestContext());
+  std::unique_ptr<net::URLRequest> fake_request(
+      context->CreateRequest(GURL("google.com"), net::RequestPriority::IDLE,
+                             nullptr, TRAFFIC_ANNOTATION_FOR_TESTS));
+  // Add ResourceType to URLRequest.
+  content::ResourceRequestInfo::AllocateForTesting(
+      fake_request.get(), content::RESOURCE_TYPE_MAIN_FRAME, nullptr, -1, -1,
+      -1,
+      true,   // is_main_frame
+      false,  // allow_download
+      false,  // is_async
+      enabled_previews,
+      nullptr);  // navigation_ui_data
+  // Add DataReductionProxyData to URLRequest.
+  data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data =
+      data_reduction_proxy::DataReductionProxyData::GetDataAndCreateIfNecessary(
+          fake_request.get());
+  data_reduction_proxy_data->set_used_data_reduction_proxy(true);
+  data_reduction_proxy_data->set_lite_page_received(true);
+  std::unique_ptr<ChromeResourceDispatcherHostDelegate> delegate(
+      new ChromeResourceDispatcherHostDelegate());
+  EXPECT_EQ(content::SERVER_LITE_PAGE_ON,
+            ChromeResourceDispatcherHostDelegate::DetermineCommittedPreviews(
+                fake_request.get(), enabled_previews));
+}
+
+TEST_F(ChromeResourceDispatcherHostDelegateTest,
+       DetermineCommittedPreviewsForClientPreview) {
+  content::PreviewsState enabled_previews =
+      content::SERVER_LITE_PAGE_ON | content::SERVER_LOFI_ON |
+      content::CLIENT_LOFI_ON | content::NOSCRIPT_ON;
+  std::unique_ptr<net::URLRequestContext> context(new net::URLRequestContext());
+  std::unique_ptr<net::URLRequest> fake_request(context->CreateRequest(
+      GURL("https://google.com"), net::RequestPriority::IDLE, nullptr,
+      TRAFFIC_ANNOTATION_FOR_TESTS));
+  // Add ResourceType to URLRequest.
+  content::ResourceRequestInfo::AllocateForTesting(
+      fake_request.get(), content::RESOURCE_TYPE_MAIN_FRAME, nullptr, -1, -1,
+      -1,
+      true,   // is_main_frame
+      false,  // allow_download
+      false,  // is_async
+      enabled_previews,
+      nullptr);  // navigation_ui_data
+  EXPECT_EQ(content::NOSCRIPT_ON,
+            ChromeResourceDispatcherHostDelegate::DetermineCommittedPreviews(
+                fake_request.get(), enabled_previews));
+}
