@@ -23,7 +23,7 @@ struct CC_EXPORT EffectNode {
   EffectNode();
   EffectNode(const EffectNode& other);
 
-  enum StableIdLabels { INVALID_STABLE_ID = 0 };
+  static constexpr uint64_t INVALID_STABLE_ID = 0;
 
   // The node index of this node in the effect tree node vector.
   int id;

@@ -62,7 +62,7 @@ class BASE_EXPORT TraceConfig {
     // Specifies the configuration options for the heap profiler.
     struct HeapProfiler {
       // Default value for |breakdown_threshold_bytes|.
-      enum { kDefaultBreakdownThresholdBytes = 1024 };
+      static constexpr uint32_t kDefaultBreakdownThresholdBytes = 1024;
 
       HeapProfiler();
 
