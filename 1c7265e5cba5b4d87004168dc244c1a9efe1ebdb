@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7296f65b_a9d09c66",
+        "filename": "components/offline_pages/core/offline_page_feature_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-07T22:58:08Z",
+      "side": 1,
+      "message": "Also added missing tests for existing Prefetching feature flags.",
+      "range": {
+        "startLine": 65,
+        "startChar": 29,
+        "endLine": 65,
+        "endChar": 52
+      },
+      "revId": "1c7265e5cba5b4d87004168dc244c1a9efe1ebdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
