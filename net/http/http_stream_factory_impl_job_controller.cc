@@ -611,7 +611,7 @@ void HttpStreamFactoryImpl::JobController::OnConnectionInitialized(Job* job,
   if (rv != OK) {
     // Resume the main job as there's an error raised in connection
     // initiation.
-    return MaybeResumeMainJob(job, main_job_wait_time_);
+    MaybeResumeMainJob(job, main_job_wait_time_);
   }
 }
 

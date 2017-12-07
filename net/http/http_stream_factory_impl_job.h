@@ -310,6 +310,8 @@ class HttpStreamFactoryImpl::Job {
                                           std::unique_ptr<HttpStream> stream);
   void OnPreconnectsComplete();
 
+  void OnQuicHostResolution(int result);
+
   void OnIOComplete(int result);
   // RunLoop() finishes asynchronously and invokes one of the On* methods (see
   // above) when done.

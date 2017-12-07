@@ -116,8 +116,10 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
               const GURL& url,
               const NetLogWithSource& net_log,
               NetErrorDetails* net_error_details,
+              const CompletionCallback& host_resolution_callback,
               const CompletionCallback& callback);
 
+  void OnHostResolution(int rv);
   void OnRequestComplete(int rv);
 
   // Helper method that calls |factory_|'s GetTimeDelayForWaitingJob(). It
@@ -141,6 +143,7 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   QuicServerId server_id_;
   NetLogWithSource net_log_;
   CompletionCallback callback_;
+  CompletionCallback host_resolution_callback_;
   NetErrorDetails* net_error_details_;  // Unowned.
   std::unique_ptr<QuicChromiumClientSession::Handle> session_;
 
