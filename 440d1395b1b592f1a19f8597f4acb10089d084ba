@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc06a8c6_3d959ae0",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T16:31:30Z",
+      "side": 0,
+      "message": "I assume NotificationDisplayServiceTester is synchronous? I\u0027m not familiar with it and its header doesn\u0027t discuss it.",
+      "revId": "440d1395b1b592f1a19f8597f4acb10089d084ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dbb0cb_5561fb17",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T16:31:30Z",
+      "side": 0,
+      "message": "Thank you for fixing things like this!",
+      "revId": "440d1395b1b592f1a19f8597f4acb10089d084ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

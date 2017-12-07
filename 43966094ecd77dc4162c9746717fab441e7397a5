@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8243dc4c_34c7d407",
+        "filename": "chrome/browser/chromeos/net/network_portal_notification_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T16:31:30Z",
+      "side": 1,
+      "message": "optional: Maybe document why this has to be a BrowserWithTestWindow test? Some dependency of NotificationDisplayServiceTester? Testing profiles?",
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebe3436_ecd5d3d1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T16:31:30Z",
+      "side": 1,
+      "message": "nit: guaranteed",
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5e827eb_7e8f777c",
         "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2017-12-07T03:20:51Z",
       "side": 1,
       "message": "Steven, James, wdyt of this approach? Any gotchas? Since NotificationDisplayService is profile-keyed, we need some profile that\u0027s guaranteed to exist. The signin profile seems to always exist, even post-signin.\n\nI also tried out an alternative where I hung an extra NotificationDisplayService with no profile off g_browser_process (so callsites for system notifications would use g_browser_process-\u003eplatform_part()-\u003eGetSystemNotificationDisplayService()). This is workable but requires changing a lot of places that assume profile is non-null. It seems more straightforward to use a dummy profile instead.",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 51
+      },
+      "revId": "43966094ecd77dc4162c9746717fab441e7397a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63c1fa0_950ca0aa",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T16:31:30Z",
+      "side": 1,
+      "message": "I\u0027m OK with this. Steven, WDYT?",
+      "parentUuid": "b5e827eb_7e8f777c",
       "range": {
         "startLine": 38,
         "startChar": 1,
