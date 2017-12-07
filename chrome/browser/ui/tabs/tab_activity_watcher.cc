@@ -8,6 +8,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/tabs/browser_activity_watcher.h"
 #include "chrome/browser/ui/tabs/tab_metrics_logger_impl.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
@@ -138,6 +139,10 @@ TabActivityWatcher::TabActivityWatcher()
           features::kTabMetricsLogging, kPerSourceLogTimeoutMsecParamName,
           kDefaultPerSourceLogTimeout.InMilliseconds()));
   browser_tab_strip_tracker_.Init();
+
+  // Tab activity UKMs reference browser window UKMs, so ensure the
+  // BrowserActivityWatcher is initialized.
+  BrowserActivityWatcher::GetInstance();
 }
 
 TabActivityWatcher::~TabActivityWatcher() = default;
