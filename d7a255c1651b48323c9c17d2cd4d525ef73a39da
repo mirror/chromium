@@ -75,6 +75,24 @@
       "revId": "d7a255c1651b48323c9c17d2cd4d525ef73a39da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e840281_afa069e1",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:22:43Z",
+      "side": 1,
+      "message": "Views is only used on desktop platforms so you needn\u0027t worry about OS_ANDROID.\n\nTo Avi\u0027s point, it sounds like what would be ideal here would be:\n\n#if defined(OS_MACOSX)\n  node_data-\u003eAddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, \"Command+L\");\n#else\n  node_data-\u003eAddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, \"Ctrl+L\");\n#endif\n\nBut I have no idea if that works nor do I know off the top of my head how you test MacViews. From my perspective, it\u0027d be reasonable to omit any ifdef here unless Avi can provide guidance on what would make sense for MacViews.",
+      "parentUuid": "18c7d355_2ccbc5bf",
+      "revId": "d7a255c1651b48323c9c17d2cd4d525ef73a39da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
