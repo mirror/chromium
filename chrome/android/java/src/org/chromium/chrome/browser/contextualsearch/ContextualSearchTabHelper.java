@@ -208,7 +208,8 @@ public class ContextualSearchTabHelper
     private void addContextualSearchHooks(ContentViewCore cvc) {
         assert mTab.getContentViewCore() == null || mTab.getContentViewCore() == cvc;
         ContextualSearchManager contextualSearchManager = getContextualSearchManager(mTab);
-        if (mGestureStateListener == null && contextualSearchManager != null) {
+        if (contextualSearchManager != null) {
+            if (mGestureStateListener != null) removeContextualSearchHooks(cvc);
             mGestureStateListener = contextualSearchManager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
 
