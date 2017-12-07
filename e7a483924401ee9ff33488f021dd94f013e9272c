@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fdc390b_09e674e5",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88b617f_dde1ba68",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b457f00_428739df",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "59c4ad55_b65079dd",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b457f00_428739df",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0156fad8_44b10d48",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-06T21:37:30Z",
       "side": 1,
       "message": "I think we should fail more gracefully.  Can be done either at the Mojo layer before we create the request, or on start.",
+      "range": {
+        "startLine": 59,
+        "startChar": 9,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d290032_6e5d2730",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "I added a TODO. Let me know if you\u0027d like me to address that in this CL.",
+      "parentUuid": "0156fad8_44b10d48",
       "range": {
         "startLine": 59,
         "startChar": 9,
@@ -91,6 +163,30 @@
       "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc6d969_e26ae3ef",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Got it. I agree. I filed a bug, added a TODO, and will address this before I attempt to write the mojo version.",
+      "parentUuid": "f188a9f7_1831730b",
+      "range": {
+        "startLine": 81,
+        "startChar": 45,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "925b78e4_0d00ac69",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "badf764b_e1587119",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29a63ae2_7060f75b",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 14
@@ -183,6 +303,30 @@
       "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3da65f5_9f086c05",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Thanks, Matt. I have filed a followup bug.",
+      "parentUuid": "29a63ae2_7060f75b",
+      "range": {
+        "startLine": 160,
+        "startChar": 35,
+        "endLine": 160,
+        "endChar": 36
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "75d1fda2_2f2cf5e6",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41142937_6c0bfed1",
+      "range": {
+        "startLine": 182,
+        "startChar": 33,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7073aed9_bc5384d0",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 14
@@ -229,6 +397,30 @@
       "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b2d85c_a9dbb872",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7073aed9_bc5384d0",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "2d2c443e_908af2a6",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "I filed a crbug and added a TODO. Will address before migrating to mojo",
+      "parentUuid": "29b4f631_e4a02f9f",
+      "range": {
+        "startLine": 205,
+        "startChar": 30,
+        "endLine": 205,
+        "endChar": 0
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d10350_6fcdbd3d",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 14
@@ -275,6 +491,30 @@
       "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4f5d50_bcba087c",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T22:22:50Z",
+      "side": 1,
+      "message": "Ack. I filed a crbug to address this before migrating to mojo",
+      "parentUuid": "60d10350_6fcdbd3d",
+      "range": {
+        "startLine": 303,
+        "startChar": 46,
+        "endLine": 303,
+        "endChar": 71
+      },
+      "revId": "e7a483924401ee9ff33488f021dd94f013e9272c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
