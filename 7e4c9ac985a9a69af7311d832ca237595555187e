@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8831c988_c0c183fe",
+        "filename": "third_party/WebKit/Source/modules/vr/VREyeParameters.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T21:02:22Z",
+      "side": 1,
+      "message": "Nit: let\u0027s fix this (and the previous ctor) to use initializers in a followup. I think this can be combined into:\n\nVREyeParameters::VREyeParameters(...)\n    : offset_(DOMFloat32Array::Create(\u0026eye_parameters-\u003eoffset[0], 3)),\n      // This requires updating VRFieldOfView\u0027s constructors\n      field_of_view_(new VRFieldOfView(eye_parameters-\u003efieldOfView)),\n      render_width_(eye_parameters-\u003erenderWidth),\n      render_height_(eye_parameters-\u003erenderHeight) {\n  ...\n}",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f598c04_bdd5b9e8",
+        "filename": "third_party/WebKit/Source/modules/vr/VREyeParameters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T21:02:22Z",
+      "side": 1,
+      "message": "Nit: is the default ctor still necessary? Let\u0027s remove it if it\u0027s not used.",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2093beaa_0d57e627",
+        "filename": "third_party/WebKit/Source/modules/vr/VREyeParameters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T21:02:22Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1151a38_72b9e1b7",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T21:02:22Z",
+      "side": 1,
+      "message": "We expect both or non to always be set right? How about DCHECK(!left_eye \u0026\u0026 !right_eye) here?",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c0b57f_16a79ade",
+        "filename": "third_party/WebKit/Source/modules/vr/VRFrameData.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T21:02:22Z",
+      "side": 1,
+      "message": "This will leak. Instead, we can do something like:\n\nstatic const VRFieldOfView* const default_fov \u003d new VRFieldOfView(45, 45, 45, 45);\n\nThis leaks memory for the lifetime of the program, but it\u0027s just one allocation (and we consider this OK, in order to comply with the style guide requirements around globals).\n\nThen here, we can do:\n  fov_left \u003d fov_right \u003d default_fov;",
+      "revId": "7e4c9ac985a9a69af7311d832ca237595555187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
