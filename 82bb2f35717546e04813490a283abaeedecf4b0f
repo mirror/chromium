@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5774a5e_703000fa",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-12-07T17:28:53Z",
+      "side": 1,
+      "message": "What I don\u0027t see in go/feature-api is how to support parameters to configure the server(s) to be used",
+      "parentUuid": "9b369d50_61e3aa74",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cab5ac1a_37a57494",
         "filename": "net/dns/dns_session.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-05T18:39:43Z",
       "side": 1,
       "message": "Again, suggest writing this out.  I don\u0027t think anyone knows what DoH means (Unless it\u0027s a reference to the critically acclaimed (No, not really) \"Arkanoid 2: Revenge of Doh\"",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 16
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031a577f_0b349a51",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-12-07T17:28:53Z",
+      "side": 1,
+      "message": "My motivation for using DoH rather than say dns_over_https is that the honest DNS team has used \"DNS over HTTPS\" to refer to their JSON formatted host resolver.",
+      "parentUuid": "cab5ac1a_37a57494",
       "range": {
         "startLine": 128,
         "startChar": 9,
@@ -203,6 +245,30 @@
       "writtenOn": "2017-12-05T18:39:43Z",
       "side": 1,
       "message": "DCHECK that server uses an IP address instead of a hostname?  Otherwise, we\u0027re in trouble.",
+      "range": {
+        "startLine": 316,
+        "startChar": 21,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ce27be_c0c5cc5b",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-12-07T17:28:53Z",
+      "side": 1,
+      "message": "We want the ability for this to be a hostname and to fallback to other resolution methods to resolve that hostname.",
+      "parentUuid": "8246163e_4afa9290",
       "range": {
         "startLine": 316,
         "startChar": 21,
