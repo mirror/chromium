@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "37b1a52d_9b82f2d8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T22:22:20Z",
+      "side": 1,
+      "message": "Should we add a new flag to enforce legacy block flow for testing?\n\nUsing contenteditable seems a little bit weird for it, and needs more maintenance when we enable NG on contenteditable in the future.",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 739,
+        "endChar": 37
+      },
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb48d661_855bbe4f",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
         "patchSetId": 7
@@ -53,6 +76,70 @@
     },
     {
       "key": {
+        "uuid": "e30227aa_e1c6de0c",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T22:22:20Z",
+      "side": 1,
+      "message": "I think |start_in_block| can be greater than |EndOffset()|, if the selection starts in some later fragments of this text node.\n\nI guess this function indicates \"no selection in fragment\" by returning a pair where |first \u003e\u003d second|. It\u0027s better to be documented.",
+      "parentUuid": "2f6c7539_3e4f88de",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a5fe26_ee456f2c",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T22:22:20Z",
+      "side": 1,
+      "message": "Should it be 0 or the max offset?\n\nIt seems weird for both start and end to use 0 as the default value, since 0 means select-all for start, but select-none for end.",
+      "range": {
+        "startLine": 50,
+        "startChar": 70,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2a729f_821919a0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T22:22:20Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 56,
+        "startChar": 70,
+        "endLine": 56,
+        "endChar": 71
+      },
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e344509_bfd6eca8",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
         "patchSetId": 7
@@ -64,6 +151,24 @@
       "writtenOn": "2017-12-07T20:02:56Z",
       "side": 1,
       "message": "TextRun is legacy, we shouldn\u0027t use it.\n\nWe should probably copy the logic to here or somewhere else, the logic seems to be small.\n\nThen to get CharacterRange, pass text_fragment.TextShapeResult() to the static version of ShapeResultBuffer::GetCharacterRange().",
+      "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea40565d_7a193c61",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T22:22:20Z",
+      "side": 1,
+      "message": "We probably want to wrap the computation of |selection_rect| into a utility function, so that it can be reused by, say, getClientRects().",
+      "parentUuid": "3e344509_bfd6eca8",
       "revId": "ba49ab657ef2981ba35e06d8b34df7e3921d2f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
