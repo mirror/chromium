@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bbd9224_e7252130",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T22:38:30Z",
+      "side": 1,
+      "message": "I\u0027m using this as a test to see if storing the last generated ID in the allocator is worth it.\nI think it isn\u0027t.\n\nThe top line certainly is more simple. It does indeed allow us to no longer store the LocalSurfaceId as a member.\n\nHowever, I think there is an intrinsic value to letting the type system provide hints such as assignment. If I were to look at the old bottom line, I could see the member variable and then ask \"Okay, where is this initialized?\" I can easily search for where that variable is assigned (ctor, operator\u003d). There are tricky ways to assign it like swap() that would make it harder to find where it is initialized.\n\nI think this LastGeneratedId() also hides the assignment. I think it is tricky, like swap().\nI tried to make the name \"LastGeneratedId\" a clue that it references \"GenerateId\". But at the end of the day, all of this is adding mental context rather than removing it and utilizing affordances.",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3067,
+        "endChar": 3
+      },
+      "revId": "6d694d82923cb5a3d2c03675da9a803554fa82cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
