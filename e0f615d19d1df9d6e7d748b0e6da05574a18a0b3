@@ -22,6 +22,30 @@
       "revId": "e0f615d19d1df9d6e7d748b0e6da05574a18a0b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "444e6c60_92cb835e",
+        "filename": "content/shell/test_runner/pixel_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T05:58:56Z",
+      "side": 1,
+      "message": "Yes, adding a new task type would be a (near) future work. I adopted kUnthrottled not to change the current behavior.",
+      "parentUuid": "dea93733_62096498",
+      "range": {
+        "startLine": 156,
+        "startChar": 27,
+        "endLine": 156,
+        "endChar": 56
+      },
+      "revId": "e0f615d19d1df9d6e7d748b0e6da05574a18a0b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
