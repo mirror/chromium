@@ -45,6 +45,30 @@
       "revId": "71e813862ea246b493ded1e4844bb283e400f951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4031d394_8c02b8b6",
+        "filename": "cc/trees/layer_tree_host_unittest_scroll.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-07T21:01:10Z",
+      "side": 1,
+      "message": "Yeah, that would remove the need for this test flag and I suppose is something we should be doing in general? We could decide to do this on the next impl frame if the main thread missed the deadline for the last frame? On that note, |main_thread_missed_last_deadline_| will currently be set if there is a pending tree, even if the pending tree was impl side. We should probably change it to only consider pending trees from main frames.",
+      "parentUuid": "9930c9e5_d2423618",
+      "range": {
+        "startLine": 2196,
+        "startChar": 37,
+        "endLine": 2196,
+        "endChar": 76
+      },
+      "revId": "71e813862ea246b493ded1e4844bb283e400f951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
