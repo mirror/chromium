@@ -53,6 +53,52 @@
     },
     {
       "key": {
+        "uuid": "51cfd782_4f6a9f25",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.c",
+        "patchSetId": 33
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T21:20:27Z",
+      "side": 1,
+      "message": "I\u0027m curious why the trailing underscore.\nI\u0027m used to the Chromium style guide which is different from zlib so when I see this my gut reaction is that it is a member variable. But maybe zlib uses this for internal functions?",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4e22d0_d792498d",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-07T21:20:27Z",
+      "side": 1,
+      "message": "ACK",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc2a035b_343d9ff8",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 33
