@@ -69,7 +69,7 @@ class ArcPowerBridgeTest : public testing::Test {
   // Destroys the FakePowerInstance. This results in
   // ArcPowerBridge::OnInstanceClosed() being called.
   void DestroyPowerInstance() {
-    bridge_service_->power()->SetInstance(nullptr, 0);
+    bridge_service_->power()->CloseInstance(power_instance_.get());
     power_instance_.reset();
   }
 
