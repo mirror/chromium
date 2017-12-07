@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/callback.h"
-#include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -41,13 +40,6 @@ class UtilityProcessMojoClient {
   // Start().
   void set_error_callback(const base::Closure& error_callback) {
     error_callback_ = error_callback;
-  }
-
-  // Allows a directory to be opened through the utility process sandbox.
-  void set_exposed_directory(const base::FilePath& directory) {
-    DCHECK(!start_called_);
-    DCHECK(!directory.empty());
-    helper_->set_exposed_directory(directory);
   }
 
   // Disables the sandbox in the utility process.
@@ -110,10 +102,6 @@ class UtilityProcessMojoClient {
                          mojo_interface_name, base::Passed(&interface_pipe)));
     }
 
-    void set_exposed_directory(const base::FilePath& directory) {
-      exposed_directory_ = directory;
-    }
-
     void set_disable_sandbox() { disable_sandbox_ = true; }
 
 #if defined(OS_WIN)
@@ -132,9 +120,6 @@ class UtilityProcessMojoClient {
       utility_host_ = UtilityProcessHost::Create(nullptr, nullptr)->AsWeakPtr();
       utility_host_->SetName(process_name_);
 
-      if (!exposed_directory_.empty())
-        utility_host_->SetExposedDir(exposed_directory_);
-
       if (disable_sandbox_)
         utility_host_->SetSandboxType(service_manager::SANDBOX_TYPE_NO_SANDBOX);
 #if defined(OS_WIN)
@@ -152,7 +137,6 @@ class UtilityProcessMojoClient {
 
     // Properties of the utility process.
     base::string16 process_name_;
-    base::FilePath exposed_directory_;
     bool disable_sandbox_ = false;
 #if defined(OS_WIN)
     bool run_elevated_ = false;

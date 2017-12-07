@@ -84,7 +84,7 @@ void ZipFileInstaller::Unzip(base::Optional<base::FilePath> unzip_dir) {
   utility_process_mojo_client_->set_error_callback(
       base::Bind(&ZipFileInstaller::UnzipDone, this, *unzip_dir, false));
 
-  utility_process_mojo_client_->set_exposed_directory(*unzip_dir);
+  // utility_process_mojo_client_->set_exposed_directory(*unzip_dir);
 
   utility_process_mojo_client_->Start();
 

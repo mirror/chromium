@@ -371,7 +371,7 @@ void SandboxedUnpacker::StartUtilityProcessIfNeeded() {
   utility_process_mojo_client_->set_error_callback(
       base::Bind(&SandboxedUnpacker::UtilityProcessCrashed, this));
 
-  utility_process_mojo_client_->set_exposed_directory(temp_dir_.GetPath());
+  // utility_process_mojo_client_->set_exposed_directory(temp_dir_.GetPath());
 
   utility_process_mojo_client_->Start();
 }
