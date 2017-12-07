@@ -46,6 +46,30 @@
       "revId": "b8bc00a83cbbd86a31fef9f4e79bc2ecece0869e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55e12f31_1decfbfb",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T20:54:05Z",
+      "side": 1,
+      "message": "Makes sense. Can you please change the comment to reflect that not all nodes with coordinates \u003c 0 are offscreen? Maybe:\n// Ignore offscreen or partially clipped nodes, as these are unlikely to be the best match.",
+      "parentUuid": "0aad832e_eb82c122",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 33
+      },
+      "revId": "b8bc00a83cbbd86a31fef9f4e79bc2ecece0869e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
