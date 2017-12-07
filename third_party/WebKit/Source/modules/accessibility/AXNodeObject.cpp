@@ -1029,6 +1029,10 @@ AXRestriction AXNodeObject::Restriction() const {
 }
 
 AccessibilityExpanded AXNodeObject::IsExpanded() const {
+  // In ARIA 1.1, aria-expanded is not valid on separators.
+  if (AriaRoleAttribute() == kSplitterRole)
+    return kExpandedUndefined;
+
   if (GetNode() && IsHTMLSummaryElement(*GetNode())) {
     if (GetNode()->parentNode() &&
         IsHTMLDetailsElement(GetNode()->parentNode()))
