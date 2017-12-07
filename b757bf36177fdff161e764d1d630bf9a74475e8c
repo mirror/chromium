@@ -16,6 +16,24 @@
       "revId": "b757bf36177fdff161e764d1d630bf9a74475e8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f95308_b468e35c",
+        "filename": "chrome/browser/ui/app_list/app_list_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-07T17:13:26Z",
+      "side": 1,
+      "message": "The story is:\n- `git cl lint` complaint that comments should start 2 spaces after code.\n- So I put one more space there.\n- `git cl format` then made this.",
+      "parentUuid": "dbed50cb_9974c7a1",
+      "revId": "b757bf36177fdff161e764d1d630bf9a74475e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

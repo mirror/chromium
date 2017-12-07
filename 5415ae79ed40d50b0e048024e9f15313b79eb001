@@ -34,6 +34,24 @@
       "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccee74b_b43be07e",
+        "filename": "ash/app_list/model/app_list_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-07T17:13:26Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "08e0ccdc_6a03424b",
+      "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
