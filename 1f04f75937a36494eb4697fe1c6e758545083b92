@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5512273c_0b1c1cf6",
+        "filename": "tools/metrics/histograms/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T22:10:35Z",
+      "side": 1,
+      "message": "Oh, this line is specifically where I think I got the idea that it was \"either/or\" for enums and sparse histograms. But it jumps you to the sparse section, so as long as that added info is easy to find, I think it\u0027s ok if it doesn\u0027t go here.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "1f04f75937a36494eb4697fe1c6e758545083b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0490ff7f_0c7d655a",
         "filename": "tools/metrics/histograms/README.md",
         "patchSetId": 1
