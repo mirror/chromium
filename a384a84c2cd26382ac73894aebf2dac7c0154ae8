@@ -22,6 +22,30 @@
       "revId": "a384a84c2cd26382ac73894aebf2dac7c0154ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8649dfc_298f9590",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-07T18:40:23Z",
+      "side": 1,
+      "message": "Absolutely. Done.",
+      "parentUuid": "364808c7_e6d85c83",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "a384a84c2cd26382ac73894aebf2dac7c0154ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
