@@ -347,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "ddb8e64f_6d85c9be",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-12-07T20:37:55Z",
+      "side": 1,
+      "message": "when the DoH resolution fails, it falls back to UDP within the same resolution. I could add an explicit check for the HTTPAttempt to fail if the host being resolved matches the server.",
+      "parentUuid": "c8adcd30_3e291a9c",
+      "range": {
+        "startLine": 316,
+        "startChar": 21,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "333194ad_024f869b",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 6
