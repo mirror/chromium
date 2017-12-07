@@ -282,6 +282,30 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a46894_43b76d8f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-07T09:34:32Z",
+      "side": 1,
+      "message": "Yes, I understand that.\nWhat I may get wrong is what |state| means here.",
+      "parentUuid": "69782f4a_761eb4b3",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
