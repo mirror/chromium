@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b28bf63c_b5d2eeae",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-07T11:46:20Z",
+      "side": 1,
+      "message": "Could you remove the base::trace_event:: while you\u0027re here (I think we don\u0027t need it since we\u0027re using MemoryDumpType/MemoryDumpLevelOfDetail above) It would improve the readability slightly, thanks!",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 62
+      },
+      "revId": "62c8ec996482cab319c31617036a33434ba98799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f01f4a_cf585b67",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-07T11:46:20Z",
+      "side": 1,
+      "message": "I think we using MemoryDumpType above so we don\u0027t need the base::trace_event:: here.",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 25
+      },
+      "revId": "62c8ec996482cab319c31617036a33434ba98799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
