@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6adf95ad_4b82a813",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T00:18:52Z",
+      "side": 1,
+      "message": "\u003e We could do that - we currently have a 25% unused population in the Default group that we could repurpose for this.  I could introduce a new base::Feature for this.  +Lukasz - WDYT?\n\u003e \nUptime and version composition of the new group would be different than in the 3 old groups, so they can\u0027t be compared in meaningful ways.  If we wanted to do this, then I think we would have to rename/reset all 3/4 groups.  If we decide to do this, it might be useful at the same time to extend the list of isolated origins used in the groups (which would also necessitate renaming/resetting the groups).\n\nOTOH, if we do the renaming/reset we might not get full week worth of data...  So maybe we can do a/b comparison in january in a separate trial? (and putting the optional frame consolidation behind a base::Feature can either wait until that time [or if you want to, you can add base::Feature now - in an enabled-by-default state]). \n\n\u003e On the other hand, would filtering out by versions be too terrible, if, say, we keep the canary trial for two weeks and land this in time for the second week?  Couldn\u0027t we still compare the 7-day actives process count for first and second weeks?\n\nMaybe... but I agree with Nick that a/b comparison would give us more confidence.",
+      "parentUuid": "fc96f3f6_4649eb33",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ade602_99aa9ccc",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
