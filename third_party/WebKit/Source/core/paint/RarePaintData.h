@@ -5,11 +5,11 @@
 #ifndef RarePaintData_h
 #define RarePaintData_h
 
+#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -19,7 +19,6 @@ class PropertyTreeState;
 // This is for paint-related data on LayoutObject that is not needed on all
 // objects.
 class CORE_EXPORT RarePaintData {
-  WTF_MAKE_NONCOPYABLE(RarePaintData);
   USING_FAST_MALLOC(RarePaintData);
 
  public:
@@ -119,6 +118,8 @@ class CORE_EXPORT RarePaintData {
   //   properties would have a transform node that points to the div's
   //   ancestor transform space.
   std::unique_ptr<PropertyTreeState> local_border_box_properties_;
+
+  DISALLOW_COPY_AND_ASSIGN(RarePaintData);
 };
 
 }  // namespace blink
