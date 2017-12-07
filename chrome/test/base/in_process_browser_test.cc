@@ -606,6 +606,7 @@ void InProcessBrowserTest::PostRunTestOnMainThread() {
 void InProcessBrowserTest::QuitBrowsers() {
   if (chrome::GetTotalBrowserCount() == 0) {
     browser_shutdown::NotifyAppTerminating();
+    chrome::OnAppExiting();
     return;
   }
 
