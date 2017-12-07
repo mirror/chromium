@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18229048_56eabfae",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "Added to all new tests.",
+      "parentUuid": "1effa2bd_2b30f026",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2062382c_5136066e",
         "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a74516f_d4d8276e",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "Added all these to all affected providers.",
+      "parentUuid": "2062382c_5136066e",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf1b762d_bf15bae8",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "I gave them all better names.",
+      "parentUuid": "fa68f4d5_f2552108",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e062e0d6_6a477573",
         "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73dfd27b_16ecb9d8",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "I believe it\u0027s how it gets the input.",
+      "parentUuid": "e062e0d6_6a477573",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d4675026_1d7cd3ea",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "The ScoredHistoryMatch constructor (or something it calls) DCHECKs if terms.empty(). Then it crashes if word_starts isn\u0027t the same size.\n\nI used your fill constructor idea, and moved them all to a builder function. btw, I followed a Google recommendation of putting all the builders local to where they\u0027re used.",
+      "parentUuid": "0d73fcde_e1059ce3",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e75e1d1_bfe10b2d",
         "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30fe6aa_f8d620ab",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "Done.\n\nThere\u0027s not much that says \"don\u0027t care\" better than 0, but I was hoping to convey that it was a score. 0 matches two other values within a few lines of it, and would seem misleading to me.",
+      "parentUuid": "3e75e1d1_bfe10b2d",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b9fa52c1_e9571e93",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28f6e91_5cfc941d",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8bad63d_312f5b7f",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 12
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0318d9ab_661a1048",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "HistoryURLProviderParams doesn\u0027t have a default constructor and can\u0027t be copied so I had to new it, but done.",
+      "parentUuid": "e8bad63d_312f5b7f",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e1044f3_5ff687cb",
         "filename": "components/omnibox/browser/titled_url_match_utils_unittest.cc",
         "patchSetId": 12
@@ -152,6 +296,24 @@
       "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f713c973_c52571f8",
+        "filename": "components/omnibox/browser/titled_url_match_utils_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T23:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e1044f3_5ff687cb",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
