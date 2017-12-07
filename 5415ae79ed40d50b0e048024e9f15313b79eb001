@@ -16,6 +16,24 @@
       "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e0ccdc_6a03424b",
+        "filename": "ash/app_list/model/app_list_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:37:43Z",
+      "side": 0,
+      "message": "If this is used in UMA, we should not delete it without confirming with metric people. I have seen people marking UMA used enum as deprecated. Maybe we should do it here too.\ne.g.\n  STATE_CUSTOM_LAUNCHER_PAGE_DEPRECATED",
+      "parentUuid": "4a537bd7_7679a890",
+      "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

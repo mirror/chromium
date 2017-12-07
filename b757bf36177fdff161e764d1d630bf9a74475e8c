@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbed50cb_9974c7a1",
+        "filename": "chrome/browser/ui/app_list/app_list_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:37:43Z",
+      "side": 1,
+      "message": "nit: Is this from \"git cl format\", looks strange when it is not all aligned.",
+      "revId": "b757bf36177fdff161e764d1d630bf9a74475e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
