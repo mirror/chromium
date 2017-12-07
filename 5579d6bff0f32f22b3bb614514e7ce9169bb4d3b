@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0fb1d2a_002a28d2",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "nit: list() is unnecessary:\n\n\u003e\u003e\u003e sorted(set([2,1, 3, 4]) - set([1, 5]))\n[2, 3, 4]",
+      "range": {
+        "startLine": 883,
+        "startChar": 25,
+        "endLine": 883,
+        "endChar": 30
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3683db19_f2292279",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "I think this should be sorted(set(filter) \u0026 set(test_filter))",
+      "range": {
+        "startLine": 884,
+        "startChar": 23,
+        "endLine": 884,
+        "endChar": 34
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc3ad77_f0761b70",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "Please use \n  self.assertIn(\u0027-t\u0027, cmd)\n  self.assertIn(\u0027a\u0027, cmd)\n\nIt is more idiomatic, and produces better errors when tests fail.",
+      "range": {
+        "startLine": 223,
+        "startChar": 9,
+        "endLine": 223,
+        "endChar": 19
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5deb249_bd7d2105",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "Similarly:\n\n  self.assertIn(\u0027-t\u0027, cmd)\n  self.assertIn(\u0027a\u0027, cmd)\n  self.assertNotIn(\u0027-b\u0027, cmd)",
+      "range": {
+        "startLine": 227,
+        "startChar": 9,
+        "endLine": 227,
+        "endChar": 19
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4875afe3_b3bdea4c",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "nit: IMHO it\u0027s preferred to write smaller separate test cases, one for each configuration, rather than having many assertions within the same testcase. The testcase name can then refer to the config tested, and an error will be easier to correlate with the failing config.\n\nI\u0027d set self.tr \u003d test_runner.DeviceTestRunner(...) in setUp(), and use it in each test case. In particular, you won\u0027t need to reset tr.xctestrun_data or assign the empty test lists (they\u0027ll be empty by default). For example:\n\n  def test_test_filter_without_test_cases(self):\n    self.tr.set_xctest_filters([\u0027a\u0027, \u0027b\u0027], invert\u003dFalse)\n    self.assertEqual(self.tr.xctestrun_data[\u0027TestTargetName\u0027][\u0027OnlyTestIdentifiers\u0027],\n                     [\u0027a\u0027, \u0027b\u0027])\n\nThis also improves readability, as you have to explicitly assign non-empty lists in every testcase. Currently, I have to scroll back and search for the last assignment to test_filter or test_cases to understand each assertion.",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 309,
+        "endChar": 22
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c823ff0_57fc5920",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "Here, I\u0027d make test_filter contain elements not in test_cases, e.g. test_filter\u003d[\u0027a\u0027, \u0027b\u0027, \u0027irrelevant test\u0027]\nand make sure you only get [\u0027a\u0027, \u0027b\u0027].",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 337,
+        "endChar": 33
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b8770f_eebf4ee9",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "Similarly, I\u0027d add something extra to test_filter to make sure the set difference is computed correctly.",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 343,
+        "endChar": 32
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5160758_2af5324e",
+        "filename": "ios/build/bots/scripts/test_runner_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-07T20:53:09Z",
+      "side": 1,
+      "message": "Should this be self.assertIsNone() ? Or can it be either None or []?",
+      "range": {
+        "startLine": 349,
+        "startChar": 15,
+        "endLine": 349,
+        "endChar": 20
+      },
+      "revId": "5579d6bff0f32f22b3bb614514e7ce9169bb4d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
