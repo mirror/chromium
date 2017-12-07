@@ -257,12 +257,14 @@ class SSLClientSocketImpl::SSLContext {
 
     SSL_CTX_set_msg_callback(ssl_ctx_.get(), MessageCallback);
 
+#if BORINGSSL_API_VERSION < 7
     if (!SSL_CTX_add_client_custom_ext(ssl_ctx_.get(), kTbExtNum,
                                        &TokenBindingAddCallback,
                                        &TokenBindingFreeCallback, nullptr,
                                        &TokenBindingParseCallback, nullptr)) {
       NOTREACHED();
     }
+#endif
   }
 
   static int TokenBindingAddCallback(SSL* ssl,
@@ -671,8 +673,15 @@ bool SSLClientSocketImpl::GetSSLInfo(SSLInfo* ssl_info) {
   ssl_info->client_cert_sent =
       ssl_config_.send_client_cert && ssl_config_.client_cert.get();
   ssl_info->channel_id_sent = channel_id_sent_;
+#if BORINGSSL_API_VERSION < 7
   ssl_info->token_binding_negotiated = tb_was_negotiated_;
   ssl_info->token_binding_key_param = tb_negotiated_param_;
+#else
+  ssl_info->token_binding_negotiated =
+      SSL_is_token_binding_negotiated(ssl_.get());
+  ssl_info->token_binding_key_param = static_cast<net::TokenBindingParam>(
+      SSL_get_negotiated_token_binding_param(ssl_.get()));
+#endif
   ssl_info->pinning_failure_log = pinning_failure_log_;
   ssl_info->ocsp_result = server_cert_verify_result_.ocsp_result;
   ssl_info->is_fatal_cert_error = is_fatal_cert_error_;
@@ -913,6 +922,16 @@ int SSLClientSocketImpl::Init() {
     SSL_enable_tls_channel_id(ssl_.get());
   }
 
+#if BORINGSSL_API_VERSION >= 7
+  if (!ssl_config_.token_binding_params.empty()) {
+    std::vector<uint8_t> params(ssl_config_.token_binding_params.size());
+    for (size_t i = 0; i < ssl_config_.token_binding_params.size(); ++i) {
+      params[i] = ssl_config_.token_binding_params[i];
+    }
+    SSL_set_token_binding_params(ssl_.get(), params.data(), params.size());
+  }
+#endif
+
   if (!ssl_config_.alpn_protos.empty()) {
     std::vector<uint8_t> wire_protos =
         SerializeNextProtos(ssl_config_.alpn_protos);
@@ -1066,6 +1085,7 @@ int SSLClientSocketImpl::DoHandshakeComplete(int result) {
         GetSessionCacheKey());
   }
 
+#if BORINGSSL_API_VERSION < 7
   // Check that if token binding was negotiated, then extended master secret
   // and renegotiation indication must also be negotiated.
   if (tb_was_negotiated_ &&
@@ -1073,6 +1093,7 @@ int SSLClientSocketImpl::DoHandshakeComplete(int result) {
         SSL_get_secure_renegotiation_support(ssl_.get()))) {
     return ERR_SSL_PROTOCOL_ERROR;
   }
+#endif
 
   const uint8_t* alpn_proto = NULL;
   unsigned alpn_len = 0;
@@ -1677,8 +1698,13 @@ std::string SSLClientSocketImpl::GetSessionCacheKey() const {
 }
 
 bool SSLClientSocketImpl::IsRenegotiationAllowed() const {
+#if BORINGSSL_API_VERSION < 7
   if (tb_was_negotiated_)
     return false;
+#else
+  if (SSL_is_token_binding_negotiated(ssl_.get()))
+    return false;
+#endif
 
   if (negotiated_protocol_ == kProtoUnknown)
     return ssl_config_.renego_allowed_default;
