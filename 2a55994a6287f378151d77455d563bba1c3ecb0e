@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6cbc39_80f0b6d9",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T00:34:33Z",
+      "side": 1,
+      "message": "nit: mind updating this too? \"Current screen brightness in the range [0.0, 100.0].\"",
+      "range": {
+        "startLine": 170,
+        "startChar": 9,
+        "endLine": 170,
+        "endChar": 14
+      },
+      "revId": "2a55994a6287f378151d77455d563bba1c3ecb0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
