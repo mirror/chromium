@@ -16,6 +16,24 @@
       "revId": "9be1ad874b97926f744115bfa9e887bca02a2137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888578fb_071984ed",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T08:16:20Z",
+      "side": 1,
+      "message": "Yes. Once thread termination is requested, GetWorkerThread() may return nullptr. I put a comment about it on GetWorkerThread().",
+      "parentUuid": "da286f63_fa998db4",
+      "revId": "9be1ad874b97926f744115bfa9e887bca02a2137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
