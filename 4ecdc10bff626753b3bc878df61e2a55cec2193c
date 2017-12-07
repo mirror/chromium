@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "156b794c_f6b95086",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "\u003e Thus, after automatic password submission it doesn\u0027t require any reauth ever. However, in this scenario where user reauthenticated once, you\u0027ll require him to reauth again at random point in time. Does it look consistent to you?\n\u003e \n\u003e I already said at some point that I\u0027m against any sort of timeouts for the bubble. The one implemented currently (bound to the tab) makes the least sense out of all options to me.\n\u003e The desired behavior:\n\u003e - somehow bubble opens. At the creation time we determine if the reauth will be needed or not (automatic submission, manual fallback without autofilled values, reopened after reauth) for the lifetime of the bubble.\n\u003e There are other more complex options: reauth every time for controversial bubbles (manual bubble, manual fallback with existing credentials), timeout per bubble. However, I don\u0027t any value in those approaches.\n\nI removed the timer.",
+      "parentUuid": "9f8da68c_51b0ecab",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 32
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b16d509_8acf6144",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
         "patchSetId": 18
@@ -282,6 +306,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d22fe91_5d1f7063",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "\u003e So the answer to my question is \"Yes, we can\" ;-)\n\u003e You can still clear the value after bubble opening in the controller.\n\nDone.",
+      "parentUuid": "eaa26412_5747e656",
+      "range": {
+        "startLine": 570,
+        "startChar": 9,
+        "endLine": 570,
+        "endChar": 63
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -521,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "2f2cd8c8_e722dbe5",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "\u003e The method shouldn\u0027t clear the flag. When you get a signal that the bubble was opened (ManagePasswordsUIController::OnBubbleShown) you could clear the flag.\n\nI clear the flag in OnBubbleHidden. Then, I can check the flag in tests.",
+      "parentUuid": "f3f41491_21fcf21a",
+      "range": {
+        "startLine": 147,
+        "startChar": 36,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2979f6b5_18f3e367",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
@@ -704,6 +776,24 @@
     },
     {
       "key": {
+        "uuid": "9dabd767_80d3f085",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "\u003e The problem is that AuthenticateUser() may take 10 minutes before it returns something. Chrome (at least on Win) probably continues handling messages. Therefore, you don\u0027t know a lot about the state of the bubble/tab and so on.\n\u003e \n\u003e My proposal was to make the function fast. If it returns true then the password is just revealed. If it returns false then it\u0027s a signal to the caller \"I\u0027m doing a reauth and after it I\u0027ll take care of the password UI. Don\u0027t do anything for now\".\n\nDone.",
+      "parentUuid": "9e7a0b9f_70579127",
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888cedbb_1d2d4e23",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 18
@@ -748,6 +838,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12a01e5_056fef54",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "\u003e I think it shouldn\u0027t have side effects. The state can be reset after the bubble is shown. We already handle this event in this class.\n\nDone.",
+      "parentUuid": "a3167265_c7871a00",
+      "range": {
+        "startLine": 520,
+        "startChar": 34,
+        "endLine": 520,
+        "endChar": 61
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -964,6 +1078,30 @@
     },
     {
       "key": {
+        "uuid": "ec3c69f5_76f2317d",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f24b1e_3be11727",
+      "range": {
+        "startLine": 116,
+        "startChar": 32,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38f87e23_6816168b",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -1035,6 +1173,30 @@
     },
     {
       "key": {
+        "uuid": "a64340b0_39a33ebd",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f977f3a_366863e8",
+      "range": {
+        "startLine": 117,
+        "startChar": 10,
+        "endLine": 117,
+        "endChar": 42
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4647b896_39fada69",
         "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
         "patchSetId": 18
@@ -1079,6 +1241,30 @@
       "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3519a385_f50134af",
+        "filename": "chrome/browser/ui/passwords/passwords_model_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-07T17:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9389b34_ac4fde78",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
