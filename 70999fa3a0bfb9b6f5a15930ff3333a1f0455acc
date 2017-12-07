@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfc9326_a73bc85b",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-07T06:46:20Z",
+      "side": 1,
+      "message": "What would you think if we enable the blur by default?\nUsing app_list::features from here might not be appropriate, but it\u0027s verbose to have another flag.\nAlso sidebar is still behind the flag so it wouldn\u0027t be a problem even if some devices do not work as expected.",
+      "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
