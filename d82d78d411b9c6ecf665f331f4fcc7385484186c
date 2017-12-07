@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ffbdce0_dfb6a6a8",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "couple of nits:\n- what needs to be destroyed? |this|?\n- avoid using first person pronouns in documentations.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccba1db_80bd310e",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "nit: rename this to |otr_profile_registration_|?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6420a6_b2fb5125",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Is it possible for manager_ to be nullptr?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73eddf91_505e3a2c",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Does that mean the refcount counts the number of Browser instances associated with the OTR profile, plus 1 for OTRProfileRegistration?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc666b10_6044244e",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Is this ok to call this on the same profile more than once?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c354e08_9b49b768",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Do we need to notify OTRProfileRegistration if the OTR profile is being destroyed? Or is this case only possible as a result of OTRProfileRegistration being destroyed?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85215666_ca6d47de",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "I think it\u0027s possible that there are other OTR profiles hanging off the same original profile. If that\u0027s the case then we shouldn\u0027t remove this notification until all OTR profiles for the original profile have been destroyed.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65272b73_a8d838ee",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Generic lambdas aren\u0027t allowed in Chromium yet :(",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92421cae_e0dead59",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Could you also document threading assumptions of this class?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca769ab_a2429c0e",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0d791_d8ae4300",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "FAIL() \u003c\u003c \"Original profile unexpectedly destroyed\";",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9118e2a_6810406a",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "typo in \"true\"",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a328780c_0b5c5233",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Hmm... so if I were to start a offscreen presentation / PresentationReceiverWindow from an OTR profile, the presentation OTR profile will end up in a place parallel to the \"real\" OTR profile. This might have some interesting implications, although Media Router does terminate routes started from an OTR profile when the OTR profile is destroyed.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c7e426_3874f921",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "- How will the owner of PresentationReceiverWindowController know if the presentation is terminated due to OriginalProfileDestroyed / navigation / other means? Maybe the termination_callback_ should be provided upfront?\n\n- If above comment does not apply: It is a bit confusing to reuse this method to pass in a null callback. Maybe define a private DoTerminate() method instead that is also called from here after setting termination_callback_?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004376d1_fe521cc1",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "Is this the same as std::move(termination_callback_).Run() ?",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7b6ade_3a42de27",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "nit: the interface declared this method public, so it\u0027s a bit weird for this to be private. Considering make this public for consistency.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80964307_3206934a",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-07T23:27:58Z",
+      "side": 1,
+      "message": "I have to admit I am not familiar at all with the logic in this class :) Are all of these necessary for a functional window? I don\u0027t see how some of them will be used in the presentation receiver window.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
