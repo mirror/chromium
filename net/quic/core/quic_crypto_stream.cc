@@ -97,4 +97,6 @@ void QuicCryptoStream::WriteCryptoData(const QuicStringPiece& data) {
   WriteOrBufferData(data, /* fin */ false, /* ack_listener */ nullptr);
 }
 
+#undef ENDPOINT
+
 }  // namespace net

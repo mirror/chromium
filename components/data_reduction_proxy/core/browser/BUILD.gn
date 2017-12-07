@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 browser_sources = [
   "data_reduction_proxy_bypass_protocol.cc",
   "data_reduction_proxy_bypass_protocol.h",
@@ -57,7 +59,7 @@ browser_sources = [
 ]
 
 if (is_android) {
-  static_library("browser_small") {
+  jumbo_static_library("browser_small") {
     sources = browser_sources
 
     deps = [
@@ -79,7 +81,7 @@ if (is_android) {
   }
 }
 
-static_library("browser") {
+jumbo_static_library("browser") {
   sources = browser_sources
   sources += [
     "data_store_impl.cc",

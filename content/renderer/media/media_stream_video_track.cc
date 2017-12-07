@@ -26,7 +26,7 @@ void ResetCallback(std::unique_ptr<VideoCaptureDeliverFrameCB> callback) {
 
 // Empty method used for keeping a reference to the original media::VideoFrame.
 // The reference to |frame| is kept in the closure that calls this method.
-void ReleaseOriginalFrame(const scoped_refptr<media::VideoFrame>& frame) {
+void ReleaseOriginalVideoFrame(const scoped_refptr<media::VideoFrame>& frame) {
 }
 
 }  // namespace
@@ -187,7 +187,7 @@ MediaStreamVideoTrack::FrameDeliverer::GetBlackFrame(
   if (!wrapped_black_frame)
     return nullptr;
   wrapped_black_frame->AddDestructionObserver(
-      base::BindOnce(&ReleaseOriginalFrame, black_frame_));
+      base::BindOnce(&ReleaseOriginalVideoFrame, black_frame_));
 
   wrapped_black_frame->set_timestamp(reference_frame->timestamp());
   base::TimeTicks reference_time;

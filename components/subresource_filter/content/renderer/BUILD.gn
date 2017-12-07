@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("renderer") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("renderer") {
   sources = [
     "subresource_filter_agent.cc",
     "subresource_filter_agent.h",
@@ -10,6 +12,10 @@ static_library("renderer") {
     "unverified_ruleset_dealer.h",
     "web_document_subresource_filter_impl.cc",
     "web_document_subresource_filter_impl.h",
+  ]
+  jumbo_excluded_sources = [
+    # IPC
+    "unverified_ruleset_dealer.cc",
   ]
   deps = [
     "//base",

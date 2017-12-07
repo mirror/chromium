@@ -3,12 +3,13 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//testing/test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 assert(use_dbus)
 
-component("dbus") {
+jumbo_component("dbus") {
   sources = [
     "bus.cc",
     "bus.h",
@@ -35,6 +36,11 @@ component("dbus") {
     "util.h",
     "values_util.cc",
     "values_util.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Symbols (kSuccessRatioHistogramMaxValue
+    "object_proxy.cc",
   ]
 
   defines = [ "DBUS_IMPLEMENTATION" ]

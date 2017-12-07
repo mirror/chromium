@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-component("cpp") {
+import("//build/config/jumbo.gni")
+
+jumbo_component("cpp") {
   output_name = "service_manager_cpp"
 
   sources = [
@@ -41,7 +43,7 @@ component("cpp") {
 # A component for types which the public interfaces depend on for typemapping.
 # Unlike ":cpp" above, this cannot itself depend on the main public interfaces
 # target.
-component("cpp_types") {
+jumbo_component("cpp_types") {
   output_name = "service_manager_cpp_types"
 
   sources = [

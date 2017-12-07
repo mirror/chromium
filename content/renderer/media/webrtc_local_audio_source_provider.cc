@@ -15,9 +15,12 @@
 
 using blink::WebVector;
 
-namespace content {
+namespace {
 
 static const size_t kMaxNumberOfBuffers = 10;
+}
+
+namespace content {
 
 // Size of the buffer that WebAudio processes each time, it is the same value
 // as AudioNode::ProcessingSizeInFrames in WebKit.

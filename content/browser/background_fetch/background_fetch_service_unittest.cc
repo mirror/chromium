@@ -21,7 +21,7 @@
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 
 namespace content {
-namespace {
+namespace background_fetch_service_unittest {
 
 const char kExampleUniqueId[] = "7e57ab1e-c0de-a150-ca75-1e75f005ba11";
 const char kExampleDeveloperId[] = "my-background-fetch";
@@ -894,5 +894,5 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
   }
 }
 
-}  // namespace
+}  // namespace background_fetch_service_unittest
 }  // namespace content

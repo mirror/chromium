@@ -40,8 +40,7 @@ using testing::StrictMock;
 using testing::Values;
 
 namespace media {
-
-namespace {
+namespace audio_output_device_unittest {
 
 const char kDefaultDeviceId[] = "";
 const char kNonDefaultDeviceId[] = "valid-nondefault-device-id";
@@ -111,8 +110,6 @@ ACTION_P2(RequestMoreData, socket, shared_memory) {
 ACTION_P(QuitLoop, task_runner) {
   task_runner->PostTask(FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
 }
-
-}  // namespace.
 
 class AudioOutputDeviceTest
     : public testing::Test,
@@ -428,4 +425,5 @@ TEST_P(AudioOutputDeviceTest, BitstreamFormatTest) {
 
 INSTANTIATE_TEST_CASE_P(Render, AudioOutputDeviceTest, Values(false));
 
-}  // namespace media.
+}  // namespace audio_output_device_unittest
+}  // namespace media

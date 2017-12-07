@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-component("display") {
+jumbo_component("display") {
   sources = [
     "display.cc",
     "display.h",
@@ -46,6 +47,11 @@ component("display") {
     "win/screen_win.h",
     "win/screen_win_display.cc",
     "win/screen_win_display.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Macros
+    "screen_base.cc",
   ]
 
   defines = [ "DISPLAY_IMPLEMENTATION" ]
@@ -95,7 +101,7 @@ component("display_manager_test_api") {
   ]
 }
 
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
   sources = [
     "manager/chromeos/test/action_logger.cc",

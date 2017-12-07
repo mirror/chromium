@@ -35,15 +35,15 @@ IdSet GetTrackIds(const std::vector<rtc::scoped_refptr<T>>& tracks) {
 // TODO(tommi): Consolidate this and TrackObserver since these implementations
 // are fundamentally achieving the same thing (aside from specific logic inside
 // the OnChanged callbacks).
-class MediaStreamObserver
-    : public base::RefCountedThreadSafe<MediaStreamObserver>,
+class MediaStreamTrackObserver
+    : public base::RefCountedThreadSafe<MediaStreamTrackObserver>,
       public webrtc::ObserverInterface {
  public:
   typedef base::Callback<
       void(const IdSet& audio_track_ids, const IdSet& video_track_ids)>
           OnChangedCallback;
 
-  MediaStreamObserver(
+  MediaStreamTrackObserver(
       const OnChangedCallback& callback,
       const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
       webrtc::MediaStreamInterface* stream)
@@ -65,8 +65,8 @@ class MediaStreamObserver
   }
 
  private:
-  friend class base::RefCountedThreadSafe<MediaStreamObserver>;
-  ~MediaStreamObserver() override {
+  friend class base::RefCountedThreadSafe<MediaStreamTrackObserver>;
+  ~MediaStreamTrackObserver() override {
     DCHECK(!stream_.get()) << "must have been unregistered before deleting";
   }
 
@@ -74,7 +74,7 @@ class MediaStreamObserver
   void OnChanged() override {
     DCHECK(signaling_thread_.CalledOnValidThread());
     main_thread_->PostTask(
-        FROM_HERE, base::BindOnce(&MediaStreamObserver::OnChangedOnMainThread,
+        FROM_HERE, base::BindOnce(&MediaStreamTrackObserver::OnChangedOnMainThread,
                                   this, GetTrackIds(stream_->GetAudioTracks()),
                                   GetTrackIds(stream_->GetVideoTracks())));
   }
@@ -138,7 +138,7 @@ class MediaStreamTrackMetricsObserver {
   IdSet video_track_ids_;
 
   MediaStreamTrackMetrics::StreamType stream_type_;
-  scoped_refptr<MediaStreamObserver> observer_;
+  scoped_refptr<MediaStreamTrackObserver> observer_;
 
   // Non-owning.
   MediaStreamTrackMetrics* owner_;
@@ -172,7 +172,7 @@ MediaStreamTrackMetricsObserver::MediaStreamTrackMetricsObserver(
       audio_track_ids_(GetTrackIds(stream->GetAudioTracks())),
       video_track_ids_(GetTrackIds(stream->GetVideoTracks())),
       stream_type_(stream_type),
-      observer_(new MediaStreamObserver(
+      observer_(new MediaStreamTrackObserver(
             base::Bind(&MediaStreamTrackMetricsObserver::OnChanged,
                        base::Unretained(this)),
             base::ThreadTaskRunnerHandle::Get(),

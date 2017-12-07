@@ -19,11 +19,10 @@
 using ::testing::_;
 
 namespace media {
+namespace virtual_audio_output_stream_unittest {
 
-namespace {
 const AudioParameters kParams(
     AudioParameters::AUDIO_PCM_LOW_LATENCY, CHANNEL_LAYOUT_MONO, 8000, 8, 128);
-}
 
 class MockVirtualAudioInputStream : public VirtualAudioInputStream {
  public:
@@ -122,4 +121,5 @@ TEST_F(VirtualAudioOutputStreamTest, StartStopStartStop) {
   SyncWithAudioThread();
 }
 
+}  // namespace virtual_audio_output_stream_unittest
 }  // namespace media

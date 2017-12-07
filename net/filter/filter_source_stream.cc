@@ -17,7 +17,7 @@ namespace net {
 
 namespace {
 
-const char kDeflate[] = "deflate";
+const char kDeflate2[] = "deflate";
 const char kGZip[] = "gzip";
 const char kXGZip[] = "x-gzip";
 const char kBrotli[] = "br";
@@ -78,7 +78,7 @@ FilterSourceStream::SourceType FilterSourceStream::ParseEncodingType(
     return TYPE_NONE;
   } else if (base::LowerCaseEqualsASCII(encoding, kBrotli)) {
     return TYPE_BROTLI;
-  } else if (base::LowerCaseEqualsASCII(encoding, kDeflate)) {
+  } else if (base::LowerCaseEqualsASCII(encoding, kDeflate2)) {
     return TYPE_DEFLATE;
   } else if (base::LowerCaseEqualsASCII(encoding, kGZip) ||
              base::LowerCaseEqualsASCII(encoding, kXGZip)) {

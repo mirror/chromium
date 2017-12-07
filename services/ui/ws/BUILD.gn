@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 import("//services/catalog/public/tools/catalog.gni")
@@ -13,7 +14,7 @@ import("//services/service_manager/public/tools/test/service_test.gni")
 # not children of a Chrome OS window manager's root window.
 is_external_mode = use_ozone && !is_chromeos
 
-static_library("lib") {
+jumbo_static_library("lib") {
   sources = [
     "accelerator.cc",
     "accelerator.h",

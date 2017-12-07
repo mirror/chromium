@@ -19,7 +19,7 @@ namespace {
 
 // In debug builds only, log OpenSSL error stack. Then clear OpenSSL error
 // stack.
-void DLogOpenSslErrors() {
+void DLogOpenSslErrors2() {
 #ifdef NDEBUG
   while (ERR_get_error()) {
   }
@@ -62,7 +62,7 @@ bool AeadBaseEncrypter::SetKey(QuicStringPiece key) {
 
   if (!EVP_AEAD_CTX_init(ctx_.get(), aead_alg_, key_, key_size_, auth_tag_size_,
                          nullptr)) {
-    DLogOpenSslErrors();
+    DLogOpenSslErrors2();
     return false;
   }
 
@@ -109,7 +109,7 @@ bool AeadBaseEncrypter::Encrypt(QuicStringPiece nonce,
           reinterpret_cast<const uint8_t*>(plaintext.data()), plaintext.size(),
           reinterpret_cast<const uint8_t*>(associated_data.data()),
           associated_data.size())) {
-    DLogOpenSslErrors();
+    DLogOpenSslErrors2();
     return false;
   }
 

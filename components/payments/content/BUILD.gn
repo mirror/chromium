@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("content") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("content") {
   sources = [
     "can_make_payment_query_factory.cc",
     "can_make_payment_query_factory.h",
@@ -22,6 +24,11 @@ static_library("content") {
     "payment_response_helper.h",
     "service_worker_payment_instrument.cc",
     "service_worker_payment_instrument.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # namespaces
+    "payment_request_state.cc",
   ]
 
   deps = [
