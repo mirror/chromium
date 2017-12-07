@@ -22,6 +22,30 @@
       "revId": "79670f855026713260d731426c47e0e1bc7423da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a615f4a_9232b235",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-07T13:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f62109d_e479ddcf",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 18
+      },
+      "revId": "79670f855026713260d731426c47e0e1bc7423da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
