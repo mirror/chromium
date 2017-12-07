@@ -13,8 +13,11 @@ VREyeParameters::VREyeParameters() {
   render_height_ = 0;
 }
 
-void VREyeParameters::Update(
+VREyeParameters::VREyeParameters(
     const device::mojom::blink::VREyeParametersPtr& eye_parameters) {
+  offset_ = DOMFloat32Array::Create(3);
+  field_of_view_ = new VRFieldOfView();
+
   offset_->Data()[0] = eye_parameters->offset[0];
   offset_->Data()[1] = eye_parameters->offset[1];
   offset_->Data()[2] = eye_parameters->offset[2];
