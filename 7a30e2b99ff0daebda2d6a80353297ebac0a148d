@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "da594754_d9da5cd2",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportsController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we return nullptr if FetchImport() returns nullptr?",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e7e5aa_be47fc28",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 1,
+      "message": "Can we also rewrite this Fetch() and WaitForResource() call below and remove WaitForResource()?",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f0a07e3_949ab3a7",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 2
@@ -13,6 +47,41 @@
       "writtenOn": "2017-12-07T20:08:33Z",
       "side": 1,
       "message": "I may try to make SetResource() private eventually and only accessible by ResourceFetcher and a couple of other friends. But at least while I\u0027m landing these changes, keep it protected and minimize the friend list.",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2968734e_1e28edc5",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 1,
+      "message": "Sounds good. Could you add this review comment as a a TODO comment in the code?",
+      "parentUuid": "7f0a07e3_949ab3a7",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0253fcc1_6217ef94",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 1,
+      "message": "How about DCHECK()ing that |client| is null for synchronous requests?",
       "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

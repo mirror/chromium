@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1119535e_fa56a187",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 0,
+      "message": "Is this comment intentionally removed?",
+      "revId": "9ecc892ac9840a973d568a36afd446a38c3a3b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69607218_c025bc67",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorResourceContentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-07T20:45:28Z",
+      "side": 0,
+      "message": "Memo:\nThis CL moves WaitForResource() call to before |pending_resource_clients_.insert()| etc.\nThis is safe because RawResourceClient is notified asynchronously.",
+      "revId": "9ecc892ac9840a973d568a36afd446a38c3a3b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
