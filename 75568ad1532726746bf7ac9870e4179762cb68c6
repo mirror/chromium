@@ -234,6 +234,30 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31488817_c9704265",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-07T09:26:39Z",
+      "side": 1,
+      "message": "Not sure I get it.\nIf the back button is always visible, why do we need to hide it in snapshots?",
+      "parentUuid": "e1a8741b_ffd2350b",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
