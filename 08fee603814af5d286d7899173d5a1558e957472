@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1ad07f85_14cf0b78",
+        "filename": "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-07T22:06:25Z",
+      "side": 1,
+      "message": "Actually, I removed the |dismiss_suggestion_callbacks_| altogether, we can directly pass the callback to the next function. Earlier I was having issues with OnceCallback -\u003e Callback conversion, so I needed to cache the callback. Now I changed the API to use OnceCallback, so I don\u0027t need it anymore.",
+      "parentUuid": "c775f28c_a9d4f6a8",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bf0d318_7805b0c1",
         "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
         "patchSetId": 2
@@ -163,6 +187,30 @@
       "revId": "08fee603814af5d286d7899173d5a1558e957472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76d0a5e_41e20734",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-07T22:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68241f24_6a80f234",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 28
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +295,30 @@
       "writtenOn": "2017-10-20T17:48:29Z",
       "side": 1,
       "message": "Do you need a map of ContentId -\u003e List of callbacks?  What if there are two calls made for the same ContentId?",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 50
+      },
+      "revId": "08fee603814af5d286d7899173d5a1558e957472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921262e3_ca7335de",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-07T22:06:25Z",
+      "side": 1,
+      "message": "Actually we don\u0027t need this for single item. We can directly bind the callback as an argument.",
+      "parentUuid": "fdbaaf71_7de7092a",
       "range": {
         "startLine": 141,
         "startChar": 2,
