@@ -16,6 +16,24 @@
       "revId": "af55e43564085dbecab6a57b830b3298435769e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb54573_31678ebb",
+        "filename": "third_party/webrtc_overrides/rtc_base/gtest_prod_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-12-07T14:25:33Z",
+      "side": 1,
+      "message": "Since we don\u0027t compile WebRTC tests in Chromium, I don\u0027t expect that to be an issue. This is just needed so that the compiler only has one definition of FRIEND_TEST_ALL_PREFIXES",
+      "parentUuid": "9b934cf6_16953549",
+      "revId": "af55e43564085dbecab6a57b830b3298435769e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
