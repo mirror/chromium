@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6ee26b_2043923d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-12-07T06:40:54Z",
+      "side": 1,
+      "message": "I think we should put this line right at the end to be most conventional :)",
+      "range": {
+        "startLine": 1314,
+        "startChar": 0,
+        "endLine": 1314,
+        "endChar": 39
+      },
+      "revId": "dcff4d090d02ef60f5079885e2520534d894f3fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203f4b20_c6bcbbc4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-12-07T06:40:54Z",
+      "side": 1,
+      "message": "This one too",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "dcff4d090d02ef60f5079885e2520534d894f3fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
