@@ -35,6 +35,7 @@ class FakeVoiceInteractionFrameworkInstance
   void ShowVoiceInteractionSettings() override;
   void GetVoiceInteractionSettings(
       GetVoiceInteractionSettingsCallback callback) override;
+  void NotifyHostFlags(bool enable_assist_data_encryption) override;
 
   void FlushMojoForTesting();
 
@@ -50,6 +51,9 @@ class FakeVoiceInteractionFrameworkInstance
     return start_session_for_region_count_;
   }
   const gfx::Rect& selected_region() const { return selected_region_; }
+  bool enable_assist_data_encryption() const {
+    return enable_assist_data_encryption_;
+  }
 
   void ResetCounters() {
     start_session_count_ = 0u;
@@ -72,6 +76,7 @@ class FakeVoiceInteractionFrameworkInstance
   mojom::VoiceInteractionFrameworkHostPtr host_;
   arc::mojom::VoiceInteractionState state_ =
       arc::mojom::VoiceInteractionState::STOPPED;
+  bool enable_assist_data_encryption_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(FakeVoiceInteractionFrameworkInstance);
 };

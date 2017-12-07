@@ -79,6 +79,11 @@ void FakeVoiceInteractionFrameworkInstance::ShowVoiceInteractionSettings() {
 void FakeVoiceInteractionFrameworkInstance::GetVoiceInteractionSettings(
     GetVoiceInteractionSettingsCallback callback) {}
 
+void FakeVoiceInteractionFrameworkInstance::NotifyHostFlags(
+    bool enable_assist_data_encryption) {
+  enable_assist_data_encryption_ = enable_assist_data_encryption;
+}
+
 void FakeVoiceInteractionFrameworkInstance::FlushMojoForTesting() {
   host_.FlushForTesting();
 }

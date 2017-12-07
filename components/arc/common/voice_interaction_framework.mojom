@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 14
+// Next MinVersion: 15
 
 module arc.mojom;
 
@@ -22,7 +22,7 @@ enum VoiceInteractionState {
 };
 
 // Handles voice interaction queries from Android.
-// Next method ID: 6
+// Next method ID: 8
 // Deprecated method ID: 0, 2, 3, 4
 interface VoiceInteractionFrameworkHost {
   // Returns a fullscreen screenshot of the primary display.
@@ -31,6 +31,14 @@ interface VoiceInteractionFrameworkHost {
 
   // Notifies Chrome the state of voice interaction session.
   [MinVersion=8]SetVoiceInteractionState@5(VoiceInteractionState state);
+
+  // Returns the screenshot of the metalayer selected region.
+  // |data| represents the image encoded in JPEG format.
+  // The selected region of the screenshot is determined by the Host side.
+  [MinVersio=14]CaptureSelectedRegion@6() => (array<uint8> data);
+
+  // Returns an assist data containing the encrypted screenshot information.
+  [MinVersion=14]GetAssistData@7() => (array<uint8> data);
 };
 
 // Indicates voice interaction configuration status.
@@ -46,7 +54,7 @@ struct VoiceInteractionStatus {
 };
 
 // Connects with Android system server.
-// Next method ID: 12
+// Next method ID: 13
 // Deprecated method ID: 4
 interface VoiceInteractionFrameworkInstance {
   // DEPRECATED: Please use Init@11 instead.
@@ -65,6 +73,8 @@ interface VoiceInteractionFrameworkInstance {
 
   // Starts the voice interaction session in container, with a screen region
   // selected.
+  // |enable_assist_data_encryption| is true if the AssistData Encryption feature is enabled.
+  // It is a temporary experiment flag which will be removed after the feature is stablized.
   [MinVersion=1] StartVoiceInteractionSessionForRegion@2(Rect region);
 
   // Shows/hides the metalayer in the container.
@@ -87,4 +97,9 @@ interface VoiceInteractionFrameworkInstance {
   // Queries voice interaction settings status.
   [MinVersion=7] GetVoiceInteractionSettings@7() =>
     (VoiceInteractionStatus status);
+
+  // Notify container about the host side flags after the connection is ready.
+  // |enable_assist_data_encryption| is true if the AssistData Encryption feature is enabled.
+  // It is a temporary experiment flag which shoud be removed after the feature is stablized.
+  [MinVersion=14] NotifyHostFlags@12(bool enable_assist_data_encryption);
 };

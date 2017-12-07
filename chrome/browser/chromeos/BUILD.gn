@@ -1635,6 +1635,12 @@ source_set("chromeos") {
   if (use_cras) {
     defines = [ "USE_CRAS" ]
   }
+
+  if (is_chrome_branded) {
+    deps += [
+      "//chrome/browser/chromeos/arc/voice_interaction/internal/assist_data",
+    ]
+  }
 }
 
 static_library("arc_test_support") {
