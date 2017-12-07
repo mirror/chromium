@@ -193,10 +193,10 @@ void SimpleWebViewDialog::Init() {
 
   // Location bar.
   location_bar_ =
-      new LocationBarView(NULL, profile_, command_updater_.get(), this, true);
+      new LocationBarView(NULL, profile_, this, this, true);
 
   // Reload button.
-  reload_ = new ReloadButton(profile_, command_updater_.get());
+  reload_ = new ReloadButton(profile_, this);
   reload_->set_triggerable_event_flags(ui::EF_LEFT_MOUSE_BUTTON |
                                        ui::EF_MIDDLE_MOUSE_BUTTON);
   reload_->set_tag(IDC_RELOAD);
@@ -330,6 +330,42 @@ void SimpleWebViewDialog::ExecuteCommandWithDisposition(int id,
     default:
       NOTREACHED();
   }
+}
+
+bool SimpleWebViewDialog::SupportsCommand(int id) const {
+  return command_updater_->SupportsCommand(id);
+}
+
+bool SimpleWebViewDialog::IsCommandEnabled(int id) const {
+  return command_updater_->IsCommandEnabled(id);
+}
+
+bool SimpleWebViewDialog::ExecuteCommand(int id) {
+  return command_updater_->ExecuteCommand(id);
+}
+
+bool SimpleWebViewDialog::ExecuteCommandWithDispositionProxy(
+    int id, WindowOpenDisposition disposition) {
+  return command_updater_->ExecuteCommandWithDisposition(id, disposition);
+}
+
+void SimpleWebViewDialog::AddCommandObserver(
+    int id, CommandObserver* observer) {
+  command_updater_->AddCommandObserver(id, observer);
+}
+
+void SimpleWebViewDialog::RemoveCommandObserver(
+    int id, CommandObserver* observer) {
+  command_updater_->RemoveCommandObserver(id, observer);
+}
+
+void SimpleWebViewDialog::RemoveCommandObserver(
+    CommandObserver* observer) {
+  command_updater_->RemoveCommandObserver(observer);
+}
+
+void SimpleWebViewDialog::UpdateCommandEnabled(int id, bool state) {
+  command_updater_->UpdateCommandEnabled(id, state);
 }
 
 void SimpleWebViewDialog::LoadImages() {

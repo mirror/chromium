@@ -579,8 +579,8 @@ void ManagePasswordsUIController::ShowBubbleWithoutUserInteraction() {
   if (!browser || browser->toolbar_model()->input_in_progress())
     return;
 
-  CommandUpdater* updater = browser->command_controller()->command_updater();
-  updater->ExecuteCommand(IDC_MANAGE_PASSWORDS_FOR_PAGE);
+  chrome::BrowserCommandController* controller = browser->command_controller();
+  controller->ExecuteCommand(IDC_MANAGE_PASSWORDS_FOR_PAGE);
 }
 
 void ManagePasswordsUIController::DestroyAccountChooser() {
