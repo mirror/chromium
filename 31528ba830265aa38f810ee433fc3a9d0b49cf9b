@@ -16,6 +16,24 @@
       "revId": "31528ba830265aa38f810ee433fc3a9d0b49cf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d97c345_8731a440",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T14:34:03Z",
+      "side": 1,
+      "message": "No. I tried that, but deleting the temp folder when the ScopedTempDir goes out of scope also does blocking IO. (And manually deleting it within a second \"allow_blocking\" block doesn\u0027t seem worth it.)",
+      "parentUuid": "62ade988_590aed56",
+      "revId": "31528ba830265aa38f810ee433fc3a9d0b49cf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
