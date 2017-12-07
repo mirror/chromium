@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9989dc08_ba460d89",
+        "filename": "gpu/config/gpu_crash_keys.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Checked the crash_key code and realize that the \"32\" doesn\u0027t refer to the value\u0027s maximum size, but FYI these two strings will often be more than 32 characters long. The GL_RENDERER string on my Mac (just taking an example, I know these aren\u0027t used there) is \"NVIDIA GeForce GT 750M OpenGL Engine\", which is 36 characters long.",
+      "revId": "2df95311b7a2734e83dc12e366840e0b9b003ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
