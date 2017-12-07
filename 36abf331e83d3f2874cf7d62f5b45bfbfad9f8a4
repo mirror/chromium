@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2a16eae_6ce61949",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/error-clear-watch.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:08:21Z",
+      "side": 1,
+      "message": "Thanks for fixing this test!",
+      "revId": "36abf331e83d3f2874cf7d62f5b45bfbfad9f8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b940f003_68c3cf81",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/reentrant-success.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-07T09:08:21Z",
+      "side": 1,
+      "message": "Why did this move down after the call to `getCurrentPosition`? I don\u0027t know these tests, and the timing of the calls to `getCurrentPosition` here and above seems weird.",
+      "revId": "36abf331e83d3f2874cf7d62f5b45bfbfad9f8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
