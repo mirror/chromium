@@ -6,6 +6,8 @@
 
 #include <ostream>
 
+#include "base/logging.h"
+
 namespace offline_pages {
 
 ClientId::ClientId() {}
@@ -31,6 +33,17 @@ std::string ClientId::ToString() const {
       .append(id)
       .append(")");
 }
+
+std::string ClientId::AppendToHistogramName(const char* histogram_name) const {
+  std::string adjusted_histogram_name(histogram_name);
+  if (name_space.empty()) {
+    NOTREACHED();
+    return adjusted_histogram_name;
+  }
+  adjusted_histogram_name += ".";
+  adjusted_histogram_name += name_space;
+  return adjusted_histogram_name;
+};
 
 std::ostream& operator<<(std::ostream& out, const ClientId& cid) {
   return out << cid.ToString();
