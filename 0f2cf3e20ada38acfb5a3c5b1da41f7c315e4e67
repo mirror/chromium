@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d740c1f6_03a0002a",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-07T00:44:08Z",
+      "side": 1,
+      "message": "I think you accidentally a comment explaining this function",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627a65c9_3ba9fd43",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-07T00:44:08Z",
+      "side": 1,
+      "message": "Might be clearer as \"HasNonEmptyStringAtIndex\" ?",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa7df0d_ef6d8b82",
+        "filename": "chrome/browser/ui/webui/sync_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-07T00:44:08Z",
+      "side": 1,
+      "message": "I think that this line initializes the event_case as being test_event? It\u0027s kind of an obtuse idiom; at first glance it looks like this line does nothing. Can you add a comment explaining it?",
+      "revId": "0f2cf3e20ada38acfb5a3c5b1da41f7c315e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
