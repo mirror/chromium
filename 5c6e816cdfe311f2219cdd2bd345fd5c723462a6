@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "76399bde_4ffaee71",
+        "filename": "ios/web/net/cookies/system_cookie_store_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T15:29:22Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me why this new API should leak cookie from the regular browsing session to Incognito. How embedder knows that it\u0027s ok to send cookie for Incognito on iOS 11 and *not ok* to send cookie for Incognito on iOS 10?",
+      "parentUuid": "b492b640_d89d801c",
+      "revId": "5c6e816cdfe311f2219cdd2bd345fd5c723462a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5743117_46730123",
         "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
         "patchSetId": 3

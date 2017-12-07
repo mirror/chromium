@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa21ef1_02914f3c",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T15:29:22Z",
+      "side": 1,
+      "message": "Please don\u0027t mention web view here. Public API does not suppose to leak this information. Use WebState term.",
+      "revId": "52be2395effc814a078920cd43c9f9eedc302480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
