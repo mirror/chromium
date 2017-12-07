@@ -3097,6 +3097,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
 #endif  // OS_ANDROID
 
+#if defined(OS_ANDROID)
+    {"enable-chrome-home-survey",
+     flag_descriptions::kEnableChromeHomeSurveyName,
+     flag_descriptions::kEnableChromeHomeSurveyDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeSurvey)},
+#endif  // OS_ANDROID
+
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
     {pausetabs::kFeatureName, flag_descriptions::kPauseBackgroundTabsName,
      flag_descriptions::kPauseBackgroundTabsDescription, kOsDesktop,
