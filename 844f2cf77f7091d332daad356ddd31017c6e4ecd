@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7e679a9e_f97825ef",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T05:00:46Z",
+      "side": 1,
+      "message": "As we talked before, we should take primary direction(\u003d\u003d direction of\nenclosing box) from given position instead of passing wrong direction.\n\nI think it is worth to try to change such wrong call sites, I remembered\nit is Left/Right.\n\nSince this DCHECK doesn\u0027t hit, fixing wrong call sites may not cause\ntest failures.",
+      "parentUuid": "dac5f8c1_d73d93e8",
+      "revId": "844f2cf77f7091d332daad356ddd31017c6e4ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ba88d46_bdf8a4cb",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 6
