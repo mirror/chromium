@@ -34,8 +34,10 @@ DialMediaSinkService::DialMediaSinkService(content::BrowserContext* context) {
 
 DialMediaSinkService::~DialMediaSinkService() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (impl_)
-    impl_->task_runner()->DeleteSoon(FROM_HERE, impl_.release());
+  if (impl_) {
+    DialMediaSinkServiceImpl* impl_ptr = impl_.release();
+    impl_ptr->task_runner()->DeleteSoon(FROM_HERE, impl_ptr);
+  }
 }
 
 void DialMediaSinkService::Start(
