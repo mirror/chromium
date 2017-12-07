@@ -63,6 +63,30 @@
       "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ccbd95_f6b12d65",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T22:48:40Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/chrome/browser/extensions/component_extensions_whitelist/whitelist.h for the list of component extensions.",
+      "parentUuid": "2eb9b3e9_eb717cb3",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
