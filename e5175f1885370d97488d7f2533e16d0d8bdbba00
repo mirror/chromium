@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bbb3aaa_58cab9c9",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T08:42:07Z",
+      "side": 1,
+      "message": "nit: use a . here as well?",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ed8881_d25ba6c1",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T08:42:07Z",
+      "side": 1,
+      "message": "// The OomIntervetnionDecider is disabled in incognito mode because it is\n// written in such a way that hostnames would be persisted in preferences on disk\n// which is not acceptable for incognito mode.",
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d78cf0b_6c1d24a0",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T08:42:07Z",
+      "side": 1,
+      "message": "why this change from base::MakeUnique? I think that base::MakeUnique is the right way to go here.",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9a45dc_956c2b21",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T08:42:07Z",
+      "side": 1,
+      "message": "Thanks for this DCHECK!",
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
