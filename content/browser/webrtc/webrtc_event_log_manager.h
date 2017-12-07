@@ -152,6 +152,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
 
  protected:
   friend class WebRtcEventLogManagerTest;  // unit tests inject a frozen clock.
+  friend class WebRTCInternalsForTest;
   friend struct base::LazyInstanceTraitsBase<WebRtcEventLogManager>;
 
   struct LogFile {

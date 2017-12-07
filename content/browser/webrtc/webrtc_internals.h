@@ -17,6 +17,7 @@
 #include "base/process/process.h"
 #include "base/threading/thread_checker.h"
 #include "base/values.h"
+#include "content/browser/webrtc/webrtc_event_log_manager.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "media/media_features.h"
@@ -116,6 +117,10 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   WebRTCInternals();
   WebRTCInternals(int aggregate_updates_ms, bool should_block_power_saving);
   ~WebRTCInternals() override;
+
+  // This allows unit-tests to override to using either a mock, or a locally
+  // scoped, version of WebRtcEventLogManager.
+  virtual WebRtcEventLogManager* webrtc_event_log_manager();
 
   device::mojom::WakeLockPtr wake_lock_;
 
