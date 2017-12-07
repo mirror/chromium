@@ -187,8 +187,7 @@ TEST_P(SavePasswordInfoBarDelegateTestForUKMs, VerifyUKMRecording) {
   {
     // Setup metrics recorder
     auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
-        true /*is_main_frame_secure*/, &test_ukm_recorder,
-        test_ukm_recorder.GetNewSourceID(), GURL("https://www.example.com/"));
+        true /*is_main_frame_secure*/, test_ukm_recorder.GetNewSourceID());
 
     // Exercise delegate.
     std::unique_ptr<MockPasswordFormManager> password_form_manager(
