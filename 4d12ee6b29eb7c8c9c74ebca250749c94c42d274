@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e643f2dd_27f7df75",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-07T23:06:53Z",
+      "side": 1,
+      "message": "Opened crbug.com/793091",
+      "parentUuid": "08348037_70aa9bb5",
+      "range": {
+        "startLine": 824,
+        "startChar": 51,
+        "endLine": 824,
+        "endChar": 65
+      },
+      "revId": "4d12ee6b29eb7c8c9c74ebca250749c94c42d274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed302cc_faec6c5f",
         "filename": "components/previews/content/previews_content_util.cc",
         "patchSetId": 2
