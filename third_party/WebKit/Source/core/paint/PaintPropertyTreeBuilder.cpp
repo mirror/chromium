@@ -1454,7 +1454,8 @@ static void SetNeedsPaintPropertyUpdateIfNeeded(const LayoutObject& object) {
     box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
 
   // The filter generated for reflection depends on box size.
-  if (box.HasReflection()) {
+  // Non-layered object's reflection has no effect (e.g. SVG text).
+  if (box.HasReflection() && box.HasLayer()) {
     box.Layer()->SetFilterOnEffectNodeDirty();
     box.GetMutableForPainting().SetNeedsPaintPropertyUpdate();
   }
