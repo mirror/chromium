@@ -52,6 +52,24 @@
       "revId": "fb8574a8c9e4ded8aaa018c4e765effc7688c84d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3699ec3a_705b7a10",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-12-07T16:02:29Z",
+      "side": 1,
+      "message": "\u003e Eventually I realized what had happened is that VMware\u0027s weird mounted network drive caching had confused me. (It locks mounted files on Windows host while the VM is running, so then I suspend the target, rebuild, and resume the target... sometimes it picks up the changes, but sometimes it ends up using an old version, maybe due to a network cache or something?, which can be very confusing.)\n\nYES! This bug. Why don’t they fix it already?\n\nIt’s not Windows-specific, either. I see it on a macOS host too, regardless of the guest. If I make a change to any executable code that’s shared into a VM via vmhgfs, and I’ve already executed from that file in the VM, then it won’t work. Usually it’s crashy, sometimes it’s just stale. It’s never right.",
+      "parentUuid": "f1cba65d_d6149715",
+      "revId": "fb8574a8c9e4ded8aaa018c4e765effc7688c84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
