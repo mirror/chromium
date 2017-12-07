@@ -36,6 +36,11 @@ class ProcessDiceHeaderDelegate {
   // Called after the account was seeded in the account tracker service and
   // after the refresh token was fetched and updated in the token service.
   virtual void EnableSync(const std::string& account_id) = 0;
+
+  // Handles a failure in the token exchange (i.e. shows the error to the user).
+  virtual void HandleTokenExchangeFailure(
+      const std::string& email,
+      const GoogleServiceAuthError& error) = 0;
 };
 
 // Processes the Dice responses from Gaia.
@@ -140,8 +145,10 @@ class DiceResponseHandler : public KeyedService {
       std::string email,
       std::string refresh_token,
       std::unique_ptr<ProcessDiceHeaderDelegate> delegate);
-  void OnTokenExchangeFailure(DiceTokenFetcher* token_fetcher,
-                              const GoogleServiceAuthError& error);
+  void OnTokenExchangeFailure(
+      DiceTokenFetcher* token_fetcher,
+      std::unique_ptr<ProcessDiceHeaderDelegate> delegate,
+      const GoogleServiceAuthError& error);
 
   SigninManager* signin_manager_;
   SigninClient* signin_client_;

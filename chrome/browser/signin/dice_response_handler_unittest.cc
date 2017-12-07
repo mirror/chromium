@@ -101,6 +101,12 @@ class DiceResponseHandlerTest : public testing::Test,
     enable_sync_account_id_ = account_id;
   }
 
+  void HandleTokenExchangeFailure(const std::string& email,
+                                  const GoogleServiceAuthError& error) {
+    auth_error_email_ = email;
+    auth_error_ = error;
+  }
+
  protected:
   DiceResponseHandlerTest()
       : loop_(base::MessageLoop::TYPE_IO),  // URLRequestContext requires IO.
@@ -190,6 +196,8 @@ class DiceResponseHandlerTest : public testing::Test,
   int reconcilor_blocked_count_;
   int reconcilor_unblocked_count_;
   std::string enable_sync_account_id_;
+  GoogleServiceAuthError auth_error_;
+  std::string auth_error_email_;
 };
 
 class TestProcessDiceHeaderDelegate : public ProcessDiceHeaderDelegate {
@@ -202,6 +210,12 @@ class TestProcessDiceHeaderDelegate : public ProcessDiceHeaderDelegate {
   // Called after the refresh token was fetched and added in the token service.
   void EnableSync(const std::string& account_id) override {
     owner_->EnableSync(account_id);
+  }
+
+  void HandleTokenExchangeFailure(
+      const std::string& email,
+      const GoogleServiceAuthError& error) override {
+    owner_->HandleTokenExchangeFailure(email, error);
   }
 
  private:
@@ -228,6 +242,8 @@ TEST_F(DiceResponseHandlerTest, Signin) {
                                           false /* is_child_account */));
   // Check that the token has been inserted in the token service.
   EXPECT_TRUE(token_service_.RefreshTokenIsAvailable(account_id));
+  EXPECT_EQ(std::string(), auth_error_email_);
+  EXPECT_EQ(GoogleServiceAuthError::NONE, auth_error_.state());
   // Check that the reconcilor was blocked and unblocked exactly once.
   EXPECT_EQ(1, reconcilor_blocked_count_);
   EXPECT_EQ(1, reconcilor_unblocked_count_);
@@ -248,12 +264,16 @@ TEST_F(DiceResponseHandlerTest, SigninFailure) {
   EXPECT_EQ(
       1u, dice_response_handler_->GetPendingDiceTokenFetchersCountForTesting());
   // Simulate GaiaAuthFetcher failure.
+  GoogleServiceAuthError::State error_state =
+      GoogleServiceAuthError::SERVICE_UNAVAILABLE;
   signin_client_.consumer_->OnClientOAuthFailure(
-      GoogleServiceAuthError(GoogleServiceAuthError::SERVICE_UNAVAILABLE));
+      GoogleServiceAuthError(error_state));
   EXPECT_EQ(
       0u, dice_response_handler_->GetPendingDiceTokenFetchersCountForTesting());
   // Check that the token has not been inserted in the token service.
   EXPECT_FALSE(token_service_.RefreshTokenIsAvailable(account_id));
+  EXPECT_EQ(account_info.email, auth_error_email_);
+  EXPECT_EQ(error_state, auth_error_.state());
 }
 
 // Checks that a second token for the same account is not requested when a
