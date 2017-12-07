@@ -273,6 +273,9 @@ void WindowState::RestoreAlwaysOnTop() {
 
 void WindowState::OnWMEvent(const WMEvent* event) {
   current_state_->OnWMEvent(this, event);
+
+  if (!event->IsWorkspaceEvent())
+    UpdateSnappedWidthRatio();
 }
 
 void WindowState::SaveCurrentBoundsForRestore() {
@@ -315,6 +318,17 @@ std::unique_ptr<WindowState::State> WindowState::SetStateObject(
   current_state_ = std::move(new_state);
   current_state_->AttachState(this, old_object.get());
   return old_object;
+}
+
+void WindowState::UpdateSnappedWidthRatio() {
+  if (IsSnapped()) {
+    gfx::Rect maximized_bounds =
+        ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+    snapped_width_ratio_ = static_cast<float>(window_->bounds().width()) /
+                           static_cast<float>(maximized_bounds.width());
+  } else {
+    snapped_width_ratio_ = 0.5f;
+  }
 }
 
 void WindowState::SetPreAutoManageWindowBounds(const gfx::Rect& bounds) {
@@ -431,6 +445,8 @@ void WindowState::AdjustSnappedBounds(gfx::Rect* bounds) {
     return;
   gfx::Rect maximized_bounds =
       ScreenUtil::GetMaximizedWindowBoundsInParent(window_);
+  bounds->set_width(
+      static_cast<int>(snapped_width_ratio_ * maximized_bounds.width()));
   if (GetStateType() == mojom::WindowStateType::LEFT_SNAPPED)
     bounds->set_x(maximized_bounds.x());
   else if (GetStateType() == mojom::WindowStateType::RIGHT_SNAPPED)
