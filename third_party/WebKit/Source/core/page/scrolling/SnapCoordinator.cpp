@@ -262,7 +262,7 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   SnapAreaData snap_area_data;
   LayoutRect container(
       LayoutPoint(),
-      LayoutSize(snap_container.OffsetWidth(), snap_container.OffsetHeight()));
+      LayoutSize(snap_container.ClientWidth(), snap_container.ClientHeight()));
   // We assume that the snap_container is the snap_area's ancestor in layout
   // tree, as the snap_container is found by walking up the layout tree in
   // FindSnapContainer(). Under this assumption,
