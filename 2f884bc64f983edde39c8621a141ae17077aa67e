@@ -16,6 +16,24 @@
       "revId": "2f884bc64f983edde39c8621a141ae17077aa67e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ad35e2_075e229c",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-07T01:38:28Z",
+      "side": 1,
+      "message": "It would give us all the information wouldn\u0027t affect the visual layout. I don\u0027t think TRACE_EVENT_ASYNC_STEP_INTO* can take a timestamp and adjust its internal start/end like some of the other trace macros.",
+      "parentUuid": "49f52a39_62cecd29",
+      "revId": "2f884bc64f983edde39c8621a141ae17077aa67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
