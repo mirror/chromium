@@ -142,8 +142,12 @@ TabActivityWatcher::TabActivityWatcher()
 
 TabActivityWatcher::~TabActivityWatcher() = default;
 
-void TabActivityWatcher::DisableLogTimeoutForTest() {
+void TabActivityWatcher::DisableLogTimeoutForTesting() {
   per_source_log_timeout_ = base::TimeDelta();
+}
+
+void TabActivityWatcher::ResetForTesting() {
+  tab_metrics_logger_ = std::make_unique<TabMetricsLoggerImpl>();
 }
 
 void TabActivityWatcher::TabPinnedStateChanged(TabStripModel* tab_strip_model,
