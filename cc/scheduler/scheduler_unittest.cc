@@ -1442,7 +1442,7 @@ TEST_F(SchedulerTest,
   SetUpScheduler(EXTERNAL_BFS);
   fake_compositor_timing_history_->SetAllEstimatesTo(kFastDuration);
   fake_compositor_timing_history_
-      ->SetBeginMainFrameStartToCommitDurationEstimate(kSlowDuration);
+      ->SetBeginMainFrameStartToReadyToCommitDurationEstimate(kSlowDuration);
 
   bool expect_send_begin_main_frame = true;
   EXPECT_SCOPED(
@@ -1804,7 +1804,7 @@ TEST_F(SchedulerTest, ImplFrameNotSkippedAfterLateAck_CommitEstimateTooLong) {
   SetUpScheduler(EXTERNAL_BFS);
   fake_compositor_timing_history_->SetAllEstimatesTo(kFastDuration);
   fake_compositor_timing_history_
-      ->SetBeginMainFrameStartToCommitDurationEstimate(kSlowDuration);
+      ->SetBeginMainFrameStartToReadyToCommitDurationEstimate(kSlowDuration);
   EXPECT_SCOPED(ImplFrameNotSkippedAfterLateAck());
 }
 
