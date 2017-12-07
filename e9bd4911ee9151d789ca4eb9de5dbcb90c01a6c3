@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cde03c4_96523b89",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-07T16:06:25Z",
+      "side": 1,
+      "message": "I believe that it should be DISABLED_BY_DEFAULT for all platforms and ENABLED_BY_DEFAULT for Android.",
+      "range": {
+        "startLine": 315,
+        "startChar": 38,
+        "endLine": 315,
+        "endChar": 71
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b892362b_e006cd6d",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-07T16:06:25Z",
+      "side": 1,
+      "message": "Do we need \"Experimental\" suffix there?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 13,
+        "endLine": 1004,
+        "endChar": 41
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ae490f_35b2a126",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-07T16:06:25Z",
+      "side": 1,
+      "message": "Let\u0027s drop \"Android\" from here — we\u0027ll use it for all platforms now.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 13,
+        "endLine": 1008,
+        "endChar": 43
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda649b3_30355dba",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-07T16:06:25Z",
+      "side": 1,
+      "message": "ThrotteableTaskQueue should always have SetCanBeStopped(true).",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 49
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89820597_af5618a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-07T16:06:25Z",
+      "side": 1,
+      "message": "Let\u0027s create a separate switch: SetCanBeStopped(RuntimeEnabledFeatures::StopNonTimersInBackgroundEnabled). This way we\u0027ll have:\n\nStopInBackgroundEnabled — for stopping the whole renderer (only timers by default), and StopLoadingInBackground enabled and StopNonTimersInBackground for extending stopping to other types of tasks.",
+      "range": {
+        "startLine": 361,
+        "startChar": 28,
+        "endLine": 361,
+        "endChar": 43
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
