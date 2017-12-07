@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "222c60c3_d549f241",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-07T00:04:07Z",
+      "side": 1,
+      "message": "I guess this only runs if either is disabled and the user opens the menu. I think that\u0027s ok though.",
+      "range": {
+        "startLine": 488,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 9
+      },
+      "revId": "612964b46b0d6b726c14f6ef16e744c7e1a99d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
