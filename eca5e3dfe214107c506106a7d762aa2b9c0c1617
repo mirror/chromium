@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "600c15fb_d0f3a72f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T16:21:52Z",
+      "side": 1,
+      "message": "Put this with the rest of the chrome home flags in this file",
+      "revId": "eca5e3dfe214107c506106a7d762aa2b9c0c1617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90efcb8_d61bc2c0",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T16:21:52Z",
+      "side": 1,
+      "message": "nit: Capitalize Chrome Home\n\nPut these with the rest of the Chrome Home names/descriptions.",
+      "range": {
+        "startLine": 1772,
+        "startChar": 51,
+        "endLine": 1772,
+        "endChar": 62
+      },
+      "revId": "eca5e3dfe214107c506106a7d762aa2b9c0c1617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
