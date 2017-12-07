@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "944def24_748233b4",
+        "filename": "device/vr/oculus/oculus_device_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-07T22:58:00Z",
+      "side": 1,
+      "message": "Not necessary for this CL, but for future reference you\u0027ll want to look at ovr_Detect() in OVR_CAPI_Util.h: https://developer3.oculus.com/doc/1.20-libovr/_o_v_r___c_a_p_i___util_8h.html#ac16f8de3682756eb33e8832c9285d4c9",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
