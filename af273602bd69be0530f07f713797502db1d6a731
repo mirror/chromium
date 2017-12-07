@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df6f8188_104f40c3",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T18:10:36Z",
+      "side": 1,
+      "message": "Huh, I guess I did make this method public. I\u0027m not quite sure how I feel about this.",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd389d9_5f29037a",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T18:10:36Z",
+      "side": 1,
+      "message": "Huh, clever, I had never thought to do a wait like this. I guess, while you\u0027re in here, can you EXPECT that this condition starts false before you start RunUntilIdle()?\n\nWhat do you think of using SyncService::GetActiveDataTypes() instead of IsTrackingMetadata()?",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a493ca6f_d9282e96",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T18:10:36Z",
+      "side": 1,
+      "message": "This is terrifying. Maybe record a histogram instead of DCHECK? Or, could post to this thread and try again. I don\u0027t think a DCHECK is safe. I wish 709094 and 761485 were fixed :(",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 8
+      },
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0034615b_992b389c",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-07T18:10:36Z",
+      "side": 1,
+      "message": "This component should not be aware of IsTrackingMetadata(). We\u0027re leaking too much abstraction here. At the very least, can you put a TODO in here to remove this once the corresponding bugs are fixed?",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
