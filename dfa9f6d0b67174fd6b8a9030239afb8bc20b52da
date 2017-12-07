@@ -422,6 +422,23 @@
       "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec59fa8_398c6c11",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-07T16:26:12Z",
+      "side": 1,
+      "message": "ke.he@ fixed the leak in the real service. Could you see if this is still needed?\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d791155",
+      "revId": "dfa9f6d0b67174fd6b8a9030239afb8bc20b52da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
