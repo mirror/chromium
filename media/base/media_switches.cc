@@ -270,6 +270,12 @@ const base::Feature kUseR16Texture{"use-r16-texture",
 const base::Feature kUnifiedAutoplay{"UnifiedAutoplay",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Forces the Unified Autoplay policy by overriding the platform's default
+// autoplay policy. This flag will take priority over all other autoplay flags
+// so it can be used to force Unified Autoplay for testing.
+const base::Feature kForceUnifiedAutoplayForTest{
+    "ForceUnifiedAutoplayForTest", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Use SurfaceLayer instead of VideoLayer.
 const base::Feature kUseSurfaceLayerForVideo{"UseSurfaceLayerForVideo",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
@@ -340,6 +346,10 @@ const base::Feature kMediaFoundationH264Encoding{
 #endif  // defined(OS_WIN)
 
 std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
+  // Enable unified autoplay for testing.
+  if (base::FeatureList::IsEnabled(media::kForceUnifiedAutoplayForTest))
+    return switches::autoplay::kDocumentUserActivationRequiredPolicy;
+
   // |kIgnoreAutoplayRestrictionsForTests| overrides all other settings.
   if (command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
     return switches::autoplay::kNoUserGestureRequiredPolicy;
