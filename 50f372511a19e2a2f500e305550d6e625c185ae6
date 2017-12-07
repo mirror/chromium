@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3f3e3d79_687a5658",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/location-hash-usvstring.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-07T09:50:43Z",
+      "side": 1,
+      "message": "I think it should go in external/wpt since it\u0027s only testing web-exposed behavior prescribed by the spec. web-platform-tests isn\u0027t current particularly comprehensive or well organized, but we can make it better by using it by default whenever possible :)",
+      "parentUuid": "0b5b0de4_bac73277",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 10
+      },
+      "revId": "50f372511a19e2a2f500e305550d6e625c185ae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a544b559_0999fc42",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/location-hash-usvstring.html",
         "patchSetId": 5
