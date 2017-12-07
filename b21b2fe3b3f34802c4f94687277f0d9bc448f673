@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c38186c_794c7334",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T09:23:29Z",
+      "side": 1,
+      "message": "nit: could \u0027here\u0027 be replaced with \u0027for dispatching event\u0027 to explicitly narrow the context? (Checking AskedToTerminate a few lines below could feel confusing for careless readers like me)",
+      "revId": "b21b2fe3b3f34802c4f94687277f0d9bc448f673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ca6481_49733dd6",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2017-12-07T08:29:15Z",
       "side": 1,
       "message": "would still prefer the comment say because Get worker thread may return null.\nOtherwise the reader doesn\u0027t really know why it\u0027s being avoided.\n\nor should we just call Get worker thread and if null exit?",
+      "revId": "b21b2fe3b3f34802c4f94687277f0d9bc448f673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f2885c_d27d2bff",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T09:23:29Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "24ca6481_49733dd6",
       "revId": "b21b2fe3b3f34802c4f94687277f0d9bc448f673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
