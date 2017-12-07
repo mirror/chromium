@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684c0e7c_ab91f0e9",
+        "filename": "components/policy/content/policy_blacklist_navigation_throttle.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-07T00:16:01Z",
+      "side": 1,
+      "message": "Just a quick drive-by. Do you only care about blacklisting direct navigations and ignore redirects to blacklisted URLs? If you want to catch redirects, you need to explicitly override WillRedirectRequest.",
+      "revId": "beabf40868138c9249807c85d97871052a65b06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
