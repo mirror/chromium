@@ -16,6 +16,24 @@
       "revId": "403d57c19492fca90e2cf5538a07e234d10dcaa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c667b1_00ccfa59",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T07:34:07Z",
+      "side": 1,
+      "message": "OK teaching MockRPH about StoragePartition seems to get the RenderProcessHostUnitTests to pass. Not sure if there are problems with that or if lots of other unit tests will start failing.",
+      "parentUuid": "78f98230_cb8acd44",
+      "revId": "403d57c19492fca90e2cf5538a07e234d10dcaa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
