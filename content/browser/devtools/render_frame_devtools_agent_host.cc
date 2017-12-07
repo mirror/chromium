@@ -648,6 +648,10 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
 
   if (IsBrowserSideNavigationEnabled()) {
     if (!navigation_handles_.empty()) {
+      // Buffer messages for later delivery if there is a comitted
+      // navigation in process.  The renderer may either be about to die or
+      // it may not be safe to eval arbitary JS until the WindowProxy has
+      // been initalised.
       suspended_messages_by_session_id_[session_id].push_back(
           {call_id, method, message});
       return true;
@@ -711,6 +715,8 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
+
+  navigation_handles_.insert(handle);
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
@@ -895,7 +901,6 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  navigation_handles_.insert(handle);
   DCHECK(CheckConsistency());
 }
 
@@ -1126,7 +1131,6 @@ void RenderFrameDevToolsAgentHost::DisconnectWebContents() {
   if (IsBrowserSideNavigationEnabled()) {
     UpdateFrameHost(nullptr);
     frame_tree_node_ = nullptr;
-    navigation_handles_.clear();
     WebContentsObserver::Observe(nullptr);
     return;
   }
