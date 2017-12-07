@@ -22,6 +22,30 @@
       "revId": "c73532631f02ab63668ead5dedb8f37b923dbd31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f980de_bfd725f3",
+        "filename": "ui/base/clipboard/clipboard_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T22:09:52Z",
+      "side": 1,
+      "message": "Oops. Good catch.",
+      "parentUuid": "e5169598_72df69eb",
+      "range": {
+        "startLine": 498,
+        "startChar": 57,
+        "endLine": 498,
+        "endChar": 58
+      },
+      "revId": "c73532631f02ab63668ead5dedb8f37b923dbd31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
