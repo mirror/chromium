@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "6f619e2a_373f772b",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T22:21:28Z",
+      "side": 1,
+      "message": "Ok. flex: none is essentially flex: 0 0 auto, which is flex-basis: auto, so (I think but have not tried), that flex-basis: auto might suffice here.",
+      "parentUuid": "805828f5_42f223e6",
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "005161f0_9c814acd",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 1
@@ -175,6 +193,30 @@
       "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05474e11_483fd6ae",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T22:21:28Z",
+      "side": 1,
+      "message": "I see. Thanks for the explanation.",
+      "parentUuid": "66a6cf70_1d23092e",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
