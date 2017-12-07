@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "cde0c544_493fca60",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-07T16:50:55Z",
+      "side": 1,
+      "message": "I think it makes more sense to be strict about how this should be used: only viz-host should connect to this, and it should be smart enough to connect to a client just once. I feel that\u0027s a reasonable expectation. If a second request is coming in, then we should just close the first connection, and bind the latest request.\n\nYou can leave it a BindingSet\u003c\u003e too, it\u0027s technically correct. Just more permissive than it needs to be.",
+      "parentUuid": "2b4c2d84_a2d285e5",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df58fef_df18e2e7",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 17
