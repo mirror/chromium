@@ -22,6 +22,30 @@
       "revId": "aa3e3944164d7209599ed4f54558d1a3fe72dd2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d931eb01_de09c139",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-12-07T17:30:07Z",
+      "side": 1,
+      "message": "This was from old days, didn\u0027t know it was unneeded now, removed it.",
+      "parentUuid": "9ad5b70b_efcf120c",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "aa3e3944164d7209599ed4f54558d1a3fe72dd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
