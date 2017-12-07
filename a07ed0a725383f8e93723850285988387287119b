@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "772a55d2_aa3bf801",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc5b36e_71f1fa2f",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03f72307_415e1f8b",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T19:59:58Z",
       "side": 1,
       "message": "nit: if (!tree_.Unserialize(params.update))\n       return false;",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ae7e631_4276be60",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f72307_415e1f8b",
       "revId": "a07ed0a725383f8e93723850285988387287119b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8f0611a7_b9bad352",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "I think we need to allow AXEventGenerator to see the change, even if the associated event is sent directly here.\n\nFor example, Blink might send a focus event, and then a load complete. Both have the same tree data and root node, but they arrive in sequence. AXEventGenerator will actually fire a load complete when it sees the first event since it\u0027s triggering on the change to the tree, so if we returned early here, AXEventGenerator wouldn\u0027t ever fire the load complete.",
+      "parentUuid": "79a6de03_31f22689",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0938ed_be01b5a2",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-06T19:59:58Z",
       "side": 1,
       "message": "Why not just refactor the switch into a function -- then ShouldSendAutomationEvent would just be if that function returns extensions::api::automation::EVENT_TYPE_NONE.",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17b4ae1b_624aaa35",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "OK, done - now I have functions that map AXEvent to automation\nevents, and AXGenerator events to automation events. Then we have\na single switch that decides whether each automation event should\ncome from AXEventGenerator or from AXEvent, so there\u0027s only one\nplace to change.\n\nThis also adds a bit more type safety overall because we no longer\ndepend on AXEvent and automation events being the same - if they\ndiffer we\u0027ll get a compile error now.",
+      "parentUuid": "7c0938ed_be01b5a2",
       "revId": "a07ed0a725383f8e93723850285988387287119b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "09e8067a_f7058dbd",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "It\u0027s there also, but it seems helpful to have it here too since\nthis is the class that owns tree_, and we\u0027re relying on\nAutomationInternalCustomBindings to dispatch updates to the\ncorrect tree wrapper.",
+      "parentUuid": "0a106d3b_8a9094cc",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4aaf346_6f4f1007",
         "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-06T19:59:58Z",
       "side": 1,
       "message": "nit: if (!tree_wrapper...) ...",
+      "revId": "a07ed0a725383f8e93723850285988387287119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06311f8b_86a8c1d3",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T20:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4aaf346_6f4f1007",
       "revId": "a07ed0a725383f8e93723850285988387287119b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
