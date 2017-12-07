@@ -22,6 +22,30 @@
       "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbee190_9ad5c4ec",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-07T03:39:44Z",
+      "side": 1,
+      "message": "I typemapped this. Please take another look.",
+      "parentUuid": "75365c44_394fd584",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
