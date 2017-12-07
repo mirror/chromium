@@ -216,8 +216,8 @@ class BASE_EXPORT ScopedAllowBlocking {
 
 class ScopedAllowBlockingForTesting {
  public:
-  ScopedAllowBlockingForTesting() {}
-  ~ScopedAllowBlockingForTesting() {}
+  ScopedAllowBlockingForTesting() = default;
+  ~ScopedAllowBlockingForTesting() = default;
 
  private:
 #if DCHECK_IS_ON()
