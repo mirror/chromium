@@ -4,29 +4,38 @@
 
 package org.chromium.net;
 
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.security.NetworkSecurityPolicy;
-
 import org.chromium.base.annotations.CalledByNative;
-
-import java.lang.reflect.Method;
 
 /**
  * Utility functions for testing features implemented in AndroidNetworkLibrary.
  */
 public class AndroidNetworkLibraryTestUtil {
+    private static int sCallCount;
     /**
-     * Helper for tests that simulates an app disallowing cleartext traffic entirely on M and newer.
+     * Helper for tests that simulates an app controlling cleartext traffic on M and newer.
      */
-    @TargetApi(Build.VERSION_CODES.M)
     @CalledByNative
     private static void setUpSecurityPolicyForTesting(boolean cleartextPermitted) throws Exception {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Method setCleartextTrafficPermitted = NetworkSecurityPolicy.class.getDeclaredMethod(
-                    "setCleartextTrafficPermitted", boolean.class);
-            setCleartextTrafficPermitted.invoke(
-                    NetworkSecurityPolicy.getInstance(), cleartextPermitted);
-        }
+        sCallCount = 0;
+        AndroidNetworkLibrary.NetworkSecurityPolicyProxy.setInstanceForTesting(
+                new AndroidNetworkLibrary.NetworkSecurityPolicyProxy() {
+                    @Override
+                    public boolean isCleartextTrafficPermitted(String host) {
+                        ++sCallCount;
+                        if (host.startsWith(".")) {
+                            throw new IllegalArgumentException("hostname can not start with .");
+                        }
+                        return cleartextPermitted;
+                    }
+                    @Override
+                    public boolean isCleartextTrafficPermitted() {
+                        return cleartextPermitted;
+                    }
+                });
+    }
+
+    @CalledByNative
+    private static int getCallCount() {
+        return sCallCount;
     }
 }

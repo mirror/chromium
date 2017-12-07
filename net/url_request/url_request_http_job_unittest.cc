@@ -1466,15 +1466,21 @@ TEST_F(URLRequestHttpJobTest, AndroidCleartextPermittedTest) {
     const char* url;
     bool cleartext_permitted;
     bool should_block;
+    int expected_call_count;
   } cases[] = {
-      {"http://blocked.test/", true, false},
-      {"https://blocked.test/", true, false},
-      {"http://blocked.test/", false, true},
-      {"https://blocked.test/", false, false},
+      {"http://unblocked.test/", true, false, 1},
+      {"https://unblocked.test/", true, false, 0},
+      {"http://blocked.test/", false, true, 1},
+      {"https://blocked.test/", false, false, 0},
+      // These should receive the default config, and should not cause
+      // a JNI error. The hostname should not be passed to
+      // NetworkSecurityPolicy.
+      {"http://./", false, true, 0},
+      {"https://./", false, false, 0},
   };
 
+  JNIEnv* env = base::android::AttachCurrentThread();
   for (const TestCase& test : cases) {
-    JNIEnv* env = base::android::AttachCurrentThread();
     Java_AndroidNetworkLibraryTestUtil_setUpSecurityPolicyForTesting(
         env, test.cleartext_permitted);
 
@@ -1485,16 +1491,15 @@ TEST_F(URLRequestHttpJobTest, AndroidCleartextPermittedTest) {
     request->Start();
     base::RunLoop().Run();
 
-    int sdk_int = base::android::BuildInfo::GetInstance()->sdk_int();
-    bool expect_blocked = (sdk_int >= base::android::SDK_VERSION_MARSHMALLOW &&
-                           test.should_block);
-    if (expect_blocked) {
+    if (test.should_block) {
       EXPECT_THAT(delegate.request_status(),
                   IsError(ERR_CLEARTEXT_NOT_PERMITTED));
     } else {
       // Should fail since there's no test server running
       EXPECT_THAT(delegate.request_status(), IsError(ERR_FAILED));
     }
+    jint call_count = Java_AndroidNetworkLibraryTestUtil_getCallCount(env);
+    EXPECT_EQ(call_count, test.expected_call_count);
   }
 }
 #endif
