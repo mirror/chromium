@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a740c478_3f768ea2",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-07T19:02:43Z",
+      "side": 1,
+      "message": "Just:\n  auto work_area \u003d display.work_area();\n  work_area.set_width(work_area.width() / 2);\n  return work_area;",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a2d17d_2a675b4c",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-07T19:02:43Z",
+      "side": 1,
+      "message": "Numbers like these seem like magic, because it\u0027s not clear where they came from except from a tiny comment. Also what if default shelf height changes to be something else other than 48?\n\nI suggest:\ngfx::Rect bounds_no_shelf \u003d display.bound(); \nbounds_no_shelf.set_height(...);  // \u003c\u003c-- Is this equal to display.work_area()?\nEXPECT_EQ(bounds_no_shelf, ...);",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe5173_c7e16941",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-07T19:02:43Z",
+      "side": 1,
+      "message": "ditto here and below.",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8ea63a3_6493d279",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 14
