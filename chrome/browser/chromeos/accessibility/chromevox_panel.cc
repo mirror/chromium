@@ -45,8 +45,8 @@ class ChromeVoxPanelWebContentsObserver : public content::WebContentsObserver {
   ~ChromeVoxPanelWebContentsObserver() override {}
 
   // content::WebContentsObserver overrides.
-  void DidFirstVisuallyNonEmptyPaint() override {
-    panel_->DidFirstVisuallyNonEmptyPaint();
+  void DocumentOnLoadCompletedInMainFrame() override {
+    panel_->DocumentOnLoadCompletedInMainFrame();
   }
 
   void DidFinishNavigation(
@@ -125,7 +125,7 @@ void ChromeVoxPanel::Close() {
   widget_->Close();
 }
 
-void ChromeVoxPanel::DidFirstVisuallyNonEmptyPaint() {
+void ChromeVoxPanel::DocumentOnLoadCompletedInMainFrame() {
   widget_->Show();
   UpdatePanelHeight();
 }

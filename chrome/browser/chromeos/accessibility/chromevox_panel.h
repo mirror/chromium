@@ -31,7 +31,7 @@ class ChromeVoxPanel : public views::WidgetDelegate,
   aura::Window* GetRootWindow();
 
   void Close();
-  void DidFirstVisuallyNonEmptyPaint();
+  void DocumentOnLoadCompletedInMainFrame();
   void UpdatePanelHeight();
   void ResetPanelHeight();
   void EnterFullscreen();
