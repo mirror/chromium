@@ -462,6 +462,13 @@ class ContentMainRunnerImpl : public ContentMainRunner {
       Shutdown();
   }
 
+  void HandleFatalErrorDuringInitialization() {
+    if (delegate_)
+      delegate_->FatalErrorDuringInitialization();
+    else
+      CHECK(false);
+  }
+
   int Initialize(const ContentMainParams& params) override {
     ui_task_ = params.ui_task;
 
@@ -620,13 +627,22 @@ class ContentMainRunnerImpl : public ContentMainRunner {
     int icudata_fd = g_fds->MaybeGet(kAndroidICUDataDescriptor);
     if (icudata_fd != -1) {
       auto icudata_region = g_fds->GetRegion(kAndroidICUDataDescriptor);
-      CHECK(base::i18n::InitializeICUWithFileDescriptor(icudata_fd,
-                                                        icudata_region));
+      if (!base::i18n::InitializeICUWithFileDescriptor(icudata_fd,
+                                                       icudata_region)) {
+        HandleFatalErrorDuringInitialization();
+        return 0;
+      }
     } else {
-      CHECK(base::i18n::InitializeICU());
+      if (!base::i18n::InitializeICU()) {
+        HandleFatalErrorDuringInitialization();
+        return 0;
+      }
     }
 #else
-    CHECK(base::i18n::InitializeICU());
+    if (!base::i18n::InitializeICU()) {
+      HandleFatalErrorDuringInitialization();
+      return 0;
+    }
 #endif  // OS_ANDROID && (ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE)
 
     base::StatisticsRecorder::Initialize();
@@ -655,9 +671,12 @@ class ContentMainRunnerImpl : public ContentMainRunner {
       delegate_->PreSandboxStartup();
 
 #if defined(OS_WIN)
-    CHECK(InitializeSandbox(
-        service_manager::SandboxTypeFromCommandLine(command_line),
-        params.sandbox_info));
+    if (!InitializeSandbox(
+            service_manager::SandboxTypeFromCommandLine(command_line),
+            params.sandbox_info)) {
+      HandleFatalErrorDuringInitialization();
+      return 0;
+    }
 #elif defined(OS_MACOSX)
     if (process_type == switches::kRendererProcess ||
         process_type == switches::kPpapiPluginProcess ||
@@ -665,7 +684,10 @@ class ContentMainRunnerImpl : public ContentMainRunner {
       // On OS X the renderer sandbox needs to be initialized later in the
       // startup sequence in RendererMainPlatformDelegate::EnableSandbox().
     } else {
-      CHECK(InitializeSandbox());
+      if (!InitializeSandbox()) {
+        HandleFatalErrorDuringInitialization();
+        return 0;
+      }
     }
 #endif
 
