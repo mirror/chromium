@@ -46,6 +46,30 @@
       "revId": "5461e4e8f371ff0a3accb42b43b782351afdfca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58cdf67_6d389250",
+        "filename": "content/renderer/loader/web_url_loader_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:41:00Z",
+      "side": 1,
+      "message": "I think easiest would be to add WebURLResponse::SecurityDetails() getter method which returns WebSecurityDetails (that can do reverse conversion to what SetSecurityDetails() does)? We could maybe name it SecurtiyDetailsForTesting() to make sure that there\u0027s no perf concern for the back and forth.",
+      "parentUuid": "63087fdd_0a49b3fe",
+      "range": {
+        "startLine": 714,
+        "startChar": 6,
+        "endLine": 714,
+        "endChar": 41
+      },
+      "revId": "5461e4e8f371ff0a3accb42b43b782351afdfca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
