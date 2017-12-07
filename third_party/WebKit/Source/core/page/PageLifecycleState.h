@@ -10,6 +10,7 @@ namespace blink {
 enum class PageLifecycleState {
   kUnknown,
   kStopped,
+  kResumed,
 };
 
 }  // namespace blink
