@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7f6a2104_048999a4",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T14:31:49Z",
+      "side": 1,
+      "message": "Ok, I have done more digging and it looks like this is used by some extensions to collect feedback and probably user visible. I\u0027ll mark this as user visible and add a comment.\n\nDone.",
+      "parentUuid": "ed8bf468_6e3f97ad",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e5ee24_b466b59e",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
         "patchSetId": 10
@@ -210,6 +228,24 @@
       "side": 1,
       "message": "To prevent people from having a redundant conversation in the future, move the definition of |result_ptr| to right before it is used (PostTaskAndReply), and add a comment explaining that due to undefined execution order or arguments in a function call, we need to save |result.get()| before calling std::move(result).",
       "parentUuid": "12938aaa_b423f191",
+      "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "223f1ddf_9b6235b3",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-07T14:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2f8d27_e9a3b965",
       "revId": "5216e4d0652c1628a45b7ae46a0ddad291f9afb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
