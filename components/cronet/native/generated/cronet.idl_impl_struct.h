@@ -21,9 +21,9 @@ struct Cronet_Buffer {
   Cronet_Buffer();
   ~Cronet_Buffer();
 
-  int32_t size = 0;
-  int32_t limit = 0;
-  int32_t position = 0;
+  uint64_t size = 0ULL;
+  uint64_t limit = 0ULL;
+  uint64_t position = 0ULL;
   RawDataPtr data;
   Cronet_BufferCallbackPtr callback;
 
