@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c5bd7cb_6453d01d",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-07T09:55:56Z",
+      "side": 1,
+      "message": "I\u0027d like to keep the explanation why we lower the priority here (\"since this font is not required ...\").",
+      "revId": "8ea5d3cc396f35794637ddf5c38acf02daacc399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe90e3c_b3f51898",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-07T09:55:56Z",
+      "side": 1,
+      "message": "Change this back to font-\u003eIsLoaded()?",
+      "revId": "8ea5d3cc396f35794637ddf5c38acf02daacc399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
