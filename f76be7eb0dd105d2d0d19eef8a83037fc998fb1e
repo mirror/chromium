@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ce0a4a_4d2e927d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "By looking at your full CL:777707, this is used only for NGFragmentBuilder, not for NGLineBoxFragmentBuilder, correct?\n\nCould we move this to NGFragmentBuilder until we know we need this for NGLineBoxFragmentBuilder too?",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4417fc1e_b7887335",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to increment ref count here, can just be a pointer (or ref in this case because it\u0027s never be nullptr?)",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc08f3b_cc17b5bb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "This part is better to move NGPhysicalLineBoxFragment or NGPhysicalContainerFragment.",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb956ddd_18761895",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "Don\u0027t we need to check children of this box fragment?\ne.g., \u003cdiv\u003e\u003cspan\u003e\u003cspan style\u003d\"position: relative\"\u003e\u003cspan style\u003d\"position: absolute\"\u003e",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d0e2ba_d45f37af",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "This part still doesn\u0027t look correct to me...\n\nFrom the comment above, you want in \"physical\" order. Fragments are (currently) in the physical order, so why do you need to sort?\n\nBut more importantly, bidi reorder isn\u0027t all about Direction(), so if you try to sort logical/physical by looking at Direction(), it\u0027s not correct. It\u0027s only correct when you use the \u0027direction\u0027 property (or \u0027dir\u0027 attribute) without RTL characters.\n\nAlso, bidi reorder occurs only within a line box. Sorting across line boxes isn\u0027t correct (is thsi what your TODO is talking about?)\n\nWhat I\u0027d recommend is, you\u0027d collect relevant fragments in a line box, then unite rect to compute a box for the line box. You\u0027ll then get multiple rects, one for each line. Then the first rect represents the first \"fragment box\" (in dbaron\u0027s term) and the last represents the last.\n\nThis method is not correct, depends on what dbaron meant by \"first\", when a span is fragmented within a line due to bidi reordering. But this is very rare, and unfortunately you can\u0027t compute it yet (because NG doesn\u0027t support the case yet, I\u0027m working on revising bidi reorder algorithm for this.) So I think it\u0027s best to only worry about fragmentation across lines, and this logic not to rely on the order of fragments within a line box.\n\n...does this make sense? I\u0027m not sure if I could explain well enough, pls feel free to ping me anytime.",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c899c6_2d160617",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-07T13:10:58Z",
+      "side": 1,
+      "message": "This is only for temporary, to keep the HashMap on the stack, correct? Assuming so:\n1. Can we add DISALLOW_NEW_EXCEPT_PLACEMENT_NEW()?\n2. I don\u0027t think we need to use scoped_refptr to inc/dec ref count each time. Can it be just a pointer?",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
