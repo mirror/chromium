@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c683a2_5aa5b389",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-07T17:09:15Z",
+      "side": 1,
+      "message": "+bashi@ in case he remembers the context of the original change (https://codereview.chromium.org/2374373002)\n\nNot sure that the additional locking here is protecting against anything:\n\nCurrently Shutdown is always run on the task_runner_ thread, so it\u0027s impossible for these two functions to happen at the same time (although the ordering isn\u0027t guaranteed, so invalidating the weak pointer is a good change).\n\nIf shutdown could run on a different thread from task_runner_, then we still have a race, as the task may have started running after Shutdown acquired the lock, but before weak pointers were invalidated.\n\nThat said, I re-visited the initial CL to understand things better, and it really feels like the PostTask wasn\u0027t\u0027 necessary - the creation of the staging buffer pool *should* always happen on the |task_runner_| thread. My guess was that this was trying to work around the locking issues that were also fixed later in the same CL (as we were calling a function that required a lock, but without taking the lock, which may have appeared to be a threading issue).\n\nIt looks like StagingBufferPool can either be called through:\nLTHI::SetMemoryPolicy\nLTHI::UpdateTreeResourcesForGpuRasterizationIfNeeded\nLTHI::InitializeRenderer\n\nAll these should happen on the task_runner_ thread.\n\nSo really, I\u0027d just remove the PostTask from the constructor and call directly. Unit test is good to have though - thanks for adding that!",
+      "range": {
+        "startLine": 173,
+        "startChar": 20,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "a7bcaed7c2949c846ac95ff8bb835859ca5adb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
