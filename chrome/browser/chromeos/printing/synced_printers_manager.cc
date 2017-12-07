@@ -10,6 +10,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/guid.h"
 #include "base/json/json_reader.h"
 #include "base/md5.h"
@@ -18,13 +19,20 @@
 #include "base/optional.h"
 #include "base/synchronization/lock.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/chromeos/printing/external_printers.h"
+#include "chrome/browser/chromeos/printing/external_printers_factory.h"
+#include "chrome/browser/chromeos/printing/external_printers_observer.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printers_sync_bridge.h"
 #include "chrome/browser/chromeos/printing/specifics_translation.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/printing/printer_configuration.h"
 #include "chromeos/printing/printer_translator.h"
+#include "components/policy/policy_constants.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 
@@ -32,11 +40,13 @@ namespace chromeos {
 
 namespace {
 
-// Enumeration values for NativePrintersBulkAccessMode.
-constexpr int kBlacklistAccess = 0;
-// TODO(crbug.com/758680): Parse the access policy.
-// constexpr int kWhitelistAccess = 1;
-// constexpr int kAllAccess = 2;
+ExternalPrinterPolicies UserPolicyNames() {
+  ExternalPrinterPolicies user_policy_names;
+  user_policy_names.access_mode = prefs::kRecommendedNativePrintersAccessMode;
+  user_policy_names.blacklist = prefs::kRecommendedNativePrintersBlacklist;
+  user_policy_names.whitelist = prefs::kRecommendedNativePrintersWhitelist;
+  return user_policy_names;
+}
 
 class SyncedPrintersManagerImpl : public SyncedPrintersManager,
                                   public PrintersSyncBridge::Observer {
@@ -53,6 +63,11 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
         prefs::kRecommendedNativePrinters,
         base::Bind(&SyncedPrintersManagerImpl::UpdateRecommendedPrinters,
                    base::Unretained(this)));
+    if (base::FeatureList::IsEnabled(features::kBulkPrinters)) {
+      printers_observer_ = base::MakeUnique<ExternalPrintersObserver>(
+          UserPolicyNames(), profile_);
+    }
+
     UpdateRecommendedPrinters();
     sync_bridge_->AddObserver(this);
   }
@@ -158,18 +173,15 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
     sync_bridge_->UpdatePrinter(PrinterToSpecifics(printer));
   }
 
-  void UpdateRecommendedPrinters() {
+  // Reads printers provided by NativePrinters policy. Populates
+  // |new_ids| with the ids in the order they were received.  Populates
+  // |new_printers| with the printers indexed by id.
+  void PolicyNativePrinters(
+      std::vector<std::string>* new_ids,
+      std::unordered_map<std::string, Printer>* new_printers) {
     const PrefService* prefs = profile_->GetPrefs();
-
     const base::ListValue* values =
         prefs->GetList(prefs::kRecommendedNativePrinters);
-
-    // Parse the policy JSON into new structures outside the lock.
-    std::vector<std::string> new_ids;
-    std::unordered_map<std::string, Printer> new_printers;
-
-    new_ids.reserve(values->GetList().size());
-    new_printers.reserve(values->GetList().size());
     for (const auto& value : *values) {
       std::string printer_json;
       if (!value.GetAsString(&printer_json)) {
@@ -193,7 +205,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
       std::string id = base::MD5String(printer_json);
       printer_dictionary->SetString(kPrinterId, id);
 
-      if (base::ContainsKey(new_printers, id)) {
+      if (base::ContainsKey(*new_printers, id)) {
         // Skip duplicated entries.
         LOG(WARNING) << "Duplicate printer ignored.";
         continue;
@@ -205,8 +217,44 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
         continue;
       }
 
-      new_ids.push_back(id);
-      new_printers.insert({id, *new_printer});
+      new_ids->push_back(id);
+      new_printers->insert({id, *new_printer});
+    }
+  }
+
+  // Reads printers provided by NativePrintersBulkConfigurations. Populates
+  // |new_ids| with the ids in the order they were received.  Populates
+  // |new_printers| with the printers indexed by id.
+  void BulkPolcyPrinters(
+      std::vector<std::string>* new_ids,
+      std::unordered_map<std::string, Printer>* new_printers) {
+    ExternalPrinters* printers =
+        ExternalPrintersFactory::Get()->GetForProfile(profile_);
+    if (!printers || !printers->IsPolicySet())
+      return;
+
+    for (const Printer& p : printers->GetPrinters()) {
+      if (base::ContainsKey(*new_printers, p.id())) {
+        // Skip duplicated entries.
+        LOG(WARNING) << "Duplicate printer ignored.";
+        continue;
+      }
+
+      Printer printer(p);
+      printer.set_source(Printer::SRC_POLICY);
+      new_ids->push_back(printer.id());
+      new_printers->insert({printer.id(), printer});
+    }
+  }
+
+  void UpdateRecommendedPrinters() {
+    // Parse the policy JSON into new structures outside the lock.
+    std::vector<std::string> new_ids;
+    std::unordered_map<std::string, Printer> new_printers;
+
+    PolicyNativePrinters(&new_ids, &new_printers);
+    if (base::FeatureList::IsEnabled(features::kBulkPrinters)) {
+      BulkPolcyPrinters(&new_ids, &new_printers);
     }
 
     // Objects not in the most recent update get deallocated after method
@@ -238,6 +286,9 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
   // The backend for profile printers.
   std::unique_ptr<PrintersSyncBridge> sync_bridge_;
 
+  // Connects external printers preferences with the tracking object.
+  std::unique_ptr<ExternalPrintersObserver> printers_observer_;
+
   // Enterprise printers as of the last time we got a policy update.  The ids
   // vector is used to preserve the received ordering.
   std::vector<std::string> enterprise_printer_ids_;
@@ -253,6 +304,15 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager,
   base::WeakPtrFactory<SyncedPrintersManagerImpl> weak_factory_;
 };
 
+// Registers the preferences used by external printers assigned to a user.
+void RegisterExternalPrintersPrefs(user_prefs::PrefRegistrySyncable* registry) {
+  // Default value is blacklist.
+  registry->RegisterIntegerPref(prefs::kRecommendedNativePrintersAccessMode,
+                                0 /* blacklist */);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersBlacklist);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersWhitelist);
+}
+
 }  // namespace
 
 // static
@@ -261,11 +321,8 @@ void SyncedPrintersManager::RegisterProfilePrefs(
   registry->RegisterListPref(prefs::kPrintingDevices,
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kRecommendedNativePrinters);
-  // Default value is blacklist.
-  registry->RegisterIntegerPref(prefs::kRecommendedNativePrintersAccessMode,
-                                kBlacklistAccess);
-  registry->RegisterListPref(prefs::kRecommendedNativePrintersBlacklist);
-  registry->RegisterListPref(prefs::kRecommendedNativePrintersWhitelist);
+
+  RegisterExternalPrintersPrefs(registry);
 }
 
 // static
