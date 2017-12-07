@@ -210,10 +210,10 @@ blink::Image* ImageResourceContent::GetImage() {
   return image_.get();
 }
 
-IntSize ImageResourceContent::IntrinsicSize(
+FloatSize ImageResourceContent::IntrinsicSize(
     RespectImageOrientationEnum should_respect_image_orientation) {
   if (!image_)
-    return IntSize();
+    return FloatSize();
   if (should_respect_image_orientation == kRespectImageOrientation &&
       image_->IsBitmapImage())
     return ToBitmapImage(image_.get())->SizeRespectingOrientation();

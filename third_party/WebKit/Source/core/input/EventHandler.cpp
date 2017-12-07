@@ -440,7 +440,7 @@ EventHandler::OptionalCursor EventHandler::SelectCursor(
       // Get hotspot and convert from logical pixels to physical pixels.
       IntPoint hot_spot = (*cursors)[i].HotSpot();
       hot_spot.Scale(scale, scale);
-      IntSize size = cached_image->GetImage()->Size();
+      FloatSize size = cached_image->GetImage()->Size();
       if (cached_image->ErrorOccurred())
         continue;
       // Limit the size of cursors (in UI pixels) so that they cannot be

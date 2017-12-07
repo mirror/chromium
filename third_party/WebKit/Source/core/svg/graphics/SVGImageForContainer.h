@@ -69,7 +69,7 @@ class SVGImageForContainer final : public Image {
         image, container_size_without_zoom, zoom, url));
   }
 
-  IntSize Size() const override;
+  FloatSize Size() const override;
 
   bool UsesContainerSize() const override {
     return image_->UsesContainerSize();

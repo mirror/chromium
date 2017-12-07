@@ -27,10 +27,10 @@
 
 namespace blink {
 
-IntSize SVGImageForContainer::Size() const {
+FloatSize SVGImageForContainer::Size() const {
   FloatSize scaled_container_size(container_size_);
   scaled_container_size.Scale(zoom_);
-  return RoundedIntSize(scaled_container_size);
+  return scaled_container_size;
 }
 
 void SVGImageForContainer::Draw(PaintCanvas* canvas,

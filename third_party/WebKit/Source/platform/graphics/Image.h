@@ -31,7 +31,7 @@
 #include "base/memory/weak_ptr.h"
 #include "platform/PlatformExport.h"
 #include "platform/SharedBuffer.h"
-#include "platform/geometry/IntRect.h"
+#include "platform/geometry/FloatRect.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/ImageAnimationPolicy.h"
 #include "platform/graphics/ImageObserver.h"
@@ -54,7 +54,6 @@ class PaintFlags;
 namespace blink {
 
 class FloatPoint;
-class FloatRect;
 class FloatSize;
 class GraphicsContext;
 class Image;
@@ -107,10 +106,10 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
   virtual bool UsesContainerSize() const { return false; }
   virtual bool HasRelativeSize() const { return false; }
 
-  virtual IntSize Size() const = 0;
-  IntRect Rect() const { return IntRect(IntPoint(), Size()); }
-  int width() const { return Size().Width(); }
-  int height() const { return Size().Height(); }
+  virtual FloatSize Size() const = 0;
+  FloatRect Rect() const { return FloatRect(FloatPoint(), Size()); }
+  float width() const { return Size().Width(); }
+  float height() const { return Size().Height(); }
   virtual bool GetHotSpot(IntPoint&) const { return false; }
 
   enum SizeAvailability {

@@ -430,7 +430,7 @@ void OffscreenCanvasFrameDispatcherImpl::ReclaimResource(unsigned resource_id) {
 }
 
 bool OffscreenCanvasFrameDispatcherImpl::VerifyImageSize(
-    const IntSize image_size) {
+    const FloatSize image_size) {
   if (image_size.Width() == width_ && image_size.Height() == height_)
     return true;
   return false;

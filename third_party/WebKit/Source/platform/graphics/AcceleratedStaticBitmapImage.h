@@ -38,7 +38,7 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
       IntSize mailbox_size);
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
-  IntSize Size() const override;
+  FloatSize Size() const override;
   bool IsTextureBacked() const override { return true; }
   scoped_refptr<StaticBitmapImage> MakeAccelerated(
       base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_wrapper)
