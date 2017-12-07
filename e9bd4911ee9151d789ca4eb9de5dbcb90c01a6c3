@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1ac2442d_c31b4fa2",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T18:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b892362b_e006cd6d",
+      "range": {
+        "startLine": 1004,
+        "startChar": 13,
+        "endLine": 1004,
+        "endChar": 41
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3ae490f_35b2a126",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-07T16:06:25Z",
       "side": 1,
       "message": "Let\u0027s drop \"Android\" from here — we\u0027ll use it for all platforms now.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 13,
+        "endLine": 1008,
+        "endChar": 43
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa56f0b_5fde5d8d",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T18:10:51Z",
+      "side": 1,
+      "message": "Done. Assuming this is fine to change flag names inline.",
+      "parentUuid": "a3ae490f_35b2a126",
       "range": {
         "startLine": 1008,
         "startChar": 13,
@@ -91,6 +139,30 @@
       "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff5a76d_c3ae20c3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T18:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda649b3_30355dba",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 49
+      },
+      "revId": "e9bd4911ee9151d789ca4eb9de5dbcb90c01a6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
