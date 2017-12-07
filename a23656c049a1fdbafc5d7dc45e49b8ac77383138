@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "de9a4256_e300b1e3",
+        "filename": "base/strings/strcat.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-07T02:37:18Z",
+      "side": 1,
+      "message": "\u003e I think we should keep StrCat and JoinStrings in separate headers. They\u0027re similar conceptually, but ultimately, they\u0027re not quite the same either. The fact that StrCat happens to work with containers just like JoinStrings() is a detail of the current implementation.\n\nI\u0027m a bit confused by this. StrCat is exactly the same as JoinString with a default argument of \"\". Maybe you mean that the point is StrCat is typically called with a fixed-size initializer list while JoinString is typically called with a vector. I don\u0027t see that as a big differentiator, since both can be used either way.\n\nI\u0027d be happier to have JoinString moved into strcat.h, rather than its own file, since conceptually I think these functions are nearly identical. In terms of sharing implementation, it would be easier if they were in the same file, since you\u0027d want to share JoinStringT, not the public JoinString method.",
+      "parentUuid": "38769ffb_ef5d63f2",
+      "revId": "a23656c049a1fdbafc5d7dc45e49b8ac77383138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127be37c_e6c3d749",
         "filename": "base/strings/strcat.h",
         "patchSetId": 6
