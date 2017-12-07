@@ -16,6 +16,24 @@
       "revId": "5a3ed56a2bd05a2f79bb82f03d4b7f5f98bc091d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdb82fe_36dd904f",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-07T22:50:12Z",
+      "side": 0,
+      "message": "It\u0027added back. It removed by mistake earlier..",
+      "parentUuid": "35873475_84571f31",
+      "revId": "5a3ed56a2bd05a2f79bb82f03d4b7f5f98bc091d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
