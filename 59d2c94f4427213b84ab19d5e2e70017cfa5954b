@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ef9d6cb_848cdf8a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-07T20:01:05Z",
+      "side": 1,
+      "message": "It reads as \"Command\" when in English. The same symbol is used in menus on Mac -- actually all over the place, to represent the Command modifier.",
+      "parentUuid": "5181caf4_6c544c47",
+      "revId": "59d2c94f4427213b84ab19d5e2e70017cfa5954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93234912_956d6d23",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T19:05:21Z",
       "side": 1,
       "message": "Were you able to build MacViews and confirm that this works? Check with shrike@ if not.",
+      "revId": "59d2c94f4427213b84ab19d5e2e70017cfa5954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44c2b08_1bbb20d4",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-07T20:01:05Z",
+      "side": 1,
+      "message": "Checking with Shrike.",
+      "parentUuid": "93234912_956d6d23",
       "revId": "59d2c94f4427213b84ab19d5e2e70017cfa5954b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
