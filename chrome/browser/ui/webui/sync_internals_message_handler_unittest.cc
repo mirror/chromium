@@ -346,13 +346,45 @@ TEST_F(SyncInternalsMessageHandlerTest, WriteUserEvent) {
 TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBadParse) {
   ListValue args;
   args.AppendString("123abc");
-  args.AppendString("");
+  args.AppendString("abcdefghijklmnopqrstuvwxyz");
   handler()->HandleWriteUserEvent(&args);
 
   ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
   const sync_pb::UserEventSpecifics& event =
       *fake_user_event_service()->GetRecordedUserEvents().begin();
   EXPECT_EQ(0, event.event_time_usec());
+  EXPECT_EQ(0, event.navigation_id());
+}
+
+TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBlank) {
+  ListValue args;
+  args.AppendString("");
+  args.AppendString("");
+  handler()->HandleWriteUserEvent(&args);
+
+  ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
+  const sync_pb::UserEventSpecifics& event =
+      *fake_user_event_service()->GetRecordedUserEvents().begin();
+  EXPECT_TRUE(event.has_event_time_usec());
+  EXPECT_EQ(0, event.event_time_usec());
+  // Should not have a navigation_id because that means something different to
+  // the UserEvents logic.
+  EXPECT_FALSE(event.has_navigation_id());
+}
+
+TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventZero) {
+  ListValue args;
+  args.AppendString("0");
+  args.AppendString("0");
+  handler()->HandleWriteUserEvent(&args);
+
+  ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
+  const sync_pb::UserEventSpecifics& event =
+      *fake_user_event_service()->GetRecordedUserEvents().begin();
+  EXPECT_TRUE(event.has_event_time_usec());
+  EXPECT_EQ(0, event.event_time_usec());
+  // Should have a navigation_id, even though the value is 0.
+  EXPECT_TRUE(event.has_navigation_id());
   EXPECT_EQ(0, event.navigation_id());
 }
 
