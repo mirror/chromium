@@ -83,6 +83,7 @@ class ASH_EXPORT NotifierSettingsView
     views::Label* name_view_;
     views::Checkbox* checkbox_;
     views::ImageButton* learn_more_ = nullptr;
+    views::ImageView* policy_enforced_icon_;
 
     DISALLOW_COPY_AND_ASSIGN(NotifierButton);
   };
