@@ -5,7 +5,11 @@
 #ifndef CHROME_BROWSER_UI_TABS_TAB_METRICS_LOGGER_IMPL_H_
 #define CHROME_BROWSER_UI_TABS_TAB_METRICS_LOGGER_IMPL_H_
 
+#include <string>
+
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/tabs/tab_metrics_event.pb.h"
 #include "chrome/browser/ui/tabs/tab_metrics_logger.h"
 
 // Logs a TabManager.TabMetrics UKM for a tab when requested. Includes
@@ -21,6 +25,13 @@ class TabMetricsLoggerImpl : public TabMetricsLogger {
                         const TabMetrics& tab_metrics) override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(TabMetricsLoggerImplTest, Schemes);
+  FRIEND_TEST_ALL_PREFIXES(TabMetricsLoggerImplTest, NonWhitelistedSchemes);
+
+  // Returns the ProtocolHandlerScheme enumerator matching the string.
+  static metrics::TabMetricsEvent::ProtocolHandlerScheme
+  GetSchemeValueFromString(const std::string& scheme);
+
   DISALLOW_COPY_AND_ASSIGN(TabMetricsLoggerImpl);
 };
 
