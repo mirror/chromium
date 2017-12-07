@@ -5,6 +5,10 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_API_PASSWORDS_PRIVATE_PASSWORDS_PRIVATE_EVENT_ROUTER_H_
 #define CHROME_BROWSER_EXTENSIONS_API_PASSWORDS_PRIVATE_PASSWORDS_PRIVATE_EVENT_ROUTER_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "chrome/common/extensions/api/passwords_private.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -40,6 +44,13 @@ class PasswordsPrivateEventRouter : public KeyedService {
   // |plaintext_password| The human-readable password.
   void OnPlaintextPasswordFetched(size_t index,
                                   const std::string& plaintext_password);
+
+  // Notifies listeners after the passwords have been written to the export
+  // destination.
+  // |error| The error that occurred. Empty on success.
+  void OnPasswordsExportProgress(
+      api::passwords_private::ExportProgressStatus status,
+      const std::string& message);
 
  protected:
   explicit PasswordsPrivateEventRouter(content::BrowserContext* context);

@@ -148,3 +148,11 @@ chrome.passwordsPrivate.onPasswordExceptionsListChanged;
  * @see https://developer.chrome.com/extensions/passwordsPrivate#event-onPlaintextPasswordRetrieved
  */
 chrome.passwordsPrivate.onPlaintextPasswordRetrieved;
+
+
+/**
+ * Fired when the passwords have been written to the export destination.
+ * @type {!ChromeEvent}
+ * @see https://developer.chrome.com/extensions/passwordsPrivate#event-onPasswordsExportCompleted
+ */
+chrome.passwordsPrivate.onPasswordsExportCompleted;

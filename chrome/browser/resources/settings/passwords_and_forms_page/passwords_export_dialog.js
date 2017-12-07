@@ -38,7 +38,15 @@ Polymer({
    * @private
    */
   onExportTap_: function() {
-    this.passwordManager_.exportPasswords();
+    this.passwordManager_.exportPasswords(this.onExportRequested_);
+  },
+
+  /**
+   * Callback for the exportPasswords() request.
+   * @private
+   */
+  onExportRequested_: function(accepted) {
+    // TODO(http://crbug/789561) Jump to "export in progress" UI.
   },
 
   /**

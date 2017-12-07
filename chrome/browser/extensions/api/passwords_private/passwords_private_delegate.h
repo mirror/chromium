@@ -77,7 +77,8 @@ class PasswordsPrivateDelegate : public KeyedService {
 
   // Trigger the password export procedure, allowing the user to save a file
   // containing their passwords.
-  virtual void ExportPasswords(content::WebContents* web_contents) = 0;
+  virtual void ExportPasswords(base::OnceCallback<void(bool)> accepted,
+                               content::WebContents* web_contents) = 0;
 };
 
 }  // namespace extensions

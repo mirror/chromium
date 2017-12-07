@@ -6,9 +6,11 @@
 #define CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 
 #include <memory>
+#include <string>
 
 #include "components/password_manager/core/browser/import/password_importer.h"
 #include "components/password_manager/core/browser/ui/export_flow.h"
+#include "components/password_manager/core/browser/ui/export_progress_status.h"
 #include "components/password_manager/core/browser/ui/import_flow.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 
@@ -29,13 +31,18 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
                               public password_manager::ExportFlow,
                               public password_manager::ImportFlow {
  public:
+  using ProgressCallback =
+      base::RepeatingCallback<void(password_manager::ExportProgressStatus,
+                                   const std::string&)>;
+
   // This constructor injects PasswordManagerPorter's dependencies directly to
   // facilitate testing. Primary constructor.
   explicit PasswordManagerPorter(
       std::unique_ptr<password_manager::PasswordManagerExporter> exporter);
 
   explicit PasswordManagerPorter(password_manager::CredentialProviderInterface*
-                                     credential_provider_interface);
+                                     credential_provider_interface,
+                                 ProgressCallback on_exported_callback);
 
   ~PasswordManagerPorter() override;
 
@@ -44,7 +51,7 @@ class PasswordManagerPorter : public ui::SelectFileDialog::Listener,
   }
 
   // password_manager::ExportFlow
-  void Store() override;
+  bool Store() override;
 
   // password_manager::ImportFlow
   void Load() override;

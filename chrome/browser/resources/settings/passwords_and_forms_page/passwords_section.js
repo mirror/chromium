@@ -86,6 +86,19 @@ class PasswordManager {
    * Triggers the dialogue for exporting passwords.
    */
   exportPasswords() {}
+
+  /**
+   * Add an observer to the export progress.
+   * // TODO change type to enum
+   * @param {function(!string):void} listener
+   */
+  addPasswordsFileExportProgressListener(listener) {}
+
+  /**
+   * Remove an observer from the export progress.
+   * @param {function(!string):void} listener
+   */
+  removePasswordsFileExportProgressListener(listener) {}
 }
 
 /** @typedef {chrome.passwordsPrivate.PasswordUiEntry} */
@@ -176,8 +189,19 @@ class PasswordManagerImpl {
   }
 
   /** @override */
-  exportPasswords() {
-    chrome.passwordsPrivate.exportPasswords();
+  exportPasswords(callback) {
+    chrome.passwordsPrivate.exportPasswords(callback);
+  }
+
+  /** @override */
+  addPasswordsFileExportProgressListener(listener) {
+    chrome.passwordsPrivate.onPasswordsFileExportProgress.addListener(listener);
+  }
+
+  /** @override */
+  removePasswordsFileExportProgressListener(listener) {
+    chrome.passwordsPrivate.onPasswordsFileExportProgress.removeListener(
+        listener);
   }
 }
 
