@@ -214,7 +214,10 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
   }
 
   std::vector<PreviewsEligibilityReason> passed_reasons;
-  uint64_t page_id = PreviewsUserData::GetData(request)->page_id();
+  uint64_t page_id = 0;
+  if (PreviewsUserData::GetData(request)) {
+    page_id = PreviewsUserData::GetData(request)->page_id();
+  }
   if (is_enabled_callback_.is_null() || !previews_black_list_) {
     LogPreviewDecisionMade(PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE,
                            request.url(), base::Time::Now(), type,
