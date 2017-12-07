@@ -208,12 +208,12 @@ bool SecurityHandler::NotifyCertificateError(int cert_error,
                                              CertErrorCallback handler) {
   if (!enabled_)
     return false;
+  bool should_handle_error = handler && certificate_errors_overriden_;
   frontend_->CertificateError(++last_cert_error_id_,
                               net::ErrorToShortString(cert_error),
-                              request_url.spec());
-  if (!certificate_errors_overriden_) {
+                              request_url.spec(), should_handle_error);
+  if (!should_handle_error)
     return false;
-  }
   cert_error_callbacks_[last_cert_error_id_] = handler;
   return true;
 }

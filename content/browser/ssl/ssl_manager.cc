@@ -44,6 +44,30 @@ void OnAllowCertificateWithRecordDecision(
   callback.Run(record_decision, decision);
 }
 
+// Notify the provided agent host of a certificate error. Returns true if one of
+// the host's handlers will handle the certificate error.
+bool NotifyAgentHost(
+    DevToolsAgentHost* host,
+    int cert_error,
+    const GURL& request_url,
+    const base::RepeatingCallback<
+        void(bool, content::CertificateRequestResultType)>& callback) {
+  if (host) {
+    DevToolsAgentHostImpl* host_impl =
+        static_cast<DevToolsAgentHostImpl*>(host);
+    for (auto* security_handler :
+         protocol::SecurityHandler::ForAgentHost(host_impl)) {
+      if (security_handler->NotifyCertificateError(
+              cert_error, request_url,
+              base::BindRepeating(&OnAllowCertificateWithRecordDecision, false,
+                                  callback))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 void OnAllowCertificate(SSLErrorHandler* handler,
                         SSLHostStateDelegate* state_delegate,
                         bool record_decision,
@@ -336,19 +360,23 @@ void SSLManager::OnCertErrorInternal(std::unique_ptr<SSLErrorHandler> handler,
       base::Bind(&OnAllowCertificate, base::Owned(handler.release()),
                  ssl_host_state_delegate_);
 
-  DevToolsAgentHostImpl* agent_host = static_cast<DevToolsAgentHostImpl*>(
-      DevToolsAgentHost::GetOrCreateFor(web_contents).get());
-  if (agent_host) {
-    for (auto* security_handler :
-         protocol::SecurityHandler::ForAgentHost(agent_host)) {
-      if (security_handler->NotifyCertificateError(
-              cert_error, request_url,
-              base::Bind(&OnAllowCertificateWithRecordDecision, false,
-                         callback))) {
-        return;
-      }
+  DevToolsAgentHost* agent_host =
+      DevToolsAgentHost::GetOrCreateFor(web_contents).get();
+  if (NotifyAgentHost(agent_host, cert_error, request_url, callback)) {
+    // Only allow a single agent host to handle the error.
+    callback.Reset();
+  }
+
+  for (scoped_refptr<DevToolsAgentHost> agent_host :
+       DevToolsAgentHost::GetBrowserAgentHosts()) {
+    if (NotifyAgentHost(agent_host.get(), cert_error, request_url, callback)) {
+      // Only allow a single agent host to handle the error.
+      callback.Reset();
     }
   }
+
+  if (!callback)
+    return;
 
   GetContentClient()->browser()->AllowCertificateError(
       web_contents, cert_error, ssl_info, request_url, resource_type, fatal,

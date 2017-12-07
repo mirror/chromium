@@ -283,12 +283,22 @@ class DevToolsProtocolTest : public ContentBrowserTest,
     shell()->web_contents()->SetDelegate(this);
   }
 
-  void TearDownOnMainThread() override {
+  void AttachToBrowserTarget() {
+    // Tethering domain is not used in tests.
+    agent_host_ = DevToolsAgentHost::CreateForBrowser(
+        nullptr, DevToolsAgentHost::CreateServerSocketCallback());
+    agent_host_->AttachClient(this);
+    shell()->web_contents()->SetDelegate(this);
+  }
+
+  void Detach() {
     if (agent_host_) {
       agent_host_->DetachClient(this);
       agent_host_ = nullptr;
     }
   }
+
+  void TearDownOnMainThread() override { Detach(); }
 
   std::unique_ptr<base::DictionaryValue> WaitForNotification(
       const std::string& notification) {
@@ -1689,6 +1699,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateError) {
   std::unique_ptr<base::DictionaryValue> params;
   std::unique_ptr<base::DictionaryValue> command_params;
   int eventId;
+  bool shouldHandleError;
 
   shell()->LoadURL(GURL("about:blank"));
   WaitForLoadStop(shell()->web_contents());
@@ -1712,6 +1723,8 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateError) {
       test_url,
       shell()->web_contents()->GetController().GetPendingEntry()->GetURL());
   EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  EXPECT_TRUE(params->GetBoolean("shouldHandleError", &shouldHandleError));
+  EXPECT_TRUE(shouldHandleError);
   command_params.reset(new base::DictionaryValue());
   command_params->SetInteger("eventId", eventId);
   command_params->SetString("action", "cancel");
@@ -1732,12 +1745,62 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateError) {
   shell()->LoadURL(test_url);
   params = WaitForNotification("Security.certificateError", false);
   EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  EXPECT_TRUE(params->GetBoolean("shouldHandleError", &shouldHandleError));
+  EXPECT_TRUE(shouldHandleError);
   command_params.reset(new base::DictionaryValue());
   command_params->SetInteger("eventId", eventId);
   command_params->SetString("action", "continue");
   SendCommand("Security.handleCertificateError", std::move(command_params),
               false);
   WaitForNotification("Network.loadingFinished", true);
+  continue_observer.Wait();
+  EXPECT_EQ(test_url, shell()
+                          ->web_contents()
+                          ->GetController()
+                          .GetLastCommittedEntry()
+                          ->GetURL());
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateErrorBrowserTarget) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED);
+  https_server.ServeFilesFromSourceDirectory("content/test/data");
+  ASSERT_TRUE(https_server.Start());
+  GURL test_url = https_server.GetURL("/devtools/navigation.html");
+  std::unique_ptr<base::DictionaryValue> params;
+  std::unique_ptr<base::DictionaryValue> command_params;
+  int eventId;
+  bool shouldHandleError;
+
+  shell()->LoadURL(GURL("about:blank"));
+  WaitForLoadStop(shell()->web_contents());
+
+  // Clear cookies and cache to avoid interference with cert error events.
+  Attach();
+  SendCommand("Network.enable", nullptr, true);
+  SendCommand("Network.clearBrowserCache", nullptr, true);
+  SendCommand("Network.clearBrowserCookies", nullptr, true);
+  Detach();
+
+  // Test that browser target can receive and handle cert error events.
+  AttachToBrowserTarget();
+  SendCommand("Security.enable", nullptr, false);
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("override", true);
+  SendCommand("Security.setOverrideCertificateErrors",
+              std::move(command_params), true);
+
+  TestNavigationObserver continue_observer(shell()->web_contents(), 1);
+  shell()->LoadURL(test_url);
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  EXPECT_TRUE(params->GetBoolean("shouldHandleError", &shouldHandleError));
+  EXPECT_TRUE(shouldHandleError);
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetInteger("eventId", eventId);
+  command_params->SetString("action", "continue");
+  SendCommand("Security.handleCertificateError", std::move(command_params),
+              false);
   continue_observer.Wait();
   EXPECT_EQ(test_url, shell()
                           ->web_contents()

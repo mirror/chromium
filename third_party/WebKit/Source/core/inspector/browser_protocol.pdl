@@ -4931,6 +4931,8 @@ domain Security
       string errorType
       # The url that was requested.
       string requestURL
+      # Whether the client should handle this error. If false, another agent or the browser itself will handle this error.
+      optional boolean shouldHandleError
 
   # The security state of the page changed.
   event securityStateChanged

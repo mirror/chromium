@@ -10725,6 +10725,12 @@
                             "name": "requestURL",
                             "description": "The url that was requested.",
                             "type": "string"
+                        },
+                        {
+                            "name": "shouldHandleError",
+                            "description": "Whether the client should handle this error. If false, another agent or the browser itself will handle this error.",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ]
                 },
