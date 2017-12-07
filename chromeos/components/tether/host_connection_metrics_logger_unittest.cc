@@ -185,23 +185,28 @@ TEST_F(HostConnectionMetricsLoggerTest,
 }
 
 TEST_F(HostConnectionMetricsLoggerTest,
-       RecordConnectionResultFailureTetheringTimeout_SetupNotRequired) {
+       RecordConnectionResultFailureTetheringUnsupported) {
   metrics_logger_->RecordConnectionToHostResult(
       HostConnectionMetricsLogger::ConnectionToHostResult::
-          CONNECTION_RESULT_FAILURE_TETHERING_TIMED_OUT_FIRST_TIME_SETUP_WAS_NOT_REQUIRED);
+          CONNECTION_RESULT_FAILURE_TETHERING_UNSUPPORTED);
 
-  VerifyFailure_TetheringTimeout(
-      HostConnectionMetricsLogger::
-          ConnectionToHostResult_FailureTetheringTimeoutEventType::
-              FIRST_TIME_SETUP_WAS_NOT_REQUIRED);
   VerifyFailure(
       HostConnectionMetricsLogger::ConnectionToHostResult_FailureEventType::
-          TETHERING_TIMED_OUT);
+          TETHERING_UNSUPPORTED);
   VerifySuccess(HostConnectionMetricsLogger::
                     ConnectionToHostResult_SuccessEventType::FAILURE);
-  VerifyProvisioningFailure(
-      HostConnectionMetricsLogger::
-          ConnectionToHostResult_ProvisioningFailureEventType::OTHER);
+}
+
+TEST_F(HostConnectionMetricsLoggerTest,
+       RecordConnectionResultFailureNoCellData) {
+  metrics_logger_->RecordConnectionToHostResult(
+      HostConnectionMetricsLogger::ConnectionToHostResult::
+          CONNECTION_RESULT_FAILURE_NO_CELL_DATA);
+
+  VerifyFailure(HostConnectionMetricsLogger::
+                    ConnectionToHostResult_FailureEventType::NO_CELL_DATA);
+  VerifySuccess(HostConnectionMetricsLogger::
+                    ConnectionToHostResult_SuccessEventType::FAILURE);
 }
 
 }  // namespace tether
