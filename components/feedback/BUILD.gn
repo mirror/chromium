@@ -43,6 +43,13 @@ static_library("feedback") {
     "//third_party/re2",
     "//third_party/zlib/google:zip",
   ]
+
+  if (is_chromeos) {
+    sources += [
+      "feedback_util_chromeos.cc",
+      "feedback_util_chromeos.h",
+    ]
+  }
 }
 
 source_set("unit_tests") {
