@@ -536,5 +536,6 @@ MediaEngagementContentsObserver::GetOrCreateSession(
     return opener_observer->session_;
   }
 
-  return new MediaEngagementSession(service_, origin);
+  return new MediaEngagementSession(service_, origin,
+                                    GetSourceIdForWebContentsDocument(opener));
 }

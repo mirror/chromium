@@ -11,8 +11,9 @@
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
 MediaEngagementSession::MediaEngagementSession(MediaEngagementService* service,
-                                               const url::Origin& origin)
-    : service_(service), origin_(origin) {}
+                                               const url::Origin& origin,
+                                               ukm::SourceId ukm_source_id)
+    : service_(service), origin_(origin), ukm_source_id_(ukm_source_id) {}
 
 bool MediaEngagementSession::IsSameOriginWith(const url::Origin& origin) const {
   return origin_.IsSameOriginWith(origin);
@@ -70,24 +71,7 @@ MediaEngagementSession::~MediaEngagementSession() {
   RecordUkmMetrics();
 }
 
-ukm::UkmRecorder* MediaEngagementSession::GetUkmRecorder() {
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
-  if (!ukm_recorder)
-    return nullptr;
-
-  if (ukm_source_id_ == ukm::kInvalidSourceId) {
-    ukm_source_id_ = ukm_recorder->GetNewSourceID();
-    ukm_recorder->UpdateSourceURL(ukm_source_id_, origin_.GetURL());
-  }
-
-  return ukm_recorder;
-}
-
 void MediaEngagementSession::RecordUkmMetrics() {
-  ukm::UkmRecorder* ukm_recorder = GetUkmRecorder();
-  if (!ukm_recorder)
-    return;
-
   MediaEngagementScore score =
       service_->CreateEngagementScore(origin_.GetURL());
   ukm::builders::Media_Engagement_SessionFinished(ukm_source_id_)
@@ -101,7 +85,7 @@ void MediaEngagementSession::RecordUkmMetrics() {
       .SetPlayer_Significant_Delta(significant_players_total_)
       .SetPlayer_Significant_Total(score.significant_playbacks())
       .SetPlaybacks_SecondsSinceLast(time_since_playback_for_ukm_.InSeconds())
-      .Record(ukm_recorder);
+      .Record(ukm::UkmRecorder::Get());
 }
 
 bool MediaEngagementSession::HasPendingDataToCommit() const {
