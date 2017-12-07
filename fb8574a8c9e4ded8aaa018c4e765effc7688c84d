@@ -34,6 +34,24 @@
       "revId": "fb8574a8c9e4ded8aaa018c4e765effc7688c84d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cba65d_d6149715",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-07T04:50:21Z",
+      "side": 1,
+      "message": "Thanks! I thought I\u0027d tried that, and it didn\u0027t seem to work. I assumed it was some launcher-related functionality that crashpad_tests didn\u0027t have without actually confirming that. Eventually I realized what had happened is that VMware\u0027s weird mounted network drive caching had confused me. (It locks mounted files on Windows host while the VM is running, so then I suspend the target, rebuild, and resume the target... sometimes it picks up the changes, but sometimes it ends up using an old version, maybe due to a network cache or something?, which can be very confusing.)\n\nIn any case, this doesn\u0027t work because msvc doesn\u0027t like the unconditional return, so I\u0027ll look first thing tomorrow to try to sort out the actual cause.",
+      "parentUuid": "1df19f35_d1592045",
+      "revId": "fb8574a8c9e4ded8aaa018c4e765effc7688c84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
