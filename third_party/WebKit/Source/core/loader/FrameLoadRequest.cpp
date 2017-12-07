@@ -7,6 +7,7 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebURLRequest.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 
 namespace blink {
 
@@ -105,7 +106,8 @@ FrameLoadRequest::FrameLoadRequest(
   // If we're dealing with a top-level request, use the origin of the requested
   // URL as the initiator.
   // TODO(mkwst): This should be `nullptr`. https://crbug.com/625969
-  if (resource_request_.GetFrameType() == WebURLRequest::kFrameTypeTopLevel) {
+  if (resource_request_.GetFrameType() ==
+      network::mojom::RequestContextFrameType::kTopLevel) {
     resource_request_.SetRequestorOrigin(
         SecurityOrigin::Create(resource_request.Url()));
     return;

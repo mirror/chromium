@@ -95,8 +95,8 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerRequest {
   void SetRequestContext(WebURLRequest::RequestContext);
   WebURLRequest::RequestContext GetRequestContext() const;
 
-  void SetFrameType(WebURLRequest::FrameType);
-  WebURLRequest::FrameType GetFrameType() const;
+  void SetFrameType(network::mojom::RequestContextFrameType);
+  network::mojom::RequestContextFrameType GetFrameType() const;
 
   void SetClientId(const WebString&);
   const WebString& ClientId() const;
