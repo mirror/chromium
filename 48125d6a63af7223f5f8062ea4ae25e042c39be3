@@ -141,6 +141,24 @@
       "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f816f740_14ed249b",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-07T15:58:28Z",
+      "side": 1,
+      "message": "Yeah, this is really complicated.  Since webaudio works on 128 frames chunks, ideally, we want requested size to be a multiple of that.  But if the HW calls back with sizes that aren\u0027t a multiple of 128, it gets complicated.  Let\u0027s say the HW size is 129 samples.  To satisfy the first request, we need to render twice, just to get 129 samples.  The CPU load is way higher than it needs to be because we basically do the work of two renders in the time allowed for one. And this lasts for a long time.\n\nMaybe this is ok for your example.  The HW size is already so large that there\u0027s no real expectation of low latency audio, so producing an even larger latency, while not great, isn\u0027t really horrible.\n\nSo, let\u0027s round up, and see what happens and watch the bug reports. (My guess is the latency hint is not used very often.  Hmm.  Need to check if we have stats for that....)",
+      "parentUuid": "5618ff7f_84e63689",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
