@@ -17,6 +17,7 @@
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/texture_definition.h"
 #include "gpu/config/gpu_switches.h"
+#include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_fence.h"
 #include "ui/gl/gl_implementation.h"
@@ -1050,10 +1051,11 @@ void FeatureInfo::InitializeFeatures() {
     validators_.g_l_state.AddValue(GL_TEXTURE_BINDING_RECTANGLE_ARB);
   }
 
+// TODO(mcasas): remove the following #ifdef, https://crbug.com/791676.
 #if defined(OS_MACOSX)
-  // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
-  // querying minigbm. crbug.com/646148
-  if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL) {
+  if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL &&
+      (gpu::GetNativeGpuMemoryBufferConfigurations().count(
+          gfx::BufferFormat::YUV_420_BIPLANAR))) {
     AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
     feature_flags_.chromium_image_ycbcr_420v = true;
   }

@@ -35,6 +35,8 @@ namespace gpu {
 bool AreNativeGpuMemoryBuffersEnabled();
 
 // Returns the set of supported configurations.
+// TODO(mcasas): move this method to //gpu/ipc/common/gpu_memory_buffer_support
+// https://crbug.com/791676.
 GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations();
 
 // Returns the OpenGL target to use for image textures.
