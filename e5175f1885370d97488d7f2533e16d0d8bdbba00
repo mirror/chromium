@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85dc5f82_60748fd0",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbb3aaa_58cab9c9",
+      "range": {
+        "startLine": 13,
+        "startChar": 56,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57ed8881_d25ba6c1",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8e451851_c7e0a952",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T09:19:59Z",
+      "side": 1,
+      "message": "Thanks for suggestion. Done.",
+      "parentUuid": "57ed8881_d25ba6c1",
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d78cf0b_6c1d24a0",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-07T08:42:07Z",
       "side": 1,
       "message": "why this change from base::MakeUnique? I think that base::MakeUnique is the right way to go here.",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "e5175f1885370d97488d7f2533e16d0d8bdbba00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9315049f_97605ce4",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T09:19:59Z",
+      "side": 1,
+      "message": "After making the constructor private I got following error:\n\n../../third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++/libcxx/include/memory:3047:32: error: calling a private constructor of class \u0027OomInterventionDecider\u0027\n    return unique_ptr\u003c_Tp\u003e(new _Tp(_VSTD::forward\u003c_Args\u003e(__args)...));\n\nI needed to change this to work around the error.",
+      "parentUuid": "7d78cf0b_6c1d24a0",
       "range": {
         "startLine": 47,
         "startChar": 25,
