@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d70277_d4e66604",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-07T16:38:13Z",
+      "side": 1,
+      "message": "You say \"protocol can be removed\", but do I correctly understand that:\n- this protocol\n- its implementation\n- need for custom view class\n- so basically everything in this CL\ncan all be removed? If yes, please update this comment and then LGTM. \n\nIf no, please don\u0027t check CQ just yet and explain which parts of this will stay.",
+      "revId": "e26262ec93c5717534c4595caf45ddb18fced016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
