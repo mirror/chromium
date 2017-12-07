@@ -46,6 +46,30 @@
       "revId": "4f60727111b7aec61f81c22c91cdb2e5da4d9481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc145637_233e8ca1",
+        "filename": "media/audio/mac/audio_device_listener_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-07T11:50:59Z",
+      "side": 1,
+      "message": "Still looks like if some calls succeed and some fail, the successfully initialized property listeners will try to use the unset |listener_cb_|. Couldn\u0027t you just set |listener_cb_| unconditionally?",
+      "parentUuid": "d23638a7_8f1efa8c",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "4f60727111b7aec61f81c22c91cdb2e5da4d9481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
