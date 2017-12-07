@@ -12,7 +12,7 @@
 #include "url/gurl.h"
 
 namespace content {
-namespace {
+namespace payment_manager_unittest {
 
 using ::payments::mojom::PaymentHandlerStatus;
 using ::payments::mojom::PaymentInstrument;
@@ -56,8 +56,6 @@ void ClearPaymentInstrumentsCallback(PaymentHandlerStatus* out_status,
                                      PaymentHandlerStatus status) {
   *out_status = status;
 }
-
-}  // namespace
 
 class PaymentManagerTest : public PaymentAppContentUnitTestBase {
  public:
@@ -281,4 +279,5 @@ TEST_F(PaymentManagerTest, ClearPaymentInstruments) {
   ASSERT_EQ(0U, keys.size());
 }
 
+}  // namespace payment_manager_unittest
 }  // namespace content

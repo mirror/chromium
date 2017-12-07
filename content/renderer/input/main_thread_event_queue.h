@@ -23,6 +23,11 @@
 
 namespace content {
 
+namespace main_thread_event_queue_unittest {
+class MainThreadEventQueueTest;
+class MainThreadEventQueueInitializationTest;
+}  // namespace main_thread_event_queue_unittest
+
 using HandledEventCallback =
     base::OnceCallback<void(InputEventAckState ack_state,
                             const ui::LatencyInfo& latency_info,
@@ -124,8 +129,9 @@ class CONTENT_EXPORT MainThreadEventQueue
   }
 
   friend class QueuedWebInputEvent;
-  friend class MainThreadEventQueueTest;
-  friend class MainThreadEventQueueInitializationTest;
+  friend class main_thread_event_queue_unittest::MainThreadEventQueueTest;
+  friend class main_thread_event_queue_unittest::
+      MainThreadEventQueueInitializationTest;
   MainThreadEventQueueClient* client_;
   bool last_touch_start_forced_nonblocking_due_to_fling_;
   bool enable_fling_passive_listener_flag_;
