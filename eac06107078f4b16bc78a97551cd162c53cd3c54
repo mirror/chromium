@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0666e725_7fa2d6f2",
+        "filename": "chrome/test/chromedriver/net/websocket.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-07T15:46:02Z",
+      "side": 1,
+      "message": "chromedriver is test only code isn\u0027t it?",
+      "revId": "eac06107078f4b16bc78a97551cd162c53cd3c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
