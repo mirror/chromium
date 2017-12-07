@@ -20,6 +20,7 @@ enum SinkIconType {
   MEETING,
   HANGOUT,
   EDUCATION,
+  WIRED_DISPLAY,
   GENERIC
 };
 
