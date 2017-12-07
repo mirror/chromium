@@ -39,6 +39,7 @@
 #import "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 #import "ios/chrome/browser/ui/stack_view/card_stack_layout_manager.h"
 #import "ios/chrome/browser/ui/stack_view/card_stack_pinch_gesture_recognizer.h"
 #import "ios/chrome/browser/ui/stack_view/card_view.h"
@@ -206,7 +207,9 @@ NSString* const kTransitionToolbarAnimationKey =
 
 @end
 
-@interface StackViewController ()<ToolsMenuConfigurationProvider>
+@interface StackViewController ()<ToolsMenuConfigurationProvider,
+                                  SettingsNavigationControllerDelegate,
+                                  SettingsBrowserStateProvider>
 
 // Clears the internal state of the object. Should only be called when the
 // object is not being shown. After this method is called, a call to
@@ -2839,7 +2842,20 @@ NSString* const kTransitionToolbarAnimationKey =
     [configuration setNoOpenedTabs:YES];
   if (_activeCardSet == _otrCardSet)
     [configuration setInIncognito:YES];
+  configuration.settingsDelegate = self;
   return configuration;
+}
+
+#pragma mark - SettingsNavigationControllerDelegate
+
+- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings {
+  return self.dispatcher;
+}
+
+#pragma mark - SettingsBrowserStateProvider
+
+- (ios::ChromeBrowserState*)browserStateForSettings {
+  return self.activeCardSet.tabModel.browserState;
 }
 
 #pragma mark - BrowserCommands

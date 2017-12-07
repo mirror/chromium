@@ -12,6 +12,7 @@
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#include "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.h"
@@ -43,6 +44,8 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
   UIView* _toolsTableViewContainer;
   // The view controller from which to present other view controllers.
   __weak UIViewController* _baseViewController;
+  __weak id<SettingsNavigationControllerDelegate, SettingsBrowserStateProvider>
+      _settingsDelegate;
 }
 @end
 
@@ -63,6 +66,7 @@ initAndPresentWithConfiguration:(ToolsMenuConfiguration*)configuration
     _toolsMenuViewController.dispatcher = self.dispatcher;
 
     _baseViewController = configuration.baseViewController;
+    _settingsDelegate = configuration.settingsDelegate;
 
     _toolsTableViewContainer = [_toolsMenuViewController view];
     [_toolsTableViewContainer layer].cornerRadius = 2;
@@ -203,10 +207,16 @@ initAndPresentWithConfiguration:(ToolsMenuConfiguration*)configuration
     case TOOLS_NEW_TAB_ITEM:
       base::RecordAction(UserMetricsAction("MobileMenuNewTab"));
       break;
-    case TOOLS_SETTINGS_ITEM:
+    case TOOLS_SETTINGS_ITEM: {
       base::RecordAction(UserMetricsAction("MobileMenuSettings"));
-      [self.dispatcher showSettingsFromViewController:_baseViewController];
-      break;
+      DCHECK(_settingsDelegate);
+      SettingsNavigationController* settingsController =
+          [SettingsNavigationController
+              newSettingsMainControllerWithDelegate:_settingsDelegate];
+      [_baseViewController presentViewController:settingsController
+                                        animated:YES
+                                      completion:nil];
+    } break;
     case TOOLS_RELOAD_ITEM:
       base::RecordAction(UserMetricsAction("MobileMenuReload"));
       break;

@@ -10,6 +10,8 @@
 #include "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
+#include "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -23,6 +25,8 @@
                 baseViewController:(UIViewController*)baseViewController
                         dispatcher:
                             (id<ApplicationCommands, BrowserCommands>)dispatcher
+                  settingsDelegate:
+                      (id<SettingsNavigationControllerDelegate>)settingsDelegate
                        editingText:(BOOL)editingText {
   __weak id<KeyCommandsPlumbing> weakConsumer = consumer;
   __weak UIViewController* weakBaseViewController = baseViewController;
@@ -215,14 +219,21 @@
                            modifierFlags:UIKeyModifierCommand
                                    title:nil
                                   action:newTab],
-    [UIKeyCommand cr_keyCommandWithInput:@","
-                           modifierFlags:UIKeyModifierCommand
-                                   title:nil
-                                  action:^{
-                                    [weakDispatcher
-                                        showSettingsFromViewController:
-                                            weakBaseViewController];
-                                  }],
+    [UIKeyCommand
+        cr_keyCommandWithInput:@","
+                 modifierFlags:UIKeyModifierCommand
+                         title:nil
+                        action:^{
+                          SettingsNavigationController*
+                              settingsNavigationController =
+                                  [SettingsNavigationController
+                                      newSettingsMainControllerWithDelegate:
+                                          settingsDelegate];
+                          [weakBaseViewController
+                              presentViewController:settingsNavigationController
+                                           animated:YES
+                                         completion:nil];
+                        }],
   ]];
 
   // List the commands that don't appear in the HUD and only appear when there
