@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "756f06ab_e3c8c6ee",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Seems that DataPipeProducerHandle doesn\u0027t have such method to set the connection error handler. https://cs.chromium.org/chromium/src/mojo/public/cpp/system/data_pipe.h?rcl\u003ddfa4d7dd9696c70e0368123d3b1d8629b35fe19b\u0026l\u003d26",
+      "parentUuid": "9fc153b3_d9aa3c20",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 3
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b4ae9f0_afafe514",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T04:44:39Z",
       "side": 1,
       "message": "IMHO, you should support sending zero-byte buffers. Sometimes codecs (e.g., Opus, IIRC) can produce 0-byte frames. The semantics of this, from both the producer\u0027s and consumer\u0027s point-of-view would be that a 0-byte frame is being sent/received.\n\n...\n\nOh, I just looked at the code later on, and realized you\u0027re not sending the payload size through the data pipe, like we had discussed earlier. Can we add that? Some use cases, such as CastRemotingSender, would benefit from not having to have the separate message to signal when to Read() from the pipe. Actually, it would solve a huge complexity issue regarding a race condition: Mojo doesn\u0027t guarantee whether the other endpoint will see bytes in the data pipe before or after the message is received. Last year, this led me to have to write some complex task queuing code: https://cs.chromium.org/chromium/src/chrome/browser/media/cast_remoting_sender.cc?rcl\u003d7e81dda83e2309e9faa74cda282d6f9ed4a6f870\u0026l\u003d332\n\nNote that this might change your Read() interface, since the number of bytes to be read wouldn\u0027t be known ahead of time. Maybe do something like to mitigate that:\n\n  using DoneCB \u003d base::OnceCallback\u003cvoid(std::unique_ptr\u003cstd::string\u003e buffer)\u003e;\n  void Read(std::unique_ptr\u003cstd::string\u003e buffer, DoneCB done_cb);\n\n(This would allow re-use of the same std::string as it gets passed in/out to/from each Read() operation, hopefully avoiding lots of heap reallocs.)",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05327c43_d92e88fe",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Changed to simply return when buffer size is 0, though I think this can be guarded by the caller.\nThe MojoDataPipeReader/Writer in this CL is a general reader/writer that reads/writes a chunk of data by request. For some applications, like the MojoDecoderBufferReader/Writer, the size for each buffer is passed along with other information through mojo message. It sounds not necessary to write the size again in the data pipe for that case. For our application to transfer the UDP packets, for each packet we can simply call Write() twice: write the size first, then packet. And in the reader, call read twice as well. \nActually the Read() and DoneCB you suggested is the interface for the UdpPacketsReader that is in my another CL that comes later. :)\nWill discuss further with you offline on this.",
+      "parentUuid": "2b4ae9f0_afafe514",
       "range": {
         "startLine": 166,
         "startChar": 2,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "f1a5d1e0_21824007",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "All the checks here were to make sure that there is no active writing while Write() is called. Removed the check on |current_buffer_size_| after addressing your other comments.",
+      "parentUuid": "7259fd0e_630bf42c",
+      "range": {
+        "startLine": 168,
+        "startChar": 48,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539a60bf_efc01ad6",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "This check was to check whether there is an active writing since it was reset after a write completes. Removed it now after addressing your other comments below.",
+      "parentUuid": "62e0fb7e_60f9b41e",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 25
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "917f859e_17835e6e",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-07T04:44:39Z",
       "side": 1,
       "message": "I\u0027m thinking this should all be a DCHECK(): It\u0027s a logic flaw in the code to call Write() while a previous write is in-progress.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2702cbf_0a270c52",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a logic flaw in the caller\u0027s code to call Write() while a previous write is in-progress. Though not sure whether DCHECK() is better. It sounds good to me to let the caller handle the error. WDYT?",
+      "parentUuid": "917f859e_17835e6e",
       "range": {
         "startLine": 170,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c17e3ca2_5095c6aa",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1561bebb_a3b25172",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 37
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f556fb5f_102009d4",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
         "patchSetId": 3
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "457f826d_d476aefd",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f556fb5f_102009d4",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 27
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d6925a_745d7229",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51774725_9c14449b",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-07T19:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d6925a_745d7229",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
