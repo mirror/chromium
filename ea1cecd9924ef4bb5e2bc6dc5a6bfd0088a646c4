@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf7f5fa_ac74eac3",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-07T22:50:02Z",
+      "side": 1,
+      "message": "Nit: s/works/work, s/method/this method ?",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 56
+      },
+      "revId": "ea1cecd9924ef4bb5e2bc6dc5a6bfd0088a646c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64f2add_9c41b3c4",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-07T22:50:02Z",
+      "side": 1,
+      "message": "Nit: s/initialized/initialize",
+      "range": {
+        "startLine": 307,
+        "startChar": 42,
+        "endLine": 307,
+        "endChar": 53
+      },
+      "revId": "ea1cecd9924ef4bb5e2bc6dc5a6bfd0088a646c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bb4b09_594abe6d",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/color.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-07T22:50:02Z",
+      "side": 1,
+      "message": "This is repeating some code from getDefaultValueInternal(). We also have getDefaultColorOption_(), which is a private function only called in getDefaultValueInternal() (and here, in the repeated code). So, to clean this up, WDYT of inlining getDefaultColorOption_() here, and then calling this function from getDefaultValueInternal?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 5
+      },
+      "revId": "ea1cecd9924ef4bb5e2bc6dc5a6bfd0088a646c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
