@@ -26,6 +26,7 @@
 #ifndef EventHandler_h
 #define EventHandler_h
 
+#include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -78,7 +79,6 @@ class WebTouchEvent;
 
 class CORE_EXPORT EventHandler final
     : public GarbageCollectedFinalized<EventHandler> {
-  WTF_MAKE_NONCOPYABLE(EventHandler);
 
  public:
   explicit EventHandler(LocalFrame&);
@@ -417,6 +417,8 @@ class CORE_EXPORT EventHandler final
   // triggering |touchstart| event was canceled. This suppresses mouse event
   // firing for the current gesture sequence (i.e. until next GestureTapDown).
   bool suppress_mouse_events_from_gestures_;
+
+  DISALLOW_COPY_AND_ASSIGN(EventHandler);
 
   // ShouldShowIBeamForNode's unit tests:
   FRIEND_TEST_ALL_PREFIXES(EventHandlerTest, HitOnNothingDoesNotShowIBeam);
