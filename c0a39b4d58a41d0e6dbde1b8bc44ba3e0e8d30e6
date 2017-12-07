@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13824dd7_f42d26de",
+        "filename": "chrome/browser/accessibility/accessibility_extension_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T23:12:07Z",
+      "side": 1,
+      "message": "david, you mentioned in comment #7 at https://crbug.com/760730 that chromevox currently needs to use two accelerators rather than a toggle since you don\u0027t know the current state.\n\nit\u0027d probably be possible to change that now, since AccessibilityManager knows whether it has an active request or not.",
+      "revId": "c0a39b4d58a41d0e6dbde1b8bc44ba3e0e8d30e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
