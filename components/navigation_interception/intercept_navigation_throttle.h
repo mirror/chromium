@@ -5,11 +5,11 @@
 #ifndef COMPONENTS_NAVIGATION_INTERCEPTION_INTERCEPT_NAVIGATION_THROTTLE_H_
 #define COMPONENTS_NAVIGATION_INTERCEPTION_INTERCEPT_NAVIGATION_THROTTLE_H_
 
-#include <string>
-
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 #include "content/public/browser/navigation_throttle.h"
 
 namespace content {
@@ -36,12 +36,30 @@ class InterceptNavigationThrottle : public content::NavigationThrottle {
   // content::NavigationThrottle implementation:
   ThrottleCheckResult WillStartRequest() override;
   ThrottleCheckResult WillRedirectRequest() override;
+  ThrottleCheckResult WillFailRequest() override;
+  ThrottleCheckResult WillProcessResponse() override;
   const char* GetNameForLogging() override;
 
  private:
+  ThrottleCheckResult WillFinish();
+
   ThrottleCheckResult CheckIfShouldIgnoreNavigation(bool is_redirect);
+  void OnCheckComplete(bool should_ignore);
 
   CheckCallback should_ignore_callback_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+
+  // Whether an async check is currently pending.
+  bool pending_check_ = false;
+
+  // Whether the navigation should be ignored.
+  bool should_ignore_ = false;
+
+  // Whether the navigation has reached WillFailRequest or WillProcessResponse.
+  bool ready_to_finish_ = false;
+
+  base::WeakPtrFactory<InterceptNavigationThrottle> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(InterceptNavigationThrottle);
 };
