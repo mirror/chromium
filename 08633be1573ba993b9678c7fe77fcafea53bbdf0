@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bee427a1_504df7b8",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T05:50:41Z",
+      "side": 1,
+      "message": "Sounds nice (let\u0027s consider this later anyway)!",
+      "parentUuid": "b823abe0_f99df416",
+      "range": {
+        "startLine": 95,
+        "startChar": 12,
+        "endLine": 95,
+        "endChar": 45
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805b2455_c5ecf344",
         "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T22:29:46Z",
       "side": 1,
       "message": "The same: I believe we should use something like kRealTimeMedia here.",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2953a676_8ba51780",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T05:50:41Z",
+      "side": 1,
+      "message": "Yes, but can we consider new task type strategy later? We can\u0027t determine the strategy soon. I\u0027d like to keep this CL just to change the task runner.",
+      "parentUuid": "805b2455_c5ecf344",
       "range": {
         "startLine": 104,
         "startChar": 22,
