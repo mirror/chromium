@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "96c7a833_4d637a8d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T18:27:19Z",
+      "side": 1,
+      "message": "I don;t think we should use the color matrix for this. I think it\u0027d be better to add new shader code and not have it complicate the color matrix code. that way, the tinting wont break if a color matrix is set.\n\nalso, a full matrix is not needed for the tint and separate shader code for this can avoid that.",
+      "revId": "ca33eeb39bab4c81afc47c25722fd3e62af30438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "882dabda_9bb3ceb6",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 4
