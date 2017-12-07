@@ -106,13 +106,19 @@ ShelfController::ShelfController() {
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kAshDisableShelfModelSynchronization);
 
+  model_.SetShelfItemDelegate(ShelfID(kBackButtonId), nullptr);
+  DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kBackButtonId)));
+  ShelfItem item0 = model_.items()[0];
+  item0.title = l10n_util::GetStringUTF16(IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE);
+  model_.Set(0, item0);
+
   // Set the delegate and title string for the app list item.
   model_.SetShelfItemDelegate(ShelfID(kAppListId),
                               std::make_unique<AppListShelfItemDelegate>());
-  DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kAppListId)));
-  ShelfItem item = model_.items()[0];
+  DCHECK_EQ(1, model_.ItemIndexByID(ShelfID(kAppListId)));
+  ShelfItem item = model_.items()[1];
   item.title = l10n_util::GetStringUTF16(IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE);
-  model_.Set(0, item);
+  model_.Set(1, item);
 
   model_.AddObserver(this);
   Shell::Get()->session_controller()->AddObserver(this);
@@ -209,7 +215,6 @@ void ShelfController::MoveShelfItem(const ShelfID& id, int32_t index) {
   DCHECK_NE(current_index, 0) << " The AppList shelf item cannot be moved";
   if (current_index <= 0)
     return;
-  DCHECK_GT(index, 0) << " Items can not precede the AppList";
   DCHECK_LT(index, model_.item_count()) << " Index out of bounds";
   index = std::min(std::max(index, 1), model_.item_count() - 1);
   if (current_index == index) {

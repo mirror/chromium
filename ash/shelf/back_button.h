@@ -39,7 +39,6 @@ class ASH_EXPORT BackButton : public views::ImageButton {
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
 
  private:
   // Generate and send a VKEY_BROWSER_BACK key event when the back button
