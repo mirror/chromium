@@ -7,6 +7,7 @@
 #include <set>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
@@ -14,6 +15,7 @@
 #include "base/sequence_checker.h"
 #include "base/stl_util.h"
 #include "base/values.h"
+#include "chrome/common/chrome_features.h"
 #include "chromeos/printing/printer_translator.h"
 
 namespace chromeos {
@@ -28,6 +30,9 @@ class ExternalPrintersImpl : public ExternalPrinters {
 
   // Resets the printer state fields.
   void ClearData() override {
+    if (!base::FeatureList::IsEnabled(features::kBulkPrinters)) {
+      return;
+    }
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     bool notify = !printers_.empty();
     policy_retrieved_ = false;
@@ -45,6 +50,10 @@ class ExternalPrintersImpl : public ExternalPrinters {
   }
 
   void SetData(std::unique_ptr<std::string> data) override {
+    if (!base::FeatureList::IsEnabled(features::kBulkPrinters)) {
+      return;
+    }
+
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
     int error_code;
