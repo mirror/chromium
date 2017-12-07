@@ -160,15 +160,18 @@ StagingBufferPool::~StagingBufferPool() {
 }
 
 void StagingBufferPool::RegisterMemoryCoordinatorClient() {
+  base::AutoLock lock(lock_);
   // Register this component with base::MemoryCoordinatorClientRegistry.
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 }
 
 void StagingBufferPool::Shutdown() {
+  base::AutoLock lock(lock_);
   // Unregister this component with memory_coordinator::ClientRegistry.
   base::MemoryCoordinatorClientRegistry::GetInstance()->Unregister(this);
+  // Invalidate the callback to register, in case that has not run yet.
+  weak_ptr_factory_.InvalidateWeakPtrs();
 
-  base::AutoLock lock(lock_);
   if (buffers_.empty())
     return;
 
