@@ -127,23 +127,35 @@ class ArcWallpaperService::DecodeRequest : public ImageDecoder::ImageRequest {
     DCHECK_NE(pair.image_id, 0u)
         << "image_id should not be 0 as we succeeded to decode image here.";
 
-    chromeos::WallpaperManager* const wallpaper_manager =
-        chromeos::WallpaperManager::Get();
     const PrimaryAccount& account = GetPrimaryAccount();
     wallpaper::WallpaperFilesId wallpaper_files_id =
         WallpaperControllerClient::Get()->GetFilesId(account.id);
-    // TODO(crbug.com/618922): Allow specifying layout.
-    wallpaper_manager->SetCustomWallpaper(
-        account.id, wallpaper_files_id, kAndroidWallpaperFilename,
-        wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::CUSTOMIZED,
-        image, account.is_active /*update_wallpaper*/);
-    // When kiosk app is running, or wallpaper cannot be changed due to policy,
-    // or we are running child profile, WallpaperManager don't submit wallpaper
-    // change requests.
-    if (wallpaper_manager->IsPendingWallpaper(pair.image_id))
-      service_->id_pairs_.push_back(pair);
-    else
+
+    ash::WallpaperController* wallpaper_controller = GetWallpaperController();
+    // TODO(crbug.com/776464): The |CanSetCustomWallpaper| check here as well as
+    // the observer for WallpaperController don't work under mash. Replace them
+    // with mojo callbacks.
+    if (wallpaper_controller &&
+        !wallpaper_controller->CanSetCustomWallpaper(
+            account.id,
+            !user_manager::UserManager::Get()->IsUserNonCryptohomeDataEphemeral(
+                account.id) /* is_persistent */)) {
+      // When kiosk app is running or policy is enforced, WallpaperController
+      // doesn't process custom wallpaper requests.
       service_->NotifyWallpaperChangedAndReset(android_id_);
+    } else {
+      bool show_wallpaper = account.is_active;
+      // TODO(crbug.com/618922): Allow specifying layout.
+      WallpaperControllerClient::Get()->SetCustomWallpaper(
+          account.id, wallpaper_files_id, kAndroidWallpaperFilename,
+          wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::CUSTOMIZED,
+          image, show_wallpaper);
+
+      if (show_wallpaper)
+        service_->id_pairs_.push_back(pair);
+      else
+        service_->NotifyWallpaperChangedAndReset(android_id_);
+    }
 
     // TODO(crbug.com/618922): Register the wallpaper to Chrome OS wallpaper
     // picker. Currently the new wallpaper does not appear there. The best way
@@ -254,8 +266,6 @@ void ArcWallpaperService::OnWallpaperDataChanged() {
   const uint32_t current_image_id =
       wallpaper_controller->GetWallpaperOriginalImageId();
 
-  chromeos::WallpaperManager* const wallpaper_manager =
-      chromeos::WallpaperManager::Get();
   bool current_wallppaer_notified = false;
   for (auto it = id_pairs_.begin(); it != id_pairs_.end();) {
     int32_t const android_id = it->android_id;
@@ -263,9 +273,6 @@ void ArcWallpaperService::OnWallpaperDataChanged() {
     if (it->image_id == current_image_id) {
       should_notify = true;
       current_wallppaer_notified = true;
-      it = id_pairs_.erase(it);
-    } else if (!wallpaper_manager->IsPendingWallpaper(it->image_id)) {
-      should_notify = true;
       it = id_pairs_.erase(it);
     } else {
       ++it;
