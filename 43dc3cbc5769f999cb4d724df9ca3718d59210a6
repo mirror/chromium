@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c55091f_50596816",
+        "filename": "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5876e273_661df42b",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e2a0384_01bf4714",
         "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "0d24cc79_281eadcf",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "D\u0027oh, yes, much better! Done.",
+      "parentUuid": "8e2a0384_01bf4714",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7360bc39_2a70cc0b",
         "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad73cb4_063ec615",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "I used ASSERT here because these are preconditions. If they fail, the rest of the test could still run (i.e. wouldn\u0027t crash), but it\u0027d be meaningless.",
+      "parentUuid": "7360bc39_2a70cc0b",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "46ba9c8f_7d866606",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d50036_25e90adc",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7d1842d_b76f01ff",
         "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
         "patchSetId": 3
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "852518bc_fa243840",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "Makes sense. This was copied from NavigateAndCheckText, so I changed it there too.",
+      "parentUuid": "c7d1842d_b76f01ff",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4842df28_f00f9cb3",
         "filename": "components/omnibox/browser/omnibox_client.h",
         "patchSetId": 3
@@ -118,6 +208,24 @@
       "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea40d8f9_14851fa8",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-07T10:37:32Z",
+      "side": 1,
+      "message": "Well, this method basically exposes search::IsInstantNTP to components/omnibox, so I wanted to point there. But I guess it\u0027s obvious enough anyway, so I just removed the reference here.",
+      "parentUuid": "4842df28_f00f9cb3",
+      "revId": "43dc3cbc5769f999cb4d724df9ca3718d59210a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
