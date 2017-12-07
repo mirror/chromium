@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c32777b0_55f352b0",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T04:06:23Z",
+      "side": 1,
+      "message": "It\u0027s entirely possible I have this wrong. My understanding is that DidPresent/DidDiscard come in async so that it\u0027s possible to generate multiple CFs before we know if the present succeeded. Some logging I added on a device indicates multiple frames may in fact be requested before the ack (DidPresent/DidScard) is called. Because there is no ordering guarantee and I only care about success (DidPresent) I keep requesting times until a present and all the callbacks have been run.\n\nSo, this branch means we\u0027ve requested a time and either the frame(s) are still in flight, or the frame was discarded. In which case the request is made again in hopes of it being presented.",
+      "parentUuid": "d5ffb901_64e79aa3",
+      "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0dc6f80_23dba329",
         "filename": "cc/trees/layer_tree_host.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T00:29:20Z",
       "side": 1,
       "message": "This lock shouldn\u0027t be necessary, sorry the code isn\u0027t super clear about that. When FinishCommitOnImplThread is called, the main thread is blocked (see the end ProxyMain::BeginMainFrame, we wait on a WaitableEvent while commit happens). That\u0027s why the rest of the commit doesn\u0027t use locks.\n\nThat should simplify a bit of the logic in DidPresentCompositorFrame too (no need to collect the callbacks to run outside the lock).",
+      "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bc20da_d4238008",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T04:06:23Z",
+      "side": 1,
+      "message": "I totally missed that. Removing the lock definitely simplifies things.",
+      "parentUuid": "d0dc6f80_23dba329",
       "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863749db_058e5545",
+        "filename": "cc/trees/layer_tree_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T04:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c50c368_6a2b85d2",
+      "revId": "dd2514555ab063ee993d4b4484be83dbb5d1afc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
