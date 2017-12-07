@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edf08c84_2ee653e7",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T08:00:27Z",
+      "side": 1,
+      "message": "This is because module scripts are not fetched at this point. Module script loading starts on the worker thread after GlobalScope is created.\n\nNote that spec-wise classic script loading should also starts with WorkerGlobalScope but current implementation does it with Document.",
+      "parentUuid": "4a4d4eec_5cc82ebe",
+      "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e750114_ddea78f9",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T07:49:54Z",
       "side": 1,
       "message": "nullptr default cached_meta_data probably makes sense,  but why is the default empty String() default needed?",
+      "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d122790_ad25cd6f",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T08:00:27Z",
+      "side": 1,
+      "message": "As my other comment, module scripts are not fetched at this point. For simplification, I put the default value here instead of explicitly passing an empty String.",
+      "parentUuid": "2e750114_ddea78f9",
       "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
