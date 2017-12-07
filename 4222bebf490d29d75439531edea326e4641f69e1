@@ -381,6 +381,30 @@
     },
     {
       "key": {
+        "uuid": "6c434774_8077a5ca",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T18:44:45Z",
+      "side": 1,
+      "message": "Thanks!  (And what was confusing me about the 2 bits it I was thinking 2048+100 meant wrote byte 2048 and 100 more, not wrote the first 2048 bytes), so I think we\u0027re on the same page now, and I can actually review the code!  Thanks for bearing with me.  I\u0027ll try to get to it today.",
+      "parentUuid": "29e77de4_73b5d8ee",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
