@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83244d17_faa96ab6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "We prefer non-bool parameter.\n\nThere are number of way to avoid bool parameter:\n1. introduce enum\n2. pass FrameSelection\n3, introduce SelectionModifier::SetIsDirectional() and make call sites,\nactually only one, to call SetIsDirectional() before calling Modify().\n\nIt seems options 3 is simplest. WDYT?",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e70fca_7fdbe184",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "We should change this constructor to take only a Position because all call\nsites pass collapsed selection which is non-null.\n\nWe take frame from Position::GetDocument()-\u003eGetFrame() and selection_is_dirctional can be any value, because passed selection is collapsed.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b7b963_3bd44959",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "Since EndingSelection() is a caret, see L795, we should pass Position to\navoid passing bool argument. If we do so, SelectionModifier doesn\u0027t need\nto have bool parameter.",
+      "range": {
+        "startLine": 813,
+        "startChar": 47,
+        "endLine": 813,
+        "endChar": 78
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74eb21f_96d0bb47",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "We should not refer FrameSelection in command. If we really need to pass\nIsDirection, please take from command.",
+      "range": {
+        "startLine": 814,
+        "startChar": 39,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d9780f_c267bf9f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "Same as L813, EndingSelection() is a caret, see L978.",
+      "range": {
+        "startLine": 989,
+        "startChar": 47,
+        "endLine": 989,
+        "endChar": 78
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b5ab92_b4df0909",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T11:32:40Z",
+      "side": 1,
+      "message": "Same as L814,",
+      "range": {
+        "startLine": 990,
+        "startChar": 39,
+        "endLine": 990,
+        "endChar": 73
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
