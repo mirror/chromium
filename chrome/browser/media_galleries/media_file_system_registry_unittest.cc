@@ -202,7 +202,8 @@ class MockProfileSharedRenderProcessHostFactory
       content::BrowserContext* browser_context);
 
   content::RenderProcessHost* CreateRenderProcessHost(
-      content::BrowserContext* browser_context) const override;
+      content::BrowserContext* browser_context,
+      content::StoragePartition* storage_partition = nullptr) const override;
 
  private:
   mutable std::map<content::BrowserContext*,

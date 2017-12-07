@@ -625,7 +625,8 @@ class VisitedLinkRenderProcessHostFactory
  public:
   VisitedLinkRenderProcessHostFactory() : context_(new VisitCountingContext) {}
   content::RenderProcessHost* CreateRenderProcessHost(
-      content::BrowserContext* browser_context) const override {
+      content::BrowserContext* browser_context,
+      content::StoragePartition* storage_partition = nullptr) const override {
     return new VisitRelayingRenderProcessHost(browser_context, context_.get());
   }
 

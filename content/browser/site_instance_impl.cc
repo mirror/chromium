@@ -34,7 +34,8 @@ SiteInstanceImpl::SiteInstanceImpl(BrowsingInstance* browsing_instance)
       process_(nullptr),
       has_site_(false),
       process_reuse_policy_(ProcessReusePolicy::DEFAULT),
-      is_for_service_worker_(false) {
+      is_for_service_worker_(false),
+      storage_partition_for_service_worker_(nullptr) {
   DCHECK(browsing_instance);
 }
 
@@ -78,6 +79,18 @@ bool SiteInstanceImpl::ShouldAssignSiteForURL(const GURL& url) {
   // The embedder will then have the opportunity to determine if the URL
   // should "use up" the SiteInstance.
   return GetContentClient()->browser()->ShouldAssignSiteForURL(url);
+}
+
+// static
+scoped_refptr<SiteInstanceImpl> SiteInstanceImpl::CreateForServiceWorker(
+    BrowserContext* browser_context,
+    const GURL& script_url,
+    StoragePartitionImpl* storage_partition) {
+  scoped_refptr<SiteInstanceImpl> instance =
+      CreateForURL(browser_context, script_url);
+  instance->is_for_service_worker_ = true;
+  instance->storage_partition_for_service_worker_ = storage_partition;
+  return instance;
 }
 
 int32_t SiteInstanceImpl::GetId() {

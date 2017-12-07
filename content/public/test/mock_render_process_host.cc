@@ -41,12 +41,15 @@
 
 namespace content {
 
-MockRenderProcessHost::MockRenderProcessHost(BrowserContext* browser_context)
+MockRenderProcessHost::MockRenderProcessHost(
+    BrowserContext* browser_context,
+    StoragePartition* storage_partition)
     : bad_msg_count_(0),
       factory_(nullptr),
       id_(ChildProcessHostImpl::GenerateChildProcessUniqueId()),
       has_connection_(false),
       browser_context_(browser_context),
+      storage_partition_(storage_partition),
       prev_routing_id_(0),
       fast_shutdown_started_(false),
       deletion_callback_called_(false),
@@ -176,7 +179,7 @@ void MockRenderProcessHost::OnMediaStreamAdded() {}
 void MockRenderProcessHost::OnMediaStreamRemoved() {}
 
 StoragePartition* MockRenderProcessHost::GetStoragePartition() const {
-  return BrowserContext::GetDefaultStoragePartition(browser_context_);
+  return storage_partition_;
 }
 
 void MockRenderProcessHost::AddWord(const base::string16& word) {
@@ -288,8 +291,7 @@ BrowserContext* MockRenderProcessHost::GetBrowserContext() const {
 
 bool MockRenderProcessHost::InSameStoragePartition(
     StoragePartition* partition) const {
-  // Mock RPHs only have one partition.
-  return true;
+  return storage_partition_ == partition;
 }
 
 IPC::ChannelProxy* MockRenderProcessHost::GetChannel() {
@@ -461,9 +463,10 @@ MockRenderProcessHostFactory::~MockRenderProcessHostFactory() {
 }
 
 RenderProcessHost* MockRenderProcessHostFactory::CreateRenderProcessHost(
-    BrowserContext* browser_context) const {
-  processes_.push_back(
-      std::make_unique<MockRenderProcessHost>(browser_context));
+    BrowserContext* browser_context,
+    StoragePartition* storage_partition) const {
+  processes_.push_back(std::make_unique<MockRenderProcessHost>(
+      browser_context, storage_partition));
   processes_.back()->SetFactory(this);
   return processes_.back().get();
 }
