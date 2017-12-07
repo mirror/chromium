@@ -32,6 +32,11 @@
 using chrome::android::BackgroundTabManager;
 #endif
 
+// This experiment only exists on Views for now.
+#if defined(TOOLKIT_VIEWS)
+#include "chrome/browser/history/nav_tree.h"
+#endif
+
 using content::NavigationEntry;
 using content::WebContents;
 
@@ -46,9 +51,7 @@ const char kChromeContentSuggestionsReferrer[] =
 }  // namespace
 
 HistoryTabHelper::HistoryTabHelper(WebContents* web_contents)
-    : content::WebContentsObserver(web_contents),
-      received_page_title_(false) {
-}
+    : content::WebContentsObserver(web_contents) {}
 
 HistoryTabHelper::~HistoryTabHelper() {
 }
@@ -140,10 +143,14 @@ void HistoryTabHelper::DidFinishNavigation(
   // the WebContents' URL getter does.
   NavigationEntry* last_committed =
       web_contents()->GetController().GetLastCommittedEntry();
-  const history::HistoryAddPageArgs& add_page_args =
-      CreateHistoryAddPageArgs(
-          web_contents()->GetURL(), last_committed->GetTimestamp(),
-          last_committed->GetUniqueID(), navigation_handle);
+  const history::HistoryAddPageArgs add_page_args = CreateHistoryAddPageArgs(
+      web_contents()->GetURL(), last_committed->GetTimestamp(),
+      last_committed->GetUniqueID(), navigation_handle);
+
+#if defined(TOOLKIT_VIEWS)
+  // The NavTree is an experiment that watches navigations.
+  NavTree::UpdateForNavigation(navigation_handle, add_page_args);
+#endif
 
   prerender::PrerenderManager* prerender_manager =
       prerender::PrerenderManagerFactory::GetForBrowserContext(

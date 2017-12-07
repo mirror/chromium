@@ -55,7 +55,7 @@ class HistoryTabHelper : public content::WebContentsObserver,
   // Used to prevent subsequent title updates from affecting history. This
   // prevents some weirdness because some AJAXy apps use titles for status
   // messages.
-  bool received_page_title_;
+  bool received_page_title_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryTabHelper);
 };
