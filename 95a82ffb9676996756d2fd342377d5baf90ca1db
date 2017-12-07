@@ -212,6 +212,30 @@
       "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6180750f_6870d2a2",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1178840
+      },
+      "writtenOn": "2017-12-07T18:35:49Z",
+      "side": 1,
+      "message": "Well, adding an for(;;) in Transition() would of course require a larger refactoring that changes those recursive Transition calls and turns them into simple returns.\n\nThis might actually be a bit orthogonal to the change here and could be done separately. I just find a recursive state machine a bit odd, but perhaps that\u0027s just me.",
+      "parentUuid": "56e48817_578779c2",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "95a82ffb9676996756d2fd342377d5baf90ca1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
