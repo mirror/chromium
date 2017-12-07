@@ -16,6 +16,24 @@
       "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7b8cfe_e9af2040",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T16:50:43Z",
+      "side": 1,
+      "message": "What about renaming to kObsoleteFullscreenNotEnabled or similar instead of removing?",
+      "parentUuid": "c50999aa_66989582",
+      "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
