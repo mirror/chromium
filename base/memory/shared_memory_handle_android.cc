@@ -4,6 +4,7 @@
 
 #include "base/memory/shared_memory_handle.h"
 
+#include <sys/mman.h>
 #include <unistd.h>
 
 #include "base/android/android_hardware_buffer_compat.h"
@@ -11,8 +12,18 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/unix_domain_socket.h"
 #include "base/unguessable_token.h"
+#include "third_party/ashmem/ashmem.h"
 
 namespace base {
+
+static int GetAshmemRegionProtectionMask(int fd) {
+  int prot = ashmem_get_prot_region(fd);
+  if (prot < 0) {
+    DPLOG(ERROR) << "When reading Ashmem region protection mask";
+    return -1;
+  }
+  return prot;
+}
 
 SharedMemoryHandle::SharedMemoryHandle() {}
 
@@ -154,11 +165,15 @@ SharedMemoryHandle SharedMemoryHandle::Duplicate() const {
       return SharedMemoryHandle();
     case Type::ASHMEM: {
       DCHECK(IsValid());
+      SharedMemoryHandle result;
       int duped_handle = HANDLE_EINTR(dup(file_descriptor_.fd));
-      if (duped_handle < 0)
-        return SharedMemoryHandle();
-      return SharedMemoryHandle(FileDescriptor(duped_handle, true), GetSize(),
-                                GetGUID());
+      if (duped_handle >= 0) {
+        result = SharedMemoryHandle(FileDescriptor(duped_handle, true),
+                                    GetSize(), GetGUID());
+        if (IsReadOnly())
+          result.SetReadOnly();
+      }
+      return result;
     }
     case Type::ANDROID_HARDWARE_BUFFER:
       DCHECK(IsValid());
@@ -193,6 +208,38 @@ bool SharedMemoryHandle::OwnershipPassesToIPC() const {
     case Type::ANDROID_HARDWARE_BUFFER:
       return ownership_passes_to_ipc_;
   }
+}
+
+bool SharedMemoryHandle::IsRegionReadOnly() const {
+  if (type_ != Type::ASHMEM)
+    return false;
+
+  int prot = GetAshmemRegionProtectionMask(file_descriptor_.fd);
+  return (prot >= 0 && (prot & PROT_WRITE) == 0);
+}
+
+bool SharedMemoryHandle::SetRegionReadOnly() const {
+  if (type_ != Type::ASHMEM) {
+    LOG(ERROR) << "Not an ashmem region";
+    return false;
+  }
+  int fd = file_descriptor_.fd;
+  int prot = GetAshmemRegionProtectionMask(fd);
+  if (prot < 0)
+    return false;
+
+  if ((prot & PROT_WRITE) == 0) {
+    // Region is already read-only.
+    return true;
+  }
+
+  prot &= ~PROT_WRITE;
+  int ret = ashmem_set_prot_region(fd, prot);
+  if (ret != 0) {
+    DPLOG(ERROR) << "When trying to set region read-only";
+    return false;
+  }
+  return true;
 }
 
 }  // namespace base
