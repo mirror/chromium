@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f1602e_57ef0ee7",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-07T19:55:30Z",
+      "side": 1,
+      "message": "Can this ever be a nullptr?",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4199659_f3cf18fd",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-07T19:55:30Z",
+      "side": 1,
+      "message": "Can this ever be nullptr?",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32a993b_1ec717d3",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-07T19:55:30Z",
+      "side": 1,
+      "message": "nit: For me as a layman, this naming is somewhat hard to decode. How about something like GetPasswordSynchronouslyThenSignal? Same below.",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
