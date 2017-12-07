@@ -126,7 +126,7 @@ cleanup() {
 
 usage() {
   echo "usage: $(basename $0) [-a target_arch] [-b 'dir'] -c channel"
-  echo "                      -d branding [-f] [-o 'dir']"
+  echo "                      -d branding [-f] [-o 'dir'] -t target_os"
   echo "-a arch     package architecture (ia32 or x64)"
   echo "-b dir      build input directory    [${BUILDDIR}]"
   echo "-c channel  the package channel (unstable, beta, stable)"
@@ -134,6 +134,7 @@ usage() {
   echo "-f          indicates that this is an official build"
   echo "-h          this help message"
   echo "-o dir      package output directory [${OUTPUTDIR}]"
+  echo "-t platform target platform"
 }
 
 # Check that the channel name is one of the allowable ones.
@@ -184,6 +185,9 @@ process_opts() {
       o )
         OUTPUTDIR=$(readlink -f "${OPTARG}")
         mkdir -p "${OUTPUTDIR}"
+        ;;
+      t )
+        TARGET_OS="$OPTARG"
         ;;
       \: )
         echo "'-$OPTARG' needs an argument."
