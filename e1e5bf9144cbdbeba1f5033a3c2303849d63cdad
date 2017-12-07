@@ -22,6 +22,30 @@
       "revId": "e1e5bf9144cbdbeba1f5033a3c2303849d63cdad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d463d8e_6e7921a1",
+        "filename": "services/device/device_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-07T23:36:42Z",
+      "side": 0,
+      "message": "thanks for the catch!",
+      "parentUuid": "338cebd0_8672858f",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "e1e5bf9144cbdbeba1f5033a3c2303849d63cdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
