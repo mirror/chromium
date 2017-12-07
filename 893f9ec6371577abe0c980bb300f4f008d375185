@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a790fd0_fbfb9d9e",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "172fb041_8566a455",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 43
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1859128_c9b487b2",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5c9c96_90fb7481",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1859128_c9b487b2",
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "129df907_fb8bbc33",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "I changed this so it returns false when a fetch is not really started, and OnFetchComplete checks that value after calling this with the HTTP URL, if it\u0027s true it returns, if it\u0027s false it finishes executing for the original (HTTPS failed) fetch, as if the feature was enabled. Does that sound OK to you?",
+      "parentUuid": "c0d9d353_9d00eb47",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3691faa_adb3902a",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2424437b_b4b93737",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Moved it there and removed this check, however for the point where I do the actual encryption (around line 547), I think it\u0027s better to keep the IsEnabled check, since it might be weird to check for empty URLs there since I don\u0027t use the URL at all in that block, what do you think? (I could also just assume that if DoFetchToURL is being called with an HTTP URL, the feature is enabled, but that would break running on a local server with the feature disabled).",
+      "parentUuid": "e3691faa_adb3902a",
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "28055e00_ca52ca4c",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fdb2c67_37a54449",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 9
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a985889f_c07f4a25",
         "filename": "components/variations/variations_switches.cc",
         "patchSetId": 6
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "a912eb2a_1843918e",
+        "filename": "components/variations/variations_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a985889f_c07f4a25",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936e553f_588e1519",
         "filename": "components/variations/variations_switches.cc",
         "patchSetId": 6
@@ -148,6 +280,30 @@
       "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b709de_edf75137",
+        "filename": "components/variations/variations_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-07T20:24:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "936e553f_588e1519",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "893f9ec6371577abe0c980bb300f4f008d375185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
