@@ -104,6 +104,7 @@ void TextControlElement::DispatchBlurEvent(
 void TextControlElement::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::webkitEditableContentChanged &&
       GetLayoutObject() && GetLayoutObject()->IsTextControl()) {
+    LOG(ERROR) << "Here";
     last_change_was_user_edit_ = !GetDocument().IsRunningExecCommand();
 
     if (IsFocused()) {
@@ -161,7 +162,9 @@ bool TextControlElement::IsPlaceholderEmpty() const {
 }
 
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && InnerEditorValue().IsEmpty() &&
+  return SupportsPlaceholder() &&
+         (InnerEditorValue().IsEmpty() ||
+          InnerEditorElement()->FastHasAttribute(HTMLNames::hiddenAttr)) &&
          !IsPlaceholderEmpty() && SuggestedValue().IsEmpty();
 }
 
@@ -977,16 +980,15 @@ String TextControlElement::DirectionForFormData() const {
 void TextControlElement::SetSuggestedValue(const String& value) {
   suggested_value_ = value;
   if (!suggested_value_.IsEmpty() && !InnerEditorValue().IsEmpty()) {
-    // Save the value that is in the editor and set the editor value to an empty
-    // string. This will allow the suggestion placeholder to be shown to the
-    // user.
-    value_before_set_suggested_value_ = InnerEditorValue();
-    SetInnerEditorValue("");
-  } else if (suggested_value_.IsEmpty() &&
-             !value_before_set_suggested_value_.IsEmpty()) {
-    // Reset the value that was in the editor before showing the suggestion.
-    SetInnerEditorValue(value_before_set_suggested_value_);
-    value_before_set_suggested_value_ = "";
+    // If there is an inner editor value, hide it so the suggested value can be
+    // shown to the user.
+    static_cast<TextControlInnerEditorElement*>(InnerEditorElement())
+        ->SetVisibility(false);
+  } else if (suggested_value_.IsEmpty() && InnerEditorElement()) {
+    // If there is no suggested value and there is an InnerEditorElement, reset
+    // its visibility.
+    static_cast<TextControlInnerEditorElement*>(InnerEditorElement())
+        ->SetVisibility(true);
   }
 
   UpdatePlaceholderText();
