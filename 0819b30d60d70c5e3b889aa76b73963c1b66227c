@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f050e77_83bf4f4f",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-07T00:31:05Z",
+      "side": 1,
+      "message": "extension\u0027s\n\nAlthough the phrase \"underlying intention\" also sounds a bit strange.  Maybe \"if they all contribute to the same common purpose\"?  WDYT?",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "0819b30d60d70c5e3b889aa76b73963c1b66227c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47296eef_81d0d856",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-07T00:31:05Z",
+      "side": 1,
+      "message": "though *most* extensions won\u0027t\n\nIt is possible to have a functional extension that uses only the manifest.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 62
+      },
+      "revId": "0819b30d60d70c5e3b889aa76b73963c1b66227c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e236c47_1ac2bf91",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-07T00:31:05Z",
+      "side": 1,
+      "message": "nit: maybe \"create a file called hello.html with the following content:\"?",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 30
+      },
+      "revId": "0819b30d60d70c5e3b889aa76b73963c1b66227c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae50723_0c7e288f",
+        "filename": "chrome/common/extensions/docs/templates/articles/extensions_index.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-07T00:31:05Z",
+      "side": 1,
+      "message": "Chrome menu",
+      "range": {
+        "startLine": 140,
+        "startChar": 18,
+        "endLine": 140,
+        "endChar": 32
+      },
+      "revId": "0819b30d60d70c5e3b889aa76b73963c1b66227c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
