@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b9003588_0e35d7ba",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-07T07:30:42Z",
+      "side": 1,
+      "message": "EXPECT_EQ(simple_bubble-\u003econtent_type(), simple_bubble-\u003econtent_type());",
+      "parentUuid": "694d58cc_6d1b36a1",
+      "revId": "e2958049ebca99066562bf5b6a1d437f8cd64f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a81a7c4_8eb24a4f",
         "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
         "patchSetId": 8
