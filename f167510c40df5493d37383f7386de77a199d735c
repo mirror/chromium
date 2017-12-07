@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ee646b14_a6dc67d4",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "4 out of 5 values directly deal with store\nAlso the SyncOperation part of the name alludes to *Sync calls which we do on I/O to access store.\n\nI still think that is a good place for it.",
+      "parentUuid": "d5be731f_8f4ea66a",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 71
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8181483d_fafb64fb",
         "filename": "components/offline_pages/core/model/offline_page_model_types.h",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "f167510c40df5493d37383f7386de77a199d735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dd93de_6140df08",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a74fc01e_1ae1edb1",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "9d50c7ab_b5478c63",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff97bcc_03577eff",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a9ae9e_e342dc15",
         "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
         "patchSetId": 2
@@ -260,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "1933d4f5_27d9904d",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ce740e7_2e6b0b9b",
+      "range": {
+        "startLine": 193,
+        "startChar": 44,
+        "endLine": 193,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b241019_f1ad5f3d",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 2
@@ -280,6 +376,30 @@
       "revId": "f167510c40df5493d37383f7386de77a199d735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a20759_592883ac",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b241019_f1ad5f3d",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "b57a0979_6baa820e",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "220c63b9_d21e7d29",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 51
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4893cbde_4236ac4b",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -503,6 +647,30 @@
       "revId": "f167510c40df5493d37383f7386de77a199d735c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8788ef5e_a55ff9f7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 54001,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T22:39:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e20e7024_06f3ea95",
+      "range": {
+        "startLine": 54001,
+        "startChar": 10,
+        "endLine": 54001,
+        "endChar": 41
+      },
+      "revId": "f167510c40df5493d37383f7386de77a199d735c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
