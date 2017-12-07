@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "918f790e_57de6c64",
+        "filename": "ui/file_manager/file_manager/background/js/volume_info_impl.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-07T08:21:11Z",
+      "side": 1,
+      "message": "qq: For non-FSP volumes, will it be empty string (as commented) or undefined?\n(If it is empty string, \"Empty\" \u003d\u003e \"Empty string\" might be clearer.)",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "7b9db1954bd98bf228e0d28bf608c285b97db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5184dea5_8f70698b",
+        "filename": "ui/file_manager/file_manager/background/js/volume_info_impl.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-07T08:21:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 31,
+        "startChar": 63,
+        "endLine": 31,
+        "endChar": 68
+      },
+      "revId": "7b9db1954bd98bf228e0d28bf608c285b97db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
