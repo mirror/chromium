@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c011f5e6_341311d5",
+        "filename": "ash/mus/window_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T23:48:13Z",
+      "side": 0,
+      "message": "This was a left-behind copy of ash/window_manager_unittest.cc that wasn\u0027t being compiled.",
+      "revId": "2c1b3d065890fe1e72bcd831c5421ac6a2834e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a65178d_80053594",
+        "filename": "ash/window_manager_common_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T23:48:13Z",
+      "side": 0,
+      "message": "This comment is wrong. I think it dates back to the WMCommon days.",
+      "revId": "2c1b3d065890fe1e72bcd831c5421ac6a2834e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
