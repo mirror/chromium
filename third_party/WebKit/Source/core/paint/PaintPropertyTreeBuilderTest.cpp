@@ -549,7 +549,10 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
             transform_properties->Transform()->Matrix());
   // The value is zero without a transform property that needs transform-offset.
   EXPECT_EQ(FloatPoint3D(0, 0, 0), transform_properties->Transform()->Origin());
-  EXPECT_EQ(nullptr, transform_properties->PaintOffsetTranslation());
+  EXPECT_EQ(TransformationMatrix().Translate(50, 100),
+            transform_properties->PaintOffsetTranslation()->Matrix());
+  EXPECT_EQ(LayoutPoint(),
+            transform->GetLayoutObject()->FirstFragment().PaintOffset());
   EXPECT_TRUE(transform_properties->Transform()->HasDirectCompositingReasons());
 
   CHECK_EXACT_VISUAL_RECT(LayoutRect(50, 100, 400, 300),
@@ -1143,7 +1146,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSVGHTMLBoundary) {
             div_with_transform_properties->Transform()->Matrix());
   // Ensure the div's transform node is a child of the svg's transform node.
   EXPECT_EQ(svg_with_transform_properties->Transform(),
-            div_with_transform_properties->Transform()->Parent()->Parent());
+            div_with_transform_properties->Transform()->Parent());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetTranslationSVGHTMLBoundary) {
@@ -1419,10 +1422,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
   auto* inner_document_scroll_translation = inner_div_transform->Parent();
   EXPECT_EQ(TransformationMatrix().Translate3d(0, 0, 0),
             inner_document_scroll_translation->Matrix());
-  auto* paint_offset_translation = inner_document_scroll_translation->Parent();
-  auto* iframe_pre_translation =
-      inner_document_scroll_translation->Parent()->Parent();
-  EXPECT_EQ(FloatSize(), paint_offset_translation->Matrix().To2DTranslation());
+  auto* iframe_pre_translation = inner_document_scroll_translation->Parent();
   EXPECT_EQ(TransformationMatrix().Translate3d(7, 7, 0),
             iframe_pre_translation->Matrix());
   EXPECT_EQ(div_with_transform_properties->Transform(),
@@ -1783,7 +1783,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
   // content).
   EXPECT_TRUE(!FrameScrollTranslation());
   EXPECT_EQ(FramePreTranslation(),
-            overflow_properties->ScrollTranslation()->Parent()->Parent());
+            overflow_properties->ScrollTranslation()->Parent());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 50, 50), &overflow,
                           GetDocument().View()->GetLayoutView());
 
@@ -2122,10 +2122,9 @@ TEST_P(PaintPropertyTreeBuilderTest,
       c->FirstFragment().PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate3d(11, 13, 0),
             c_properties->Transform()->Matrix());
-  // The paint offset should be (-0.3,-0.3) but the paint offset transform
-  // should still be at (0,0) because it should be snapped.
-  EXPECT_EQ(TransformationMatrix().Translate(0, 0),
-            c_properties->Transform()->Parent()->Matrix());
+  // The paint offset should be (-0.3,-0.3) but the snapped paint offset is
+  // zero so there is no PaintOffsetTranslation node.
+  EXPECT_EQ(b_properties->Transform(), c_properties->Transform()->Parent());
   // The residual subpixel adjustment should still be (-0.3,-0.3).
   EXPECT_EQ(subpixel_accumulation, c->FirstFragment().PaintOffset());
   CHECK_EXACT_VISUAL_RECT(LayoutRect(LayoutUnit(16.7), LayoutUnit(20.7),
@@ -2635,12 +2634,12 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
   b_transform_node = b_properties->Transform();
   EXPECT_EQ(TransformationMatrix().Translate(111, 222),
             b_transform_node->Matrix());
-  EXPECT_EQ(a_transform_node, b_transform_node->Parent()->Parent());
+  EXPECT_EQ(a_transform_node, b_transform_node->Parent());
 
   EXPECT_EQ(c_properties,
             c->GetLayoutObject()->FirstFragment().PaintProperties());
   EXPECT_EQ(c_transform_node, c_properties->Transform());
-  EXPECT_EQ(b_transform_node, c_transform_node->Parent()->Parent());
+  EXPECT_EQ(b_transform_node, c_transform_node->Parent());
 
   CHECK_EXACT_VISUAL_RECT(LayoutRect(33, 44, 50, 60), a->GetLayoutObject(),
                           frame_view->GetLayoutView());
@@ -2664,7 +2663,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
   EXPECT_EQ(c_properties,
             c->GetLayoutObject()->FirstFragment().PaintProperties());
   EXPECT_EQ(c_transform_node, c_properties->Transform());
-  EXPECT_EQ(a_transform_node, c_transform_node->Parent()->Parent());
+  EXPECT_EQ(a_transform_node, c_transform_node->Parent());
 
   CHECK_EXACT_VISUAL_RECT(LayoutRect(33, 44, 50, 60), a->GetLayoutObject(),
                           frame_view->GetLayoutView());
@@ -2688,12 +2687,12 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
             b->GetLayoutObject()->FirstFragment().PaintProperties());
   b_transform_node = b_properties->Transform();
   EXPECT_EQ(TransformationMatrix().Translate(4, 5), b_transform_node->Matrix());
-  EXPECT_EQ(a_transform_node, b_transform_node->Parent()->Parent());
+  EXPECT_EQ(a_transform_node, b_transform_node->Parent());
 
   EXPECT_EQ(c_properties,
             c->GetLayoutObject()->FirstFragment().PaintProperties());
   EXPECT_EQ(c_transform_node, c_properties->Transform());
-  EXPECT_EQ(b_transform_node, c_transform_node->Parent()->Parent());
+  EXPECT_EQ(b_transform_node, c_transform_node->Parent());
 
   CHECK_EXACT_VISUAL_RECT(LayoutRect(33, 44, 50, 60), a->GetLayoutObject(),
                           frame_view->GetLayoutView());

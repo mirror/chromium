@@ -342,7 +342,7 @@ static bool CanUpcastTo(const PropertyTreeState& guest,
 
   for (const ClipPaintPropertyNode* current_clip = guest.Clip();
        current_clip != home.Clip(); current_clip = current_clip->Parent()) {
-    if (!current_clip || current_clip->HasDirectCompositingReasons())
+    if (!current_clip)
       return false;
     if (!IsNonCompositingAncestorOf(home.Transform(),
                                     current_clip->LocalTransformSpace()))
