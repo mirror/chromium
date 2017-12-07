@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b54df6d3_30221899",
+        "filename": "ui/accelerated_widget_mac/accelerated_widget_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T03:14:54Z",
+      "side": 1,
+      "message": "nit: ui:: not needd",
+      "range": {
+        "startLine": 61,
+        "startChar": 15,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "96524eb1d399d0d9b6a6cf698566a78d21eacd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
