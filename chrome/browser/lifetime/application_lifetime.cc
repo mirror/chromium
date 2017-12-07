@@ -118,6 +118,39 @@ bool SetLocaleForNextStart(PrefService* local_state) {
 bool g_send_stop_request_to_session_manager = false;
 #endif
 
+#if defined(OS_CHROMEOS)
+void AttemptUserExitAfterFlush() {
+  g_send_stop_request_to_session_manager = true;
+  // On ChromeOS, always terminate the browser, regardless of the result of
+  // AreAllBrowsersCloseable(). See crbug.com/123107.
+  browser_shutdown::NotifyAndTerminate(true /* fast_path */);
+}
+
+void AttemptUserExitChromeOS() {
+  VLOG(1) << "AttemptUserExit";
+  browser_shutdown::StartShutdownTracing();
+  chromeos::BootTimesRecorder::Get()->AddLogoutTimeMarker("LogoutStarted",
+                                                          false);
+
+  PrefService* state = g_browser_process->local_state();
+  if (state) {
+    chromeos::BootTimesRecorder::Get()->OnLogoutStarted(state);
+
+    if (SetLocaleForNextStart(state)) {
+      TRACE_EVENT0("shutdown", "CommitPendingWrite");
+      state->CommitPendingWrite();
+    }
+  }
+  if (g_browser_process) {
+    g_browser_process->platform_part()->StartCommitPendingWriteOnExit(
+        base::BindOnce(&AttemptUserExitAfterFlush));
+  } else {
+    // For tests.
+    AttemptUserExitAfterFlush();
+  }
+}
+#endif  // defined(OS_CHROMEOS)
+
 }  // namespace
 
 #if !defined(OS_ANDROID)
@@ -190,24 +223,7 @@ void CloseAllBrowsers() {
 
 void AttemptUserExit() {
 #if defined(OS_CHROMEOS)
-  VLOG(1) << "AttemptUserExit";
-  browser_shutdown::StartShutdownTracing();
-  chromeos::BootTimesRecorder::Get()->AddLogoutTimeMarker("LogoutStarted",
-                                                          false);
-
-  PrefService* state = g_browser_process->local_state();
-  if (state) {
-    chromeos::BootTimesRecorder::Get()->OnLogoutStarted(state);
-
-    if (SetLocaleForNextStart(state)) {
-      TRACE_EVENT0("shutdown", "CommitPendingWrite");
-      state->CommitPendingWrite();
-    }
-  }
-  g_send_stop_request_to_session_manager = true;
-  // On ChromeOS, always terminate the browser, regardless of the result of
-  // AreAllBrowsersCloseable(). See crbug.com/123107.
-  browser_shutdown::NotifyAndTerminate(true /* fast_path */);
+  AttemptUserExitChromeOS();
 #else
   // Reset the restart bit that might have been set in cancelled restart
   // request.

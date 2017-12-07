@@ -118,6 +118,8 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   ui::InputDeviceControllerClient* GetInputDeviceControllerClient();
 
+  void StartCommitPendingWriteOnExit(base::OnceClosure on_finish);
+
  private:
   void CreateProfileHelper();
 
@@ -151,6 +153,10 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   std::unique_ptr<ui::InputDeviceControllerClient>
       input_device_controller_client_;
 #endif
+
+  // Before exiting we start flushing all user data.
+  // This flag prevents duplicate exit.
+  bool commit_pending_write_on_exit_started_ = false;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
