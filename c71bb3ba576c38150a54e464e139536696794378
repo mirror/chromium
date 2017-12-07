@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70e7d1d7_33b42f41",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f10e22a_3a07b228",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcfc8d05_cb4764bf",
         "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "c71bb3ba576c38150a54e464e139536696794378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65004bac_ae660453",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcfc8d05_cb4764bf",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "749c7a5c_66520665",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e9fa06_9c36a535",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abe1a8b_77708fdb",
         "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
         "patchSetId": 11
@@ -79,6 +139,30 @@
       "revId": "c71bb3ba576c38150a54e464e139536696794378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04b27ca_3fa5c8b4",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abe1a8b_77708fdb",
+      "range": {
+        "startLine": 151,
+        "startChar": 23,
+        "endLine": 151,
+        "endChar": 32
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "96fed6a4_929ef231",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41331182_b16db91a",
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "555eabd8_45c85d5b",
         "filename": "content/common/appcache.mojom",
         "patchSetId": 11
@@ -179,6 +281,30 @@
       "revId": "c71bb3ba576c38150a54e464e139536696794378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a859fb6f_f97a28f5",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f9f1b5_9c6fc99f",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -251,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "a15e80ac_44948d15",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Shall we see if it works in the next CL?",
+      "parentUuid": "06153a3c_08f4c9ef",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ba52ac9_f5c413d6",
         "filename": "content/renderer/appcache/appcache_backend_proxy.cc",
         "patchSetId": 11
@@ -274,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "0048b310_b5c94cb8",
+        "filename": "content/renderer/appcache/appcache_backend_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba52ac9_f5c413d6",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e63518e_3b59b456",
         "filename": "content/renderer/appcache/appcache_backend_proxy.h",
         "patchSetId": 11
@@ -285,6 +459,30 @@
       "writtenOn": "2017-12-06T07:15:13Z",
       "side": 1,
       "message": "Is this still used anywhere?",
+      "range": {
+        "startLine": 50,
+        "startChar": 15,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "c71bb3ba576c38150a54e464e139536696794378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b000fa7b_7fd193e9",
+        "filename": "content/renderer/appcache/appcache_backend_proxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-07T03:35:56Z",
+      "side": 1,
+      "message": "There\u0027s a getter above, which is used externally.",
+      "parentUuid": "2e63518e_3b59b456",
       "range": {
         "startLine": 50,
         "startChar": 15,
