@@ -5,6 +5,7 @@
 #ifndef ScrollSnapData_h
 #define ScrollSnapData_h
 
+#include "platform/geometry/FloatRect.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/wtf/Vector.h"
 
@@ -103,12 +104,15 @@ struct SnapAreaData {
   // The scroll_offset to snap the area at the specified alignment in that axis.
   ScrollOffset snap_offset;
 
+  // The snap area is visible if the scroll_offset of its snap container is
+  // inside the visible_area.
+  FloatRect visible_area;
+
   // Whether this area has scroll-snap-stop: always.
   // See https://www.w3.org/TR/css-scroll-snap-1/#scroll-snap-stop
   bool must_snap;
 
-  // TODO(sunyunjia): Add fields for visibility requirement and large area
-  // snapping.
+  // TODO(sunyunjia): Add fields for large area snapping.
 };
 
 // Snap container is a scroll container that has non-'none' value for

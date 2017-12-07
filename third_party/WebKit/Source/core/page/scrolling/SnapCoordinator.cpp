@@ -252,6 +252,16 @@ static float CalculateSnapOffset(SnapAlignment alignment,
   }
 }
 
+static FloatRect CalculateVisibleArea(const LayoutRect& container,
+                                      const LayoutRect& area) {
+  float min_x = (area.X() - container.MaxX()).ToFloat();
+  float min_y = (area.Y() - container.MaxY()).ToFloat();
+  float max_x = (area.MaxX() - container.X()).ToFloat();
+  float max_y = (area.MaxY() - container.Y()).ToFloat();
+
+  return FloatRect(min_x, min_y, max_x - min_x, max_y - min_y);
+}
+
 SnapAreaData SnapCoordinator::CalculateSnapAreaData(
     const LayoutBox& snap_area,
     const LayoutBox& snap_container,
@@ -260,6 +270,7 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   const ComputedStyle* container_style = snap_container.Style();
   const ComputedStyle* area_style = snap_area.Style();
   SnapAreaData snap_area_data;
+  // TODO(sunyunjia): Should use snap_container.ClientWidth() and ClientHeight()
   LayoutRect container(
       LayoutPoint(),
       LayoutSize(snap_container.OffsetWidth(), snap_container.OffsetHeight()));
@@ -331,6 +342,8 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
     snap_area_data.snap_axis = SnapAxis::kY;
   }
 
+  snap_area_data.visible_area = CalculateVisibleArea(container, area);
+
   snap_area_data.must_snap =
       (area_style->ScrollSnapStop() == EScrollSnapStop::kAlways);
 
@@ -345,7 +358,12 @@ ScrollOffset SnapCoordinator::FindSnapOffset(const ScrollOffset& current_offset,
   float smallest_distance_y = std::numeric_limits<float>::max();
   ScrollOffset snap_offset = current_offset;
   for (SnapAreaData snap_area_data : data.snap_area_list) {
-    // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
+    // Ignore the snap areas that are not currently visible.
+    if (!snap_area_data.visible_area.Contains(FloatPoint(current_offset)))
+      continue;
+
+    // TODO(sunyunjia): We should consider whether the snap area is larger than
+    // the snap container when choosing snap offset.
     if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
                              snap_area_data.snap_axis == SnapAxis::kBoth)) {
       float offset = snap_area_data.snap_offset.Width();
