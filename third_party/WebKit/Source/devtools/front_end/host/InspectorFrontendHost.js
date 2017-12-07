@@ -554,7 +554,7 @@ InspectorFrontendHost.events;
  * @return {boolean}
  */
 Host.isUnderTest = function(prefs) {
-  if (InspectorFrontendHost.isUnderTest())
+  if (Runtime.queryParam('test') || InspectorFrontendHost.isUnderTest())
     return true;
 
   if (prefs)

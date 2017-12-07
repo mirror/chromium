@@ -12,11 +12,71 @@
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
 
+TestRunner.startTestRunner = function() {
+  InspectorFrontendHost.events.addEventListener(
+    InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, TestRunner._evaluateForTestInFrontend, TestRunner);
+  if (!Runtime.queryParam('test'))
+    return;
+  TestRunner._printDevToolsConsole();
+  TestRunner._executeTestScript();
+};
+
+/**
+ * Only tests in /LayoutTests/http/tests/devtools/startup/ need to call
+ * this method becauswe these tests need certain activities to be exercised
+ * in the inspected page prior to the DevTools session.
+ * @param {string} path
+ * @return {!Promise<undefined>}
+ */
+TestRunner.setupStartupTest = function(path) {
+  return TestRunner._navigateInspectedPage(path);
+};
+
+TestRunner.isStartupTest = function() {
+  var test = Runtime.queryParam('test');
+  return test && test.includes('/startup/');
+};
+
+/**
+ * @param {string} path
+ * @return {!Promise<undefined>}
+ */
+TestRunner._navigateInspectedPage = function(path) {
+  var absoluteURL = TestRunner.url(path);
+  testRunner.navigateSecondaryWindow(absoluteURL);
+  return new Promise(f => TestRunner.onInspect = () => {
+    Main._mainForTesting._initializeTarget();
+    f();
+  });
+}
+
+TestRunner._evaluateForTestInFrontend = function(event) {
+    var callId = /** @type {number} */ (event.data['callId']);
+    var script = /** @type {number} */ (event.data['script']);
+
+    function invokeMethod() {
+      try {
+        script = script + '//# sourceURL=TestRunner' + callId + '.js';
+        self.eval(script);
+      } catch (e) {
+        console.error(e.stack);
+      }
+    }
+
+    // The first evaluateForTestInFrontend is called before target has been initialized
+    if (Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches)
+      Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(invokeMethod);
+    else
+      invokeMethod();
+  }
+
 TestRunner._executeTestScript = function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
       .then(data => data.text())
-      .then(testScript => {
+      .then(async (testScript) => {
+        // if (!testScriptURL.includes('/devtools/startup/'))
+          // await TestRunner._navigateInspectedPage('/devtools/resources/inspected-page.html');
         if (TestRunner._isDebugTest()) {
           TestRunner.addResult = console.log;
           TestRunner.completeTest = () => console.log('Test completed');
@@ -1338,9 +1398,8 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
-    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    TestRunner._runTest();
+    TestRunner._setupInspectedPage();
   }
 
   /**
@@ -1351,7 +1410,7 @@ TestRunner._TestObserver = class {
   }
 };
 
-TestRunner._runTest = async function() {
+TestRunner._setupInspectedPage = async function() {
   var testPath = TestRunner.url();
   await TestRunner.loadHTML(`
     <head>
@@ -1360,7 +1419,6 @@ TestRunner._runTest = async function() {
     <body>
     </body>
   `);
-  TestRunner._executeTestScript();
 };
 
 /**
@@ -1388,4 +1446,5 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
+TestRunner.startTestRunner();
 })();

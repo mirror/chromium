@@ -285,9 +285,11 @@ Main.Main = class {
     function handleQueryParam(value, handler) {
       handler.handleQueryParam(value);
     }
+    InspectorFrontendHost.readyForTest();
 
     // Allow UI cycles to repaint prior to creating connection.
-    setTimeout(this._initializeTarget.bind(this), 0);
+    if (!TestRunner.isStartupTest())
+      setTimeout(this._initializeTarget.bind(this), 0);
     Main.Main.timeEnd('Main._showAppUI');
   }
 
@@ -295,7 +297,6 @@ Main.Main = class {
     Main.Main.time('Main._initializeTarget');
     SDK.targetManager.connectToMainTarget(webSocketConnectionLost);
 
-    InspectorFrontendHost.readyForTest();
     // Asynchronously run the extensions.
     setTimeout(this._lateInitialization.bind(this), 100);
     Main.Main.timeEnd('Main._initializeTarget');
@@ -952,4 +953,4 @@ Main.ShowMetricsRulersSettingUI = class {
   }
 };
 
-new Main.Main();
+Main._mainForTesting = new Main.Main();
