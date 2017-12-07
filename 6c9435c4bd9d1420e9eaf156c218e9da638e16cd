@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d3397ec5_f3a93424",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T17:22:48Z",
+      "side": 1,
+      "message": "I was a bit unclear with Bo\u0027s comment (I might be alone there), but the take away is that the native side should also be a UserData and not a WebContentsObserver.\n\nFor now, I don\u0027t think we have a path to java UserData having a destroy call because WebView can have it be GC\u0027d before web contents destroy is called so it would be unreachable.\n\nIf we need a predictable destroy, then you can\u0027t use the java side, you have to add yourself to the native userdata and do all that plumbing.\n\nI do wonder if there are things we can do to make user data across both boundaries cleaner, but I\u0027m not sure there is yet.\n\nI guess the question I have here is that if the native side of GestureListenerManager is a native user data, should we just have this own the java side too (with all the fun weak ref\u0027s that come along with it) to not make two sided user data?  Should we try to have user data be only on one side of the boundary (either java or native, but not both)?",
+      "parentUuid": "50044943_60d93c8e",
+      "range": {
+        "startLine": 23,
+        "startChar": 44,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7cc534_2c8634ef",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 11
