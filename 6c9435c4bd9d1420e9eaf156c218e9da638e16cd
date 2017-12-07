@@ -163,6 +163,40 @@
       "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994eb951_4847a393",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-07T19:52:38Z",
+      "side": 1,
+      "message": "Nit: Remove? Refer to class comment above?",
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca25962c_59bdd78c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-07T19:52:38Z",
+      "side": 1,
+      "message": "In case the setUserData(...) call fails, should we still return mObject? It kind of feels we should go through a getUserData(...) call here?",
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
