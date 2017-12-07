@@ -110,8 +110,9 @@ enum TextRowType { ROW_SINGLE, ROW_MULTILINE };
 // the combobox.
 class PasswordDropdownModel : public ui::ComboboxModel {
  public:
-  explicit PasswordDropdownModel(const std::vector<base::string16>& items)
-      : masked_(true), passwords_(items) {}
+  explicit PasswordDropdownModel(bool masked,
+                                 const std::vector<base::string16>& items)
+      : masked_(masked), passwords_(items) {}
   ~PasswordDropdownModel() override {}
 
   void SetMasked(bool masked) {
@@ -274,10 +275,12 @@ std::unique_ptr<views::ToggleImageButton> CreatePasswordViewButton(
 
 // Creates a dropdown from the other possible passwords.
 std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
-    const autofill::PasswordForm& form) {
+    const autofill::PasswordForm& form,
+    bool are_passwords_visible) {
   DCHECK(!form.all_possible_passwords.empty());
-  std::unique_ptr<views::Combobox> combobox = std::make_unique<views::Combobox>(
-      std::make_unique<PasswordDropdownModel>(form.all_possible_passwords));
+  std::unique_ptr<views::Combobox> combobox =
+      std::make_unique<views::Combobox>(std::make_unique<PasswordDropdownModel>(
+          are_passwords_visible, form.all_possible_passwords));
   size_t index = std::distance(
       form.all_possible_passwords.begin(),
       find(form.all_possible_passwords.begin(),
@@ -484,7 +487,8 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       password_view_button_(nullptr),
       password_dropdown_(nullptr),
       password_label_(nullptr),
-      password_visible_(false) {
+      password_visible_(
+          parent_->model()->are_passwords_revealed_when_bubble_is_opened()) {
   // Create credentials row.
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
@@ -501,7 +505,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() && is_password_credential) {
+      is_password_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -583,7 +587,8 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
   if (enable_password_selection &&
       password_form.all_possible_passwords.size() > 1 &&
       parent_->model()->enable_editing()) {
-    password_dropdown_ = CreatePasswordDropdownView(password_form).release();
+    password_dropdown_ =
+        CreatePasswordDropdownView(password_form, password_visible_).release();
   } else {
     password_label_ =
         CreatePasswordLabel(password_form, password_visible_).release();
@@ -591,6 +596,9 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ && !parent_->model()->CanRevealPasswords())
+    return;
+
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);

@@ -310,7 +310,7 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
     metrics_util::UIDisplayDisposition display_disposition) {
   if (credential_source_type == metrics_util::CredentialSourceType::kUnknown)
     return;
-  DCHECK_EQ(CurrentBubbleOfInterest::kNone, current_bubble_);
+  // DCHECK_EQ(CurrentBubbleOfInterest::kNone, current_bubble_);
   BubbleTrigger automatic_trigger_type =
       credential_source_type ==
               metrics_util::CredentialSourceType::kPasswordManager
@@ -356,6 +356,7 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
     case metrics_util::AUTOMATIC_GENERATED_PASSWORD_CONFIRMATION:
     case metrics_util::MANUAL_GENERATED_PASSWORD_CONFIRMATION:
     case metrics_util::AUTOMATIC_SIGNIN_TOAST:
+    case metrics_util::REOPEN_AFTER_REAUTH:
       // Do nothing.
       return;
 
