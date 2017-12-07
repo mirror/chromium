@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7533dce3_582a6071",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:20:53Z",
+      "side": 1,
+      "message": "do we need to null out mWebContents (like mContentViewCore was being done...or was that to prevent duplicate calls to hide())?",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 536,
+        "endChar": 30
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737d3fe8_735312b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:20:53Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to pass this in as a param for now (WebContents not cvc)",
+      "range": {
+        "startLine": 1875,
+        "startChar": 34,
+        "endLine": 1875,
+        "endChar": 50
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e3af0a_19b1e5ce",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:20:53Z",
+      "side": 1,
+      "message": "the need for this to be a WebContentsObserver just to get destroy seems sad to me.\n\nI feel that WebContentsUserData should have a destroy method in java that you\u0027d get notified of there (similar to the destructor in C++).  Having to do this referencing seems rather unfortunate IMO.\n\nAnd if we do need the observer, I feel it should live on the same side as the user data.\n\nThat being said, this does exactly fall into the case I was worried about.  We have the niceties of the user data on the java side, but the ugly-ness of an explicit setter on the C++ side.  I feel it would be better if the C++ was also able to pull this out of the user data (granted this would likely need to be a user data on the C++ side that has one on the java side...I\u0027m not 100% sure that is the worst thing in the world, but I do worry about this somewhat mixed behavior being the gold standard for how this is handled)",
+      "range": {
+        "startLine": 23,
+        "startChar": 44,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7cc534_2c8634ef",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:20:53Z",
+      "side": 1,
+      "message": "do we ever set the mInternalsHolder to null in the destructor?\n\nI feel we should throw an illegalstateexception here if this is called and the webcontents has been destroyed.\n\nI worry someone will add something to a destroyed webcontents w/o this and unintentionally leak something because they\u0027ll never get a destroy call.",
+      "range": {
+        "startLine": 772,
+        "startChar": 38,
+        "endLine": 772,
+        "endChar": 39
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
