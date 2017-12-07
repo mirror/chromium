@@ -70,6 +70,24 @@
       "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0d9256_127427ed",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-12-07T04:36:38Z",
+      "side": 1,
+      "message": "Yeah, I was concerned about the sizing of the flex item.\n\n\u003e This function is not used in computing the min/max preferred width\n\nThat\u0027s probably what I\u0027m missing. In most of the table traces I\u0027ve looked at, the first call to MaxPreferredLogicalWidth is usually via this method (called on line 328 below).\n\nI suppose you\u0027re saying that flexbox retrieves the min/max preferred widths before calling UpdateLayout on its items, which makes sense, I just can\u0027t find where it\u0027s happening in codesearch.",
+      "parentUuid": "1f5da98e_443b5242",
+      "revId": "567755f656419c11c9077322d0f8eb12c8a51f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
