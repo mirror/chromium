@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "565d0aba_93a8ccd4",
+        "filename": "content/common/content_param_traits_macros.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:03:34Z",
+      "side": 1,
+      "message": "Let\u0027s define and use kLast for this one, it feels error prone",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cbd5baa_774459cb",
         "filename": "content/public/common/BUILD.gn",
         "patchSetId": 3
@@ -13,6 +30,75 @@
       "writtenOn": "2017-12-06T07:05:50Z",
       "side": 1,
       "message": "I think we\u0027d better always put \u0027mojom\u0027 dependency as public_deps rather than deps. Also, \u0027interfaces:interfaces\u0027 could just be \u0027interfaces\u0027.",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44804981_9a7d7c10",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:03:34Z",
+      "side": 1,
+      "message": "I don\u0027t think we should \u0027always\u0027 do so, putting things in public_deps should still be done with a proper care. Though in this case I think we\u0027ll likely need it in public_deps",
+      "parentUuid": "6cbd5baa_774459cb",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e5f47f_f1d3a492",
+        "filename": "services/network/public/interfaces/request_context_frame_type.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:03:34Z",
+      "side": 1,
+      "message": "content::ResourceType (not mojofied yet, used in a native struct)",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a33c427_c57b5ea5",
+        "filename": "services/network/public/interfaces/request_context_frame_type.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:03:34Z",
+      "side": 1,
+      "message": "... loading code, or we could possibly introduce \u0027destination context\u0027 enum defined in Fetch spec (link) and replace this and ResourceContext together, but ...\n\n?",
+      "revId": "47010a3d027b72358972cda71628f90fae071406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab90025_2e3ddca2",
+        "filename": "services/network/public/interfaces/request_context_frame_type.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-07T05:03:34Z",
+      "side": 1,
+      "message": "I prefer keeping kLast and use it for IPC_ENUM_TRAITS_MAX_VALUE, but with a TODO comment to remove it when legacy IPC is removed.",
       "revId": "47010a3d027b72358972cda71628f90fae071406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
