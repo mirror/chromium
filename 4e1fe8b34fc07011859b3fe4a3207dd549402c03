@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afaf2c81_7fcd652b",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T19:08:54Z",
+      "side": 1,
+      "message": "if (user_logged_in_)\n  return;\nuser_logged_in_ \u003d true;\nuser_initiated_connection_ \u003d false;",
+      "revId": "4e1fe8b34fc07011859b3fe4a3207dd549402c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d5b5e1_ac17b793",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T19:08:54Z",
+      "side": 1,
+      "message": "if (best_connection_checked_)\n  user_initiated_connection_ \u003d true;",
+      "revId": "4e1fe8b34fc07011859b3fe4a3207dd549402c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2963a6d_a7d31ca8",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T19:08:54Z",
+      "side": 1,
+      "message": "best_connection_checked_ \u003d true;",
+      "revId": "4e1fe8b34fc07011859b3fe4a3207dd549402c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b43c10f_bc5ecaeb",
+        "filename": "chromeos/network/auto_connect_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T19:08:54Z",
+      "side": 1,
+      "message": "Return if there is no pending request or if the user has initiated a\nconnect request after a completed CheckBestConection call.",
+      "revId": "4e1fe8b34fc07011859b3fe4a3207dd549402c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
