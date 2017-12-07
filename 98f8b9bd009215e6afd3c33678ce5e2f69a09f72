@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3549fc9e_fa1a23b8",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBTestHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-07T06:43:20Z",
+      "side": 1,
+      "message": "Fair enough. Switched to std::move and returning the Vector.",
+      "parentUuid": "8118e08f_919156dc",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97e6aa3f_e95ca654",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1f4b1b01_70f629b4",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-07T06:43:20Z",
+      "side": 1,
+      "message": "Thank you for pushing me to do the right thing!",
+      "parentUuid": "97e6aa3f_e95ca654",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d7665b9_05d2c20e",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09d8cc4_4006b0d7",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-07T06:43:20Z",
+      "side": 1,
+      "message": "Thank you for the feedback!\n\nI used Take because I wanted a simple conceptual model (clone, wrap, pull everything out). I used a reference to avoid a vector move. The latter is less important than the former, so I switched to std::move and returning a Vector.",
+      "parentUuid": "1d7665b9_05d2c20e",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1ced9805_ecfe92ab",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-07T06:43:20Z",
+      "side": 1,
+      "message": "Done.\n\nI just read around, and __func__ happens to be standardized, whereas __FUNCTION__ wasn\u0027t. Thank you for the recommendation, this is much better!",
+      "parentUuid": "0ba98afc_7c4b59c6",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a230f99_31bad838",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426705cf_677090d4",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValueWrapping.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-07T06:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a230f99_31bad838",
+      "revId": "98f8b9bd009215e6afd3c33678ce5e2f69a09f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
