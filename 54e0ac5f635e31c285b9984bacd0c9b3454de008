@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f533277a_de2a4441",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T03:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082085f4_4e11199c",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 42
+      },
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c076d3_b6851501",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 48
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-06T12:57:20Z",
       "side": 1,
       "message": "based on https://msdn.microsoft.com/en-us/library/windows/desktop/ms683844(v\u003dvs.85).aspx, this should be a quoted string. i think it\u0027s good practice to also set ServerExecutable to the unquoted path.",
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68704336_78b441bd",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T03:53:01Z",
+      "side": 1,
+      "message": "I\u0027ve added the quotes to the string path.\n\nFor ServerExecutable, can I make this change using another CL after I go back to the Seattle office in a week or two? I am currently in the Shanghai office waiting for my visa and don\u0027t have a Windows machine with me. I recall that in my local testing, setting the default path alone (as in this CL) works, while setting the ServerExecutable path alone doesn\u0027t work. I have not tested if setting both paths works. For \"work\", I mean Chrome can be launched by clicking a toast notification.",
+      "parentUuid": "06c076d3_b6851501",
       "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b3ccb88c_65d275a7",
+        "filename": "chrome/installer/setup/setup_util_unittest.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T03:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1ff7f02_1d174404",
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f45a3128_4e055f74",
         "filename": "chrome/installer/setup/uninstall.cc",
         "patchSetId": 48
@@ -73,6 +133,24 @@
       "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c60dc8_c1e9c742",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T03:53:01Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "f45a3128_4e055f74",
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91da7fa_513cb235",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T03:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2956a0be_9135457f",
+      "range": {
+        "startLine": 645,
+        "startChar": 6,
+        "endLine": 645,
+        "endChar": 42
+      },
+      "revId": "54e0ac5f635e31c285b9984bacd0c9b3454de008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
