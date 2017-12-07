@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//ios/web/js_compile.gni")
+import("//tools/grit/grit_rule.gni")
 
 source_set("web") {
   configs += [ "//build/config/compiler:enable_arc" ]
@@ -96,6 +97,31 @@ source_set("unit_tests") {
   ]
 }
 
+service_manifest("chrome_browser_manifest_overlay") {
+  source = "chrome_browser_web_manifest_overlay.json"
+  packaged_services = [ "//components/unzip_service:manifest" ]
+}
+
+grit("resources") {
+  visibility = [ ":*" ]
+  source = "chrome_resources.grd"
+
+  # The .grd contains references to generated files.
+  source_is_generated = true
+
+  grit_flags = [
+    "-E",
+    "root_gen_dir=" + rebase_path(root_gen_dir, root_build_dir),
+  ]
+  outputs = [
+    "grit/chrome_resources.h",
+    "chrome_browser_web_resources.pak",
+  ]
+  deps = [
+    ":chrome_browser_manifest_overlay",
+  ]
+}
+
 js_compile_bundle("chrome_bundle") {
   closure_entry_point = "__crWeb.chromeBundle"
   sources = [
@@ -145,6 +171,7 @@ source_set("web_internal") {
   ]
   deps = [
     ":chrome_bundle",
+    ":resources",
     "//base",
     "//components/content_settings/core/browser",
     "//components/dom_distiller/core",

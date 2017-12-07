@@ -15,6 +15,8 @@
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/unzip_service/public/interfaces/constants.mojom.h"
+#include "components/unzip_service/unzip_service.h"
 #include "components/version_info/version_info.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_about_rewriter.h"
@@ -151,6 +153,28 @@ base::RefCountedMemory* ChromeWebClient::GetDataResourceBytes(
     int resource_id) const {
   return ui::ResourceBundle::GetSharedInstance().LoadDataResourceBytes(
       resource_id);
+}
+
+void ChromeWebClient::RegisterServices(StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo unzip_info;
+  unzip_info.factory = base::Bind(&unzip::UnzipService);
+  unzip_info.task_runner = base::ThreadTaskRunnerHandle::Get();
+  services->insert(std::make_pair(unzip::mojom::kServiceName, unzip_info));
+}
+
+std::unique_ptr<base::Value> ChromeWebClient::GetServiceManifestOverlay(
+    base::StringPiece name) {
+  int identifier = -1;
+  if (name == mojom::kBrowserServiceName)
+    identifier = IDR_WEB_CHROME_BROWSER_MANIFEST_OVERLAY;
+
+  if (identifier == -1)
+    return nullptr;
+
+  base::StringPiece manifest_contents =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResourceForScale(
+          identifier, ui::ScaleFactor::SCALE_FACTOR_NONE);
+  return base::JSONReader::Read(manifest_contents);
 }
 
 void ChromeWebClient::GetAdditionalWebUISchemes(

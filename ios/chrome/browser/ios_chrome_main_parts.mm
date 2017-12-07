@@ -81,6 +81,10 @@ void IOSChromeMainParts::PreMainMessageLoopStart() {
   PathService::Get(ios::FILE_RESOURCES_PACK, &resources_pack_path);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
       resources_pack_path, ui::SCALE_FACTOR_100P);
+  PathService::Get(base::DIR_MODULE, &resources_pak_path);
+  ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+      resources_pack_path.AppendASCII("chrome_browser_web_resources.pak"),
+      ui::SCALE_FACTOR_100P);
 }
 
 void IOSChromeMainParts::PreCreateThreads() {
