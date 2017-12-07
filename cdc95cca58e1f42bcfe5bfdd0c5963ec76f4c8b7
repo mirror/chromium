@@ -16,6 +16,24 @@
       "revId": "cdc95cca58e1f42bcfe5bfdd0c5963ec76f4c8b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76cc4d3a_23510544",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-07T18:58:02Z",
+      "side": 1,
+      "message": "Done. Sorry, I thought I had uploaded that change.",
+      "parentUuid": "d20fb9ec_8559d131",
+      "revId": "cdc95cca58e1f42bcfe5bfdd0c5963ec76f4c8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
