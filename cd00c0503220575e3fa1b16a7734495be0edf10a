@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac9a1c83_b028a04d",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-07T00:02:20Z",
+      "side": 1,
+      "message": "Maybe add a note about is_imported_script cond.",
+      "revId": "cd00c0503220575e3fa1b16a7734495be0edf10a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
