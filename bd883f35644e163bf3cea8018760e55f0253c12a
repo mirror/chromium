@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbca15be_9c902647",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-07T12:05:59Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(auth_error_email_.empty());",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 11
+      },
+      "revId": "bd883f35644e163bf3cea8018760e55f0253c12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b786f0_50d0ef98",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-07T12:05:59Z",
+      "side": 1,
+      "message": "I think I would prefer early return than successive if statements.",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "bd883f35644e163bf3cea8018760e55f0253c12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8341829c_4de1abe9",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-07T12:05:59Z",
+      "side": 1,
+      "message": "I think we should log this even in sign-in internals all the time. Maybe have a different string for these 2 cases: \"Failed (web sign-in)\", \"Failed (enable sync)\"",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 31
+      },
+      "revId": "bd883f35644e163bf3cea8018760e55f0253c12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
