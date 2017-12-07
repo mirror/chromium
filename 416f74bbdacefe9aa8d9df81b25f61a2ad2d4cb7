@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4b2cdbc_d0255a6f",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:12:50Z",
+      "side": 1,
+      "message": "Done. This goes back to https://codereview.chromium.org/988523003 where flex implementation was changed in chrome. This basically restores default min sizes to 0. Not essential in this case, so I\u0027ll remove it.",
+      "parentUuid": "d40330ac_bdb1ec7c",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 3
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7948d413_652665ef",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d60fe3f6_b745869e",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7948d413_652665ef",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4484e0b1_a73d0e36",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-07T20:25:25Z",
       "side": 1,
       "message": "Why is this necessary? Could you remove this, and just turn #content to flex: 1?",
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805828f5_42f223e6",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:12:50Z",
+      "side": 1,
+      "message": "I\u0027d like to explicitly specify that header and footer have fixed basis. Not sure how you are doing this (flex: 0?), but we say flex: none in these cases.",
+      "parentUuid": "4484e0b1_a73d0e36",
       "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "66a6cf70_1d23092e",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:12:50Z",
+      "side": 1,
+      "message": "This template is configurable and can be passed as options[\u0027footerTemplate\u0027] as a string (same for header above). We can\u0027t pass template strings like that since they are a part of the syntax. Hence the manual formatting.",
+      "parentUuid": "005161f0_9c814acd",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 38
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1efc701_cdbb89d2",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-07T20:25:25Z",
       "side": 1,
       "message": "Isn\u0027t this the same as |header| from line 65? Similar question for next line.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "416f74bbdacefe9aa8d9df81b25f61a2ad2d4cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ff0453_adb7593b",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:12:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c1efc701_cdbb89d2",
       "range": {
         "startLine": 83,
         "startChar": 2,
