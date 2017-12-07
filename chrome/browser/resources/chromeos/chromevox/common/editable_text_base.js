@@ -317,8 +317,6 @@ cvox.ChromeVoxEditableTextBase.prototype.speak = function(
  * @param {cvox.TextChangeEvent} evt The text change event.
  */
 cvox.ChromeVoxEditableTextBase.prototype.changed = function(evt) {
-  // Normalize space characters.
-  evt.value = evt.value.replace('\u00a0', ' ');
   if (!this.shouldDescribeChange(evt)) {
     this.lastChangeDescribed = false;
     return;
