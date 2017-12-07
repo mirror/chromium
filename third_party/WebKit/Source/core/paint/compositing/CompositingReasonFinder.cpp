@@ -129,6 +129,29 @@ CompositingReasonFinder::PotentialCompositingReasonsFromStyle(
   return reasons;
 }
 
+CompositingReasons CompositingReasonFinder::DirectReasonsForPaintProperties(
+    const LayoutObject& object) {
+  const auto& style = object.StyleRef();
+  CompositingReasons reasons = CompositingReasonsForAnimation(style);
+
+  if (CompositingReasonFinder::RequiresCompositingForTransform(object))
+    reasons |= CompositingReason::k3DTransform;
+
+  if (style.HasWillChangeCompositingHint() &&
+      !style.SubtreeWillChangeContents())
+    reasons |= CompositingReason::kWillChangeCompositingHint;
+
+  if (object.HasLayer() &&
+      ToLayoutBoxModelObject(object).Layer()->Has3DTransformedDescendant()) {
+    if (style.HasPerspective())
+      reasons |= CompositingReason::kPerspectiveWith3DDescendants;
+    if (style.UsedTransformStyle3D() == ETransformStyle3D::kPreserve3d)
+      reasons |= CompositingReason::kPreserve3DWith3DDescendants;
+  }
+
+  return reasons;
+}
+
 bool CompositingReasonFinder::RequiresCompositingForTransform(
     const LayoutObject& layout_object) {
   // Note that we ask the layoutObject if it has a transform, because the style

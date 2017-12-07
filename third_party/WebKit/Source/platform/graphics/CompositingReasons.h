@@ -145,6 +145,12 @@ class PLATFORM_EXPORT CompositingReason {
 
     kComboSquashableReasons =
         kOverlap | kAssumedOverlap | kOverflowScrollingParent,
+
+    kDirectReasonsForTransformProperty =
+        k3DTransform | kActiveTransformAnimation | kWillChangeCompositingHint |
+        kPerspectiveWith3DDescendants | kPreserve3DWith3DDescendants,
+    kDirectReasonsForEffectProperty = kActiveOpacityAnimation,
+    kDirectReasonsForFilterProperty = kActiveFilterAnimation,
   };
 };
 

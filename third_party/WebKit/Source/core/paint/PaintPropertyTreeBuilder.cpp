@@ -252,14 +252,16 @@ class FragmentPaintPropertyTreeBuilder {
       const LayoutObject& object,
       PaintPropertyTreeBuilderContext& full_context,
       PaintPropertyTreeBuilderFragmentContext& context,
-      FragmentData& fragment_data)
+      FragmentData& fragment_data,
+      CompositingReasons direct_compositing_reasons)
       : object_(object),
         full_context_(full_context),
         context_(context),
         fragment_data_(fragment_data),
         properties_(fragment_data.GetRarePaintData()
                         ? fragment_data.GetRarePaintData()->PaintProperties()
-                        : nullptr) {}
+                        : nullptr),
+        direct_compositing_reasons_(direct_compositing_reasons) {}
 
   ALWAYS_INLINE void UpdateForSelf();
   ALWAYS_INLINE void UpdateForChildren();
@@ -288,10 +290,11 @@ class FragmentPaintPropertyTreeBuilder {
   // The tree builder context for the whole object.
   PaintPropertyTreeBuilderContext& full_context_;
   // The tree builder context for the current fragment, which is one of the
-  // entries in |full_context.fragments|.
+  // entries in |full_context_.fragments|.
   PaintPropertyTreeBuilderFragmentContext& context_;
   FragmentData& fragment_data_;
   ObjectPaintProperties* properties_;
+  CompositingReasons direct_compositing_reasons_;
 };
 
 static bool NeedsScrollNode(const LayoutObject& object) {
@@ -323,7 +326,9 @@ static bool NeedsPaintOffsetTranslationForScrollbars(
   return false;
 }
 
-static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
+static bool NeedsPaintOffsetTranslation(
+    const LayoutObject& object,
+    CompositingReasons direct_compositing_reasons) {
   if (!object.IsBoxModelObject())
     return false;
   const LayoutBoxModelObject& box_model = ToLayoutBoxModelObject(object);
@@ -348,17 +353,20 @@ static bool NeedsPaintOffsetTranslation(const LayoutObject& object) {
   // unnecessary full layer paint/raster invalidation when paint offset in
   // ancestor transform node changes which should not affect the descendants
   // of the composited layer.
-  // TODO(wangxianzhu): For SPv2, we also need a avoid unnecessary paint/raster
-  // invalidation in composited layers when their paint offset changes.
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
-      // For only LayoutBlocks that won't be escaped by floating objects and
-      // column spans when finding their containing blocks.
-      // TODO(crbug.com/780242): This can be avoided if we have fully correct
-      // paint property tree states for floating objects and column spans.
-      object.IsLayoutBlock() && object.HasLayer() &&
-      !ToLayoutBoxModelObject(object).Layer()->EnclosingPaginationLayer() &&
-      object.GetCompositingState() == kPaintsIntoOwnBacking)
-    return true;
+  // For only LayoutBlocks that won't be escaped by floating objects and
+  // column spans when finding their containing blocks.
+  // TODO(crbug.com/780242): This can be avoided if we have fully correct
+  // paint property tree states for floating objects and column spans.
+  if (box_model.IsLayoutBlock() && box_model.HasLayer() &&
+      !box_model.Layer()->EnclosingPaginationLayer()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      if (direct_compositing_reasons != CompositingReason::kNone)
+        return true;
+    } else {
+      if (box_model.GetCompositingState() == kPaintsIntoOwnBacking)
+        return true;
+    }
+  }
 
   return false;
 }
@@ -392,7 +400,7 @@ IntPoint ApplyPaintOffsetTranslation(const LayoutObject& object,
 
 void FragmentPaintPropertyTreeBuilder::UpdateForPaintOffsetTranslation(
     Optional<IntPoint>& paint_offset_translation) {
-  if (!NeedsPaintOffsetTranslation(object_))
+  if (!NeedsPaintOffsetTranslation(object_, direct_compositing_reasons_))
     return;
 
   paint_offset_translation =
@@ -470,29 +478,6 @@ void FragmentPaintPropertyTreeBuilder::UpdateTransformForNonRootSVG() {
   }
 }
 
-static CompositingReasons CompositingReasonsForTransform(const LayoutBox& box) {
-  const ComputedStyle& style = box.StyleRef();
-  CompositingReasons compositing_reasons = CompositingReason::kNone;
-  if (CompositingReasonFinder::RequiresCompositingForTransform(box))
-    compositing_reasons |= CompositingReason::k3DTransform;
-
-  if (CompositingReasonFinder::RequiresCompositingForTransformAnimation(style))
-    compositing_reasons |= CompositingReason::kActiveTransformAnimation;
-
-  if (style.HasWillChangeCompositingHint() &&
-      !style.SubtreeWillChangeContents())
-    compositing_reasons |= CompositingReason::kWillChangeCompositingHint;
-
-  if (box.HasLayer() && box.Layer()->Has3DTransformedDescendant()) {
-    if (style.HasPerspective())
-      compositing_reasons |= CompositingReason::kPerspectiveWith3DDescendants;
-    if (style.UsedTransformStyle3D() == ETransformStyle3D::kPreserve3d)
-      compositing_reasons |= CompositingReason::kPreserve3DWith3DDescendants;
-  }
-
-  return compositing_reasons;
-}
-
 static FloatPoint3D TransformOrigin(const LayoutBox& box) {
   const ComputedStyle& style = box.StyleRef();
   // Transform origin has no effect without a transform or motion path.
@@ -505,11 +490,13 @@ static FloatPoint3D TransformOrigin(const LayoutBox& box) {
       style.TransformOriginZ());
 }
 
-static bool NeedsTransform(const LayoutObject& object) {
+static bool NeedsTransform(const LayoutObject& object,
+                           CompositingReasons direct_compositing_reasons) {
   if (!object.IsBox())
     return false;
   return object.StyleRef().HasTransform() || object.StyleRef().Preserves3D() ||
-         CompositingReasonsForTransform(ToLayoutBox(object)) !=
+         (direct_compositing_reasons &
+          CompositingReason::kDirectReasonsForTransformProperty) !=
              CompositingReason::kNone;
 }
 
@@ -528,11 +515,8 @@ void FragmentPaintPropertyTreeBuilder::UpdateTransform() {
     // direct compositing reason. The latter is required because this is the
     // only way to represent compositing both an element and its stacking
     // descendants.
-    if (NeedsTransform(object_)) {
+    if (NeedsTransform(object_, direct_compositing_reasons_)) {
       auto& box = ToLayoutBox(object_);
-
-      CompositingReasons compositing_reasons =
-          CompositingReasonsForTransform(box);
 
       TransformationMatrix matrix;
       style.ApplyTransform(
@@ -551,7 +535,9 @@ void FragmentPaintPropertyTreeBuilder::UpdateTransform() {
       auto result = properties_->UpdateTransform(
           context_.current.transform, matrix, TransformOrigin(box),
           context_.current.should_flatten_inherited_transform,
-          rendering_context_id, compositing_reasons,
+          rendering_context_id,
+          direct_compositing_reasons_ &
+              CompositingReason::kDirectReasonsForTransformProperty,
           CompositorElementIdFromUniqueObjectId(
               object_.UniqueId(), CompositorElementIdNamespace::kPrimary));
       full_context_.force_subtree_update |= result.NewNodeCreated();
@@ -678,15 +664,6 @@ void FragmentPaintPropertyTreeBuilder::UpdateEffect() {
     bool local_clip_added_or_removed = false;
     bool local_clip_changed = false;
     if (NeedsEffect(object_)) {
-      // We may begin to composite our subtree prior to an animation starts,
-      // but a compositor element ID is only needed when an animation is
-      // current.
-      CompositingReasons compositing_reasons = CompositingReason::kNone;
-      if (CompositingReasonFinder::RequiresCompositingForOpacityAnimation(
-              style)) {
-        compositing_reasons = CompositingReason::kActiveOpacityAnimation;
-      }
-
       IntRect mask_clip;
       ColorFilter mask_color_filter;
       bool has_mask = ComputeMaskParameters(
@@ -718,7 +695,9 @@ void FragmentPaintPropertyTreeBuilder::UpdateEffect() {
       auto result = properties_->UpdateEffect(
           context_.current_effect, context_.current.transform, output_clip,
           kColorFilterNone, CompositorFilterOperations(), style.Opacity(),
-          blend_mode, compositing_reasons,
+          blend_mode,
+          direct_compositing_reasons_ &
+              CompositingReason::kDirectReasonsForEffectProperty,
           CompositorElementIdFromUniqueObjectId(
               object_.UniqueId(), CompositorElementIdNamespace::kPrimary));
       full_context_.force_subtree_update |= result.NewNodeCreated();
@@ -760,7 +739,6 @@ static bool NeedsFilter(const LayoutObject& object) {
 
 void FragmentPaintPropertyTreeBuilder::UpdateFilter() {
   DCHECK(properties_);
-  const ComputedStyle& style = object_.StyleRef();
 
   if (object_.NeedsPaintPropertyUpdate() ||
       full_context_.force_subtree_update) {
@@ -796,21 +774,11 @@ void FragmentPaintPropertyTreeBuilder::UpdateFilter() {
       // TODO(trchen): A filter may contain spatial operations such that an
       // output pixel may depend on an input pixel outside of the output clip.
       // We should generate a special clip node to represent this expansion.
-
-      // We may begin to composite our subtree prior to an animation starts,
-      // but a compositor element ID is only needed when an animation is
-      // current.
-      CompositingReasons compositing_reasons =
-          CompositingReasonFinder::RequiresCompositingForFilterAnimation(style)
-              ? CompositingReason::kActiveFilterAnimation
-              : CompositingReason::kNone;
-      DCHECK(!style.HasCurrentFilterAnimation() ||
-             compositing_reasons != CompositingReason::kNone);
-
       auto result = properties_->UpdateFilter(
           context_.current_effect, context_.current.transform, output_clip,
           kColorFilterNone, std::move(filter), 1.f, SkBlendMode::kSrcOver,
-          compositing_reasons,
+          direct_compositing_reasons_ &
+              CompositingReason::kDirectReasonsForFilterProperty,
           CompositorElementIdFromUniqueObjectId(
               object_.UniqueId(), CompositorElementIdNamespace::kEffectFilter),
           FloatPoint(context_.current.paint_offset));
@@ -920,7 +888,8 @@ void FragmentPaintPropertyTreeBuilder::UpdateLocalBorderBoxContext() {
 
   auto* rare_paint_data = fragment_data_.GetRarePaintData();
 
-  if (!object_.HasLayer() && !NeedsPaintOffsetTranslation(object_)) {
+  if (!object_.HasLayer() &&
+      !NeedsPaintOffsetTranslation(object_, direct_compositing_reasons_)) {
     if (rare_paint_data)
       rare_paint_data->ClearLocalBorderBoxProperties();
   } else {
@@ -1580,7 +1549,8 @@ static const int kMaxNumFragments = 2000;
 
 void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
   bool needs_paint_properties =
-      NeedsPaintOffsetTranslation(object_) || NeedsTransform(object_) ||
+      NeedsPaintOffsetTranslation(object_, direct_compositing_reasons_) ||
+      NeedsTransform(object_, direct_compositing_reasons_) ||
       NeedsEffect(object_) || NeedsTransformForNonRootSVG(object_) ||
       NeedsFilter(object_) || NeedsCssClip(object_) ||
       NeedsInnerBorderRadiusClip(object_) || NeedsOverflowClip(object_) ||
@@ -1719,15 +1689,19 @@ void ObjectPaintPropertyTreeBuilder::UpdatePaintingLayer() {
 void ObjectPaintPropertyTreeBuilder::UpdateForSelf() {
   UpdatePaintingLayer();
 
-  if (ObjectTypeMightNeedPaintProperties(object_))
+  if (ObjectTypeMightNeedPaintProperties(object_)) {
+    direct_compositing_reasons_ =
+        CompositingReasonFinder::DirectReasonsForPaintProperties(object_);
     UpdateFragments();
-  else
+  } else {
     object_.GetMutableForPainting().FirstFragment().ClearNextFragment();
+  }
 
   auto* fragment_data = &object_.GetMutableForPainting().FirstFragment();
   for (auto& fragment_context : context_.fragments) {
     FragmentPaintPropertyTreeBuilder(object_, context_, fragment_context,
-                                     *fragment_data)
+                                     *fragment_data,
+                                     direct_compositing_reasons_)
         .UpdateForSelf();
     fragment_data = fragment_data->NextFragment();
   }
@@ -1741,7 +1715,8 @@ void ObjectPaintPropertyTreeBuilder::UpdateForChildren() {
   auto* fragment_data = &object_.GetMutableForPainting().FirstFragment();
   for (auto& fragment_context : context_.fragments) {
     FragmentPaintPropertyTreeBuilder(object_, context_, fragment_context,
-                                     *fragment_data)
+                                     *fragment_data,
+                                     direct_compositing_reasons_)
         .UpdateForChildren();
     context_.force_subtree_update |= object_.SubtreeNeedsPaintPropertyUpdate();
     fragment_data = fragment_data->NextFragment();

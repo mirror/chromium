@@ -35,6 +35,9 @@ class CORE_EXPORT CompositingReasonFinder {
 
   void UpdateTriggers();
 
+  static CompositingReasons DirectReasonsForPaintProperties(
+      const LayoutObject&);
+
   bool RequiresCompositingForScrollableFrame() const;
   static CompositingReasons CompositingReasonsForAnimation(
       const ComputedStyle&);
