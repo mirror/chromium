@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a89d30_3d0f47a7",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-07T13:59:56Z",
+      "side": 1,
+      "message": "nit: I would add \"with formatting values\"",
+      "range": {
+        "startLine": 798,
+        "startChar": 37,
+        "endLine": 798,
+        "endChar": 38
+      },
+      "revId": "ef8625044637f14a24d7ce5c4b725de8e7acca36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

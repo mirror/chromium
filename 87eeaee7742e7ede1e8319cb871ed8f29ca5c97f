@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4359ba3f_b96859af",
+        "filename": "chrome/renderer/autofill/form_autofill_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-07T13:59:56Z",
+      "side": 1,
+      "message": "Nit: Could you put this comment on line 1306/1307?",
+      "range": {
+        "startLine": 1316,
+        "startChar": 5,
+        "endLine": 1316,
+        "endChar": 73
+      },
+      "revId": "87eeaee7742e7ede1e8319cb871ed8f29ca5c97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
