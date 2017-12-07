@@ -22,6 +22,235 @@
       "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577f6a34_ec4fb603",
+        "filename": "third_party/WebKit/LayoutTests/vr/resources/mock-vr-service.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Very minor nit - use preincrement instead of postincrement? While the style guide doesn\u0027t require that for simple scalar values, I think it just saves a mental step to always use it, especially when the type isn\u0027t visible directly at the place where it\u0027s incremented.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d60b2c0f_bd5db063",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "This wait was intended to be done before capturing the frame in a mailbox, so it\u0027s not going to work as expected here. When using GpuFence to separate frames, the server wait needs to be inserted into the GL stream *before* any commands that complete a renderable frame. If it were inserted here, the GPU would be free to start working on the new frame before the previous one is done.",
+      "range": {
+        "startLine": 325,
+        "startChar": 51,
+        "endLine": 325,
+        "endChar": 52
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5523df_d54870b7",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "I think the changes would need to be even more general. For example, the AHardwareBuffer path I\u0027m working on is expected to draw directly into a mailbox texture provided at VSync. We should split this into a frame pre-draw setup (in OnPresentingVSync or equivalent) and frame snapshot/transport (in SubmitFrame).",
+      "range": {
+        "startLine": 329,
+        "startChar": 5,
+        "endLine": 330,
+        "endChar": 54
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7976bd93_bee73563",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "While this may be a bit out of scope for this CL, what\u0027s the semantic distinction between Exclusive vs NonExclusive here? For the code, an important distinction is if frames are supposed to be shown on the headset or not, and that seems more closely related to \"Presenting\" vs not-presenting. Is NonExclusive guaranteed to not be shown on a headset device?",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf39046b_eb7fb4b2",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Please move these to a shared header file if we\u0027re sharing the mojo transport and display code on the other end. Duplicating is just going to make things painful for future changes. Maybe modules/vr/common/frame_transport.h ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72af7211_889efd48",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Similar to above, I think this would be cleaner in a shared frame transport class that can be used as a member in both implementations.",
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43d486d_9e82645d",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Maybe a silly question, but is this really equivalent? glClear sets the color buffer to the configurable clear color. Do unwritten parts of a discarded buffer end up being the clear color (at the time of discard) when being read later?",
+      "range": {
+        "startLine": 351,
+        "startChar": 8,
+        "endLine": 351,
+        "endChar": 29
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a5f68d_b5c2d22a",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Is this context under exclusive control of this code? If not, it would need to save and restore the scissor area and maybe other state to ensure it\u0027s a full clear.",
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e473bf7_27968e15",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "Why? You\u0027re flushing below anyway, this seems redundant. In any case, I think this should at most be a ShallowFlushCHROMIUM.",
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c3745c_336c96db",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "ShallowFlushCHROMIUM please. Or just remove it, according to piman@ GenSyncTokenCHROMIUM does an automatic shallow flush if needed:\n\nhttps://chromium.googlesource.com/chromium/src/+/refs/changes/35/680135/71/docs/design/gpu_synchronization.md#Command-buffer-GL-clients_use-CHROMIUM-fence-sync",
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c6719c_44b03611",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLFramebuffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-07T17:55:53Z",
+      "side": 1,
+      "message": "What does HasChanged mean in this context? If it means that drawing operations were done, IsDirty would seem clearer. Or is it related to configuration changes?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
