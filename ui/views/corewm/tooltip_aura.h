@@ -16,6 +16,17 @@ class RenderText;
 class Size;
 }  // namespace gfx
 
+class TooltipAuraTestApi;
+
+
+namespace views {
+namespace corewm {
+class TooltipAura;
+}
+}
+
+VIEWS_EXPORT gfx::RenderText* GetRenderTextForTest3(views::corewm::TooltipAura*);
+
 namespace views {
 
 class Widget;
@@ -34,8 +45,7 @@ class VIEWS_EXPORT TooltipAura : public Tooltip, public WidgetObserver {
  private:
   class TooltipView;
 
-  friend class test::TooltipAuraTestApi;
-  gfx::RenderText* GetRenderTextForTest();
+ friend gfx::RenderText* ::GetRenderTextForTest3(views::corewm::TooltipAura*);
 
   // Adjusts the bounds given by the arguments to fit inside the desktop
   // and applies the adjusted bounds to the label_.

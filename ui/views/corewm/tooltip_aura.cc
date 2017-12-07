@@ -163,9 +163,9 @@ TooltipAura::~TooltipAura() {
   DestroyWidget();
 }
 
-gfx::RenderText* TooltipAura::GetRenderTextForTest() {
-  return tooltip_view_->render_text_for_test();
-}
+// gfx::RenderText* TooltipAura::GetRenderTextForTest2() {
+//   return tooltip_view_->render_text_for_test();
+// }
 
 void TooltipAura::SetTooltipBounds(const gfx::Point& mouse_pos,
                                    const gfx::Size& tooltip_size) {
@@ -251,3 +251,7 @@ void TooltipAura::OnWidgetDestroying(views::Widget* widget) {
 
 }  // namespace corewm
 }  // namespace views
+
+gfx::RenderText* GetRenderTextForTest3(views::corewm::TooltipAura* aura) {
+ return aura->tooltip_view_->render_text_for_test();
+}
