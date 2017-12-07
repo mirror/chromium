@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3a0d18_952558b5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-07T18:58:55Z",
+      "side": 1,
+      "message": "ShouldHasLayer be pushed into the HasReflection method? What about the other callsites of\nHasReflection()?",
+      "revId": "d8c1e18bcdc000708eb6586d40b078732a6073ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
