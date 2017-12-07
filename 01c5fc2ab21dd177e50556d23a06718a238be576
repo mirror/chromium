@@ -16,6 +16,24 @@
       "revId": "01c5fc2ab21dd177e50556d23a06718a238be576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4affcc59_ff709ce9",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-07T22:07:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ced0086e_9a42b1ec",
+      "revId": "01c5fc2ab21dd177e50556d23a06718a238be576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
