@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e50eb19_58bf6f9f",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T22:08:10Z",
+      "side": 1,
+      "message": "Nit: this probably doesn\u0027t need the null check (the remote frame version doesn\u0027t seem to bother?)",
+      "revId": "be5b8547a9ba3c08345b4d3b19e0d47d5f4786e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74dc1aca_7e44c392",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T22:08:10Z",
+      "side": 1,
+      "message": "Sorry for not noticing this earlier, but I\u0027m wondering why we need to have the local frame version: the current IPC code only replicates this bit to RenderFrameProxies, so this should be unused.",
+      "revId": "be5b8547a9ba3c08345b4d3b19e0d47d5f4786e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
