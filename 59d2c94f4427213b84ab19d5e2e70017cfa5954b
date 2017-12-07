@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93234912_956d6d23",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T19:05:21Z",
+      "side": 1,
+      "message": "Were you able to build MacViews and confirm that this works? Check with shrike@ if not.",
+      "revId": "59d2c94f4427213b84ab19d5e2e70017cfa5954b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
