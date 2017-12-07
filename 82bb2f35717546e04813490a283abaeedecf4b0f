@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3fd12274_ba082414",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T18:03:16Z",
+      "side": 1,
+      "message": "See base::GetFieldTrialParamValue() for getting parameters.\n\nI believe the utility for creating the JSON configuration strings has options to create them, but you just add:\n\n\"params\": {\n  \"name\" : \"value\",\n  \"name2\" : \"value2\",\n}\n\netc. inside an experiment group to set parameters for it.",
+      "parentUuid": "c5774a5e_703000fa",
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cab5ac1a_37a57494",
         "filename": "net/dns/dns_session.cc",
         "patchSetId": 6
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "My motivation for using DoH rather than say dns_over_https is that the honest DNS team has used \"DNS over HTTPS\" to refer to their JSON formatted host resolver.",
       "parentUuid": "cab5ac1a_37a57494",
+      "range": {
+        "startLine": 128,
+        "startChar": 9,
+        "endLine": 128,
+        "endChar": 16
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bda60db_98555efe",
+        "filename": "net/dns/dns_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T18:03:16Z",
+      "side": 1,
+      "message": "I don\u0027t think \"doh\" adds any clarity there.  raw_dns_over_http?",
+      "parentUuid": "031a577f_0b349a51",
       "range": {
         "startLine": 128,
         "startChar": 9,
@@ -269,6 +311,30 @@
       "side": 1,
       "message": "We want the ability for this to be a hostname and to fallback to other resolution methods to resolve that hostname.",
       "parentUuid": "8246163e_4afa9290",
+      "range": {
+        "startLine": 316,
+        "startChar": 21,
+        "endLine": 316,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8adcd30_3e291a9c",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T18:03:16Z",
+      "side": 1,
+      "message": "What protects us from trying to resolve hostname for the HTTP server, and then when trying to resolve that hostname, recursively calling into this code against to resolve it, ad infinitum?",
+      "parentUuid": "67ce27be_c0c5cc5b",
       "range": {
         "startLine": 316,
         "startChar": 21,
