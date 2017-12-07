@@ -195,7 +195,8 @@
         </div>
         <div class="section continuation control-line" id="enable-section">
           <span class$="{{computeEnabledStyle_(data.state)}}">
-            [[computeEnabledText_(data.state)]]
+            [[computeEnabledText_(data.state, '$i18nPolymer{itemOn}',
+                '$i18nPolymer{itemOff}')]]
           </span>
           <div class="layout horizontal">
             <cr-tooltip-icon hidden$="[[!data.controlledInfo]]"
