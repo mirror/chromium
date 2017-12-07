@@ -5,55 +5,41 @@
 <title>multicolumn | column-width</title>
 <link rel="author" title="Opera Software ASA" href="http://www.opera.com/"/>
 <style type="text/css"><![CDATA[
-body {
-	margin: 0;
-	width: 40em;
+.multicol-ref {
+  display: flow-root;
+  width: 65ch;
+  font: 1em monospace;
+  background: yellow;
 }
-div {
-	font-family: monospace;
-	font-size: 1em;
-	line-height: 1em;
-	color: black;
-	background: yellow;
-	orphans: 1;
-	widows: 1;
-}
-span {
-	float: left;
-	width: 8em;
-}
-div::after {
-	content: "";
-	clear: both;
-	display: block;
+.multicol-ref > span {
+  float: left;
+  width: 13ch;
 }
 ]]></style>
 </head>
 
 <body>
-
-<div>
-<span>
-	one two three four
-	five six seven eight
-</span>
-<span>
-	nineten eleven twelve
-	thirtn
-</span>
-<span>
-	fourtnfiftn sixtn
-	seventn eightn
-</span>
-<span>
-	ninetn twenty
-	hundred thousand
-</span>
-<span>
-	million billion
-	trillion
-</span>
-</div>
-
+  <div class="multicol-ref">
+    <span>
+      one two three four
+      five six seven eight
+    </span>
+    <span>
+      nineten eleven twelve
+      thirtn
+    </span>
+    <span>
+      fourtnfiftn sixtn
+      seventn eightn ninetn
+    </span>
+    <span>
+      twenty
+      hundred thousand
+    </span>
+    <span>
+      million billion
+      trillion
+    </span>
+  </div>
 </body>
 </html>
