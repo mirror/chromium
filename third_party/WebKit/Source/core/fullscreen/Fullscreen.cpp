@@ -901,6 +901,11 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
     }
   }
 
+  // Any element not contained by the fullscreen element is inert (see
+  // |Node::IsInert()|), so changing the fullscreen element will typically
+  // change the inertness of most elements. Clear the entire cache.
+  GetDocument()->ClearAXObjectCache();
+
   // TODO(foolip): This should not call |UpdateStyleAndLayoutTree()|.
   GetDocument()->UpdateStyleAndLayoutTree();
 }
