@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5f458b0_d1328a70",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Updating values here to prevent duplicate calling Close(true). e.g. Internal display is connected with two external displays. We turn off mirror mode, Close(true) is called. Then we disconnect a display, we will call Close(true) again if we do not update the values here.",
+      "parentUuid": "60367b8b_ad7044a1",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T23:10:50Z",
       "side": 1,
       "message": "It\u0027s odd to call the display manager back from the method that is called by display manager.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80140f48_001ddc42",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "I would make the function private and call it inside DisplayManager.",
+      "parentUuid": "5d902c15_368bd4db",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "06a93f73_abcb29c4",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Running on device and linux build have different code path. If we use SetSoftwareMirroring(true), for the linux build, the \"#if defined(OS_CHROMEOS)\" part in DisplayManager::OnNativeDisplaysChanged will be execute to override the mirror mode we just set.",
+      "parentUuid": "f1d20d99_0714b6a8",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06212b11_382e27c7",
         "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "39cf6e14_2e1300c4",
+        "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06212b11_382e27c7",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48f3cdd0_39e077b4",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-06T23:10:50Z",
       "side": 1,
       "message": "can you store mirror state as a part of display property?\nI also think you\u0027ll need to store as \"mixed_mirror\" to distinguish from mirror later.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59c5966_80472df2",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "I tried, but I could not, because ManagedDisplayInfo is update everytime display configuration changes. e.g. We have Internal display I and external A. Then we turn on mirror mode. So we update ManagedDisplayInfo.mirrored to true for A. Then we close lid, we only have one display left, so we don\u0027t want to update ManagedDisplayInfo.mirrored, but the ManagedDisplayInfo will still be updated in DisplayManager so that the stored mirrored is lost.",
+      "parentUuid": "48f3cdd0_39e077b4",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "96ea08ac_c90c10e1",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5d8dca_156a6174",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c1f859d_f2f4f0d8",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 8
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ded024c0_d2e21821",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c1f859d_f2f4f0d8",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0a4d63_5fd32456",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-06T23:10:50Z",
       "side": 1,
       "message": "why this was necessary?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa40b952_982fcb58",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "We only store mirror mode for external display, so we should set internal display before adding displays.",
+      "parentUuid": "cf0a4d63_5fd32456",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "06624f8f_03410b95",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951b453e_acce6024",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e5a98d_fbfadfab",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 8
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-06T23:10:50Z",
       "side": 1,
       "message": "can  you add comment why this needs to be set first?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e4ed8a_fd9beddb",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "I would move back to original place, as it also works there.",
+      "parentUuid": "e8e5a98d_fbfadfab",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1e3c868f_70112167",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Currently, I connect display A to usb-c port 1 of eve and turn on mirror mode. Then disconnect and reconnect A to usb-c port 2, it restores mirror mode. It seems using id also works?",
+      "parentUuid": "859ff729_855d618a",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "811c607a_ea33fa25",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 8
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "1ecb56d8_adeb6c23",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "Yes we could.",
+      "parentUuid": "811c607a_ea33fa25",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5809382_4d1e4f39",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 8
@@ -217,6 +433,24 @@
       "writtenOn": "2017-12-06T23:10:50Z",
       "side": 1,
       "message": "why we need off and not set? Should they be the same?",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1ae028_c434ef20",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-07T09:11:04Z",
+      "side": 1,
+      "message": "for NotSet, then we set mirror mode based on the preference (This happens at boot up and reconnect a display). For MirrorOff or MirrorOn, we continue the off/on state as long as we have more than 1 displays (This happens when add or remove a display).",
+      "parentUuid": "b5809382_4d1e4f39",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
