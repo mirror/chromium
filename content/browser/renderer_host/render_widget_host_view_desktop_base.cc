@@ -25,6 +25,11 @@ void RenderWidgetHostViewDesktopBase::Hide() {
     WasHidden();
 }
 
+void RenderWidgetHostViewDesktopBase::ForceShow() {
+  Show();
+  WasShown();
+}
+
 void RenderWidgetHostViewDesktopBase::VisibilityChanged() {
   VisibilityOrCaptureStateChanged();
 }

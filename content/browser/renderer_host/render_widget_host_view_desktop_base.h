@@ -20,6 +20,7 @@ class CONTENT_EXPORT RenderWidgetHostViewDesktopBase
 
   // RenderWidgetHostViewDesktopBase:
   void Hide() final;
+  void ForceShow() final;
 
   // Implementations must call this when the visibility of the view changes.
   // Calls WasShown()/WasHidden() depending on the visibility and capture state

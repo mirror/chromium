@@ -118,6 +118,9 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual void Show() = 0;
   virtual void Hide() = 0;
 
+  // Forces the view to act like if it was visible, even if it's not.
+  virtual void ForceShow() = 0;
+
   // DEPRECATED. Use GetVisibility() instead.
   // TODO(fdoray): Remove this. https://crbug.com/668690
   virtual bool IsShowing() = 0;
