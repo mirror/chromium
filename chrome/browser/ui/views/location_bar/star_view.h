@@ -10,13 +10,13 @@
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 
 class Browser;
-class CommandUpdater;
+class CommandUpdaterProxy;
 class WidgetObserver;
 
 // The star icon to show a bookmark bubble.
 class StarView : public BubbleIconView {
  public:
-  StarView(CommandUpdater* command_updater, Browser* browser);
+  StarView(CommandUpdaterProxy* command_updater_proxy, Browser* browser);
   ~StarView() override;
 
   // Toggles the star on or off.

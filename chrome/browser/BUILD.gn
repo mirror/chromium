@@ -261,6 +261,7 @@ split_static_library("browser") {
     "command_updater.cc",
     "command_updater.h",
     "command_updater_delegate.h",
+    "command_updater_proxy.h",
     "component_updater/chrome_component_updater_configurator.cc",
     "component_updater/chrome_component_updater_configurator.h",
     "component_updater/component_updater_prefs.cc",

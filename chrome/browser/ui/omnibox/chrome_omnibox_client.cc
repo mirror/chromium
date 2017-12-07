@@ -20,7 +20,7 @@
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service_factory.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/bookmarks/bookmark_stats.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/net/predictor.h"
@@ -166,7 +166,8 @@ bool ChromeOmniboxClient::IsLoading() const {
 }
 
 bool ChromeOmniboxClient::IsPasteAndGoEnabled() const {
-  return controller_->command_updater()->IsCommandEnabled(IDC_OPEN_CURRENT_URL);
+  return controller_->command_updater_proxy()->IsCommandEnabled(
+      IDC_OPEN_CURRENT_URL);
 }
 
 bool ChromeOmniboxClient::IsNewTabPage(const GURL& url) const {
