@@ -41,7 +41,6 @@
 
 namespace blink {
 
-class WebCredentialManagerClient;
 class WebFrame;
 class WebHitTestResult;
 class WebLocalFrame;
@@ -115,7 +114,6 @@ class WebView : protected WebWidget {
                                       WebView* opener);
 
   // Initializes the various client interfaces.
-  virtual void SetCredentialManagerClient(WebCredentialManagerClient*) = 0;
   virtual void SetPrerendererClient(WebPrerendererClient*) = 0;
 
   // Options -------------------------------------------------------------

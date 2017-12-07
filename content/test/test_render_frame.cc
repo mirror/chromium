@@ -223,7 +223,7 @@ mojom::FrameHost* TestRenderFrame::GetFrameHost() {
   //   2.1.) Mojo sync request sent
   //   2.2.) Waiting for sync response while dispatching incoming sync requests
   //
-  // Normally the sync Mojo request would be processed in 2.2. However, the
+  // Normally the sync Mojo request wo  uld be processed in 2.2. However, the
   // implementation is not yet bound at that point, and will never be, because
   // only sync IPCs are dispatched by 2.2, not posted tasks. So the sync request
   // is never dispatched, the response never arrives.
