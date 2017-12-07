@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be076382_6e7db089",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T18:54:03Z",
+      "side": 1,
+      "message": "without this call the favicon will not get written into aura::client::kWindowIcon",
+      "parentUuid": "426e47a4_7edf3c21",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab2a87_eda128bd",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T18:08:59Z",
       "side": 1,
       "message": "This change effects all platforms.",
+      "range": {
+        "startLine": 1687,
+        "startChar": 2,
+        "endLine": 1690,
+        "endChar": 3
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c426720_c155c05c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1690,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T18:54:03Z",
+      "side": 1,
+      "message": "changed to cros only",
+      "parentUuid": "16ab2a87_eda128bd",
       "range": {
         "startLine": 1687,
         "startChar": 2,
