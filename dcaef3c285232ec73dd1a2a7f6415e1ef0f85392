@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c58a1d8_e927fa79",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-12-07T08:13:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f91a72f5_85fcf473",
+      "revId": "dcaef3c285232ec73dd1a2a7f6415e1ef0f85392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf11b47_f873a7d6",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "dcaef3c285232ec73dd1a2a7f6415e1ef0f85392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732ec28f_762294eb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1126984
+      },
+      "writtenOn": "2017-12-07T08:13:11Z",
+      "side": 1,
+      "message": "I\u0027ve add test case for \u003chr\u003e with separator.\nWe got expected results as below even if that a set to kExpandedUndefined.\n\n----------------------------\n[       OK ] DumpAccessibilityTreeTest.AccessibilityAriaExpanded (18449 ms)\n[----------] 1 test from DumpAccessibilityTreeTest (18449 ms total)\n\n[----------] Global test environment tear-down\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 1 test from 1 test case ran. (18449 ms total)\n[  PASSED  ] 1 test.\n----------------------------",
+      "parentUuid": "3cf11b47_f873a7d6",
+      "revId": "dcaef3c285232ec73dd1a2a7f6415e1ef0f85392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
