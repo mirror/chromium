@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06299bc3_271a2643",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T23:56:14Z",
+      "side": 1,
+      "message": "Can you elaborate on why this code takes a callback instead of returning a boolean status? I could see a callback if this function was async, but it isn\u0027t, the result is known immediately.",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 75
+      },
+      "revId": "b92512f05cd69a6886adfa852ec5343adc59175f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
