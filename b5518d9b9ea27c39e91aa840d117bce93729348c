@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "737a9450_bcc4f660",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "nit: braces",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7700d91_343a3b79",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "Design question - we don\u0027t differentiate between timeouts and all subframes rendered. Would that result in potentially missing content. i.e. Computer with very slow (and/or busy) CPU and a very complicated print job.",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67016c24_00ddd4d3",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "You can initialize |composited| in the header where it\u0027s declared. Since it\u0027s initial value doesn\u0027t depend on any of the ctor params.",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23e535b_8e6d7416",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "This is the frame ID, right? Add a comment?",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3105d1fb_4cb5e6f8",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "std::make_unique, also line 30.",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38027947_cb7e6b1a",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "|status_| needs to become |is_ready_| here as well.",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dd4b68_df55ee9e",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "Use a base::TimeDelta, and don\u0027t bother with the default argument. Just pass it in on line 60.",
+      "range": {
+        "startLine": 45,
+        "startChar": 40,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f803e35c_10f06db3",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "Not called.",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5b240a_12eda440",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:42:34Z",
+      "side": 1,
+      "message": "This should be signed, since it\u0027s a frame id.",
+      "range": {
+        "startLine": 64,
+        "startChar": 22,
+        "endLine": 64,
+        "endChar": 24
+      },
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
