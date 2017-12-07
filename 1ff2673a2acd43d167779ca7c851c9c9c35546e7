@@ -46,6 +46,30 @@
       "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57775359_b63047fd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 69619,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:24:34Z",
+      "side": 1,
+      "message": "Oh, sorry!  By \"document when this is recorded\", I meant: Please document what event in Chrome triggers the recording of this metric.  For the other metric you\u0027re adding, you listed \"Recorded for each 1000 ms window.\"  Is this one the same?",
+      "parentUuid": "29684cd5_4b7b2633",
+      "range": {
+        "startLine": 69619,
+        "startChar": 20,
+        "endLine": 69619,
+        "endChar": 75
+      },
+      "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
