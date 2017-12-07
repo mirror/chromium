@@ -368,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "397c0abb_d560ec08",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-07T21:09:30Z",
+      "side": 1,
+      "message": "That\u0027s an interesting point, thanks for the link!\n \nWe could have |shutdownForTesting| CHECK that metricsTaskMap is empty, would that be better?",
+      "parentUuid": "9017f35b_37f3f4fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de3d1ed3_601aeb6e",
         "filename": "ios/net/crn_http_protocol_handler.h",
         "patchSetId": 44
