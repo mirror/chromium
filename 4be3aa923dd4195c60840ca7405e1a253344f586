@@ -22,6 +22,30 @@
       "revId": "4be3aa923dd4195c60840ca7405e1a253344f586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb882bb6_e0a65d5d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T17:22:56Z",
+      "side": 1,
+      "message": "Done.\n\nDidn\u0027t realize that \"sparse histograms\" could have enums. The documentation (tools/metrics/histograms/README.md) made it sound like an either/or.",
+      "parentUuid": "e561bbfa_a2228da1",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 61
+      },
+      "revId": "4be3aa923dd4195c60840ca7405e1a253344f586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
