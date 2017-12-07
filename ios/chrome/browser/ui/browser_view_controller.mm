@@ -744,9 +744,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // Returns the view to use when animating a page in or out, positioning it to
 // fill the content area but not actually adding it to the view hierarchy.
 - (UIImageView*)pageOpenCloseAnimationView;
-// Returns the view to use when animating full screen NTP paper in, filling the
-// entire screen but not actually adding it to the view hierarchy.
-- (UIImageView*)pageFullScreenOpenCloseAnimationView;
 // Updates the toolbar display based on the current tab.
 - (void)updateToolbar;
 // Starts or stops broadcasting the toolbar UI and main content UI depending on
@@ -1721,24 +1718,26 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     UIView* animationParentView = _contentArea;
     // Create the new page image, and load with the new tab page snapshot.
     CGFloat newPageOffset = 0;
-    UIImageView* newPage;
+    UIView* newPage;
     if (tab.webState->GetLastCommittedURL() == kChromeUINewTabURL &&
         !_isOffTheRecord && !IsIPadIdiom()) {
       animationParentView = self.view;
-      newPage = [self pageFullScreenOpenCloseAnimationView];
+      newPage = tab.view;
+      CGRect viewBounds, remainder;
+      CGRectDivide(self.view.bounds, &remainder, &viewBounds, StatusBarHeight(),
+                   CGRectMinYEdge);
+      newPage.frame = viewBounds;
     } else {
       newPage = [self pageOpenCloseAnimationView];
     }
     newPageOffset = newPage.frame.origin.y;
 
-    [tab view].frame = _contentArea.bounds;
-    newPage.image = [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
     [animationParentView addSubview:newPage];
+
     CGPoint origin = [self lastTapPoint];
     page_animation_util::AnimateInPaperWithAnimationAndCompletion(
-        newPage, -newPageOffset,
-        newPage.frame.size.height - newPage.image.size.height, origin,
-        _isOffTheRecord, NULL, ^{
+        newPage, -newPageOffset, 0, origin, _isOffTheRecord, NULL, ^{
+          [tab view].frame = _contentArea.bounds;
           [newPage removeFromSuperview];
           self.inNewTabAnimation = NO;
           // Use the model's currentTab here because it is possible that it can
@@ -2461,13 +2460,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)expectNewForegroundTab {
   _expectingForegroundTab = YES;
-}
-
-- (UIImageView*)pageFullScreenOpenCloseAnimationView {
-  CGRect viewBounds, remainder;
-  CGRectDivide(self.view.bounds, &remainder, &viewBounds, StatusBarHeight(),
-               CGRectMinYEdge);
-  return [[UIImageView alloc] initWithFrame:viewBounds];
 }
 
 - (UIImageView*)pageOpenCloseAnimationView {
