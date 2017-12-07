@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9a186e9f_a1b250f6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T23:05:37Z",
+      "side": 1,
+      "message": "Yeah, I realize that it\u0027s not very well known what exactly enums.xml does.  I\u0027ve tried to clarify a bit in the docs: https://chromium-review.googlesource.com/c/chromium/src/+/815543 – thanks for reminding me!",
+      "parentUuid": "6788ebcd_a02571d9",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 19
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429e417c_0afe6bd7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
