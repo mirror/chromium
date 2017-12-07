@@ -14,7 +14,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/app/chrome_command_ids.h"
 #import "chrome/browser/app_controller_mac.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
@@ -89,24 +89,26 @@ const SkColor kMaterialDarkVectorIconColor = SK_ColorWHITE;
 // TODO(shess): This code is mostly copied from the gtk
 // implementation.  Make sure it's all appropriate and flesh it out.
 
-LocationBarViewMac::LocationBarViewMac(AutocompleteTextField* field,
-                                       CommandUpdater* command_updater,
-                                       Profile* profile,
-                                       Browser* browser)
+LocationBarViewMac::LocationBarViewMac(
+    AutocompleteTextField* field,
+    CommandUpdaterProxy* command_updater_proxy,
+    Profile* profile,
+    Browser* browser)
     : LocationBar(profile),
-      ChromeOmniboxEditController(command_updater),
-      omnibox_view_(new OmniboxViewMac(this, profile, command_updater, field)),
+      ChromeOmniboxEditController(command_updater_proxy),
+      omnibox_view_(
+          new OmniboxViewMac(this, profile, command_updater_proxy, field)),
       field_(field),
       selected_keyword_decoration_(new SelectedKeywordDecoration()),
       page_info_decoration_(new PageInfoBubbleDecoration(this)),
       save_credit_card_decoration_(
-          new SaveCreditCardDecoration(command_updater)),
-      star_decoration_(new StarDecoration(command_updater)),
-      translate_decoration_(new TranslateDecoration(command_updater)),
+          new SaveCreditCardDecoration(command_updater_proxy)),
+      star_decoration_(new StarDecoration(command_updater_proxy)),
+      translate_decoration_(new TranslateDecoration(command_updater_proxy)),
       zoom_decoration_(new ZoomDecoration(this)),
       keyword_hint_decoration_(new KeywordHintDecoration()),
       manage_passwords_decoration_(
-          new ManagePasswordsDecoration(command_updater, this)),
+          new ManagePasswordsDecoration(command_updater_proxy, this)),
       browser_(browser),
       location_bar_visible_(true),
       is_width_available_for_security_verbose_(false),
@@ -192,8 +194,8 @@ void LocationBarViewMac::UpdateSaveCreditCardIcon() {
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents);
   bool enabled = controller && controller->IsIconVisible();
-  command_updater()->UpdateCommandEnabled(IDC_SAVE_CREDIT_CARD_FOR_PAGE,
-                                          enabled);
+  command_updater_proxy()->UpdateCommandEnabled(IDC_SAVE_CREDIT_CARD_FOR_PAGE,
+                                                enabled);
   save_credit_card_decoration_->SetIcon(IsLocationBarDark());
   save_credit_card_decoration_->SetVisible(enabled);
   OnDecorationsChanged();
@@ -626,7 +628,7 @@ void LocationBarViewMac::UpdateTranslateDecoration() {
   translate::LanguageState& language_state =
       ChromeTranslateClient::FromWebContents(web_contents)->GetLanguageState();
   bool enabled = language_state.translate_enabled();
-  command_updater()->UpdateCommandEnabled(IDC_TRANSLATE_PAGE, enabled);
+  command_updater_proxy()->UpdateCommandEnabled(IDC_TRANSLATE_PAGE, enabled);
   translate_decoration_->SetVisible(enabled);
   translate_decoration_->SetLit(language_state.IsPageTranslated(),
                                 IsLocationBarDark());

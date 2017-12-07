@@ -8,13 +8,13 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 // The location bar icon to show the Translate bubble where the user can have
 // the page translated.
 class TranslateIconView : public BubbleIconView {
  public:
-  explicit TranslateIconView(CommandUpdater* command_updater);
+  explicit TranslateIconView(CommandUpdaterProxy* command_updater_proxy);
   ~TranslateIconView() override;
 
  protected:

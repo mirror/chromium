@@ -10,7 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
@@ -38,9 +38,10 @@ const int kReloadMenuItems[]  = {
 // static
 const char ReloadButton::kViewClassName[] = "ReloadButton";
 
-ReloadButton::ReloadButton(Profile* profile, CommandUpdater* command_updater)
+ReloadButton::ReloadButton(Profile* profile,
+                           CommandUpdaterProxy* command_updater_proxy)
     : ToolbarButton(profile, this, CreateMenuModel()),
-      command_updater_(command_updater),
+      command_updater_proxy_(command_updater_proxy),
       intended_mode_(MODE_RELOAD),
       visible_mode_(MODE_RELOAD),
       double_click_timer_delay_(
@@ -132,8 +133,8 @@ void ReloadButton::ButtonPressed(views::Button* /* button */,
   ClearPendingMenu();
 
   if (visible_mode_ == MODE_STOP) {
-    if (command_updater_)
-      command_updater_->ExecuteCommandWithDisposition(
+    if (command_updater_proxy_)
+      command_updater_proxy_->ExecuteCommandWithDispositionProxy(
           IDC_STOP, WindowOpenDisposition::CURRENT_TAB);
     // The user has clicked, so we can feel free to update the button, even if
     // the mouse is still hovering.
@@ -220,9 +221,9 @@ ui::SimpleMenuModel* ReloadButton::CreateMenuModel() {
 }
 
 void ReloadButton::ExecuteBrowserCommand(int command, int event_flags) {
-  if (!command_updater_)
+  if (!command_updater_proxy_)
     return;
-  command_updater_->ExecuteCommandWithDisposition(
+  command_updater_proxy_->ExecuteCommandWithDispositionProxy(
       command, ui::DispositionFromEventFlags(event_flags));
 }
 

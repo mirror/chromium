@@ -16,9 +16,9 @@
 
 namespace autofill {
 
-SaveCardIconView::SaveCardIconView(CommandUpdater* command_updater,
+SaveCardIconView::SaveCardIconView(CommandUpdaterProxy* command_updater_proxy,
                                    Browser* browser)
-    : BubbleIconView(command_updater, IDC_SAVE_CREDIT_CARD_FOR_PAGE),
+    : BubbleIconView(command_updater_proxy, IDC_SAVE_CREDIT_CARD_FOR_PAGE),
       browser_(browser) {
   set_id(VIEW_ID_SAVE_CREDIT_CARD_BUTTON);
   SetTooltipText(l10n_util::GetStringUTF16(IDS_TOOLTIP_SAVE_CREDIT_CARD));

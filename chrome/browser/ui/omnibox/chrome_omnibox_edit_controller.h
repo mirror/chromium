@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "components/omnibox/browser/omnibox_edit_controller.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 namespace content {
 class WebContents;
@@ -32,15 +32,20 @@ class ChromeOmniboxEditController : public OmniboxEditController {
   // tab state.
   virtual void UpdateWithoutTabRestore() = 0;
 
-  CommandUpdater* command_updater() { return command_updater_; }
-  const CommandUpdater* command_updater() const { return command_updater_; }
+  CommandUpdaterProxy* command_updater_proxy() {
+    return command_updater_proxy_;
+  }
+  const CommandUpdaterProxy* command_updater_proxy() const {
+    return command_updater_proxy_;
+  }
 
  protected:
-  explicit ChromeOmniboxEditController(CommandUpdater* command_updater);
+  explicit ChromeOmniboxEditController(
+      CommandUpdaterProxy* command_updater_proxy);
   ~ChromeOmniboxEditController() override;
 
  private:
-  CommandUpdater* const command_updater_;
+  CommandUpdaterProxy* const command_updater_proxy_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOmniboxEditController);
 };

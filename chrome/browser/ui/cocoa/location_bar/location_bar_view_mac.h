@@ -22,7 +22,7 @@
 #include "components/zoom/zoom_event_manager_observer.h"
 
 @class AutocompleteTextField;
-class CommandUpdater;
+class CommandUpdaterProxy;
 class ContentSettingDecoration;
 class KeywordHintDecoration;
 class LocationBarDecoration;
@@ -60,7 +60,7 @@ class LocationBarViewMac : public LocationBar,
                            public zoom::ZoomEventManagerObserver {
  public:
   LocationBarViewMac(AutocompleteTextField* field,
-                     CommandUpdater* command_updater,
+                     CommandUpdaterProxy* command_updater_proxy,
                      Profile* profile,
                      Browser* browser);
   ~LocationBarViewMac() override;

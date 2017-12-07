@@ -12,13 +12,13 @@
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "ui/views/controls/image_view.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 // View for the password icon in the Omnibox.
 class ManagePasswordsIconViews : public ManagePasswordsIconView,
                                  public BubbleIconView {
  public:
-  explicit ManagePasswordsIconViews(CommandUpdater* updater);
+  explicit ManagePasswordsIconViews(CommandUpdaterProxy* command_updater_proxy);
   ~ManagePasswordsIconViews() override;
 
   // ManagePasswordsIconView:
