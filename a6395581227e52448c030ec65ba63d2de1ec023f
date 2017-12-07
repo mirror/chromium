@@ -52,6 +52,24 @@
       "revId": "a6395581227e52448c030ec65ba63d2de1ec023f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb61170_25a1d752",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-12-07T06:05:50Z",
+      "side": 1,
+      "message": "\u003e First, is VP9Picture supposed to only exist and be used on the decoder thread? If not, it absolutely cannot be RefCounted since the ref-counting is not atomic in the non-ThreadSafe variant! (Meaning, passing ref-counted objects across threads, even if you don\u0027t use them, will modify the internal ref-count and the increment/decrement must be made thread-safe.)\n\nI also lack a complete understanding of this code, but this does not seem to happen here (all VP9Picture references are accessed by the decoder thread solely). On the other hand I noticed that VaapiVideoDecodeAccelerator::SurfaceReady() does pass a scoped_refptr\u003cVaapiDecodeSurface\u003e from the decoder to the main thread, which may introduce some concurrency issues?\n\n\u003e Another approach to consider: Instead of deleting the decoders on the decoder thread, could you explicitly delete them just after the decoder_thread_.Stop() call? That would mean the decoder is deleted on the main thread, but since the decoder thread was Stop()\u0027ed, you know there are no outstanding operations in-progress, so it should be safe. If VP9Pictures or other resources need to be deleted beforehand, you could post a task to the decoder thread to do that just before the decoder_thread_.Stop() call.\n\nIIUC that would still trigger the DCHECK since the reference count would be decremented in the wrong thread.",
+      "parentUuid": "3493bdcd_e046842f",
+      "revId": "a6395581227e52448c030ec65ba63d2de1ec023f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
