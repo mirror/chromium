@@ -52,6 +52,24 @@
       "revId": "d8c1e18bcdc000708eb6586d40b078732a6073ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa3f0c2_65717214",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-07T21:16:09Z",
+      "side": 1,
+      "message": "Added the following code in LayoutBox::StyleDidChange:\n\n// Reflection works through PaintLayer. Some child classes e.g.\n// LayoutSVGBlock don\u0027t create layers and ignore reflections.\nif (HasReflection() \u0026\u0026 !HasLayer())\n  SetHasReflection(false);\n\nWe can\u0027t let HasReflection() depends on LayerTypeRequired() because that will cause circular dependency.",
+      "parentUuid": "223a177c_990adb42",
+      "revId": "d8c1e18bcdc000708eb6586d40b078732a6073ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
