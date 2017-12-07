@@ -152,6 +152,9 @@ class StructTraits<printing::mojom::PWGRasterSettingsDataView,
   static bool reverse_page_order(const printing::PwgRasterSettings& settings) {
     return settings.reverse_page_order;
   }
+  static bool use_color(const printing::PwgRasterSettings& settings) {
+    return settings.use_color;
+  }
   static printing::PwgRasterTransformType odd_page_transform(
       const printing::PwgRasterSettings& settings) {
     return settings.odd_page_transform;
