@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248fd04b_fd418bfd",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-07T19:12:30Z",
+      "side": 1,
+      "message": "Note, this block is moving because the element is now differently-parented.",
+      "revId": "74dc862f0944d2e0b67b4d9b85efd38d34188a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
