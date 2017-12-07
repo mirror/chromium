@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "094b8411_4907d7dd",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T23:40:13Z",
+      "side": 1,
+      "message": "Where do you propose to clear them? |start| is asynchronous method, so we can\u0027t clear them in delegate callback. Clearing in |start| would be incorrect, because start did not set them. I think it\u0027s an existing pattern to hold the properties for the lifetime of the BVC.",
+      "parentUuid": "9d43e9d7_aa07809c",
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46eaa9d7_2147104d",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 6
