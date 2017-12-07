@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6dfd334a_3c500ec7",
+        "filename": "chrome/browser/chromeos/printing/external_printers_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-07T02:15:13Z",
+      "side": 1,
+      "message": "I left ownership with ExternalPrintersFactory since ChromeUserManagerImpl will need it first.  However, I\u0027m no longer retaining the reference which I hope will alleviate some concerns.\n\nI tried refactoring the class to perform callbacks in SyncedPrintersManager but I\u0027d like to avoid adding more code to that class (it\u0027s large enough already).  I\u0027ve tweaked the structure to make the relationship clearer (hopefully).\n\nI\u0027ve also renamed the class.  It observes preferences, not printers.",
+      "parentUuid": "9bf582c5_7aaa65a6",
+      "revId": "04f11feb086ba5a044f107b5171ff796c9139d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07f41db_768c21b2",
         "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
         "patchSetId": 2
