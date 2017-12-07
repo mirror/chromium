@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616c3d0c_dbdbdf7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-07T19:32:31Z",
+      "side": 1,
+      "message": "This is usually called by the Widget lifecycle\u0027s _processWasShown().\n\nConsole is unique because it can be shown as a drawer and as a panel.  Calling viewport.refresh() can change scrollHeight, so ideally it should happen before restoring scroll position.",
+      "range": {
+        "startLine": 360,
+        "startChar": 9,
+        "endLine": 360,
+        "endChar": 31
+      },
+      "revId": "2b72068f4d961cc2ac182680d4e63269869776c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc1a965_15934d99",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-07T19:32:31Z",
+      "side": 1,
+      "message": "When the Console is hidden (e.g. switching to another panel), it is technically scrolled to bottom.\n\nThis check ensures that clicking on a Console link can open another panel without altering Console\u0027s stickToBottom state.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 10,
+        "endLine": 1137,
+        "endChar": 26
+      },
+      "revId": "2b72068f4d961cc2ac182680d4e63269869776c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
