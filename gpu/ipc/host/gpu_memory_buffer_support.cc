@@ -37,6 +37,8 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
 
 #if defined(USE_OZONE) || defined(OS_MACOSX) || defined(OS_WIN) || \
     defined(OS_ANDROID)
+  // TODO(dcastagna): Determine supported formats on CrOS at runtime by querying
+  // minigbm. https://crbug.com/646148
   if (AreNativeGpuMemoryBuffersEnabled()) {
     const gfx::BufferFormat kNativeFormats[] = {
         gfx::BufferFormat::R_8,       gfx::BufferFormat::RG_88,
