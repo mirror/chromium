@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5369c730_8d83d3fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-07T22:01:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa8a133f_50b72048",
+      "range": {
+        "startLine": 159,
+        "startChar": 51,
+        "endLine": 159,
+        "endChar": 69
+      },
+      "revId": "4a7f7c9f728c6cf25f544c1a4286438cd9cd80fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a02d024_f7ebdaa7",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "4a7f7c9f728c6cf25f544c1a4286438cd9cd80fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fcb45f6_2429c70a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-07T22:01:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a02d024_f7ebdaa7",
+      "revId": "4a7f7c9f728c6cf25f544c1a4286438cd9cd80fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
