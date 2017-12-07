@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e5768076_c79dda3d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T08:05:27Z",
+      "side": 1,
+      "message": "And does making a translation transformation of the stack view also moves the buttons? If yes, I think it would be better.",
+      "parentUuid": "b959c79e_0f2beee4",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70261b93_ab2fb100",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -234,6 +258,30 @@
       "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6831f5f8_5270a670",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T08:05:27Z",
+      "side": 1,
+      "message": "Ok to keep it that way.",
+      "parentUuid": "c53f427e_1e64e1ca",
+      "range": {
+        "startLine": 845,
+        "startChar": 8,
+        "endLine": 845,
+        "endChar": 42
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
