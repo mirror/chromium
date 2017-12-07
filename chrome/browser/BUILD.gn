@@ -3130,6 +3130,17 @@ split_static_library("browser") {
   }
 
   if (toolkit_views) {
+    sources += [
+      "history/nav_tree.cc",
+      "history/nav_tree.h",
+      "history/nav_tree_factory.cc",
+      "history/nav_tree_factory.h",
+      "history/nav_tree_node.cc",
+      "history/nav_tree_node.h",
+      "history/nav_tree_page.cc",
+      "history/nav_tree_page.h",
+    ]
+
     deps += [ "//ui/views" ]
   }
 
