@@ -70,6 +70,24 @@
       "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0153f16_a68e1caf",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-07T03:24:24Z",
+      "side": 1,
+      "message": "Hmm, I\u0027ve tried to add a test for SetDevTollsAttached() with restarting, but it seems a bit too much to exercise the change in this CL.\nAlso, I think it\u0027s better to avoid checking if the internal containers are empty since it may make code maintainability worse. So now I\u0027m thinking of keeping this as is.\nWhat do you think?",
+      "parentUuid": "7ec42a0d_cbf2c02c",
+      "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
