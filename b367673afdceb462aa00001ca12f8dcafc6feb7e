@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "a135fec5_1aaa0901",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-07T01:53:38Z",
+      "side": 1,
+      "message": "Oh, actually, I don\u0027t know if we actually need this at all, come to think of it. There\u0027s no need to remove the interstitial override when we aren\u0027t changing the contents of the interstitial except for the support URL.",
+      "parentUuid": "18bef2ba_db2644e8",
+      "range": {
+        "startLine": 542,
+        "startChar": 36,
+        "endLine": 542,
+        "endChar": 0
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5127aa_c2c48c5e",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 20
