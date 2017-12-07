@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "fca1e66c_588b23ac",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "Nit: put this in a subdirectory within //tools/android (//tools/android/sdk_updater or //tools/android/update_sdk?), and rename the script to just update_sdk.py. That way, when you import it downstream, you can add just tools/android/sdk_updater to the sys.path and you\u0027ll be importing update_sdk rather than sdk_update_script, which may look a bit odd in code.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ddf233_691e1f46",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "This would conceivably change once we rehome the SDK, right?",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3977518c_31e326f3",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "nit: maybe GN_ARGUMENTS_TO_UPDATE?",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4190b799_0c61bbcf",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "nit: Maybe just phrase this as \u0027Coercing %s to %s\u0027 % (pkg, _DEFAULT_PACKAGES_DICT[pkg])",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152fffbf_b401dac9",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "nit: we conventionally favor % over string concatenation",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb035daa_7056c749",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "nit: 2 blank lines between functions or classes at module scope",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462de38f_d6271ef9",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "super nit: put this immediately below UploadSdkPackage",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2b4bce6_86571242",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -13,6 +132,23 @@
       "writtenOn": "2017-12-07T03:01:38Z",
       "side": 1,
       "message": "Add this method, s.t. the future logic to change ensure files can use it as well.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8acf56_40e34711",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "Wow, this is sweet. I\u0027ve never used a backreference like this in python \u0026 had to look up \\g.\n\nYou should have a comment here (or as a docstring on the function) that pattern must contain a capture group.",
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +172,75 @@
     },
     {
       "key": {
+        "uuid": "a4bafb44_d66c1cdb",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50fc948a_1467c2ed",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "106c882a_26068344",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "Comment this, plz. What are you trying to parse?\n\n(My favorite example of a regex comment is one that perezju wrote a while back over in devil: https://codesearch.chromium.org/chromium/src/third_party/catapult/devil/devil/android/device_utils.py?rcl\u003d82cfea0e3cd5c5cbc032a0e4bf4be2d1625110f9\u0026l\u003d139. This regex is not so complex that it needs something like that, but a comment explaining briefly what you\u0027re looking for here would be great.)",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957907a8_9392f078",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "Note that this won\u0027t always be true for tools; it simply is for the version of OMR1 we\u0027re using at the moment.\n\nMost of these versions are motivated by paths within the package, so you could consider parsing the values out of those (e.g., the tools ones are motivated by things in tools/lib/)",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08403fc1_ebb9d88a",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "To clarify: as written, a user updating the SDK would do:\n\n  $ sdk_update_script.py download\n  $ sdk_update_script.py package -p build-tools --version 27.0.1\n  $ sdk_update_script.py package -p platforms --version 27\n  $ ...\n\n?",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ed1b4b_fb1b8d90",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -47,6 +252,24 @@
       "writtenOn": "2017-12-07T03:01:38Z",
       "side": 1,
       "message": "Set \u0027--package\u0027 as required since changing file logic needing package name explicitly.",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54406464_e9c5e23e",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-07T05:01:37Z",
+      "side": 1,
+      "message": "hmm... we have a default set of packages that we download; what prevents us from having the same set of packages as the default here?",
+      "parentUuid": "14ed1b4b_fb1b8d90",
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
