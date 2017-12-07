@@ -25,6 +25,7 @@ WarmupURLFetcher::WarmupURLFetcher(
         url_request_context_getter,
     WarmupURLFetcherCallback callback)
     : url_request_context_getter_(url_request_context_getter),
+      is_fetch_in_flight_(false),
       callback_(callback) {
   DCHECK(url_request_context_getter_);
 }
@@ -32,6 +33,8 @@ WarmupURLFetcher::WarmupURLFetcher(
 WarmupURLFetcher::~WarmupURLFetcher() {}
 
 void WarmupURLFetcher::FetchWarmupURL() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   UMA_HISTOGRAM_EXACT_LINEAR("DataReductionProxy.WarmupURL.FetchInitiated", 1,
                              2);
   net::NetworkTrafficAnnotationTag traffic_annotation =
@@ -59,6 +62,8 @@ void WarmupURLFetcher::FetchWarmupURL() {
   GURL warmup_url_with_query_params;
   GetWarmupURLWithQueryParam(&warmup_url_with_query_params);
 
+  is_fetch_in_flight_ = true;
+
   fetcher_ =
       net::URLFetcher::Create(warmup_url_with_query_params,
                               net::URLFetcher::GET, this, traffic_annotation);
@@ -80,6 +85,8 @@ void WarmupURLFetcher::FetchWarmupURL() {
 
 void WarmupURLFetcher::GetWarmupURLWithQueryParam(
     GURL* warmup_url_with_query_params) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   // Set the query param to a random string to prevent intermediate middleboxes
   // from returning cached content.
   const std::string query = "q=" + base::GenerateGUID();
@@ -94,7 +101,10 @@ void WarmupURLFetcher::GetWarmupURLWithQueryParam(
 }
 
 void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_EQ(source, fetcher_.get());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  is_fetch_in_flight_ = false;
   UMA_HISTOGRAM_BOOLEAN(
       "DataReductionProxy.WarmupURL.FetchSuccessful",
       source->GetStatus().status() == net::URLRequestStatus::SUCCESS);
@@ -132,6 +142,11 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
       HasDataReductionProxyViaHeader(*(source->GetResponseHeaders()),
                                      nullptr /* has_intermediary */);
   callback_.Run(source->ProxyServerUsed(), success_response);
+}
+
+bool WarmupURLFetcher::IsFetchInFlight() const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return is_fetch_in_flight_;
 }
 
 }  // namespace data_reduction_proxy

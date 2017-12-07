@@ -116,8 +116,11 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLNoViaHeader) {
                                            std::move(test_request_context));
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
   warmup_url_fetcher.FetchWarmupURL();
+  EXPECT_TRUE(warmup_url_fetcher.IsFetchInFlight());
   base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
 
   histogram_tester.ExpectUniqueSample(
       "DataReductionProxy.WarmupURL.FetchInitiated", 1, 1);
@@ -169,8 +172,11 @@ TEST(WarmupURLFetcherTest, TestSuccessfulFetchWarmupURLWithViaHeader) {
                                            std::move(test_request_context));
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
   warmup_url_fetcher.FetchWarmupURL();
+  EXPECT_TRUE(warmup_url_fetcher.IsFetchInFlight());
   base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
 
   histogram_tester.ExpectUniqueSample(
       "DataReductionProxy.WarmupURL.FetchInitiated", 1, 1);
@@ -219,8 +225,11 @@ TEST(WarmupURLFetcherTest, TestConnectionResetFetchWarmupURL) {
                                            std::move(test_request_context));
 
   WarmupURLFetcherTest warmup_url_fetcher(request_context_getter);
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
   warmup_url_fetcher.FetchWarmupURL();
+  EXPECT_TRUE(warmup_url_fetcher.IsFetchInFlight());
   base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(warmup_url_fetcher.IsFetchInFlight());
 
   histogram_tester.ExpectUniqueSample(
       "DataReductionProxy.WarmupURL.FetchInitiated", 1, 1);
