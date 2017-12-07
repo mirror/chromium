@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f380dd0_6f3e67f9",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T05:29:18Z",
+      "side": 1,
+      "message": "As this call doesn\u0027t pass the ownership, I think this should not use std::move",
+      "parentUuid": "f7e71867_67e508d3",
+      "range": {
+        "startLine": 118,
+        "startChar": 27,
+        "endLine": 118,
+        "endChar": 44
+      },
+      "revId": "f1ba53b7a9e96a87729ade24a450dfd09f8b0996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd7828a5_92256ada",
         "filename": "content/renderer/devtools/devtools_agent.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yes, it should — but to future-proof this would you mind adding an explicit SequenceChecker for this?",
       "parentUuid": "b1ce7159_5b46ffa2",
+      "range": {
+        "startLine": 231,
+        "startChar": 63,
+        "endLine": 231,
+        "endChar": 75
+      },
+      "revId": "f1ba53b7a9e96a87729ade24a450dfd09f8b0996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e959387_9ab0b6d5",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-07T05:29:18Z",
+      "side": 1,
+      "message": "I agree we should use a new type like kDevtools rather than kUnthrottled, but I feel like our task type strategy would not be determined soon. I\u0027d like to leave kUnthrottled and change this later.",
+      "parentUuid": "48ee9b06_e7743d0d",
       "range": {
         "startLine": 231,
         "startChar": 63,
