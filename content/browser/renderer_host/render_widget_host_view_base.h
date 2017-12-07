@@ -108,6 +108,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHost* GetRenderWidgetHost() const final;
   void SetBackgroundColorToDefault() final;
   ui::TextInputClient* GetTextInputClient() override;
+  void ForceShow() override;
   bool IsShowing() final;
   void CaptureStateChanged() override;
   void SetIsInVR(bool is_in_vr) override;

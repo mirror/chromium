@@ -145,6 +145,10 @@ ui::TextInputClient* RenderWidgetHostViewBase::GetTextInputClient() {
 
 void RenderWidgetHostViewBase::CaptureStateChanged() {}
 
+void RenderWidgetHostViewBase::ForceShow() {
+  Show();
+}
+
 bool RenderWidgetHostViewBase::IsShowing() {
   return GetVisibility() != Visibility::HIDDEN;
 }
