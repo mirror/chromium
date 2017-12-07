@@ -34,6 +34,24 @@
       "revId": "92a9b828a0803b8c13d0b7682b80750af1c637b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a24c28_0a9dbea2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T06:41:21Z",
+      "side": 1,
+      "message": "If I understand it correctly, this CL to make GetPrinterInfo() always return a valid value is to make sure the user can delete/edit his non-valid printer config that was added before, right?",
+      "parentUuid": "74649c7e_6801e30e",
+      "revId": "92a9b828a0803b8c13d0b7682b80750af1c637b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
