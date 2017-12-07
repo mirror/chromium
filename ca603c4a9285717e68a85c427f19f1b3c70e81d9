@@ -117,6 +117,30 @@
       "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2e9fde_99af69ca",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-07T08:09:13Z",
+      "side": 1,
+      "message": "Yes, I should (and will) update the comment. What do you mean as \"transient parent of the tray\"? Does it mean whether the info bubble is temporary parented to tray (BubbleDialogDelegateView) or not?\n\nIt\u0027s possible that the tray spawn a window that is outside of the container. But this is an assumption which we are making with this approach: all windows for UI of the tray are descendants of the container.\n\nIf we want to address this issue, I think we need to take different approach.",
+      "parentUuid": "7fc08419_7bd86cdf",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
