@@ -113,9 +113,9 @@ void VideoCaptureDeviceFactoryAndroid::GetSupportedFormats(
         pixel_format = PIXEL_FORMAT_NV21;
         break;
       default:
-        // TODO(mcasas): break here and let the enumeration continue with
-        // UNKNOWN pixel format because the platform doesn't know until capture,
-        // but some unrelated tests timeout https://crbug.com/644910.
+        // TODO(crbug.com/792260): break here and let the enumeration continue
+        // with UNKNOWN pixel format because the platform doesn't know until
+        // capture, but some unrelated tests timeout https://crbug.com/644910.
         continue;
     }
     VideoCaptureFormat capture_format(
