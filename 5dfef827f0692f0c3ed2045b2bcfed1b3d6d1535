@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95ca761f_b045cfe3",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-07T06:22:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a8e8040_0c48b5a2",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2293c37_c020fbe9",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba340a95_600a94fe",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-07T06:22:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2293c37_c020fbe9",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "821893e0_6efb185c",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-07T06:22:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "294e855e_95aad24f",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75bc6458_0164f8d4",
         "filename": "chrome/browser/extensions/bookmark_app_helper_browsertest.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33edbdb3_69bafb22",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-07T06:22:26Z",
+      "side": 1,
+      "message": "Failures were due to below statement.\nchrome::ExecuteCommand(browser(), IDC_CREATE_HOSTED_APP);\n\nFAILURE Case:\n\n[11035:11035:1207/111227.490656:INFO:bookmark_app_helper_browsertest.cc(106)] Chandra :: BookmarkAppHelperTest :: ShowDialog just before GetWebApplicationInfo\n[11035:11035:1207/111227.490775:INFO:tab_helper.cc(604)] Chandra :: TabHelper::GetApplicationInfo\n[1:1:1207/111227.492015:INFO:chrome_render_frame_observer.cc(270)]  Chandra :: ChromeRenderFrameObserver::GetWebApplicationInfo in Renderer side\n[1:1:1207/111227.492369:INFO:chrome_render_frame_observer.cc(270)]  Chandra :: ChromeRenderFrameObserver::GetWebApplicationInfo in Renderer side\n[11035:11035:1207/111227.493310:INFO:bookmark_app_helper_browsertest.cc(67)] Chandra :: BookmarkAppHelperTest :: OnDidGetWebApplicationInfo callback\n[11035:11035:1207/111227.493482:INFO:tab_helper.cc(349)] Chandra :: TabHelper::OnDidGetWebApplicationInfo\n\n\n\nSuccess Case:\n\n[10446:10446:1207/110612.591608:INFO:bookmark_app_helper_browsertest.cc(106)] Chandra :: BookmarkAppHelperTest :: ShowDialog just before GetWebApplicationInfo\n[10446:10446:1207/110612.591862:INFO:tab_helper.cc(604)] Chandra :: TabHelper::GetApplicationInfo\n[1:1:1207/110612.593760:INFO:chrome_render_frame_observer.cc(270)]  Chandra :: ChromeRenderFrameObserver::GetWebApplicationInfo in Renderer side\n[1:1:1207/110612.594171:INFO:chrome_render_frame_observer.cc(270)]  Chandra :: ChromeRenderFrameObserver::GetWebApplicationInfo in Renderer side\n[10446:10446:1207/110612.595841:INFO:bookmark_app_helper_browsertest.cc(67)] Chandra :: BookmarkAppHelperTest :: OnDidGetWebApplicationInfo callback",
+      "parentUuid": "75bc6458_0164f8d4",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 32
+      },
+      "revId": "5dfef827f0692f0c3ed2045b2bcfed1b3d6d1535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
