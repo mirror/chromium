@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a537bd7_7679a890",
+        "filename": "ash/app_list/model/app_list_model.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-07T07:22:46Z",
+      "side": 0,
+      "message": "Number these explicitly and note that this value is deprecated so that histograms don\u0027t get confused in future. Also, delete this value from enums.xml.",
+      "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
