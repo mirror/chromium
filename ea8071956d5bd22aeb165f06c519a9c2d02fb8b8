@@ -22,6 +22,30 @@
       "revId": "ea8071956d5bd22aeb165f06c519a9c2d02fb8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5e7d16_cb1a8637",
+        "filename": "content/renderer/input/prediction/kalman_filter/axis_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1167942
+      },
+      "writtenOn": "2017-12-07T18:25:29Z",
+      "side": 1,
+      "message": "I\u0027ve never done that. But I think it\u0027s possible. However, we never have reliable timestamp. Even the  timestamp from kernel is marked by kernel, not underlying firmware. We are making the assumption that the sensor sample time is constant here, which is almost always the case (unless the firmware is doing some kind of delay-accuracy trade-off itself.) I think we should start with this, and as we move on, might come to the point that we decide to implement varying dt.",
+      "parentUuid": "1f7e5eb5_27bd73d0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "ea8071956d5bd22aeb165f06c519a9c2d02fb8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
