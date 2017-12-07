@@ -115,7 +115,7 @@ bool KeyStorageLinux::WaitForInitOnTaskRunner() {
   bool success;
   task_runner->PostTask(
       FROM_HERE,
-      base::BindOnce(&KeyStorageLinux::BlockOnInitThenSignal,
+      base::BindOnce(&KeyStorageLinux::BlockOnGetKeyImplThenSignal,
                      base::Unretained(this), &initialized, &success));
   initialized.Wait();
   return success;
@@ -146,17 +146,15 @@ base::SequencedTaskRunner* KeyStorageLinux::GetTaskRunner() {
   return nullptr;
 }
 
-void KeyStorageLinux::BlockOnPasswordThenSignal(
+void KeyStorageLinux::BlockOnGetKeyImplThenSignal(
     base::WaitableEvent* on_password_received,
     std::string* password) {
   *password = GetKeyImpl();
-  if (on_password_received)
-    on_password_received->Signal();
+  on_password_received->Signal();
 }
 
 void KeyStorageLinux::BlockOnInitThenSignal(base::WaitableEvent* on_inited,
                                             bool* success) {
   *success = Init();
-  if (on_inited)
-    on_inited->Signal();
+  on_inited->Signal();
 }
