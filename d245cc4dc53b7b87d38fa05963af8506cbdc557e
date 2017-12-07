@@ -56,6 +56,23 @@
       "revId": "d245cc4dc53b7b87d38fa05963af8506cbdc557e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0a4fe7_39bd30c4",
+        "filename": "skia/ext/skia_utils_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T20:13:27Z",
+      "side": 1,
+      "message": "Maybe preserve error logging in case someone cares about it?",
+      "revId": "d245cc4dc53b7b87d38fa05963af8506cbdc557e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
