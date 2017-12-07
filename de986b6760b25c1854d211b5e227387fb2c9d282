@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "1ecc65bb_8a8d76ec",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-07T06:33:42Z",
+      "side": 1,
+      "message": "Setting up a COM server to handle activations when Chrome isn\u0027t running is implemented in https://chromium-review.googlesource.com/c/chromium/src/+/748181, which is under review by Greg now. So I think this CL is supposed not to deal with launching Chrome.\n\nIn my local testing, the \"Activate\" API overridden in class ActivatorRegister (also in this file) was never reliably called when the native notification is poked while Chrome is running. The API was invoked for me a few times, but then it never got invoked for reasons I don\u0027t known. It seems that this API never gets invoked in Finnur\u0027s case. So I suspect something is missing. That says, I don\u0027t fully understand the whole machinery neither.",
+      "parentUuid": "4faf7a4b_16c6dab4",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5583bfe_1dd7ba85",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
