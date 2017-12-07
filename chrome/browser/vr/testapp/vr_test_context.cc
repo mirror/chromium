@@ -187,7 +187,11 @@ void VrTestContext::HandleInput(ui::Event* event) {
         ui_->OnWebVrFrameAvailable();
         break;
       case ui::DomCode::US_A: {
-        CreateFakeTextInput();
+        CreateFakeTextInputOrCommit(false);
+        break;
+      }
+      case ui::DomCode::ENTER: {
+        CreateFakeTextInputOrCommit(true);
         break;
       }
       default:
@@ -348,19 +352,23 @@ unsigned int VrTestContext::CreateFakeContentTexture() {
   return texture_id;
 }
 
-void VrTestContext::CreateFakeTextInput() {
+void VrTestContext::CreateFakeTextInputOrCommit(bool commit) {
   // Every time this method is called, change the number of suggestions shown.
   const std::string text =
       "what is the actual meaning of life when considering all factors";
 
   static int len = 0;
-  len = (len + 1) % text.size();
+  if (!commit)
+    len = (len + 1) % text.size();
 
   TextInputInfo info;
   info.text = base::UTF8ToUTF16(text.substr(0, len));
   info.selection_start = len;
   info.selection_end = len;
-  ui_->OnInputEdited(info);
+  if (commit)
+    ui_->OnInputCommitted(info);
+  else
+    ui_->OnInputEdited(info);
 }
 
 void VrTestContext::CreateFakeVoiceSearchResult() {
