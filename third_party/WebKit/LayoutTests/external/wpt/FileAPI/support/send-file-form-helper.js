@@ -194,7 +194,7 @@ const formPostFileUploadTest = ({
       // exposed through the newer .files[0].name API. This check
       // verifies that assumption.
       assert_equals(
-          fileInput.files[0].name,
+          baseNameOfFilePath(fileInput.files[0].name),
           baseNameOfFilePath(fileInput.value),
           `The basename of the field's value should match its files[0].name`);
       form.submit();
@@ -219,6 +219,17 @@ const formPostFileUploadTest = ({
         `${fileBaseName}: multipart form data must end with ${boundary}--: ${
              JSON.stringify(formDataText)
            }`);
+    const expectedEscapedFileName = expectedEncodedBaseName
+          .replace(/\n/g, '%0A')
+          .replace(/\r/g, '%0D')
+          .replace(/"/g, '%22');
+    const expectedEscapedName = expectedEncodedBaseName
+          .replace(/\r\n/g, '%0D%0A')
+          .replace(/\n/g, '%0D%0A')
+          .replace(/\r/g, '%0D%0A')
+          .replace(/"/g, '%22');
+    const expectedEscapedValue = expectedEncodedBaseName
+          .replace(/\r\n?/g, '\n');
     const expectedText = [
       boundary,
       'Content-Disposition: form-data; name="_charset_"',
@@ -227,14 +238,14 @@ const formPostFileUploadTest = ({
       boundary,
       'Content-Disposition: form-data; name="filename"',
       '',
-      expectedEncodedBaseName,
+      expectedEscapedValue,
       boundary,
-      `Content-Disposition: form-data; name="${expectedEncodedBaseName}"`,
+      `Content-Disposition: form-data; name="${expectedEscapedName}"`,
       '',
       'filename',
       boundary,
       `Content-Disposition: form-data; name="file"; ` +
-          `filename="${expectedEncodedBaseName}"`,
+          `filename="${expectedEscapedFileName}"`,
       'Content-Type: text/plain',
       '',
       kTestChars,
