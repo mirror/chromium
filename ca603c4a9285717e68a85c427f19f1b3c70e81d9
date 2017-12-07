@@ -141,6 +141,30 @@
       "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ce508f_aceeeb19",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T18:18:31Z",
+      "side": 1,
+      "message": "By transient parent I mean wm::GetTransientParent(). More specifically I\u0027m wondering if this fixs the problem:\naura::Window* tray_window \u003d tray_bubble_view_-\u003eGetWidget()-\u003eGetNativeView();\nif (tray_window-\u003eContains(target) || HasTransientAncestor(target, tray_window)) {\n}\n?",
+      "parentUuid": "df2e9fde_99af69ca",
+      "range": {
+        "startLine": 165,
+        "startChar": 25,
+        "endLine": 165,
+        "endChar": 38
+      },
+      "revId": "ca603c4a9285717e68a85c427f19f1b3c70e81d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
