@@ -52,6 +52,24 @@
       "revId": "95da5dfc1c459c0105a0d661b2a93ebb559b48b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ba9951_38a82775",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-07T23:21:19Z",
+      "side": 1,
+      "message": "Conversation with einbinder@ just now:\n\neverything about [this] bug made me sad\nI was like \"man it\u0027d be so great if we had topLayer to manage focus for us\" - doesn\u0027t exist\n\"man it\u0027d be so great if we could set the focus navigation start point instead of having to set actual focus\" - doesn\u0027t exist\n\"ok well at least I can use preventScroll\" - still flagged\n\n\nSo no, I\u0027m not a fan, but the platform isn\u0027t doing us any favours here.",
+      "parentUuid": "e505a5f7_cf240e47",
+      "revId": "95da5dfc1c459c0105a0d661b2a93ebb559b48b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
