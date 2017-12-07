@@ -110,14 +110,15 @@ enum TextRowType { ROW_SINGLE, ROW_MULTILINE };
 // the combobox.
 class PasswordDropdownModel : public ui::ComboboxModel {
  public:
-  explicit PasswordDropdownModel(const std::vector<base::string16>& items)
-      : masked_(true), passwords_(items) {}
+  explicit PasswordDropdownModel(bool revealed,
+                                 const std::vector<base::string16>& items)
+      : revealed_(revealed), passwords_(items) {}
   ~PasswordDropdownModel() override {}
 
-  void SetMasked(bool masked) {
-    if (masked_ == masked)
+  void SetMasked(bool revealed) {
+    if (revealed_ == revealed)
       return;
-    masked_ = masked;
+    revealed_ = revealed;
     for (auto& observer : observers_)
       observer.OnComboboxModelChanged(this);
   }
@@ -125,8 +126,8 @@ class PasswordDropdownModel : public ui::ComboboxModel {
   // ui::ComboboxModel:
   int GetItemCount() const override { return passwords_.size(); }
   base::string16 GetItemAt(int index) override {
-    return masked_ ? base::string16(passwords_[index].length(), kBulletChar)
-                   : passwords_[index];
+    return revealed_ ? passwords_[index]
+                     : base::string16(passwords_[index].length(), kBulletChar);
   }
   void AddObserver(ui::ComboboxModelObserver* observer) override {
     observers_.AddObserver(observer);
@@ -136,7 +137,7 @@ class PasswordDropdownModel : public ui::ComboboxModel {
   }
 
  private:
-  bool masked_;
+  bool revealed_;
   const std::vector<base::string16> passwords_;
   // To be called when |masked_| was changed;
   base::ObserverList<ui::ComboboxModelObserver> observers_;
@@ -274,10 +275,12 @@ std::unique_ptr<views::ToggleImageButton> CreatePasswordViewButton(
 
 // Creates a dropdown from the other possible passwords.
 std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
-    const autofill::PasswordForm& form) {
+    const autofill::PasswordForm& form,
+    bool are_passwords_revealed_) {
   DCHECK(!form.all_possible_passwords.empty());
-  std::unique_ptr<views::Combobox> combobox = std::make_unique<views::Combobox>(
-      std::make_unique<PasswordDropdownModel>(form.all_possible_passwords));
+  std::unique_ptr<views::Combobox> combobox =
+      std::make_unique<views::Combobox>(std::make_unique<PasswordDropdownModel>(
+          are_passwords_revealed_, form.all_possible_passwords));
   size_t index = std::distance(
       form.all_possible_passwords.begin(),
       find(form.all_possible_passwords.begin(),
@@ -470,7 +473,7 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   views::Combobox* password_dropdown_;
   views::Label* password_label_;
 
-  bool password_visible_;
+  bool are_passwords_revealed_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -484,7 +487,8 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       password_view_button_(nullptr),
       password_dropdown_(nullptr),
       password_label_(nullptr),
-      password_visible_(false) {
+      are_passwords_revealed_(
+          parent_->model()->are_passwords_revealed_when_bubble_is_opened()) {
   // Create credentials row.
   const autofill::PasswordForm& password_form =
       parent_->model()->pending_password();
@@ -501,7 +505,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection) &&
-      !parent_->model()->hide_eye_icon() && is_password_credential) {
+      is_password_credential) {
     password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
@@ -583,23 +587,30 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
   if (enable_password_selection &&
       password_form.all_possible_passwords.size() > 1 &&
       parent_->model()->enable_editing()) {
-    password_dropdown_ = CreatePasswordDropdownView(password_form).release();
+    password_dropdown_ =
+        CreatePasswordDropdownView(password_form, are_passwords_revealed_)
+            .release();
   } else {
     password_label_ =
-        CreatePasswordLabel(password_form, password_visible_).release();
+        CreatePasswordLabel(password_form, are_passwords_revealed_).release();
   }
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!are_passwords_revealed_ && !parent_->model()->CanRevealPasswords()) {
+    ManagePasswordsBubbleView::CloseCurrentBubble();
+    return;
+  }
+
   UpdateUsernameAndPasswordInModel();
-  password_visible_ = !password_visible_;
-  password_view_button_->SetToggled(password_visible_);
+  are_passwords_revealed_ = !are_passwords_revealed_;
+  password_view_button_->SetToggled(are_passwords_revealed_);
   DCHECK(!password_dropdown_ || !password_label_);
   if (password_dropdown_) {
     static_cast<PasswordDropdownModel*>(password_dropdown_->model())
-        ->SetMasked(!password_visible_);
+        ->SetMasked(!are_passwords_revealed_);
   } else {
-    password_label_->SetObscured(!password_visible_);
+    password_label_->SetObscured(!are_passwords_revealed_);
   }
 }
 

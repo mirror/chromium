@@ -1241,3 +1241,34 @@ TEST_F(ManagePasswordsUIControllerTest, AutofillDuringSignInPromo) {
   EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
   controller()->OnBubbleHidden();
 }
+
+TEST_F(ManagePasswordsUIControllerTest, AuthenticateUser) {
+  std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+      CreateFormManager());
+  test_form_manager->ProvisionallySave(
+      test_local_form(),
+      password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
+  EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
+  controller()->OnPasswordSubmitted(std::move(test_form_manager));
+  EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
+            controller()->GetState());
+  EXPECT_TRUE(controller()->opened_bubble());
+  ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
+
+  // Simulate that re-auth is need to reveal passwords in the bubble.
+  bool success = controller()->AuthenticateUser();
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  EXPECT_FALSE(success);
+  // Let the task posted in AuthenticateUser to re-open the bubble.
+  EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility());
+  content::RunAllPendingInMessageLoop();
+  EXPECT_TRUE(controller()->opened_bubble());
+  EXPECT_TRUE(controller()->ArePasswordsRevealedWhenBubbleIsOpened());
+
+  // Close the bubble.
+  controller()->OnBubbleHidden();
+  EXPECT_FALSE(controller()->ArePasswordsRevealedWhenBubbleIsOpened());
+#else
+  EXPECT_TRUE(success);
+#endif
+}
