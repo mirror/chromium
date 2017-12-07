@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c73b1450_71c287e9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-07T20:44:47Z",
+      "side": 1,
+      "message": "Yes. An empty OWNERS implies WPT-NOTIFY\u003dFalse, which I think is fine.\n\nWe don\u0027t really have OWNERS files. There are a few with only comment lines though. It was a problem when we wanted to extract email addresses, but comment-only OWNERS files are perfectly fine in the new system.",
+      "parentUuid": "f805cde0_aea79966",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0c07656_fea89fb6",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "54f7babe_fffe7526",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-07T20:44:47Z",
+      "side": 1,
+      "message": "Actually, if we no longer ignore \"empty\" OWNERS files, the problem naturally goes away.",
+      "parentUuid": "d0c07656_fea89fb6",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b8345bc_9f6cc870",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
         "patchSetId": 1
@@ -65,6 +101,30 @@
       "writtenOn": "2017-12-07T17:55:17Z",
       "side": 1,
       "message": "Formatting note: Another way to format this if you prefer would be with parentheses and implicit string concatenation, e.g.:\n\n    (\u0027diff --git a/foo-expected.txt b/foo-expected.txt\\n\u0027\n     \u0027--- a/foo-expected.txt\\n\u0027\n     \u0027...\\n\u0027)",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 3
+      },
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b944bf5_ef6d45c3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-07T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8345bc_9f6cc870",
       "range": {
         "startLine": 54,
         "startChar": 8,
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "7806482c_344d695a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-07T20:44:47Z",
+      "side": 1,
+      "message": "I don\u0027t want to block on this. We can file bugs without links to baseline diff. Users would then have to click on the Gerrit link to the whole CL and jump to the diff; we can fix the inconvenience later.",
+      "parentUuid": "7d43347a_73809228",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab7f552_ea1ceb0a",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
         "patchSetId": 1
@@ -123,6 +201,24 @@
       "writtenOn": "2017-12-07T17:55:17Z",
       "side": 1,
       "message": "This is an improvement :-)\n\nNit; I might put this at the top of the file, because it makes sense to read this first when scanning through this file.",
+      "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02947ee2_936690f6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-07T20:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab7f552_ea1ceb0a",
       "revId": "d5f1f1b0a47446fc8bf08890e9426cae3833e506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
