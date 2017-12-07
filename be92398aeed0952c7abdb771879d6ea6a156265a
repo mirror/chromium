@@ -22,6 +22,30 @@
       "revId": "be92398aeed0952c7abdb771879d6ea6a156265a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb41c32_cd49e239",
+        "filename": "chrome/browser/extensions/webstore_install_helper.cc",
+        "patchSetId": 54
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-12-07T03:18:36Z",
+      "side": 1,
+      "message": "yes, it\u0027s the same behavior",
+      "parentUuid": "ab1e1140_0c85c30d",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 77
+      },
+      "revId": "be92398aeed0952c7abdb771879d6ea6a156265a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
