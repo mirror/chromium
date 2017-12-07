@@ -139,6 +139,24 @@
     },
     {
       "key": {
+        "uuid": "42aafb5f_8f2ffecc",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9572bca_4e839b02",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c489b64_5aad8dd6",
         "filename": "ash/shelf/app_list_back_button_background_view.cc",
         "patchSetId": 6
@@ -168,6 +186,24 @@
       "side": 1,
       "message": "this way handles the case where only one button is showing (circle background).\n\ndoes DrawRoundRect draw a perfect circle with radius kAppListButtonRadius if we do:\ncanvas-\u003eDrawRoundRect(rect(x, y, diameter, diamter), kAppListButtonRadius) ?",
       "parentUuid": "0c489b64_5aad8dd6",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a153e1b_a6212705",
+        "filename": "ash/shelf/app_list_back_button_background_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "I would hope that it would draw a circle correctly, and that seems easy enough to test, but the painting code could also just draw a circle instead if there is no back button (or even if they have the same center point at begin/end animation?)",
+      "parentUuid": "ec4e882f_b97374b0",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -549,6 +585,24 @@
     },
     {
       "key": {
+        "uuid": "75347eb3_31633402",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "The logic to handle the app list button via the app_list_back_button_background_view_ is a bit irregular, and my concern is that something may unintentionally handle the back button like the app list button. For instance, when this function is called for a cursor location over the *back button*, I believe it will pass the conditional above (child \u003d\u003d app_list_back_button_background_view_), and then this line will incorrectly treat the hover as if it\u0027s over the *app list button*.\nI think that truly splitting the buttons up and having ShelfView paint their background would avoid problematic corner cases like this. Otherwise, please double check logic here and elsewhere.",
+      "parentUuid": "4898eed9_56cbce16",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77a1183_44d667be",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -581,6 +635,24 @@
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47940248_e35cb39d",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b2b1b67_0d9b7dfb",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -619,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "c9d3e8b2_9aa33396",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19fd0ea3_09813002",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf42a1d8_534c2352",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -654,6 +744,24 @@
     },
     {
       "key": {
+        "uuid": "7410c20b_3de01400",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4023903_3dcec5ac",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ba98cb_7907f5ae",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 6
@@ -686,6 +794,24 @@
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d850d979_6f1714e9",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-07T03:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d76dc336_778b2fed",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
