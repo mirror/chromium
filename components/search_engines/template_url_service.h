@@ -397,9 +397,7 @@ class TemplateURLService : public WebDataServiceConsumer,
       const syncer::SyncDataList& sync_data);
 
 #if defined(UNIT_TEST)
-  void set_clock(std::unique_ptr<base::Clock> clock) {
-    clock_ = std::move(clock);
-  }
+  void set_clock(base::Clock* clock) { clock_ = clock; }
 #endif
 
  private:
@@ -819,7 +817,7 @@ class TemplateURLService : public WebDataServiceConsumer,
   TemplateURLID next_id_;
 
   // Used to retrieve the current time, in base::Time units.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   // Do we have an active association between the TemplateURLs and sync models?
   // Set in MergeDataAndStartSyncing, reset in StopSyncing. While this is not

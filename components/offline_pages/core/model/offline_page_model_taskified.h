@@ -53,7 +53,7 @@ class OfflinePageModelTaskified : public OfflinePageModel,
       std::unique_ptr<OfflinePageMetadataStoreSQL> store,
       std::unique_ptr<ArchiveManager> archive_manager,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-      std::unique_ptr<base::Clock> clock);
+      base::Clock* clock);
   ~OfflinePageModelTaskified() override;
 
   // TaskQueue::Delegate implementation.
@@ -198,7 +198,7 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   base::Time last_clear_cached_pages_time_;
 
   // Clock for testing only.
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   base::WeakPtrFactory<OfflinePageModelTaskified> weak_ptr_factory_;
 

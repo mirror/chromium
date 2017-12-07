@@ -698,8 +698,8 @@ TEST_F(AuthenticatorImplTest, TestTimeout) {
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner(
       new base::TestMockTimeTaskRunner(base::Time::Now(),
                                        base::TimeTicks::Now()));
-  std::unique_ptr<base::TickClock> tick_clock = task_runner->GetMockTickClock();
-  auto timer = base::MakeUnique<base::OneShotTimer>(tick_clock.get());
+  auto timer =
+      base::MakeUnique<base::OneShotTimer>(task_runner->GetMockTickClock());
   timer->SetTaskRunner(task_runner);
   AuthenticatorPtr authenticator =
       ConnectToAuthenticator(connector.get(), std::move(timer));

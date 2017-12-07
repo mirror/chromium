@@ -429,7 +429,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     database_ = database.get();
 
     auto fetch_timeout_timer =
-        base::MakeUnique<base::OneShotTimer>(tick_clock_.get());
+        base::MakeUnique<base::OneShotTimer>(tick_clock_);
     fetch_timeout_timer->SetTaskRunner(timer_mock_task_runner_);
 
     return base::MakeUnique<RemoteSuggestionsProviderImpl>(
@@ -713,9 +713,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
 
   Logger debug_logger_;
 
-  // TODO(tzik): Remove |mock_tick_clock_| after updating GetMockTickClock to
-  // own the instance. http://crbug.com/789079
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   scoped_refptr<TestMockTimeTaskRunner> timer_mock_task_runner_;
 

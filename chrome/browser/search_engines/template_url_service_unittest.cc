@@ -388,9 +388,9 @@ TEST_F(TemplateURLServiceTest, AddUpdateRemove) {
   // We expect the last_modified time to be updated to the present time on an
   // explicit reset.
   Time now = Time::Now();
-  std::unique_ptr<base::SimpleTestClock> clock(new base::SimpleTestClock);
-  clock->SetNow(now);
-  model()->set_clock(std::move(clock));
+  base::SimpleTestClock clock;
+  clock.SetNow(now);
+  model()->set_clock(&clock);
 
   // Mutate an element and verify it succeeded.
   model()->ResetTemplateURL(loaded_url, ASCIIToUTF16("a"), ASCIIToUTF16("b"),
@@ -712,9 +712,9 @@ TEST_F(TemplateURLServiceTest, Reset) {
   base::RunLoop().RunUntilIdle();
 
   Time now = Time::Now();
-  std::unique_ptr<base::SimpleTestClock> clock(new base::SimpleTestClock);
-  clock->SetNow(now);
-  model()->set_clock(std::move(clock));
+  base::SimpleTestClock clock;
+  clock.SetNow(now);
+  model()->set_clock(&clock);
 
   // Reset the short name, keyword, url and make sure it takes.
   const base::string16 new_short_name(ASCIIToUTF16("a"));

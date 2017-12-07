@@ -91,7 +91,6 @@ class VideoDecodeStatsReporterTest : public ::testing::Test {
   void SetUp() override {
     // Do this first. Lots of pieces depend on the task runner.
     task_runner_ = new base::TestMockTimeTaskRunner();
-    clock_ = task_runner_->GetMockTickClock();
     message_loop_.SetTaskRunner(task_runner_);
 
     // Make reporter with default configuration. Connects RecordInterceptor as
@@ -173,7 +172,7 @@ class VideoDecodeStatsReporterTest : public ::testing::Test {
         std::move(recorder_ptr),
         base::Bind(&VideoDecodeStatsReporterTest::GetPipelineStatsCB,
                    base::Unretained(this)),
-        MakeDefaultVideoConfig(), clock_.get());
+        MakeDefaultVideoConfig(), task_runner_->GetMockTickClock());
   }
 
   // Fast forward the task runner (and associated tick clock) by |milliseconds|.
@@ -338,10 +337,6 @@ class VideoDecodeStatsReporterTest : public ::testing::Test {
   // Task runner that allows for manual advancing of time. Instantiated and
   // used by message_loop_ in Setup().
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
-
-  // TODO(tzik): Remove |clock_| after updating GetMockTickClock to own the
-  // instance.
-  std::unique_ptr<base::TickClock> clock_;
 
   // Points to the interceptor that acts as a VideoDecodeStatsRecorder. The
   // object is owned by VideoDecodeStatsRecorderPtr, which is itself owned by
