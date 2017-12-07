@@ -1734,7 +1734,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   peer_connection_tracker_host_ = new PeerConnectionTrackerHost(
       GetID(), webrtc_eventlog_host_.GetWeakPtr());
   AddFilter(peer_connection_tracker_host_.get());
-  AddFilter(new MediaStreamTrackMetricsHost());
 #endif
 #if BUILDFLAG(ENABLE_PLUGINS)
   AddFilter(new PepperRendererConnection(GetID()));
@@ -1905,6 +1904,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&RenderProcessHostImpl::CreateMediaStreamDispatcherHost,
                  base::Unretained(this), media_stream_manager));
+  registry->AddInterface(
+      base::Bind(&RenderProcessHostImpl::CreateMediaStreamTrackMetricsHost,
+                 base::Unretained(this)));
 #endif
 
   registry->AddInterface(
@@ -4034,6 +4036,14 @@ void RenderProcessHostImpl::CreateMediaStreamDispatcherHost(
         new MediaStreamDispatcherHost(GetID(), media_stream_manager));
   }
   media_stream_dispatcher_host_->BindRequest(std::move(request));
+}
+
+void RenderProcessHostImpl::CreateMediaStreamTrackMetricsHost(
+    mojom::MediaStreamTrackMetricsHostRequest request) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!media_stream_track_metrics_host_)
+    media_stream_track_metrics_host_.reset(new MediaStreamTrackMetricsHost());
+  media_stream_track_metrics_host_->BindRequest(std::move(request));
 }
 
 void RenderProcessHostImpl::OnRegisterAecDumpConsumer(int id) {

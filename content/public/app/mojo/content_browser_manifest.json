@@ -33,6 +33,7 @@
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MediaStreamDispatcherHost",
+          "content::mojom::MediaStreamTrackMetricsHost",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
           "content::mojom::QuotaDispatcherHost",

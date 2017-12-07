@@ -16,10 +16,6 @@
 #define IPC_MESSAGE_START MediaStreamTrackMetricsHostMsgStart
 
 // Messages sent to MediaStreamTrackMetricsHost.
-IPC_MESSAGE_CONTROL3(MediaStreamTrackMetricsHost_AddTrack,
-                     uint64_t /* id */,
-                     bool /* is_audio */,
-                     bool /* is_remote */)
-IPC_MESSAGE_CONTROL1(MediaStreamTrackMetricsHost_RemoveTrack, uint64_t /* id */)
+// TODO(mck.giri): Remove this file as all the IPCs are migrated to mojo.
 
 #endif  // CONTENT_COMMON_MEDIA_MEDIA_STREAM_TRACK_METRICS_HOST_MESSAGES_H_
