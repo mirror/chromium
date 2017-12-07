@@ -116,6 +116,19 @@ void ShellDevToolsBindings::InspectElementAt(int x, int y) {
   }
 }
 
+void ShellDevToolsBindings::Inspect() {
+  if (agent_host_)
+    agent_host_->DetachClient(this);
+  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
+  agent_host_->AttachClient(this);
+  if (inspect_element_at_x_ != -1) {
+    agent_host_->InspectElement(this, inspect_element_at_x_,
+                                inspect_element_at_y_);
+    inspect_element_at_x_ = -1;
+    inspect_element_at_y_ = -1;
+  }
+}
+
 ShellDevToolsBindings::ShellDevToolsBindings(WebContents* devtools_contents,
                                              WebContents* inspected_contents,
                                              ShellDevToolsDelegate* delegate)
@@ -152,19 +165,6 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
                                           base::GenerateGUID().c_str());
   DevToolsFrontendHost::SetupExtensionsAPI(frame, script);
 #endif
-}
-
-void ShellDevToolsBindings::DocumentAvailableInMainFrame() {
-  if (agent_host_)
-    agent_host_->DetachClient(this);
-  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
-  agent_host_->AttachClient(this);
-  if (inspect_element_at_x_ != -1) {
-    agent_host_->InspectElement(this, inspect_element_at_x_,
-                                inspect_element_at_y_);
-    inspect_element_at_x_ = -1;
-    inspect_element_at_y_ = -1;
-  }
 }
 
 void ShellDevToolsBindings::WebContentsDestroyed() {

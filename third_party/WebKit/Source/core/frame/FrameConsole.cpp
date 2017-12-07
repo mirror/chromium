@@ -82,6 +82,7 @@ void FrameConsole::ReportMessageToClient(MessageSource source,
                                          MessageLevel level,
                                          const String& message,
                                          SourceLocation* location) {
+  fprintf(stderr, "***********8 CONSOLE: %s\n", message.Utf8().data());
   if (source == kNetworkMessageSource)
     return;
 
