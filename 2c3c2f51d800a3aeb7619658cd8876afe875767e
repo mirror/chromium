@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca86ee4_130fe0d7",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T00:48:20Z",
+      "side": 1,
+      "message": "base::WeakPtrFactory\u003cExternalAppLauncherTabHelper\u003e weak_factory_;",
+      "revId": "2c3c2f51d800a3aeb7619658cd8876afe875767e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ed4ccf_72bab9bf",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T00:48:20Z",
+      "side": 1,
+      "message": "Take base::Callback",
+      "range": {
+        "startLine": 128,
+        "startChar": 35,
+        "endLine": 128,
+        "endChar": 58
+      },
+      "revId": "2c3c2f51d800a3aeb7619658cd8876afe875767e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a7f721_6f5cfa5a",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T00:48:20Z",
+      "side": 1,
+      "message": "callback.Run(true);",
+      "revId": "2c3c2f51d800a3aeb7619658cd8876afe875767e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959f1edf_bd2e437d",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T00:48:20Z",
+      "side": 1,
+      "message": "prompt, open_label, l10n_util::GetNSString(IDS_CANCEL), base::Bind(\u0026Bar)",
+      "range": {
+        "startLine": 159,
+        "startChar": 48,
+        "endLine": 159,
+        "endChar": 49
+      },
+      "revId": "2c3c2f51d800a3aeb7619658cd8876afe875767e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de08f24_110133f6",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T00:48:20Z",
+      "side": 1,
+      "message": "prompt_body, allow_label, block_label, base::Bind(\u0026ExternalAppLauncherTabHelper::Foo, weak_factory_.GetWeakPtr()",
+      "range": {
+        "startLine": 275,
+        "startChar": 51,
+        "endLine": 275,
+        "endChar": 55
+      },
+      "revId": "2c3c2f51d800a3aeb7619658cd8876afe875767e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
