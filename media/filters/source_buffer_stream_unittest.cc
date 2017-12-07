@@ -5477,6 +5477,137 @@ TEST_P(SourceBufferStreamTest, RangeIsNextInPTS_OutOfOrder) {
   CheckIsNextInPTSSequenceWithFirstRange(1181, false);
 }
 
+TEST_P(SourceBufferStreamTest, AllowIncrementalAppendsToCoalesceRangeGap_1) {
+  // Append 2 SAP-Type-1 GOPs continuous in DTS and PTS interval and with
+  // frame durations and number of frames per GOP such that the first keyframe
+  // by itself would not be considered "adjacent" to the second GOP by our fudge
+  // room logic. Then incrementally reappend each frame of the first GOP.
+  // During those incremental appends, the buffered range GAP between the two
+  // ranges should eventually coalesce into a single continuous range that
+  // demuxes continuously.
+  // BIG TODO Note: this test worked prior to code change.
+  NewCodedFrameGroupAppend("0K 10 20 30 40 50K 60 70 80 90");
+  Seek(0);
+  CheckExpectedRangesByTimestamp("{ [0,100) }");
+  CheckExpectedRangeEndTimes("{ <90,100> }");
+  CheckExpectedBuffers("0K 10 20 30 40 50K 60 70 80 90");
+  CheckNoNextBuffer();
+
+  NewCodedFrameGroupAppend("0D10K");  // Replaces first GOP with 1 frame.
+  Seek(0);
+  CheckExpectedRangesByTimestamp("{ [0,10) [50,100) }");
+  CheckExpectedRangeEndTimes("{ <0,10> <90,100> }");
+  CheckExpectedBuffers("0K");
+  CheckNoNextBuffer();
+  SeekToTimestampMs(50);
+  CheckExpectedBuffers("50K 60 70 80 90");
+  CheckNoNextBuffer();
+
+  // Add more of the replacement GOP, but not enough to trigger gap coalescence.
+  AppendBuffers("10 20");
+  Seek(0);
+  CheckExpectedRangesByTimestamp("{ [0,30) [50,100) }");
+  CheckExpectedRangeEndTimes("{ <20,30> <90,100> }");
+  CheckExpectedBuffers("0K 10 20");
+  CheckNoNextBuffer();
+  SeekToTimestampMs(50);
+  CheckExpectedBuffers("50K 60 70 80 90");
+  CheckNoNextBuffer();
+
+  // Add just enough more of the replacement GOP to trigger gap coalescence.
+  AppendBuffers("30D10");
+  Seek(0);
+  CheckExpectedRangesByTimestamp("{ [0,100) }");
+  CheckExpectedRangeEndTimes("{ <90,100> }");
+  CheckExpectedBuffers("0K 10 20 30 50K 60 70 80 90");
+  CheckNoNextBuffer();
+
+  // Complete the replacement GOP and reconfirm there is no resulting GAP.
+  AppendBuffers("40D10");
+  Seek(0);
+  CheckExpectedRangesByTimestamp("{ [0,100) }");
+  CheckExpectedRangeEndTimes("{ <90,100> }");
+  CheckExpectedBuffers("0K 10 20 30 40 50K 60 70 80 90");
+  CheckNoNextBuffer();
+}
+
+TEST_P(SourceBufferStreamTest, AllowIncrementalAppendsToCoalesceRangeGap_2) {
+  // Append a SAP-Type-1 GOP with a coded frame group start time far before the
+  // timestamp of the first GOP (beyond any fudge room possible in this test).
+  // This simulates one of multiple muxed tracks with jagged start times
+  // following a discontinuity.
+  // Then incrementally append a preceding SAP-Type-1 GOP with frames that
+  // eventually are adjacent within fudge room of the first appended GOP's group
+  // start time and observe the buffered range and demux gap coalesces. Finally,
+  // incrementally append more frames of that preceding GOP to fill in the
+  // timeline to abut the first appended GOP's keyframe timestamp and observe no
+  // further buffered range change or discontinuity.
+  NewCodedFrameGroupAppend(base::TimeDelta::FromMilliseconds(100), "150K 160");
+  SeekToTimestampMs(100);
+  CheckExpectedRangesByTimestamp("{ [100,170) }");
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("150K 160");
+  CheckNoNextBuffer();
+
+  NewCodedFrameGroupAppend("70D10K");
+  SeekToTimestampMs(70);
+  CheckExpectedRangesByTimestamp("{ [70,80) [100,170) }");
+  CheckExpectedRangeEndTimes("{ <70,80> <160,170> }");
+  CheckExpectedBuffers("70K");
+  CheckNoNextBuffer();
+  SeekToTimestampMs(100);
+  CheckExpectedBuffers("150K 160");
+  CheckNoNextBuffer();
+
+  // BIG TODO: Note, this part failed prior to code change. Gap still existed.
+  AppendBuffers("80D10");  // 80ms is just close enough to 100ms to coalesce.
+  SeekToTimestampMs(70);
+  CheckExpectedRangesByTimestamp("{ [70,170) }");
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("70K 80 150K 160");
+  CheckNoNextBuffer();
+
+  AppendBuffers("90D10");
+  SeekToTimestampMs(70);
+  // BIG TODO: Note, the next line didn't fail prior to code change, but the gap
+  // was still there internally (TimeRanges coalesces immediately adjacent
+  // ranges).
+  CheckExpectedRangesByTimestamp("{ [70,170) }");
+  // BIG TODO: Note, the next line failed prior to code change due to there
+  // still being two ranges.
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("70K 80 90 150K 160");
+  CheckNoNextBuffer();
+
+  AppendBuffers("100 110 120");
+  SeekToTimestampMs(70);
+  // BIG TODO: Note, the next line didn't fail prior to code change, but the gap
+  // was still there internally (TimeRanges coalesces overlapping ranges).
+  CheckExpectedRangesByTimestamp("{ [70,170) }");
+  // BIG TODO: Note, the next line failed prior to code change due to there
+  // still being two ranges.
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("70K 80 90 100 110 120 150K 160");
+  CheckNoNextBuffer();
+
+  // BIG TODO: Note, this group of lines passed prior to code change because
+  // 130ms is just close enough to the keyframe time 150ms of the next range,
+  // and the range is finally coalesced.
+  AppendBuffers("130D10");
+  SeekToTimestampMs(70);
+  CheckExpectedRangesByTimestamp("{ [70,170) }");
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("70K 80 90 100 110 120 130 150K 160");
+  CheckNoNextBuffer();
+
+  AppendBuffers("140D10");
+  SeekToTimestampMs(70);
+  CheckExpectedRangesByTimestamp("{ [70,170) }");
+  CheckExpectedRangeEndTimes("{ <160,170> }");
+  CheckExpectedBuffers("70K 80 90 100 110 120 130 140 150K 160");
+  CheckNoNextBuffer();
+}
+
 INSTANTIATE_TEST_CASE_P(LegacyByDts,
                         SourceBufferStreamTest,
                         Values(BufferingApi::kLegacyByDts));

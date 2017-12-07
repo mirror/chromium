@@ -174,6 +174,17 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
  private:
   typedef std::map<base::TimeDelta, int> KeyframeMap;
 
+  // Helper method for Appending |range| to the end of this range.  If |range|'s
+  // first buffer time is before the time of the last buffer in this range,
+  // returns kNoTimestamp.  Otherwise, returns the closest time within
+  // [|range|'s start time, |range|'s first buffer time] that is at or after the
+  // this range's GetEndTimestamp(). This allows |range| to potentially be
+  // determined to be adjacent within fudge room for appending to the end of
+  // this range, especially if |range| has a start time that is before its first
+  // buffer's time.
+  base::TimeDelta NextRangeStartTimeForAppendRangeToEnd(
+      const SourceBufferRangeByPts& range) const;
+
   // Returns an index (or iterator) into |buffers_| pointing to the first buffer
   // at or after |timestamp|.  If |skip_given_timestamp| is true, this returns
   // the first buffer with timestamp strictly greater than |timestamp|. If

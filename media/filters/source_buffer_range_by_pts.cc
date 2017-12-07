@@ -49,7 +49,8 @@ void SourceBufferRangeByPts::AppendRangeToEnd(
   if (transfer_current_position && range.next_buffer_index_ >= 0)
     next_buffer_index_ = range.next_buffer_index_ + buffers_.size();
 
-  AppendBuffersToEnd(range.buffers_, kNoTimestamp);
+  AppendBuffersToEnd(range.buffers_,
+                     NextRangeStartTimeForAppendRangeToEnd(range));
 }
 
 bool SourceBufferRangeByPts::CanAppendRangeToEnd(
@@ -57,7 +58,8 @@ bool SourceBufferRangeByPts::CanAppendRangeToEnd(
   DVLOG(1) << __func__;
   DVLOG(4) << ToStringForDebugging();
 
-  return CanAppendBuffersToEnd(range.buffers_, kNoTimestamp);
+  return CanAppendBuffersToEnd(range.buffers_,
+                               NextRangeStartTimeForAppendRangeToEnd(range));
 }
 
 bool SourceBufferRangeByPts::CanAppendBuffersToEnd(
@@ -568,6 +570,26 @@ bool SourceBufferRangeByPts::GetBuffersInRange(base::TimeDelta start,
     buffers->push_back(buffer);
   }
   return previous_size < buffers->size();
+}
+
+base::TimeDelta SourceBufferRangeByPts::NextRangeStartTimeForAppendRangeToEnd(
+    const SourceBufferRangeByPts& range) const {
+  DCHECK(!buffers_.empty());
+  DCHECK(!range.buffers_.empty());
+
+  base::TimeDelta next_range_first_buffer_time =
+      range.buffers_.front()->timestamp();
+  base::TimeDelta this_range_end_time = GetEndTimestamp();
+  if (next_range_first_buffer_time < this_range_end_time)
+    return kNoTimestamp;
+
+  base::TimeDelta next_range_start_time = range.GetStartTimestamp();
+  DCHECK(next_range_start_time <= next_range_first_buffer_time);
+
+  if (next_range_start_time >= this_range_end_time)
+    return next_range_start_time;
+
+  return this_range_end_time;
 }
 
 size_t SourceBufferRangeByPts::GetBufferIndexAt(base::TimeDelta timestamp,

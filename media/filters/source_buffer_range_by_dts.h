@@ -173,6 +173,17 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
  private:
   typedef std::map<DecodeTimestamp, int> KeyframeMap;
 
+  // Helper method for Appending |range| to the end of this range.  If |range|'s
+  // first buffer time is before the time of the last buffer in this range,
+  // returns kNoDecodeTimestamp().  Otherwise, returns the closest time within
+  // [|range|'s start time, |range|'s first buffer time] that is at or after the
+  // time of the last buffer in this range. This allows |range| to potentially
+  // be determined to be adjacent within fudge room for appending to the end of
+  // this range, especially if |range| has a start time that is before its first
+  // buffer's time.
+  DecodeTimestamp NextRangeStartTimeForAppendRangeToEnd(
+      const SourceBufferRangeByDts& range) const;
+
   // Helper method to delete buffers in |buffers_| starting at
   // |starting_point|, an iterator in |buffers_|.
   // Returns true if everything in the range was removed. Returns
