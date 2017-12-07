@@ -125,7 +125,7 @@ TEST_P(ParameterizedNGOffsetMappingTest, NGInlineFormattingContextOf) {
   SetBodyInnerHTML(
       "<div id=container>"
       "  foo"
-      "  <span id=inline-block style='display:inline-block'>blah</span>"
+      "  <span id=inline-block>blah</span>"
       "  <span id=inline-span>bar</span>"
       "</div>");
 
