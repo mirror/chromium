@@ -30,7 +30,10 @@ class TabActivityWatcher : public TabStripModelObserver,
   // TODO(michaelpg): Track more events.
 
   // Forces logging even when a timeout would have prevented it.
-  void DisableLogTimeoutForTest();
+  void DisableLogTimeoutForTesting();
+
+  // Resets internal state.
+  void ResetForTesting();
 
   // Returns the single instance, creating it if necessary.
   static TabActivityWatcher* GetInstance();
