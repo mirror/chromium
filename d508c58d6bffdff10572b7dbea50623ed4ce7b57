@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4eb1e3a9_c5c9fa5b",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:11:55Z",
+      "side": 1,
+      "message": "I believe so, at least the java tests use English strings: https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java?rcl\u003d3e791ee1e4628508bb4c1fdd201d026963e0192e\u0026l\u003d51",
+      "parentUuid": "32df7e57_4b325a51",
+      "range": {
+        "startLine": 469,
+        "startChar": 65,
+        "endLine": 469,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7de04d5_5f24f573",
         "filename": "chrome/browser/ssl/ssl_browsertest.cc",
         "patchSetId": 7
@@ -354,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "b4b5b712_f742c59b",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:11:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "906150f8_ae8070b1",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eaf0e4d_7354d58b",
         "filename": "components/security_interstitials/core/bad_clock_ui.cc",
         "patchSetId": 7
@@ -401,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "86b3253d_ccdec46f",
+        "filename": "components/security_interstitials/core/bad_clock_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:11:55Z",
+      "side": 1,
+      "message": "Ah, so this class was never getting these messages before, but now it does, hence the change? SG.",
+      "parentUuid": "743ae478_ed166773",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e2ae29c_cd5111e0",
         "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
         "patchSetId": 7
@@ -421,6 +493,30 @@
       "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b6d59d_4e8130ad",
+        "filename": "testing/buildbot/filters/mojo.fyi.network_browser_tests.filter",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-07T19:11:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e2ae29c_cd5111e0",
+      "range": {
+        "startLine": 175,
+        "startChar": 47,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "d508c58d6bffdff10572b7dbea50623ed4ce7b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
