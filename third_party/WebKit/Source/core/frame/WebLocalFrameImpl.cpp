@@ -2196,6 +2196,11 @@ void WebLocalFrameImpl::SetHasReceivedUserGesture() {
     GetFrame()->UpdateUserActivationInFrameTree();
 }
 
+void WebLocalFrameImpl::SetHasReceivedUserGestureBeforeNavigation(bool value) {
+  if (GetFrame())
+    GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(value);
+}
+
 void WebLocalFrameImpl::BlinkFeatureUsageReport(const std::set<int>& features) {
   DCHECK(!features.empty());
   // Assimilate all features used/performed by the browser into UseCounter.
