@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1bf3b97_1d0043f0",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:44:39Z",
+      "side": 1,
+      "message": "Just use std::move() for this please.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 23
+      },
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f001111c_3e95adfa",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:44:39Z",
+      "side": 1,
+      "message": "The obvious question to ask here is: why doesn\u0027t the mojom just declare int32_t as the type of this arg then?",
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
