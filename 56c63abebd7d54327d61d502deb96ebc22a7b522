@@ -16,6 +16,24 @@
       "revId": "56c63abebd7d54327d61d502deb96ebc22a7b522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4d22d7_214448c0",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-07T08:05:09Z",
+      "side": 1,
+      "message": "That\u0027s because I thought before starting timeout timer we shouldn\u0027t start any requests, but I can stand for that, too.\nMoved it.",
+      "parentUuid": "3383088b_88e218ab",
+      "revId": "56c63abebd7d54327d61d502deb96ebc22a7b522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
