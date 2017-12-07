@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1271f43d_b9fd6c12",
+        "filename": "chrome/browser/media/cdm_storage_id_key.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-07T20:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e95c6f9_bf608ee2",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "ccd8344afbaa6a4fef72d947b5881cda1c6aeb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4282e8_eccc1d10",
         "filename": "media/BUILD.gn",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f2632b1a_35436f81",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-07T20:35:00Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "ff4282e8_eccc1d10",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 61
+      },
+      "revId": "ccd8344afbaa6a4fef72d947b5881cda1c6aeb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f136bc18_25a323e0",
         "filename": "media/media_options.gni",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "ccd8344afbaa6a4fef72d947b5881cda1c6aeb27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658cb797_d2d1eaf1",
+        "filename": "media/media_options.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-07T20:35:00Z",
+      "side": 1,
+      "message": "Changed text. I\u0027m not sure that #define CDM_STORAGE_ID_KEY is necessary as the build files don\u0027t support this currently, as we don\u0027t want to encourage it (as then the key value would get checked in somewhere).",
+      "parentUuid": "f136bc18_25a323e0",
+      "revId": "ccd8344afbaa6a4fef72d947b5881cda1c6aeb27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
