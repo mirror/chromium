@@ -28,8 +28,11 @@
 #include "content/renderer/loader/sync_load_response.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
+#include "net/cert/x509_util.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "net/ssl/ssl_connection_status_flags.h"
+#include "net/test/cert_test_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -681,6 +684,49 @@ TEST_F(WebURLLoaderImplTest, ResponseIPAddress) {
     WebURLLoaderImpl::PopulateURLResponse(url, info, &response, true);
     EXPECT_EQ(test.expected, response.RemoteIPAddress().Utf8());
   };
+}
+
+TEST_F(WebURLLoaderImplTest, ResponseCert) {
+  GURL url("https://test.example/");
+
+  net::CertificateList certs;
+  ASSERT_TRUE(net::LoadCertificateFiles(
+      {"subjectAltName_sanity_check.pem", "root_ca_cert.pem"}, &certs));
+  ASSERT_EQ(2U, certs.size());
+
+  base::StringPiece cert0_der =
+      net::x509_util::CryptoBufferAsStringPiece(certs[0]->cert_buffer());
+  base::StringPiece cert1_der =
+      net::x509_util::CryptoBufferAsStringPiece(certs[1]->cert_buffer());
+
+  WTF::String cert0_der_wtf(cert0_der.data(), cert0_der.size());
+  WTF::String cert1_der_wtf(cert1_der.data(), cert1_der.size());
+
+  content::ResourceResponseInfo info;
+  net::SSLConnectionStatusSetVersion(net::SSL_CONNECTION_VERSION_TLS1_2,
+                                     &info.ssl_connection_status);
+  info.certificate.emplace_back(cert0_der);
+  info.certificate.emplace_back(cert1_der);
+  blink::WebURLResponse web_url_response;
+  WebURLLoaderImpl::PopulateURLResponse(url, info, &web_url_response, true);
+  /*
+  const blink::ResourceResponse& resource_response =
+      web_url_response.ToResourceResponse();
+  const blink::ResourceResponse::SecurityDetails* security_details =
+      resource_response.GetSecurityDetails();
+  ASSERT_TRUE(security_details);
+  EXPECT_EQ("TLS 1.2", security_details->protocol);
+  EXPECT_EQ("127.0.0.1", security_details->subject_name);
+  EXPECT_EQ("127.0.0.1", security_details->issuer);
+  ASSERT_EQ(3U, security_details->san_list.size());
+  EXPECT_EQ("test.example", security_details->san_list[0]);
+  EXPECT_EQ("127.0.0.2", security_details->san_list[1]);
+  EXPECT_EQ("fe80::1", security_details->san_list[2]);
+  EXPECT_EQ(certs[0]->valid_start().ToTimeT(), security_details->valid_from);
+  EXPECT_EQ(certs[0]->valid_expiry().ToTimeT(), security_details->valid_to);
+  ASSERT_EQ(2U, security_details->certificate.size());
+  EXPECT_EQ(cert0_der_wtf, security_details->certificate[0]);
+  EXPECT_EQ(cert1_der_wtf, security_details->certificate[1]);*/
 }
 
 // Verifies that the lengths used by the PerformanceResourceTiming API are
