@@ -46,6 +46,30 @@
       "revId": "1faef906ffa2ac90f5beafd27660152418137d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6002b0_a6d8f36b",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-07T18:44:59Z",
+      "side": 0,
+      "message": "ok.",
+      "parentUuid": "dbd4afc3_e0a3a934",
+      "range": {
+        "startLine": 38,
+        "startChar": 49,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "1faef906ffa2ac90f5beafd27660152418137d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
