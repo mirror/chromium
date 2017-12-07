@@ -16,6 +16,24 @@
       "revId": "e26262ec93c5717534c4595caf45ddb18fced016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49528389_50f02e4b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T17:02:33Z",
+      "side": 1,
+      "message": "The protocol can be removed. So its implementation and all usage in the class can also be removed.\nI plan to move some logic from the ViewController to the class and expand its utility.\nIf not, yes, this class can be entirely removed.",
+      "parentUuid": "e6d70277_d4e66604",
+      "revId": "e26262ec93c5717534c4595caf45ddb18fced016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
