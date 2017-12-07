@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "afa44141_a101dbf3",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:21:14Z",
+      "side": 1,
+      "message": "GetTestInterface() is basically an alternative to using a static_cast. It has the advantage of crashing immediately when trying to dereference null vs. static_cast which can have unexpected results.\n\nAt one point we had separate \"Stub\" implementations for testing, and \"Fake\" implementations for running on linux, but we have since replaced all of the Stub implementations with the fakes. The test interface was used by both.\n\nWe also use GetTestInterface() in a few places in the code to identify fake implementations and alter behavior accordingly to better approximate the real implementaiton in the UI (e.g. NetworkPortalDetectorImpl::OnAttemptCompleted).",
+      "parentUuid": "d15b6429_6f9e756b",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90b55a13_4641c55e",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "80fa4f33_d8b54a9a",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:21:14Z",
+      "side": 1,
+      "message": "Opinions vary. I don\u0027t care, but consistency is always good.",
+      "parentUuid": "8d2d9e29_efba13da",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe678341_b2b81837",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "The entry should be kept, IIUC, as old code does not have DeleteEntry()?\nActually, I checked the value of HasService(), and it returns true (as I personally expected).",
       "parentUuid": "fe678341_b2b81837",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ed93c7_aa281cfd",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:21:14Z",
+      "side": 1,
+      "message": "All the more reason to add EXPECT_TRUE instead :)",
+      "parentUuid": "545f4dcb_c9e1f3ee",
       "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef59200_8585bfc1",
+        "filename": "chromeos/dbus/fake_shill_profile_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:21:14Z",
+      "side": 1,
+      "message": "As long as we are changing this file, I believe this can now just be:\n\nif (profile-\u003eentries.FindKey(service_path))\n  return true;\n\nThis should also be fixed in GetProfilePathsContainingService() above, and GetServiceDataFromProfile can be removed and inlined into GetService().\n\nThen there will be one less use of GetDictionaryWithoutPathExpansion for someone to remove.",
+      "revId": "a6fea40c365179fe94faa723c1ecd5c78f13cd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
