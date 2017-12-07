@@ -790,21 +790,36 @@ void GLES2DecoderTestBase::SetBucketAsCStrings(uint32_t bucket_id,
   ClearSharedMemory();
 }
 
-void GLES2DecoderTestBase::SetupClearTextureExpectations(GLuint service_id,
-                                                         GLuint old_service_id,
-                                                         GLenum bind_target,
-                                                         GLenum target,
-                                                         GLint level,
-                                                         GLenum internal_format,
-                                                         GLenum format,
-                                                         GLenum type,
-                                                         GLint xoffset,
-                                                         GLint yoffset,
-                                                         GLsizei width,
-                                                         GLsizei height) {
+void GLES2DecoderTestBase::SetupClearTextureExpectations(
+    GLuint service_id,
+    GLuint old_service_id,
+    GLenum bind_target,
+    GLenum target,
+    GLint level,
+    GLenum format,
+    GLenum type,
+    GLint xoffset,
+    GLint yoffset,
+    GLsizei width,
+    GLsizei height,
+    bool is_webgl2_or_es3_context) {
   EXPECT_CALL(*gl_, BindTexture(bind_target, service_id))
       .Times(1)
       .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, _))
+      .Times(2)
+      .RetiresOnSaturation();
+  if (is_webgl2_or_es3_context) {
+    EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, _))
+        .Times(2)
+        .RetiresOnSaturation();
+    EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, _))
+        .Times(2)
+        .RetiresOnSaturation();
+    EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, _))
+        .Times(2)
+        .RetiresOnSaturation();
+  }
   EXPECT_CALL(*gl_, TexSubImage2D(target, level, xoffset, yoffset, width,
                                   height, format, type, _))
       .Times(1)

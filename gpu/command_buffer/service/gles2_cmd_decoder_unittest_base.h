@@ -411,13 +411,13 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
                                      GLenum bind_target,
                                      GLenum target,
                                      GLint level,
-                                     GLenum internal_format,
                                      GLenum format,
                                      GLenum type,
                                      GLint xoffset,
                                      GLint yoffset,
                                      GLsizei width,
-                                     GLsizei height);
+                                     GLsizei height,
+                                     bool is_webgl2_or_es3_context);
 
   void SetupExpectationsForRestoreClearState(GLclampf restore_red,
                                              GLclampf restore_green,

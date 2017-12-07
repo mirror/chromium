@@ -108,7 +108,7 @@ TEST_P(GLES2DecoderTest, GenerateMipmapClearsUnclearedTexture) {
       GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0, 0);
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 0, 2, 2);
+                                GL_UNSIGNED_BYTE, 0, 0, 2, 2, false);
   EXPECT_CALL(*gl_, GenerateMipmapEXT(GL_TEXTURE_2D));
   EXPECT_CALL(*gl_, GetError())
       .WillOnce(Return(GL_NO_ERROR))
@@ -136,7 +136,7 @@ TEST_P(GLES3DecoderTest, GenerateMipmapBaseLevel) {
 
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 2, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 0, 2, 2);
+                                GL_UNSIGNED_BYTE, 0, 0, 2, 2, true);
   EXPECT_CALL(*gl_, GenerateMipmapEXT(GL_TEXTURE_2D));
   EXPECT_CALL(*gl_, GetError())
       .WillOnce(Return(GL_NO_ERROR))
@@ -163,7 +163,7 @@ TEST_P(GLES2DecoderManualInitTest, SetTextureFiltersBeforeGenerateMipmap) {
       GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0, 0);
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 0, 2, 2);
+                                GL_UNSIGNED_BYTE, 0, 0, 2, 2, false);
   EXPECT_CALL(
       *gl_,
       TexParameteri(
@@ -1344,10 +1344,24 @@ TEST_P(GLES3DecoderTest, CopyTexSubImage3DClearTheUncleared3DTexture) {
   ASSERT_TRUE(texture_ref != NULL);
   Texture* texture = texture_ref->texture();
 
+  InSequence seq;
+
   EXPECT_FALSE(texture->SafeToRenderFrom());
   EXPECT_FALSE(texture->IsLevelCleared(kTarget, kLevel));
 
   // CopyTexSubImage3D will clear the uncleared texture
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, 1))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, GenBuffersARB(1, _))
       .Times(1)
       .RetiresOnSaturation();
@@ -1367,10 +1381,17 @@ TEST_P(GLES3DecoderTest, CopyTexSubImage3DClearTheUncleared3DTexture) {
                                         kFormat, kType))
       .Times(1)
       .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _)).Times(1).RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, _))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, _))
       .Times(1)
       .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _))
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, _))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, _))
       .Times(1)
       .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindTexture(kTarget, _))
@@ -2842,7 +2863,7 @@ TEST_P(GLES2DecoderTest, TexSubImage2DClearsAfterTexImage2DNULL) {
       GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0, 0);
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 1, 2, 1);
+                                GL_UNSIGNED_BYTE, 0, 1, 2, 1, false);
   EXPECT_CALL(*gl_, TexSubImage2D(GL_TEXTURE_2D, 0, 0, _, _, 1, GL_RGBA,
                                   GL_UNSIGNED_BYTE, shared_memory_address_))
       .Times(2)
@@ -2971,7 +2992,7 @@ TEST_P(GLES2DecoderTest, TexSubImage2DClearsAfterTexImage2DWithDataThenNULL) {
   // Next call to TexSubImage2d should clear.
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 1, 2, 1);
+                                GL_UNSIGNED_BYTE, 0, 1, 2, 1, false);
   EXPECT_CALL(*gl_, TexSubImage2D(GL_TEXTURE_2D, 0, 0, _, _, 1, GL_RGBA,
                                   GL_UNSIGNED_BYTE, shared_memory_address_))
       .Times(2)
@@ -3010,16 +3031,9 @@ TEST_P(GLES3DecoderTest, ClearLevelWithBoundUnpackBuffer) {
 
   // This TexSubImage2D can't be coalesced with the previous one, so it will
   // force a clear.
-  // The clear needs to unbind the GL_PIXEL_UNPACK_BUFFER, and restore it.
-  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0))
-      .Times(1)
-      .RetiresOnSaturation();
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 1, 2, 1);
-  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, kServiceBufferId))
-      .Times(1)
-      .RetiresOnSaturation();
+                                GL_UNSIGNED_BYTE, 0, 1, 2, 1, true);
 
   EXPECT_CALL(*gl_, TexSubImage2D(GL_TEXTURE_2D, 0, 0, 1, 1, 1, GL_RGBA,
                                   GL_UNSIGNED_BYTE, 0))
@@ -3103,7 +3117,7 @@ TEST_P(GLES2DecoderTest, CopyTexSubImage2DTwiceClearsUnclearedTexture) {
 
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
                                 GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
-                                GL_RGBA, GL_UNSIGNED_BYTE, 0, 1, 2, 1);
+                                GL_UNSIGNED_BYTE, 0, 1, 2, 1, false);
 
   // This will clear the bottom part as a rectangle is not sufficient to keep
   // track of the initialized area.
@@ -3659,18 +3673,9 @@ TEST_P(GLES2DecoderTest, GLImageAttachedAfterClearLevel) {
   EXPECT_TRUE(texture->GetLevelImage(GL_TEXTURE_2D, 0) == image.get());
 
   // ClearLevel should use glTexSubImage2D to avoid unbinding GLImage.
-  EXPECT_CALL(*gl_, BindTexture(GL_TEXTURE_2D, kServiceTextureId))
-      .Times(2)
-      .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, TexSubImage2D(target, level, xoffset, yoffset, width,
-                                  height, format, type, _))
-      .Times(1)
-      .RetiresOnSaturation();
-#if DCHECK_IS_ON()
-  EXPECT_CALL(*gl_, GetError())
-      .WillOnce(Return(GL_NO_ERROR))
-      .RetiresOnSaturation();
-#endif
+  SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
+                                GL_TEXTURE_2D, GL_TEXTURE_2D, level, format,
+                                type, xoffset, yoffset, width, height, false);
   GetDecoder()->ClearLevel(texture, target, level, format, type, 0, 0, width,
                            height);
   EXPECT_TRUE(texture->GetLevelImage(GL_TEXTURE_2D, 0) == image.get());
@@ -4035,8 +4040,8 @@ TEST_P(GLES2DecoderManualInitTest, TexSubImage2DFloatDoesClearOnGLES3) {
                0,
                0);
   SetupClearTextureExpectations(kServiceTextureId, kServiceTextureId,
-                                GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA32F,
-                                GL_RGBA, GL_FLOAT, 0, kHeight - 1, kWidth, 1);
+                                GL_TEXTURE_2D, GL_TEXTURE_2D, 0, GL_RGBA,
+                                GL_FLOAT, 0, kHeight - 1, kWidth, 1, false);
   EXPECT_CALL(*gl_, TexSubImage2D(GL_TEXTURE_2D, 0, 0, _, _, _, GL_RGBA,
                                   GL_FLOAT, shared_memory_address_))
       .Times(2)
@@ -4434,6 +4439,19 @@ TEST_P(GLES3DecoderTest, ClearLevel3DSingleCall) {
   ASSERT_TRUE(texture_ref != NULL);
   Texture* texture = texture_ref->texture();
 
+  InSequence seq;
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, 1))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, GenBuffersARB(1, _))
       .Times(1)
       .RetiresOnSaturation();
@@ -4455,10 +4473,17 @@ TEST_P(GLES3DecoderTest, ClearLevel3DSingleCall) {
         .Times(1)
         .RetiresOnSaturation();
   }
+  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _)).Times(1).RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, _))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, _))
       .Times(1)
       .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _))
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, _))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, _))
       .Times(1)
       .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindTexture(kTarget, _))
@@ -4488,6 +4513,19 @@ TEST_P(GLES3DecoderTest, ClearLevel3DMultipleLayersPerCall) {
   ASSERT_TRUE(texture_ref != NULL);
   Texture* texture = texture_ref->texture();
 
+  InSequence seq;
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, 1))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, GenBuffersARB(1, _))
       .Times(1)
       .RetiresOnSaturation();
@@ -4520,10 +4558,17 @@ TEST_P(GLES3DecoderTest, ClearLevel3DMultipleLayersPerCall) {
         .Times(1)
         .RetiresOnSaturation();
   }
+  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _)).Times(1).RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, _))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, _))
       .Times(1)
       .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _))
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, _))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, _))
       .Times(1)
       .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindTexture(kTarget, _))
@@ -4553,6 +4598,19 @@ TEST_P(GLES3DecoderTest, ClearLevel3DMultipleCallsPerLayer) {
   ASSERT_TRUE(texture_ref != NULL);
   Texture* texture = texture_ref->texture();
 
+  InSequence seq;
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, 1))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, 0))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, GenBuffersARB(1, _))
       .Times(1)
       .RetiresOnSaturation();
@@ -4579,10 +4637,17 @@ TEST_P(GLES3DecoderTest, ClearLevel3DMultipleCallsPerLayer) {
         .Times(1)
         .RetiresOnSaturation();
   }
+  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _)).Times(1).RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, _))
+      .Times(1)
+      .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindBuffer(GL_PIXEL_UNPACK_BUFFER, _))
       .Times(1)
       .RetiresOnSaturation();
-  EXPECT_CALL(*gl_, DeleteBuffersARB(1, _))
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ROW_LENGTH, _))
+      .Times(1)
+      .RetiresOnSaturation();
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_IMAGE_HEIGHT, _))
       .Times(1)
       .RetiresOnSaturation();
   EXPECT_CALL(*gl_, BindTexture(kTarget, _))
