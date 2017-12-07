@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d96cc157_9421c3c9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54501,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-07T18:59:45Z",
+      "side": 1,
+      "message": "I really like this. Being as verbose as possible IRT what is being  measured is great!\n\nBut to improve dashboard visualization I\u0027d suggest keeping the label values short and adding the lengthier explanations as textual context of the XML element, by turning elements `\u003cint .../\u003e` into `\u003cint ...\u003eLenghtier explanation\u003c/int\u003e`.",
+      "parentUuid": "10b9679a_beddd0cf",
+      "revId": "55ebe747866d817f427474e4157f5a75c1930ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ef4c080_5c461148",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
