@@ -56,12 +56,6 @@ class GeolocationProvider {
       const LocationUpdateCallback& callback,
       bool enable_high_accuracy) = 0;
 
-  // Calling this method indicates the user has opted into using location
-  // services, including sending network requests to [Google servers to] resolve
-  // the user's location. Use this method carefully, in line with the rules in
-  // go/chrome-privacy-doc.
-  virtual void UserDidOptIntoLocationServices() = 0;
-
   virtual bool HighAccuracyLocationInUse() = 0;
 
   // Overrides the current location for testing.
