@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "30fafcf2_db154bcc",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "HttpProxyClientSocketWrapper goes through the pools to create the underlying sockets, but I haven\u0027t yet plumbed SocketTag through the pools.  I\u0027ve changed this to a TODO and a check that no specific SocketTag is being applied.  I\u0027ll flush out the implementation in the next CL which plumbs through the socket pool.",
+      "parentUuid": "5cfd2fac_2905213e",
+      "range": {
+        "startLine": 295,
+        "startChar": 9,
+        "endLine": 295,
+        "endChar": 26
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38800a6a_4d7d5338",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "92c454ae_aac2fcbb",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Here\u0027s my plan for how the initial implementation will work:\n\nA URLRequest has a SocketTag like so:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/550275/17/net/url_request/url_request.h\n\nThe URLRequest\u0027s SocketTag is transferred to the HttpRequestInfo like so:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/550275/17/net/url_request/url_request_http_job.cc\n\nThe HttpRequestInfo gets passed between HttpStreamFactoryImpl::Job and InitSocketPoolHelper() like so:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/550275/17/net/http/http_stream_factory_impl_job.cc\nhttps://chromium-review.googlesource.com/c/chromium/src/+/550275/17/net/socket/client_socket_pool_manager.cc\n\nWhen searching for an existing QUIC session to reuse for a new URLRequest, the URLRequest\u0027s SocketTag is included in the QuicServerInfo so that a matched session has a matching SocketTag and no tagging/retagging is necessary.\nWhen searching for an existing Spdy session to reuse for a new URLRequest, the URLRequest\u0027s SocketTag is included in the SpdySessionKey so that a matched session has a matching SocketTag and no tagging/retagging is necessary.\nWhen searching for an idle TCP/SSL socket to resuse, if one is found, the socket is retagged with the URLRequest\u0027s SocketTag.\nIf a new QUIC session is created because one cannot be found to reuse, the UDP socket is tagged upon creation with the URLRequest\u0027s SocketTag.\nIf a new Spdy session is created because one cannot be found to reuse, the TCP socket is tagged upon creation with the URLRequest\u0027s SocketTag.\nIf a new TCP or SSL socket is created because an idle one cannot be found to reuse, the TCP socket is tagged upon creation with the URLRequest\u0027s SocketTag.\n\nProxy socket and wrapped socket/stream creation/reuse will work similarly.\n\nThe SocketTag from the HttpRequestInfo is transferred into the TransportSocketParams.  \nTransportSocketParams is included in SSLSocketParams and HttpProxySocketParams.\n\nThe lesson I learned is:\nTCP sockets will need to be tagged and retagged.\nSSL sockets will need to be tagged and retagged.\nThe UDP socket underlying a QUIC session will be tagged on creation but not retagged.\nThe TCP socket underlying a Spdy session will be tagged on creation but not retagged.\n\nI put in the CHECK(false) here to make sure we don\u0027t attempt to retag session sockets.",
+      "parentUuid": "38800a6a_4d7d5338",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a4395b1_008f40eb",
         "filename": "net/socket/stream_socket.h",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "b2423c022fe6950a88db5e209799e221511576ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66ddfaa_63b5ea3a",
+        "filename": "net/socket/stream_socket.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4395b1_008f40eb",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 15
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "90f49cab_16af188c",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0086c9_858154eb",
+      "range": {
+        "startLine": 351,
+        "startChar": 2,
+        "endLine": 351,
+        "endChar": 7
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f34ec3b0_d920ad8d",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what \"this\" is.  Could you clarify?",
+      "parentUuid": "7f2d3fc4_181e3f9c",
+      "range": {
+        "startLine": 351,
+        "startChar": 9,
+        "endLine": 351,
+        "endChar": 12
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95d1ab6_93533d77",
         "filename": "net/socket/tcp_client_socket.cc",
         "patchSetId": 18
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-06T16:40:14Z",
       "side": 1,
       "message": "Having tag not reset if a socket fails to connect and is reused (Or is closed and reconnected) like a bad idea to me.  Nothing else behaves that way, to the extent of my knowledge.",
+      "range": {
+        "startLine": 389,
+        "startChar": 29,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62e6cae_722834e5",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done, I reset the tag when connect fails or when closed.  Should I do this for UDP sockets as well?",
+      "parentUuid": "d95d1ab6_93533d77",
       "range": {
         "startLine": 389,
         "startChar": 29,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ff80e554_a0f97293",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ab26ba_f240ca9b",
+      "range": {
+        "startLine": 396,
+        "startChar": 23,
+        "endLine": 396,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52c22317_fc4b84b2",
         "filename": "net/socket/tcp_client_socket_unittest.cc",
         "patchSetId": 18
@@ -183,6 +351,30 @@
       "revId": "b2423c022fe6950a88db5e209799e221511576ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8313d26e_2a2817ab",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c22317_fc4b84b2",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 24
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "074bdad5_64805a94",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27cdc000_fefd03a7",
+      "range": {
+        "startLine": 193,
+        "startChar": 19,
+        "endLine": 193,
+        "endChar": 23
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e95e7d5_9f7d8052",
         "filename": "net/socket/tcp_client_socket_unittest.cc",
         "patchSetId": 18
@@ -229,6 +445,30 @@
       "revId": "b2423c022fe6950a88db5e209799e221511576ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff97207_a9488de6",
+        "filename": "net/socket/tcp_client_socket_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e95e7d5_9f7d8052",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "163e4d58_2e4d4cca",
+        "filename": "net/socket/tcp_socket_posix.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7007f52b_64bf5482",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 17
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7dbec35_e69514d0",
         "filename": "net/socket/udp_client_socket.cc",
         "patchSetId": 18
@@ -275,6 +539,30 @@
       "revId": "b2423c022fe6950a88db5e209799e221511576ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adb7010_5d87bd99",
+        "filename": "net/socket/udp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done, I\u0027ve made Tag() not DCHECK on all platforms, so that higher layers don\u0027t have to have platform-specific checks before calling Tag().",
+      "parentUuid": "b7dbec35_e69514d0",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 5
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "1a14d2a3_5e5c4449",
+        "filename": "net/socket/udp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a3ac1a6_71e16ab0",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac31d9e_6bf531c6",
         "filename": "net/socket/udp_socket_win.cc",
         "patchSetId": 18
@@ -321,6 +633,30 @@
       "revId": "b2423c022fe6950a88db5e209799e221511576ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef62f6af_afd84d69",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:07:48Z",
+      "side": 1,
+      "message": "I changed it to CHECK that only the default tag is being applied.  This way higher layer code doesn\u0027t need to have platform-specific checks when calling ApplySocketTag().",
+      "parentUuid": "6ac31d9e_6bf531c6",
+      "range": {
+        "startLine": 1221,
+        "startChar": 15,
+        "endLine": 1221,
+        "endChar": 0
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
