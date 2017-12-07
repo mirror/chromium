@@ -107,6 +107,24 @@
       "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a04b45_5055587c",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-07T19:52:18Z",
+      "side": 1,
+      "message": "So in my own words, most renderer clients do not retry if EstablishChannel fails, which is a problem if EstablishChannel can fail in a transient way.\n\nI have some ideas how to proceed, but they probably don\u0027t look anything like this CL, so I\u0027ll put those ideas on the bug for your feedback, and abandon this CL.",
+      "parentUuid": "72778718_d77fe213",
+      "revId": "3a791213ca3094b39c5a72e333e15d18a2ba9a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
