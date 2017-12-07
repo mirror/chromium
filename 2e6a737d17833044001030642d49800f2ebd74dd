@@ -22,6 +22,30 @@
       "revId": "2e6a737d17833044001030642d49800f2ebd74dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abf2698_9202fcbe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/support/send-file-form-helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-12-07T17:08:53Z",
+      "side": 1,
+      "message": "They aren\u0027t always the same. I suspect it appears this way due to the diff viewer not showing unchanged lines. Expand the \"common lines\" in the file diff viewer - the other test cases (moved to WPT but otherwise unchanged in this move) pass different values for this.\n\nThe expectedEncodedBaseName varies across the different formEncoding values for the more \"interesting\" fileBaseName values. The fileNameSource is just a hint about source repertoire (meaning e.g. \"this file name has characters entirely representable in ASCII\" or \"... in ISO-2022-JP\") that I found useful when debugging failures.\n\nI can\u0027t seem to construct a shareable URL to the diff viewer that shows what I\u0027m talking about, but the committed files may show more clearly what I\u0027m talking about:\n\nCompare, e.g., UTF-8\n\nhttps://chromium.googlesource.com/chromium/src/+/2e6a737d17833044001030642d49800f2ebd74dd/third_party/WebKit/LayoutTests/external/wpt/FileAPI/file/send-file-form-utf-8.html\n\n..., Windows-1252\n\nhttps://chromium.googlesource.com/chromium/src/+/2e6a737d17833044001030642d49800f2ebd74dd/third_party/WebKit/LayoutTests/external/wpt/FileAPI/file/send-file-form-windows-1252.tentative.html\n\n... and ISO-2022-JP\n\nhttps://chromium.googlesource.com/chromium/src/+/2e6a737d17833044001030642d49800f2ebd74dd/third_party/WebKit/LayoutTests/external/wpt/FileAPI/file/send-file-form-iso-2022-jp.tentative.html",
+      "parentUuid": "d525c7a2_282b6efa",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "2e6a737d17833044001030642d49800f2ebd74dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
