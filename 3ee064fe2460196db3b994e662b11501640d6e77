@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cfc4482_4baec661",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-07T10:01:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1bf3b97_1d0043f0",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 23
+      },
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f001111c_3e95adfa",
         "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
         "patchSetId": 19
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-07T07:44:39Z",
       "side": 1,
       "message": "The obvious question to ask here is: why doesn\u0027t the mojom just declare int32_t as the type of this arg then?",
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551433ee_ee50f1c3",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-07T10:01:06Z",
+      "side": 1,
+      "message": "Because not all ints fit in an int32 (at least not on all platforms). That said, they\u0027re sequentially generated starting at 0, so it should be fine to CHECK on the renderer side if the int is too large. Would you prefer that?",
+      "parentUuid": "f001111c_3e95adfa",
       "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b227928_931d0cac",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-07T10:01:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc6526c_48cf1c61",
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
