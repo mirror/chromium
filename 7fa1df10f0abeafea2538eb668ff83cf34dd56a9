@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "674d7940_bb7c1bf2",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "nit: please use a more readable name than x, y.",
+      "range": {
+        "startLine": 145,
+        "startChar": 49,
+        "endLine": 145,
+        "endChar": 50
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddeecc41_66083e2a",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "I think it will be more readable if we create local variable aliases for \nx.first and x.second that have better names and types. This is also encouraged\nby style guide [1]\n\ne.g., \nint element_id \u003d x.first;\nstd::unordered_set\u003cint\u003e\u0026 ticker_ids \u003d x.second;\n\n\n[1]\nhttps://google.github.io/styleguide/cppguide.html#auto",
+      "range": {
+        "startLine": 147,
+        "startChar": 52,
+        "endLine": 147,
+        "endChar": 59
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8db1d2_8dfefc08",
+        "filename": "cc/animation/animation_player.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "I think it will be useful to add some documentation on when a ticker is added to either map.\nand how they relate to each other.\n\nMy understanding based on looking at the code is that \n1) a ticker is added/removed to the \nid_to_ticker_map_ when AddTicker/RemoveTicker is called.\n2) a ticker is added/removed  to element_to_ticker_id_map_ when AttachElementFrom/DetachElementFrom are called.\n\nFrom above two and how add, attach works I understand that it is possible for\na ticker to be in id_to_ticker_map_ but not in element_to_ticker_id_map_\nbut not possible otherwise? \n\nIs the above accurate?",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 34
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5d3334_5c3fad57",
+        "filename": "cc/animation/animation_ticker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "hmmm, shouldn\u0027t this DCHECK always fail?",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37e8a09_51f5e5c2",
+        "filename": "cc/animation/single_animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "should actually verify that we have exactly \"1\" ticker.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8364fa_68c9bb1a",
+        "filename": "cc/animation/single_animation_player.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "This creates a player with a single ticker but that ticker id is different.\nDon\u0027t we need to make sure that the impl side ticker has the same id?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126c459f_c33bf98d",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think \"Unique\" is accurate and meaningful here. \nSingleAnimationPlayer has one ticker by definition. So why not just say\n\"GetTicker\" which obviously refers to the expected ticker.",
+      "range": {
+        "startLine": 59,
+        "startChar": 19,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "7fa1df10f0abeafea2538eb668ff83cf34dd56a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

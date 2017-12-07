@@ -624,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "e8e463f3_f242b680",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-07T21:30:02Z",
+      "side": 1,
+      "message": "I agree that it makes sense to use SingleAnimationPlayer in other tests in this\npatch to avoid unnecessary churn in unrelated test code. But in this particular \ninstance, I don\u0027t think it is the right decision.\n\n\nThis unit test is meant to test the AnimationPlayer logic. Most of existing tests \nhere assume a single ticker instance. This is why on surface it is tempting to use \"SingleAnimationPlayer\" and not change the tests. But this makes the tests more \nindirect. I feel in this unit test we should opt for directly testing animation player\nat the cost of updating the tests to use its new API. \n\n\nHaving said that, operationally I think the pattern of:\n - create a ticker\n - add ticker to player\n - test as before but use local ticker instance instead of player_-\u003eanimation_ticker()\n\nshould pretty much cover most of the changes you need to do. It is a bit of\nwork but I think it is reasonable.",
+      "parentUuid": "d652bc0b_e8839cc5",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "1a40194b5ccb9f499c64980af1b4d9e79263176b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c584d2d1_2bc2d2c2",
         "filename": "cc/animation/animation_ticker.cc",
         "patchSetId": 10
