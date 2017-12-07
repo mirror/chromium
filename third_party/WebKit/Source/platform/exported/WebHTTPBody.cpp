@@ -85,7 +85,7 @@ bool WebHTTPBody::ElementAt(size_t index, Element& result) const {
       result.type = Element::kTypeBlob;
       result.blob_uuid = element.blob_uuid_;
       break;
-    default:
+    case FormDataElement::kDataPipe:
       NOTREACHED();
       return false;
   }
@@ -121,6 +121,19 @@ void WebHTTPBody::AppendFileRange(const WebString& file_path,
 void WebHTTPBody::AppendBlob(const WebString& uuid) {
   EnsureMutable();
   private_->AppendBlob(uuid, nullptr);
+}
+
+void WebHTTPBody::AppendDataPipe(mojo::ScopedMessagePipeHandle message_pipe) {
+  EnsureMutable();
+
+  // Convert the raw message pipe to network::mojom::blink::DataPipeGetter.
+  network::mojom::blink::DataPipeGetterPtr data_pipe_getter;
+  data_pipe_getter.Bind(network::mojom::blink::DataPipeGetterPtrInfo(
+      std::move(message_pipe), 0u));
+
+  scoped_refptr<WrappedDataPipeGetter> wrapped =
+      base::AdoptRef(new WrappedDataPipeGetter(std::move(data_pipe_getter)));
+  private_->AppendDataPipe(std::move(wrapped));
 }
 
 long long WebHTTPBody::Identifier() const {

@@ -51,7 +51,7 @@ class MODULES_EXPORT BytesConsumerForDataConsumerHandle final
 
  private:
   void Close();
-  void GetError();
+  void SetError();
   void Notify();
 
   Member<ExecutionContext> execution_context_;

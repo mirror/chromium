@@ -36,6 +36,9 @@
 #include "WebString.h"
 #include "WebURL.h"
 
+#include "mojo/public/cpp/system/data_pipe.h"
+#include "services/network/public/interfaces/data_pipe_getter.mojom-shared.h"
+
 #if INSIDE_BLINK
 #include "base/memory/scoped_refptr.h"
 #endif
@@ -47,7 +50,12 @@ class EncodedFormData;
 class WebHTTPBody {
  public:
   struct Element {
-    enum Type { kTypeData, kTypeFile, kTypeBlob, kTypeFileSystemURL } type;
+    enum Type {
+      kTypeData,
+      kTypeFile,
+      kTypeBlob,
+      kTypeFileSystemURL,
+    } type;
     WebData data;
     WebString file_path;
     long long file_start;
@@ -88,6 +96,9 @@ class WebHTTPBody {
                                              long long file_length,
                                              double modification_time);
   BLINK_PLATFORM_EXPORT void AppendBlob(const WebString& uuid);
+  // |data_pipe_getter| is a network::mojom::DataPipeGetterPtr.
+  BLINK_PLATFORM_EXPORT void AppendDataPipe(
+      mojo::ScopedMessagePipeHandle data_pipe_getter);
 
   BLINK_PLATFORM_EXPORT void SetUniqueBoundary();
 
