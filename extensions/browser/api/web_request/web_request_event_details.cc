@@ -65,7 +65,7 @@ WebRequestEventDetails::WebRequestEventDetails(const net::URLRequest* request,
 
   dict_.SetString(keys::kMethodKey, request->method());
   dict_.SetString(keys::kRequestIdKey,
-                  base::Uint64ToString(request->identifier()));
+                  base::NumberToString(request->identifier()));
   dict_.SetDouble(keys::kTimeStampKey, base::Time::Now().ToDoubleT() * 1000);
   dict_.SetString(keys::kTypeKey,
                   WebRequestResourceTypeToString(resource_type));

@@ -329,6 +329,42 @@ bool String16ToIntImpl(const StringPiece16& input, VALUE* output) {
 
 }  // namespace
 
+namespace internal {
+
+std::string Int32ToString(int32_t value) {
+  return IntToStringT<std::string, int32_t>::IntToString(value);
+}
+
+string16 Int32ToString16(int32_t value) {
+  return IntToStringT<string16, int32_t>::IntToString(value);
+}
+
+std::string Uint32ToString(uint32_t value) {
+  return IntToStringT<std::string, uint32_t>::IntToString(value);
+}
+
+string16 Uint32ToString16(uint32_t value) {
+  return IntToStringT<string16, uint32_t>::IntToString(value);
+}
+
+std::string Int64ToString(int64_t value) {
+  return IntToStringT<std::string, int64_t>::IntToString(value);
+}
+
+string16 Int64ToString16(int64_t value) {
+  return IntToStringT<string16, int64_t>::IntToString(value);
+}
+
+std::string Uint64ToString(uint64_t value) {
+  return IntToStringT<std::string, uint64_t>::IntToString(value);
+}
+
+string16 Uint64ToString16(uint64_t value) {
+  return IntToStringT<string16, uint64_t>::IntToString(value);
+}
+
+}  // namespace internal
+
 std::string NumberToString(int32_t value) {
   return IntToStringT<std::string, int32_t>::IntToString(value);
 }
@@ -343,22 +379,6 @@ std::string NumberToString(uint32_t value) {
 
 string16 NumberToString16(uint32_t value) {
   return IntToStringT<string16, uint32_t>::IntToString(value);
-}
-
-std::string NumberToString(int64_t value) {
-  return IntToStringT<std::string, int64_t>::IntToString(value);
-}
-
-string16 NumberToString16(int64_t value) {
-  return IntToStringT<string16, int64_t>::IntToString(value);
-}
-
-std::string NumberToString(uint64_t value) {
-  return IntToStringT<std::string, uint64_t>::IntToString(value);
-}
-
-string16 NumberToString16(uint64_t value) {
-  return IntToStringT<string16, uint64_t>::IntToString(value);
 }
 
 #if defined(OS_MACOSX)
