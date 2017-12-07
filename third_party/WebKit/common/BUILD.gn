@@ -44,6 +44,8 @@ jumbo_component("blink_common") {
     "message_port/transferable_message.h",
     "message_port/transferable_message_struct_traits.cc",
     "message_port/transferable_message_struct_traits.h",
+    "message_port/v8_stack_trace_id_struct_traits.cc",
+    "message_port/v8_stack_trace_id_struct_traits.h",
     "mime_util/mime_util.cc",
     "mime_util/mime_util.h",
     "origin_manifest/origin_manifest.cc",

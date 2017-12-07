@@ -15,7 +15,8 @@ bool StructTraits<blink::mojom::TransferableMessage::DataView,
          blink::TransferableMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadMessage(static_cast<blink::CloneableMessage*>(out)) ||
-      !data.ReadPorts(&ports)) {
+      !data.ReadPorts(&ports) ||
+      !data.ReadSenderStackTraceId(&out->sender_stack_trace_id)) {
     return false;
   }
 

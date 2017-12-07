@@ -8,6 +8,7 @@
 #include "third_party/WebKit/common/message_port/cloneable_message_struct_traits.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/transferable_message.h"
+#include "third_party/WebKit/common/message_port/v8_stack_trace_id_struct_traits.h"
 
 namespace mojo {
 
@@ -22,6 +23,11 @@ struct BLINK_COMMON_EXPORT
   static std::vector<mojo::ScopedMessagePipeHandle> ports(
       blink::TransferableMessage& input) {
     return blink::MessagePortChannel::ReleaseHandles(input.ports);
+  }
+
+  static const v8_inspector::V8StackTraceId& sender_stack_trace_id(
+      blink::TransferableMessage& input) {
+    return input.sender_stack_trace_id;
   }
 
   static bool Read(blink::mojom::TransferableMessage::DataView data,

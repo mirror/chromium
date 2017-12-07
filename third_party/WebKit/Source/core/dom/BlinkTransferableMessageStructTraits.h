@@ -11,6 +11,7 @@
 #include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
+#include "v8/include/v8-inspector.h"
 
 namespace mojo {
 
@@ -29,6 +30,14 @@ struct StructTraits<blink::mojom::blink::TransferableMessage::DataView,
     for (const auto& port : input.ports)
       result.push_back(port.ReleaseHandle());
     return result;
+  }
+
+  static blink::mojom::blink::StackTraceIdPtr sender_stack_trace_id(
+      blink::BlinkTransferableMessage& input) {
+    return blink::mojom::blink::StackTraceId::New(
+        input.sender_stack_trace_id.id,
+        input.sender_stack_trace_id.debugger_id.first,
+        input.sender_stack_trace_id.debugger_id.second);
   }
 
   static bool Read(blink::mojom::blink::TransferableMessage::DataView,
