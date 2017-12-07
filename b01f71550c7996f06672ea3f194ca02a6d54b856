@@ -439,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "7e824fe5_e7b8b6e8",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T09:09:04Z",
+      "side": 1,
+      "message": "|models| is a vector of ContentSettingImageModel, not BubbleModel. So you should be able to check model-\u003eimage_type() against content_settings_to_test[], no?",
+      "parentUuid": "71de8a69_5a6ace4a",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb35b1de_ff23632a",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
         "patchSetId": 9
