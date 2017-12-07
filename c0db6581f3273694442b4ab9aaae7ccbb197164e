@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b7d0207_7cff015f",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T17:21:20Z",
+      "side": 1,
+      "message": "This initialization is unnecessary. The default constructor sets it to nullptr.",
+      "revId": "c0db6581f3273694442b4ab9aaae7ccbb197164e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d21e683_419c4503",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T17:21:20Z",
+      "side": 1,
+      "message": "web_app_info_provider_.reset();",
+      "revId": "c0db6581f3273694442b4ab9aaae7ccbb197164e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b52e28_d01987b6",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T17:21:20Z",
+      "side": 1,
+      "message": "Can this method be called more than once before the callback is run? It looks like it can\u0027t because CreateHostedAppFromWebContents checks before calling this method but can you add a comment here explaining that and perhaps a DCHECK on pending_web_app_action_.",
+      "range": {
+        "startLine": 598,
+        "startChar": 0,
+        "endLine": 599,
+        "endChar": 31
+      },
+      "revId": "c0db6581f3273694442b4ab9aaae7ccbb197164e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
