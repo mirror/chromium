@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2867fbb8_f37d5d40",
+        "filename": "chrome/browser/resources/feedback/js/sys_info.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:26:28Z",
+      "side": 1,
+      "message": "are there any unit tests for this file?",
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65727af_20562452",
+        "filename": "chrome/browser/resources/feedback/js/sys_info.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:26:28Z",
+      "side": 1,
+      "message": "was this meant to be displayValue as well? the intent here isn\u0027t obvious to me",
+      "range": {
+        "startLine": 207,
+        "startChar": 56,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12af48f3_8575e240",
+        "filename": "components/feedback/feedback_util_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:26:28Z",
+      "side": 1,
+      "message": "feedback_util.h already exists and also only has one function in it. thoughts about whether it\u0027d be better to make this be a non-cros-only function in the existing file in case it\u0027s useful for other platforms, or even just a cros-only function there?",
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54bc95_1a2285b8",
+        "filename": "components/feedback/feedback_util_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T21:26:28Z",
+      "side": 1,
+      "message": "nit: document what the return value means",
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
