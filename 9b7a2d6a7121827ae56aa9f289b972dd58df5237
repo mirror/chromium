@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5a58f15d_6542ac1a",
+        "filename": "chrome/browser/resources/feedback/js/sys_info.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-07T22:05:04Z",
+      "side": 1,
+      "message": "If the value for this key is empty, then there\u0027s no reason to show the displayValue instead; we\u0027ll just show the empty entry.",
+      "parentUuid": "f65727af_20562452",
+      "range": {
+        "startLine": 207,
+        "startChar": 56,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "9b7a2d6a7121827ae56aa9f289b972dd58df5237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12af48f3_8575e240",
         "filename": "components/feedback/feedback_util_chromeos.h",
         "patchSetId": 4
