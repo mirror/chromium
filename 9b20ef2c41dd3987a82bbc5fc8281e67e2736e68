@@ -22,6 +22,30 @@
       "revId": "9b20ef2c41dd3987a82bbc5fc8281e67e2736e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884dab8b_d925943e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-12-07T05:16:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a1dcef_7cc77be0",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 22
+      },
+      "revId": "9b20ef2c41dd3987a82bbc5fc8281e67e2736e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
