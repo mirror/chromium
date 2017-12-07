@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "9cf5757a_2943125c",
+        "filename": "net/socket/tcp_client_socket.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-07T19:26:11Z",
+      "side": 1,
+      "message": "TCP sockets expend data to connect() whereas UDP sockets do not, so to make sure all data is accounted for we need to tag TCP sockets before connect()ing.  It\u0027s a little more code so I only did it for TCP sockets.  Anyhow in the current version both UDP and TCP sockets can be tagged before or after connect()ing.",
+      "parentUuid": "ba4866f8_3367dd50",
+      "range": {
+        "startLine": 351,
+        "startChar": 9,
+        "endLine": 351,
+        "endChar": 12
+      },
+      "revId": "b2423c022fe6950a88db5e209799e221511576ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d95d1ab6_93533d77",
         "filename": "net/socket/tcp_client_socket.cc",
         "patchSetId": 18
