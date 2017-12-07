@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<title>Tests that the optional comment area under the "WEBVTT" file header is properly ignored.  Also, default settings and styling are currently ignored (treated as faulty cues).</title>
+<title>Optional comment area under the "WEBVTT" file header is properly ignored and also, default settings and styling are currently ignored (treated as faulty cues)</title>
 <script src="track-helpers.js"></script>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <video>
-    <track src="captions-webvtt/tc005-default-styles.vtt">
-    <track src="captions-webvtt/tc005-metadata-area.vtt">
+    <track src="resources/tc005-default-styles.vtt">
+    <track src="resources/tc005-metadata-area.vtt">
 </video>
 <script>
 async_test(function(t) {
     var video = document.querySelector("video");
-    
+
     var trackElements = document.querySelectorAll("track");
     for (var i = 0; i < video.textTracks.length; i++)
         trackElements[i].onload = t.step_func(trackLoaded);

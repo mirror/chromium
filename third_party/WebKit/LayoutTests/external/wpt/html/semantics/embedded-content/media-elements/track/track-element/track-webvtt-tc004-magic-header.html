@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<title>Tests that the magic file header "WEBVTT" leads to the file properly recognized as a WebVTT file.</title>
+<title>Magic file header "WEBVTT" leads to the file properly recognized as a WebVTT file</title>
 <script src="track-helpers.js"></script>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <video>
-    <track src="captions-webvtt/tc004-webvtt-file.vtt">
-    <track src="captions-webvtt/tc004-webvtt-rubbish.vtt">
-    <track src="captions-webvtt/tc004-no-webvtt.vtt">
+    <track src="resources/tc004-webvtt-file.vtt">
+    <track src="resources/tc004-webvtt-rubbish.vtt">
+    <track src="resources/tc004-no-webvtt.vtt">
 </video>
 <script>
 async_test(function(t) {
     var video = document.querySelector("video");
-    
+
     var trackElements = document.querySelectorAll("track");
     trackElements[0].onload = t.step_func(trackLoaded);
     trackElements[1].onload = t.step_func(trackLoaded);
     trackElements[2].onerror = t.step_func(trackLoaded);
-    
+
     enableAllTextTracks(video.textTracks);
 
     var numberOfTracksLoaded = 0;
