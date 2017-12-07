@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7382bef_8074fe4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "a14c815e_2a65d5d5",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf33e21_871e4895",
         "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4020418e_fd8eb297",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf33e21_871e4895",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "984069e5_f79735f7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "I prefer with braces. I find it easier to read, as well as more standard (always braces, rather than braces-if-not-single-line).",
+      "parentUuid": "8b23fe10_171f6b43",
+      "range": {
+        "startLine": 391,
+        "startChar": 13,
+        "endLine": 391,
+        "endChar": 14
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d209045_12442cf9",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-07T16:06:19Z",
       "side": 1,
       "message": "I think this one should be a DCHECK_GT(written, 0)\nIs there a security issue if |written| is 0?",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 7
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c29e66_00d2f6a4",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "* I\u0027ll change to _GT.\n* snprintf is not supposed to be able to fail, given these inputs, so we\u0027re not supposed to ever end up really crashing.\n* In the *highly* unlikely case that snprintf does end up with an error, there are no guarantees over |stamp|. Then, it might even end up with a path that would refer us back to some place of the filesystem where we really not wish to be. That\u0027s why I\u0027d consider it a (theoretical) security issue.\n* Please note that this bit of the code was just moved.\n\nLeaving unresolved; waiting for further input about CHECK vs. DCHECK vs. other options.",
+      "parentUuid": "6d209045_12442cf9",
       "range": {
         "startLine": 420,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9b277aff_d303489a",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e015848_40d714ce",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 7
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab0542b7_3aeea5cb",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917bbde1_f0aa6d7d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab0542b7_3aeea5cb",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "69f741dd_158adbea",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2c9e1d_d4405410",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80f7f6cf_9c9543b6",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 7
@@ -183,6 +351,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df3d4d9_c2bc9008",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80f7f6cf_9c9543b6",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 24
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4b02fd32_daedee5b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efa9e255_477f7391",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 15
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "508fb5f5_dff2455e",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c1855d_3de27f89",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508fb5f5_dff2455e",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "c35a0614_1e28b7b8",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f631fc7b_c34dbb20",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1026cfeb_fab6ef72",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 7
@@ -275,6 +539,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4895691_295c3dff",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1026cfeb_fab6ef72",
+      "range": {
+        "startLine": 134,
+        "startChar": 46,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "8821a0a8_b4cfd001",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "1. Done.\n2. Reply let\u0027s you know that the observer was set/unset, and let\u0027s you run whatever reaction logic you want. For unit tests, specifically, you then know that it\u0027s safe to deallocate the observer.\n3. Yes, by passing nullptr. This is done in the unit-tests.",
+      "parentUuid": "f0478864_535459b1",
+      "range": {
+        "startLine": 147,
+        "startChar": 9,
+        "endLine": 147,
+        "endChar": 10
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b7f33f_cb863328",
         "filename": "content/browser/webrtc/webrtc_internals.h",
         "patchSetId": 7
@@ -312,6 +624,30 @@
       "writtenOn": "2017-12-07T16:06:19Z",
       "side": 1,
       "message": "This method should use CamelCase naming convention.\nThe underscore convention is for simple inline getters/setters.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f088b9_cf8a02f4",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "* Is this not a simple getter? Is the fact that it\u0027s virtual the thing that makes the difference?\n* If we do change to CamelCase, shall it be WebRtcEventLogManager() or GetWebRtcEventLogManager()? The former might be confused for the class\u0027s ctor. What do you prefer?",
+      "parentUuid": "97b7f33f_cb863328",
       "range": {
         "startLine": 123,
         "startChar": 2,
@@ -344,6 +680,30 @@
       "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a4dbac_95db2e59",
+        "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T17:16:21Z",
+      "side": 1,
+      "message": "Thanks. Removed.",
+      "parentUuid": "6b84edc4_de29775a",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
