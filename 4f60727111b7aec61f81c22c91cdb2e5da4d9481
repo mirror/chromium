@@ -70,6 +70,30 @@
       "revId": "4f60727111b7aec61f81c22c91cdb2e5da4d9481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e57c5f_dd18dbd3",
+        "filename": "media/audio/mac/audio_device_listener_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T14:29:23Z",
+      "side": 1,
+      "message": "Sorry, it still had a bug. Please take a look at the latest patchset.",
+      "parentUuid": "cc145637_233e8ca1",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "4f60727111b7aec61f81c22c91cdb2e5da4d9481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
