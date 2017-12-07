@@ -2211,8 +2211,31 @@ scoped_refptr<AbstractInlineTextBox> LayoutText::FirstAbstractInlineTextBox() {
                                             first_text_box_);
 }
 
+static const NGPaintFragment* findNGPaintFragment(const NGPaintFragment* parent,
+  const LayoutObject* layout_object) {
+  if (!parent)
+    return nullptr;
+  if (parent->GetLayoutObject() == layout_object)
+    return parent;
+  for (const auto& child : parent->Children()) {
+    if (const NGPaintFragment* fragment = findNGPaintFragment(child.get(), layout_object))
+      return fragment;
+  }
+  return nullptr;
+}
+
 void LayoutText::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
+  if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
+    // TODO: Implement Mix-in template function.
+    LayoutNGBlockFlow* layout_ng = ToLayoutNGBlockFlow(block_flow);
+    const NGPaintFragment* paint_fragment = findNGPaintFragment(layout_ng->PaintFragment(), this);
+    if (paint_fragment) {
+      ObjectPaintInvalidator paint_invalidator(*this);
+      paint_invalidator.InvalidateDisplayItemClient(*paint_fragment, invalidation_reason);
+    }
+    return;
+  }
   ObjectPaintInvalidator paint_invalidator(*this);
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
