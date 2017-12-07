@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c50999aa_66989582",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-07T01:56:21Z",
+      "side": 1,
+      "message": "I\u0027m open to other suggestions on how to do this, but I don\u0027t really want to leave the original constant in the code.",
+      "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
