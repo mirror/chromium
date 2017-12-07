@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ae4e3ca0_17860915",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T16:48:06Z",
+      "side": 1,
+      "message": "I think I\u0027d rather add an exemption (pending discussion with security) that if you\u0027re connected to USB and have usb debugging enabled then we would disable this feature.\n\nI do wonder if this has implications for render tests or any of the screenshot tools being build.  If we want a flag for this, then I\u0027d still rather it just be a command line flag and not exposed in about flags as this could have unexpected consequences.",
+      "parentUuid": "e2861a0b_4449209e",
+      "range": {
+        "startLine": 209,
+        "startChar": 31,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "e108ff7d7abe8c47e96225713add09342671cccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4f289b_586e3bca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
         "patchSetId": 5
