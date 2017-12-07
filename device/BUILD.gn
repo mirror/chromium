@@ -72,6 +72,7 @@ test("device_unittests") {
     "sensors/sensor_manager_chromeos_unittest.cc",
     "test/run_all_unittests.cc",
     "u2f/u2f_apdu_unittest.cc",
+    "u2f/u2f_ble_connection_unittest.cc",
     "u2f/u2f_ble_frames_unittest.cc",
     "u2f/u2f_discovery_unittest.cc",
     "u2f/u2f_message_unittest.cc",
@@ -280,7 +281,9 @@ source_set("usb_test_gadget") {
 }
 
 if (is_android) {
-  bluetooth_java_sources_needing_jni = [ "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java" ]
+  bluetooth_java_sources_needing_jni = [
+    "bluetooth/test/android/java/src/org/chromium/device/bluetooth/Fakes.java",
+  ]
 
   generate_jni("bluetooth_test_jni_headers") {
     sources = bluetooth_java_sources_needing_jni
