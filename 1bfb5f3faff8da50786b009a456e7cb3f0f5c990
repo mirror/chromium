@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bc6b2e_14b11e48",
+        "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-07T21:59:35Z",
+      "side": 1,
+      "message": "Is it possible to do this with only one vector? Custom property names will always start with \u0027--\u0027, so you can primary sort on whether it\u0027s a custom property and then secondary sort on the name. Your comparison function could be something like:\n\n    if (a.first.StartsWith(\u0027--\u0027) \u003d\u003d b.first.StartsWith(\u0027--\u0027))\n      return WTF::CodePointCompareLessThan(a.first, b.first);\n    return b.first.StartsWith(\u0027--\u0027);",
+      "revId": "1bfb5f3faff8da50786b009a456e7cb3f0f5c990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
