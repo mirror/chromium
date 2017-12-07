@@ -230,6 +230,7 @@ class FullscreenObserver : public WebContentsObserver {
     isPopup_ = popup;
     touchBarController_.reset([[WebTextfieldTouchBarController alloc]
         initWithTabContentsController:self]);
+    [touchBarController_ changeWebContents:contents];
   }
   return self;
 }
@@ -310,6 +311,7 @@ class FullscreenObserver : public WebContentsObserver {
   fullscreenObserver_->Observe(contents_);
   isEmbeddingFullscreenWidget_ =
       contents_ && contents_->GetFullscreenRenderWidgetHostView();
+  [touchBarController_ changeWebContents:newContents];
 }
 
 // Returns YES if the tab represented by this controller is the front-most.
