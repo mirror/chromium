@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcef6ec_3470d017",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-07T07:42:50Z",
+      "side": 1,
+      "message": "This needs to keep calling PlatformGetParent in a loop, otherwise you\u0027re\nonly fixing immediate children of controls and not other descendants.\n\nAlso make sure it doesn\u0027t crash if PlatformGetParent returns null.",
+      "revId": "26616bf99e1cf11ad85883b4786b8409300dd041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
