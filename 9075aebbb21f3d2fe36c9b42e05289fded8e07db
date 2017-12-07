@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a6282f6_38410abb",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:57:26Z",
+      "side": 1,
+      "message": "Can we add a comment so future readers won\u0027t worry this is leaking and try to go back to ScopedHandle?",
+      "revId": "9075aebbb21f3d2fe36c9b42e05289fded8e07db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5db0396_90ccce98",
+        "filename": "base/process/process_info_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T02:57:26Z",
+      "side": 1,
+      "message": "Can we remove this now?",
+      "revId": "9075aebbb21f3d2fe36c9b42e05289fded8e07db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
