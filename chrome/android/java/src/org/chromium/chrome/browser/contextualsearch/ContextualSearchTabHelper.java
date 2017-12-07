@@ -195,6 +195,7 @@ public class ContextualSearchTabHelper
         if (cvc == null) return;
 
         if (isContextualSearchActive(cvc)) {
+            removeContextualSearchHooks(cvc);
             addContextualSearchHooks(cvc);
         } else {
             removeContextualSearchHooks(cvc);
@@ -232,7 +233,10 @@ public class ContextualSearchTabHelper
             mGestureStateListener = null;
 
             // If we needed to remove our listener, we also need to remove our selection client.
-            cvc.setSelectionClient(mSelectionClientManager.removeContextualSearchSelectionClient());
+            if (mSelectionClientManager != null) {
+                cvc.setSelectionClient(
+                        mSelectionClientManager.removeContextualSearchSelectionClient());
+            }
         }
     }
 
