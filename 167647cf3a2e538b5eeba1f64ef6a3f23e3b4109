@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fb85bbe_82f5e252",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-07T02:15:51Z",
+      "side": 1,
+      "message": "Ian, this is the cute binding we discussed, that uses an out-of-band model.  As mentioned, we could instead adapt the VrShell interface to split input and enabled.",
+      "revId": "167647cf3a2e538b5eeba1f64ef6a3f23e3b4109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
