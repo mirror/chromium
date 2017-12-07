@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef59fe1a_18c8c057",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-12-07T17:52:26Z",
+      "side": 1,
+      "message": "nit: this is also no longer needed right?",
+      "range": {
+        "startLine": 402,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 0
+      },
+      "revId": "126cf67d63f4058c83c1343a951f3683e92e6671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
