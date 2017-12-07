@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc7fc2d8_e3c80246",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-12-07T19:39:19Z",
+      "side": 1,
+      "message": "German Eszett character? :-)",
+      "range": {
+        "startLine": 110,
+        "startChar": 74,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "c086c5a126b744a4e125c493ae903c36e7dd6380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
