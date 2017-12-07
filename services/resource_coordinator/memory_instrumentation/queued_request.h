@@ -49,7 +49,8 @@ struct QueuedRequest {
 
   QueuedRequest(const base::trace_event::MemoryDumpRequestArgs& args,
                 const RequestGlobalMemoryDumpInternalCallback& callback,
-                bool add_to_trace);
+                bool add_to_trace,
+                base::ProcessId pid);
   ~QueuedRequest();
 
   bool wants_mmaps() const {
@@ -73,6 +74,7 @@ struct QueuedRequest {
   const base::trace_event::MemoryDumpRequestArgs args;
   const RequestGlobalMemoryDumpInternalCallback callback;
   const bool add_to_trace;
+  const base::ProcessId pid;
 
   // When a dump, requested via RequestGlobalMemoryDump(), is in progress this
   // set contains a |PendingResponse| for each |RequestChromeMemoryDump| and
