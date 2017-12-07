@@ -36,6 +36,7 @@ CWV_EXPORT
 // |completionHandler| will only be called on success.
 - (void)fetchSuggestionsForFormWithName:(NSString*)formName
                               fieldName:(NSString*)fieldName
+                        fieldIdentifier:(NSString*)fieldIdentifier
                       completionHandler:
                           (void (^)(NSArray<CWVAutofillSuggestion*>*))
                               completionHandler;

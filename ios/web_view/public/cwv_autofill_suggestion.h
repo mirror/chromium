@@ -44,6 +44,9 @@ CWV_EXPORT
 // The 'name' attribute of the html field element.
 @property(nonatomic, copy, readonly) NSString* fieldName;
 
+// The '' attribute of the html field element.
+@property(nonatomic, copy, readonly) NSString* fieldIdentifier;
+
 // The string that will replace the field with |fieldName|'s value attribute.
 @property(nonatomic, copy, readonly) NSString* value;
 

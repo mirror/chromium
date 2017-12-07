@@ -36,8 +36,8 @@
 // |completionHandler| is called after the forms are filled. |completionHandler|
 // cannot be nil.
 - (void)fillForm:(NSString*)dataString
-    forceFillFieldName:(NSString*)forceFillFieldName
-     completionHandler:(ProceduralBlock)completionHandler;
+    forceFillFieldIdentifier:(NSString*)forceFillFieldIdentifier
+           completionHandler:(ProceduralBlock)completionHandler;
 
 // Clear autofilled fields of the specified form. Fields that are not currently
 // autofilled are not modified. Field contents are cleared, and Autofill flag

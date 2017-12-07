@@ -52,11 +52,12 @@ TEST_F(JsAutofillManagerTest, InitAndInject) {
 // Tests forms extraction method
 // (fetchFormsWithRequirements:minimumRequiredFieldsCount:completionHandler:).
 TEST_F(JsAutofillManagerTest, ExtractForms) {
-  LoadHtml(@"<html><body><form name='testform' method='post'>"
-            "<input type='text' name='firstname'/>"
-            "<input type='text' name='lastname'/>"
-            "<input type='email' name='email'/>"
-            "</form></body></html>");
+  LoadHtml(
+      @"<html><body><form name='testform' method='post'>"
+       "<input type='text' id='firstname' name='firstname'/>"
+       "<input type='text' id='lastname' name='lastname'/>"
+       "<input type='email' id='email' name='email'/>"
+       "</form></body></html>");
 
   NSDictionary* expected = @{
     @"name" : @"testform",
@@ -64,6 +65,7 @@ TEST_F(JsAutofillManagerTest, ExtractForms) {
     @"fields" : @[
       @{
         @"name" : @"firstname",
+        @"id" : @"firstname",
         @"form_control_type" : @"text",
         @"max_length" : GetDefaultMaxLength(),
         @"should_autocomplete" : @true,
@@ -74,6 +76,7 @@ TEST_F(JsAutofillManagerTest, ExtractForms) {
       },
       @{
         @"name" : @"lastname",
+        @"id" : @"lastname",
         @"form_control_type" : @"text",
         @"max_length" : GetDefaultMaxLength(),
         @"should_autocomplete" : @true,
@@ -84,6 +87,7 @@ TEST_F(JsAutofillManagerTest, ExtractForms) {
       },
       @{
         @"name" : @"email",
+        @"id" : @"email",
         @"form_control_type" : @"email",
         @"max_length" : GetDefaultMaxLength(),
         @"should_autocomplete" : @true,
@@ -121,18 +125,20 @@ TEST_F(JsAutofillManagerTest, ExtractForms) {
 
 // Tests form filling (fillActiveFormField:completionHandler:) method.
 TEST_F(JsAutofillManagerTest, FillActiveFormField) {
-  LoadHtml(@"<html><body><form name='testform' method='post'>"
-            "<input type='email' name='email'/>"
-            "</form></body></html>");
+  LoadHtml(
+      @"<html><body><form name='testform' method='post'>"
+       "<input type='email' id='email' name='email'/>"
+       "</form></body></html>");
 
   NSString* get_element_javascript = @"document.getElementsByName('email')[0]";
   NSString* focus_element_javascript =
       [NSString stringWithFormat:@"%@.focus()", get_element_javascript];
   [manager_ executeJavaScript:focus_element_javascript completionHandler:nil];
-  [manager_
-      fillActiveFormField:@"{\"name\":\"email\",\"value\":\"newemail@com\"}"
-        completionHandler:^{
-        }];
+  [manager_ fillActiveFormField:
+                @"{\"name\":\"email\",\"identifier\":\"email\",\"value\":"
+                @"\"newemail@com\"}"
+              completionHandler:^{
+              }];
 
   NSString* element_value_javascript =
       [NSString stringWithFormat:@"%@.value", get_element_javascript];

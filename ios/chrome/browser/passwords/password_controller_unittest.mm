@@ -1255,7 +1255,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     __block BOOL block_was_called = NO;
     [passwordController_
         retrieveSuggestionsForForm:form_name
-                             field:username_element
+                         fieldName:username_element
+                   fieldIdentifier:username_element
                          fieldType:@"text"
                               type:@"focus"
                         typedValue:@"abc"
@@ -1282,7 +1283,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     };
     [passwordController_
         didSelectSuggestion:suggestion
-                   forField:@"u"
+                  fieldName:@"u"
+            fieldIdentifier:@"u"
                        form:base::SysUTF8ToNSString(FormName(0))
           completionHandler:completion];
     EXPECT_TRUE(
