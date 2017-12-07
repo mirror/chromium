@@ -22,6 +22,30 @@
       "revId": "2bc5940e98d34500b994c99c37b45c2f0551e06c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878a9ad9_86f8c46e",
+        "filename": "ash/frame/custom_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T01:04:05Z",
+      "side": 0,
+      "message": "new change should cover cases we found at my desk",
+      "parentUuid": "d8a53e5c_96ba2c34",
+      "range": {
+        "startLine": 519,
+        "startChar": 0,
+        "endLine": 519,
+        "endChar": 64
+      },
+      "revId": "2bc5940e98d34500b994c99c37b45c2f0551e06c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
