@@ -1557,6 +1557,8 @@ void ServiceWorkerVersion::StartWorkerInternal() {
 
 void ServiceWorkerVersion::StartTimeoutTimer() {
   DCHECK(!timeout_timer_.IsRunning());
+  DCHECK(pending_requests_.IsEmpty());
+  DCHECK(request_timeouts_.empty());
 
   if (embedded_worker_->devtools_attached()) {
     // Don't record the startup time metric once DevTools is attached.
@@ -1932,6 +1934,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
     iter.Advance();
   }
   pending_requests_.Clear();
+  request_timeouts_.clear();
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
   controller_ptr_.reset();
