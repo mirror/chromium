@@ -23,7 +23,7 @@ class UserActivityMonitor : public mojom::UserActivityMonitor {
  public:
   // |now_clock| is used to get the timestamp. If |now_clock| is nullptr, then
   // DefaultTickClock is used.
-  explicit UserActivityMonitor(std::unique_ptr<base::TickClock> now_clock);
+  explicit UserActivityMonitor(base::TickClock* now_clock);
   ~UserActivityMonitor() override;
 
   // Should be called whenever some input event is received from the user.
@@ -52,7 +52,7 @@ class UserActivityMonitor : public mojom::UserActivityMonitor {
   void OnIdleObserverDisconnected(mojom::UserIdleObserver* observer);
 
   mojo::BindingSet<mojom::UserActivityMonitor> bindings_;
-  std::unique_ptr<base::TickClock> now_clock_;
+  base::TickClock* now_clock_;
 
   struct ActivityObserverInfo {
     base::TimeTicks last_activity_notification;

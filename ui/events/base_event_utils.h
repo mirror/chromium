@@ -28,7 +28,7 @@ EVENTS_BASE_EXPORT bool IsSystemKeyModifier(int flags);
 EVENTS_BASE_EXPORT base::TimeTicks EventTimeForNow();
 
 EVENTS_BASE_EXPORT void SetEventTickClockForTesting(
-    std::unique_ptr<base::TickClock> tick_clock);
+    base::TickClock* tick_clock);
 
 // Converts an event timestamp ticks to seconds (floating point representation).
 // WARNING: This should only be used when interfacing with platform code that

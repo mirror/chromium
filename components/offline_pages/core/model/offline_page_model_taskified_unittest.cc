@@ -112,9 +112,7 @@ class OfflinePageModelTaskifiedTest
   std::unique_ptr<OfflinePageTestArchiver> BuildArchiver(const GURL& url,
                                                          ArchiverResult result);
   void CheckTaskQueueIdle();
-  void SetTestingClock(std::unique_ptr<base::Clock> clock) {
-    model_->clock_ = std::move(clock);
-  }
+  void SetTestingClock(base::Clock* clock) { model_->clock_ = clock; }
 
   // Getters for private fields.
   base::TestMockTimeTaskRunner* task_runner() { return task_runner_.get(); }
