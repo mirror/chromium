@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96262642_4e46a4d3",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T01:50:04Z",
+      "side": 1,
+      "message": "Is it possible to have a more interesting expectation than not crashing? What do the request timeouts look like before and after calling this function? Is it just an empty set since there are no events?",
+      "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
