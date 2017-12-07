@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "e01b5bd9_f0b1044c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "You don\u0027t have to say \"This CL\" in the subject line. Just \"Add mtp.mojom file and modify the related code.\"",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11452e4_f405db5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "grammar: Sorry, I forget the names of the tense/form, but let\u0027s write the following. Also, you can wrap at 72 columns / line.\n\nDefine structs in mtp.mojom to mirror the MTP protobuf messages. Use\nthese structs in MtpManager and related code.",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8518f6_fcbac2df",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Since Ke mentioned it in another file, can this just !info_ptr?",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9432352_c38f3006",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "nit: leave a blank line after the namespace above. Same in other files.",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06b52720_211ed48c",
         "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
         "patchSetId": 1
@@ -227,6 +295,177 @@
         "endLine": 34,
         "endChar": 51
       },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3beaade1_af3ce169",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Can this be const auto\u0026 ?",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9a2594_3719d2b0",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Why is this a .bak file?",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d3b7c8_ea9401d9",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "space before the open parens.",
+      "range": {
+        "startLine": 8,
+        "startChar": 38,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a133d9_4bce192a",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Just:\n\n// This is a mojo counterpart ...\n// See discussion on https://crbug.com/769630.",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4aad1e3_961635cd",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "The sentence abruptly end. How about just:\n\n// Mojo counterpart of the ... from ...\n// See discussion on https://crbug.com/769630.",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fde175_42b8c41c",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Maybe say something more, like \"The same |observer| may not be added more than once.\" if that\u0027s the case.",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f10cd8_f8b8eb24",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "storage names? Since the returned type is a string and not some object.",
+      "range": {
+        "startLine": 76,
+        "startChar": 39,
+        "endLine": 76,
+        "endChar": 47
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf3d66d_0b7b0730",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "There\u0027s no parameter named \"callback\" here.",
+      "range": {
+        "startLine": 83,
+        "startChar": 57,
+        "endLine": 83,
+        "endChar": 72
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37008d6a_2f7d2d18",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T23:45:22Z",
+      "side": 1,
+      "message": "Typo",
       "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
