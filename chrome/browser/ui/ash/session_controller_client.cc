@@ -602,8 +602,10 @@ void SessionControllerClient::SendSessionLengthLimit() {
 
   policy::off_hours::DeviceOffHoursController* off_hours_controller =
       chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
-  base::TimeTicks policy_off_hours_end_time =
-      off_hours_controller->GetOffHoursEndTime();
+  base::TimeTicks policy_off_hours_end_time;
+  // Use "OffHours" end time only if the session will be actually terminated.
+  if (off_hours_controller->IsCurrentSessionAllowedOnlyForOffHours())
+    policy_off_hours_end_time = off_hours_controller->GetOffHoursEndTime();
 
   // If |session_length_limit| is zero or |session_start_time| is null then
   // "SessionLengthLimit" policy is unset.

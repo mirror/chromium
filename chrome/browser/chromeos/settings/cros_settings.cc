@@ -221,10 +221,10 @@ bool CrosSettings::GetDictionary(
   return false;
 }
 
-bool CrosSettings::FindEmailInList(const std::string& path,
+// static
+bool CrosSettings::FindEmailInList(const base::ListValue* list,
                                    const std::string& email,
-                                   bool* wildcard_match) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+                                   bool* wildcard_match) {
   std::string canonicalized_email(
       gaia::CanonicalizeEmail(gaia::SanitizeEmail(email)));
   std::string wildcard_email;
@@ -236,10 +236,6 @@ bool CrosSettings::FindEmailInList(const std::string& path,
 
   if (wildcard_match)
     *wildcard_match = false;
-
-  const base::ListValue* list;
-  if (!GetList(path, &list))
-    return false;
 
   bool found_wildcard_match = false;
   for (base::ListValue::const_iterator entry(list->begin());
@@ -268,6 +264,21 @@ bool CrosSettings::FindEmailInList(const std::string& path,
     *wildcard_match = found_wildcard_match;
 
   return found_wildcard_match;
+}
+
+bool CrosSettings::FindEmailInList(const std::string& path,
+                                   const std::string& email,
+                                   bool* wildcard_match) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  const base::ListValue* list;
+  if (!GetList(path, &list)) {
+    if (wildcard_match)
+      *wildcard_match = false;
+    return false;
+  }
+
+  return FindEmailInList(list, email, wildcard_match);
 }
 
 bool CrosSettings::AddSettingsProvider(

@@ -114,242 +114,6 @@ const char* const kKnownSettings[] = {
     kVariationsRestrictParameter,
 };
 
-void DecodeLoginPolicies(
-    const em::ChromeDeviceSettingsProto& policy,
-    PrefValueMap* new_values_cache) {
-  // For all our boolean settings the following is applicable:
-  // true is default permissive value and false is safe prohibitive value.
-  // Exceptions:
-  //   kAccountsPrefEphemeralUsersEnabled has a default value of false.
-  //   kAccountsPrefSupervisedUsersEnabled has a default value of false
-  //     for enterprise devices and true for consumer devices.
-  //   kAccountsPrefTransferSAMLCookies has a default value of false.
-  if (policy.has_allow_new_users() &&
-      policy.allow_new_users().has_allow_new_users()) {
-    if (policy.allow_new_users().allow_new_users()) {
-      // New users allowed, user whitelist ignored.
-      new_values_cache->SetBoolean(kAccountsPrefAllowNewUser, true);
-    } else {
-      // New users not allowed, enforce user whitelist if present.
-      new_values_cache->SetBoolean(kAccountsPrefAllowNewUser,
-                                   !policy.has_user_whitelist());
-    }
-  } else {
-    // No configured allow-new-users value, enforce whitelist if non-empty.
-    new_values_cache->SetBoolean(
-        kAccountsPrefAllowNewUser,
-        policy.user_whitelist().user_whitelist_size() == 0);
-  }
-
-  new_values_cache->SetBoolean(
-      kRebootOnShutdown,
-      policy.has_reboot_on_shutdown() &&
-      policy.reboot_on_shutdown().has_reboot_on_shutdown() &&
-      policy.reboot_on_shutdown().reboot_on_shutdown());
-
-  new_values_cache->SetBoolean(
-      kAccountsPrefAllowGuest,
-      !policy.has_guest_mode_enabled() ||
-      !policy.guest_mode_enabled().has_guest_mode_enabled() ||
-      policy.guest_mode_enabled().guest_mode_enabled());
-
-  policy::BrowserPolicyConnectorChromeOS* connector =
-      g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  bool supervised_users_enabled = false;
-  if (connector->IsEnterpriseManaged()) {
-    supervised_users_enabled =
-        policy.has_supervised_users_settings() &&
-        policy.supervised_users_settings().has_supervised_users_enabled() &&
-        policy.supervised_users_settings().supervised_users_enabled();
-  } else {
-    supervised_users_enabled =
-        !policy.has_supervised_users_settings() ||
-        !policy.supervised_users_settings().has_supervised_users_enabled() ||
-        policy.supervised_users_settings().supervised_users_enabled();
-  }
-  new_values_cache->SetBoolean(
-      kAccountsPrefSupervisedUsersEnabled, supervised_users_enabled);
-
-  new_values_cache->SetBoolean(
-      kAccountsPrefShowUserNamesOnSignIn,
-      !policy.has_show_user_names() ||
-      !policy.show_user_names().has_show_user_names() ||
-      policy.show_user_names().show_user_names());
-
-  new_values_cache->SetBoolean(
-      kAccountsPrefEphemeralUsersEnabled,
-      policy.has_ephemeral_users_enabled() &&
-      policy.ephemeral_users_enabled().has_ephemeral_users_enabled() &&
-      policy.ephemeral_users_enabled().ephemeral_users_enabled());
-
-  std::unique_ptr<base::ListValue> list(new base::ListValue());
-  const em::UserWhitelistProto& whitelist_proto = policy.user_whitelist();
-  const RepeatedPtrField<std::string>& whitelist =
-      whitelist_proto.user_whitelist();
-  for (RepeatedPtrField<std::string>::const_iterator it = whitelist.begin();
-       it != whitelist.end(); ++it) {
-    list->AppendString(*it);
-  }
-  new_values_cache->SetValue(kAccountsPrefUsers, std::move(list));
-
-  std::unique_ptr<base::ListValue> account_list(new base::ListValue());
-  const em::DeviceLocalAccountsProto device_local_accounts_proto =
-      policy.device_local_accounts();
-  const RepeatedPtrField<em::DeviceLocalAccountInfoProto>& accounts =
-      device_local_accounts_proto.account();
-  RepeatedPtrField<em::DeviceLocalAccountInfoProto>::const_iterator entry;
-  for (entry = accounts.begin(); entry != accounts.end(); ++entry) {
-    std::unique_ptr<base::DictionaryValue> entry_dict(
-        new base::DictionaryValue());
-    if (entry->has_type()) {
-      if (entry->has_account_id()) {
-        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyId,
-                           base::Value(entry->account_id()));
-      }
-      entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyType,
-                         base::Value(entry->type()));
-      if (entry->kiosk_app().has_app_id()) {
-        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyKioskAppId,
-                           base::Value(entry->kiosk_app().app_id()));
-      }
-      if (entry->kiosk_app().has_update_url()) {
-        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyKioskAppUpdateURL,
-                           base::Value(entry->kiosk_app().update_url()));
-      }
-      if (entry->android_kiosk_app().has_package_name()) {
-        entry_dict->SetKey(
-            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskPackage,
-            base::Value(entry->android_kiosk_app().package_name()));
-      }
-      if (entry->android_kiosk_app().has_class_name()) {
-        entry_dict->SetKey(
-            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskClass,
-            base::Value(entry->android_kiosk_app().class_name()));
-      }
-      if (entry->android_kiosk_app().has_action()) {
-        entry_dict->SetKey(
-            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskAction,
-            base::Value(entry->android_kiosk_app().action()));
-      }
-      if (entry->android_kiosk_app().has_display_name()) {
-        entry_dict->SetKey(
-            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskDisplayName,
-            base::Value(entry->android_kiosk_app().display_name()));
-      }
-    } else if (entry->has_deprecated_public_session_id()) {
-      // Deprecated public session specification.
-      entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyId,
-                         base::Value(entry->deprecated_public_session_id()));
-      entry_dict->SetKey(
-          kAccountsPrefDeviceLocalAccountsKeyType,
-          base::Value(policy::DeviceLocalAccount::TYPE_PUBLIC_SESSION));
-    }
-    account_list->Append(std::move(entry_dict));
-  }
-  new_values_cache->SetValue(kAccountsPrefDeviceLocalAccounts,
-                             std::move(account_list));
-
-  if (policy.has_device_local_accounts()) {
-    if (policy.device_local_accounts().has_auto_login_id()) {
-      new_values_cache->SetString(
-          kAccountsPrefDeviceLocalAccountAutoLoginId,
-          policy.device_local_accounts().auto_login_id());
-    }
-    if (policy.device_local_accounts().has_auto_login_delay()) {
-      new_values_cache->SetInteger(
-          kAccountsPrefDeviceLocalAccountAutoLoginDelay,
-          policy.device_local_accounts().auto_login_delay());
-    }
-  }
-
-  new_values_cache->SetBoolean(
-      kAccountsPrefDeviceLocalAccountAutoLoginBailoutEnabled,
-      policy.device_local_accounts().enable_auto_login_bailout());
-  new_values_cache->SetBoolean(
-      kAccountsPrefDeviceLocalAccountPromptForNetworkWhenOffline,
-      policy.device_local_accounts().prompt_for_network_when_offline());
-
-  if (policy.has_start_up_flags()) {
-    std::unique_ptr<base::ListValue> list(new base::ListValue());
-    const em::StartUpFlagsProto& flags_proto = policy.start_up_flags();
-    const RepeatedPtrField<std::string>& flags = flags_proto.flags();
-    for (RepeatedPtrField<std::string>::const_iterator it = flags.begin();
-         it != flags.end(); ++it) {
-      list->AppendString(*it);
-    }
-    new_values_cache->SetValue(kStartUpFlags, std::move(list));
-  }
-
-  if (policy.has_saml_settings()) {
-    new_values_cache->SetBoolean(
-        kAccountsPrefTransferSAMLCookies,
-        policy.saml_settings().transfer_saml_cookies());
-  }
-
-  // The behavior when policy is not set and when it is set to an empty string
-  // is the same. Thus lets add policy only if it is set and its value is not
-  // an empty string.
-  if (policy.has_login_screen_domain_auto_complete() &&
-      policy.login_screen_domain_auto_complete()
-          .has_login_screen_domain_auto_complete() &&
-      !policy.login_screen_domain_auto_complete()
-           .login_screen_domain_auto_complete()
-           .empty()) {
-    new_values_cache->SetString(kAccountsPrefLoginScreenDomainAutoComplete,
-                                policy.login_screen_domain_auto_complete()
-                                    .login_screen_domain_auto_complete());
-  }
-
-  if (policy.has_login_authentication_behavior() &&
-      policy.login_authentication_behavior()
-          .has_login_authentication_behavior()) {
-    new_values_cache->SetInteger(
-        kLoginAuthenticationBehavior,
-        policy.login_authentication_behavior().login_authentication_behavior());
-  }
-
-  if (policy.has_login_video_capture_allowed_urls()) {
-    std::unique_ptr<base::ListValue> list(new base::ListValue());
-    const em::LoginVideoCaptureAllowedUrlsProto&
-        login_video_capture_allowed_urls_proto =
-            policy.login_video_capture_allowed_urls();
-    for (const auto& value : login_video_capture_allowed_urls_proto.urls()) {
-      list->AppendString(value);
-    }
-    new_values_cache->SetValue(kLoginVideoCaptureAllowedUrls, std::move(list));
-  }
-
-  if (policy.has_device_login_screen_app_install_list()) {
-    std::unique_ptr<base::ListValue> apps(new base::ListValue);
-    const em::DeviceLoginScreenAppInstallListProto& proto(
-        policy.device_login_screen_app_install_list());
-    for (const auto& app : proto.device_login_screen_app_install_list())
-      apps->AppendString(app);
-    new_values_cache->SetValue(kDeviceLoginScreenAppInstallList,
-                               std::move(apps));
-  }
-
-  if (policy.has_login_screen_locales()) {
-    std::unique_ptr<base::ListValue> locales(new base::ListValue);
-    const em::LoginScreenLocalesProto& login_screen_locales(
-        policy.login_screen_locales());
-    for (const auto& locale : login_screen_locales.login_screen_locales())
-      locales->AppendString(locale);
-    new_values_cache->SetValue(kDeviceLoginScreenLocales, std::move(locales));
-  }
-
-  if (policy.has_login_screen_input_methods()) {
-    std::unique_ptr<base::ListValue> input_methods(new base::ListValue);
-    const em::LoginScreenInputMethodsProto& login_screen_input_methods(
-        policy.login_screen_input_methods());
-    for (const auto& input_method :
-         login_screen_input_methods.login_screen_input_methods())
-      input_methods->AppendString(input_method);
-    new_values_cache->SetValue(kDeviceLoginScreenInputMethods,
-                               std::move(input_methods));
-  }
-}
-
 void DecodeNetworkPolicies(
     const em::ChromeDeviceSettingsProto& policy,
     PrefValueMap* new_values_cache) {
@@ -683,6 +447,243 @@ DeviceSettingsProvider::~DeviceSettingsProvider() {
 bool DeviceSettingsProvider::IsDeviceSetting(const std::string& name) {
   const char* const* end = kKnownSettings + arraysize(kKnownSettings);
   return std::find(kKnownSettings, end, name) != end;
+}
+
+// static
+void DeviceSettingsProvider::DecodeLoginPolicies(
+    const em::ChromeDeviceSettingsProto& policy,
+    PrefValueMap* new_values_cache) {
+  // For all our boolean settings the following is applicable:
+  // true is default permissive value and false is safe prohibitive value.
+  // Exceptions:
+  //   kAccountsPrefEphemeralUsersEnabled has a default value of false.
+  //   kAccountsPrefSupervisedUsersEnabled has a default value of false
+  //     for enterprise devices and true for consumer devices.
+  //   kAccountsPrefTransferSAMLCookies has a default value of false.
+  if (policy.has_allow_new_users() &&
+      policy.allow_new_users().has_allow_new_users()) {
+    if (policy.allow_new_users().allow_new_users()) {
+      // New users allowed, user whitelist ignored.
+      new_values_cache->SetBoolean(kAccountsPrefAllowNewUser, true);
+    } else {
+      // New users not allowed, enforce user whitelist if present.
+      new_values_cache->SetBoolean(kAccountsPrefAllowNewUser,
+                                   !policy.has_user_whitelist());
+    }
+  } else {
+    // No configured allow-new-users value, enforce whitelist if non-empty.
+    new_values_cache->SetBoolean(
+        kAccountsPrefAllowNewUser,
+        policy.user_whitelist().user_whitelist_size() == 0);
+  }
+
+  new_values_cache->SetBoolean(
+      kRebootOnShutdown,
+      policy.has_reboot_on_shutdown() &&
+          policy.reboot_on_shutdown().has_reboot_on_shutdown() &&
+          policy.reboot_on_shutdown().reboot_on_shutdown());
+
+  new_values_cache->SetBoolean(
+      kAccountsPrefAllowGuest,
+      !policy.has_guest_mode_enabled() ||
+          !policy.guest_mode_enabled().has_guest_mode_enabled() ||
+          policy.guest_mode_enabled().guest_mode_enabled());
+
+  policy::BrowserPolicyConnectorChromeOS* connector =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  bool supervised_users_enabled = false;
+  if (connector->IsEnterpriseManaged()) {
+    supervised_users_enabled =
+        policy.has_supervised_users_settings() &&
+        policy.supervised_users_settings().has_supervised_users_enabled() &&
+        policy.supervised_users_settings().supervised_users_enabled();
+  } else {
+    supervised_users_enabled =
+        !policy.has_supervised_users_settings() ||
+        !policy.supervised_users_settings().has_supervised_users_enabled() ||
+        policy.supervised_users_settings().supervised_users_enabled();
+  }
+  new_values_cache->SetBoolean(kAccountsPrefSupervisedUsersEnabled,
+                               supervised_users_enabled);
+
+  new_values_cache->SetBoolean(
+      kAccountsPrefShowUserNamesOnSignIn,
+      !policy.has_show_user_names() ||
+          !policy.show_user_names().has_show_user_names() ||
+          policy.show_user_names().show_user_names());
+
+  new_values_cache->SetBoolean(
+      kAccountsPrefEphemeralUsersEnabled,
+      policy.has_ephemeral_users_enabled() &&
+          policy.ephemeral_users_enabled().has_ephemeral_users_enabled() &&
+          policy.ephemeral_users_enabled().ephemeral_users_enabled());
+
+  std::unique_ptr<base::ListValue> list(new base::ListValue());
+  const em::UserWhitelistProto& whitelist_proto = policy.user_whitelist();
+  const RepeatedPtrField<std::string>& whitelist =
+      whitelist_proto.user_whitelist();
+  for (RepeatedPtrField<std::string>::const_iterator it = whitelist.begin();
+       it != whitelist.end(); ++it) {
+    list->AppendString(*it);
+  }
+  new_values_cache->SetValue(kAccountsPrefUsers, std::move(list));
+
+  std::unique_ptr<base::ListValue> account_list(new base::ListValue());
+  const em::DeviceLocalAccountsProto device_local_accounts_proto =
+      policy.device_local_accounts();
+  const RepeatedPtrField<em::DeviceLocalAccountInfoProto>& accounts =
+      device_local_accounts_proto.account();
+  RepeatedPtrField<em::DeviceLocalAccountInfoProto>::const_iterator entry;
+  for (entry = accounts.begin(); entry != accounts.end(); ++entry) {
+    std::unique_ptr<base::DictionaryValue> entry_dict(
+        new base::DictionaryValue());
+    if (entry->has_type()) {
+      if (entry->has_account_id()) {
+        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyId,
+                           base::Value(entry->account_id()));
+      }
+      entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyType,
+                         base::Value(entry->type()));
+      if (entry->kiosk_app().has_app_id()) {
+        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyKioskAppId,
+                           base::Value(entry->kiosk_app().app_id()));
+      }
+      if (entry->kiosk_app().has_update_url()) {
+        entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyKioskAppUpdateURL,
+                           base::Value(entry->kiosk_app().update_url()));
+      }
+      if (entry->android_kiosk_app().has_package_name()) {
+        entry_dict->SetKey(
+            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskPackage,
+            base::Value(entry->android_kiosk_app().package_name()));
+      }
+      if (entry->android_kiosk_app().has_class_name()) {
+        entry_dict->SetKey(
+            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskClass,
+            base::Value(entry->android_kiosk_app().class_name()));
+      }
+      if (entry->android_kiosk_app().has_action()) {
+        entry_dict->SetKey(
+            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskAction,
+            base::Value(entry->android_kiosk_app().action()));
+      }
+      if (entry->android_kiosk_app().has_display_name()) {
+        entry_dict->SetKey(
+            chromeos::kAccountsPrefDeviceLocalAccountsKeyArcKioskDisplayName,
+            base::Value(entry->android_kiosk_app().display_name()));
+      }
+    } else if (entry->has_deprecated_public_session_id()) {
+      // Deprecated public session specification.
+      entry_dict->SetKey(kAccountsPrefDeviceLocalAccountsKeyId,
+                         base::Value(entry->deprecated_public_session_id()));
+      entry_dict->SetKey(
+          kAccountsPrefDeviceLocalAccountsKeyType,
+          base::Value(policy::DeviceLocalAccount::TYPE_PUBLIC_SESSION));
+    }
+    account_list->Append(std::move(entry_dict));
+  }
+  new_values_cache->SetValue(kAccountsPrefDeviceLocalAccounts,
+                             std::move(account_list));
+
+  if (policy.has_device_local_accounts()) {
+    if (policy.device_local_accounts().has_auto_login_id()) {
+      new_values_cache->SetString(
+          kAccountsPrefDeviceLocalAccountAutoLoginId,
+          policy.device_local_accounts().auto_login_id());
+    }
+    if (policy.device_local_accounts().has_auto_login_delay()) {
+      new_values_cache->SetInteger(
+          kAccountsPrefDeviceLocalAccountAutoLoginDelay,
+          policy.device_local_accounts().auto_login_delay());
+    }
+  }
+
+  new_values_cache->SetBoolean(
+      kAccountsPrefDeviceLocalAccountAutoLoginBailoutEnabled,
+      policy.device_local_accounts().enable_auto_login_bailout());
+  new_values_cache->SetBoolean(
+      kAccountsPrefDeviceLocalAccountPromptForNetworkWhenOffline,
+      policy.device_local_accounts().prompt_for_network_when_offline());
+
+  if (policy.has_start_up_flags()) {
+    std::unique_ptr<base::ListValue> list(new base::ListValue());
+    const em::StartUpFlagsProto& flags_proto = policy.start_up_flags();
+    const RepeatedPtrField<std::string>& flags = flags_proto.flags();
+    for (RepeatedPtrField<std::string>::const_iterator it = flags.begin();
+         it != flags.end(); ++it) {
+      list->AppendString(*it);
+    }
+    new_values_cache->SetValue(kStartUpFlags, std::move(list));
+  }
+
+  if (policy.has_saml_settings()) {
+    new_values_cache->SetBoolean(
+        kAccountsPrefTransferSAMLCookies,
+        policy.saml_settings().transfer_saml_cookies());
+  }
+
+  // The behavior when policy is not set and when it is set to an empty string
+  // is the same. Thus lets add policy only if it is set and its value is not
+  // an empty string.
+  if (policy.has_login_screen_domain_auto_complete() &&
+      policy.login_screen_domain_auto_complete()
+          .has_login_screen_domain_auto_complete() &&
+      !policy.login_screen_domain_auto_complete()
+           .login_screen_domain_auto_complete()
+           .empty()) {
+    new_values_cache->SetString(kAccountsPrefLoginScreenDomainAutoComplete,
+                                policy.login_screen_domain_auto_complete()
+                                    .login_screen_domain_auto_complete());
+  }
+
+  if (policy.has_login_authentication_behavior() &&
+      policy.login_authentication_behavior()
+          .has_login_authentication_behavior()) {
+    new_values_cache->SetInteger(
+        kLoginAuthenticationBehavior,
+        policy.login_authentication_behavior().login_authentication_behavior());
+  }
+
+  if (policy.has_login_video_capture_allowed_urls()) {
+    std::unique_ptr<base::ListValue> list(new base::ListValue());
+    const em::LoginVideoCaptureAllowedUrlsProto&
+        login_video_capture_allowed_urls_proto =
+            policy.login_video_capture_allowed_urls();
+    for (const auto& value : login_video_capture_allowed_urls_proto.urls()) {
+      list->AppendString(value);
+    }
+    new_values_cache->SetValue(kLoginVideoCaptureAllowedUrls, std::move(list));
+  }
+
+  if (policy.has_device_login_screen_app_install_list()) {
+    std::unique_ptr<base::ListValue> apps(new base::ListValue);
+    const em::DeviceLoginScreenAppInstallListProto& proto(
+        policy.device_login_screen_app_install_list());
+    for (const auto& app : proto.device_login_screen_app_install_list())
+      apps->AppendString(app);
+    new_values_cache->SetValue(kDeviceLoginScreenAppInstallList,
+                               std::move(apps));
+  }
+
+  if (policy.has_login_screen_locales()) {
+    std::unique_ptr<base::ListValue> locales(new base::ListValue);
+    const em::LoginScreenLocalesProto& login_screen_locales(
+        policy.login_screen_locales());
+    for (const auto& locale : login_screen_locales.login_screen_locales())
+      locales->AppendString(locale);
+    new_values_cache->SetValue(kDeviceLoginScreenLocales, std::move(locales));
+  }
+
+  if (policy.has_login_screen_input_methods()) {
+    std::unique_ptr<base::ListValue> input_methods(new base::ListValue);
+    const em::LoginScreenInputMethodsProto& login_screen_input_methods(
+        policy.login_screen_input_methods());
+    for (const auto& input_method :
+         login_screen_input_methods.login_screen_input_methods())
+      input_methods->AppendString(input_method);
+    new_values_cache->SetValue(kDeviceLoginScreenInputMethods,
+                               std::move(input_methods));
+  }
 }
 
 void DeviceSettingsProvider::DoSet(const std::string& path,
