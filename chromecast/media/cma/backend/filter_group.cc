@@ -111,6 +111,12 @@ float FilterGroup::MixAndFilter(int chunk_size) {
       volume = tmp;
       loudest_content_type = input->content_type();
     }
+    if (tmp == volume && input->primary()) {
+      // Tiebreak is first by primary input, then by content type index.
+      // (communication > alarm > media).
+      loudest_content_type =
+          std::max(input->content_type(), loudest_content_type);
+    }
   }
 
   mixed_->ToInterleaved<::media::FloatSampleTypeTraits<float>>(chunk_size,
