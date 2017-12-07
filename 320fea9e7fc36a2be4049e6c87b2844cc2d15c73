@@ -104,6 +104,24 @@
       "revId": "320fea9e7fc36a2be4049e6c87b2844cc2d15c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f2c684_406d3c91",
+        "filename": "ui/views/views_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T23:13:26Z",
+      "side": 1,
+      "message": "\u003e Moved the comment but not totally following the \"This may depend on the layout of the parent window\" part. Would it?\n\nYeah - it depends on whether the location bar icons are swapped around. What you have is fine though - this shouldn\u0027t be around long.",
+      "parentUuid": "8118475a_f6e8fdba",
+      "revId": "320fea9e7fc36a2be4049e6c87b2844cc2d15c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
