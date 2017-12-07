@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b7471ecd_f5494ff3",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-07T19:45:41Z",
+      "side": 1,
+      "message": "Oh, definitely not asking for any changes here (hence my \"food for thought\" preface)",
+      "parentUuid": "ca2498b5_96890213",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d72e67d9_54889774",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "\u003e We could do that - we currently have a 25% unused population in the Default group that we could repurpose for this.  I could introduce a new base::Feature for this.  +Lukasz - WDYT?\n\u003e \nUptime and version composition of the new group would be different than in the 3 old groups, so they can\u0027t be compared in meaningful ways.  If we wanted to do this, then I think we would have to rename/reset all 3/4 groups.  If we decide to do this, it might be useful at the same time to extend the list of isolated origins used in the groups (which would also necessitate renaming/resetting the groups).\n\nOTOH, if we do the renaming/reset we might not get full week worth of data...  So maybe we can do a/b comparison in january in a separate trial? (and putting the optional frame consolidation behind a base::Feature can either wait until that time [or if you want to, you can add base::Feature now - in an enabled-by-default state]). \n\n\u003e On the other hand, would filtering out by versions be too terrible, if, say, we keep the canary trial for two weeks and land this in time for the second week?  Couldn\u0027t we still compare the 7-day actives process count for first and second weeks?\n\nMaybe... but I agree with Nick that a/b comparison would give us more confidence.",
       "parentUuid": "fc96f3f6_4649eb33",
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52350232_3771f4b6",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-07T19:45:41Z",
+      "side": 1,
+      "message": "Repurposing should work -- you shouldn\u0027t need to rename the group if you also filter by version \u003e\u003d {whenever this CL lands}, though. Right?\n\nI\u0027m definitely also fine landing now and trying to get a rough extraction of the effect manually.\n\nLonger term I think we should build ourselves some flexibility to tinker with these and other heuristics, and a/b test the results.",
+      "parentUuid": "6adf95ad_4b82a813",
       "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +232,30 @@
     },
     {
       "key": {
+        "uuid": "b1632e5a_417d532d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-07T19:45:41Z",
+      "side": 1,
+      "message": "Good point about this not mattering for --site-per-process and being less clear-cut in other modes. Since --site-per-process is our top priority for process count reduction efforts, I\u0027m okay with leaving the policy as you implemented.",
+      "parentUuid": "d514dade_0ae5cd47",
+      "range": {
+        "startLine": 1235,
+        "startChar": 6,
+        "endLine": 1235,
+        "endChar": 51
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30c3259f_734330fa",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 3
@@ -231,6 +291,30 @@
       "side": 1,
       "message": "That\u0027d be nice, but I think it\u0027s difficult because we can\u0027t apply the final policy here if we don\u0027t know the site.  If the SiteInstance has a lazily-assigned site, we\u0027ll only learn about it at commit time, so I think we\u0027ll have to still make some decisions (e.g., about the process-per-site policy) there.\n\nWe overwrite the reuse policy in some other cases already (e.g., https://cs.chromium.org/chromium/src/content/browser/site_instance_impl.cc?l\u003d123\u0026rcl\u003d4fd18fba5494f2f3c3b23029de8f10fdead68537), so it seems consolidating all this might be a fairly large cleanup.  Would you be ok not doing it in this CL?",
       "parentUuid": "30c3259f_734330fa",
+      "range": {
+        "startLine": 1236,
+        "startChar": 21,
+        "endLine": 1236,
+        "endChar": 22
+      },
+      "revId": "3ee86b8ff5b26e927e45bcd3b58df4e3f4c871c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0952a98_cd1b406b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-07T19:45:41Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "1f5b6a96_980a4e55",
       "range": {
         "startLine": 1236,
         "startChar": 21,
