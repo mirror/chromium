@@ -25,6 +25,69 @@
     },
     {
       "key": {
+        "uuid": "5a513f47_0355443e",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T22:18:55Z",
+      "side": 1,
+      "message": "1u",
+      "range": {
+        "startLine": 325,
+        "startChar": 12,
+        "endLine": 325,
+        "endChar": 34
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce9ed4c_4e533b6f",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T22:18:55Z",
+      "side": 1,
+      "message": "Mojo",
+      "range": {
+        "startLine": 329,
+        "startChar": 17,
+        "endLine": 329,
+        "endChar": 22
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506e7059_4f390bd0",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T22:18:55Z",
+      "side": 1,
+      "message": "I\u0027m concerned that these tests are bypassing too much of the code that uses the HidConnection by calling methods like DeviceTransact and OnAllocateChannel manually. Can you follow the example of how we use MockUsbDeviceHandle in usb_descriptors_unittest.cc and have the mock connection set up with the data we expect to read and write?\n\nThis can be done in a follow-up since the tests above should also be updated.",
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79f41c01_76a60c07",
         "filename": "device/u2f/u2f_hid_device_unittest.cc",
         "patchSetId": 6
@@ -36,6 +99,30 @@
       "writtenOn": "2017-12-07T07:19:00Z",
       "side": 1,
       "message": "In order for callback for U2fHidDevice::OnAllocateChannel() to complete, we should wait until timeout callback for U2fHidDevice::AllocateChannel() is invoked. This is because all Read() function within U2fHidDevice::AllocateChannel() is mocked using MockHidConnection. \n\nThus, currently, it takes 3000ms for this test to complete. Is this an acceptable behavior? \nPlease let me know if there is a better approach! :)",
+      "range": {
+        "startLine": 357,
+        "startChar": 36,
+        "endLine": 357,
+        "endChar": 61
+      },
+      "revId": "28b277de441413db4645e6f4532707d9545f3ca3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7c477f_2d09cdfb",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-07T22:18:55Z",
+      "side": 1,
+      "message": "Initialize |scoped_task_environment_| with MainThreadType::MOCK_TIME and you will be able to use its FastForwardBy() method to move time forward by 3000ms and then assert that your callback was executed.",
+      "parentUuid": "79f41c01_76a60c07",
       "range": {
         "startLine": 357,
         "startChar": 36,
