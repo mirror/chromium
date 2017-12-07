@@ -16,6 +16,24 @@
       "revId": "21983d2d3a1f3edcfcc06010a80c12e0eafcfc0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6ec181_8e665a67",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-07T22:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82462e0f_e9868a4d",
+      "revId": "21983d2d3a1f3edcfcc06010a80c12e0eafcfc0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
