@@ -26,6 +26,7 @@
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace extensions {
@@ -97,6 +98,7 @@ enum class PortType {
 // Returns an extension hosted in the |render_frame| (or nullptr if the frame
 // doesn't host an extension).
 const Extension* GetExtensionFromFrame(content::RenderFrame* render_frame) {
+  v8::HandleScope handle_scope(blink::MainThreadIsolate());
   DCHECK(render_frame);
   ScriptContext* context =
       ScriptContextSet::GetMainWorldContextForFrame(render_frame);
