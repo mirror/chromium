@@ -72,14 +72,16 @@ class MockVaapiPicture : public VaapiPicture {
                    int32_t picture_buffer_id,
                    const gfx::Size& size,
                    uint32_t texture_id,
-                   uint32_t client_texture_id)
+                   uint32_t client_texture_id,
+                   uint32_t texture_target)
       : VaapiPicture(vaapi_wrapper,
                      make_context_current_cb,
                      bind_image_cb,
                      picture_buffer_id,
                      size,
                      texture_id,
-                     client_texture_id) {}
+                     client_texture_id,
+                     texture_target) {}
   ~MockVaapiPicture() override = default;
 
   // VaapiPicture implementation.
@@ -109,11 +111,12 @@ class MockVaapiPictureFactory : public VaapiPictureFactory {
       int32_t picture_buffer_id,
       const gfx::Size& size,
       uint32_t texture_id,
-      uint32_t client_texture_id) override {
+      uint32_t client_texture_id,
+      uint32_t texture_target) override {
     MockCreateVaapiPicture(vaapi_wrapper.get(), size);
     return std::make_unique<MockVaapiPicture>(
         vaapi_wrapper, make_context_current_cb, bind_image_cb,
-        picture_buffer_id, size, texture_id, client_texture_id);
+        picture_buffer_id, size, texture_id, client_texture_id, texture_target);
   }
 };
 
