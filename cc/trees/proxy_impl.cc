@@ -739,4 +739,8 @@ void ProxyImpl::SetURLForUkm(const GURL& url) {
   host_impl_->ukm_manager()->SetSourceURL(url);
 }
 
+void ProxyImpl::SetImplSideInvalidationForcedForTesting(bool forced) {
+  scheduler_->set_impl_side_invalidation_forced_for_testing(forced);
+}
+
 }  // namespace cc

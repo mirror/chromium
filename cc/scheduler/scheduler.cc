@@ -382,17 +382,6 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   adjusted_args.deadline -= compositor_timing_history_->DrawDurationEstimate();
   adjusted_args.deadline -= kDeadlineFudgeFactor;
 
-  base::TimeDelta bmf_start_to_activate =
-      compositor_timing_history_
-          ->BeginMainFrameStartToReadyToCommitDurationEstimate() +
-      compositor_timing_history_->CommitDurationEstimate() +
-      compositor_timing_history_->CommitToReadyToActivateDurationEstimate() +
-      compositor_timing_history_->ActivateDurationEstimate();
-
-  base::TimeDelta bmf_to_activate_estimate_critical =
-      bmf_start_to_activate +
-      compositor_timing_history_->BeginMainFrameQueueDurationCriticalEstimate();
-
   // TODO(khushalsagar): We need to consider the deadline fudge factor here to
   // match the deadline used in BeginImplFrameDeadlineMode::REGULAR mode
   // (used in the case where the impl thread needs to redraw). In the case where
@@ -403,6 +392,20 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
       adjusted_args.interval -
       compositor_timing_history_->DrawDurationEstimate() - kDeadlineFudgeFactor;
 
+  // An estimate of time from starting the main frame on the main thread to when
+  // the resulting pending tree is activated. Note that this excludes the
+  // durations where progress is blocked due to back pressure in the pipeline
+  // (ready to commit to commit, ready to activate to activate, etc.)
+  base::TimeDelta bmf_start_to_activate =
+      compositor_timing_history_
+          ->BeginMainFrameStartToReadyToCommitDurationEstimate() +
+      compositor_timing_history_->CommitDurationEstimate() +
+      compositor_timing_history_->CommitToReadyToActivateDurationEstimate() +
+      compositor_timing_history_->ActivateDurationEstimate();
+
+  base::TimeDelta bmf_to_activate_estimate_critical =
+      bmf_start_to_activate +
+      compositor_timing_history_->BeginMainFrameQueueDurationCriticalEstimate();
   state_machine_.SetCriticalBeginMainFrameToActivateIsFast(
       bmf_to_activate_estimate_critical < bmf_to_activate_threshold);
 
@@ -411,6 +414,36 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   begin_main_frame_args_ = adjusted_args;
   begin_main_frame_args_.on_critical_path = !ImplLatencyTakesPriority();
 
+  // If we expect the main thread to respond within this frame, defer the
+  // invalidation to merge it with the incoming main frame. Even if the response
+  // is delayed such that the raster can not be completed within this frame's
+  // draw, its better to delay the invalidation than blocking the pipeline with
+  // an extra pending tree update to be flushed.
+  base::TimeDelta time_since_main_frame_sent;
+  if (compositor_timing_history_->begin_main_frame_sent_time() !=
+      base::TimeTicks()) {
+    time_since_main_frame_sent =
+        now - compositor_timing_history_->begin_main_frame_sent_time();
+  }
+  base::TimeDelta bmf_sent_to_ready_to_commit_estimate =
+      compositor_timing_history_->BeginMainFrameQueueDurationCriticalEstimate();
+  if (begin_main_frame_args_.on_critical_path) {
+    bmf_sent_to_ready_to_commit_estimate +=
+        compositor_timing_history_
+            ->BeginMainFrameQueueDurationCriticalEstimate();
+  } else {
+    bmf_sent_to_ready_to_commit_estimate +=
+        compositor_timing_history_
+            ->BeginMainFrameQueueDurationNotCriticalEstimate();
+  }
+
+  const bool main_thread_response_expected_before_deadline =
+      bmf_sent_to_ready_to_commit_estimate - time_since_main_frame_sent <
+      bmf_to_activate_threshold;
+  state_machine_.set_should_defer_invalidation_for_main_frame(
+      main_thread_response_expected_before_deadline &&
+      !impl_side_invalidation_forced_for_testing_);
+
   base::TimeDelta bmf_to_activate_estimate = bmf_to_activate_estimate_critical;
   if (!begin_main_frame_args_.on_critical_path) {
     bmf_to_activate_estimate =
@@ -418,7 +451,6 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
         compositor_timing_history_
             ->BeginMainFrameQueueDurationNotCriticalEstimate();
   }
-
   bool can_activate_before_deadline =
       CanBeginMainFrameAndActivateBeforeDeadline(adjusted_args,
                                                  bmf_to_activate_estimate, now);
