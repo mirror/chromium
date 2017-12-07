@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ecb4b7d_ba82671b",
+        "filename": "cc/output/overlay_candidate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T01:35:16Z",
+      "side": 1,
+      "message": "This comment might be misintepreted as if HW overlays could never support CSC.\nI\u0027ll send you a CL to change this to a TODO that links to the bug to implement per plane CSC on CrOS.",
+      "revId": "6bde89c7fbf1815ac2cb40a685b1d6c823450133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f294e5d_63086a02",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-07T01:35:16Z",
+      "side": 1,
+      "message": "Can we rely on GL drivers treating uniforms as constants and premultiply them if possible?\nOtherwise we might end up doing this multiplication per fragment, even when we\u0027re compositing a solid color quad.\n\nWhat was the reason of introducing this matrix instead of using colorMatrix?\nWas it to apply the color transform on the output instead of the source (after swizzling \u0026 co)?",
+      "revId": "6bde89c7fbf1815ac2cb40a685b1d6c823450133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
