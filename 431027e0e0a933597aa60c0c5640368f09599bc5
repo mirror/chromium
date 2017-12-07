@@ -206,6 +206,30 @@
       "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10d8050_cca4f5ca",
+        "filename": "components/storage_monitor/test_media_transfer_protocol_manager_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T09:57:50Z",
+      "side": 1,
+      "message": "New() is ok. sorry:)",
+      "parentUuid": "bfa40fa1_9365a567",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
