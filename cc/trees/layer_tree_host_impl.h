@@ -138,6 +138,10 @@ class LayerTreeHostImplClient {
 
   virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
 
+  // If |forced| is set to true, impl-side invalidations will not be blocked on
+  // the main thread.
+  virtual void SetImplSideInvalidationForcedForTesting(bool forced) {}
+
  protected:
   virtual ~LayerTreeHostImplClient() {}
 };
@@ -641,6 +645,8 @@ class CC_EXPORT LayerTreeHostImpl
   UkmManager* ukm_manager() { return ukm_manager_.get(); }
 
   void RenewTreePriorityForTesting() { client_->RenewTreePriority(); }
+
+  LayerTreeHostImplClient* client_for_testing() { return client_; }
 
  protected:
   LayerTreeHostImpl(

@@ -1703,6 +1703,12 @@ class LayerTreeHostAnimationTestImplSideInvalidation
       // invalidation and make sure it finishes before the main thread is
       // released.
       did_request_impl_side_invalidation_ = true;
+
+      // The main thread will block the commit until an invalidation is
+      // performed. We need to ensure that the invalidation is not blocked on a
+      // commit to avoid a deadlock.
+      host_impl->client_for_testing()->SetImplSideInvalidationForcedForTesting(
+          true);
       host_impl->RequestImplSideInvalidationForCheckerImagedTiles();
     }
   }
