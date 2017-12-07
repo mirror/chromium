@@ -112,6 +112,8 @@ void ExecutionContext::PausePausableObjectIfNeeded(PausableObject* object) {
 bool ExecutionContext::ShouldSanitizeScriptError(
     const String& source_url,
     AccessControlStatus cors_status) {
+  if (source_url.IsEmpty())
+    return false;
   if (cors_status == kOpaqueResource)
     return true;
   const KURL& url = CompleteURL(source_url);
