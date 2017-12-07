@@ -34,6 +34,24 @@
       "revId": "6be6e1ff7d13d81cf27a8d8a67e51bde3010f01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "883b028c_3ef59c6c",
+        "filename": "cc/test/scheduler_test_common.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-07T20:55:13Z",
+      "side": 1,
+      "message": "Thanks for all the extra test coverage!",
+      "parentUuid": "fbaa2452_ee226fb3",
+      "revId": "6be6e1ff7d13d81cf27a8d8a67e51bde3010f01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
