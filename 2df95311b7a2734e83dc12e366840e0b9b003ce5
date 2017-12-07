@@ -16,6 +16,24 @@
       "revId": "2df95311b7a2734e83dc12e366840e0b9b003ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb13dad_93c9c9f7",
+        "filename": "gpu/config/gpu_crash_keys.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-07T23:40:07Z",
+      "side": 1,
+      "message": "Ah, thanks for pointing that out. The \"32\" *does* refer to the max value length (it allocates a static buffer into which the value can be copied, so that the heap allocator doesn\u0027t have to be used in crashy cases).\n\nI ran this query for each of the keys to find appropriate upper bounds and updated as appropriate and have updated the CL.\n\nSELECT LENGTH(CAST(Value AS bytes)) AS ValueLength, COUNT(*)\nFROM crash.prod.latest, UNNEST(ProductData)\nWHERE Key \u003d \u0027gpu-gl-renderer\u0027\nGROUP BY ValueLength\nORDER BY ValueLength",
+      "parentUuid": "9989dc08_ba460d89",
+      "revId": "2df95311b7a2734e83dc12e366840e0b9b003ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
