@@ -109,7 +109,10 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLSlotElement.h"
+#include "core/html/HTMLTableCellElement.h"
+#include "core/html/HTMLTableColElement.h"
 #include "core/html/HTMLTableRowsCollection.h"
+#include "core/html/HTMLTableSectionElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/custom/CustomElement.h"
 #include "core/html/custom/CustomElementRegistry.h"
@@ -159,6 +162,12 @@
 namespace blink {
 
 namespace {
+
+// Used for innerHTML setter optimization check, if innerHTML string only
+// contains non-markup character, we can just set its TextContent instead.
+inline bool IsHTMLMarkupCharacter(UChar c) {
+  return c == '<' || c == '&' || c == '\r' || c == '\0';
+}
 
 // We need to retain the scroll customization callbacks until the element
 // they're associated with is destroyed. It would be simplest if the callbacks
@@ -3078,6 +3087,17 @@ void Element::DispatchFocusOutEvent(
                          new_focused_element, source_capabilities));
 }
 
+bool Element::IsInnerHTMLStringChangeOptimizable(const String& html) {
+  if (IsHTMLSelectElement(this) || IsHTMLTableCellElement(this) ||
+      IsHTMLTableRowElement(this) || IsHTMLTableSectionElement(this) ||
+      IsHTMLTableCaptionElement(this) || IsHTMLTableColElement(this) ||
+      IsHTMLTableElement(this) || IsHTMLFrameSetElement(this) ||
+      IsHTMLTemplateElement(this) || IsHTMLHtmlElement(this)) {
+    return false;
+  }
+  return html.Find(IsHTMLMarkupCharacter) == kNotFound;
+}
+
 String Element::InnerHTMLAsString() const {
   return CreateMarkup(this, kChildrenOnly);
 }
@@ -3097,12 +3117,16 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
-  if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
-          html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
-    ContainerNode* container = this;
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
-      container = template_element->content();
-    ReplaceChildrenWithFragment(container, fragment, exception_state);
+  if (IsInnerHTMLStringChangeOptimizable(html)) {
+    setTextContent(html);
+  } else {
+    if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
+            html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
+      ContainerNode* container = this;
+      if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
+        container = template_element->content();
+      ReplaceChildrenWithFragment(container, fragment, exception_state);
+    }
   }
 }
 

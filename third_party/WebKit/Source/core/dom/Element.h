@@ -1026,6 +1026,8 @@ class CORE_EXPORT Element : public ContainerNode {
   void DetachAttrNodeAtIndex(Attr*, size_t index);
 
   Member<ElementData> element_data_;
+
+  bool IsInnerHTMLStringChangeOptimizable(const String& html);
 };
 
 DEFINE_NODE_TYPE_CASTS(Element, IsElementNode());
