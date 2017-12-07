@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722fdb3f_a08ddf3c",
+        "filename": "ios/chrome/app/deferred_initialization_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-12-07T21:36:01Z",
+      "side": 1,
+      "message": "Not sure if this is the right place to put a key that should be shared. Let me know if a separate header would be more appropriate.",
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ef1215_c4903959",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4325,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-12-07T21:36:01Z",
+      "side": 1,
+      "message": "Here I\u0027m using the configuration object we have to also pass through the delegate for the Settings UI (used by the ToolsPopupMenu to create the Settings view controller).",
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37886099_90749ea2",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-12-07T21:36:01Z",
+      "side": 1,
+      "message": "This is a separate protocol for now, but I imagine as more classes are refactored everything will begin to adopt both the SettingsBrowserStateProvider and the existing SettingsNavigationControllerDelegate, and these can then be merged.",
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
