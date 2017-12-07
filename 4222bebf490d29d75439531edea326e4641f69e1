@@ -405,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "84daf133_e098f25a",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-07T19:00:20Z",
+      "side": 1,
+      "message": "To be explicit: wrote first 2148 bytes...\n\nAnd anyway, thanks for all the feedback, hopefully I\u0027ll be able to actually turn it into helpful comments... and there is also no particular reason to hurry this, I think. Hmm, though maybe I am underestimating the impact of this; the weird write pattern that triggers this was toggled by the video code, and it does essentially potentially inject a weird error code in an odd spot of the state machine...\n\n(definitely not a regression, though...)",
+      "parentUuid": "6c434774_8077a5ca",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
