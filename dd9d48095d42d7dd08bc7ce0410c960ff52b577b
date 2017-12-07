@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f1afda4_42550c0f",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-07T21:36:30Z",
+      "side": 1,
+      "message": "This is the only red flag I see in this CL. Unmultiplying alpha is a lossy operation; are we doing it in more situations than we used to?",
+      "revId": "dd9d48095d42d7dd08bc7ce0410c960ff52b577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
