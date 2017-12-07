@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "913ff1df_0037a770",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-07T01:32:16Z",
+      "side": 1,
+      "message": "cached path, or path cache? If you change here, change the two more occurrences below.",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "2b577da5ee8e70a3590629c5d8b3d256ba58a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a789ba0_e64f86e6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-07T01:32:16Z",
+      "side": 1,
+      "message": "You already DCHECK above, no need to check for nullity. This was wrong in the original code already.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 6,
+        "endLine": 1066,
+        "endChar": 11
+      },
+      "revId": "2b577da5ee8e70a3590629c5d8b3d256ba58a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236b6d10_0e8e7d63",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-07T01:32:16Z",
+      "side": 1,
+      "message": "Nit: Remove \"we\" (go/avoidwe).",
+      "range": {
+        "startLine": 1073,
+        "startChar": 5,
+        "endLine": 1073,
+        "endChar": 7
+      },
+      "revId": "2b577da5ee8e70a3590629c5d8b3d256ba58a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d8b292_151a3782",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2322,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-07T01:32:16Z",
+      "side": 1,
+      "message": "This second half doesn’t seem to need to go through the first half, is that right? Consider making a second test entirely for this (even if you need to repeat a few lines of setup).",
+      "range": {
+        "startLine": 2322,
+        "startChar": 0,
+        "endLine": 2322,
+        "endChar": 78
+      },
+      "revId": "2b577da5ee8e70a3590629c5d8b3d256ba58a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
