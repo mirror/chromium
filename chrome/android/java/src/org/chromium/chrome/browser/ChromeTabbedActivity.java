@@ -1644,6 +1644,11 @@ public class ChromeTabbedActivity
                 // Return early if Chrome Home is not enabled.
                 if (getBottomSheet() == null) return null;
 
+                if (getBottomSheet() != null
+                        && AppMenuPropertiesDelegate.shouldShowNavMenuItems()) {
+                    return null;
+                }
+
                 boolean isPageMenu = getAppMenuPropertiesDelegate().shouldShowPageMenu();
                 LayoutInflater inflater = LayoutInflater.from(ChromeTabbedActivity.this);
 
@@ -1807,10 +1812,10 @@ public class ChromeTabbedActivity
                 getTabCreator(true).launchNTP();
             }
         } else if (id == R.id.all_bookmarks_menu_id) {
-            if (currentTab != null) {
+            if (currentTab != null || getBottomSheet() != null) {
                 getCompositorViewHolder().hideKeyboard(() -> {
                     StartupMetrics.getInstance().recordOpenedBookmarks();
-                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
+                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this, true);
                 });
                 if (currentTabIsNtp) {
                     NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_BOOKMARKS_MANAGER);
@@ -1849,7 +1854,7 @@ public class ChromeTabbedActivity
                 getToolbarManager().setUrlBarFocus(true);
             }
         } else if (id == R.id.downloads_menu_id) {
-            DownloadUtils.showDownloadManager(this, currentTab);
+            DownloadUtils.showDownloadManager(this, currentTab, true);
             if (currentTabIsNtp) {
                 NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_DOWNLOADS_MANAGER);
             }

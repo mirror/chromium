@@ -29,6 +29,7 @@ import android.widget.PopupWindow.OnDismissListener;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.ObserverList;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
@@ -48,6 +49,7 @@ import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager.FullscreenListener;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
@@ -922,13 +924,13 @@ public class BottomSheet
 
         if (UrlConstants.BOOKMARKS_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_bookmarks);
+                    R.id.action_bookmarks, true);
         } else if (UrlConstants.DOWNLOADS_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_downloads);
+                    R.id.action_downloads, true);
         } else if (UrlConstants.HISTORY_HOST.equals(uri.getHost())) {
             mActivity.getBottomSheetContentController().showContentAndOpenSheet(
-                    R.id.action_history);
+                    R.id.action_history, true);
         } else {
             return false;
         }
@@ -1831,5 +1833,31 @@ public class BottomSheet
     @VisibleForTesting
     public @Nullable ViewAnchoredTextBubble getHelpBubbleForTests() {
         return mHelpBubble;
+    }
+
+    /**
+     * Record a menu item click and open the bottom sheet to the specified content. This method
+     * assumes that Chrome Home is enabled.
+     * @param navId The bottom sheet navigation id to open.
+     */
+    public void openBottomSheetForMenuItem(int navId) {
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            ChromePreferenceManager.getInstance().incrementChromeHomeMenuItemClickCount();
+        }
+        final View highlightedView = findViewById(navId);
+        ViewHighlighter.turnOnHighlight(highlightedView, false);
+        BottomSheetContentController contentController =
+                mActivity != null ? mActivity.getBottomSheetContentController() : null;
+        contentController.showContentAndOpenSheet(navId, false);
+
+        addObserver(new EmptyBottomSheetObserver() {
+            @Override
+            public void onSheetContentChanged(BottomSheet.BottomSheetContent newContent) {
+                highlightedView.post(() -> {
+                    ViewHighlighter.turnOffHighlight(highlightedView);
+                    removeObserver(this);
+                });
+            }
+        });
     }
 }
