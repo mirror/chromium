@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "69a07409_e2ab8c7a",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T20:26:19Z",
+      "side": 1,
+      "message": "Code duplication is imo sometimes preferred over complicated inheritance. And there are other ways to avoid code duplication here. Views code is really hard to follow as a result of it\u0027s extreme use of inheritance imo. I\u0027d like to avoid the same for exo classes.\n\nThis is fine for now but I\u0027d like to see us move towards a less complicated code reuse pattern between shell surface classes in the near future.",
+      "parentUuid": "00a25e61_cf7b483b",
+      "range": {
+        "startLine": 1043,
+        "startChar": 10,
+        "endLine": 1043,
+        "endChar": 24
+      },
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d142a78_b43972cb",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -178,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "440a4fa5_2a240376",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T20:26:19Z",
+      "side": 1,
+      "message": "Popup really means a lot more than what we implement today. We need to support grabs and proper dismissing of popup chains. I\u0027d rather not see any of that as part of the base shell surface class but in a derived XdgSurface class. So I\u0027d prefer if the concept didn\u0027t explicitly exist at this level but it was rather a \"is_not_movable\" here as that\u0027s all we care about. container_ value already kind of means this but it\u0027s fine to add something more explicit if you prefer.\n\nFyi, there are no plans to implement popups for wl_shell_surface today.",
+      "parentUuid": "9d9e1bcd_2328d8b1",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13324cbf_83eced50",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 2
@@ -207,6 +249,24 @@
       "side": 1,
       "message": "These are helper functions that can be overridden, i.e. they do not belong in the public API. They could be made protected, but I think visibility should be reduced unless the override needs to chain with the base version.",
       "parentUuid": "13324cbf_83eced50",
+      "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8846629_9b2a81e9",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T20:26:19Z",
+      "side": 1,
+      "message": "I guess this pattern is fine for now. However, it\u0027s not a common pattern in chrome code afact and virtual functions are generally not used in exo except for abstract interfaces. it would be nice if we could avoid virtual functions here in the future but OK for now as I guess it makes it a bit easier to do this shell surface refactor.",
+      "parentUuid": "d4b7fdf3_6c3e15a0",
       "revId": "2933fb6674f8ee693dcb9146be5c84c1f2202ebb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
