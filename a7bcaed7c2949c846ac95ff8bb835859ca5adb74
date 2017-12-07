@@ -46,6 +46,30 @@
       "revId": "a7bcaed7c2949c846ac95ff8bb835859ca5adb74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a733b7b0_ecc0b09a",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T23:30:55Z",
+      "side": 1,
+      "message": "I have a vague memory of it but I think that I was trying to fix the locking issue Eric described. Thanks Eric for detailed explanation!",
+      "parentUuid": "e69d50c0_6f79160a",
+      "range": {
+        "startLine": 173,
+        "startChar": 20,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "a7bcaed7c2949c846ac95ff8bb835859ca5adb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
