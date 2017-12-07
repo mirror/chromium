@@ -22,6 +22,30 @@
       "revId": "7d9948d25b9ba46fa1fe2a70da1a2942f71ee784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e859d056_92109d97",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-07T18:26:56Z",
+      "side": 1,
+      "message": "Thanks for noticing this!\nAs long as they are called together and in the same thread, order doesn\u0027t matter. Thanks!",
+      "parentUuid": "ec9dfe91_edb37ccc",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 469,
+        "endChar": 25
+      },
+      "revId": "7d9948d25b9ba46fa1fe2a70da1a2942f71ee784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
