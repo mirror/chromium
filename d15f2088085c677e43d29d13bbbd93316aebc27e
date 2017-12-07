@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbf3a760_9a7f6f1e",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-07T09:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7551e1b2_f55e96ad",
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20d3bd86_96ca33da",
         "filename": "tools/cygprofile/orderfile_generator_backend.py",
         "patchSetId": 2
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "9bf6b279_6d83a9d0",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-07T09:58:23Z",
+      "side": 1,
+      "message": "This is not actually device dependent, this is just raw pixel coordinates. The comment highlights that the unit is not \"device independent pixels\", which is standard in Android UI.",
+      "parentUuid": "f6058f23_a9bf86fb",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21978495_72a687b3",
         "filename": "tools/cygprofile/profile_android_startup.py",
         "patchSetId": 2
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1522c065_1bfb5f3f",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-07T09:58:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21978495_72a687b3",
+      "range": {
+        "startLine": 402,
+        "startChar": 7,
+        "endLine": 402,
+        "endChar": 15
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1590533_87eb8972",
         "filename": "tools/cygprofile/profile_android_startup.py",
         "patchSetId": 2
@@ -99,6 +165,30 @@
       "writtenOn": "2017-12-04T13:57:24Z",
       "side": 1,
       "message": "nit: simulate-user-gestures?",
+      "range": {
+        "startLine": 407,
+        "startChar": 9,
+        "endLine": 407,
+        "endChar": 22
+      },
+      "revId": "d15f2088085c677e43d29d13bbbd93316aebc27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48aa0ed_242f67b4",
+        "filename": "tools/cygprofile/profile_android_startup.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-07T09:58:23Z",
+      "side": 1,
+      "message": "Later changes will probably add more user-like beahavior, would prefer keeping it as is.",
+      "parentUuid": "c1590533_87eb8972",
       "range": {
         "startLine": 407,
         "startChar": 9,
