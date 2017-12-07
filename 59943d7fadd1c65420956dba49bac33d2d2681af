@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab16966a_92a1210d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T07:53:39Z",
+      "side": 1,
+      "message": "I remember we have layout tests where |PrimaryDirectionOf(*position_on_left.AnchorNode()) !\u003d primary_direction|, changing which causes some test failures.",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
