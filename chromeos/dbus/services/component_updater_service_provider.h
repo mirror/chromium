@@ -22,19 +22,25 @@ class MethodCall;
 
 namespace chromeos {
 
-// This class exports a "LoadComponent" D-Bus method that installs a component
-// and return the installed path (if successful) or an error message
-// (on failure):
+// This class exports D-Bus methods that manages components:
 //
+// LoadComponent:
 // % dbus-send --system --type=method_call --print-reply
 //     --dest=org.chromium.ComponentUpdaterService
 //     /org/chromium/ComponentUpdaterService
 //     org.chromium.ComponentUpdaterService.LoadComponent
 //     "string:|component name|"
 //
-// -> method return sender=:1.42 -> destination=:1.43 reply_serial=2
+// % string "/run/imageloader/|component name|/|version|"
 //
-// string "/run/imageloader/|component name|/|version|"
+// UnloadComponent:
+// % dbus-send --system --type=method_call --print-reply
+//     --dest=org.chromium.ComponentUpdaterService
+//     /org/chromium/ComponentUpdaterService
+//     org.chromium.ComponentUpdaterService.UnloadComponent
+//     "string:|component name|"
+//
+// % (returns nothing if successful)
 class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
     : public CrosDBusService::ServiceProviderInterface {
  public:
@@ -47,7 +53,11 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
 
     virtual void LoadComponent(
         const std::string& name,
-        const base::Callback<void(const std::string&)>& load_callback) = 0;
+        base::OnceCallback<void(const std::string&)> load_callback) = 0;
+
+    virtual void UnloadComponent(
+        const std::string& name,
+        base::OnceCallback<void(bool)> remove_callback) = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Delegate);
@@ -74,6 +84,15 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
   void OnLoadComponent(dbus::MethodCall* method_call,
                        dbus::ExportedObject::ResponseSender response_sender,
                        const std::string& result);
+
+  // Called on UI thread in response to a D-Bus request.
+  void UnloadComponent(dbus::MethodCall* method_call,
+                       dbus::ExportedObject::ResponseSender response_sender);
+
+  // Callback executed after component removal operation is done.
+  void OnUnloadComponent(dbus::MethodCall* method_call,
+                         dbus::ExportedObject::ResponseSender response_sender,
+                         bool is_successful);
 
   std::unique_ptr<Delegate> delegate_;
   // Keep this last so that all weak pointers will be invalidated at the
