@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "244b2cad_3401a71c",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T20:01:17Z",
+      "side": 1,
+      "message": "Sorry. Matt mentioned that it is legal for a udp socket to return 0 byte payload (ungraceful close). I have updated the interface accordingly",
+      "parentUuid": "6783866d_dc7c5b7f",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "90159eb49e92d68ec80ea26602e8bba6c6cd93ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82dee143_6df4a710",
         "filename": "services/network/udp_socket_impl.h",
         "patchSetId": 11

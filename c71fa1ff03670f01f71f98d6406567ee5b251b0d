@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "186906c1_a27c54f9",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T20:01:17Z",
+      "side": 1,
+      "message": "Done. Thanks Randy. That\u0027s very helpful suggestion! \nI have uploaded a new patch that implements the design discussed offline. I will update design doc if it looks okay to you.",
+      "parentUuid": "ca8145fa_47fe3ee6",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 27
+      },
+      "revId": "c71fa1ff03670f01f71f98d6406567ee5b251b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e17f92a0_29c9b92c",
         "filename": "services/network/udp_socket_impl.h",
         "patchSetId": 15
