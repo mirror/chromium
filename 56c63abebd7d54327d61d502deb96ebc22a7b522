@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3383088b_88e218ab",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T05:50:16Z",
+      "side": 1,
+      "message": "Why do we check these conditions here, not in ServiceWorkerVersion::StartWorkerInternal()? IIUC, these conditions should be satisfied while running_status() is STOPPED, and checking them immediately after the following line would more make sense.\n\n1498: DCHECK_EQ(EmbeddedWorkerStatus::STOPPED, running_status());",
+      "revId": "56c63abebd7d54327d61d502deb96ebc22a7b522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
