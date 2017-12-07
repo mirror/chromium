@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c4b60b_42230848",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T08:28:28Z",
+      "side": 0,
+      "message": "Since |p| doesn\u0027t go outside current line, we can safely remove this.",
+      "range": {
+        "startLine": 252,
+        "startChar": 61,
+        "endLine": 252,
+        "endChar": 78
+      },
+      "revId": "0365acdcbdebed0896f9078f3dc62163ce4ae211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

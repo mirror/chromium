@@ -16,6 +16,24 @@
       "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2c0189_37aae8e3",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifierCharacter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-07T08:28:28Z",
+      "side": 1,
+      "message": "There are two options, one is some changes fix the issue, or you failed to\nget primary direction.\n\nNote:\n|position_on_left| can be in another block, e.g.\n\u003cdiv\u003eabc\u003cdiv dir\u003drtl\u003e\u003cbdo\u003eDEF\u003c/bdo\u003e\u003c/div\u003exyz\u003c/div\u003e\nhttps://jsfiddle.net/9u1m4d36/\n\nWhen \"abc|\" \u003d\u003e Right \u003d\u003e \"|DEF\" case, primary_direction should be RTL.\nFor \"DEF|\" \u003d\u003e Left \u003d\u003e \"|xyz\" case primary direction should be LTR.\n\n|primary_direction| affects offset but InlineBox and this call site uses\nonly InlineBox, thus no layout test failed.",
+      "parentUuid": "ab16966a_92a1210d",
+      "revId": "59943d7fadd1c65420956dba49bac33d2d2681af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
