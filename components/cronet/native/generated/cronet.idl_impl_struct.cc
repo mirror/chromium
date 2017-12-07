@@ -24,17 +24,17 @@ void Cronet_Buffer_Destroy(Cronet_BufferPtr self) {
 }
 
 // Struct Cronet_Buffer setters.
-void Cronet_Buffer_set_size(Cronet_BufferPtr self, int32_t size) {
+void Cronet_Buffer_set_size(Cronet_BufferPtr self, uint64_t size) {
   DCHECK(self);
   self->size = size;
 }
 
-void Cronet_Buffer_set_limit(Cronet_BufferPtr self, int32_t limit) {
+void Cronet_Buffer_set_limit(Cronet_BufferPtr self, uint64_t limit) {
   DCHECK(self);
   self->limit = limit;
 }
 
-void Cronet_Buffer_set_position(Cronet_BufferPtr self, int32_t position) {
+void Cronet_Buffer_set_position(Cronet_BufferPtr self, uint64_t position) {
   DCHECK(self);
   self->position = position;
 }
@@ -51,17 +51,17 @@ void Cronet_Buffer_set_callback(Cronet_BufferPtr self,
 }
 
 // Struct Cronet_Buffer getters.
-int32_t Cronet_Buffer_get_size(Cronet_BufferPtr self) {
+uint64_t Cronet_Buffer_get_size(Cronet_BufferPtr self) {
   DCHECK(self);
   return self->size;
 }
 
-int32_t Cronet_Buffer_get_limit(Cronet_BufferPtr self) {
+uint64_t Cronet_Buffer_get_limit(Cronet_BufferPtr self) {
   DCHECK(self);
   return self->limit;
 }
 
-int32_t Cronet_Buffer_get_position(Cronet_BufferPtr self) {
+uint64_t Cronet_Buffer_get_position(Cronet_BufferPtr self) {
   DCHECK(self);
   return self->position;
 }
