@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72507efb_fb82db97",
+        "filename": "media/audio/audio_debug_file_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-07T10:17:09Z",
+      "side": 1,
+      "message": "How Unretained is safe?",
+      "revId": "e0e0944db6fab3faf3aa3be77858f3617a6ce88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de64561d_79f3d522",
+        "filename": "media/audio/audio_debug_file_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-07T10:17:09Z",
+      "side": 1,
+      "message": "Who will close the file if AudioDebugFileWriter is deleted before the task is executed?",
+      "revId": "e0e0944db6fab3faf3aa3be77858f3617a6ce88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2bad95_e7a5fcbe",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-07T10:17:09Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "e0e0944db6fab3faf3aa3be77858f3617a6ce88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeff1d75_cfb0c233",
+        "filename": "media/audio/audio_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-07T10:17:09Z",
+      "side": 1,
+      "message": "AudioManager cannot depend on Mojo (any of media/audio cannot depend on it).",
+      "revId": "e0e0944db6fab3faf3aa3be77858f3617a6ce88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43da077_cd2c3c8e",
+        "filename": "media/mojo/interfaces/audio_debug_recording_file_provider.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-07T10:17:09Z",
+      "side": 1,
+      "message": "What is the purpose of it?",
+      "revId": "e0e0944db6fab3faf3aa3be77858f3617a6ce88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
