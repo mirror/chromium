@@ -109,6 +109,8 @@ constexpr gfx::Insets kQuietModeTogglePadding(0, 14, 0, 14);
 constexpr SkColor kTopLabelColor = SkColorSetRGB(0x42, 0x85, 0xF4);
 constexpr SkColor kLabelColor = SkColorSetARGB(0xDE, 0x0, 0x0, 0x0);
 constexpr SkColor kTopBorderColor = SkColorSetARGB(0x1F, 0x0, 0x0, 0x0);
+constexpr SkColor kDisabledNotifierFilterColor =
+    SkColorSetARGB(0xB8, 0xFF, 0xFF, 0xFF);
 const int kLabelFontSize = 13;
 
 // EntryView ------------------------------------------------------------------
@@ -133,23 +135,36 @@ class EntryView : public views::View {
  private:
   std::unique_ptr<views::Painter> focus_painter_;
 
+  views::View* contents_;
+  views::View* disabled_filter_;
+
   DISALLOW_COPY_AND_ASSIGN(EntryView);
 };
 
 EntryView::EntryView(views::View* contents)
-    : focus_painter_(CreateFocusPainter()) {
+    : focus_painter_(CreateFocusPainter()),
+      contents_(contents),
+      disabled_filter_(new views::View) {
   AddChildView(contents);
+
+  disabled_filter_->SetBackground(
+      views::CreateSolidBackground(kDisabledNotifierFilterColor));
+  disabled_filter_->set_can_process_events_within_subtree(false);
+  AddChildView(disabled_filter_);
 }
 
 EntryView::~EntryView() = default;
 
 void EntryView::Layout() {
-  DCHECK_EQ(1, child_count());
-  views::View* content = child_at(0);
-  int content_width = width();
-  int content_height = content->GetHeightForWidth(content_width);
-  int y = std::max((height() - content_height) / 2, 0);
-  content->SetBounds(0, y, content_width, content_height);
+  int contents_width = width();
+  int contents_height = contents_->GetHeightForWidth(contents_width);
+  int y = std::max((height() - contents_height) / 2, 0);
+  contents_->SetBounds(0, y, contents_width, contents_height);
+
+  disabled_filter_->SetVisible(!contents_->enabled());
+  gfx::Rect filter_bounds = GetContentsBounds();
+  filter_bounds.set_width(filter_bounds.width() - kEntryIconSize);
+  disabled_filter_->SetBoundsRect(filter_bounds);
 }
 
 gfx::Size EntryView::CalculatePreferredSize() const {
@@ -157,8 +172,7 @@ gfx::Size EntryView::CalculatePreferredSize() const {
 }
 
 void EntryView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  DCHECK_EQ(1, child_count());
-  child_at(0)->GetAccessibleNodeData(node_data);
+  contents_->GetAccessibleNodeData(node_data);
 }
 
 void EntryView::OnFocus() {
@@ -169,11 +183,11 @@ void EntryView::OnFocus() {
 }
 
 bool EntryView::OnKeyPressed(const ui::KeyEvent& event) {
-  return child_at(0)->OnKeyPressed(event);
+  return contents_->OnKeyPressed(event);
 }
 
 bool EntryView::OnKeyReleased(const ui::KeyEvent& event) {
-  return child_at(0)->OnKeyReleased(event);
+  return contents_->OnKeyReleased(event);
 }
 
 void EntryView::OnPaint(gfx::Canvas* canvas) {
@@ -310,6 +324,17 @@ NotifierSettingsView::NotifierButton::NotifierButton(
                                    views::ImageButton::ALIGN_MIDDLE);
   }
 
+  if (notifier_ui_data.enforced) {
+    Button::SetEnabled(false);
+    checkbox_->SetEnabled(false);
+  }
+
+  if (!enabled()) {
+    policy_enforced_icon_ = new views::ImageView();
+    policy_enforced_icon_->SetImage(gfx::CreateVectorIcon(
+        kSystemMenuBusinessIcon, kEntryIconSize, gfx::kChromeIconGrey));
+  }
+
   UpdateIconImage(notifier_ui_data.icon);
 }
 
@@ -401,12 +426,19 @@ void NotifierSettingsView::NotifierButton::GridChanged() {
                   GridLayout::USE_PREF, 0, 0);
   }
 
+  if (!enabled()) {
+    cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0, GridLayout::FIXED,
+                  kEntryIconSize, 0);
+  }
+
   layout->StartRow(0, 0);
   layout->AddView(checkbox_);
   layout->AddView(icon_view_);
   layout->AddView(name_view_);
   if (learn_more_)
     layout->AddView(learn_more_);
+  if (!enabled())
+    layout->AddView(policy_enforced_icon_);
 
   Layout();
 }
