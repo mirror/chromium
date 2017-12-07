@@ -246,6 +246,30 @@
       "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c493b8c_04980dd6",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-12-07T22:28:41Z",
+      "side": 1,
+      "message": "The logic of invert for XCTest is not being used (Line 427) for neither Simulator nor Device.  We should enable that if necessary.",
+      "parentUuid": "031281c3_0f014d0d",
+      "range": {
+        "startLine": 891,
+        "startChar": 26,
+        "endLine": 891,
+        "endChar": 55
+      },
+      "revId": "267bd12ddff79884b1d6b83366c8ac3b2c0d482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
