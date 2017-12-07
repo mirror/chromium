@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f87bead8_bacc2a65",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:36:14Z",
+      "side": 1,
+      "message": "DevicesEnumerated and OnDispatcherHostConnectionError should remain private and nonvirtual.\n\nTo solve the problem of hooking the effects of these functions in the test you can either introduce virtual methods (with default empty implementations) that are called at the end of these functions, or introduce a couple of |callback_for_testing_| fields with callbacks that are invoked at the end.\nFor the DevicesEnumerated helper you should pass the vector with the results as parameters.\n\nIn the test you override the virtual methods or supply the callbacks.",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "3db0d259c2606f2cb602fa037326f7dccfb52b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c61a8d8_1204de51",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-07T16:36:14Z",
+      "side": 1,
+      "message": "Rewriting DevicesEnumerated here defeats the purpose of the test since you are no longer testing the original code, but this mock.\nFollow the advice in the other comment to avoid rewriting the whole of DevicesEnumerated().",
+      "revId": "3db0d259c2606f2cb602fa037326f7dccfb52b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
