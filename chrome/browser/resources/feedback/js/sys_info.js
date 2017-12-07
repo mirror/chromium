@@ -204,8 +204,13 @@ function createTableRowWrapper(key, value) {
 function createTable(systemInfo) {
   for (var key in systemInfo) {
     var item = systemInfo[key];
+    // If the value is non-empty and we have a display value, show that
+    // instead.
+    var displayValue = ('displayValue' in item && item['value'].length > 0) ?
+        item['displayValue'] :
+        item['value'];
     tableCreationClosuresQueue.push(
-        createTableRowWrapper(item['key'], item['value']));
+        createTableRowWrapper(item['key'], displayValue));
   }
 
   tableCreationClosuresQueue.push(finishPageLoading);
