@@ -24,6 +24,7 @@ class Thread;
     (std::unique_ptr<net::CertVerifier>)certVerifier;
 + (void)setEnablePublicKeyPinningBypassForLocalTrustAnchors:(BOOL)enable;
 + (base::SingleThreadTaskRunner*)getFileThreadRunnerForTesting;
++ (size_t)metricsTaskMapSizeForTesting;
 @end
 
 // NSURLSessionDataDelegate delegate implementation used by the tests to
@@ -38,8 +39,12 @@ class Thread;
 @property(readonly) NSMutableDictionary<NSURLSessionDataTask*, NSNumber*>*
     totalBytesReceivedPerTask;
 
+// Contains the expected amount of received data.
 @property(readonly) NSMutableDictionary<NSURLSessionDataTask*, NSNumber*>*
     expectedContentLengthPerTask;
+
+// Contains metrics data.
+@property(readonly) NSURLSessionTaskMetrics* taskMetrics NS_AVAILABLE_IOS(10.0);
 
 // Resets the delegate, so it can be used again for another request.
 - (void)reset;
