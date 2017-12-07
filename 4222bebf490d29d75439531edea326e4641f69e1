@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "6404c6c6_bc5d469a",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T17:41:08Z",
+      "side": 1,
+      "message": "Set 2 bits?  What two bits?\n\nSo let\u0027s see if I understand this:\n\nA child is 1 MB, a block is 1k.\n\nThis code is designed to read a (continuous?) chunk of data that may span multiple children.  This particular method is for reading data from within a single child, after setting up various parameters to indicate which chunk of this particular child we want.\n\nchild_offset_ is the offset *within* the current child (Not the offset of the current child, which was confusing me) where we want to start getting data from.  child_len_ isn\u0027t the length of the child (again, this was confusing me), but the length of data starting at child_offset_ we want to read, all contained within this child (Which may not be fully populated, of course).\n\nchild_data_.header.last_block is contained fully within a single block, and indicates a partial (Or maybe complete?) block that was last written, and is the only block in the file where we track having a partially valid block.\n\nOther than last_block, child_map_ is the only information we have on which data in the map is valid.  We only have one boolean for each block.\n\nSo we want to intersect [child_offset_ to child_len_] with the union of {data the map indicates is valid} and [the partial block represented by child_data_].\n\nSo what do we want to return if we only have part of the data?",
+      "parentUuid": "e75aa8b6_34c8371a",
+      "range": {
+        "startLine": 795,
+        "startChar": 21,
+        "endLine": 795,
+        "endChar": 37
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7db7bba_81afe9ce",
         "filename": "net/disk_cache/blockfile/sparse_control.cc",
         "patchSetId": 8
