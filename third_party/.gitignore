@@ -146,6 +146,7 @@
 /pdfsqueeze
 /pdfium
 /pefile
+/perfetto/src
 /perl
 /ppapi
 /psyco_win32
