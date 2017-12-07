@@ -215,12 +215,16 @@ void MirrorWindowController::UpdateWindow(
       if (reflector_) {
         reflector_->AddMirroringLayer(mirror_window->layer());
       } else if (aura::Env::GetInstance()->context_factory_private()) {
-        reflector_ =
-            aura::Env::GetInstance()
-                ->context_factory_private()
-                ->CreateReflector(
-                    Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
-                    mirror_window->layer());
+        // Config::MUS will create the accelerated widget asynchronously.
+        if (host->GetAcceleratedWidget()) {
+          DCHECK_EQ(aura::Env::GetInstance()->mode(), aura::Env::Mode::LOCAL);
+          reflector_ =
+              aura::Env::GetInstance()
+                  ->context_factory_private()
+                  ->CreateReflector(
+                      Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+                      mirror_window->layer());
+        }
       } else {
         // TODO: Config::MUS needs to support reflector.
         // http://crbug.com/601869.
@@ -287,7 +291,6 @@ void MirrorWindowController::CloseIfNotNecessary() {
 void MirrorWindowController::Close(bool delay_host_deletion) {
   for (auto& info : mirroring_host_info_map_)
     CloseAndDeleteHost(info.second, delay_host_deletion);
-
   mirroring_host_info_map_.clear();
   if (reflector_) {
     aura::Env::GetInstance()->context_factory_private()->RemoveReflector(
@@ -318,6 +321,16 @@ void MirrorWindowController::OnHostResized(aura::WindowTreeHost* host) {
   }
 }
 
+void MirrorWindowController::OnAcceleratedWidgetAvailable(
+    aura::WindowTreeHost* host) {
+  DCHECK_EQ(aura::Env::GetInstance()->mode(), aura::Env::Mode::MUS);
+  MirroringHostInfo* info = mirroring_host_info_map_[host->GetDisplayId()];
+  reflector_ =
+      aura::Env::GetInstance()->context_factory_private()->CreateReflector(
+          Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+          info->mirror_window->layer());
+}
+
 display::Display MirrorWindowController::GetDisplayForRootWindow(
     const aura::Window* root) const {
   for (const auto& pair : mirroring_host_info_map_) {
@@ -335,7 +348,8 @@ display::Display MirrorWindowController::GetDisplayForRootWindow(
 
 AshWindowTreeHost* MirrorWindowController::GetAshWindowTreeHostForDisplayId(
     int64_t id) {
-  CHECK_EQ(1u, mirroring_host_info_map_.count(id));
+  if (mirroring_host_info_map_.count(id) == 0)
+    return nullptr;
   return mirroring_host_info_map_[id]->ash_host.get();
 }
 
@@ -383,7 +397,7 @@ void MirrorWindowController::CloseAndDeleteHost(MirroringHostInfo* host_info,
     reflector_->RemoveMirroringLayer(host_info->mirror_window->layer());
 
   // EventProcessor may be accessed after this call if the mirroring window
-  // was deleted as a result of input event (e.g. shortcut), so don't delete
+  // was deleted as a result of input event (e.g. shortcut), so don't delete]
   // now.
   if (delay_host_deletion)
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, host_info);
