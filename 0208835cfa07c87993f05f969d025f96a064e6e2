@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9619f6f_86bf3f2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T06:16:21Z",
+      "side": 1,
+      "message": "Skipped it only because my main interest for this call is to figure out when the content view size (as it is known by content layer where the default is zero) turns to non-zero one when the initial layout is completed, so didn\u0027t see the point of sending zero-sized value as that will be ignored. I think it is okay to send down the size with zero width/height - it won\u0027t do any harm.",
+      "parentUuid": "9794d39e_d946ab8d",
+      "range": {
+        "startLine": 712,
+        "startChar": 53,
+        "endLine": 712,
+        "endChar": 61
+      },
+      "revId": "0208835cfa07c87993f05f969d025f96a064e6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "043f16b4_9f485bfc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-07T05:33:48Z",
       "side": 1,
       "message": "What happens if this is called with the same values?  I can imagine this will be called anytime requestLayout is triggered but the size doesn\u0027t change.  I believe the resize command to blink is smart enough to do nothing if there are no changes, but I want to make sure.\n\nHad to revisit, but I wonder if we should have added a layout change listener to the ContentView to trigger the size change (https://developer.android.com/reference/android/view/View.html#addOnLayoutChangeListener(android.view.View.OnLayoutChangeListener)).  I worry we might have discrepancies between the ContentView size and the WebContents size with this.  I guess this is all in the direction to removing ContentView entirely and having just CompositorViewHolder be the place that triggers gesture events.",
+      "revId": "0208835cfa07c87993f05f969d025f96a064e6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5849cb71_d35b32a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorViewHolder.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T06:16:21Z",
+      "side": 1,
+      "message": "\u003e What happens if this is called with the same values?  I can imagine this will be called anytime requestLayout is triggered but the size doesn\u0027t change.  I believe the resize command to blink is smart enough to do nothing if there are no changes, but I want to make sure.\n\nI may have not made it clear in the comment above. Successive calls with the same values are ignored by ViewAndroid on the receiving end of this call.. Rewrote the comment for clarification.\n\n\u003e I worry we might have discrepancies between the ContentView size and the WebContents size with this. \n\nI *think* this makes the resizing work as close as it can get to how it worked before the culprit CL landed. But I\u0027ll keep an eye on resizing-related behavior after landing this CL. Right now I\u0027m not very clear what side effect I might end up with. \n\n\u003e I guess this is all in the direction to removing ContentView entirely and having just CompositorViewHolder be the place that triggers gesture events.\n\nThat\u0027s correct, I\u0027m going in that direction as suggested in one of slimming clank syncups.",
+      "parentUuid": "043f16b4_9f485bfc",
       "revId": "0208835cfa07c87993f05f969d025f96a064e6e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
