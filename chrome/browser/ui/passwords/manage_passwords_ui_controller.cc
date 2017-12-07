@@ -8,7 +8,9 @@
 
 #include "base/auto_reset.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
@@ -31,6 +33,12 @@
 #include "components/password_manager/core/browser/statistics_table.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "content/public/browser/navigation_handle.h"
+
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
+#endif
 
 using password_manager::PasswordFormManager;
 
@@ -325,6 +333,7 @@ bool ManagePasswordsUIController::BubbleIsManualFallbackForSaving() const {
 
 void ManagePasswordsUIController::OnBubbleShown() {
   bubble_status_ = SHOWN;
+  reveal_password_when_next_bubble_is_opened_ = false;
 }
 
 void ManagePasswordsUIController::OnBubbleHidden() {
@@ -485,6 +494,26 @@ void ManagePasswordsUIController::OnDialogHidden() {
   }
 }
 
+bool ManagePasswordsUIController::AuthenticateUser() {
+#if !defined(OS_WIN) && !defined(OS_MACOSX)
+  return true;
+#else
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(&ManagePasswordsUIController::
+                                    RequestAuthenticationAndReopensBubbleImpl,
+                                this));
+  return false;
+#endif
+}
+
+bool ManagePasswordsUIController::IsPasswordRevealedWhenOpened() {
+  if (reveal_password_when_next_bubble_is_opened_) {
+    reveal_password_when_next_bubble_is_opened_ = false;
+    return true;
+  }
+  return false;
+}
+
 void ManagePasswordsUIController::SavePasswordInternal() {
   password_manager::PasswordStore* password_store =
       GetPasswordStore(web_contents());
@@ -598,4 +627,22 @@ void ManagePasswordsUIController::WebContentsDestroyed() {
   TabDialogs* tab_dialogs = TabDialogs::FromWebContents(web_contents());
   if (tab_dialogs)
     tab_dialogs->HideManagePasswordsBubble();
+}
+
+void ManagePasswordsUIController::RequestAuthenticationAndReopensBubbleImpl() {
+  bool authenticated = true;
+#if defined(OS_WIN)
+  authenticated =
+      password_manager_util_win::RequestAuthenticationAndReopensBubble(
+          web_contents()->GetNativeView());
+#elif defined(OS_MACOSX)
+  authenticated =
+      password_manager_util_mac::RequestAuthenticationAndReopensBubble();
+#else
+  NOTREACHED();
+#endif
+  if (authenticated)
+    reveal_password_when_next_bubble_is_opened_ = true;
+  bubble_status_ = SHOULD_POP_UP;
+  UpdateBubbleAndIconVisibility();
 }
