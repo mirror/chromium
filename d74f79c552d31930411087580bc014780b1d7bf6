@@ -16,6 +16,24 @@
       "revId": "d74f79c552d31930411087580bc014780b1d7bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abe691d_8e6ac6ca",
+        "filename": "testing/buildbot/filters/fuchsia.net_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-07T01:39:24Z",
+      "side": 0,
+      "message": "Thanks Eric; I took a look at the existing CRLSet test and it looks straightforward, but I\u0027m not familiar with the tooling used to create the data files (in this case an appropriately-constructed CRLSet), so I think it\u0027s probably better for you to take care of it and make sure it\u0027s done properly - sorry.",
+      "parentUuid": "6adc74b3_f1500899",
+      "revId": "d74f79c552d31930411087580bc014780b1d7bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
