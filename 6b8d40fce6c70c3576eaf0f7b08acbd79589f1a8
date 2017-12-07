@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed102484_5cd0d31a",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-07T01:10:48Z",
+      "side": 1,
+      "message": "This TODO seems to be implemented here so can be removed.",
+      "revId": "6b8d40fce6c70c3576eaf0f7b08acbd79589f1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1b26b9_299fcc99",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-07T01:10:48Z",
+      "side": 1,
+      "message": "Would it be cleaner to have this method at ClientId? So you could:\nstd::string foo \u003d client_id.AppendToHistogramName(histogram_name);",
+      "revId": "6b8d40fce6c70c3576eaf0f7b08acbd79589f1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
