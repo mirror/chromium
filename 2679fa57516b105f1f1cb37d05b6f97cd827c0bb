@@ -71,6 +71,54 @@
     },
     {
       "key": {
+        "uuid": "329ca1ff_57fc399a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T22:16:11Z",
+      "side": 1,
+      "message": "Done.  I\u0027ve also added a C++-side enum in view_type.h (although I am not sure if this is truly needed).",
+      "parentUuid": "06ef81a8_da31baf3",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 19
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cdf55cc_0bcd4151",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T22:16:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3fcd0685_b0091280",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 9
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "429e417c_0afe6bd7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "66ba3bfe_e77ede3f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22461,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T22:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429e417c_0afe6bd7",
+      "range": {
+        "startLine": 22461,
+        "startChar": 19,
+        "endLine": 22461,
+        "endChar": 25
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f472bc_00d9c68d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -114,6 +186,30 @@
       "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967bbcad_37d18eed",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22504,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-07T22:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f472bc_00d9c68d",
+      "range": {
+        "startLine": 22455,
+        "startChar": 0,
+        "endLine": 22504,
+        "endChar": 12
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
