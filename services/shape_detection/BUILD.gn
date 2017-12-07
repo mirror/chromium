@@ -36,7 +36,8 @@ source_set("lib") {
       "face_detection_impl_win.h",
       "face_detection_provider_win.cc",
       "face_detection_provider_win.h",
-      "text_detection_impl.cc",
+      "text_detection_impl_win.cc",
+      "text_detection_impl_win.h",
     ]
   } else {
     sources += [
@@ -122,7 +123,10 @@ source_set("tests") {
       "QuartzCore.framework",
     ]
   } else if (is_win) {
-    sources += [ "face_detection_impl_win_unittest.cc" ]
+    sources += [
+      "face_detection_impl_win_unittest.cc",
+      "text_detection_impl_win_unittest.cc",
+    ]
   }
 
   deps = [
