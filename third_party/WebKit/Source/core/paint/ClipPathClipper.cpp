@@ -17,6 +17,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
+#include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 
 namespace blink {
 
@@ -145,6 +146,10 @@ ClipPathClipper::ClipPathClipper(GraphicsContext& context,
       paint_offset_(paint_offset) {
   DCHECK(layout_object.StyleRef().ClipPath());
 
+  // Technically we should apply the mask clip and mask isolation property
+  // nodes to match clip_recorder_ and mask_isolation_recorder_ below,
+  // but we can safely omit those, because they will be applied in bundle
+  // when the contents are painted.
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
 
@@ -197,10 +202,18 @@ static AffineTransform MaskToContentTransform(
 }
 
 ClipPathClipper::~ClipPathClipper() {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+  Optional<ScopedPaintChunkProperties> scoped_properties;
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    const auto* properties = layout_object_.FirstFragment().PaintProperties();
+    if (!properties || !properties->ClipPath())
+      return;
+    scoped_properties.emplace(
+        context_.GetPaintController(),
+        layout_object_.FirstFragment().GetRarePaintData()->ClipPathProperties(),
+        layout_object_, DisplayItem::kSVGClip);
+  } else if (!mask_isolation_recorder_) {
     return;
-  if (!mask_isolation_recorder_)
-    return;
+  }
 
   bool is_svg_child = layout_object_.IsSVGChild();
   FloatRect reference_box = LocalReferenceBox(layout_object_);
@@ -232,23 +245,37 @@ ClipPathClipper::~ClipPathClipper() {
     else
       context_.BeginLayer(1.f, SkBlendMode::kDstIn);
 
-    // We wouldn't have reached here if the current clip-path is a shape,
-    // because it would have been applied as path-based clip already.
-    DCHECK(resource_clipper);
-    DCHECK_EQ(clip_path->GetType(), ClipPathOperation::REFERENCE);
-    locks.Lock(*resource_clipper);
-    if (resource_clipper->StyleRef().ClipPath()) {
-      // Try to apply nested clip-path as path-based clip.
-      bool unused;
-      if (Optional<Path> path = PathBasedClip(*resource_clipper, is_svg_child,
-                                              reference_box, unused)) {
-        context_.ClipPath(path->GetSkPath(), kAntiAliased);
-        rest_of_the_chain_already_appled = true;
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
+        !resource_clipper) {
+      // TODO(crbug.com/792769): Temporary hack because path-based clip-path
+      // is not implemented in SPv175+ yet. Remove this once it's done.
+      DCHECK_EQ(clip_path->GetType(), ClipPathOperation::SHAPE);
+      PaintFlags paint;
+      paint.setAntiAlias(true);
+      paint.setColor(SK_ColorBLACK);
+      context_.DrawPath(ToShapeClipPathOperation(clip_path)
+                            ->GetPath(reference_box)
+                            .GetSkPath(),
+                        paint);
+    } else {
+      // We wouldn't have reached here if the current clip-path is a shape,
+      // because it would have been applied as path-based clip already.
+      DCHECK(resource_clipper);
+      DCHECK_EQ(clip_path->GetType(), ClipPathOperation::REFERENCE);
+      locks.Lock(*resource_clipper);
+      if (resource_clipper->StyleRef().ClipPath()) {
+        // Try to apply nested clip-path as path-based clip.
+        bool unused;
+        if (Optional<Path> path = PathBasedClip(*resource_clipper, is_svg_child,
+                                                reference_box, unused)) {
+          context_.ClipPath(path->GetSkPath(), kAntiAliased);
+          rest_of_the_chain_already_appled = true;
+        }
       }
+      context_.ConcatCTM(MaskToContentTransform(*resource_clipper, is_svg_child,
+                                                reference_box));
+      context_.DrawRecord(resource_clipper->CreatePaintRecord());
     }
-    context_.ConcatCTM(
-        MaskToContentTransform(*resource_clipper, is_svg_child, reference_box));
-    context_.DrawRecord(resource_clipper->CreatePaintRecord());
 
     if (is_first)
       context_.Restore();
@@ -271,6 +298,11 @@ Optional<Path> ClipPathClipper::PathBasedClip(
   is_valid =
       IsClipPathOperationValid(clip_path, clip_path_owner, resource_clipper);
   if (!is_valid)
+    return WTF::nullopt;
+
+  // TODO(crbug.com/792769): Temporary hack because path-based clip-path
+  // is not implemented in SPv175+ yet. Remove this once it's done.
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return WTF::nullopt;
 
   if (resource_clipper) {

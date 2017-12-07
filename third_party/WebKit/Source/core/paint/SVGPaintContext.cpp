@@ -156,9 +156,6 @@ void SVGPaintContext::ApplyCompositingIfNecessary() {
 }
 
 void SVGPaintContext::ApplyClipIfNecessary() {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-
   if (object_.StyleRef().ClipPath())
     clip_path_clipper_.emplace(GetPaintInfo().context, object_, LayoutPoint());
 }
@@ -210,12 +207,16 @@ bool SVGPaintContext::ApplyFilterIfNecessary(SVGResources* resources) {
 }
 
 bool SVGPaintContext::IsIsolationInstalled() const {
+  // In SPv175+ isolation is modeled by effect nodes, and will be applied by
+  // PaintArtifactCompositor or PaintChunksToCcLayer depends on compositing
+  // state.
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return true;
   if (compositing_recorder_)
     return true;
   if (masker_ || filter_)
     return true;
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() && clip_path_clipper_ &&
-      clip_path_clipper_->IsIsolationInstalled())
+  if (clip_path_clipper_ && clip_path_clipper_->IsIsolationInstalled())
     return true;
   return false;
 }
