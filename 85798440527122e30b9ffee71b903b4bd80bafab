@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "36214713_79adfe47",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-07T22:48:20Z",
+      "side": 1,
+      "message": "I will rename this to MailtoHandlerManager since it manages a collection of MailtoHandler objects.",
+      "parentUuid": "3b8d7daa_81cbfead",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "982a5995_2499ded5",
         "filename": "ios/chrome/browser/web/mailto_url_rewriter.mm",
         "patchSetId": 4
@@ -141,6 +165,30 @@
       "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d866ab78_c1a17d32",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-07T22:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c796c4f_d2b4efcd",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "85798440527122e30b9ffee71b903b4bd80bafab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
