@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "339dd9d4_9c9272f8",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-07T11:12:34Z",
+      "side": 1,
+      "message": "How about the new comment?\nMy point of this change is to emphasize that this is not equal to call this-\u003eIsLowPriorityLoadingAllowedForRemoteFont(), but asks other clients too.",
+      "parentUuid": "7c5bd7cb_6453d01d",
+      "revId": "8ea5d3cc396f35794637ddf5c38acf02daacc399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe90e3c_b3f51898",
         "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8ea5d3cc396f35794637ddf5c38acf02daacc399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa19e28_1aba8a64",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-07T11:12:34Z",
+      "side": 1,
+      "message": "I slightly prefer to use IsLoaded() to be consistent. In this file, all others call this-\u003eIsLoaded() consistently.\n\nNote that font-\u003eIsLoaded() is still equal to !GetResource() since ClearResource() is called in NotifyFinished.",
+      "parentUuid": "dfe90e3c_b3f51898",
+      "revId": "8ea5d3cc396f35794637ddf5c38acf02daacc399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
