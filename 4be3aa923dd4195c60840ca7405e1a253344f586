@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e561bbfa_a2228da1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T01:21:32Z",
+      "side": 1,
+      "message": "nit: Please add either an enum or a units attribute.  I\u0027d actually suggest keeping the same enum that you had before, just with different values, e.g.\n\n\u003cint value\u003d\"50\" label\u003d\"0.5: Slowest\"/\u003e",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 61
+      },
+      "revId": "4be3aa923dd4195c60840ca7405e1a253344f586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

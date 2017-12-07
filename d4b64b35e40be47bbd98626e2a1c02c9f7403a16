@@ -164,6 +164,30 @@
       "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d444a3df_16dec86a",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T01:21:32Z",
+      "side": 1,
+      "message": "Awesome, thank you!  Doing so in a separate CL sounds great \u003d)\n\nFor recordEnumeratedValue – maybe something like recordEnumerationValue would be a clearer name?  I\u0027m basically thinking that it would be nice to have a JavaScript analogue to UMA_HISTOGRAM_ENUMERATION.",
+      "parentUuid": "97e0ed99_d060b9d8",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 37
+      },
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
