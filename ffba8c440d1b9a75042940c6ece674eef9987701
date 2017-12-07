@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a1cb995_0a941ba0",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a64452f_74348680",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d42cc5_c4cdc3b0",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4d9eea_1af3ba3d",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "OK, changed.",
+      "parentUuid": "37d42cc5_c4cdc3b0",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5851443b_ae2f56c1",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096c1eca_72232dd4",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "401ec213_18665638",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a79ed8a_24c090de",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401ec213_18665638",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6983baec_1ce72034",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c59fec_50351df6",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d09855ec_a6b9de68",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d211ef_a10cdc56",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "I had intentionally used #### to make these headings not stand out too much, but better to stick to markdown rules I guess.",
+      "parentUuid": "d09855ec_a6b9de68",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5b5ef47e_e352ed77",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87590354_0e910d37",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1550d6da_2d61999b",
         "filename": "docs/security/security-labels.md",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a17633_e7805bd2",
+        "filename": "docs/security/security-labels.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-07T16:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1550d6da_2d61999b",
+      "revId": "ffba8c440d1b9a75042940c6ece674eef9987701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
