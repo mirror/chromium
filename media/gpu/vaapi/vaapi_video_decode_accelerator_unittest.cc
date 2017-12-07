@@ -46,7 +46,7 @@ class MockAcceleratedVideoDecoder : public AcceleratedVideoDecoder {
 
   MOCK_METHOD2(SetStream, void(const uint8_t* ptr, size_t size));
   MOCK_METHOD0(Flush, bool());
-  MOCK_METHOD0(Reset, void());
+  MOCK_METHOD0(Reset, bool());
   MOCK_METHOD0(Decode, DecodeResult());
   MOCK_CONST_METHOD0(GetPicSize, gfx::Size());
   MOCK_CONST_METHOD0(GetRequiredNumOfPictures, size_t());
@@ -136,6 +136,8 @@ class VaapiVideoDecodeAcceleratorTest : public TestWithParam<VideoCodecProfile>,
     // Don't want to go through a vda_->Initialize() because it binds too many
     // items of the environment. Instead, just start the decoder thread.
     vda_.decoder_thread_task_runner_ = decoder_thread_.task_runner();
+
+    ON_CALL(*mock_decoder_, Reset()).WillByDefault(Return(true));
 
     // Plug in all the mocks and ourselves as the |client_|.
     vda_.decoder_.reset(mock_decoder_);

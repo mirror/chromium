@@ -98,7 +98,7 @@ class MEDIA_GPU_EXPORT VP9Decoder : public AcceleratedVideoDecoder {
   // AcceleratedVideoDecoder implementation.
   void SetStream(const uint8_t* ptr, size_t size) override;
   bool Flush() override WARN_UNUSED_RESULT;
-  void Reset() override;
+  bool Reset() override;
   DecodeResult Decode() override WARN_UNUSED_RESULT;
   gfx::Size GetPicSize() const override;
   size_t GetRequiredNumOfPictures() const override;

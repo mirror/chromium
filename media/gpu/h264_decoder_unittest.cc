@@ -48,15 +48,15 @@ class MockH264Accelerator : public H264Decoder::H264Accelerator {
   MOCK_METHOD1(SubmitDecode, bool(const scoped_refptr<H264Picture>& pic));
   MOCK_METHOD1(OutputPicture, bool(const scoped_refptr<H264Picture>& pic));
 
-  bool SubmitFrameMetadata(const H264SPS* sps,
-                           const H264PPS* pps,
-                           const H264DPB& dpb,
-                           const H264Picture::Vector& ref_pic_listp0,
-                           const H264Picture::Vector& ref_pic_listb0,
-                           const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override {
-    return true;
-  }
+  MOCK_METHOD7(
+      SubmitFrameMetadata,
+      H264Decoder::MetadataResult(const H264SPS* sps,
+                                  const H264PPS* pps,
+                                  const H264DPB& dpb,
+                                  const H264Picture::Vector& ref_pic_listp0,
+                                  const H264Picture::Vector& ref_pic_listb0,
+                                  const H264Picture::Vector& ref_pic_listb1,
+                                  const scoped_refptr<H264Picture>& pic));
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
@@ -64,11 +64,11 @@ class MockH264Accelerator : public H264Decoder::H264Accelerator {
                    const H264Picture::Vector& ref_pic_list1,
                    const scoped_refptr<H264Picture>& pic,
                    const uint8_t* data,
-                   size_t size) override {
+                   size_t size) {
     return true;
   }
 
-  void Reset() override {}
+  MOCK_METHOD0(Reset, bool());
 };
 
 // Test H264Decoder by feeding different of h264 frame sequences and make
@@ -98,14 +98,17 @@ class H264DecoderTest : public ::testing::Test {
 };
 
 void H264DecoderTest::SetUp() {
-  decoder_.reset(new H264Decoder(&accelerator_));
-
   // Sets default behaviors for mock methods for convenience.
   ON_CALL(accelerator_, CreateH264Picture()).WillByDefault(Invoke([]() {
     return new H264Picture();
   }));
   ON_CALL(accelerator_, SubmitDecode(_)).WillByDefault(Return(true));
   ON_CALL(accelerator_, OutputPicture(_)).WillByDefault(Return(true));
+  ON_CALL(accelerator_, SubmitFrameMetadata(_, _, _, _, _, _, _))
+      .WillByDefault(Return(H264Decoder::MetadataResult::kOk));
+  ON_CALL(accelerator_, Reset()).WillByDefault(Return(true));
+
+  decoder_.reset(new H264Decoder(&accelerator_));
 }
 
 void H264DecoderTest::SetInputFrameFiles(
@@ -326,6 +329,22 @@ TEST_F(H264DecoderTest, SwitchHighToBaseline) {
   }
   ASSERT_EQ(AcceleratedVideoDecoder::kRanOutOfStreamData, Decode());
   ASSERT_TRUE(decoder_->Flush());
+}
+
+TEST_F(H264DecoderTest, MetadataMayTryAgain) {
+  // If SubmitFrameMetadata returns |kTryAgain|, then Decode should notify us.
+  EXPECT_CALL(accelerator_, SubmitFrameMetadata(_, _, _, _, _, _, _))
+      .WillOnce(Return(H264Decoder::MetadataResult::kTryAgain));
+  SetInputFrameFiles({kBaselineFrame0});
+  ASSERT_EQ(AcceleratedVideoDecoder::kAllocateNewSurfaces, Decode());
+  EXPECT_CALL(accelerator_, CreateH264Picture());
+  ASSERT_EQ(AcceleratedVideoDecoder::kTryAgain, Decode());
+}
+
+TEST_F(H264DecoderTest, ResetMayFail) {
+  // If the accelerator fails to reset, then so should the decoder.
+  EXPECT_CALL(accelerator_, Reset()).WillOnce(Return(false));
+  ASSERT_FALSE(decoder_->Reset());
 }
 
 }  // namespace
