@@ -334,6 +334,30 @@
       "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991fa425_90e8687c",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-07T04:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c91a2cf9_59268fae",
+      "range": {
+        "startLine": 343,
+        "startChar": 22,
+        "endLine": 343,
+        "endChar": 36
+      },
+      "revId": "b9b1cff342b5c9bec0f60d18a90a681e53cfef00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
