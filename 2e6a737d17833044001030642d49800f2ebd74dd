@@ -46,6 +46,30 @@
       "revId": "2e6a737d17833044001030642d49800f2ebd74dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3551902e_cccae963",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/support/send-file-form-helper.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-12-07T17:18:00Z",
+      "side": 1,
+      "message": "... and to further clarify: the specific case of the ASCII-only filename `file-for-upload-in-form.txt` unmodified by encoding is indeed replicated in each formEncoding. This is to ensure ASCII passes through unmodified and produces the correct/expected multipart data. This fails, for instance, if the formEncoding contains a typo, since the hidden `_charset_` field will take a different value in that case.",
+      "parentUuid": "5abf2698_9202fcbe",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "2e6a737d17833044001030642d49800f2ebd74dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
