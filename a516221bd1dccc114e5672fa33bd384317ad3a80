@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "449419a6_7fa85f69",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d8cf2d_50fe4d11",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45710497_e662f7f4",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ee471565_6acb1ead",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45710497_e662f7f4",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba4913a_78d48767",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c9ee63_56e131ff",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba4913a_78d48767",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "4b99d361_35b2c0d0",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a556c9_721c9d87",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d8cd86a_5f8ce48d",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider_unittest.cc",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c169df_5bebac8f",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_decider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d8cd86a_5f8ce48d",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +218,24 @@
       "side": 1,
       "message": "The usual pattern is:\n-\u003e Do you support timestamps? Delete based on the [delete_begin_, delete_end) timestamps.\n-\u003e Otherwise, do you contain URLs? Delete everything regardless of time range.\n-\u003e Otherwise, do you contain data derived from history, but no URLs? Only delete data on complete deletion.",
       "parentUuid": "da9792dc_a33557b5",
+      "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e07dc01_9b9970a7",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-07T02:35:08Z",
+      "side": 1,
+      "message": "Thanks for guidelines. Took the second pattern (delete everything regardless of time range) as we don\u0027t support timestamps.",
+      "parentUuid": "6805ddc8_4db5333b",
       "revId": "a516221bd1dccc114e5672fa33bd384317ad3a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
