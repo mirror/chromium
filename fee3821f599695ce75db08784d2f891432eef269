@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27a5330_1d6ed3a4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-07T18:41:55Z",
+      "side": 1,
+      "message": "Can you say a bit more about the background to this statement?  I don\u0027t understand any of why AttachFileForUpload() would allow them to be opened in the current process, why that is desirable (unless that\u0027s as simple as \"the network service won\u0027t have privileges to open arbitrary files, so they have to be opened out of process and a handle passed in\"), or why the goal isn\u0027t to find a way to make a DataElement that allows passing files in by the usual pathway rather than adding in a new interface for it.",
+      "range": {
+        "startLine": 772,
+        "startChar": 39,
+        "endLine": 772,
+        "endChar": 41
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffb2d69_a08e8578",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-07T18:41:55Z",
+      "side": 1,
+      "message": "I\u0027m sure it\u0027s something I\u0027m missing about the use of this enum, but why is TYPE_BYTES not allowed in the element list?",
+      "range": {
+        "startLine": 777,
+        "startChar": 31,
+        "endLine": 777,
+        "endChar": 38
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac2eb8d_45f093ea",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-07T18:41:55Z",
+      "side": 1,
+      "message": "I feel like there\u0027s context I\u0027m missing to understand this, which suggests to me we need more documentation.  I scanned ResourceRequest looking for a base::File data member, and didn\u0027t spot it.  Given the context for this CL, I suspect but am not sure that you mean that if there is a temporary file provided for upload through ResourceRequestBody::elements_, it will be deleted on another thread, but I think it\u0027s worthwhile being explicit about that.\n\nETA: It looks from the implementation as if it\u0027s explicitly illegal to pass in files for upload using this interface, which suggests that I\u0027m confused or the above comment is wrong.  What am I missing?",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18781b6b_f5daf000",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-07T18:41:55Z",
+      "side": 1,
+      "message": "Could you give some background about why the extra interface instead of finding a way to make the current ResourceRequest-\u003eDataElement mechanism work?  It feels like that would be a cleaner interface, which would also allow (don\u0027t know if consumers need it) the ability to have multiple different upload sources.\n\nAlso, is the file passed in deleted when the upload is complete?  If so, I think that\u0027s worth saying.",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
