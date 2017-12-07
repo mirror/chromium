@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67f4d79b_22a91018",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-07T18:14:18Z",
+      "side": 1,
+      "message": "suggestion: bluetooth: web: test: Isolate FakeAdapter utils",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6282a9fc_58a13ee4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-07T18:14:18Z",
+      "side": 1,
+      "message": "since references to TestRunner shouldn\u0027t exist in wpt/.",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc243eb3_9139d36d",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-fake-adapter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-07T18:14:18Z",
+      "side": 1,
+      "message": "might as well \u0027use strict\u0027 up here.\n\nAlso, add a comment about the temporary nature of this file and include TODO(509038)",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
