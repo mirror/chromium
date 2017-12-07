@@ -183,4 +183,26 @@ TEST_F(ScriptedAnimationControllerTest, RegisterCallbackAndEnqueueTask) {
   EXPECT_EQ(1, observer.Order()[1]);
 }
 
+TEST_F(ScriptedAnimationControllerTest, TestHasRegisteredCallbacks) {
+  TaskOrderObserver observer;
+
+  Controller().RegisterCallback(new RunTaskCallback(observer.CreateTask(1)));
+  EXPECT_TRUE(Controller().HasRegisteredCallbacks());
+
+  Controller().CancelCallback(1);
+  EXPECT_FALSE(Controller().HasRegisteredCallbacks());
+
+  Controller().RegisterCallback(new RunTaskCallback(observer.CreateTask(1)));
+  Controller().RegisterCallback(new RunTaskCallback(observer.CreateTask(2)));
+  EXPECT_TRUE(Controller().HasRegisteredCallbacks());
+
+  Controller().CancelCallback(1);
+  EXPECT_TRUE(Controller().HasRegisteredCallbacks());
+
+  // Servicing the scripted animations should call the remaining callback and
+  // clear it.
+  Controller().ServiceScriptedAnimations(0);
+  EXPECT_FALSE(Controller().HasRegisteredCallbacks());
+}
+
 }  // namespace blink
