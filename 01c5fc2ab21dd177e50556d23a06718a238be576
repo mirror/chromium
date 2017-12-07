@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced0086e_9a42b1ec",
+        "filename": "chrome/browser/vr/elements/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-07T21:48:30Z",
+      "side": 1,
+      "message": "Was thinking the position probably doesn\u0027t have to be plumbed into the delegate, but you mentioned they may be useful on other platforms, so, cool!",
+      "revId": "01c5fc2ab21dd177e50556d23a06718a238be576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
