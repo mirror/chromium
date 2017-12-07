@@ -187,6 +187,13 @@ void PartnerBookmarksShim::SetPartnerBookmarksRoot(
     observer.PartnerShimLoaded(this);
 }
 
+void PartnerBookmarksShim::NotifyShimChanged() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  for (PartnerBookmarksShim::Observer& observer : observers_) {
+    observer.PartnerShimChanged(this);
+  }
+}
+
 PartnerBookmarksShim::NodeRenamingMapKey::NodeRenamingMapKey(
     const GURL& url, const base::string16& provider_title)
     : url_(url), provider_title_(provider_title) {}

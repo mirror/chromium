@@ -401,6 +401,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java",
   "java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationParams.java",
   "java/src/org/chromium/chrome/browser/externalnav/IntentWithGesturesHandler.java",
+  "java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
   "java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
   "java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
   "java/src/org/chromium/chrome/browser/feature_engagement/TrackerFactory.java",
