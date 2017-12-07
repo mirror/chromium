@@ -16,6 +16,24 @@
       "revId": "05ed742736b4d4070ad44f954dd7952caa66e893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7fe991_ae68d1d5",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 4629,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-07T17:23:47Z",
+      "side": 1,
+      "message": "Sorry, meant to set this as well - but forgot when everything compiled and worked as is. Added.",
+      "parentUuid": "42664f07_b8d533e3",
+      "revId": "05ed742736b4d4070ad44f954dd7952caa66e893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
