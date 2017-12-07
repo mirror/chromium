@@ -357,7 +357,12 @@ config("compiler") {
   if (is_posix && use_lld && !is_nacl) {
     ldflags += [ "-fuse-ld=lld" ]
   } else if (use_gold) {
-    ldflags += [ "-fuse-ld=gold" ]
+    ldflags += [
+      "-fuse-ld=gold",
+
+      # Required to address crbug.com/792777
+      "-Wl,--rosegment",
+    ]
     if (!is_android) {
       # On Android, this isn't needed.  gcc in the NDK knows to look next to
       # it with -fuse-ld=gold, and clang gets a --gcc-toolchain flag passed
