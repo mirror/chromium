@@ -136,7 +136,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    */
    var findInputByFieldIdentifier_ = function(inputs, identifier) {
      for (var i = 0; i < inputs.length; ++i) {
-       if (identifier == __gCrWeb.common.getFieldIdentifier(inputs[i])) {
+       if (identifier == __gCrWeb.common.getFieldName(inputs[i])) {
          return inputs[i];
        }
      }
@@ -336,7 +336,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
       var input = inputs[j];
 
       fields.push({
-        'element': __gCrWeb.common.getFieldIdentifier(input),
+        'element': __gCrWeb.common.getFieldName(input),
         'type': input.type
       });
 
@@ -345,7 +345,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
           firstPasswordIndex = j;
         }
         passwords.push({
-          'element': __gCrWeb.common.getFieldIdentifier(input),
+          'element': __gCrWeb.common.getFieldName(input),
           'value': input.value
         });
       }
@@ -359,7 +359,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     for (var j = firstPasswordIndex - 1; j >= 0; j--) {
       var input = inputs[j];
       if (!input.disabled && __gCrWeb.common.isTextField(input)) {
-        usernameElement = __gCrWeb.common.getFieldIdentifier(input);
+        usernameElement = __gCrWeb.common.getFieldName(input);
         usernameValue = input.value;
         break;
       }
