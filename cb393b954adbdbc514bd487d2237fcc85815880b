@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5126ed_d122e99c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/zero-rowspan-002-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-12-07T20:36:23Z",
+      "side": 1,
+      "message": "These are html tests rather than css tests but this still feels like the right place to test the behaviour. Either that or I can make them private layout tests.",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
