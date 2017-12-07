@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26e3294_86d93938",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-07T19:42:23Z",
+      "side": 1,
+      "message": "Maybe this whole block could be guarded under an if (!is_ios \u0026\u0026 intel \u0026\u0026 arm).",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376ed5c5_c2f8ba69",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-07T19:42:23Z",
+      "side": 1,
+      "message": "As that would allow to set the sources only once.",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342a193a_9dbc8660",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-07T19:42:23Z",
+      "side": 1,
+      "message": "I looked in the code base and optimize_speed was only used in v8, but *not* for ARM.\n\nGenerally -O3 will generate a bigger binary.\n\nWhat would be the performance gain of using it?",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
