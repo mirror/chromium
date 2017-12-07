@@ -84,15 +84,6 @@ class ShellSurface : public SurfaceTreeHost,
     surface_destroyed_callback_ = surface_destroyed_callback;
   }
 
-  // Set the callback to run when the surface state changed.
-  using StateChangedCallback =
-      base::Callback<void(ash::mojom::WindowStateType old_state_type,
-                          ash::mojom::WindowStateType new_state_type)>;
-  void set_state_changed_callback(
-      const StateChangedCallback& state_changed_callback) {
-    state_changed_callback_ = state_changed_callback;
-  }
-
   // Set the callback to run when the client is asked to configure the surface.
   // The size is a hint, in the sense that the client is free to ignore it if
   // it doesn't resize, pick a smaller size (to satisfy aspect ratio or resize
@@ -120,16 +111,22 @@ class ShellSurface : public SurfaceTreeHost,
   void Activate();
 
   // Maximizes the shell surface.
-  void Maximize();
+  virtual void Maximize();
 
   // Minimize the shell surface.
-  void Minimize();
+  virtual void Minimize();
 
   // Restore the shell surface.
-  void Restore();
+  virtual void Restore();
 
   // Set fullscreen state for shell surface.
-  void SetFullscreen(bool fullscreen);
+  virtual void SetFullscreen(bool fullscreen);
+
+  // Set the surface's bounds in screen coordinates.
+  virtual void SetBounds(const gfx::Rect& bounds_in_screen);
+
+  // Set the surface's bounds in parent's coordinates.
+  virtual void SetBoundsInParent(const gfx::Rect& bounds_in_parent);
 
   // Start an interactive move of surface.
   virtual void Move();
@@ -354,7 +351,6 @@ class ShellSurface : public SurfaceTreeHost,
   gfx::Rect pending_geometry_;
   base::Closure close_callback_;
   base::Closure surface_destroyed_callback_;
-  StateChangedCallback state_changed_callback_;
   ConfigureCallback configure_callback_;
   ScopedConfigure* scoped_configure_ = nullptr;
   std::unique_ptr<ui::CompositorLock> configure_compositor_lock_;
