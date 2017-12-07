@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c000fc_993b7fd5",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-07T17:02:29Z",
+      "side": 1,
+      "message": "There are many tests in this file that already have this pattern. Consider not even bringing up possible resource types. The LitePage determination is only on the main frame header, so maybe just something like:\n\n  # Check main frame for Lite Page response.",
+      "revId": "4ad95f63535349784d6e9db83f1f62d415e47f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
