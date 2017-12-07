@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338cebd0_8672858f",
+        "filename": "services/device/device_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T09:17:11Z",
+      "side": 0,
+      "message": "Keep this?",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "e1e5bf9144cbdbeba1f5033a3c2303849d63cdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
