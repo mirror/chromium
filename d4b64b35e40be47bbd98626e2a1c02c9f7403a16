@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "39cf2435_68f8f9cc",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T01:06:48Z",
+      "side": 1,
+      "message": "That\u0027s a cool way to do it, I\u0027ll change to a sparse histogram. PTAL -- not sure if I\u0027ve done this right, I couldn\u0027t find any other JS examples.",
+      "parentUuid": "86670bfd_f6b2c16b",
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9e49a0_0faf0cb9",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c7feb415_e61f63c3",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T01:06:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a9e49a0_0faf0cb9",
+      "range": {
+        "startLine": 711,
+        "startChar": 59,
+        "endLine": 711,
+        "endChar": 0
+      },
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0a87b54_984c8cd2",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -89,6 +131,30 @@
       "writtenOn": "2017-12-06T23:18:13Z",
       "side": 1,
       "message": "Could I talk you into extending the metricsPrivate API to include a recordBoolean function, and using that here?  And, for extra communal goodness, maybe a recordEnumeratedValue function as well?  It\u0027s terribly easy as-is to pass the wrong values for the bucket min/max/buckets params.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 37
+      },
+      "revId": "d4b64b35e40be47bbd98626e2a1c02c9f7403a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e0ed99_d060b9d8",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-07T01:06:48Z",
+      "side": 1,
+      "message": "I can do recordBoolean for sure. I\u0027m not entirely clear on what you mean by recordEnumeratedValue.\n\nHow do you feel about those being a separate change to keep this one simple? Then I\u0027ll come back and flip this one over to recordBoolean.",
+      "parentUuid": "a0a87b54_984c8cd2",
       "range": {
         "startLine": 714,
         "startChar": 0,
