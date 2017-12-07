@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "64d9ace8_5d916f83",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "This is not a global variable and like task_metrics_map_, does not need g_ prefix.",
+      "parentUuid": "ca10183a_20308a9f",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5130746c_231a872d",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 44
@@ -283,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "53b315c3_22b4dbb9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "I\u0027m sorry I meant s/import/include for objc/runtime.h\n\n#include \u003cobjc/runtime.h\u003e\n\n#include \"base/strings/sys_string_conversions.h\"",
+      "parentUuid": "bb36abf6_05c404ed",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b09a6c_c4c4b93c",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 44
@@ -312,6 +354,24 @@
       "side": 1,
       "message": "Yes.  I made a small change to try and make this clearer.",
       "parentUuid": "a4b09a6c_c4c4b93c",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1005cc68_6a26b841",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "Would it be better to remove a line-break after the comment then?",
+      "parentUuid": "945132c2_3df0cb6d",
       "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -397,6 +457,30 @@
       "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb132b84_2b91233c",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "Calling CronetTestBase::SetUp from this method seems unusual. Is there a way to call Super::SetUp() from Subclass::SetUp() as intended? If no, comments could be helpful here.",
+      "parentUuid": "40818c46_beb2297a",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -740,6 +824,30 @@
       "side": 1,
       "message": "That\u0027s an interesting point, thanks for the link!\n \nWe could have |shutdownForTesting| CHECK that metricsTaskMap is empty, would that be better?",
       "parentUuid": "9017f35b_37f3f4fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91088dd_86f1595e",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "I think so.",
+      "parentUuid": "397c0abb_d560ec08",
       "range": {
         "startLine": 27,
         "startChar": 10,

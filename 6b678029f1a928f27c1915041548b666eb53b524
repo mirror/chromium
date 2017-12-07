@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55fef949_e1a2606b",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "SwizzleSessionWithConfiguration",
+      "revId": "6b678029f1a928f27c1915041548b666eb53b524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549b68ca_e2c47677",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 45
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T22:41:32Z",
+      "side": 1,
+      "message": "s/thisClass/this_class\n\nSame comment (use C++ Style) for other local variables in this function",
+      "range": {
+        "startLine": 333,
+        "startChar": 8,
+        "endLine": 333,
+        "endChar": 17
+      },
+      "revId": "6b678029f1a928f27c1915041548b666eb53b524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
