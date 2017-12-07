@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "7d02e487_42ef3a48",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-07T16:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a0341f_48b2465d",
+      "range": {
+        "startLine": 659,
+        "startChar": 19,
+        "endLine": 659,
+        "endChar": 23
+      },
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6fe661c_4ef323e7",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-07T16:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c84ff3a_ced6e0da",
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da15d9a9_86be3b2e",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b3a7d76a_daed432c",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-07T16:58:58Z",
+      "side": 1,
+      "message": "\u003e why do these need to be virtual? can remote shell code explicitly call some other functions that client controlled shell surface provides? that way we\u0027re not having requests to try maximize be confused with request to say that the window is maximized. maybe call it SetMaximized instead.\n\nI can do it, but shell_surface_unittests has to be updated. We probably should\n\n* Introduce ShellSurfaceBase and make ShellSurface, ClientControlledShellSurface subclasses of it.\n* Move Maximize/Minimize/Restore etc into ShellSurface (as these methods does not make sense for ClientControlledShellSurface)\n* Define SetMaximized, SetMinimized etc in ClientControlledShellSurface\n* Make state change tests in shell_surface_unittests non parametric and\n  create new tests in client_controlled_shell_surface_unittests.\n\nWDYT? If you agree, I\u0027ll make these changes in a separate CL.",
+      "parentUuid": "da15d9a9_86be3b2e",
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9adc7cf4_cfa5cc8a",
         "filename": "ui/wm/core/window_util.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-05T23:50:27Z",
       "side": 1,
       "message": "I think this could use a test?",
+      "revId": "622459f5a968c0831f613dcb67d99145154f3038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bfe7c9_614ace5d",
+        "filename": "ui/wm/core/window_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-07T16:58:58Z",
+      "side": 1,
+      "message": "\u003e I think this could use a test?\n\nAdded unit test in client_controlled_state_unittest.cc",
+      "parentUuid": "9adc7cf4_cfa5cc8a",
       "revId": "622459f5a968c0831f613dcb67d99145154f3038",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
