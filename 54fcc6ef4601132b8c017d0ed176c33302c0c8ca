@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482c8d1f_ace7005f",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:10:49Z",
+      "side": 1,
+      "message": "nit: I\u0027d rephrase this to something along the lines of:\n\n\"Ensure that each call to this method uses a distinct field trial name. Otherwise, nested calls might fail, due to the shared FieldTrialList already having the field trial registered.\"\n\n(Definitely feel free to refine the phrasing further!)",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 41
+      },
+      "revId": "54fcc6ef4601132b8c017d0ed176c33302c0c8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
