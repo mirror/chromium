@@ -19,6 +19,8 @@ namespace ash {
 class ShelfItemDelegate;
 class ShelfModelObserver;
 
+ASH_PUBLIC_EXPORT extern const char kBackButtonId[];
+
 // An id for the AppList item, which is added in the ShelfModel constructor.
 // Generated as crx_file::id_util::GenerateId("org.chromium.applist")
 ASH_PUBLIC_EXPORT extern const char kAppListId[];

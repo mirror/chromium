@@ -116,6 +116,8 @@ enum ShelfItemType {
   // Represents an open dialog.
   TYPE_DIALOG,
 
+  TYPE_BACK_BUTTON,
+
   // Default value.
   TYPE_UNDEFINED,
 };

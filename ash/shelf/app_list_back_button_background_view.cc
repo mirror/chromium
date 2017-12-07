@@ -49,6 +49,7 @@ AppListBackButtonBackgroundView::~AppListBackButtonBackgroundView() = default;
 
 void AppListBackButtonBackgroundView::UpdateShelfItemBackground(SkColor color) {
   background_color_ = color;
+  background_color_ = SK_ColorTRANSPARENT;
   SchedulePaint();
 }
 

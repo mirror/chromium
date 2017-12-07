@@ -34,10 +34,15 @@ BackButton::BackButton(ShelfView* shelf_view, Shelf* shelf)
   set_ink_drop_base_color(kShelfInkDropBaseColor);
   set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
 
+  LOG(ERROR) << shelf_view_ << shelf_;
   SetAccessibleName(
       l10n_util::GetStringUTF16(IDS_ASH_SHELF_BACK_BUTTON_ACCESSIBLE_NAME));
   SetSize(gfx::Size(kShelfSize, kShelfSize));
   SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
+
+  gfx::ImageSkia icon = gfx::CreateVectorIcon(kShelfBackIcon, 16, SK_ColorWHITE);
+  SetImage(views::Button::STATE_NORMAL, icon);
+  SetImageAlignment(ALIGN_CENTER, ALIGN_MIDDLE);
 }
 
 BackButton::~BackButton() = default;
@@ -94,34 +99,6 @@ std::unique_ptr<views::InkDrop> BackButton::CreateInkDrop() {
 std::unique_ptr<views::InkDropMask> BackButton::CreateInkDropMask() const {
   return std::make_unique<views::CircleInkDropMask>(size(), GetCenterPoint(),
                                                     kAppListButtonRadius);
-}
-
-void BackButton::PaintButtonContents(gfx::Canvas* canvas) {
-  gfx::ImageSkia img = CreateVectorIcon(kShelfBackIcon, SK_ColorWHITE);
-
-  const bool is_tablet_mode = Shell::Get()
-                                  ->tablet_mode_controller()
-                                  ->IsTabletModeWindowManagerEnabled();
-  // Sync the fade in/out of the back arrow with the movement of the shelf
-  // items.
-  const double current_animation_value =
-      shelf_view_->GetAppListButtonAnimationCurrentValue();
-
-  // Paint the back button in tablet mode and handle transition animations.
-  int opacity = is_tablet_mode ? 255 : 0;
-  if (shelf_->is_tablet_mode_animation_running()) {
-    if (current_animation_value <= 0.0) {
-      // The mode flipped but the animation hasn't begun, paint the old state.
-      opacity = is_tablet_mode ? 0 : 255;
-    } else {
-      // Animate 0->255 into tablet mode, animate 255->0 into normal mode.
-      opacity = static_cast<int>(current_animation_value * 255.0);
-      opacity = is_tablet_mode ? opacity : (255 - opacity);
-    }
-  }
-
-  canvas->DrawImageInt(img, bounds().width() / 2 - img.width() / 2,
-                       bounds().height() / 2 - img.height() / 2, opacity);
 }
 
 void BackButton::GenerateAndSendBackEvent(
