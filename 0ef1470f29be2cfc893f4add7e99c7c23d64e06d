@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca019685_81f0a1e4",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818503d6_060b05b9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 1,
+      "message": "Why it\u0027s using |user_type| here while the other places using |active_user_type|?",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c792b95d_faac2d85",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 1,
+      "message": "new style: /*\u003dcompare_layouts*/",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa36cc5b_6be2eb52",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46977d9e_d40ff272",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 1,
+      "message": "It seems the following functions can be extracted to a wallpaper_util.h/cc file?",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

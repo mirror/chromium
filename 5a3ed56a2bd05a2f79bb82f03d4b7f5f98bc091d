@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35873475_84571f31",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-07T22:23:15Z",
+      "side": 0,
+      "message": "Why remove this?",
+      "revId": "5a3ed56a2bd05a2f79bb82f03d4b7f5f98bc091d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
