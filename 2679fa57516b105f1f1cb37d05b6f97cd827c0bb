@@ -22,6 +22,98 @@
       "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcd0685_b0091280",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:42:43Z",
+      "side": 1,
+      "message": "nit: s/units/enum",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 9
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ef81a8_da31baf3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22457,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:42:43Z",
+      "side": 1,
+      "message": "nit: Please define an enum in enums.xml with labels along the lines of \"Background\" and \"Non-background\", and use it here.",
+      "range": {
+        "startLine": 22457,
+        "startChar": 4,
+        "endLine": 22457,
+        "endChar": 19
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429e417c_0afe6bd7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22461,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:42:43Z",
+      "side": 1,
+      "message": "nit: \"the source\"",
+      "range": {
+        "startLine": 22461,
+        "startChar": 19,
+        "endLine": 22461,
+        "endChar": 25
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f472bc_00d9c68d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22504,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:42:43Z",
+      "side": 1,
+      "message": "nit: It seems like some or all of these metrics are intended as temporary metrics to guide development.  If that\u0027s accurate, would you mind adding a note that that effect for each histogram\u0027s summary?  Something like \"Expected to be a temporary metric, likely safe to remove after M65\" (or whatever an appropriate milestone is).",
+      "range": {
+        "startLine": 22455,
+        "startChar": 0,
+        "endLine": 22504,
+        "endChar": 12
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
