@@ -30,4 +30,8 @@
   }
 }
 
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+}
+
 @end
