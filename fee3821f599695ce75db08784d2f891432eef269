@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd82ddb4_81b2f251",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:28:11Z",
+      "side": 1,
+      "message": "My understanding is that we don\u0027t want the network process to be able to open arbitrary files.  Per earlier comment, the usual pathway involves threadhops in every consumer.  I plan to have this class support doing that directly, to simplify consumers.",
+      "parentUuid": "d27a5330_1d6ed3a4",
+      "range": {
+        "startLine": 772,
+        "startChar": 39,
+        "endLine": 772,
+        "endChar": 41
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ffb2d69_a08e8578",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T18:41:55Z",
       "side": 1,
       "message": "I\u0027m sure it\u0027s something I\u0027m missing about the use of this enum, but why is TYPE_BYTES not allowed in the element list?",
+      "range": {
+        "startLine": 777,
+        "startChar": 31,
+        "endLine": 777,
+        "endChar": 38
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208a3490_bf8c9982",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:28:11Z",
+      "side": 1,
+      "message": "Because we\u0027ll potentially need to make *4* copies of it to send the string to the network process, which is kind of absurd.  Why 4?\n\n* We need to copy it into a DataElement (We can possible remove it, if the consumer gives us ownership, but the DataElement API doesn\u0027t currently support that, though I may add it)\n* We then need to copy it to the IPC buffer.\n* We then need to copy it from the IPC buffer to another DataElement.\n* We then need to copy it from the DataElement to the upload code (Again, may be able to skip that one).\n\nI\u0027m going to add a similar method to SimpleURLLoader to upload a string, and if it\u0027s too big (Over 256k with 4 copies, maybe 512-1MB if we get it down to 2?), just stream it.  Rather than DCHECK based on string size, it\u0027s simpler to just force them to use the streaming API.  If we later need to rethink that, it\u0027s easy enough to do.\n\nEven with only copying the data twice, when retries are enabled, we\u0027ll still need to keep two copies of the string around in memory, one in each process, until the request is complete.",
+      "parentUuid": "7ffb2d69_a08e8578",
       "range": {
         "startLine": 777,
         "startChar": 31,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48ede302_d0f741b4",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:28:11Z",
+      "side": 1,
+      "message": "Sorry, comment carried over from an earlier version (And by \"delete\" I actually meant \"destroyed\").  I\u0027ve removed it.  Will add something similar once I start opening the file in the current process.",
+      "parentUuid": "3ac2eb8d_45f093ea",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18781b6b_f5daf000",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-07T18:41:55Z",
       "side": 1,
       "message": "Could you give some background about why the extra interface instead of finding a way to make the current ResourceRequest-\u003eDataElement mechanism work?  It feels like that would be a cleaner interface, which would also allow (don\u0027t know if consumers need it) the ability to have multiple different upload sources.\n\nAlso, is the file passed in deleted when the upload is complete?  If so, I think that\u0027s worth saying.",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee81c8f_09a59e0e",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T19:28:11Z",
+      "side": 1,
+      "message": "This will use ResourceRequest-\u003eDataElement.  The problem is that I want to pass in a base::File to the network service (Can\u0027t do it yet, but this will do it eventually).  So something needs to open the base::File.  This can\u0027t be done on the UI thread, or the IO thread.\n\nRather than having a bunch of consumers jump over to another thread, this will handle that logic for them, though I\u0027ll still allow base::Files to be attached as DataElements directly, just not base::FilePaths.\n\nMoreover, base::Files can\u0027t be destroyed on a thread that doesn\u0027t allow blocking IO, so I\u0027ll also need to post a task to delete the ResourceRequest offthread, if it has one (Regardless of whether this method was used to attach a file or not).",
+      "parentUuid": "18781b6b_f5daf000",
       "range": {
         "startLine": 180,
         "startChar": 5,
