@@ -86,6 +86,7 @@ cc_component("paint") {
   public_deps = [
     "//cc/base",
     "//cc/debug",
+    "//gpu/command_buffer/common:common_utils",
     "//skia",
     "//ui/gfx:color_space",
     "//ui/gfx:geometry_skia",

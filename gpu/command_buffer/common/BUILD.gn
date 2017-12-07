@@ -26,8 +26,6 @@ source_set("common_sources") {
     "activity_flags.cc",
     "activity_flags.h",
     "bitfield_helpers.h",
-    "buffer.cc",
-    "buffer.h",
     "capabilities.cc",
     "capabilities.h",
     "cmd_buffer_common.cc",
@@ -38,8 +36,6 @@ source_set("common_sources") {
     "context_result.h",
     "debug_marker_manager.cc",
     "debug_marker_manager.h",
-    "discardable_handle.cc",
-    "discardable_handle.h",
     "gl2_types.h",
     "gles2_cmd_format.cc",
     "gles2_cmd_format.h",
@@ -50,7 +46,6 @@ source_set("common_sources") {
     "gpu_memory_buffer_support.h",
     "id_allocator.cc",
     "id_allocator.h",
-    "id_type.h",
     "mailbox.cc",
     "mailbox.h",
     "mailbox_holder.cc",
@@ -64,12 +59,12 @@ source_set("common_sources") {
     "texture_in_use_response.h",
     "thread_local.h",
     "time.h",
-    "transfer_cache_entry_id.h",
   ]
 
   configs += [ "//gpu:gpu_implementation" ]
 
   public_deps = [
+    ":common_utils",
     "//mojo/public/cpp/system",
     "//ui/gfx:memory_buffer",
     "//ui/gfx/geometry",
@@ -77,6 +72,29 @@ source_set("common_sources") {
 
   deps = [
     ":gles2_utils",
+    "//base",
+  ]
+}
+
+component("common_utils") {
+  visibility = [
+    "//gpu/*",
+    "//cc/*",
+  ]
+
+  sources = [
+    "buffer.cc",
+    "buffer.h",
+    "discardable_handle.cc",
+    "discardable_handle.h",
+    "gpu_common_utils_export.h",
+    "id_type.h",
+    "transfer_cache_entry_id.h",
+  ]
+
+  defines = [ "GPU_COMMON_UTILS_IMPLEMENTATION" ]
+
+  deps = [
     "//base",
   ]
 }
