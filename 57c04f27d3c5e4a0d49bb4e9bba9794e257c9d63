@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4566790d_b30b77f4",
+        "filename": "components/sync/protocol/session_specifics.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "nit: Add comment.",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f784327_2e3d2b16",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "Since we haven\u0027t found a case where |replace_entry| is true here, let\u0027s DCHECK that it\u0027s false and we can revisit if that\u0027s wrong in practice.  (I\u0027ve confirmed that all the NavigationController unit and browser tests seem to pass with that DCHECK.)\n\nBy having the DCHECK, we can assume that we don\u0027t need to handle the replacement struct for subframes (and can comment as much here).",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841a9a36_055ed4d3",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4322,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "nit: Capitalize Back",
+      "range": {
+        "startLine": 4322,
+        "startChar": 51,
+        "endLine": 4322,
+        "endChar": 55
+      },
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8956f6a_e950cc31",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4379,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "I would argue against populating this on a back navigation (when the same URL as before was loaded), since no replacement is happening.  The replacement data should be there if there was a replacement before leaving and coming back, and it should be added if the back navigation itself does a replacement (as in the sign-in and server-redirect examples I gave).",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcd66c8_b5bfbbfc",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "nit: Comment.",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c9df8e_466425d0",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "nit: Add something about why this is stored here instead of FrameNavigationEntry (i.e., the concept is valid for subframes but we only need to track it for main frames).",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cf672a_736a24e1",
+        "filename": "content/public/browser/replaced_navigation_entry_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "See discussion in navigation_controller_impl.cc.  I think we want to mention this.",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9234afa1_27f7a48d",
+        "filename": "content/public/browser/replaced_navigation_entry_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "At which time?  (e.g., \"at the time of the first commit, before any replacements\").  Something similar in the members below.",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

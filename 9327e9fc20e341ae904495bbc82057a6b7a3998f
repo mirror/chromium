@@ -206,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "1eec0d3c_affbf3fc",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "\u003e Correction: in this example the original landing page is A1.\n\nRight, sorry, A1 is the landing page for the first NavEntry.  The question is whether the second NavEntry should also have A1 as its landing page, or if it should use A2 since that was the state of the main frame when the second NavEntry was created.\n\n\u003e \n\u003e Also, to clarify, the subframe navigation B1-\u003eB2 would use did_replace_entry\u003d\u003dtrue, right? Otherwise it seems a moot point.\n\nAh, I had been thinking of a link click, but you\u0027re right, that would be moot since we wouldn\u0027t hit the replace block below.\n\n\u003e \n\u003e If so, what\u0027s a realistic example of this? I took a look at the existing tests and none exercise this situation.\n\nInteresting.  I thought location.replace in a subframe would trigger it, but that\u0027s apparently AUTO_SUBFRAME even in the cross-process case.\n\nI guess that means we couldn\u0027t easily support this new struct on FrameNavigationEntry without changing something about how AUTO_SUBFRAME works.  Maybe we can do that later to make things easier to reason about, but there doesn\u0027t seem to be a need for it now.\n\nOk, we can stick with tracking it for main frames and document it as such.",
+      "parentUuid": "25decf0d_11e3b95a",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e593bbd_7b06f210",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 5
@@ -352,6 +370,30 @@
       "side": 1,
       "message": "Well, this would be brittle, because precisely history is being modified as part of this test, and hence keeping a pointer to the entry might not verify the intended thing, don\u0027t you think?",
       "parentUuid": "da16cf16_3f182162",
+      "range": {
+        "startLine": 3780,
+        "startChar": 8,
+        "endLine": 3780,
+        "endChar": 37
+      },
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35782571_4cabd554",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3780,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "\u003e Well, this would be brittle, because precisely history is being modified as part of this test, and hence keeping a pointer to the entry might not verify the intended thing, don\u0027t you think?\n\nThe entry isn\u0027t changing after line 3775, is it?  All the code below there looks side-effect free, so I don\u0027t see what we\u0027re gaining by looking it up repeatedly.\n\n(In the other tests where additional actions happen, I agree we should update it after each change, but there\u0027s still multiple uses each time that would benefit from having a shorter name, in my opinion.)",
+      "parentUuid": "c9e61df1_e0a416cf",
       "range": {
         "startLine": 3780,
         "startChar": 8,
@@ -610,6 +652,24 @@
     },
     {
       "key": {
+        "uuid": "ca5785c1_0efa746b",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "\u003e Done, with some rephrasing, please review. Pending clarification about subframes, which depends on another thread in this review.\n\u003e \n\u003e Wrt to questions:\n\u003e 1. Yes, the main use-case is to never lose TYPED and AUTO_BOOKMARK navigations which always create a new entry. I documented this explicitly. There are a few corner cases that we don\u0027t handle too well: TYPE(url1), TYPE(url2), back, TYPE(url3). In this case I believe we can lose \"url2\" in this approach, right? Not that I care much.\n\nRight, url2 is gone, though that\u0027s more about pruning forward entries than replacing entries.\n\n\u003e \n\u003e 2. Can you elaborate the scenario that you have in mind? In any case the original \"snapshot\" will never be replaced.\n\nYou can hit history navigations that redirect if you log out of a site in another tab.  Going back may redirect you to the login page, replacing your history entry.  You can repro this in tests with the testserver, using a replaceState to /server-redirect?someurl and then leaving and going back.  For an example, see step 2 of the FrameNavigationEntry_BackWithRedirect test.",
+      "parentUuid": "d116c493_cb124837",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15a1a282_08b5e188",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -674,6 +734,24 @@
       "side": 1,
       "message": "This very same concept (last URL in the server-side redirect chain) is often referred to simply as \u0027url\u0027. Why is this case different?\n\n\u0027The term landing\u0027 is IMO confusing in the context of client-side redirects. WDYT?",
       "parentUuid": "3f5a5683_693a5ff7",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5492fa_38dae799",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-07T08:03:25Z",
+      "side": 1,
+      "message": "\u003e This very same concept (last URL in the server-side redirect chain) is often referred to simply as \u0027url\u0027. Why is this case different?\n\nMy concern is that just saying \"URL\" is ambiguous because NavigationEntry::GetURL() changes over time in this case, and it has proven non-trivial to describe which one we\u0027re talking about.  It could mean originally requested URL, URL after last server redirect, URL after last client redirect, or anything in between in the redirect chain.  GetURL() can return several of these at different points in time.\n\nWe\u0027ve made efforts elsewhere to avoid this ambiguity, such as preferring GetLastCommittedURL() and GetVisibleURL() and deprecating GetURL() on WebContents (etc).\n\n\u003e \u0027The term landing\u0027 is IMO confusing in the context of client-side redirects. WDYT?\n\nI\u0027m not opposed to using a different term than landing page, but since it took me quite a while to understand which URL you\u0027re trying to track, I think it\u0027s worth giving it a name to make it easy to understand.",
+      "parentUuid": "0f5d9046_65029b08",
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
