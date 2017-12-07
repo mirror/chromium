@@ -16,6 +16,24 @@
       "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1633624_9b0174b3",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-07T10:30:05Z",
+      "side": 1,
+      "message": "This if clause is basically what Mozilla\u0027s HasWeirdParserInsertionMode does. These elements might have an insertion mode that might add some elements eventhough the text itself doesn\u0027t contain any markups (https://html.spec.whatwg.org/multipage/parsing.html#reset-the-insertion-mode-appropriately), so we can\u0027t skip the parsing and only edit the text content.\n\nThis function will only return true (optimize, skip the parsing and just update text content) if the text contains no markup and does not add any elements that aren\u0027t in the given string, so it should be fine, I think.",
+      "parentUuid": "6e578548_92e23533",
+      "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
