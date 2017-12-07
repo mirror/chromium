@@ -550,6 +550,23 @@ int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format) {
   }
 }
 
+bool IsSupportedFourCCFormat(int format) {
+  switch (format) {
+    case DRM_FORMAT_R8:
+    case DRM_FORMAT_GR88:
+    case DRM_FORMAT_ABGR8888:
+    case DRM_FORMAT_XBGR8888:
+    case DRM_FORMAT_ARGB8888:
+    case DRM_FORMAT_XRGB8888:
+    case DRM_FORMAT_RGB565:
+    case DRM_FORMAT_UYVY:
+    case DRM_FORMAT_NV12:
+    case DRM_FORMAT_YVU420:
+      return true;
+  }
+  return false;
+}
+
 OverlaySurfaceCandidateList CreateOverlaySurfaceCandidateListFrom(
     const std::vector<OverlayCheck_Params>& params) {
   OverlaySurfaceCandidateList candidates;
