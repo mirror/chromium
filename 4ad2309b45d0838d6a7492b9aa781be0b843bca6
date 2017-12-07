@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503375d4_fcdbb124",
+        "filename": "chrome/browser/chromeos/extensions/info_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T20:50:18Z",
+      "side": 1,
+      "message": "You might be able to use g_browser_process-\u003elocal_state() here instead. You might need to flag kHasSeenStylus as a PrefService::PUBLIC pref so the browser can see it.",
+      "revId": "4ad2309b45d0838d6a7492b9aa781be0b843bca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
