@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00a0abf_77e71f9f",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T16:14:06Z",
+      "side": 1,
+      "message": "This is intended to exclude Linux? Or Mac Views? If the former, could you add something to the comment explaining why Ctrl+L doesn\u0027t make sense there? If the latter, maybe this should be !defined(OS_MACOSX)?",
+      "revId": "d7a255c1651b48323c9c17d2cd4d525ef73a39da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
