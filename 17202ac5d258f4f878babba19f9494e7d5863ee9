@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c9c806_c79e7c7c",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Would it be better to have this as:\n\n  DCHECK_GT(current_buffer_size_, bytes_read_);\n\n...and then you don\u0027t need the DCHECK_GT(num_bytes, 0u) below.",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e8ebcb_c57915e0",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Would it be better to have this as:\n\n  DCHECK_GT(current_buffer_size_, bytes_written_);\n\n...and then you don\u0027t need the DCHECK_GT(num_bytes, 0u) below.",
+      "range": {
+        "startLine": 203,
+        "startChar": 2,
+        "endLine": 203,
+        "endChar": 38
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647165dd_48cd9953",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anywhere.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 43
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b615224_677a80ac",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "s/completes/the operation completes/",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 14
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1f029b_3c5c22c3",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "s/succeeds/succeeded/",
+      "range": {
+        "startLine": 29,
+        "startChar": 70,
+        "endLine": 29,
+        "endChar": 78
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcf5e0c_ceda87a3",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "s/succeeds/succeeded/",
+      "range": {
+        "startLine": 74,
+        "startChar": 70,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dbf40de_4cec8b5b",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "s/completes/the operation completes/",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd941d22_1f91680e",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "This boolean is not necessary: You can remove all LOC that reference it, and at the end of ReadDecoderBuffer():\n\n  const bool need_to_start_reading \u003d pending_read_cbs_.empty();\n  pending_read_cbs_.push_back(std::move(read_cb));\n  pending_buffers_.push_back(std::move(media_buffer));\n  if (need_to_start_reading)\n    ScheduleNextRead();",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd73499_e06dc08d",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Ditto here too: This boolean is not needed. Just change the end of WriteDecoderBuffer() similarly. :)",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "17202ac5d258f4f878babba19f9494e7d5863ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

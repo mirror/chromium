@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "38a2ee8d_a3866bbc",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Ok. So, it seems we\u0027ll just encounter errors on the next Write() attempt. Sounds good.",
+      "parentUuid": "756f06ab_e3c8c6ee",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 3
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b4ae9f0_afafe514",
         "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Changed to simply return when buffer size is 0, though I think this can be guarded by the caller.\nThe MojoDataPipeReader/Writer in this CL is a general reader/writer that reads/writes a chunk of data by request. For some applications, like the MojoDecoderBufferReader/Writer, the size for each buffer is passed along with other information through mojo message. It sounds not necessary to write the size again in the data pipe for that case. For our application to transfer the UDP packets, for each packet we can simply call Write() twice: write the size first, then packet. And in the reader, call read twice as well. \nActually the Read() and DoneCB you suggested is the interface for the UdpPacketsReader that is in my another CL that comes later. :)\nWill discuss further with you offline on this.",
       "parentUuid": "2b4ae9f0_afafe514",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82321888_83529438",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "Ah, yes! Two Write()\u0027s sounds better. :)",
+      "parentUuid": "05327c43_d92e88fe",
       "range": {
         "startLine": 166,
         "startChar": 2,
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Yes, it\u0027s a logic flaw in the caller\u0027s code to call Write() while a previous write is in-progress. Though not sure whether DCHECK() is better. It sounds good to me to let the caller handle the error. WDYT?",
       "parentUuid": "917f859e_17835e6e",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7066c46c_9bb0915f",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T21:59:38Z",
+      "side": 1,
+      "message": "In this case, the calling code is violating the interface contract. Meaning, the header file explicitly said \"don\u0027t do that.\"\n\nI don\u0027t feel strongly about what you decide to do here. However, note that if you go with my advice, then the DoneCB is only run with false when the data pipe becomes invalid (and no other reason), making \"false\" mean \"permanent error\" rather than \"transient or permanent error.\"",
+      "parentUuid": "b2702cbf_0a270c52",
       "range": {
         "startLine": 170,
         "startChar": 0,
