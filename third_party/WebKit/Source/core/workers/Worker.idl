@@ -29,7 +29,7 @@
 
 [
     ActiveScriptWrappable,
-    Constructor(DOMString scriptUrl),
+    Constructor(DOMString scriptURL, optional WorkerOptions options),
     ConstructorCallWith=ExecutionContext,
     // TODO(foolip): Exposed=(Window,Worker),
     RaisesException=Constructor,

@@ -13,6 +13,7 @@
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/workers/AbstractWorker.h"
+#include "core/workers/WorkerOptions.h"
 #include "platform/wtf/Forward.h"
 
 namespace v8_inspector {
@@ -44,6 +45,7 @@ class CORE_EXPORT DedicatedWorker final
  public:
   static DedicatedWorker* Create(ExecutionContext*,
                                  const String& url,
+                                 const WorkerOptions&,
                                  ExceptionState&);
 
   ~DedicatedWorker() override;
@@ -86,6 +88,7 @@ class CORE_EXPORT DedicatedWorker final
   const AtomicString& InterfaceName() const final;
 
   const KURL script_url_;
+  const WorkerOptions options_;
   const Member<DedicatedWorkerMessagingProxy> context_proxy_;
 
   scoped_refptr<WorkerScriptLoader> script_loader_;
