@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9762edf6_34067866",
+        "filename": "chrome/test/data/pdf/material_elements_test.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T22:38:14Z",
+      "side": 1,
+      "message": "Nit(optional): Can just use an anonymous inlined method.\n\nzoomToolbar.addEventListener(\u0027fit-to-changed\u0027, e \u003d\u003e this.lastEvent_ \u003d e);",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "ee6bcab2880333b36afd39f34de575a729a073f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
