@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6867f4ee_f66344f3",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T22:19:37Z",
+      "side": 1,
+      "message": "So you\u0027re saying params-\u003ebrowser \u003d\u003d source_browser in all cases for SINGLETON_TAB?\n\nIf that\u0027s the case, it definitely seems like we should remove the disposition check here: it\u0027s unnecessary for now, and if we did change SINGLETON_TAB to check outside the current window, we\u0027d want this behavior for it too.",
+      "parentUuid": "1872fe42_737855bf",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eca47b6_248a20cb",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Line 608 appears to be saying we do.",
       "parentUuid": "acdfb9b7_2eed3ed5",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9abdf1a1_782a3dab",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-07T22:19:37Z",
+      "side": 1,
+      "message": "Wow, that\u0027s... weird.\n\nCan we at least combine these two conditionals that are trying to do the same thing into a single conditional somewhere?",
+      "parentUuid": "f1987d59_c9b5ac8e",
       "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
