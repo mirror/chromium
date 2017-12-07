@@ -9,6 +9,8 @@ namespace blink {
 
 enum class PageLifecycleState {
   kUnknown,
+  kActive,
+  kHidden,
   kStopped,
 };
 
