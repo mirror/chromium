@@ -100,6 +100,10 @@ namespace resource_coordinator {
 class TabManagerDelegate;
 }
 
+namespace service_manager {
+class EmbeddedInstanceManager;
+}
+
 namespace shell_integration {
 class LaunchXdgUtilityScopedAllowBaseSyncPrimitives;
 }
@@ -203,6 +207,7 @@ class BASE_EXPORT ScopedAllowBlocking {
   friend class cronet::CronetURLRequestContextAdapter;
   friend class resource_coordinator::TabManagerDelegate;  // crbug.com/778703
   friend class ScopedAllowBlockingForTesting;
+  friend class service_manager::EmbeddedInstanceManager;
 
   ScopedAllowBlocking() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBlocking() EMPTY_BODY_IF_DCHECK_IS_OFF;
