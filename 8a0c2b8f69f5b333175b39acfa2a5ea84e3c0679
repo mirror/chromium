@@ -34,6 +34,24 @@
       "revId": "8a0c2b8f69f5b333175b39acfa2a5ea84e3c0679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e897eacb_76c063f3",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-07T02:22:48Z",
+      "side": 1,
+      "message": "The style guide does allow omitting names from declarations when it\u0027s obvious from the context (https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions). However, the examples of obvious and non-obvious cases leave a rather large gulf of ambiguity.",
+      "parentUuid": "dd7d3656_66b5865d",
+      "revId": "8a0c2b8f69f5b333175b39acfa2a5ea84e3c0679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
