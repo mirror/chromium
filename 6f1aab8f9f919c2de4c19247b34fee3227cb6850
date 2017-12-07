@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4300845_9d641a89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T03:15:50Z",
+      "side": 1,
+      "message": "Nit: onDismiss",
+      "range": {
+        "startLine": 299,
+        "startChar": 54,
+        "endLine": 299,
+        "endChar": 63
+      },
+      "revId": "6f1aab8f9f919c2de4c19247b34fee3227cb6850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693c1e31_d71156f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-07T03:15:50Z",
+      "side": 1,
+      "message": "Nit: onClick since it\u0027s the method in this file.",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 42
+      },
+      "revId": "6f1aab8f9f919c2de4c19247b34fee3227cb6850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
