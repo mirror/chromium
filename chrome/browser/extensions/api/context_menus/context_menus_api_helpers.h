@@ -215,12 +215,21 @@ bool UpdateMenuItem(const PropertyWithEnumT& update_properties,
     // checked. If the radio item was unchecked, nothing should happen. The
     // radio item should remain checked because there should always be one item
     // checked in the radio list.
-    if (checked && !item->checked()) {
-      if (!item->SetChecked(checked)) {
-        *error = kCheckedError;
-        return false;
+    if (item->type() == MenuItem::RADIO) {
+      if (checked && !item->checked()) {
+        if (!item->SetChecked(checked)) {
+          *error = kCheckedError;
+          return false;
+        }
+        radio_item_updated = true;
       }
-      radio_item_updated = true;
+    } else if (item->type() == MenuItem::CHECKBOX) {
+      if (checked != item->checked()) {
+        if (!item->SetChecked(checked)) {
+          *error = kCheckedError;
+          return false;
+        }
+      }
     }
   }
 
