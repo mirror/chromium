@@ -738,6 +738,10 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_TEXT_FIELD;
   node_data->SetName(l10n_util::GetStringUTF8(IDS_ACCNAME_LOCATION));
   node_data->AddStringAttribute(ui::AX_ATTR_AUTO_COMPLETE, "both");
+#if defined OS_WIN || defined OS_CHROMEOS
+  // Expose keyboard shortcut where it makes sense.
+  node_data->AddStringAttribute(ui::AX_ATTR_KEY_SHORTCUTS, "Ctrl+L");
+#endif
   if (friendly_suggestion_text_.empty()) {
     // While user edits text, use the exact text displayed in the omnibox.
     node_data->SetValue(GetText());
