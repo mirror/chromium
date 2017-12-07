@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0c30fa1_c00eb3da",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_event.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T23:41:04Z",
+      "side": 1,
+      "message": "Is it possible to add a LAST\u003d20 with a compiler assert in your test TabMetricsLoggerImplTest.Schemes so that if someone changes this they immediately know to update the test?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd92ffa4_75e2c421",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T23:41:04Z",
+      "side": 1,
+      "message": "static?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e985e5b2_ff8d4462",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T23:41:04Z",
+      "side": 1,
+      "message": "Add coverage of OTHER?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
