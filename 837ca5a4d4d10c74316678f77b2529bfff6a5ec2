@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a4482379_49cceb94",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view_interactive_uitest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T23:58:53Z",
+      "side": 1,
+      "message": "It\u0027s not called on the IO thread.  It\u0027s called on the embedded test server\u0027s thread.",
+      "parentUuid": "69c12ab3_10618ed7",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "837ca5a4d4d10c74316678f77b2529bfff6a5ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa8bbdef_29d60c00",
         "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
         "patchSetId": 55
