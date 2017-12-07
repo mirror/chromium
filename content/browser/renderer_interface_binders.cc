@@ -121,7 +121,7 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
-            .CreateService(std::move(request));
+            .CreateServiceForWorker(std::move(request), origin);
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind(&CreateDedicatedWorkerHostFactory));
