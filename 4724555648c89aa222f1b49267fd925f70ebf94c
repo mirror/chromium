@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b71c3626_43f5c9e6",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-07T20:29:46Z",
+      "side": 1,
+      "message": "Nit: Pass GURL by const\u0026.\n\nAlso, no need for \"To\" in the name. Either \"From\" or omit that word entirely.\n\nDo you mind moving this function up to be right after DoActualFetch() just for 1 patchset, so it\u0027s easier to review the changes? Otherwise it looks like all this is new code in the diff, which it clearly isn\u0027t. Can change back to this place in a follow-up patchset.",
+      "range": {
+        "startLine": 493,
+        "startChar": 48,
+        "endLine": 493,
+        "endChar": 0
+      },
+      "revId": "4724555648c89aa222f1b49267fd925f70ebf94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
