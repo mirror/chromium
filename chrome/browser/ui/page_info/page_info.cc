@@ -154,11 +154,13 @@ bool ShouldShowPermission(
       return false;
     }
 
+#if defined(OS_ANDROID)
     // The setting for subresource filtering should not show up if the site is
-    // not activated, both on android and desktop platforms.
+    // not activated on Android.
     return content_settings->GetWebsiteSetting(
                site_url, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA, std::string(),
                nullptr) != nullptr;
+#endif  // defined(OS_ANDROID)
   }
 
   if (info.type == CONTENT_SETTINGS_TYPE_SOUND) {
