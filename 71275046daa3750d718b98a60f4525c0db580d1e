@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9ab5a77_556f9433",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "followup, but let\u0027s move this to a password/ subpackage.  I\u0027d like to remove everything from the top level browser folder to allow more focused owners",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d1e684_a0eff97d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "will the string of the passwords ever be \"too\" big?  Do we need to consider chunking ever or is that silly for now (i\u0027ll voting for the latter)?\n\nThe gotcha is that a huge string will be duplicated across java and C++ during the call, but I guess that is unlikely to be larger than the huge data models of bookmarks.  I\u0027ll stop my premature optimizations.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bd12f2_4a53c109",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "nit (for a follow), much like the above comment about package...but public is implied for all interface methods, so it can be left off.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 10
+      },
+      "revId": "71275046daa3750d718b98a60f4525c0db580d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840c75d2_8399f48b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/PasswordManagerHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "Should this belong in the observer?  This is really a callback of a specific task.  The one ones seem like external factors could result in the list being updated, but this seems slightly different.\n\nI wonder if we could tweak this to instead pass a org.chromium.base.Callback\u003cString\u003e into serializePasswords and have that pass the callback through the native chain and then you can even call onResult from native through RunCallbackAndroid in callback_android.h.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "d287610c63d47cf7470d90e1a9f262f7042aa5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32695eee_058cfa16",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "from my other comment about Callback\u0027s from java, I think you\u0027d just pass a ScopedJavaGlobalRef wrapped version of the java callback passed down to this method and use it in Post.\n\n(this is what immediately comes to mind for something like this: https://cs.chromium.org/chromium/src/chrome/browser/ui/android/context_menu_helper.cc?q\u003dcontext_menu_helper.\u0026sq\u003dpackage:chromium\u0026l\u003d236)\n\nThe nice thing about this is that you \"could\" support multiple serialize calls and the client wouldn\u0027t have to disambiguate since it would be associated with a specific callback.",
+      "range": {
+        "startLine": 164,
+        "startChar": 42,
+        "endLine": 164,
+        "endChar": 43
+      },
+      "revId": "d287610c63d47cf7470d90e1a9f262f7042aa5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f054b8_973a9e78",
+        "filename": "chrome/browser/android/password_ui_view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T19:14:10Z",
+      "side": 1,
+      "message": "should we check we\u0027re on the UI Thread here?",
+      "revId": "d287610c63d47cf7470d90e1a9f262f7042aa5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
