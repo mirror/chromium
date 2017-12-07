@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d516bc_9530a81f",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:27:14Z",
+      "side": 1,
+      "message": "Should we use GetLoggedInUsers (or GetLRULoggedInUsers) to only flush the logged-in users? LRU version might make sense because the most recently active users are more likely to have uncommitted data. If you worry about ordering because we use index, then use GetLoggedInUsers since its list keeps the login order and does not change.",
+      "range": {
+        "startLine": 25,
+        "startChar": 40,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddd9d32_04b48d48",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:27:14Z",
+      "side": 1,
+      "message": "WeakPtr since UsersCommitPendingWriteOnExit could be released before the write calls back.",
+      "range": {
+        "startLine": 35,
+        "startChar": 52,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e9d6d5_688de97c",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:27:14Z",
+      "side": 1,
+      "message": "nit: Think it is worth to mention that it flushes all profile data of all logged in users.",
+      "range": {
+        "startLine": 15,
+        "startChar": 38,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e10d3e_d2c59fc7",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-07T16:27:14Z",
+      "side": 1,
+      "message": "nit: slush -\u003e flush ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "e29428b8f6d4179bdce38a95de00fa6e26deec35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
