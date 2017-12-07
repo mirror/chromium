@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d047df40_a7f53eb9",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "I forget why we manually do this instead of letting needs_reload do it automatically. Worth a comment detailing why?",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23394509_21ff422d",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "Do we care about the time when a thing became audible, or do we only care about last time audible?",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d37595_d6996797",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "Curious if there\u0027s a way to get this data via a notification?\n\n(Not needed for this CL.)",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8104e4c_0e3ade65",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "We need to file another bug for this: this is currently a one way switch. If they clear the form entry, this stays positive.",
+      "range": {
+        "startLine": 158,
+        "startChar": 24,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1ac825_65e06a3f",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "Hmm... we probably don\u0027t want this on CrOS...",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e4c804_1fe00088",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe05bd0_048fb5fd",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T22:19:15Z",
+      "side": 1,
+      "message": "Is this needed externally?",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
