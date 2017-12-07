@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb39dbf_bf64f8d6",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:31:15Z",
+      "side": 1,
+      "message": "Nit: no need to do this null check here (in basically all circumstances, if LocalFrameClient is reachable, WebFrameClient must also be reachable)",
+      "revId": "770a4e234d9c4b7bb82d856e858ab5162623f8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff669e74_4be9359e",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-07T07:31:15Z",
+      "side": 1,
+      "message": "It would be good not to call back into the embedder and make an unnecessary IPC if the value doesn\u0027t change. I was going to suggest moving this logic into LocalFrame, but that would be awkward as well... so I guess just check directly here?",
+      "revId": "770a4e234d9c4b7bb82d856e858ab5162623f8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
