@@ -13,6 +13,11 @@
 #include "media/gpu/vaapi/vaapi_tfp_picture.h"
 #endif
 
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
+#endif
+
 namespace media {
 
 namespace {
@@ -90,6 +95,16 @@ uint32_t VaapiPictureFactory::GetGLTextureTarget() {
 
 gfx::BufferFormat VaapiPictureFactory::GetBufferFormatForAllocateMode() {
 #if defined(USE_OZONE)
+  ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
+  ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
+  std::vector<gfx::BufferFormat> formats =
+      factory->GetScanoutFormats(gfx::kNullAcceleratedWidget);
+  for (auto scanout_format : formats) {
+    if (scanout_format == gfx::BufferFormat::YUV_420_BIPLANAR) {
+      return gfx::BufferFormat::YUV_420_BIPLANAR;
+    }
+  }
+
   return gfx::BufferFormat::BGRX_8888;
 #else
   return gfx::BufferFormat::RGBX_8888;
