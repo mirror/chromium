@@ -16,6 +16,24 @@
       "revId": "31bb5f4afd848dda090e798770a98d8e16ac888f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677e8aca_84e16926",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3577,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-07T01:15:07Z",
+      "side": 1,
+      "message": "The internal file would override this #define, so the Google one would still be used. However, changed to use a BUILDFLAG rather than a #define for the override.",
+      "parentUuid": "74525c3b_9ab9192a",
+      "revId": "31bb5f4afd848dda090e798770a98d8e16ac888f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
