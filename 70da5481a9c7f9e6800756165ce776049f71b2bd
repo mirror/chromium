@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34202422_6a07e2a5",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T21:10:14Z",
+      "side": 1,
+      "message": "Do the TabLifecycleObservers care about the auto-discardable state? What will be the result of a change of that state?",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "70da5481a9c7f9e6800756165ce776049f71b2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9282db79_1711b555",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T21:10:14Z",
+      "side": 1,
+      "message": "Move to private since tests are friends?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "70da5481a9c7f9e6800756165ce776049f71b2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a1f1c6_178fe8f2",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T21:10:14Z",
+      "side": 1,
+      "message": "nit: Almost the same as the previous test, but with a different |focused| value? Could be rewritten using a parameterized TEST_P, or a helper function?",
+      "range": {
+        "startLine": 146,
+        "startChar": 35,
+        "endLine": 146,
+        "endChar": 65
+      },
+      "revId": "70da5481a9c7f9e6800756165ce776049f71b2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

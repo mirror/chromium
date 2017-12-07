@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac68f1c9_c1bb9c9a",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T21:10:14Z",
+      "side": 1,
+      "message": "Does this need to be public? If the tests are friends, can this be private?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "a58b6abb2503ae2f2d0d20d3b89f1b45ed2e9d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4b9f4e_31b1d262",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-07T21:10:14Z",
+      "side": 1,
+      "message": "Maybe s/current process/current browser/ ?",
+      "range": {
+        "startLine": 94,
+        "startChar": 32,
+        "endLine": 94,
+        "endChar": 33
+      },
+      "revId": "a58b6abb2503ae2f2d0d20d3b89f1b45ed2e9d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
