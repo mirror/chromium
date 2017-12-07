@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e2de3d9_8128285a",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:58:13Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer to use base::UmaHistogramBoolean(params-\u003emetric_name, value) – it should be equivalent, and captures the intent more clearly \u003d)",
+      "range": {
+        "startLine": 166,
+        "startChar": 75,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21776eae_aacb90cf",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:58:13Z",
+      "side": 1,
+      "message": "Similarly, I\u0027d prefer to use base::UmaHistogramEnumeration here.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 66
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c354d0c2_d0371af9",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:58:13Z",
+      "side": 1,
+      "message": "nit: It might be helpful to mention something like \"Analogous to base::UmaHistogramBoolean().\"",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 68
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2440eacb_913b7218",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T22:58:13Z",
+      "side": 1,
+      "message": "nit: Similarly, it might be helpful to mention something like \"Analogous to base::UmaHistogramEnumeration().\"",
+      "range": {
+        "startLine": 194,
+        "startChar": 75,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
