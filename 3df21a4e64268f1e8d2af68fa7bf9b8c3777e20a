@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "999261d4_dd25db0a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/nosniff/stylesheet.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-12-07T17:51:53Z",
+      "side": 1,
+      "message": "Why not call step_func_done without parameters? There\u0027s an awful lot of wpt tests that already rely on the parameter being optional.\n\nRef: https://cs.chromium.org/search/?q\u003dfile:/wpt/+step_func_done%5C(%5C)\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f82832_d432c36c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-12-07T17:51:53Z",
+      "side": 1,
+      "message": "nitpick: These look like backticks, rather than single or double quote marks.",
+      "range": {
+        "startLine": 510,
+        "startChar": 13,
+        "endLine": 510,
+        "endChar": 14
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe57da1a_d837be9a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-12-07T17:51:53Z",
+      "side": 1,
+      "message": "[Btw, this is a question; not really a request for change. I\u0027m sure it works; I just want to know why it was written this way.]\n------------------------------\n\nI\u0027m a bit irritated about this, but unfortunately I don\u0027t understand the loading logic very well...\n\nIf this doesn\u0027t pass nosniff, then shouldn\u0027t the \u0027old\u0027 resource have its content deleted (as part of that HandleError call) and it wouldn\u0027t load anyways? Of course, if that were the case, you probably wouldn\u0027t have written this fix...\n\nOr is this specifically about requests where the original request doesn\u0027t \u0027nosniff\u0027, but the If-Modified-Since does?",
+      "range": {
+        "startLine": 512,
+        "startChar": 1,
+        "endLine": 517,
+        "endChar": 74
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
