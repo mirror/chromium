@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffac050d_68714ecf",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T19:05:50Z",
+      "side": 1,
+      "message": "Does this really need to be part of this API? Does the code you want to make take a CommandUpdateProxy really need to change enabled state? Seems like it shouldn\u0027t.\n\nMy preference is to remove UpdateCommandEnabled, and name this either CommandUpdater (renaming existing one to CommandUpdateImpl) or name this CommandExecutor.",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "bb8fa79da85066037db5901fff37e7df5beec4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
