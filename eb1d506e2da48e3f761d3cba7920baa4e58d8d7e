@@ -84,6 +84,48 @@
     },
     {
       "key": {
+        "uuid": "1e838f79_640a6a62",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T00:55:44Z",
+      "side": 1,
+      "message": "Yes queueing up onfreeze sounds problematic, sync makes sense to me.",
+      "parentUuid": "e99fbbb9_d1a14801",
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d445fb77_d4779c72",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T00:55:44Z",
+      "side": 1,
+      "message": "I was curious why you didn\u0027t use Event::CreateBubble instead of Event::Create.\nShould this event bubble or not?",
+      "parentUuid": "bbc5e5ff_02b53055",
+      "range": {
+        "startLine": 1784,
+        "startChar": 70,
+        "endLine": 1784,
+        "endChar": 0
+      },
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65b8b75f_ba5eca51",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 6
@@ -119,6 +161,30 @@
       "side": 1,
       "message": "I will do that in a follow up CL",
       "parentUuid": "65b8b75f_ba5eca51",
+      "range": {
+        "startLine": 1785,
+        "startChar": 65,
+        "endLine": 1785,
+        "endChar": 0
+      },
+      "revId": "eb1d506e2da48e3f761d3cba7920baa4e58d8d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65877fdd_e56d6b91",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-07T00:55:44Z",
+      "side": 1,
+      "message": "as discussed this would be along the lines of: discard if time limit is exceeded.",
+      "parentUuid": "9a79434b_d7d1b28e",
       "range": {
         "startLine": 1785,
         "startChar": 65,
