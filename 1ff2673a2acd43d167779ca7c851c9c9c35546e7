@@ -94,6 +94,30 @@
       "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490cad6f_1aa84430",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 69619,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:43:06Z",
+      "side": 1,
+      "message": "Yes, please add that note here.  LGTM with that change – thanks!",
+      "parentUuid": "9262a31d_627742af",
+      "range": {
+        "startLine": 69619,
+        "startChar": 20,
+        "endLine": 69619,
+        "endChar": 75
+      },
+      "revId": "1ff2673a2acd43d167779ca7c851c9c9c35546e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
