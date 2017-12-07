@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2fb9acc8_c6dc5512",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-07T20:34:12Z",
+      "side": 1,
+      "message": "UpdateWindowIcon is overrided from widget.cc [1] which calls SetWindowIcons of native widget [2] which set property to the icon from widget delgate (browser_view) GetWindowIcon.\n\n[1]https://cs.chromium.org/chromium/src/ui/views/widget/widget.cc?rcl\u003d9684de17594ab4a8fb00318dc588842f42bd8bca\u0026l\u003d848\n\n[2]https://cs.chromium.org/chromium/src/ui/views/widget/native_widget_aura.cc?rcl\u003d9684de17594ab4a8fb00318dc588842f42bd8bca\u0026l\u003d125",
+      "parentUuid": "d2f8b769_fc699a0a",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab2a87_eda128bd",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
