@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dac5f8c1_d73d93e8",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T04:49:14Z",
+      "side": 1,
+      "message": "Sorry, I should have put a comment here explaining the DCHECK.\n\nWe are in trouble if their primary directions are different -- it means that if we want to guarantee no behavior change for legacy code path, we have to pass the primary direction of |position| to |ComputeInlineBoxPositionForInlineAdjustedPosition(adjusted)|.\n\nI haven\u0027t found such case in layout tests, so I\u0027m adding this DCHECK to keep code simple. I\u0027ll change it back to passing primary direction explicitly if we find and DCHECK hit.",
+      "parentUuid": "cbb717ee_8b8343fc",
+      "revId": "844f2cf77f7091d332daad356ddd31017c6e4ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ba88d46_bdf8a4cb",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 6
