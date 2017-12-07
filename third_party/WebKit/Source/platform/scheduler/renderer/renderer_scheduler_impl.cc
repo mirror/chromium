@@ -447,14 +447,14 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
     MainThreadTaskQueue::QueueType queue_type) {
   DCHECK_EQ(MainThreadTaskQueue::QueueClassForQueueType(queue_type),
             MainThreadTaskQueue::QueueClass::kLoading);
-  return NewTaskQueue(
-      MainThreadTaskQueue::QueueCreationParams(queue_type)
-          .SetCanBePaused(true)
-          .SetCanBeStopped(true)
-          .SetCanBeDeferred(true)
-          .SetUsedForControlTasks(
-              queue_type ==
-              MainThreadTaskQueue::QueueType::kFrameLoading_kControl));
+  MainThreadTaskQueue::QueueCreationParams queue_creation_params(queue_type);
+  queue_creation_params.SetCanBePaused(true)
+      .SetCanBeDeferred(true)
+      .SetUsedForControlTasks(
+          queue_type == MainThreadTaskQueue::QueueType::kFrameLoading_kControl);
+  if (RuntimeEnabledFeatures::StopLoadingInBackgroundEnabled())
+    queue_creation_params.SetCanBeStopped(true);
+  return NewTaskQueue(queue_creation_params);
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
@@ -1265,7 +1265,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   if (main_thread_only().stopped_when_backgrounded) {
     new_policy.timer_queue_policy().is_stopped = true;
-    if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
+    if (RuntimeEnabledFeatures::StopLoadingInBackgroundEnabled())
       new_policy.loading_queue_policy().is_stopped = true;
   }
   if (main_thread_only().renderer_pause_count) {
