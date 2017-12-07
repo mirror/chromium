@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "08348037_70aa9bb5",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T21:02:34Z",
+      "side": 1,
+      "message": "I can add a CL to set it earlier in the PreviewsUserData and in that CL we can handle the case here explicitly. I think that is a fine approach. Can you open a bug saying offline previews needs to be added to PreviewsUserData and handled in this method and just assign it to me (unless you want to do it).",
+      "parentUuid": "fc5964a0_d729e593",
+      "range": {
+        "startLine": 824,
+        "startChar": 51,
+        "endLine": 824,
+        "endChar": 65
+      },
+      "revId": "4d12ee6b29eb7c8c9c74ebca250749c94c42d274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ed302cc_faec6c5f",
         "filename": "components/previews/content/previews_content_util.cc",
         "patchSetId": 2

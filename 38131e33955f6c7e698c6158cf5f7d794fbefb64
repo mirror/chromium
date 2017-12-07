@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1214c87e_9e3d0e53",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T21:02:34Z",
+      "side": 1,
+      "message": "nit: would it make more sense to do !offline and !lofi here. It seems LoFi is handled differently (and offline could be handled the same way). It\u0027s definitely a little bit of bikeshedding though.",
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778c60b1_f4e060fc",
+        "filename": "components/data_reduction_proxy/content/renderer/content_previews_render_frame_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T21:02:34Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ makes more sense here and it might make it somewhat more standard re command line reporting.\n\nMaybe define the bools as is and do:\n\nDCHECK_EQ(has_lite_page_state, has_lite_page_directive);\nDCHECK_EQ(has_lofi_state, has_empty_image_directive);\n\nreturn (has_lite_page_state \u003d\u003d has_lite_page_directive) \u0026\u0026 (has_lofi_state \u003d\u003d has_empty_image_directive);",
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3cbe77_540de2ca",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T21:02:34Z",
+      "side": 1,
+      "message": "quick question: is a precondition of previews_state here that only lite_page or the lofis can be set (i.e., not both). If so, can you comment that or at least comment that this has been adjusted based on headers from the DRP.",
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b75e43d_e100b1e0",
+        "filename": "components/previews/content/previews_content_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-07T21:02:34Z",
+      "side": 1,
+      "message": "comment looks short, can you move some of the second line up?",
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
