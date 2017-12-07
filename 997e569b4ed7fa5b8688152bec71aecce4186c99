@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "90500bb5_c9dcc129",
+        "filename": "cc/paint/scoped_raster_flags.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-07T22:12:48Z",
+      "side": 1,
+      "message": "Thanks, converted to a pointer.",
+      "parentUuid": "dbdaa63c_421ae35c",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "997e569b4ed7fa5b8688152bec71aecce4186c99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a713d08d_5a244efa",
         "filename": "cc/paint/scoped_raster_flags_unittest.cc",
         "patchSetId": 11
