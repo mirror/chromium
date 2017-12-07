@@ -80,7 +80,6 @@ ChromeAPIPermissions::GetAllPermissions() const {
       {APIPermission::kFontSettings, "fontSettings",
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kHistory, "history"},
-      {APIPermission::kIdltest, "idltest"},
       {APIPermission::kInput, "input"},
       {APIPermission::kManagement, "management"},
       {APIPermission::kMDns, "mdns", APIPermissionInfo::kFlagCannotBeOptional},

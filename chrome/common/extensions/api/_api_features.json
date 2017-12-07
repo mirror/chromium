@@ -521,8 +521,9 @@
     "contexts": ["blessed_extension"]
   },
   "idltest": {
-    "dependencies": ["permission:idltest"],
-    "contexts": ["blessed_extension"]
+    "contexts": ["blessed_extension"],
+    "channel": "trunk",
+    "extension_types": ["extension"]
   },
   "inlineInstallPrivate": {
     "dependencies": ["permission:inlineInstallPrivate"],
