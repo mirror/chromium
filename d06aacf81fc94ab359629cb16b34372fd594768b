@@ -22,6 +22,30 @@
       "revId": "d06aacf81fc94ab359629cb16b34372fd594768b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1df08f1_694b31a5",
+        "filename": "third_party/WebKit/Source/core/input/MouseEventManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1255169
+      },
+      "writtenOn": "2017-12-07T23:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c5fca5_45930422",
+      "range": {
+        "startLine": 158,
+        "startChar": 3,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "d06aacf81fc94ab359629cb16b34372fd594768b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
