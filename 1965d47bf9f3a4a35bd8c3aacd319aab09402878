@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d3fdc2_dcfbc50b",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T07:51:23Z",
+      "side": 1,
+      "message": "Add   // TODO(crbug.com/782551): Rewrite this egtest for the new bookmark.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 52
+      },
+      "revId": "1965d47bf9f3a4a35bd8c3aacd319aab09402878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3714972b_31e42e04",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T07:51:23Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 52
+      },
+      "revId": "1965d47bf9f3a4a35bd8c3aacd319aab09402878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
