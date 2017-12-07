@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f22fc477_9abc8e70",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-07T17:20:09Z",
+      "side": 1,
+      "message": "I actually think the opposite, since you are animating more that whats needed and there are more views being animated. On the other hand it works on this case since the stack view is transparent, if it weren\u0027t you would see the whole background sliding in. \nI\u0027ll send this to the CQ, but I\u0027d like to hear what you think in case I\u0027m missing something!",
+      "parentUuid": "e5768076_c79dda3d",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 54
+      },
+      "revId": "e4787c16208041d3d0daa853be94d0ded2c01a0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70261b93_ab2fb100",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
