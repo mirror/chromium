@@ -268,13 +268,12 @@ TEST_F(WebNotificationTrayTest, PopupShownOnBothDisplays) {
   // verifies it doesn't cause crash and popups are still visible. See
   // http://crbug.com/263664
 
-  display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   UpdateDisplay("400x400,200x200");
+  display_manager()->SetMirrorMode(true);
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   EXPECT_FALSE(GetSecondaryTray());
 
-  display_manager()->SetMultiDisplayMode(display::DisplayManager::EXTENDED);
-  UpdateDisplay("400x400,200x200");
+  display_manager()->SetMirrorMode(false);
   EXPECT_TRUE(GetTray()->IsPopupVisible());
   secondary_tray = GetSecondaryTray();
   ASSERT_TRUE(secondary_tray);
