@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45bae94d_6a8d2be4",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:39:18Z",
+      "side": 0,
+      "message": "I read the comment about 10 times and never felt like I understood it, which is why I wound up deleting it. Perhaps yoshiki@ can shed some light on what we ought to do with it.",
+      "parentUuid": "829eaaa8_da8545ef",
+      "revId": "f28f29f4bc751439a347c129a3b6ba5a43980d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76f40b19_2dc80ed9",
         "filename": "ui/message_center/views/message_view_delegate.h",
         "patchSetId": 1

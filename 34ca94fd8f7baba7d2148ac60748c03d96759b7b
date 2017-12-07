@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aed3f02e_6a0fad04",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:39:18Z",
+      "side": 1,
+      "message": "so I think I have this backwards. The ScopedObserver will make sure to stop observing when |this| is destroyed, but |this| always outlives |view|, so we should be able to just use view-\u003eAddObserver(this). View\u0027s ObserverList doesn\u0027t enforce emptiness on destruction.",
+      "parentUuid": "bad4004e_56b02071",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89ddec4a_6d6a4c58",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8938f5cc_8b4b1113",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:39:18Z",
+      "side": 1,
+      "message": "unintentional, removed",
+      "parentUuid": "99401544_0cb516c7",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec6f2403_9b01fa26",
         "filename": "ui/message_center/views/message_popup_collection.cc",
         "patchSetId": 1
@@ -82,6 +118,24 @@
       "writtenOn": "2017-12-07T04:17:29Z",
       "side": 1,
       "message": "ditto: Remove anywhere?",
+      "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1106585_80560562",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T22:39:18Z",
+      "side": 1,
+      "message": "removed ScopedObserver on the basis of the same reasoning (|this| outlives |view|).",
+      "parentUuid": "ec6f2403_9b01fa26",
       "revId": "34ca94fd8f7baba7d2148ac60748c03d96759b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
