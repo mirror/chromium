@@ -269,21 +269,23 @@ class VRDisplay final : public EventTargetWithInlineData,
 
 using VRDisplayVector = HeapVector<Member<VRDisplay>>;
 
+// Ensure that this stays in sync with VRPresentationResult in enums.xml.
 enum class PresentationResult {
   kRequested = 0,
   kSuccess = 1,
   kSuccessAlreadyPresenting = 2,
   kVRDisplayCannotPresent = 3,
   kPresentationNotSupportedByDisplay = 4,
-  kVRDisplayNotFound = 5,
+  // kVRDisplayNotFound = 5,
   kNotInitiatedByUserGesture = 6,
   kInvalidNumberOfLayers = 7,
   kInvalidLayerSource = 8,
   kLayerSourceMissingWebGLContext = 9,
   kInvalidLayerBounds = 10,
-  kServiceInactive = 11,
-  kRequestDenied = 12,
-  kFullscreenNotEnabled = 13,
+  // kServiceInactive = 11,
+  // kRequestDenied = 12,
+  // kFullscreenNotEnabled = 13,
+  kPlaceholder = 13,       // TODO(ddorwin): Remove when 14 is added.
   kPresentationResultMax,  // Must be last member of enum.
 };
 
