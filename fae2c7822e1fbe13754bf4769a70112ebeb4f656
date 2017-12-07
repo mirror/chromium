@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bead6ef_7d292e8e",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T21:39:18Z",
+      "side": 1,
+      "message": "At first I had thought this was overkill...but it does seem the best way to ensure that all features (Or all the ones this file tests) are set up correctly, so I think it\u0027s a good idea.  Nice thinking!",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70715f0d_b4965ab1",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T21:39:18Z",
+      "side": 1,
+      "message": "I suggest just making accessors and getting rid of network_context_ and loader_factory_ - think it\u0027s cleaner than a setup method that we need to call.",
+      "range": {
+        "startLine": 201,
+        "startChar": 23,
+        "endLine": 201,
+        "endChar": 0
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a58792c_d8f384a3",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T21:39:18Z",
+      "side": 1,
+      "message": "I don\u0027t believe there\u0027s a guarantee that new pointers won\u0027t be the same as the old ones.",
+      "range": {
+        "startLine": 259,
+        "startChar": 33,
+        "endLine": 259,
+        "endChar": 35
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df04051_0c25991c",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T21:39:18Z",
+      "side": 1,
+      "message": "nit:  MacOS?  Or just OSX?",
+      "range": {
+        "startLine": 693,
+        "startChar": 63,
+        "endLine": 693,
+        "endChar": 68
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6f8c33_28874c7e",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-07T21:39:18Z",
+      "side": 1,
+      "message": "nit:  I think it\u0027s more common to use !defined(OS_MACOSX) for #else clauses.",
+      "range": {
+        "startLine": 751,
+        "startChar": 19,
+        "endLine": 751,
+        "endChar": 28
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
