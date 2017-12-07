@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2ebd866_d871c0ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:51:43Z",
+      "side": 1,
+      "message": "I wouldn\u0027t add a flag for this.  This isn\u0027t something we want to experiment with (nor do I think we could easily check metrics).  Let\u0027s just go for it!",
+      "range": {
+        "startLine": 209,
+        "startChar": 31,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "e108ff7d7abe8c47e96225713add09342671cccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4f289b_586e3bca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:51:43Z",
+      "side": 1,
+      "message": "instead of this owning the activity, I would pass in the TabModelSelector and the Window.  Ideally, we limit the number of classes that hold the activity directly.\n\nI think if we pass in the Window here, we should be able to add some unit tests for this logic to see it sets the window flags correctly based on the various states.\n\nAlso, this plays happily on tablet right?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "e108ff7d7abe8c47e96225713add09342671cccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1533600_9658be2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-07T05:51:43Z",
+      "side": 1,
+      "message": "is there ever a time that we could already be in the overview mode by the time we are constructed?  I wonder if we need to check that to be overly cautious.  Likely not.  I think we create this in cold start and I \"believe\" we always create a tab then, but maybe not in the chrome home case because we use the NTP sheet.  I don\u0027t know if that is considered overview or not.",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "e108ff7d7abe8c47e96225713add09342671cccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
