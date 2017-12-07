@@ -156,7 +156,7 @@ class scoped_refptr {
  public:
   typedef T element_type;
 
-  scoped_refptr() {}
+  scoped_refptr() = default;
 
   scoped_refptr(T* p) : ptr_(p) {
     if (ptr_)
