@@ -16,6 +16,24 @@
       "revId": "243148b03397982b3fd3a0baf30f3e2a5794d2ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9e0ca8_4b18d638",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-07T16:30:34Z",
+      "side": 1,
+      "message": "This was a careful attempt to reproduce the old behavior of CompareOffsets, which I *think* did the same. As far as I know:\n\n(NaN \u003c value) \u003d\u003d false\n(value \u003c NaN) \u003d\u003d false\n\nHowever, the code is broken as you say if nulls can get involved. However it looks like currently this is never called with any null offsets, so I will send out a quick CL to just update this to use CheckedOffset only.",
+      "parentUuid": "46786814_986ab122",
+      "revId": "243148b03397982b3fd3a0baf30f3e2a5794d2ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
