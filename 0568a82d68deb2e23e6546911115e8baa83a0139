@@ -16,6 +16,24 @@
       "revId": "0568a82d68deb2e23e6546911115e8baa83a0139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3600b35a_00fe9264",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-07T09:58:04Z",
+      "side": 1,
+      "message": "I guess notifying all clients makes sense, yeah. I added some logic and a param to the certificateError event so as to allow only a single agent host / client to handle the error. WDYT, is that good enough for now?\n\nI agree though that we should think about a more generic mechanism to solve these multi-target / multi-client issues. The reason I\u0027d be inclined to find a workable near-term solution / workaround is crbug.com/721739, which is highly sought after and ended up getting blocked on this.",
+      "parentUuid": "ee384464_d358fcd2",
+      "revId": "0568a82d68deb2e23e6546911115e8baa83a0139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
