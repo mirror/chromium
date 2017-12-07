@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e578548_92e23533",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-07T09:52:54Z",
+      "side": 1,
+      "message": "What is the criteria for selecting these elements?\n\nI guess they require special treatment even when empty string is given for innerHTML\n- but the readers of this code are not sure whether they are exhaustive, or if anything\nchanges (e.g. spec requirement etc.) does this optimization break?\n\nEven we copy the behavior of Mozilla, it looks Firefox also sets \"HasWeirdParserInsertionMode\"\nin HTMLSharedElement class, which is inherited by various elements, which seems missing.\n\nWe have a different implementation of HTML parser than Mozilla\u0027s, and the requirements\ncould be different.\n\nHmm, how can we make sure the set of elements that are optimizable...?",
+      "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
