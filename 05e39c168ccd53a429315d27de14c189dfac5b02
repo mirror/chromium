@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1f4581_ff113f37",
+        "filename": "base/memory/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-07T15:35:37Z",
+      "side": 1,
+      "message": "I think this would also need a \"set noparent\" to enforce, but that seems kinda crummy to //base OWNERS. Now I\u0027m wondering if we should just put the file on a watchlist (but to where?)...",
+      "revId": "05e39c168ccd53a429315d27de14c189dfac5b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298e1eef_ff137c0d",
+        "filename": "ipc/SECURITY_OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-07T15:35:37Z",
+      "side": 1,
+      "message": "As written it\u0027s only for changes to the impl of shared_memory.",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 25
+      },
+      "revId": "05e39c168ccd53a429315d27de14c189dfac5b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
