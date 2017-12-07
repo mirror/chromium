@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63add53f_4e239434",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "For the image we want to scaled down (0.5* width, 0.5* height) and compressed to 80% JPEG compression here.",
+      "parentUuid": "bb0a0271_9c51ae66",
+      "range": {
+        "startLine": 219,
+        "startChar": 42,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f121fb_1b1cc200",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baec62e7_a2d63506",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f121fb_1b1cc200",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 0
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aef00961_36602046",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8769399_c531085d",
+      "range": {
+        "startLine": 411,
+        "startChar": 42,
+        "endLine": 411,
+        "endChar": 59
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9653287_a41ff040",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b17c6c_906c05f8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "I just followed the existing format in line 288.",
+      "parentUuid": "d9653287_a41ff040",
+      "range": {
+        "startLine": 418,
+        "startChar": 28,
+        "endLine": 418,
+        "endChar": 50
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "40db0622_23919a2d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9394d2_26ba8871",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 55
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4318a204_cda9fb83",
         "filename": "components/arc/common/voice_interaction_framework.mojom",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1e35c5_ff0bdeb7",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4318a204_cda9fb83",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1f98a521_f2ccd7aa",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2e4aef_b3d7a600",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 33
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c53125a8_4684601e",
         "filename": "components/arc/common/voice_interaction_framework.mojom",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-05T00:44:58Z",
       "side": 1,
       "message": "Is it only for the screenshot?  We should have the method name reflect that e.g. \"GetAssistRequestDataWithScreenshot()\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c061f7ec_f4dbb2e7",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "It can also be used for other entry points, we could extend this interface with an ASSIST_MODE parameter when we add support for other cases.",
+      "parentUuid": "c53125a8_4684601e",
       "range": {
         "startLine": 47,
         "startChar": 17,
@@ -206,6 +398,30 @@
       "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61492c0f_7ff3f808",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-12-07T01:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207e6d59_de5f5f8e",
+      "range": {
+        "startLine": 80,
+        "startChar": 69,
+        "endLine": 80,
+        "endChar": 120
+      },
+      "revId": "610ec499869f50a72c4791b384ac81a70f6ce6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
