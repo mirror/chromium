@@ -1774,6 +1774,11 @@ const char kEnableAndroidSpellcheckerName[] = "Enable spell checking";
 const char kEnableAndroidSpellcheckerDescription[] =
     "Enables use of the Android spellchecker.";
 
+const char kEnableChromeHomeSurveyName[] = "Enable Chrome Home survey";
+const char kEnableChromeHomeSurveyDescription[] =
+    "If enabled, the survey process will allow surveys using sample "
+    "parameters.";
+
 const char kEnableContentSuggestionsNewFaviconServerName[] =
     "Get favicons for content suggestions from a new server.";
 const char kEnableContentSuggestionsNewFaviconServerDescription[] =

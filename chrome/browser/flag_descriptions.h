@@ -1097,6 +1097,9 @@ extern const char kEnableAndroidPayIntegrationV2Description[];
 extern const char kEnableAndroidSpellcheckerName[];
 extern const char kEnableAndroidSpellcheckerDescription[];
 
+extern const char kEnableChromeHomeSurveyName[];
+extern const char kEnableChromeHomeSurveyDescription[];
+
 extern const char kEnableContentSuggestionsNewFaviconServerName[];
 extern const char kEnableContentSuggestionsNewFaviconServerDescription[];
 
