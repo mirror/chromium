@@ -188,7 +188,7 @@ void TestOtherProcess(TestPaths::Architecture architecture) {
   VerifyAddressInInCodePage(process_info, code_address);
 }
 
-TEST(ProcessInfo, OtherProcess) {
+TEST(ProcessInfo, DISABLED_OtherProcess) {
   TestOtherProcess(TestPaths::Architecture::kDefault);
 }
 
