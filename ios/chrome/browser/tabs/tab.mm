@@ -649,9 +649,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (id<CRWNativeContent>)controllerForUnhandledContentAtURL:(const GURL&)url {
   // Shows download manager UI for unhandled content.
-  DownloadManagerController* downloadController =
-      [[DownloadManagerController alloc] initWithWebState:self.webState
-                                              downloadURL:url];
+  LegacyDownloadManagerController* downloadController =
+      [[LegacyDownloadManagerController alloc] initWithWebState:self.webState
+                                                    downloadURL:url];
   [downloadController start];
   return downloadController;
 }
