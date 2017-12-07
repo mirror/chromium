@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f98230_cb8acd44",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T06:46:50Z",
+      "side": 1,
+      "message": "Oops, this test is still failing. I think there are two reasons:\n* The second GetProcess() reuses the service worker process, since IsSuitableHost() is returning true during the reuse check because for MockRPH IsSameStoragePartition always returns true, so it looks like it\u0027s in the right partition.\n* This test works in DoNotReuseServiceWorkerProcessInDifferentStoragePartition because process reuse checks ShouldUseSiteProcessTracking() which returns false for any non-default storage partition. In that test, the BrowserClient is still the modified one, so it\u0027s non-deafult. But in this test we\u0027ve restored the default BrowserClient, so the storage partition is default again.",
+      "revId": "403d57c19492fca90e2cf5538a07e234d10dcaa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
