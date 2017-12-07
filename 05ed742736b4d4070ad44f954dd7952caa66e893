@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42664f07_b8d533e3",
+        "filename": "gpu/command_buffer/build_gles2_cmd_buffer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 4629,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-07T00:53:48Z",
+      "side": 1,
+      "message": "You can mark those as  \u0027internal\u0027: True, which means the command definition is created, as well as the GLES2CmdHelper functions and service-side stuff, but nothing in GLES2Interface/GLES2Implementation (or gl C wrappers).",
+      "revId": "05ed742736b4d4070ad44f954dd7952caa66e893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
