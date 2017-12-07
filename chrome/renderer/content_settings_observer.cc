@@ -130,6 +130,10 @@ ContentSettingsObserver::ContentSettingsObserver(
       base::Bind(&ContentSettingsObserver::OnInsecureContentRendererRequest,
                  base::Unretained(this)));
 
+  registry->AddInterface(
+      base::Bind(&ContentSettingsObserver::OnInterstitialPageRendererRequest,
+                 base::Unretained(this)));
+
   content::RenderFrame* main_frame =
       render_frame->GetRenderView()->GetMainRenderFrame();
   // TODO(nasko): The main frame is not guaranteed to be in the same process
@@ -182,7 +186,6 @@ void ContentSettingsObserver::DidBlockContentType(
 bool ContentSettingsObserver::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ContentSettingsObserver, message)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_SetAsInterstitial, OnSetAsInterstitial)
     IPC_MESSAGE_HANDLER(ChromeViewMsg_RequestFileSystemAccessAsyncResponse,
                         OnRequestFileSystemAccessAsyncResponse)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -239,6 +242,19 @@ void ContentSettingsObserver::SetAllowRunningInsecureContent() {
 void ContentSettingsObserver::OnInsecureContentRendererRequest(
     chrome::mojom::InsecureContentRendererRequest request) {
   insecure_content_renderer_bindings_.AddBinding(this, std::move(request));
+}
+
+void ContentSettingsObserver::SetAsInterstitial() {
+  is_interstitial_page_ = true;
+  LOG(ERROR) << "Chandra :: ContentSettingsObserver::SetAsInterstitial called";
+}
+
+void ContentSettingsObserver::OnInterstitialPageRendererRequest(
+    chrome::mojom::InterstitialPageRendererRequest request) {
+  LOG(ERROR) << "Chandra :: "
+                "ContentSettingsObserver::OnInterstitialPageRendererRequest "
+                "called";
+  interstitial_page_renderer_bindings_.AddBinding(this, std::move(request));
 }
 
 bool ContentSettingsObserver::AllowDatabase(const WebString& name,
@@ -521,10 +537,6 @@ void ContentSettingsObserver::DidNotAllowScript() {
 void ContentSettingsObserver::OnLoadBlockedPlugins(
     const std::string& identifier) {
   temporarily_allowed_plugins_.insert(identifier);
-}
-
-void ContentSettingsObserver::OnSetAsInterstitial() {
-  is_interstitial_page_ = true;
 }
 
 void ContentSettingsObserver::OnRequestFileSystemAccessAsyncResponse(

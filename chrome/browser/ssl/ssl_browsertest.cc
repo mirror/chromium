@@ -3648,6 +3648,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITestIgnoreCertErrorsBySPKIHTTPS,
 // Verifies that the interstitial can proceed, even if JavaScript is disabled.
 // http://crbug.com/322948
 IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptProceeds) {
+  LOG(ERROR)
+      << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds Start";
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                  CONTENT_SETTING_BLOCK);
@@ -3656,10 +3658,16 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptProceeds) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds "
+                "before CheckAuthenticationBrokenState";
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds "
+                "before tab->GetInterstitialPage()";
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds "
+                "before ASSERT_EQ";
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
   EXPECT_TRUE(WaitForRenderFrameReady(interstitial_page->GetMainFrame()));
@@ -3671,18 +3679,25 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptProceeds) {
   const std::string javascript =
       base::StringPrintf("window.domAutomationController.send(%d);",
                          security_interstitials::CMD_PROCEED);
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds "
+                "before ASSERT_TRUE";
   ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
       interstitial_page->GetMainFrame(), javascript, &result));
   // The above will hang without the fix.
   EXPECT_EQ(1, result);
   observer.Wait();
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds "
+                "before CheckAuthenticationBrokenState";
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::NONE);
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptProceeds End";
 }
 
 // Verifies that the interstitial can go back, even if JavaScript is disabled.
 // http://crbug.com/322948
 IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptGoesBack) {
+  LOG(ERROR)
+      << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack Start";
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                  CONTENT_SETTING_BLOCK);
@@ -3691,27 +3706,38 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptGoesBack) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ui_test_utils::NavigateToURL(
       browser(), https_server_expired_.GetURL("/ssl/google.html"));
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack "
+                "before CheckAuthenticationBrokenState";
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
 
   content::WindowedNotificationObserver observer(
       content::NOTIFICATION_RENDER_WIDGET_HOST_DESTROYED,
       content::NotificationService::AllSources());
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack "
+                "before tab->GetInterstitialPage()";
   InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack "
+                "before ASSERT";
   ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
             interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack "
+                "before interstitial_page->GetMainFrame()->GetRenderViewHost()";
   content::RenderViewHost* interstitial_rvh =
       interstitial_page->GetMainFrame()->GetRenderViewHost();
   int result = security_interstitials::CMD_ERROR;
   const std::string javascript =
       base::StringPrintf("window.domAutomationController.send(%d);",
                          security_interstitials::CMD_DONT_PROCEED);
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack "
+                "before ASSERT";
   ASSERT_TRUE(content::ExecuteScriptAndExtractInt(interstitial_rvh, javascript,
                                                   &result));
   // The above will hang without the fix.
   EXPECT_EQ(0, result);
   observer.Wait();
   EXPECT_EQ("about:blank", tab->GetVisibleURL().spec());
+  LOG(ERROR) << "Chandra :: SSLUITest, TestInterstitialJavaScriptGoesBack End";
 }
 
 // Verifies that an overridable interstitial has a proceed link.

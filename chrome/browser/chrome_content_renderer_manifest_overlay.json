@@ -22,6 +22,7 @@
           "autofill::mojom::PasswordGenerationAgent",
           "blink::mojom::document_metadata::CopylessPaste",
           "chrome::mojom::InsecureContentRenderer",
+          "chrome::mojom::InterstitialPageRenderer",
           "chrome::mojom::ChromeRenderFrame",
           "contextual_search::mojom::OverlayPageNotifierService",
           "dom_distiller::mojom::DistillerPageNotifierService",
