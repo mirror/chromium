@@ -55,10 +55,9 @@ void Socket::WriteData() {
   DCHECK(request.byte_count >= request.bytes_written);
   io_buffer_write_ = new net::WrappedIOBuffer(request.io_buffer->data() +
                                               request.bytes_written);
-  int result =
-      WriteImpl(io_buffer_write_.get(),
-                request.byte_count - request.bytes_written,
-                base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
+  int result = WriteImpl(
+      io_buffer_write_.get(), request.byte_count - request.bytes_written,
+      base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
 
   if (result != net::ERR_IO_PENDING)
     OnWriteComplete(result);
@@ -139,5 +138,28 @@ Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 
 Socket::WriteRequest::~WriteRequest() {}
+
+// static
+net::NetworkTrafficAnnotationTag Socket::GetNetworkTrafficAnnotationTag() {
+  return net::DefineNetworkTrafficAnnotation("socket_extension_api", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+}
 
 }  // namespace extensions
