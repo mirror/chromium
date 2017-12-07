@@ -326,6 +326,11 @@
     },
   },
   {
+    'name': 'chromium.chrome',
+    'machines': {
+    },
+  },
+  {
     'name': 'chromium.linux',
     'machines': {
       'Fuchsia ARM64': {
