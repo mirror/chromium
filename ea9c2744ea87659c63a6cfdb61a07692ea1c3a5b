@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "69d2b7be_aaca5f1d",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-07T02:00:38Z",
+      "side": 1,
+      "message": "I feel it is a little messy to plumb event to BoundsSetter...\n\nI think the logic here is: (1) for workspace events, update snapped window width using ratio; (2) for other events, set or reset snapped window width but not applying it.",
+      "parentUuid": "074b2bb1_ed477233",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0726d5d1_83898c94",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 9
@@ -263,6 +281,24 @@
       "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6635c0d8_5bcca359",
+        "filename": "ash/wm/window_state_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-07T02:00:38Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5dc1f681_3e2518de",
+      "revId": "ea9c2744ea87659c63a6cfdb61a07692ea1c3a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

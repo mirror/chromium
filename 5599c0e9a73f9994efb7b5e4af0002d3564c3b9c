@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "851192ac_39dd2d8f",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-07T02:00:38Z",
+      "side": 1,
+      "message": "Good question. I took another look at https://cs.chromium.org/chromium/src/ash/wm/default_state.cc?type\u003dcs\u0026q\u003dadjustsnapped\u0026l\u003d412.\n\nI felt: (1) AdjustSnappedBounds should not be necessary.. (2) and I think we can remove the trunk of window_state-\u003eIsSnapped(). The removed trunk is just SetBoundsConstrained.",
+      "parentUuid": "496bb548_7abcf03a",
+      "revId": "5599c0e9a73f9994efb7b5e4af0002d3564c3b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff2743ae_9e8c79e9",
         "filename": "ash/wm/window_state.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "5599c0e9a73f9994efb7b5e4af0002d3564c3b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9596e8d_f7325b78",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-07T02:00:38Z",
+      "side": 1,
+      "message": "Done by removing",
+      "parentUuid": "ff2743ae_9e8c79e9",
+      "revId": "5599c0e9a73f9994efb7b5e4af0002d3564c3b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
