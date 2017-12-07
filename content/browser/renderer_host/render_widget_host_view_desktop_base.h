@@ -18,10 +18,44 @@ class CONTENT_EXPORT RenderWidgetHostViewDesktopBase
  public:
   ~RenderWidgetHostViewDesktopBase() override;
 
+  // RenderWidgetHostViewDesktopBase:
+  void Hide() final;
+  void ShowAndPretendIsVisible() final;
+
+  // Implementations must call this when the visibility of the view changes.
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityChanged();
+
  protected:
   RenderWidgetHostViewDesktopBase();
 
  private:
+  // Invoked from Hide(). Should hide the view.
+  virtual void DoHide() = 0;
+
+  // Invoked when the view becomes visible and/or captured. Should enable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasShown() = 0;
+
+  // Invoked when the view becomes non-visible and non-captured. Should disable
+  // rendering and adjust the priority of the process hosting this view.
+  virtual void WasHidden() = 0;
+
+  // RenderWidgetHostViewBase:
+  void CaptureStateChanged() final;
+
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityOrCaptureStateChanged();
+
+  // Returns true if the contents is being captured (e.g. for screenshots or
+  // mirroring).
+  bool IsCaptured() const;
+
+  // Whether the view was ever visible.
+  bool was_ever_visible_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewDesktopBase);
 };
 

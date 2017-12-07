@@ -54,7 +54,7 @@ void ExtensionViewViews::VisibilityChanged(View* starting_from,
         host_->render_view_host()->GetWidget()->GetView();
     if (host_view) {
       if (is_visible)
-        host_view->Show();
+        host_view->ShowAndPretendIsVisible();
       else
         host_view->Hide();
     }

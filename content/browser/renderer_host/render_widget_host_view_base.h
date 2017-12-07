@@ -108,10 +108,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHost* GetRenderWidgetHost() const final;
   void SetBackgroundColorToDefault() final;
   ui::TextInputClient* GetTextInputClient() override;
+  void ShowAndPretendIsVisible() override;
   bool IsShowing() final;
   void CaptureStateChanged() override;
-  void WasUnOccluded() override {}
-  void WasOccluded() override {}
   void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
