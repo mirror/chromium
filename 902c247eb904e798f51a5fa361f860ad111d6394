@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11a40438_4e69b786",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-07T19:25:45Z",
+      "side": 1,
+      "message": "Done, switched to a GMock based version.",
+      "parentUuid": "b5975e31_0f162552",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a302b051_2c6b5dc3",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbfe6a4_bcafde8e",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-07T19:25:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a302b051_2c6b5dc3",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d76d077e_34aade48",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-07T19:25:45Z",
+      "side": 1,
+      "message": "Done, turned all LOGs into DLOGs and VLOGs into DVLOGs. This also makes sure that the strings defined in the above to_string methods do not end up in the resulting release binary.",
+      "parentUuid": "982c6ec2_8e4ffc3f",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ca71bf3_8bbf76ae",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b114c34_4e858e69",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-07T19:25:45Z",
+      "side": 1,
+      "message": "Done, this was indeed not really needed.",
+      "parentUuid": "6ca71bf3_8bbf76ae",
+      "revId": "902c247eb904e798f51a5fa361f860ad111d6394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
