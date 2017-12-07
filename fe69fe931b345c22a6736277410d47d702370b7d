@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cacfbc_0b3e907c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2518,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-07T22:04:08Z",
+      "side": 1,
+      "message": "It is possible to delete a range from UI?",
+      "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fbbad1_a5ffc693",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-07T22:04:08Z",
+      "side": 1,
+      "message": "refreshObjectStoreCallback",
+      "range": {
+        "startLine": 108,
+        "startChar": 53,
+        "endLine": 108,
+        "endChar": 71
+      },
+      "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125aa9d0_cbb7a868",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-07T22:04:08Z",
+      "side": 1,
+      "message": "- Use ls: ls`Delete selected`\n- Do not capitalize Selected",
+      "range": {
+        "startLine": 122,
+        "startChar": 78,
+        "endLine": 122,
+        "endChar": 85
+      },
+      "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
