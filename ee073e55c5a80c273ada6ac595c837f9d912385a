@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62c50e86_0a580d08",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-07T17:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b2c69f_662e354b",
+      "range": {
+        "startLine": 1292,
+        "startChar": 18,
+        "endLine": 1292,
+        "endChar": 23
+      },
+      "revId": "ee073e55c5a80c273ada6ac595c837f9d912385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693de546_4f0e513b",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T16:45:21Z",
       "side": 1,
       "message": "I\u0027m a bit confused about this case. Is this the case where we lose the navigation handle and then it gets recreated (without a cert)?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 0,
+        "endLine": 1296,
+        "endChar": 79
+      },
+      "revId": "ee073e55c5a80c273ada6ac595c837f9d912385a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c74668_3a7b9d05",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-07T17:02:21Z",
+      "side": 1,
+      "message": "This is when there\u0027s no cert on the handle. In that case, I only want to reuse the existing NavigationEntry\u0027s cert if the origin match. This second case is exercised by the 2nd browser test I wrote.",
+      "parentUuid": "693de546_4f0e513b",
       "range": {
         "startLine": 1296,
         "startChar": 0,
