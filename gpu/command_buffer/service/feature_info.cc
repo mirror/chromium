@@ -1050,15 +1050,6 @@ void FeatureInfo::InitializeFeatures() {
     validators_.g_l_state.AddValue(GL_TEXTURE_BINDING_RECTANGLE_ARB);
   }
 
-#if defined(OS_MACOSX)
-  // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
-  // querying minigbm. crbug.com/646148
-  if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL) {
-    AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
-    feature_flags_.chromium_image_ycbcr_420v = true;
-  }
-#endif
-
   if (gl::HasExtension(extensions, "GL_APPLE_ycbcr_422")) {
     AddExtensionString("GL_CHROMIUM_ycbcr_422_image");
     feature_flags_.chromium_image_ycbcr_422 = true;
@@ -1312,6 +1303,16 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_internal_format_storage.AddValue(GL_RG8_EXT);
   }
   UMA_HISTOGRAM_BOOLEAN("GPU.TextureRG", feature_flags_.ext_texture_rg);
+
+#if defined(OS_MACOSX) || (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY))
+  // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
+  // querying minigbm. https://crbug.com/646148
+  if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL &&
+      !feature_flags_.ext_texture_rg) {
+    AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
+    feature_flags_.chromium_image_ycbcr_420v = true;
+  }
+#endif
 
   if (gl_version_info_->is_desktop_core_profile ||
       (gl_version_info_->IsAtLeastGL(2, 1) &&
