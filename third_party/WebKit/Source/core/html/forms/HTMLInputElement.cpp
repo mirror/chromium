@@ -432,7 +432,7 @@ void HTMLInputElement::UpdateType() {
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
   if (input_type_view_->NeedsShadowSubtree()) {
-    EnsureUserAgentShadowRoot();
+    EnsureLegacyUserAgentShadowRootV0();
     CreateShadowSubtree();
   }
 
