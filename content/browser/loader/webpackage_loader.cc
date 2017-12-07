@@ -27,7 +27,7 @@ bool WebPackageStreamResourcesEnabled() {
   static bool enable_streaming =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           "enable-webpackage-streaming");
-  LOG(ERROR) << "** WebPackageStreaming: " << enable_streaming;
+  // LOG(ERROR) << "** WebPackageStreaming: " << enable_streaming;
   return enable_streaming;
 }
 
@@ -89,8 +89,9 @@ class MainResourceLoader : public mojom::URLLoader {
         subresource_manager_host_(std::move(subresource_manager_host)),
         weak_factory_(this) {
     // LOG(ERROR) << "MainResourceLoader " << this << " " << url;
-    if (url.path() == "/") {
-      // No particular path is specified; try to render the first resource.
+
+    // TENTATIVE: just always use the first resource as a main resource.
+    if (true /*url.path() == "/" */) {
       reader_->GetFirstResource(
           base::BindOnce(&MainResourceLoader::OnFoundResource,
                          weak_factory_.GetWeakPtr()),
@@ -98,8 +99,10 @@ class MainResourceLoader : public mojom::URLLoader {
                          weak_factory_.GetWeakPtr()));
       return;
     }
+    url::Replacements<char> remove_query;
+    remove_query.ClearQuery();
     ResourceRequest resource_request;
-    resource_request.url = url;
+    resource_request.url = url.ReplaceComponents(remove_query);
     resource_request.method = "GET";
     reader_->GetResource(resource_request,
                          base::BindOnce(&MainResourceLoader::OnFoundResource,
@@ -112,8 +115,8 @@ class MainResourceLoader : public mojom::URLLoader {
   void OnFoundResource(int error_code,
                        const ResourceResponseHead& response_head,
                        mojo::ScopedDataPipeConsumerHandle body) {
-    // LOG(ERROR) << "MainResourceLoader::OnFoundResource " << this
-    //            << " error_code: " << error_code;
+     // LOG(ERROR) << "MainResourceLoader::OnFoundResource " << this
+     //            << " error_code: " << error_code;
     if (error_code != net::OK) {
       loader_client_->OnComplete(
           network::URLLoaderCompletionStatus(error_code));
@@ -273,12 +276,9 @@ void WebPackageRequestHandler::CreateMainResourceLoader(
     mojom::URLLoaderClientPtr loader_client) {
   DCHECK(webpackage_reader_);
   LOG(INFO) << "** Creating WebPackgaeLoader's MainResourceLoader";
-  url::Replacements<char> remove_query;
-  remove_query.ClearQuery();
   mojo::MakeStrongBinding(
       std::make_unique<MainResourceLoader>(
-          webpackage_start_url_.ReplaceComponents(remove_query),
-          webpackage_reader_, std::move(loader_client),
+          webpackage_start_url_, webpackage_reader_, std::move(loader_client),
           std::move(subresource_manager_host)),
       std::move(loader_request));
 }
