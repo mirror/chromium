@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f0b131b_ef43c99a",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:41:23Z",
+      "side": 1,
+      "message": "(Note that I\u0027ve updated this to accept the HTML snippet). We don\u0027t need to validate it since this is coming from the automation driver in control of the browser. It is up to the client what is passed there.",
+      "parentUuid": "01cd5350_beb54bbd",
+      "revId": "db30d14dc8bdd2750bc3ead5702350b7aeda2387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f221a5f0_a47a8efc",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-06T02:56:21Z",
       "side": 1,
       "message": "pick one",
+      "range": {
+        "startLine": 9824,
+        "startChar": 93,
+        "endLine": 9824,
+        "endChar": 101
+      },
+      "revId": "db30d14dc8bdd2750bc3ead5702350b7aeda2387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7524e4c_f610ff3d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9824,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-07T21:41:23Z",
+      "side": 1,
+      "message": "Done. Note that this file is now generated from .pdl (we are transitioning from json to pdl for the protocol definition)",
+      "parentUuid": "f221a5f0_a47a8efc",
       "range": {
         "startLine": 9824,
         "startChar": 93,
