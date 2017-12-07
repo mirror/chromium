@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4329a818_e7ee2f76",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T01:05:24Z",
+      "side": 1,
+      "message": "Not sure if this is the right indentation.",
+      "revId": "32fbd7b7b28d7b0d24334dd404e5bc23fc1bbfd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
