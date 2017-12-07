@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "dc2a035b_343d9ff8",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-07T20:16:46Z",
+      "side": 1,
+      "message": "I like \u0027chunky\u0027 better.\n\nThe original patch I wrote to handle the InflateBack() corner case was actually called \u0027inflate_fast_loose\u0027 IIRC.",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "984efc7f_0cea72ac",
         "filename": "third_party/zlib/contrib/optimizations/inflate.c",
         "patchSetId": 33
