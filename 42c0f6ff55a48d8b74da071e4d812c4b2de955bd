@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b705f28_3f20b4e1",
+        "filename": "content/renderer/media/webrtc/peer_connection_dependency_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T11:01:32Z",
+      "side": 1,
+      "message": "Maybe it would be worth introducing base::ThreadTaskRunnerHandle::GetForTesting(). Then you can just aim at removing base::ThreadTaskRunnerHandle::Get().",
+      "revId": "42c0f6ff55a48d8b74da071e4d812c4b2de955bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
