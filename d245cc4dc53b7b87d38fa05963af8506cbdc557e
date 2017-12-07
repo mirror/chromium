@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dde16aa_8da98552",
+        "filename": "skia/ext/skia_utils_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-07T20:05:08Z",
+      "side": 1,
+      "message": "So this does the same as CodecDecodingPixelSerializer?",
+      "revId": "d245cc4dc53b7b87d38fa05963af8506cbdc557e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac5c4ac_83824bf0",
+        "filename": "skia/ext/skia_utils_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-07T20:05:08Z",
+      "side": 1,
+      "message": "I had a little trouble parsing this.  Maybe \"Returning true but writing nothing to the stream means no image.\"?",
+      "range": {
+        "startLine": 85,
+        "startChar": 21,
+        "endLine": 85,
+        "endChar": 57
+      },
+      "revId": "d245cc4dc53b7b87d38fa05963af8506cbdc557e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99c8a9e_11e05980",
+        "filename": "skia/ext/skia_utils_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-07T20:05:08Z",
+      "side": 1,
+      "message": "Now that we\u0027re removing the mention of things like CodecDisallowingImageDeserializer, we might want to add some sort of comment here like, // For \u003csome reason\u003e we disallow serializing and deserializing images.",
+      "revId": "d245cc4dc53b7b87d38fa05963af8506cbdc557e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
