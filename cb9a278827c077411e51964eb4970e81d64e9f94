@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac2589e_147c4116",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-07T02:56:02Z",
+      "side": 1,
+      "message": "Not sure what the best solution is for this.  We need the animator\u0027s completion blocks to be executed so that BVC\u0027s FullscrenUIElement scroll end completion block can execute.  As a result, we need to call |-stopAnimation:| with NO up above.",
+      "revId": "cb9a278827c077411e51964eb4970e81d64e9f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
