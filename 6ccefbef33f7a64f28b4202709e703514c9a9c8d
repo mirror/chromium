@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87caac6b_eb2ec245",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-12-07T17:05:17Z",
+      "side": 1,
+      "message": "callback_.Reset()? Also on line 158 and in memory_details_log_source.cc.",
+      "range": {
+        "startLine": 193,
+        "startChar": 1,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "6ccefbef33f7a64f28b4202709e703514c9a9c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
