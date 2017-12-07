@@ -49,19 +49,12 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
                             public views::StyledLabelListener,
                             public content::WebContentsObserver {
  public:
-  // Commands shown in the action-style combobox. The value corresponds to the
-  // position in the combobox menu.
-  enum class DenialComboboxIndex {
-    DONT_TRANSLATE = 0,
-    NEVER_TRANSLATE_LANGUAGE = 1,
-    SEPARATOR = 2,
-    MENU_SIZE_NO_BLACKLIST = SEPARATOR,
-    NEVER_TRANSLATE_SITE = 3,
-    MENU_SIZE = 4,
-  };
-
   // Item IDs for the denial button's menu.
-  enum DenialMenuItem { NEVER_TRANSLATE_LANGUAGE, NEVER_TRANSLATE_SITE };
+  enum DenialMenuItem {
+    NEVER_TRANSLATE_LANGUAGE,
+    NEVER_TRANSLATE_SITE,
+    MORE_OPTIONS
+  };
 
   ~TranslateBubbleView() override;
 
@@ -88,6 +81,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
 
   // views::BubbleDialogDelegateView methods.
   int GetDialogButtons() const override;
+  base::string16 GetWindowTitle() const override;
   void Init() override;
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
@@ -147,10 +141,10 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
     BUTTON_ID_SHOW_ORIGINAL,
     BUTTON_ID_TRY_AGAIN,
     BUTTON_ID_ALWAYS_TRANSLATE,
+    BUTTON_ID_ADVANCED,
   };
 
   enum ComboboxID {
-    COMBOBOX_ID_DENIAL,
     COMBOBOX_ID_SOURCE_LANGUAGE,
     COMBOBOX_ID_TARGET_LANGUAGE,
   };
@@ -257,7 +251,6 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
   views::LabelButton* advanced_cancel_button_;
   views::LabelButton* advanced_done_button_;
 
-  views::MenuButton* denial_menu_button_;
   std::unique_ptr<ui::SimpleMenuModel> denial_menu_model_;
   std::unique_ptr<views::MenuRunner> denial_menu_runner_;
 
