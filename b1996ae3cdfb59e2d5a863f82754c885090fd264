@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a506c904_ea8b0142",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790a56e4_80f6f1d2",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b60a1a_5faaf222",
         "filename": "content/renderer/input/input_target_client_impl.h",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "57f3881d_fadc34fd",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b60a1a_5faaf222",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b83dc09f_7824846a",
         "filename": "content/renderer/input/input_target_client_impl.h",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014b9311_7608b860",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b83dc09f_7824846a",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +154,24 @@
       "side": 1,
       "message": "I think it makes more sense to be strict about how this should be used: only viz-host should connect to this, and it should be smart enough to connect to a client just once. I feel that\u0027s a reasonable expectation. If a second request is coming in, then we should just close the first connection, and bind the latest request.\n\nYou can leave it a BindingSet\u003c\u003e too, it\u0027s technically correct. Just more permissive than it needs to be.",
       "parentUuid": "2b4c2d84_a2d285e5",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3503128_f2b6e2e7",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T21:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde0c544_493fca60",
       "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -187,6 +259,24 @@
       "side": 1,
       "message": "This is causing the HitTest test to fail on Android or in HighDPI on Linux. So I need to have this to fix the tests. But I\u0027m still struggling with the Android test again. It seems that page scale factor is not correctly passed into an OOPIF renderer or something. But still investigating.",
       "parentUuid": "c29e9e74_3aadf4c2",
+      "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c76c13_da2efe73",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-07T21:44:55Z",
+      "side": 1,
+      "message": "I removed this for now and added a change in the test to address this. Basically there is this device scale which we have test for in two modes HighDPI and normal version which both are passed on Linux/Win just fine with this change. However, I filed another bug to investigate into the page scaling factor and how it is passed around. I don\u0027t think that is quite related to exposing the hit-testing API with mojo which is this CL. So I\u0027d like to land this CL with that change in the test as is.",
+      "parentUuid": "5ee1670e_ff6a3b00",
       "revId": "b1996ae3cdfb59e2d5a863f82754c885090fd264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
