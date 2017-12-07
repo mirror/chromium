@@ -22,6 +22,30 @@
       "revId": "1faef906ffa2ac90f5beafd27660152418137d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd4afc3_e0a3a934",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-07T18:37:13Z",
+      "side": 0,
+      "message": "Thanks Pete. If we can show that we only log main frame URLs through the foreground path,  enabling just that path sounds ok. I talked with the UKM team and we decided that as a first step we\u0027d like to turn this off entirely (current CL) since we need to make sure all UKM client code properly implements privacy and user consents, and we have not yet audited the foreground path to be certain. Once this lands, we can audit the foreground code path as part of our auditing of all UKM metrics, to make sure it only logs main frame URLs. Once we have done this, we can land a subsequent CL to turn that path back on. How does that sound?\n\nYou can see our more general UKM Privacy Audit doc here, if you want to get a better sense for the larger goals \u0026 action items we are pursuing: https://docs.google.com/document/d/1HAvdYh9RK4R3hM4SCX1cbIN81Na7iucySNQwib8Xkws/edit#",
+      "parentUuid": "71a63cea_e478b446",
+      "range": {
+        "startLine": 38,
+        "startChar": 49,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "1faef906ffa2ac90f5beafd27660152418137d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
