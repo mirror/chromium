@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32f7e579_5e8b00b3",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T22:12:06Z",
+      "side": 0,
+      "message": "This was left over from Windows Ash, when it was deciding which desktop/context to use for new windows.",
+      "revId": "2c1b3d065890fe1e72bcd831c5421ac6a2834e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb4efb6_5f8c8437",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-07T22:12:06Z",
+      "side": 0,
+      "message": "This would just turn around and call GetDefaultWindowBoundsAsh() again, so I inlined it.",
+      "revId": "2c1b3d065890fe1e72bcd831c5421ac6a2834e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
