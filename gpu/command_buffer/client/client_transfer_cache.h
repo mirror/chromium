@@ -11,6 +11,10 @@
 #include "gpu/command_buffer/common/transfer_cache_entry_id.h"
 
 namespace gpu {
+namespace gles2 {
+class GLES2CmdHelper;
+}
+class MappedMemoryManager;
 
 // ClientTransferCache allows for ClientTransferCacheEntries to be inserted
 // into the cache, which will send them to the ServiceTransferCache, making
@@ -34,13 +38,13 @@ class GPU_EXPORT ClientTransferCache {
   ~ClientTransferCache();
 
   TransferCacheEntryId CreateCacheEntry(
-      gles2::GLES2Interface* gl,
-      CommandBuffer* command_buffer,
+      gles2::GLES2CmdHelper* helper,
+      MappedMemoryManager* mapped_memory,
       const cc::ClientTransferCacheEntry& entry);
   bool LockTransferCacheEntry(TransferCacheEntryId id);
-  void UnlockTransferCacheEntry(gles2::GLES2Interface* gl,
+  void UnlockTransferCacheEntry(gles2::GLES2CmdHelper* helper,
                                 TransferCacheEntryId id);
-  void DeleteTransferCacheEntry(gles2::GLES2Interface* gl,
+  void DeleteTransferCacheEntry(gles2::GLES2CmdHelper* helper,
                                 TransferCacheEntryId id);
 
   // Test only functions
