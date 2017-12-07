@@ -2114,6 +2114,7 @@ test("unit_tests") {
     "../browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
     "../browser/android/ntp/content_suggestions_notifier_unittest.cc",
     "../browser/android/oom_intervention/near_oom_monitor_unittest.cc",
+    "../browser/android/oom_intervention/oom_intervention_decider_unittest.cc",
     "../browser/android/physical_web/eddystone_encoder_bridge_unittest.cc",
     "../browser/android/physical_web/physical_web_data_source_android_unittest.cc",
     "../browser/android/preferences/pref_service_bridge_unittest.cc",
@@ -2933,8 +2934,6 @@ test("unit_tests") {
       "../browser/media/router/discovery/mdns/dns_sd_registry_unittest.cc",
       "../browser/media/router/discovery/media_sink_discovery_metrics_unittest.cc",
       "../browser/media/router/event_page_request_manager_unittest.cc",
-      "../common/media_router/discovery/media_sink_internal_unittest.cc",
-      "../common/media_router/discovery/media_sink_service_base_unittest.cc",
       "../browser/media/router/mojo/extension_media_route_provider_proxy_unittest.cc",
       "../browser/media/router/mojo/media_route_controller_unittest.cc",
       "../browser/media/router/mojo/media_router_desktop_unittest.cc",
@@ -2962,6 +2961,8 @@ test("unit_tests") {
       "../browser/ui/webui/media_router/media_router_web_ui_test.h",
       "../browser/ui/webui/media_router/media_router_webui_message_handler_unittest.cc",
       "../browser/ui/webui/media_router/query_result_manager_unittest.cc",
+      "../common/media_router/discovery/media_sink_internal_unittest.cc",
+      "../common/media_router/discovery/media_sink_service_base_unittest.cc",
       "../common/media_router/mojo/media_router_struct_traits_unittest.cc",
     ]
     deps += [ "//components/bubble:test_support" ]
