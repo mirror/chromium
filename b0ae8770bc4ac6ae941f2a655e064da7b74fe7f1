@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8944952_bbd0ed36",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T17:11:47Z",
+      "side": 1,
+      "message": "if we do have to keep this, please call it content_paste_16.icon",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "b0ae8770bc4ac6ae941f2a655e064da7b74fe7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

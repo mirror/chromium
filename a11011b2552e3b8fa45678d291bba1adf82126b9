@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3aa1a2_70c870aa",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-07T17:11:47Z",
+      "side": 0,
+      "message": "can we remove some includes from this file now, and remove the pngs from the repo?",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 45
+      },
+      "revId": "a11011b2552e3b8fa45678d291bba1adf82126b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
