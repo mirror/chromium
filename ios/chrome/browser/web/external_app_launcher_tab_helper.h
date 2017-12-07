@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #import "ios/web/public/web_state/web_state_user_data.h"
 
-@class ExternalAppLauncher;
+@class ExternalAppsLaunchPolicyDecider;
 class GURL;
 
 // Handles the UI behaviors when opening a URL in an external application.
@@ -34,7 +34,11 @@ class ExternalAppLauncherTabHelper
   friend class web::WebStateUserData<ExternalAppLauncherTabHelper>;
   explicit ExternalAppLauncherTabHelper(web::WebState* web_state);
 
-  ExternalAppLauncher* launcher_;
+  // Provides policy for launching applications, including repeated launches.
+  ExternalAppsLaunchPolicyDecider* policy_decider_;
+
+  // Returns YES if there is a prompt shown.
+  BOOL prompt_active_;
 
   DISALLOW_COPY_AND_ASSIGN(ExternalAppLauncherTabHelper);
 };
