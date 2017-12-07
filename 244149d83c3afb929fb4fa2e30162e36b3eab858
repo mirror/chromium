@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca1f6fd5_332d6dfe",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-07T20:53:23Z",
+      "side": 1,
+      "message": "just curious, why\u0027d you swap this?",
+      "revId": "244149d83c3afb929fb4fa2e30162e36b3eab858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
