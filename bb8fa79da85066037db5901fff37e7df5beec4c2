@@ -46,6 +46,30 @@
       "revId": "bb8fa79da85066037db5901fff37e7df5beec4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4b9c7a_8055eb15",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T20:02:37Z",
+      "side": 1,
+      "message": "That\u0027s unfortunate. I didn\u0027t realize LBV needs to modify state. This means that when you update [1] you need to see if the command succeeded or not. Seems like UpdateCommandEnabled should return a bool now.\n\nThere\u0027s nothing wrong with a mass rename, but I\u0027m less confident it helps here. Keep what you have (meaning CommandUpdateProxy).",
+      "parentUuid": "da3084e7_b13f2cd3",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "bb8fa79da85066037db5901fff37e7df5beec4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
