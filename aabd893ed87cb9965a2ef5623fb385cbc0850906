@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "d9731c13_0e4631f6",
+        "filename": "device/geolocation/geolocation_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T05:07:12Z",
+      "side": 1,
+      "message": "The UserDidOptIntoLocationServices() is now a mojo interface, so I think no need to remain it here.",
+      "parentUuid": "6afb4d20_5a3c509f",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef465200_3006f869",
         "filename": "device/geolocation/geolocation_provider_impl.cc",
         "patchSetId": 6
@@ -77,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "ac8f722e_57067d22",
+        "filename": "device/geolocation/geolocation_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T05:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef465200_3006f869",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a4f3651_51ea2012",
         "filename": "device/geolocation/geolocation_provider_impl.h",
         "patchSetId": 6
@@ -91,6 +127,24 @@
       "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8715b60c_9c442996",
+        "filename": "device/geolocation/geolocation_provider_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T05:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a4f3651_51ea2012",
+      "revId": "aabd893ed87cb9965a2ef5623fb385cbc0850906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
