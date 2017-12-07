@@ -10,9 +10,9 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/web_contents.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
-#include "services/metrics/public/cpp/ukm_entry_builder.h"
 
 namespace chromeos {
 namespace power {
@@ -42,16 +42,10 @@ void UserActivityLoggerDelegateUkm::UpdateOpenTabsURLs() {
       const content::WebContents* const contents =
           tab_strip_model->GetWebContentsAt(i);
       DCHECK(contents);
-
-      const GURL url = contents->GetLastCommittedURL();
-      if (!url.SchemeIsHTTPOrHTTPS())
-        continue;
-
-      ukm::SourceId source_id = ukm_recorder_->GetNewSourceID();
-      // We should run UpdateSourceURL here so that the url is associated with
-      // its source id.
-      ukm_recorder_->UpdateSourceURL(source_id, url);
-      source_ids_.push_back(source_id);
+      ukm::SourceId source_id =
+          ukm::GetSourceIdForWebContentsDocument(contents);
+      if (source_id != ukm::kInvalidSourceId)
+        source_ids_.push_back(source_id);
     }
   }
 }
