@@ -16,6 +16,74 @@
       "revId": "51a0380d6ca344e5bfe6c8e351702a2a0f930e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b981e82_92aee4b1",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:34:38Z",
+      "side": 1,
+      "message": "Not really necessary I think.",
+      "revId": "51a0380d6ca344e5bfe6c8e351702a2a0f930e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d4409d_384c932b",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:34:38Z",
+      "side": 1,
+      "message": "nit: I think the code will be a bit more readable and failures will be a bit easier to debug if we just set a local \u0027returned_managed_onc\u0027 and do the EXPECT_EQ test after RunUntilIdle(). This can replace \u0027called\u0027.",
+      "revId": "51a0380d6ca344e5bfe6c8e351702a2a0f930e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3c7164_5fbeac90",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:34:38Z",
+      "side": 1,
+      "message": "ShutdownDuringPolicyApplication",
+      "revId": "51a0380d6ca344e5bfe6c8e351702a2a0f930e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83013c1_0847f7c5",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-07T20:34:38Z",
+      "side": 1,
+      "message": "This needs a comment now, e.g. \u0027Reset the network configuration manager after setting policy and before calling RunUntilIdle to simulate shutdown during policy application.\u0027",
+      "revId": "51a0380d6ca344e5bfe6c8e351702a2a0f930e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
