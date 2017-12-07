@@ -3796,6 +3796,9 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
     priority_.background = kLaunchingProcessIsBackgrounded;
     priority_.boost_for_pending_views =
         kLaunchingProcessIsBoostedForPendingView;
+#if defined(OS_ANDROID)
+    priority_.is_initialized = false;
+#endif
     return;
   }
 
@@ -3813,8 +3816,15 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
 #endif
   };
 
+#if defined(OS_ANDROID)
+  const bool should_background_changed =
+      priority_.background != priority.background ||
+      priority_.is_initialized == false;
+#else
   const bool should_background_changed =
       priority_.background != priority.background;
+#endif
+
   if (priority_ == priority)
     return;
 

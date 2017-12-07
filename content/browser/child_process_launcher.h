@@ -58,6 +58,7 @@ struct ChildProcessLauncherPriority {
   bool boost_for_pending_views;
 #if defined(OS_ANDROID)
   ChildProcessImportance importance;
+  bool is_initialized = true;
 #endif
 
   bool operator==(const ChildProcessLauncherPriority& other) const;
