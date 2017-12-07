@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fac0f9d_39ef8af3",
+        "filename": "tools/chrome_proxy/webdriver/cross_origin_push.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-12-07T19:28:48Z",
+      "side": 1,
+      "message": "looks like this comment line can be removed.",
+      "revId": "6006937ba31935edb6cafbf7f7df07e92aef964d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
