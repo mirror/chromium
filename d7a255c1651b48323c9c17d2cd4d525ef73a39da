@@ -57,6 +57,24 @@
       "revId": "d7a255c1651b48323c9c17d2cd4d525ef73a39da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c7d355_2ccbc5bf",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-07T16:46:15Z",
+      "side": 1,
+      "message": "Maybe I should just do\n#if !defined(OS_ANDROID)\n?\n\nI want to avoid phone/tablet where Ctrl+L doesn\u0027t make sense.",
+      "parentUuid": "aed9dc92_f794b024",
+      "revId": "d7a255c1651b48323c9c17d2cd4d525ef73a39da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
