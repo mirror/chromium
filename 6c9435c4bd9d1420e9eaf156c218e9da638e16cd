@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "961ec13d_b656e2c9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T22:42:14Z",
+      "side": 1,
+      "message": "From the way the CL adding this line was written, this null checking is done in all native-originated calls to be defensive against being invoked again. Yes the intention is to prevent duplicated calls.",
+      "parentUuid": "7533dce3_582a6071",
+      "range": {
+        "startLine": 536,
+        "startChar": 8,
+        "endLine": 536,
+        "endChar": 30
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "737d3fe8_735312b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 11
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e07c89f3_797de892",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T22:42:14Z",
+      "side": 1,
+      "message": "\u003e I was a bit unclear with Bo\u0027s comment (I might be alone there), but the take away is that the native side should also be a UserData and not a WebContentsObserver.\n\nYou have a point. Let me replace WebContentsObserver with UserData (I guess you mean WebContentsUserData?). \n\n\u003e I guess the question I have here is that if the native side of GestureListenerManager is a native user data, should we just have this own the java side too (with all the fun weak ref\u0027s that come along with it) to not make two sided user data?  Should we try to have user data be only on one side of the boundary (either java or native, but not both)?\n\nI\u0027m now a bit more inclined to having java and native manage each side separately for consistency\u0027s sake - I think that\u0027s better than having the guide saying \"if your class Foo has java side only, let it be managed by WebContents\u0027s user data map. If it has native side too, then its native should manage the java class\".\n\nAlso, it always feels more awkward for me to let the native side own the java via a strong ref, which creates a new gc root and inevitably brings up the WebView gc issue.",
+      "parentUuid": "d3397ec5_f3a93424",
+      "range": {
+        "startLine": 23,
+        "startChar": 44,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7cc534_2c8634ef",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 11
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "\u003e do we ever set the mInternalsHolder to null in the destructor?\n\nNo\n\n\u003e \n\u003e I feel we should throw an illegalstateexception here if this is called and the webcontents has been destroyed.\n\nwe can make this an assert. should not happen\n\n\u003e \n\u003e I worry someone will add something to a destroyed webcontents w/o this and unintentionally leak something because they\u0027ll never get a destroy call.\n\nThat\u0027s always possible.\n\nBtw, I\u0027ve only been looking at the java WebContentsUserData APIs and haven\u0027t looked at the rest of this CL. It\u0027s very possible using WebContentsInternals is wrong. Like I said on the bug, it might be required for the UserData to actually specify if it wants a strong ref from WebContentsImpl.",
       "parentUuid": "eb7cc534_2c8634ef",
+      "range": {
+        "startLine": 772,
+        "startChar": 38,
+        "endLine": 772,
+        "endChar": 39
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021d6da6_4e22dd92",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T22:42:14Z",
+      "side": 1,
+      "message": "\u003e Btw, I\u0027ve only been looking at the java WebContentsUserData APIs and haven\u0027t looked at the rest of this CL. It\u0027s very possible using WebContentsInternals is wrong. Like I said on the bug, it might be required for the UserData to actually specify if it wants a strong ref from WebContentsImpl.\n\nYes, I know that GestureStateListener in WebView has a reference back to AwContents. This requires at least some classes  be allowed to have weak reference somewhere. I think it convenient to use WebContentsInternals so that userdata classes don\u0027t have to worry about the issue.",
+      "parentUuid": "7f4c7450_59870c73",
       "range": {
         "startLine": 772,
         "startChar": 38,
