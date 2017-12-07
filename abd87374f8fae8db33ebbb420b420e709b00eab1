@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340657a2_bdf1fd06",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-12-07T03:09:33Z",
+      "side": 1,
+      "message": "is this assertion correct? if use_fuzzing_engine is not set, this will always fail right?\n\nI think you want\n\n!(use_fuzzing_engine \u0026\u0026 (use_sanitizer_coverage || sanitizer_coverage_flags !\u003d \"\")\n\nor\n\n!use_fuzzer_engine || (!use_sanitizer_coverage \u0026\u0026 sanitizer_coverage_flags \u003d\u003d \"\")",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 22
+      },
+      "revId": "abd87374f8fae8db33ebbb420b420e709b00eab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
