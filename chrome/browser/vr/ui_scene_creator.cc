@@ -1127,6 +1127,14 @@ void UiSceneCreator::CreateOmnibox() {
   auto omnibox_text_field =
       CreateTextInput(1024, kOmniboxTextHeightDMM, model_,
                       &model_->omnibox_text_field_info, text_input_delegate_);
+  omnibox_text_field->set_input_committed_callback(base::BindRepeating(
+      [](Model* model, UiBrowserInterface* browser, const TextInputInfo& text) {
+        if (!model->omnibox_suggestions.empty()) {
+          browser->Navigate(model->omnibox_suggestions.front().destination);
+          model->omnibox_input_active = false;
+        }
+      },
+      base::Unretained(model_), base::Unretained(browser_)));
   omnibox_text_field->AddBinding(
       VR_BIND(TextInputInfo, Model, model_, omnibox_text_field_info,
               UiBrowserInterface, browser_, StartAutocomplete(value.text)));
@@ -1145,6 +1153,8 @@ void UiSceneCreator::CreateOmnibox() {
             m->omnibox_text_field_info = TextInputInfo();
             if (v) {
               e->RequestFocus();
+            } else {
+              e->RequestUnfocus();
             }
           },
           base::Unretained(omnibox_text_field.get()),
