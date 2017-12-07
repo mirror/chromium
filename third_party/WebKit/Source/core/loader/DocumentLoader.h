@@ -217,6 +217,9 @@ class CORE_EXPORT DocumentLoader
   std::unique_ptr<SourceLocation> CopySourceLocation() const;
   void SetSourceLocation(std::unique_ptr<SourceLocation>);
 
+  void AddPreloadRequest(const KURL&);
+  void PerformPreload();
+
   void LoadFailed(const ResourceError&);
 
   void Trace(blink::Visitor*) override;
@@ -380,6 +383,8 @@ class CORE_EXPORT DocumentLoader
   bool in_data_received_;
   scoped_refptr<SharedBuffer> data_buffer_;
   base::UnguessableToken devtools_navigation_token_;
+
+  std::vector<KURL> preload_requests_;
 };
 
 DECLARE_WEAK_IDENTIFIER_MAP(DocumentLoader);

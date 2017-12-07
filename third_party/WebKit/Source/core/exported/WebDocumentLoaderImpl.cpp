@@ -194,6 +194,10 @@ void WebDocumentLoaderImpl::ResetSourceLocation() {
   DocumentLoader::SetSourceLocation(nullptr);
 }
 
+void WebDocumentLoaderImpl::PreloadResource(const WebURL& url) {
+  DocumentLoader::AddPreloadRequest(KURL(url));
+}
+
 void WebDocumentLoaderImpl::Trace(blink::Visitor* visitor) {
   DocumentLoader::Trace(visitor);
 }
