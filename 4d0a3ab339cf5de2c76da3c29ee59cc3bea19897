@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af56cb7_fa6a3e88",
+        "filename": "chrome/test/data/pdf/material_elements_test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:15:29Z",
+      "side": 1,
+      "message": "Could this helper be merged with the similar ones at lines 155-160 and 266-271?",
+      "revId": "4d0a3ab339cf5de2c76da3c29ee59cc3bea19897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

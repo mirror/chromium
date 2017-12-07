@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3131c7ff_10c6f278",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-toolbar-dropdown/viewer-toolbar-dropdown.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-07T20:15:29Z",
+      "side": 1,
+      "message": "\u003e If I added another parameter to viewer-toolbar-dropdown besides the id, also with the value \"bookmarks\", would that be acceptable?\n\nSure. Maybe pass a dedicated metrics-id parameter.",
+      "parentUuid": "000e0196_883cac70",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 42
+      },
+      "revId": "d3e5259a676a730dcb16daa4b4de0f0e645fe18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afafed3c_a17bac14",
         "filename": "chrome/browser/resources/pdf/elements/viewer-zoom-toolbar/viewer-zoom-toolbar.js",
         "patchSetId": 14
