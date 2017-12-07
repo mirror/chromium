@@ -34,6 +34,12 @@ class APIActivityLogger : public ObjectBackedNativeHandler {
                          const std::string& call_name,
                          const std::vector<v8::Local<v8::Value>>& arguments);
 
+  // Notifies the browser that an API event has been dispatched, if and only if
+  // activity logging is enabled.
+  static void LogEvent(ScriptContext* script_context,
+                       const std::string& event_name,
+                       std::unique_ptr<base::ListValue> arguments);
+
   static void set_log_for_testing(bool log);
 
  private:
