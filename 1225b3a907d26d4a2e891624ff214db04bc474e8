@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5353d9c5_e02c3ffc",
+        "filename": "ui/gfx/vsync_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ced864_5f7ff309",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae2735a_48f36863",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "db7a46a0_119e6255",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "I added code in OnMakeCurrent to track the current context.",
+      "parentUuid": "2ae2735a_48f36863",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3ceb47_82dd152e",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf45873_0156fe50",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3ceb47_82dd152e",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "98e006a7_61bfb32e",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87fb4d9_df1fb671",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d078d02_e86b8fa9",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "1119c709_57f1d652",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d078d02_e86b8fa9",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16964103_c6535a2f",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -115,6 +205,24 @@
       "writtenOn": "2017-12-06T23:27:08Z",
       "side": 1,
       "message": "Before getting the timestamps, you need to check gpu_timing_client_-\u003eCheckAndResetTimerErrors() and discard the all the timers if it returns false (because a \"disjoint\" event occurred, invalidating all results).",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad25f95_f7d840d7",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/ui/gl/gpu_timing.cc?type\u003dcs\u0026l\u003d635\n\nSeems the timer type has to be GPUTiming::kTimerTypeDisjoint. What about other types?",
+      "parentUuid": "16964103_c6535a2f",
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "0c748364_78c0ff8d",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24a4519c_e7fa653c",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36eea10c_97260741",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "087b488b_4579da18",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36eea10c_97260741",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43bdcaf3_c8495557",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -166,6 +310,24 @@
       "writtenOn": "2017-12-06T23:27:08Z",
       "side": 1,
       "message": "We could use a future computed vsync based on vsync_timebase_ + n*vsync_interval_. I don\u0027t think we generally promise that vsync_timebase_ is the actual time of the latest vsync currently, in particular with SGIVideoSyncVSyncProvider. Is there a strong reason to wait for a future vsync?",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b330dd0_e57fcf23",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "I feel it is better to update vsync parameters from SGIVideoSyncVSyncProvider regually. If we always compute the future vsync timestamp, there is no chance to update vsync parameters from SGIVideoSyncVSyncProvider. Do you have any suggestion how to update vsync parameters for SGIVideoVSyncProvider?",
+      "parentUuid": "43bdcaf3_c8495557",
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "79428709_70f7166c",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ca3926_d19f4b74",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e97dffcf_eb9bddc6",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "d5b9fb37_501732bd",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97dffcf_eb9bddc6",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adcc9b2_96074a6f",
         "filename": "ui/gl/gl_surface_glx.h",
         "patchSetId": 7
@@ -220,6 +418,24 @@
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ea94a1_31e7cfd4",
+        "filename": "ui/gl/gl_surface_glx.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-07T05:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adcc9b2_96074a6f",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
