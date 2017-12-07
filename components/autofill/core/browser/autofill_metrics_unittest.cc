@@ -756,6 +756,7 @@ class QualityMetricsTest
     switch (type) {
       case EMPTY_TYPE:
         return "";
+      case NO_SERVER_DATA:
       case UNKNOWN_TYPE:
         return "unknown";
       case COMPANY_NAME:
@@ -803,6 +804,8 @@ class QualityMetricsTest
   bool IsExampleOf(AutofillMetrics::FieldTypeQualityMetric metric,
                    ServerFieldType predicted_type,
                    ServerFieldType actual_type) {
+    if (predicted_type == NO_SERVER_DATA)
+      predicted_type = UNKNOWN_TYPE;
     switch (metric) {
       case AutofillMetrics::TRUE_POSITIVE:
         return unknown_equivalent_types_.count(actual_type) == 0 &&
@@ -863,9 +866,9 @@ TEST_P(QualityMetricsTest, Classification) {
   ServerFieldType actual_field_type = GetParam().actual_field_type;
   ServerFieldType predicted_type = GetParam().predicted_field_type;
 
-  VLOG(2) << "Test Case = Predicted: "
-          << AutofillType(predicted_type).ToString() << "; "
-          << "Actual: " << AutofillType(actual_field_type).ToString();
+  DVLOG(2) << "Test Case = Predicted: "
+           << AutofillType(predicted_type).ToString() << "; "
+           << "Actual: " << AutofillType(actual_field_type).ToString();
 
   // Set up our form data.
   FormData form;
@@ -898,9 +901,10 @@ TEST_P(QualityMetricsTest, Classification) {
   test::CreateTestFormField("Unknown", "Unknown",
                             ValueForType(actual_field_type), "text", &field);
   form.fields.push_back(field);
-  heuristic_types.push_back(predicted_type);
-  server_types.push_back(predicted_type == UNKNOWN_TYPE ? NO_SERVER_DATA
-                                                        : predicted_type);
+  heuristic_types.push_back(predicted_type == NO_SERVER_DATA ? UNKNOWN_TYPE
+                                                             : predicted_type);
+  server_types.push_back(predicted_type);
+
   // Resolve any field type ambiguity.
   if (actual_field_type == AMBIGUOUS_TYPE) {
     if (predicted_type == COMPANY_NAME || predicted_type == NAME_MIDDLE)
@@ -937,6 +941,7 @@ TEST_P(QualityMetricsTest, Classification) {
         by_field_type_histogram,
         2 +
             (predicted_type != UNKNOWN_TYPE &&
+             predicted_type != NO_SERVER_DATA &&
              predicted_type != actual_field_type) +
             (unknown_equivalent_types_.count(actual_field_type) == 0));
 
@@ -947,8 +952,8 @@ TEST_P(QualityMetricsTest, Classification) {
                                        FieldTypeCross(NAME_LAST, NAME_LAST), 1);
     histogram_tester.ExpectBucketCount(
         crossed_histogram,
-        FieldTypeCross((source == "Server" && predicted_type == UNKNOWN_TYPE
-                            ? NO_SERVER_DATA
+        FieldTypeCross((predicted_type == NO_SERVER_DATA && source != "Server"
+                            ? UNKNOWN_TYPE
                             : predicted_type),
                        actual_field_type),
         1);
@@ -993,7 +998,7 @@ TEST_P(QualityMetricsTest, Classification) {
     // (empty is not a predictable value) and we don't capture false negative
     // mismatches.
     int expected_count_for_predicted_type =
-        (predicted_type != UNKNOWN_TYPE &&
+        (predicted_type != UNKNOWN_TYPE && predicted_type != NO_SERVER_DATA &&
          metric != AutofillMetrics::FALSE_NEGATIVE_MISMATCH)
             ? basic_expected_count
             : 0;
@@ -1020,10 +1025,10 @@ TEST_P(QualityMetricsTest, Classification) {
 INSTANTIATE_TEST_CASE_P(
     AutofillMetricsTest,
     QualityMetricsTest,
-    testing::Values(QualityMetricsTestCase{UNKNOWN_TYPE, EMPTY_TYPE},
-                    QualityMetricsTestCase{UNKNOWN_TYPE, UNKNOWN_TYPE},
-                    QualityMetricsTestCase{UNKNOWN_TYPE, AMBIGUOUS_TYPE},
-                    QualityMetricsTestCase{UNKNOWN_TYPE, EMAIL_ADDRESS},
+    testing::Values(QualityMetricsTestCase{NO_SERVER_DATA, EMPTY_TYPE},
+                    QualityMetricsTestCase{NO_SERVER_DATA, UNKNOWN_TYPE},
+                    QualityMetricsTestCase{NO_SERVER_DATA, AMBIGUOUS_TYPE},
+                    QualityMetricsTestCase{NO_SERVER_DATA, EMAIL_ADDRESS},
                     QualityMetricsTestCase{EMAIL_ADDRESS, EMPTY_TYPE},
                     QualityMetricsTestCase{EMAIL_ADDRESS, UNKNOWN_TYPE},
                     QualityMetricsTestCase{EMAIL_ADDRESS, AMBIGUOUS_TYPE},
@@ -1031,7 +1036,11 @@ INSTANTIATE_TEST_CASE_P(
                     QualityMetricsTestCase{EMAIL_ADDRESS, COMPANY_NAME},
                     QualityMetricsTestCase{COMPANY_NAME, EMAIL_ADDRESS},
                     QualityMetricsTestCase{NAME_MIDDLE, AMBIGUOUS_TYPE},
-                    QualityMetricsTestCase{COMPANY_NAME, AMBIGUOUS_TYPE}));
+                    QualityMetricsTestCase{COMPANY_NAME, AMBIGUOUS_TYPE},
+                    QualityMetricsTestCase{UNKNOWN_TYPE, EMPTY_TYPE},
+                    QualityMetricsTestCase{UNKNOWN_TYPE, UNKNOWN_TYPE},
+                    QualityMetricsTestCase{UNKNOWN_TYPE, AMBIGUOUS_TYPE},
+                    QualityMetricsTestCase{UNKNOWN_TYPE, EMAIL_ADDRESS}));
 
 // Ensures that metrics that measure timing some important Autofill functions
 // actually are recorded and retrieved.
