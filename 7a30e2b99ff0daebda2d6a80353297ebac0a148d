@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0a07e3_949ab3a7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T20:08:33Z",
+      "side": 1,
+      "message": "I may try to make SetResource() private eventually and only accessible by ResourceFetcher and a couple of other friends. But at least while I\u0027m landing these changes, keep it protected and minimize the friend list.",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74b6ace_9978928c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-07T20:08:33Z",
+      "side": 1,
+      "message": "This default value is temporary.",
+      "revId": "7a30e2b99ff0daebda2d6a80353297ebac0a148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
