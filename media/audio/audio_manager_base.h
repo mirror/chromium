@@ -21,6 +21,7 @@
 #include "media/audio/audio_device_name.h"
 #include "media/audio/audio_manager.h"
 #include "media/audio/audio_output_dispatcher.h"
+#include "media/mojo/interfaces/audio_debug_recording_file_provider.mojom.h"
 
 #if defined(OS_WIN)
 #include "base/win/scoped_com_initializer.h"
@@ -53,7 +54,8 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
 
   std::unique_ptr<AudioLog> CreateAudioLog(
       AudioLogFactory::AudioComponent component) override;
-  void EnableDebugRecording(const base::FilePath& base_file_name) final;
+  void EnableDebugRecording(
+      mojom::AudioDebugRecordingFileProviderPtr file_provider) final;
   void DisableDebugRecording() final;
 
   void SetMaxStreamCountForTesting(int max_input, int max_output) final;
@@ -203,6 +205,8 @@ class MEDIA_EXPORT AudioManagerBase : public AudioManager {
 
   // Debug recording manager.
   std::unique_ptr<AudioDebugRecordingManager> debug_recording_manager_;
+  // mojom::AudioDebugRecording implementation.
+  // std::unique_ptr<MojoAudioDebugRecording> mojo_debug_recording_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioManagerBase);
 };

@@ -23,14 +23,15 @@ int g_next_stream_id = 1;
 #define IntToStringType base::IntToString
 #endif
 
-// Helper function that returns |base_file_name| with |file_name_extension| and
-// |id| added to it as as extensions.
-base::FilePath GetDebugRecordingFileNameWithExtensions(
-    const base::FilePath& base_file_name,
+// Helper function that returns |file_name_extension| and |id| appended to be
+// used as debug recording file name suffix.
+base::FilePath GetDebugRecordingFileNameSuffix(
     const base::FilePath::StringType& file_name_extension,
     int id) {
-  return base_file_name.AddExtension(file_name_extension)
-      .AddExtension(IntToStringType(id));
+  return base::FilePath()
+      .AddExtension(file_name_extension)
+      .AddExtension(IntToStringType(id))
+      .AddExtension(FILE_PATH_LITERAL("wav"));
 }
 
 }  // namespace
@@ -42,23 +43,25 @@ AudioDebugRecordingManager::AudioDebugRecordingManager(
 AudioDebugRecordingManager::~AudioDebugRecordingManager() = default;
 
 void AudioDebugRecordingManager::EnableDebugRecording(
-    const base::FilePath& base_file_name) {
+    mojom::AudioDebugRecordingFileProviderPtr file_provider) {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  DCHECK(!base_file_name.empty());
+  DCHECK(!file_provider);
+
+  debug_recording_file_provider_ = std::move(file_provider);
 
   for (const auto& it : debug_recording_helpers_) {
-    it.second.first->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(base_file_name,
-                                                it.second.second, it.first));
+    debug_recording_file_provider_->GetFileHandle(
+        GetDebugRecordingFileNameSuffix(it.second.second, it.first),
+        base::BindOnce(&AudioDebugRecordingHelper::EnableDebugRecording,
+                       base::Unretained(it.second.first)));
   }
-  debug_recording_base_file_name_ = base_file_name;
 }
 
 void AudioDebugRecordingManager::DisableDebugRecording() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   for (const auto& it : debug_recording_helpers_)
     it.second.first->DisableDebugRecording();
-  debug_recording_base_file_name_.clear();
+  debug_recording_file_provider_.reset();
 }
 
 std::unique_ptr<AudioDebugRecorder>
@@ -79,9 +82,10 @@ AudioDebugRecordingManager::RegisterDebugRecordingSource(
               weak_factory_.GetWeakPtr(), id));
 
   if (IsDebugRecordingEnabled()) {
-    recording_helper->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(debug_recording_base_file_name_,
-                                                file_name_extension, id));
+    debug_recording_file_provider_->GetFileHandle(
+        GetDebugRecordingFileNameSuffix(file_name_extension, id),
+        base::BindOnce(&AudioDebugRecordingHelper::EnableDebugRecording,
+                       base::Unretained(recording_helper.get())));
   }
 
   debug_recording_helpers_[id] =
@@ -108,7 +112,7 @@ AudioDebugRecordingManager::CreateAudioDebugRecordingHelper(
 
 bool AudioDebugRecordingManager::IsDebugRecordingEnabled() {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  return !debug_recording_base_file_name_.empty();
+  return !debug_recording_file_provider_;
 }
 
 }  // namespace media
