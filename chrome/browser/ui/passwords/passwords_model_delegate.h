@@ -113,6 +113,18 @@ class PasswordsModelDelegate {
   // Called from the dialog controller when the dialog is hidden.
   virtual void OnDialogHidden() = 0;
 
+  // Called from the model when re-auth is needed to show passwords. Returns
+  // true immediately if user authentication is not available for the given
+  // platform. Otherwise, the method schedules a task to show an authentication
+  // dialog and reopen the bubble afterwards, then the method returns false. The
+  // password in the reopened bubble will be revealed if the authentication was
+  // successful.
+  virtual bool AuthenticateUser() = 0;
+
+  // Called when the bubble is created. Returns true  if the password value
+  // should be revealed when the bubble is opened.
+  virtual bool IsPasswordRevealedWhenOpened() = 0;
+
  protected:
   virtual ~PasswordsModelDelegate() = default;
 };
