@@ -34,6 +34,24 @@
       "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adae35f_413278ff",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-07T16:42:41Z",
+      "side": 1,
+      "message": "Oh! thanks for the explanation.\n\nHow about we iterate through |sessions_| once and then make sure all remaining |sessions_| are in draining state?  Is that equivalent?\n\ne.g.\n\n// Abort all sessions.\nfor (session : sessions_) {\n  CloseCurrentSessionHelper(...);\n}\n\n// Make sure remaining are in draining states.\nfor (session : sessions_) {\n  DCHECK(session-\u003eIsDraining());\n}",
+      "parentUuid": "bae8ccee_74fb72bb",
+      "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
