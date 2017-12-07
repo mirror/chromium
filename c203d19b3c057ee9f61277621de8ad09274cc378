@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1effa2bd_2b30f026",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2791,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Add comments to these tests to match the others in this file, explaining their purpose. E.g.:\n\n// Verifies that \"http://\" is not trimmed if the user input includes a\n// scheme, even if the input doesn\u0027t match the URL. This can happen if part \n// of the URL has been elided for display.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2062382c_5136066e",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "As long as you\u0027ve gone to the trouble to figure out how to test this behavior, let\u0027s add tests for the rest of the http trimming behavior. One that tests that http is removed from the URL, one that tests that https isn\u0027t removed, and one that tests that http isn\u0027t removed if there\u0027s a match (\"ht\").",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa68f4d5_f2552108",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Give this a more meaningful name, e.g. DontTrimSchemeIfInputHasScheme.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e062e0d6_6a477573",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Can we get rid of this? At a quick glance, it doesn\u0027t look like QuickMatchToACMatch cares whether the provider has been started.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d73fcde_e1059ce3",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "It\u0027d be helpful to the reader to cut down on all of this initialization if possible. Does something here fail if there isn\u0027t at least one term or WordStart? I.e.:\n\n  ScoredHistoryMatch history_match(\n      row, VisitInfoVector(), ASCIIToUTF16(\"\"),\n      String16Vector(), WordStarts(), RowWordStarts(), false,\n      0, base::Time());\n\nIf the values are required, then how about a fill constructors?\n\n  ScoredHistoryMatch history_match(\n      row, VisitInfoVector(), ASCIIToUTF16(\"\"),\n      String16Vector(1, \"\"), WordStarts(1, 0), RowWordStarts(),\n      false, 0, base::Time());\n\nIf neither of those works for some reason, then add a BuildHistoryMatch method to HistoryQuickProviderTest that takes a URLRow param and sets this object up.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e75e1d1_bfe10b2d",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Add a blank line here to separate the setup from the test.\n\nIs the 100 significant? Will the test work if the score is just 0? That would look more like a \"don\u0027t care\" value.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28f6e91_5cfc941d",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Similar to the HQP test, add tests for the rest of the scheme-trimming behavior.",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bad63d_312f5b7f",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Put the setup in a BuildProviderParams method that takes a URL string. So that the test setup is simplified and we can focus on what we care about (input, URL, and match.contents).",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1044f3_5ff687cb",
+        "filename": "components/omnibox/browser/titled_url_match_utils_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-07T17:16:10Z",
+      "side": 1,
+      "message": "Similar to the other tests, can we simplify the setup here to just focus on the input, URL and match.contents? And add tests for the other scheme-trimming behaviors?",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
