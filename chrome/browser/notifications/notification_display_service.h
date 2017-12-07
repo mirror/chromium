@@ -38,6 +38,10 @@ class NotificationDisplayService : public KeyedService {
 
   static NotificationDisplayService* GetForProfile(Profile* profile);
 
+  // Returns the NDS for system notifications which aren't tied to a particular
+  // user.
+  static NotificationDisplayService* GetForSystemNotifications();
+
   explicit NotificationDisplayService(Profile* profile);
   ~NotificationDisplayService() override;
 
