@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46786814_986ab122",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-07T16:18:59Z",
+      "side": 1,
+      "message": "Umm, won\u0027t this mean that if |a| has a null offset and |b| does not, then |a \u003e\u003d b| and |b \u003e\u003d a| but |a !\u003d b|? That would seem to violate the requirements of a comparator for std::sort.",
+      "revId": "243148b03397982b3fd3a0baf30f3e2a5794d2ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
