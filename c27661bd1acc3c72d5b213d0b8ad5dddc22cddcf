@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c5618d_a738a6f0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3453,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-07T19:14:13Z",
+      "side": 1,
+      "message": "Why would these change in RLS mode?",
+      "revId": "c27661bd1acc3c72d5b213d0b8ad5dddc22cddcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baebf504_1cd1b4a5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-07T19:14:13Z",
+      "side": 1,
+      "message": "Why this difference?",
+      "revId": "c27661bd1acc3c72d5b213d0b8ad5dddc22cddcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecda47e_0c896cc2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-07T19:14:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c27661bd1acc3c72d5b213d0b8ad5dddc22cddcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5de606b_c4821555",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-07T19:14:13Z",
+      "side": 1,
+      "message": "Does this test run in all modes?",
+      "revId": "c27661bd1acc3c72d5b213d0b8ad5dddc22cddcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
