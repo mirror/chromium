@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900c3157_3169452d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-07T10:54:02Z",
+      "side": 1,
+      "message": "A note to reviewers: this was previously triggered by webrtc_eventlog_host_(id_)",
+      "revId": "bdc989f47cc6ca666c0ea54386ac6966f932dbe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
