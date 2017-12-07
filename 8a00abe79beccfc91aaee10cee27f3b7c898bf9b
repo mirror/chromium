@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13dc7846_0c08110f",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "filed http://crbug.com/792782",
+      "parentUuid": "dace76ba_a6d1623c",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f29dba7d_50bdc49c",
         "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a47f158d_f0d32d03",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e aside: This could just use a Label afaict, but I\u0027m not sure why these headers are created outside a views::View hierarchy...\n\nfiled http://crbug.com/792784 ... this has actually come up in the work being done for PWA window frames..",
+      "parentUuid": "f29dba7d_50bdc49c",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da3c041_425758c0",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133adad0_5cdeede4",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e aside: StyledLabel here and below\n\nfiled http://crbug.com/792785",
+      "parentUuid": "2da3c041_425758c0",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "72edde12_6d43d6d3",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a84e1253_738c5cfd",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc5ad82_2def982c",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 10
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "f952f068_2febcd27",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e This bubble frame view test should simply check that the label is as wide as it prefers to be, not that views::Label widths match gfx\u0027s measurements. Drop these GetStringWidth/GetStringSize checks and instead check something like:\n\u003e   EXPECT_LE(title_label-\u003eGetPreferredSize().width(), title_label-\u003esize().width());\n\nhum - this was added because titles in bubble frames were being elided/truncated -- GetStringWidth seems reasonable, since it ensures the full text is laid out on a single line. But I guess it\u0027s partly redundant with LabelTest.ElideBehaviorMinimumWidth which was also added in http://crrev.com/516627\n\nAlso it was partly because the bubble frame uses the title string\u0027s minimum size (not its preferred size) since it is allowed to wrap on multiple lines. So checking against PreferredSize should be a good check for that too. updated the comment too, and a check with GetDisplayTextForTesting",
+      "parentUuid": "d762230a_898e3bf5",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24aecfb7_6a6fcd5a",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 10
@@ -154,6 +244,24 @@
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c0f983_79c63afd",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24aecfb7_6a6fcd5a",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "abca317a_e94cf1b9",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Yes. And Done - not sure if you meant to act on the Qn, but the only other thing using CreateInstanceOfSameType is render_text.cc, so we can start getting rid of that",
+      "parentUuid": "f0860b9e_ba033c07",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "164c562e_d03bae4f",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 10
@@ -188,6 +314,24 @@
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2fb112_7c5aff3c",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "164c562e_d03bae4f",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "350c6aeb_71036fb3",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e036b3ff_d9872299",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec179411_848e5f0f",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 10
@@ -219,6 +381,24 @@
       "writtenOn": "2017-12-06T17:22:04Z",
       "side": 1,
       "message": "I don\u0027t think this block should be needed anymore... the alignment and directionality of |unelided_text_| can be applied directly to |display_text_|",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a90d304_23e5ca49",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think this block should be needed anymore... the alignment and directionality of |unelided_text_| can be applied directly to |display_text_|\n\nGood point! I think that means most of the CreateRenderText args can be dropped as well  (or drop the entire function.. decomposition is nice though)",
+      "parentUuid": "ec179411_848e5f0f",
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -242,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "c1816f6a_8ee2dfdb",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002d076a_bcff73f0",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa90919_6972e6a6",
         "filename": "ui/views/controls/label.h",
         "patchSetId": 10
@@ -259,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "69a4425c_670004aa",
+        "filename": "ui/views/controls/label.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t really like this name, but don\u0027t have a great suggestion... original_text_?\n\noriginal text suggested to me something like \"text passed in to constructor\". So, I went with |full_text_|.  (also considered just, \"text\", which matches well with the text()/SetText()  methods ... although then text() wouldn\u0027t actually return |text_|, but |text_-\u003etext()| ..)",
+      "parentUuid": "1aa90919_6972e6a6",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe538cdc_6a5a02cb",
         "filename": "ui/views/controls/label_unittest.cc",
         "patchSetId": 10
@@ -270,6 +486,24 @@
       "writtenOn": "2017-12-06T17:22:04Z",
       "side": 1,
       "message": "Is there a better check than this?",
+      "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ffc9aa_73ea88bf",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T11:11:53Z",
+      "side": 1,
+      "message": "\u003e Is there a better check than this?\n\nyeah I\u0027m not sure this test has much utility any more, we can check  label()-\u003edisplay_text_-\u003eGetNumLines() (Done.), but that actually has 2 lines, not one.",
+      "parentUuid": "fe538cdc_6a5a02cb",
       "revId": "8a00abe79beccfc91aaee10cee27f3b7c898bf9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
