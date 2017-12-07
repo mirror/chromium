@@ -29,6 +29,12 @@ class SystemCookieStore {
   typedef base::OnceCallback<void(NSArray<NSHTTPCookie*>*)>
       SystemCookieCallbackForCookies;
 
+  // Represent how up to date is the SystemCookieStore from WKWebview cookies.
+  enum class SystemCookieStoreSyncStatus {
+    kAlwaysInSyncWithWKWebViewCookies,
+    kBestEffortSyncWithWKWebViewCookies
+  };
+
   SystemCookieStore();
   virtual ~SystemCookieStore();
 
@@ -66,6 +72,9 @@ class SystemCookieStore {
 
   // Returns the Cookie Accept policy for the internal cookie store.
   virtual NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() = 0;
+
+  // Returns the receiving object SystemCookieStore/WkWebview sync status.
+  virtual SystemCookieStoreSyncStatus GetCookieStoreSyncStatus() const = 0;
 
   // Returns the creation time of a specific cookie
   base::Time GetCookieCreationTime(NSHTTPCookie* cookie);

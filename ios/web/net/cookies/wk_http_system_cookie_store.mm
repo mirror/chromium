@@ -162,6 +162,11 @@ NSHTTPCookieAcceptPolicy WKHTTPSystemCookieStore::GetCookieAcceptPolicy() {
   return [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookieAcceptPolicy];
 }
 
+net::SystemCookieStore::SystemCookieStoreSyncStatus
+WKHTTPSystemCookieStore::GetCookieStoreSyncStatus() const {
+  return SystemCookieStoreSyncStatus::kAlwaysInSyncWithWKWebViewCookies;
+}
+
 #pragma mark private methods
 
 void WKHTTPSystemCookieStore::RunSystemCookieCallbackForCookies(

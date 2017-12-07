@@ -72,6 +72,12 @@ NSHTTPCookieAcceptPolicy NSHTTPSystemCookieStore::GetCookieAcceptPolicy() {
   return [cookie_store_ cookieAcceptPolicy];
 }
 
+SystemCookieStore::SystemCookieStoreSyncStatus
+NSHTTPSystemCookieStore::GetCookieStoreSyncStatus() const {
+  // NSHTTPCookieStorage is not always in sync with WKWebView cookies.
+  return SystemCookieStoreSyncStatus::kBestEffortSyncWithWKWebViewCookies;
+}
+
 #pragma mark private methods
 
 NSArray* NSHTTPSystemCookieStore::GetCookiesForURL(const GURL& url) {
