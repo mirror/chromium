@@ -22,6 +22,30 @@
       "revId": "980ba620351ff0e06e7caf9f3eabb5e73488d440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae422a1_d81626cf",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-07T22:11:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b9c0b07_506e851d",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "980ba620351ff0e06e7caf9f3eabb5e73488d440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
