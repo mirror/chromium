@@ -142,6 +142,9 @@ cr.define('extensions', function() {
      */
     navigationListener_: null,
 
+    /** @private */
+    onItemStateChangedTimeout_: null,
+
     /** @override */
     ready: function() {
       if (loadTimeData.getBoolean('isGuest')) {
@@ -221,15 +224,20 @@ cr.define('extensions', function() {
           if (!eventData.extensionInfo)
             break;
 
-          const listId = this.getListId_(eventData.extensionInfo);
-          const currentIndex = this[listId].findIndex(
-              item => item.id == eventData.extensionInfo.id);
-
-          if (currentIndex >= 0) {
-            this.updateItem_(listId, currentIndex, eventData.extensionInfo);
-          } else {
-            this.addItem_(listId, eventData.extensionInfo);
+          if (this.onItemStateChangedTimeout_) {
+            clearTimeout(this.onItemStateChangedTimeout_);
           }
+          this.onItemStateChangedTimeout_ = setTimeout((eventData) => {
+            const listId = this.getListId_(eventData.extensionInfo);
+            const currentIndex = this[listId].findIndex(
+                item => item.id == eventData.extensionInfo.id);
+
+            if (currentIndex >= 0) {
+              this.updateItem_(listId, currentIndex, eventData.extensionInfo);
+            } else {
+              this.addItem_(listId, eventData.extensionInfo);
+            }
+          }, 100);
           break;
         case EventType.UNINSTALLED:
           this.removeItem_(eventData.item_id);
