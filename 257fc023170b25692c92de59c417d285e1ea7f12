@@ -87,6 +87,24 @@
       "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d583a316_0e8e280e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T08:25:52Z",
+      "side": 1,
+      "message": "Good idea. Added comments.",
+      "parentUuid": "d40c81c0_08816292",
+      "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
