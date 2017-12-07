@@ -15,6 +15,11 @@
 
 namespace media {
 
+// The minimum amount of media playback which can elapse before we'll report
+// watch time metrics for a playback.
+constexpr base::TimeDelta kMinimumElapsedWatchTime =
+    base::TimeDelta::FromSeconds(limits::kMinimumElapsedWatchTimeSecs);
+
 static bool ShouldReportToUma(WatchTimeKey key) {
   switch (key) {
     // These keys are not currently reported to UMA, but are used for UKM metric
@@ -83,21 +88,24 @@ static bool ShouldReportToUma(WatchTimeKey key) {
   return false;
 }
 
-static void RecordWatchTimeInternal(base::StringPiece key,
-                                    base::TimeDelta value,
-                                    bool is_mtbr = false) {
-  base::UmaHistogramCustomTimes(
-      key.as_string(), value,
-      // There are a maximum of 5 underflow events possible in a given 7s
-      // watch time period, so the minimum value is 1.4s.
-      is_mtbr ? base::TimeDelta::FromSecondsD(1.4)
-              : base::TimeDelta::FromSeconds(7),
-      base::TimeDelta::FromHours(10), 50);
+static void RecordWatchTimeInternal(
+    base::StringPiece key,
+    base::TimeDelta value,
+    base::TimeDelta minimum = kMinimumElapsedWatchTime) {
+  base::UmaHistogramCustomTimes(key.as_string(), value, minimum,
+                                base::TimeDelta::FromHours(10), 50);
 }
 
 static void RecordMeanTimeBetweenRebuffers(base::StringPiece key,
                                            base::TimeDelta value) {
-  RecordWatchTimeInternal(key, value, true);
+  // There are a maximum of 5 underflow events possible in a given 7s watch time
+  // period, so the minimum value is 1.4s.
+  RecordWatchTimeInternal(key, value, base::TimeDelta::FromSecondsD(1.4));
+}
+
+static void RecordDiscardedWatchTime(base::StringPiece key,
+                                     base::TimeDelta value) {
+  RecordWatchTimeInternal(key, value, base::TimeDelta())
 }
 
 static void RecordRebuffersCount(base::StringPiece key, int underflow_count) {
@@ -172,8 +180,15 @@ void WatchTimeRecorder::FinalizeWatchTime(
       continue;
     }
 
-    if (ShouldReportToUma(kv.first))
-      RecordWatchTimeInternal(WatchTimeKeyToString(kv.first), kv.second);
+    if (ShouldReportToUma(kv.first)) {
+      if (kv.second >= kMinimumElapsedWatchTime) {
+        RecordWatchTimeInternal(WatchTimeKeyToString(kv.first), kv.second);
+      } else {
+        auto it = keys_with_discard_reports_.find(kv.first);
+        if (it != keys_with_discard_reports_.end())
+          RecordDiscardedWatchTime(it->second, kv.second);
+      }
+    }
 
     // At finalize, update the aggregate entry.
     aggregate_watch_time_info_[kv.first] += kv.second;
