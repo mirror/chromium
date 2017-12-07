@@ -117,6 +117,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4875b210_e7f9071d",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-07T22:57:44Z",
+      "side": 1,
+      "message": "Thanks for the explanation. What is last_pressed_handler_ in this case? I can\u0027t quite tell from this patch. How are you routing events to DesktopLinuxBrowserFrameView::OnMouseEvent ? Are you calling it via an EventHandler, or is it called by virtue of being a View?",
+      "parentUuid": "9c009d62_66e0ab3c",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
