@@ -45,7 +45,9 @@ goog.provide('__crWeb.form');
       'formName': window.top.__gCrWeb.common.
                       getFormIdentifier(evt.srcElement.form),
       'fieldName': window.top.__gCrWeb.common.
-                      getFieldIdentifier(srcElement),
+                      getFieldName(srcElement),
+      'fieldIdentifier': window.top.__gCrWeb.common.
+                             getFieldIdentifier(srcElement),
       'fieldType': fieldType,
       'type': evt.type,
       'value': value
