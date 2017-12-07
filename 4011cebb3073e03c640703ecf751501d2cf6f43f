@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "403ee196_63ab0d18",
+        "filename": "device/bluetooth/test/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-07T17:52:14Z",
+      "side": 1,
+      "message": "implementations?",
+      "range": {
+        "startLine": 3,
+        "startChar": 58,
+        "endLine": 3,
+        "endChar": 76
+      },
+      "revId": "4011cebb3073e03c640703ecf751501d2cf6f43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
