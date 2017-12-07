@@ -159,6 +159,24 @@
       "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b0524f_0de7b0b8",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-07T21:42:43Z",
+      "side": 1,
+      "message": "Ok sounds good! I\u0027ve modified both the calculation in this GetPreferredWebAudioBufferSize() function as well as in AudioLatency::GetExactBufferSize() to use ceil() rather than round(). While updating GetExactBufferSize() I also noticed that it was incorrectly using hardware_buffer_size rather than minimum_buffer_size, this was only working because round() was rounding to 0 and being clamped to the minimum_buffer_size.",
+      "parentUuid": "f816f740_14ed249b",
+      "revId": "48125d6a63af7223f5f8062ea4ae25e042c39be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
