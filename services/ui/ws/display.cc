@@ -289,6 +289,7 @@ EventSink* Display::GetEventSink() {
 }
 
 void Display::OnAcceleratedWidgetAvailable() {
+  LOG(ERROR) << "MSW Display::OnAcceleratedWidgetAvailable display-id:" << display_.id(); 
   display_manager()->OnDisplayAcceleratedWidgetAvailable(this);
   InitWindowManagerDisplayRoots();
 }

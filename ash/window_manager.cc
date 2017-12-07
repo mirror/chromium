@@ -12,8 +12,10 @@
 
 #include "ash/accelerators/accelerator_handler.h"
 #include "ash/accelerators/accelerator_ids.h"
+#include "ash/display/mirror_window_controller.h"
 #include "ash/drag_drop/drag_image_view.h"
 #include "ash/event_matcher_util.h"
+#include "ash/host/ash_window_tree_host.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/window_pin_type.h"
@@ -352,9 +354,29 @@ void WindowManager::OnWmAcceleratedWidgetAvailableForDisplay(
     int64_t display_id,
     gfx::AcceleratedWidget widget) {
   auto* window = Shell::GetRootWindowForDisplayId(display_id);
+  LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay A id:" << display_id << " window:" << window; 
   if (window) {
     auto* host = static_cast<aura::WindowTreeHostMus*>(window->GetHost());
     host->OverrideAcceleratedWidget(widget);
+  } else {
+    // Check if this display is a mirror...
+    // WindowTreeHostManager* host_manager = Shell::Get()->window_tree_host_manager();
+    MirrorWindowController* mirror_window_controller =
+        Shell::Get()->window_tree_host_manager()->mirror_window_controller();
+
+    LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay B mirror_window_controller:" << mirror_window_controller; 
+    AshWindowTreeHost* host_ash = 
+        mirror_window_controller->GetAshWindowTreeHostForDisplayId(display_id);
+    LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay C host_ash:" << host_ash; 
+    if (host_ash) {
+      aura::WindowTreeHost* host = host_ash->AsWindowTreeHost();
+      LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay D host:" << host; 
+      auto* host_mus = static_cast<aura::WindowTreeHostMus*>(host);
+      LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay E host_mus:" << host_mus; 
+      host_mus->OverrideAcceleratedWidget(widget);
+    } else {
+      NOTREACHED() << "No WindowTreeHost found for the display:" << display_id;
+    }
   }
 }
 

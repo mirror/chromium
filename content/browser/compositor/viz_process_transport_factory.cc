@@ -216,6 +216,7 @@ void VizProcessTransportFactory::RemoveObserver(
 std::unique_ptr<ui::Reflector> VizProcessTransportFactory::CreateReflector(
     ui::Compositor* source,
     ui::Layer* target) {
+  LOG(ERROR) << "MSW VizProcessTransportFactory::CreateReflector"; 
   // TODO(crbug.com/601869): Reflector needs to be rewritten for viz.
   NOTIMPLEMENTED();
   return nullptr;

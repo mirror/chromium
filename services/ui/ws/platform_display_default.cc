@@ -235,6 +235,7 @@ void PlatformDisplayDefault::OnLostCapture() {
 void PlatformDisplayDefault::OnAcceleratedWidgetAvailable(
     gfx::AcceleratedWidget widget,
     float device_scale_factor) {
+  LOG(ERROR) << "MSW PlatformDisplayDefault::OnAcceleratedWidgetAvailable display-id:" << delegate_->GetDisplay().id(); 
   // This will get called after Init() is called, either synchronously as part
   // of the Init() callstack or async after Init() has returned, depending on
   // the platform.

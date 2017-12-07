@@ -591,6 +591,8 @@ std::unique_ptr<WindowTreeHostMus> WindowTreeClient::CreateWindowTreeHost(
   init_params.window_port = std::move(window_port);
   init_params.window_tree_client = this;
   init_params.display_id = display_id;
+  if (window_manager_delegate_ && window_mus_type == WindowMusType::EMBED)
+    init_params.uses_real_accelerated_widget = !::switches::IsMusHostingViz();
   std::unique_ptr<WindowTreeHostMus> window_tree_host =
       std::make_unique<WindowTreeHostMus>(std::move(init_params));
   window_tree_host->InitHost();
@@ -866,10 +868,12 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
             display_init_params->viewport_metrics.bounds_in_pixels.size()));
 
     if (window_manager_client_) {
+      LOG(ERROR) << "MSW WindowTreeClient::OnWindowMusCreated Calling SetDisplayRoot "; 
       window_manager_client_->SetDisplayRoot(
           display, display_init_params->viewport_metrics.Clone(),
           display_init_params->is_primary_display, window->server_id(),
-          display_init_params->mirrors,
+          std::vector<display::Display>() /* mirrors */,
+          // display_init_params->mirrors,
           base::Bind(&OnAckMustSucceed, FROM_HERE));
     }
   }
@@ -1730,6 +1734,7 @@ void WindowTreeClient::OnConnect() {
 void WindowTreeClient::WmOnAcceleratedWidgetForDisplay(
     int64_t display,
     gpu::SurfaceHandle surface_handle) {
+  LOG(ERROR) << "MSW WindowTreeClient::WmOnAcceleratedWidgetForDisplay id:" << display << " delegate: " << window_manager_delegate_; 
   if (window_manager_delegate_) {
     window_manager_delegate_->OnWmAcceleratedWidgetAvailableForDisplay(
         display, surface_handle);

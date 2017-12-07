@@ -96,6 +96,8 @@ bool DisplayManager::SetDisplayConfiguration(
   bool found_internal_display = false;
 
   // Check the mirrors before potentially passing them to a unified display.
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays:" << displays.size() << " mirrors:" << mirrors.size();
+  DCHECK(window_server_->is_hosting_viz() || mirrors.empty()) << "The window server only handles mirrors specially when hosting viz..."; 
   for (const auto& mirror : mirrors) {
     if (mirror.id() == display::kInvalidDisplayId) {
       LOG(ERROR) << "SetDisplayConfiguration passed invalid display id";
@@ -246,6 +248,7 @@ Display* DisplayManager::AddDisplayForWindowManager(
     bool is_primary_display,
     const display::Display& display,
     const display::ViewportMetrics& metrics) {
+  LOG(ERROR) << "MSW DisplayManager::AddDisplayForWindowManager "; 
   DCHECK_EQ(DisplayCreationConfig::MANUAL,
             window_server_->display_creation_config());
   const display::DisplayList::Type display_type =
@@ -258,6 +261,7 @@ Display* DisplayManager::AddDisplayForWindowManager(
 }
 
 void DisplayManager::DestroyDisplay(Display* display) {
+  LOG(ERROR) << "MSW DisplayManager::DestroyDisplay "; 
   const bool is_pending = pending_displays_.count(display) > 0;
   if (is_pending) {
     pending_displays_.erase(display);
@@ -352,6 +356,7 @@ WindowId DisplayManager::GetAndAdvanceNextRootId() {
 }
 
 void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
+  LOG(ERROR) << "MSW DisplayManager::OnDisplayAcceleratedWidgetAvailable"; 
   DCHECK_NE(0u, pending_displays_.count(display));
   DCHECK_EQ(0u, displays_.count(display));
   const bool is_first_display =

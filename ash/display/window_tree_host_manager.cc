@@ -626,6 +626,7 @@ void WindowTreeHostManager::OnDisplayRemoved(const display::Display& display) {
         DISPLAY_METRIC_BOUNDS);
   }
 
+  LOG(ERROR) << "MSW WindowTreeHostManager::OnDisplayRemoved deleting host... "; 
   DeleteHost(host_to_delete);
 
   // The window tree host should be erased at last because some handlers can
@@ -663,13 +664,19 @@ void WindowTreeHostManager::OnHostResized(aura::WindowTreeHost* host) {
   }
 }
 
+void WindowTreeHostManager::OnAcceleratedWidgetAvailable(aura::WindowTreeHost* host) {
+  LOG(ERROR) << "MSW WindowTreeHostManager::OnAcceleratedWidgetAvailable " << host << " aw: " << host->GetAcceleratedWidget(); 
+}
+
 void WindowTreeHostManager::CreateOrUpdateMirroringDisplay(
     const display::DisplayInfoList& info_list) {
   if (GetDisplayManager()->IsInMirrorMode() ||
       GetDisplayManager()->IsInUnifiedMode()) {
     // The window server controls mirroring in Mus, not Ash.
-    if (ShouldUpdateMirrorWindowController())
+    if (ShouldUpdateMirrorWindowController()) {
+      LOG(ERROR) << "MSW CreateOrUpdateMirroringDisplay USING MIRRROR WINDOW CONTROLLER"; 
       mirror_window_controller_->UpdateWindow(info_list);
+    }
     cursor_window_controller_->UpdateContainer();
   } else {
     NOTREACHED();
@@ -783,6 +790,7 @@ AshWindowTreeHost* WindowTreeHostManager::AddWindowTreeHostForDisplay(
   params_with_bounds.ui_scale_factor = display_info.configured_ui_scale();
   // The AshWindowTreeHost ends up owned by the RootWindowControllers created
   // by this class.
+  LOG(ERROR) << "MSW WindowTreeHostManager::AddWindowTreeHostForDisplay " << display.id(); 
   AshWindowTreeHost* ash_host =
       AshWindowTreeHost::Create(params_with_bounds).release();
   aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();

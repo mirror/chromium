@@ -182,6 +182,7 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
 }
 
 void WindowTree::OnAcceleratedWidgetAvailableForDisplay(Display* display) {
+  LOG(ERROR) << "MSW WindowTree::OnAcceleratedWidgetAvailableForDisplay"; 
   DCHECK(window_manager_internal_);
   // TODO(sad): Use GpuSurfaceTracker on platforms where a gpu::SurfaceHandle is
   // not the same as a gfx::AcceleratedWidget.
@@ -350,6 +351,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
         is_primary_display, display_to_create, viewport_metrics);
   } else if (!display->GetWindowManagerDisplayRootForUser(
                  window_manager_state_->user_id())) {
+    LOG(ERROR) << "MSW WindowTree::ProcessSetDisplayRoot display existed..."; 
     // Init the root if the display already existed as a mirroring destination.
     display->InitWindowManagerDisplayRoots();
   }
@@ -362,7 +364,12 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
       display->GetWindowManagerDisplayRootForUser(
           window_manager_state_->user_id());
   DCHECK(display_root);
-  DCHECK(display_root->root()->children().empty());
+  // DCHECK(display_root->root()->children().empty());
+  bool msw = false;
+  while (!display_root->root()->children().empty()) {
+    msw = true;
+    display_root->root()->Remove(display_root->root()->children()[0]);
+  }
 
   // NOTE: this doesn't resize the window in any way. We assume the client takes
   // care of any modifications it needs to do.
@@ -374,6 +381,11 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   if (is_moving_to_new_display) {
     DCHECK(old_parent);
     window_manager_state_->DeleteWindowManagerDisplayRoot(old_parent);
+  }
+  if (msw && display->platform_display()->GetAcceleratedWidget()) {
+    LOG(ERROR) << "MSW WindowTree::ProcessSetDisplayRoot id:" << display_to_create.id() << " aw:" << display->platform_display()->GetAcceleratedWidget(); 
+    window_manager_internal_->WmOnAcceleratedWidgetForDisplay(
+      display->GetId(), display->platform_display()->GetAcceleratedWidget());
   }
   return window;
 }
