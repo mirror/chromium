@@ -618,8 +618,9 @@ SDK.ChildConnection = class {
    * @override
    * @return {!Promise}
    */
-  disconnect() {
-    throw 'Not implemented';
+  async disconnect() {
+    this._agent.detachFromTarget(this._sessionId);
+    this._onDisconnect.call(null, 'force disconnect');
   }
 };
 

@@ -474,6 +474,12 @@ Protocol.TargetBase = class {
             this._agent(domain), messageObject, methodName, callback),
         0);
   }
+
+  disconnect() {
+    if (this._connection)
+      this._connection.disconnect();
+    this._onDisconnect('force disconnect');
+  }
 };
 
 /**

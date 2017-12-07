@@ -27,6 +27,7 @@ SDK.Target = class extends Protocol.TargetBase {
     this._id = id;
     this._modelByConstructor = new Map();
     this._isSuspended = suspended;
+    this._retainCount = 1;
   }
 
   createModels(required) {
@@ -230,6 +231,20 @@ SDK.Target = class extends Protocol.TargetBase {
    */
   suspended() {
     return this._isSuspended;
+  }
+
+  retain() {
+    this._retainCount++;
+  }
+
+  release() {
+    if (!this._retainCount) {
+      console.error(`Spurious release ${this.id()}`);
+      return;
+    }
+    this._retainCount--;
+    if (this._retainCount === 0)
+      this.disconnect();
   }
 };
 

@@ -126,10 +126,16 @@ SDK.WebSocketConnection = class {
     this._messages = [];
   }
 
-  _onError() {
+  /**
+   * @param {string} closeReason
+   */
+  _notifyCloseCallbacks(closeReason) {
     this._onWebSocketDisconnect.call(null);
-    // This is called if error occurred while connecting.
-    this._onDisconnect.call(null, 'connection failed');
+    this._onDisconnect.call(null, closeReason);
+  }
+
+  _onError() {
+    this._notifyCloseCallbacks('connection failed');
     this._close();
   }
 
@@ -142,8 +148,7 @@ SDK.WebSocketConnection = class {
   }
 
   _onClose() {
-    this._onWebSocketDisconnect.call(null);
-    this._onDisconnect.call(null, 'websocket closed');
+    this._notifyCloseCallbacks('websocket closed');
     this._close();
   }
 
@@ -176,13 +181,10 @@ SDK.WebSocketConnection = class {
    * @return {!Promise}
    */
   disconnect() {
-    var fulfill;
-    var promise = new Promise(f => fulfill = f);
-    this._close(() => {
-      this._onDisconnect.call(null, 'force disconnect');
-      fulfill();
-    });
-    return promise;
+    return new Promise(resolve => this._close(() => {
+      this._notifyCloseCallbacks('force disconnect');
+      resolve();
+    }));
   }
 };
 

@@ -35,6 +35,8 @@ Profiler.ProfilesPanel = class extends UI.PanelWithSidebar {
    */
   constructor(name, profileTypes, recordingActionId) {
     super(name);
+    /** @type {?SDK.Target} */
+    this._retainedTarget = null;
     this._profileTypes = profileTypes;
     this.registerRequiredCSS('ui/panelEnablerView.css');
     this.registerRequiredCSS('profiler/heapProfiler.css');
@@ -319,6 +321,12 @@ Profiler.ProfilesPanel = class extends UI.PanelWithSidebar {
     this._typeIdToSidebarSection[typeId].addProfileHeader(profile);
     if (!this.visibleView || this.visibleView === this._launcherView)
       this.showProfile(profile);
+    var mainTarget = SDK.targetManager.mainTarget();
+    if (this._retainedTarget === mainTarget)
+      return;
+    this._retainedTarget = mainTarget;
+    if (this._retainedTarget)
+      this._retainedTarget.retain();
   }
 
   /**
@@ -338,10 +346,14 @@ Profiler.ProfilesPanel = class extends UI.PanelWithSidebar {
 
     // No other item will be selected if there aren't any other profiles, so
     // make sure that view gets cleared when the last profile is removed.
-    if (sectionIsEmpty) {
-      this.profilesItemTreeElement.select();
-      this._showLauncherView();
-    }
+    if (!sectionIsEmpty)
+      return;
+    this.profilesItemTreeElement.select();
+    this._showLauncherView();
+    if (!this._retainedTarget)
+      return;
+    this._retainedTarget.release();
+    this._retainedTarget = null;
   }
 
   /**

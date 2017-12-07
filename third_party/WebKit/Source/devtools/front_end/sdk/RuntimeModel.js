@@ -150,6 +150,8 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
     this.debuggerModel().executionContextDestroyed(executionContext);
     this._executionContextById.delete(executionContextId);
     this.dispatchEventToListeners(SDK.RuntimeModel.Events.ExecutionContextDestroyed, executionContext);
+    if (this.target().isNodeJS() && executionContext.id === 1)
+      this.target().release();
   }
 
   fireExecutionContextOrderChanged() {
