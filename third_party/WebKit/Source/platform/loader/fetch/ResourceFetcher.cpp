@@ -656,6 +656,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
     const ResourceFactory& factory,
+    ResourceClient* client,
+    const SubstituteData& substitute_data) {
+  Resource* resource = RequestResource(params, factory, substitute_data);
+  if (client)
+    client->SetResource(resource);
+  return resource;
+}
+
+Resource* ResourceFetcher::RequestResource(
+    FetchParameters& params,
+    const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();
   ResourceRequest& resource_request = params.MutableResourceRequest();

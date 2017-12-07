@@ -74,6 +74,7 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
  protected:
   ResourceClient() {}
 
+  friend class ResourceFetcher;
   // TODO(japhet): There isn't a clean way for SVGResourceClients to determine
   // whether SVGElementProxy is holding a Resource that it should register with,
   // so SVGElementProxy handles it for those clients. SVGResourceClients should
