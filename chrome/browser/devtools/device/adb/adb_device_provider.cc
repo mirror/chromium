@@ -7,6 +7,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/devtools/device/adb/adb_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace {
 
@@ -16,12 +17,14 @@ const char kLocalAbstractCommand[] = "localabstract:%s";
 
 const int kAdbPort = 5037;
 
-static void RunCommand(const std::string& serial,
-                       const std::string& command,
-                       const AdbDeviceProvider::CommandCallback& callback) {
+static void RunCommand(
+    const std::string& serial,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const std::string& command,
+    const AdbDeviceProvider::CommandCallback& callback) {
   std::string query = base::StringPrintf(
       kHostTransportCommand, serial.c_str(), command.c_str());
-  AdbClientSocket::AdbQuery(kAdbPort, query, callback);
+  AdbClientSocket::AdbQuery(kAdbPort, query, callback, traffic_annotation);
 }
 
 static void ReceivedAdbDevices(
@@ -47,14 +50,18 @@ static void ReceivedAdbDevices(
 } // namespace
 
 void AdbDeviceProvider::QueryDevices(const SerialsCallback& callback) {
-  AdbClientSocket::AdbQuery(
-      kAdbPort, kHostDevicesCommand, base::Bind(&ReceivedAdbDevices, callback));
+  // TODO(crbug.com/656607): Add Proper annotation
+  AdbClientSocket::AdbQuery(kAdbPort, kHostDevicesCommand,
+                            base::Bind(&ReceivedAdbDevices, callback),
+                            NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void AdbDeviceProvider::QueryDeviceInfo(const std::string& serial,
                                         const DeviceInfoCallback& callback) {
-  AndroidDeviceManager::QueryDeviceInfo(base::Bind(&RunCommand, serial),
-                                        callback);
+  // TODO(crbug.com/656607): Add Proper annotation
+  AndroidDeviceManager::QueryDeviceInfo(
+      base::Bind(&RunCommand, serial, NO_TRAFFIC_ANNOTATION_BUG_656607),
+      callback);
 }
 
 void AdbDeviceProvider::OpenSocket(const std::string& serial,
@@ -62,7 +69,9 @@ void AdbDeviceProvider::OpenSocket(const std::string& serial,
                                    const SocketCallback& callback) {
   std::string request =
       base::StringPrintf(kLocalAbstractCommand, socket_name.c_str());
-  AdbClientSocket::TransportQuery(kAdbPort, serial, request, callback);
+  // TODO(crbug.com/656607): Add Proper annotation
+  AdbClientSocket::TransportQuery(kAdbPort, serial, request, callback,
+                                  NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 AdbDeviceProvider::~AdbDeviceProvider() {

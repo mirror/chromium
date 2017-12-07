@@ -46,11 +46,12 @@ class AdbTransportSocket : public AdbClientSocket {
   AdbTransportSocket(int port,
                      const std::string& serial,
                      const std::string& socket_name,
-                     const SocketCallback& callback)
-    : AdbClientSocket(port),
-      serial_(serial),
-      socket_name_(socket_name),
-      callback_(callback) {
+                     const SocketCallback& callback,
+                     const net::NetworkTrafficAnnotationTag& traffic_annotation)
+      : AdbClientSocket(port, traffic_annotation),
+        serial_(serial),
+        socket_name_(socket_name),
+        callback_(callback) {
     Connect(base::Bind(&AdbTransportSocket::OnConnected,
                        base::Unretained(this)));
   }
@@ -98,8 +99,9 @@ class AdbQuerySocket : AdbClientSocket {
  public:
   AdbQuerySocket(int port,
                  const std::string& query,
-                 const CommandCallback& callback)
-      : AdbClientSocket(port),
+                 const CommandCallback& callback,
+                 const net::NetworkTrafficAnnotationTag& traffic_annotation)
+      : AdbClientSocket(port, traffic_annotation),
         current_query_(0),
         callback_(callback) {
     queries_ = base::SplitString(query, "|", base::KEEP_WHITESPACE,
@@ -154,23 +156,29 @@ class AdbQuerySocket : AdbClientSocket {
 }  // namespace
 
 // static
-void AdbClientSocket::AdbQuery(int port,
-                               const std::string& query,
-                               const CommandCallback& callback) {
-  new AdbQuerySocket(port, query, callback);
+void AdbClientSocket::AdbQuery(
+    int port,
+    const std::string& query,
+    const CommandCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  new AdbQuerySocket(port, query, callback, traffic_annotation);
 }
 
 // static
-void AdbClientSocket::TransportQuery(int port,
-                                     const std::string& serial,
-                                     const std::string& socket_name,
-                                     const SocketCallback& callback) {
-  new AdbTransportSocket(port, serial, socket_name, callback);
+void AdbClientSocket::TransportQuery(
+    int port,
+    const std::string& serial,
+    const std::string& socket_name,
+    const SocketCallback& callback,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  new AdbTransportSocket(port, serial, socket_name, callback,
+                         traffic_annotation);
 }
 
-AdbClientSocket::AdbClientSocket(int port)
-    : host_(kLocalhost), port_(port) {
-}
+AdbClientSocket::AdbClientSocket(
+    int port,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation)
+    : traffic_annotation_(traffic_annotation), host_(kLocalhost), port_(port) {}
 
 AdbClientSocket::~AdbClientSocket() {
 }
@@ -196,12 +204,11 @@ void AdbClientSocket::SendCommand(const std::string& command,
                                   const CommandCallback& callback) {
   scoped_refptr<net::StringIOBuffer> request_buffer =
       new net::StringIOBuffer(EncodeMessage(command));
-  int result = socket_->Write(request_buffer.get(),
-                              request_buffer->size(),
-                              base::Bind(&AdbClientSocket::ReadResponse,
-                                         base::Unretained(this),
-                                         callback,
-                                         is_void));
+  int result =
+      socket_->Write(request_buffer.get(), request_buffer->size(),
+                     base::Bind(&AdbClientSocket::ReadResponse,
+                                base::Unretained(this), callback, is_void),
+                     traffic_annotation_);
   if (result != net::ERR_IO_PENDING)
     ReadResponse(callback, is_void, result);
 }

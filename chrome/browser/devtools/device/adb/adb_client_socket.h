@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "net/base/io_buffer.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 class AdbClientSocket {
  public:
@@ -18,18 +19,23 @@ class AdbClientSocket {
   typedef base::Callback<void(int result, std::unique_ptr<net::StreamSocket>)>
       SocketCallback;
 
-  static void AdbQuery(int port,
-                       const std::string& query,
-                       const CommandCallback& callback);
+  static void AdbQuery(
+      int port,
+      const std::string& query,
+      const CommandCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
-
-  static void TransportQuery(int port,
-                             const std::string& serial,
-                             const std::string& socket_name,
-                             const SocketCallback& callback);
+  static void TransportQuery(
+      int port,
+      const std::string& serial,
+      const std::string& socket_name,
+      const SocketCallback& callback,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
  protected:
-  explicit AdbClientSocket(int port);
+  explicit AdbClientSocket(
+      int port,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
   ~AdbClientSocket();
 
   void Connect(const net::CompletionCallback& callback);
@@ -39,6 +45,8 @@ class AdbClientSocket {
                    const CommandCallback& callback);
 
   std::unique_ptr<net::StreamSocket> socket_;
+
+  const net::NetworkTrafficAnnotationTag traffic_annotation_;
 
  private:
   void ReadResponse(const CommandCallback& callback, bool is_void, int result);
