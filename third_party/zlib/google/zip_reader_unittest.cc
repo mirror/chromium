@@ -109,6 +109,7 @@ class MockWriterDelegate : public zip::WriterDelegate {
  public:
   MOCK_METHOD0(PrepareOutput, bool());
   MOCK_METHOD2(WriteBytes, bool(const char*, int));
+  MOCK_METHOD1(SetTimeModified, void(const base::Time&));
 };
 
 }   // namespace
