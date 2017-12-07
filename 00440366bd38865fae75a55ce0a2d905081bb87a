@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f0dc5f_ee905520",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-07T21:34:21Z",
+      "side": 1,
+      "message": "What is the range of lengths that\u0027s expected?  If there are \u003e\u003e100 distinct possible values, then please implement some clamping and/or rounding.",
+      "range": {
+        "startLine": 254,
+        "startChar": 53,
+        "endLine": 254,
+        "endChar": 0
+      },
+      "revId": "00440366bd38865fae75a55ce0a2d905081bb87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
