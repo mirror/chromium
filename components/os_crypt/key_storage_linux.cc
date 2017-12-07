@@ -115,7 +115,7 @@ bool KeyStorageLinux::WaitForInitOnTaskRunner() {
   bool success;
   task_runner->PostTask(
       FROM_HERE,
-      base::BindOnce(&KeyStorageLinux::BlockOnInitThenSignal,
+      base::BindOnce(&KeyStorageLinux::BlockOnGetKeyImplThenSignal,
                      base::Unretained(this), &initialized, &success));
   initialized.Wait();
   return success;
