@@ -16,7 +16,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/media_galleries/fileapi/mtp_device_async_delegate.h"
-#include "device/media_transfer_protocol/mtp_file_entry.pb.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp.mojom.h"
 #include "storage/browser/fileapi/async_file_util.h"
 
 class MTPReadFileWorker;
@@ -30,6 +30,8 @@ struct SnapshotRequestInfo;
 // MTP device storage.
 class MTPDeviceTaskHelper {
  public:
+  using MtpFileEntryPtr = device::mojom::MtpFileEntryPtr;
+
   struct MTPEntry {
     MTPEntry();
 
@@ -169,7 +171,7 @@ class MTPDeviceTaskHelper {
   // caller.
   void OnGetFileInfo(const GetFileInfoSuccessCallback& success_callback,
                      const ErrorCallback& error_callback,
-                     const MtpFileEntry& file_entry,
+                     MtpFileEntryPtr file_entry,
                      bool error) const;
 
   // Called when CreateDirectory completes.
@@ -187,14 +189,14 @@ class MTPDeviceTaskHelper {
   // and |error_callback| is invoked on the IO thread to notify the caller.
   void OnDidReadDirectory(const ReadDirectorySuccessCallback& success_callback,
                           const ErrorCallback& error_callback,
-                          const std::vector<MtpFileEntry>& file_entries,
+                          std::vector<MtpFileEntryPtr> file_entries,
                           bool has_more,
                           bool error) const;
 
   // Intermediate step to finish a ReadBytes request.
   void OnGetFileInfoToReadBytes(
       const MTPDeviceAsyncDelegate::ReadBytesRequest& request,
-      const MtpFileEntry& file_entry,
+      MtpFileEntryPtr file_entry,
       bool error);
 
   // Query callback for ReadBytes();

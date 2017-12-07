@@ -1,0 +1,147 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module device.mojom;
+
+// This file defines structures and interfaces for getting information and
+// notifications about Media Transfer Protocol(MTP) devices.
+
+// As we discussed in the MTP servicification issue(
+https://bugs.chromium.org/p/chromium/issues/detail?id=769630), we need
+// This is a mojo counterpart of the FileType enum from
+// //src/third_party/cros_system_api/dbus/mtp_file_entry.proto
+enum MtpFileType {
+  FILE_TYPE_FOLDER = 0;
+  FILE_TYPE_JPEG = 14;
+  FILE_TYPE_JFIF = 15;
+  FILE_TYPE_TIFF = 16;
+  FILE_TYPE_BMP = 17;
+  FILE_TYPE_GIF = 18;
+  FILE_TYPE_PICT = 19;
+  FILE_TYPE_PNG = 20;
+  FILE_TYPE_WINDOWSIMAGEFORMAT = 25;
+  FILE_TYPE_JP2 = 40;
+  FILE_TYPE_JPX = 41;
+  // Truly unknown file type.
+  FILE_TYPE_UNKNOWN = 44;
+  // There's more file types to map to, but right now they are not
+  // interesting. Just assign a dummy value for now.
+  FILE_TYPE_OTHER = 9999;
+}
+
+// This is a mojo counterpart of the MtpFileEntry message from
+// //src/third_party/cros_system_api/dbus/mtp_file_entry.proto
+struct MtpFileEntry {
+  uint32 item_id;
+  uint32 parent_id;
+  string? file_name;
+  uint64 file_size;
+  int64 modification_time;
+  MtpFileType? file_type;
+}
+
+// This is a mojo counterpart of the MtpStorageInfo message from
+// //src/third_party/cros_system_api/dbus/mtp_storage_info.proto
+struct MtpStorageInfo {
+  string? storage_name;
+  string? vendor;
+  uint32 vendor_id;
+  string? product;
+  uint32 product_id;
+  uint32 device_flags;
+  uint32 storage_type;
+  uint32 filesystem_type;
+  uint32 access_capability;
+  uint64 max_capacity;
+  uint64 free_space_in_bytes;
+  uint64 free_space_in_objects;
+  string? storage_description;
+  string? volume_identifier;
+};
+
+
+interface MtpStorageObserver {
+  // A function called after a MTP storage has been attached / detached.
+  StorageChanged(bool is_attached, const std::string& storage_name);
+};
+
+interface MediaTransferProtocolManager {
+  // Adds an observer.
+  AddObserver(Observer* observer);
+
+  // Removes an observer.
+  RemoveObserver(Observer* observer);
+
+  // Returns a vector of available MTP storages.
+  GetStorages() => (std::vector<std::string>);
+
+  // On success, returns the metadata for |storage_name|.
+  // Otherwise returns NULL.
+  GetStorageInfo() => (MtpStorageInfo*);
+
+  // Read the metadata of |storage_name| from device and runs |callback|.
+  GetStorageInfoFromDevice(const std::string& storage_name)
+      => (const MtpStorageInfo& storage_info, const bool error);
+
+  // Opens |storage_name| in |mode| and runs |callback|.
+  OpenStorage(const std::string& storage_name,
+                           const std::string& mode)
+      => (const std::string& handle, bool error);
+
+  // Close |storage_handle| and runs |callback|.
+  CloseStorage(const std::string& storage_handle)
+      => (bool error);
+
+  // Creates |directory_name| in |parent_id|.
+  CreateDirectory(const std::string& storage_handle,
+                               const uint32_t parent_id,
+                               const std::string& directory_name)
+      =>  (bool error);
+
+  // Reads directory entries from |file_id| on |storage_handle| and runs
+  // |callback|. |max_size| is a maximum number of files to be read.
+  ReadDirectory(const std::string& storage_handle,
+                             const uint32_t file_id,
+                             const size_t max_size)
+      => (const std::vector<MtpFileEntry>& file_entries,
+                          bool has_more,
+                          bool error);
+
+  // Reads file data from |file_id| on |storage_handle| and runs |callback|.
+  // Reads |count| bytes of data starting at |offset|.
+  ReadFileChunk(const std::string& storage_handle,
+                             uint32_t file_id,
+                             uint32_t offset,
+                             uint32_t count)
+      => (const std::string& data, bool error);
+
+  // Gets the file metadata for |file_id| on |storage_handle| and runs
+  // |callback|.
+  GetFileInfo(const std::string& storage_handle,
+                           uint32_t file_id)
+      => (const MtpFileEntry& file_entry, bool error);
+
+  // Renames |object_id| to |new_name|.
+  RenameObject(const std::string& storage_handle,
+                            const uint32_t object_id,
+                            const std::string& new_name)
+      => (bool error);
+                            const RenameObjectCallback& callback) = 0;
+
+  // Copies the file from |source_file_descriptor| to |file_name| on
+  // |parent_id|.
+  CopyFileFromLocal(const std::string& storage_handle,
+                                 const int source_file_descriptor,
+                                 const uint32_t parent_id,
+                                 const std::string& file_name)
+     => (bool error);
+
+  // Deletes |object_id|.
+  DeleteObject(const std::string& storage_handle,
+                            const uint32_t object_id)
+     => (bool error);
+
+  // Creates and returns the global MediaTransferProtocolManager instance.
+  static std::unique_ptr<MediaTransferProtocolManager> Initialize();
+};

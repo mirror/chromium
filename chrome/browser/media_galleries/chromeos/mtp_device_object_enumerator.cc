@@ -7,11 +7,8 @@
 #include "base/logging.h"
 
 MTPDeviceObjectEnumerator::MTPDeviceObjectEnumerator(
-    const std::vector<MtpFileEntry>& entries)
-    : file_entries_(entries),
-      index_(0U),
-      is_index_ready_(false) {
-}
+    const std::vector<MtpFileEntryPtr>& entries)
+    : file_entries_(entries), index_(0U), is_index_ready_(false) {}
 
 MTPDeviceObjectEnumerator::~MTPDeviceObjectEnumerator() {
 }
@@ -24,25 +21,26 @@ base::FilePath MTPDeviceObjectEnumerator::Next() {
 
   if (!HasMoreEntries())
     return base::FilePath();
-  return base::FilePath(file_entries_[index_].file_name());
+  return base::FilePath(file_entries_[index_]->file_name);
 }
 
 int64_t MTPDeviceObjectEnumerator::Size() {
   if (!IsIndexReadyAndInRange())
     return 0;
-  return file_entries_[index_].file_size();
+  return file_entries_[index_]->file_size;
 }
 
 bool MTPDeviceObjectEnumerator::IsDirectory() {
   if (!IsIndexReadyAndInRange())
     return false;
-  return file_entries_[index_].file_type() == MtpFileEntry::FILE_TYPE_FOLDER;
+  return file_entries_[index_]->file_type ==
+         device::mojom::MtpFileEntry::FileType::FILE_TYPE_FOLDER;
 }
 
 base::Time MTPDeviceObjectEnumerator::LastModifiedTime() {
   if (!IsIndexReadyAndInRange())
     return base::Time();
-  return base::Time::FromTimeT(file_entries_[index_].modification_time());
+  return base::Time::FromTimeT(file_entries_[index_]->modification_time);
 }
 
 bool MTPDeviceObjectEnumerator::GetEntryId(uint32_t* entry_id) const {
@@ -50,7 +48,7 @@ bool MTPDeviceObjectEnumerator::GetEntryId(uint32_t* entry_id) const {
   if (!IsIndexReadyAndInRange())
     return false;
 
-  *entry_id = file_entries_[index_].item_id();
+  *entry_id = file_entries_[index_]->item_id;
   return true;
 }
 

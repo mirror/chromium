@@ -22,6 +22,8 @@
 using storage_monitor::StorageMonitor;
 
 namespace {
+using MtpFileEntry = device::mojom::MtpFileEntry;
+using MtpFileEntryPtr = device::mojom::MtpFileEntryPtr;
 
 // Does nothing.
 // This method is used to handle the results of
@@ -33,14 +35,14 @@ device::MediaTransferProtocolManager* GetMediaTransferProtocolManager() {
   return StorageMonitor::GetInstance()->media_transfer_protocol_manager();
 }
 
-base::File::Info FileInfoFromMTPFileEntry(const MtpFileEntry& file_entry) {
+base::File::Info FileInfoFromMTPFileEntry(const MtpFileEntryPtr& file_entry) {
   base::File::Info file_entry_info;
-  file_entry_info.size = file_entry.file_size();
+  file_entry_info.size = file_entry->file_size;
   file_entry_info.is_directory =
-      file_entry.file_type() == MtpFileEntry::FILE_TYPE_FOLDER;
+      file_entry->file_type == MtpFileEntry::FileType::FILE_TYPE_FOLDER;
   file_entry_info.is_symbolic_link = false;
   file_entry_info.last_modified =
-      base::Time::FromTimeT(file_entry.modification_time());
+      base::Time::FromTimeT(file_entry->modification_time);
   file_entry_info.last_accessed = file_entry_info.last_modified;
   file_entry_info.creation_time = base::Time();
   return file_entry_info;
@@ -221,7 +223,7 @@ void MTPDeviceTaskHelper::OnDidOpenStorage(
 void MTPDeviceTaskHelper::OnGetFileInfo(
     const GetFileInfoSuccessCallback& success_callback,
     const ErrorCallback& error_callback,
-    const MtpFileEntry& file_entry,
+    MtpFileEntryPtr file_entry,
     bool error) const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (error) {
@@ -254,7 +256,7 @@ void MTPDeviceTaskHelper::OnCreateDirectory(
 void MTPDeviceTaskHelper::OnDidReadDirectory(
     const ReadDirectorySuccessCallback& success_callback,
     const ErrorCallback& error_callback,
-    const std::vector<MtpFileEntry>& file_entries,
+    std::vector<MtpFileEntryPtr> file_entries,
     bool has_more,
     bool error) const {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -282,7 +284,7 @@ void MTPDeviceTaskHelper::OnDidReadDirectory(
 
 void MTPDeviceTaskHelper::OnGetFileInfoToReadBytes(
     const MTPDeviceAsyncDelegate::ReadBytesRequest& request,
-    const MtpFileEntry& file_entry,
+    MtpFileEntryPtr file_entry,
     bool error) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(request.buf.get());

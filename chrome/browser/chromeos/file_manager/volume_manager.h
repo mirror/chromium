@@ -26,7 +26,7 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/storage_monitor/removable_storage_observer.h"
-#include "device/media_transfer_protocol/mtp_storage_info.pb.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp.mojom.h"
 
 class Profile;
 
@@ -232,7 +232,7 @@ class VolumeManager : public KeyedService,
  public:
   // Returns MediaTransferProtocolManager. Used for injecting
   // FakeMediaTransferProtocolManager for testing.
-  typedef base::Callback<const MtpStorageInfo*(const std::string&)>
+  typedef base::Callback<device::mojom::MtpStorageInfoPtr(const std::string&)>
       GetMtpStorageInfoCallback;
 
   VolumeManager(

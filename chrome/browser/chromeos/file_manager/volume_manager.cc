@@ -866,17 +866,17 @@ void VolumeManager::OnRemovableStorageAttached(
   base::RemoveChars(info.location(), kRootPath, &storage_name);
   DCHECK(!storage_name.empty());
 
-  const MtpStorageInfo* mtp_storage_info;
+  device::mojom::MtpStorageInfoPtr info_ptr;
   if (get_mtp_storage_info_callback_.is_null()) {
-    mtp_storage_info = storage_monitor::StorageMonitor::GetInstance()
-                           ->media_transfer_protocol_manager()
-                           ->GetStorageInfo(storage_name);
+    info_ptr = storage_monitor::StorageMonitor::GetInstance()
+                   ->media_transfer_protocol_manager()
+                   ->GetStorageInfo(storage_name);
   } else {
-    mtp_storage_info = get_mtp_storage_info_callback_.Run(storage_name);
+    info_ptr = get_mtp_storage_info_callback_.Run(storage_name);
   }
 
-  if (!mtp_storage_info) {
-    // mtp_storage_info can be null. e.g. As OnRemovableStorageAttached is
+  if (info_ptr.is_null()) {
+    // info_ptr can be null. e.g. As OnRemovableStorageAttached is
     // called asynchronously, there can be a race condition where the storage
     // has been already removed in MediaTransferProtocolManager at the time when
     // this method is called.
@@ -889,9 +889,8 @@ void VolumeManager::OnRemovableStorageAttached(
   const bool read_only =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kDisableMtpWriteSupport) ||
-      mtp_storage_info->access_capability() != kAccessCapabilityReadWrite ||
-      mtp_storage_info->filesystem_type() !=
-          kFilesystemTypeGenericHierarchical ||
+      info_ptr->access_capability != kAccessCapabilityReadWrite ||
+      info_ptr->filesystem_type != kFilesystemTypeGenericHierarchical ||
       GetExternalStorageAccessMode(profile_) ==
           chromeos::MOUNT_ACCESS_MODE_READ_ONLY;
 
