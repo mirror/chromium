@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcf16de6_d7efda9b",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-07T17:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a77987e_f8438534",
+      "revId": "4095797cdae877f9a663d8e32d96c5852e9f367b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452537f4_81d0391e",
         "filename": "tools/chrome_proxy/webdriver/lite_page.py",
         "patchSetId": 4
@@ -63,6 +81,30 @@
       "revId": "4095797cdae877f9a663d8e32d96c5852e9f367b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6bee0bc_880d018a",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-07T17:46:02Z",
+      "side": 1,
+      "message": "Yes, that is fine. For Nano, scrolling is not needed to load BTF resources. Below checks are more for sake of completion in-case we receive extra responses.",
+      "parentUuid": "452537f4_81d0391e",
+      "range": {
+        "startLine": 235,
+        "startChar": 26,
+        "endLine": 235,
+        "endChar": 27
+      },
+      "revId": "4095797cdae877f9a663d8e32d96c5852e9f367b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "4ad95f63535349784d6e9db83f1f62d415e47f8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd180dc_a2339157",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-07T17:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c000fc_993b7fd5",
+      "revId": "4ad95f63535349784d6e9db83f1f62d415e47f8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
