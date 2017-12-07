@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76e904a_a4a6a0c0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-07T23:18:33Z",
+      "side": 1,
+      "message": "I see it matches the mock.. but it might be worth checking that removing the full stop was intentional if you haven\u0027t already. It\u0027s inconsistent with other UI strings of this nature. Feel free to commit though.",
+      "revId": "22f388b4b85623051a027435e4263828031ce641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
