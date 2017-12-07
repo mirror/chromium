@@ -6375,7 +6375,8 @@ void RenderFrameImpl::NavigateInternal(
                            : blink::WebURLRequest::kFrameTypeNested);
 
   if (IsBrowserSideNavigationEnabled() && common_params.post_data) {
-    request.SetHTTPBody(GetWebHTTPBodyForRequestBody(common_params.post_data));
+    request.SetHTTPBody(
+        GetWebHTTPBodyForRequestBody(common_params.post_data.get()));
     if (!request_params.post_content_type.empty()) {
       request.AddHTTPHeaderField(
           WebString::FromASCII(net::HttpRequestHeaders::kContentType),
@@ -6511,7 +6512,7 @@ void RenderFrameImpl::NavigateInternal(
     if (common_params.method == "POST" && !browser_side_navigation &&
         common_params.post_data) {
       request.SetHTTPBody(
-          GetWebHTTPBodyForRequestBody(common_params.post_data));
+          GetWebHTTPBodyForRequestBody(common_params.post_data.get()));
     }
 
     should_load_request = true;
