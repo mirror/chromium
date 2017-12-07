@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d45a9d02_65f0c68e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T00:06:20Z",
+      "side": 1,
+      "message": "No, because this store is guarded by the TaskQueue.\n\nWe could of course do it, but there is no risk of crash here, the tasks will proactively get a null pointer from line 90 and fail.",
+      "parentUuid": "3e28f0a5_d4db8af0",
+      "revId": "72ee3d75d4ef490e6e77195e94cd27383c769436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5c3b16f_49153664",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "72ee3d75d4ef490e6e77195e94cd27383c769436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0137209_f36ba58e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-07T00:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c3b16f_49153664",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 17
+      },
+      "revId": "72ee3d75d4ef490e6e77195e94cd27383c769436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
