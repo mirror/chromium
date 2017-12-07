@@ -22,6 +22,30 @@
       "revId": "687deb2b43293fdda8825e1804aebdcee1c453e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72a51ed_0ac64436",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-07T19:42:42Z",
+      "side": 1,
+      "message": "Because the CL also changes the default observation in params.cc",
+      "parentUuid": "0c7c63bb_86850e5d",
+      "range": {
+        "startLine": 167,
+        "startChar": 70,
+        "endLine": 167,
+        "endChar": 73
+      },
+      "revId": "687deb2b43293fdda8825e1804aebdcee1c453e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
