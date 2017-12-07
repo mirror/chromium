@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d21efd5_0d330cb3",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T01:21:10Z",
+      "side": 1,
+      "message": "Is it okay to not resolve or reject the resolver?",
+      "revId": "a5b4f0d805aff83938efcc0f31df80e8aa9b35cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811bfecb_afc0a32f",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-07T01:21:10Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a5b4f0d805aff83938efcc0f31df80e8aa9b35cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
