@@ -24,6 +24,7 @@
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
+#include "content/browser/bad_message.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/gpu/compositor_util.h"
@@ -78,8 +79,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       scroll_bubbling_state_(NO_ACTIVE_GESTURE_SCROLL),
       weak_factory_(this) {
-  if (switches::IsMusHostingViz()) {
-    // In Mus the RenderFrameProxy will eventually assign a viz::FrameSinkId
+  if (IsUsingMus()) {
+    // In mus the RenderFrameProxy will eventually assign a viz::FrameSinkId
     // until then set ours invalid, as operations using it will be disregarded.
     frame_sink_id_ = viz::FrameSinkId();
   } else {
@@ -99,11 +100,9 @@ RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (frame_connector_)
     DetachFromTouchSelectionClientManagerIfNecessary();
 
-  if (!switches::IsMusHostingViz()) {
-    ResetCompositorFrameSinkSupport();
-    if (GetHostFrameSinkManager())
-      GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
-  }
+  ResetCompositorFrameSinkSupport();
+  if (frame_sink_id_.is_valid() && GetHostFrameSinkManager())
+    GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 void RenderWidgetHostViewChildFrame::Init() {
@@ -138,6 +137,7 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
     return;
 
   if (frame_connector_) {
+    SetFrameSinkId(viz::FrameSinkId());
     SetParentFrameSinkId(viz::FrameSinkId());
     last_received_local_surface_id_ = viz::LocalSurfaceId();
 
@@ -185,8 +185,24 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
 #if defined(USE_AURA)
 void RenderWidgetHostViewChildFrame::SetFrameSinkId(
     const viz::FrameSinkId& frame_sink_id) {
-  if (switches::IsMusHostingViz())
-    frame_sink_id_ = frame_sink_id;
+  if (!IsUsingMus() || frame_sink_id_ == frame_sink_id)
+    return;
+
+  if (frame_sink_id_.is_valid()) {
+    ResetCompositorFrameSinkSupport();
+    if (GetHostFrameSinkManager())
+      GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
+    UnregisterFrameSinkId();
+  }
+
+  frame_sink_id_ = frame_sink_id;
+
+  if (frame_sink_id_.is_valid()) {
+    if (GetHostFrameSinkManager())
+      GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    RegisterFrameSinkId();
+    CreateCompositorFrameSinkSupport();
+  }
 }
 #endif  // defined(USE_AURA)
 
@@ -409,7 +425,8 @@ RenderWidgetHostViewBase* RenderWidgetHostViewChildFrame::GetParentView() {
 
 void RenderWidgetHostViewChildFrame::RegisterFrameSinkId() {
   // If Destroy() has been called before we get here, host_ may be null.
-  if (host_ && host_->delegate() && host_->delegate()->GetInputEventRouter()) {
+  if (host_ && host_->delegate() && host_->delegate()->GetInputEventRouter() &&
+      frame_sink_id_.is_valid()) {
     RenderWidgetHostInputEventRouter* router =
         host_->delegate()->GetInputEventRouter();
     if (!router->is_registered(frame_sink_id_))
@@ -533,6 +550,11 @@ void RenderWidgetHostViewChildFrame::DidDiscardCompositorFrame(
 }
 void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
     viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+  if (!frame_sink_id_.is_valid()) {
+    renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
+    return;
+  }
+
   ResetCompositorFrameSinkSupport();
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   CreateCompositorFrameSinkSupport();
@@ -541,14 +563,14 @@ void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
 
 void RenderWidgetHostViewChildFrame::SetParentFrameSinkId(
     const viz::FrameSinkId& parent_frame_sink_id) {
-  if (parent_frame_sink_id_ == parent_frame_sink_id ||
-      switches::IsMusHostingViz())
+  if (parent_frame_sink_id_ == parent_frame_sink_id)
     return;
 
   auto* host_frame_sink_manager = GetHostFrameSinkManager();
 
   // Unregister hierarchy for the current parent, only if set.
-  if (parent_frame_sink_id_.is_valid()) {
+  if (host_frame_sink_manager && frame_sink_id_.is_valid() &&
+      parent_frame_sink_id_.is_valid()) {
     host_frame_sink_manager->UnregisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                           frame_sink_id_);
   }
@@ -556,7 +578,8 @@ void RenderWidgetHostViewChildFrame::SetParentFrameSinkId(
   parent_frame_sink_id_ = parent_frame_sink_id;
 
   // Register hierarchy for the new parent, only if set.
-  if (parent_frame_sink_id_.is_valid()) {
+  if (host_frame_sink_manager && parent_frame_sink_id_.is_valid() &&
+      frame_sink_id_.is_valid()) {
     host_frame_sink_manager->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                         frame_sink_id_);
   }
@@ -589,7 +612,7 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
 }
 
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
-  if (switches::IsMusHostingViz())
+  if (IsUsingMus())
     return;
   // TODO(kylechar): Remove sequence generation and only send surface info.
   // See https://crbug.com/676384.
@@ -629,7 +652,8 @@ void RenderWidgetHostViewChildFrame::SubmitCompositorFrame(
 void RenderWidgetHostViewChildFrame::OnDidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
   DCHECK(!enable_viz_);
-  support_->DidNotProduceFrame(ack);
+  if (support_)
+    support_->DidNotProduceFrame(ack);
 }
 
 void RenderWidgetHostViewChildFrame::ProcessFrameSwappedCallbacks() {
@@ -1029,7 +1053,7 @@ viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
 }
 
 void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
-  if (switches::IsMusHostingViz() || enable_viz_)
+  if (enable_viz_ || !GetHostFrameSinkManager())
     return;
 
   DCHECK(!support_);
@@ -1048,7 +1072,7 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
 void RenderWidgetHostViewChildFrame::ResetCompositorFrameSinkSupport() {
   if (!support_)
     return;
-  if (parent_frame_sink_id_.is_valid()) {
+  if (parent_frame_sink_id_.is_valid() && frame_sink_id_.is_valid()) {
     GetHostFrameSinkManager()->UnregisterFrameSinkHierarchy(
         parent_frame_sink_id_, frame_sink_id_);
   }
