@@ -11,10 +11,10 @@
 namespace ui {
 namespace ws {
 
-UserActivityMonitor::UserActivityMonitor(std::unique_ptr<base::TickClock> clock)
+UserActivityMonitor::UserActivityMonitor(base::TickClock* clock)
     : now_clock_(std::move(clock)) {
   if (!now_clock_)
-    now_clock_ = base::WrapUnique(new base::DefaultTickClock);
+    now_clock_ = base::DefaultTickClock::GetInstance();
   last_activity_ = now_clock_->NowTicks();
 }
 
