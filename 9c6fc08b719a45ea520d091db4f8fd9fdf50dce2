@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0955259e_c03d848d",
+        "filename": "ipc/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-07T02:18:20Z",
+      "side": 1,
+      "message": "I think I see what you\u0027re saying :) but I\u0027m not quite following here.  We might need examples to clarify?  Perhaps we should talk off-line, and add a follow-up patch to add clarifications.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 56
+      },
+      "revId": "9c6fc08b719a45ea520d091db4f8fd9fdf50dce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4caf294_6a631674",
+        "filename": "ipc/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-07T02:18:20Z",
+      "side": 1,
+      "message": "After implementing your Mojo interface, the next thing to decide is\nwhere to register it.",
+      "revId": "9c6fc08b719a45ea520d091db4f8fd9fdf50dce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
