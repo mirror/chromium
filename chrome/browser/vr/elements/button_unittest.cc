@@ -18,7 +18,7 @@
 namespace vr {
 
 TEST(Button, HoverTest) {
-  Button button(base::Callback<void()>(), vector_icons::kMicrophoneIcon);
+  Button button(base::Callback<void()>(), vector_icons::kMicIcon);
   button.SetSize(1.0f, 1.0f);
   button.set_hover_offset(0.5f);
 
@@ -45,7 +45,7 @@ TEST(Button, HoverTest) {
 }
 
 TEST(Button, SizePropagatesToSubElements) {
-  Button button(base::Callback<void()>(), vector_icons::kMicrophoneIcon);
+  Button button(base::Callback<void()>(), vector_icons::kMicIcon);
   gfx::SizeF size(1000.0f, 1000.0f);
   gfx::SizeF icon_size = size;
   icon_size.Scale(0.5f);
@@ -69,7 +69,7 @@ TEST(Button, SizePropagatesToSubElements) {
 }
 
 TEST(Button, DrawPhasePropagatesToSubElements) {
-  Button button(base::Callback<void()>(), vector_icons::kMicrophoneIcon);
+  Button button(base::Callback<void()>(), vector_icons::kMicIcon);
   button.set_draw_phase(kPhaseOverlayForeground);
 
   for (auto& child : button.children()) {
@@ -78,7 +78,7 @@ TEST(Button, DrawPhasePropagatesToSubElements) {
 }
 
 TEST(Button, NamePropagatesToSubElements) {
-  Button button(base::Callback<void()>(), vector_icons::kMicrophoneIcon);
+  Button button(base::Callback<void()>(), vector_icons::kMicIcon);
   button.set_name(kCloseButton);
 
   for (auto& child : button.children()) {

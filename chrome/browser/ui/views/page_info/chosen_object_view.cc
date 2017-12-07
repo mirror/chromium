@@ -49,8 +49,7 @@ ChosenObjectView::ChosenObjectView(
   layout->StartRow(kStretchy, column_set_id);
   // Create the chosen object icon.
   icon_ = new views::ImageView();
-  const gfx::Image& image = PageInfoUI::GetChosenObjectIcon(*info_, false);
-  icon_->SetImage(image.ToImageSkia());
+  icon_->SetImage(PageInfoUI::GetChosenObjectIcon(*info_, false));
   layout->AddView(icon_);
   // Create the label that displays the chosen object name.
   views::Label* label = new views::Label(
@@ -92,8 +91,7 @@ ChosenObjectView::~ChosenObjectView() {}
 void ChosenObjectView::ButtonPressed(views::Button* sender,
                                      const ui::Event& event) {
   // Change the icon to reflect the selected setting.
-  const gfx::Image& image = PageInfoUI::GetChosenObjectIcon(*info_, true);
-  icon_->SetImage(image.ToImageSkia());
+  icon_->SetImage(PageInfoUI::GetChosenObjectIcon(*info_, true));
 
   DCHECK(delete_button_->visible());
   delete_button_->SetVisible(false);
