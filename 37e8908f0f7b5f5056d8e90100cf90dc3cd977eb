@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53248e6f_6837083e",
+        "filename": "media/media_options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-07T21:20:05Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 172,
+        "startChar": 44,
+        "endLine": 172,
+        "endChar": 45
+      },
+      "revId": "37e8908f0f7b5f5056d8e90100cf90dc3cd977eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cedcc4b_b899fee2",
+        "filename": "media/media_options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-07T21:20:05Z",
+      "side": 1,
+      "message": "Google. Official build means something else.",
+      "range": {
+        "startLine": 173,
+        "startChar": 31,
+        "endLine": 173,
+        "endChar": 39
+      },
+      "revId": "37e8908f0f7b5f5056d8e90100cf90dc3cd977eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10b5b63_fec94194",
+        "filename": "media/media_options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-07T21:20:05Z",
+      "side": 1,
+      "message": "I feel it\u0027s actually simpler to say if cdm_storage_id_key is defined it will take precedence so that you don\u0027t need to explain what Google Chrome build does. But I\u0027ll leave that up to you.",
+      "revId": "37e8908f0f7b5f5056d8e90100cf90dc3cd977eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
