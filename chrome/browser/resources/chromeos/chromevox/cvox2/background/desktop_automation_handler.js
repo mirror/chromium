@@ -606,7 +606,7 @@ DesktopAutomationHandler.prototype = {
       // starts tabbing before load complete), then don't move ChromeVox's
       // position on the page.
       if (curRoot && focusedRoot == curRoot &&
-          this.lastRootUrl_ == focusedRoot.docUrl && focus != focusedRoot)
+          this.lastRootUrl_ == focusedRoot.docUrl)
         return;
 
       this.lastRootUrl_ = focusedRoot.docUrl || '';
@@ -624,10 +624,6 @@ DesktopAutomationHandler.prototype = {
         if (!curRoot && focus != focusedRoot)
           o.format('$name', focusedRoot);
       }
-
-      if (ChromeVoxState.instance.currentRange &&
-          focus == ChromeVoxState.instance.currentRange.start.node)
-        return;
 
       ChromeVoxState.instance.setCurrentRange(cursors.Range.fromNode(focus));
       if (!this.shouldOutput_(evt))
