@@ -157,7 +157,7 @@ class SearchPermissionsServiceTest : public testing::Test {
       profile()->GetPrefs()->ClearPref(prefs::kDSEWasDisabledByPolicy);
     }
 
-    GetService()->InitializeSettingsIfNeeded();
+    GetService()->OnDSEChanged();
   }
 
   // Simulate setting the old preference to test migration.
@@ -226,6 +226,35 @@ TEST_F(SearchPermissionsServiceTest, Initialization) {
   ReinitializeService(false /* clear_pref */);
   EXPECT_FALSE(SearchGeolocationDisclosureTabHelper::IsDisclosureResetForTests(
       profile()));
+}
+
+TEST_F(SearchPermissionsServiceTest, InitializationInconsistent) {
+  // Test initialization when the stored pref has become inconsistent with the
+  // current DSE.
+  test_delegate()->ChangeDSEOrigin(kGoogleURL);
+
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            GetContentSetting(kGoogleURL, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            GetContentSetting(kGoogleURL, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+
+  test_delegate()->set_dse_origin(kGoogleAusURL);
+  ReinitializeService(false /* clear_pref */);
+
+  // The settings for the previous DSE should be restored when the service is
+  // started.
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            GetContentSetting(kGoogleURL, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            GetContentSetting(kGoogleURL, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+
+  // The settings should be transferred to the new DSE.
+  EXPECT_EQ(
+      CONTENT_SETTING_ALLOW,
+      GetContentSetting(kGoogleAusURL, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(
+      CONTENT_SETTING_ALLOW,
+      GetContentSetting(kGoogleAusURL, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
 }
 
 TEST_F(SearchPermissionsServiceTest, OffTheRecord) {
