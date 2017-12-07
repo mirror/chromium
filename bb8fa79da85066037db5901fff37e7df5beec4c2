@@ -22,6 +22,30 @@
       "revId": "bb8fa79da85066037db5901fff37e7df5beec4c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3084e7_b13f2cd3",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-07T19:24:53Z",
+      "side": 1,
+      "message": "There\u0027s a call to it in LocationBarView [1] and also one in BrowserCommands::UpdateCommandEnabled (which is called from one unittest). And some more in Mac files which I haven\u0027t updated yet.\n\nI\u0027d probably keep the name for the CommandUpdater, and name this one somehow else, as there\u0027s 173 hits (60 files) for CommandUpdater in Chrome. Or if you think there\u0027s nothing wrong with a mass rename, do the renaming.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/785952/12/chrome/browser/ui/views/location_bar/location_bar_view.cc#780",
+      "parentUuid": "ffac050d_68714ecf",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "bb8fa79da85066037db5901fff37e7df5beec4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
