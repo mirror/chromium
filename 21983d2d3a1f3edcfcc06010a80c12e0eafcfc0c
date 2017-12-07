@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82462e0f_e9868a4d",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-07T21:30:24Z",
+      "side": 1,
+      "message": "nit: propagate to widget when widget has been created and move function below the set of standard shell surface API functions that are used by wayland bindings",
+      "revId": "21983d2d3a1f3edcfcc06010a80c12e0eafcfc0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
