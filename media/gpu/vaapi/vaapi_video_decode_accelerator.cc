@@ -1054,6 +1054,12 @@ void VaapiVideoDecodeAccelerator::Cleanup() {
   VLOGF(2) << "Destroying VAVDA";
   state_ = kDestroying;
 
+  // Ask the decoder thread to reset, freeing the resources it managed
+  // (like reference frames)
+  decoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VaapiVideoDecodeAccelerator::ResetTask,
+                                base::Unretained(this)));
+
   client_ptr_factory_.reset();
   weak_this_factory_.InvalidateWeakPtrs();
 
