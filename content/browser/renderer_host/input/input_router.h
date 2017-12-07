@@ -66,6 +66,8 @@ class InputRouter : public IPC::Listener {
   // Associate this InputRouter with a remote host channel.
   virtual void BindHost(mojom::WidgetInputHandlerHostRequest request,
                         bool frame_handler) = 0;
+
+  virtual void ProgressFling(base::TimeTicks time) = 0;
 };
 
 }  // namespace content
