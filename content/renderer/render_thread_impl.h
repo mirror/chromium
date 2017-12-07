@@ -44,7 +44,8 @@
 #include "content/public/renderer/render_thread.h"
 #include "content/renderer/gpu/compositor_dependencies.h"
 #include "content/renderer/layout_test_dependencies.h"
-#include "content/renderer/media/audio_ipc_factory.h"
+#include "content/renderer/media/audio_input_ipc_factory.h"
+#include "content/renderer/media/audio_output_ipc_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/media_features.h"
@@ -126,7 +127,6 @@ namespace content {
 
 class AppCacheDispatcher;
 class AecDumpMessageFilter;
-class AudioInputMessageFilter;
 class AudioMessageFilter;
 class AudioRendererMixerManager;
 class BlobMessageFilter;
@@ -343,10 +343,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   DomStorageDispatcher* dom_storage_dispatcher() const {
     return dom_storage_dispatcher_.get();
-  }
-
-  AudioInputMessageFilter* audio_input_message_filter() {
-    return audio_input_message_filter_.get();
   }
 
   FileSystemDispatcher* file_system_dispatcher() const {
@@ -658,7 +654,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Used on the renderer and IPC threads.
   scoped_refptr<BlobMessageFilter> blob_message_filter_;
-  scoped_refptr<AudioInputMessageFilter> audio_input_message_filter_;
   scoped_refptr<MidiMessageFilter> midi_message_filter_;
   scoped_refptr<ServiceWorkerMessageFilter> service_worker_message_filter_;
   scoped_refptr<ChildResourceMessageFilter> resource_message_filter_;
@@ -682,10 +677,13 @@ class CONTENT_EXPORT RenderThreadImpl
   scoped_refptr<AecDumpMessageFilter> aec_dump_message_filter_;
 #endif
 
+  // Provides AudioInputIPC objects for audio input devices. Initialized in
+  // Init.
+  base::Optional<AudioInputIPCFactory> audio_input_ipc_factory_;
   // Provides AudioOutputIPC objects for audio output devices. It either uses
   // an AudioMessageFilter for this or provides MojoAudioOutputIPC objects.
   // Initialized in Init.
-  base::Optional<AudioIPCFactory> audio_ipc_factory_;
+  base::Optional<AudioOutputIPCFactory> audio_output_ipc_factory_;
 
   // Used on the render thread.
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;
