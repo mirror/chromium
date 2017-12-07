@@ -10,7 +10,9 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
+#include "chrome/common/chrome_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
@@ -61,6 +63,8 @@ constexpr char kBulkPolicyContentsJson[] = R"json(
 class ExternalPrintersTest : public testing::Test {
  public:
   ExternalPrintersTest() : scoped_task_environment_() {
+    scoped_feature_list_.InitAndEnableFeature(
+        base::Feature(features::kBulkPrinters));
     external_printers_ = ExternalPrinters::Create();
   }
 
@@ -68,6 +72,7 @@ class ExternalPrintersTest : public testing::Test {
   std::unique_ptr<ExternalPrinters> external_printers_;
 
  private:
+  base::test::ScopedFeatureList scoped_feature_list_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
