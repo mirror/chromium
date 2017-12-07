@@ -10,7 +10,7 @@
 
 #include "ash/display/window_tree_host_manager.h"
 #include "base/macros.h"
-#include "components/exo/shell_surface.h"
+#include "components/exo/shell_surface_base.h"
 #include "ui/base/hit_test.h"
 #include "ui/compositor/compositor_lock.h"
 #include "ui/display/display_observer.h"
@@ -30,7 +30,7 @@ enum class Orientation { PORTRAIT, LANDSCAPE };
 // window state, bounds are controlled by the client rather than window
 // manager.
 class ClientControlledShellSurface
-    : public ShellSurface,
+    : public ShellSurfaceBase,
       public display::DisplayObserver,
       public ash::WindowTreeHostManager::Observer,
       public ui::CompositorLockClient {
@@ -44,6 +44,18 @@ class ClientControlledShellSurface
   void InitializeWindowState(ash::wm::WindowState* window_state) override;
   void AttemptToStartDrag(int component) override;
   void UpdateBackdrop() override;
+
+  // Called when the client was maximized.
+  void SetMaximized();
+
+  // Called when the client was minimized.
+  void SetMinimized();
+
+  // Called when the client was restored.
+  void SetRestored();
+
+  // Called when the client chagned the fullscreen state.
+  void SetFullscreen(bool fullscreen);
 
   // Pin/unpin the surface. Pinned surface cannot be switched to
   // other windows unless its explicitly unpinned.
@@ -66,9 +78,10 @@ class ClientControlledShellSurface
   // Set top inset for surface.
   void SetTopInset(int height);
 
+  // Start an interactive move of surface.
+  void Move();
+
   // Overridden from ShellSurface:
-  void Move() override;
-  void Resize(int component) override;
   float GetScale() const override;
 
   // Overridden from SurfaceDelegate:
