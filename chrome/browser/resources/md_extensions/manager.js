@@ -207,11 +207,13 @@ cr.define('extensions', function() {
     onItemStateChanged_: function(eventData) {
       const EventType = chrome.developerPrivate.EventType;
       switch (eventData.event_type) {
-        case EventType.VIEW_REGISTERED:
-        case EventType.VIEW_UNREGISTERED:
-        case EventType.INSTALLED:
         case EventType.LOADED:
+        case EventType.VIEW_UNREGISTERED:
         case EventType.UNLOADED:
+          // Do nothing.
+          break;
+        case EventType.VIEW_REGISTERED:
+        case EventType.INSTALLED:
         case EventType.ERROR_ADDED:
         case EventType.ERRORS_REMOVED:
         case EventType.PREFS_CHANGED:
