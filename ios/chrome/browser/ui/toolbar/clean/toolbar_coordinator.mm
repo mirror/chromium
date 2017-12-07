@@ -346,12 +346,16 @@
 
 - (void)locationBarHasBecomeFirstResponder {
   [self.delegate locationBarDidBecomeFirstResponder];
+  if (IsIPadIdiom())
+    [self.toolbarViewController locationBarIsFirstResonderOnIPad:YES];
   if (!self.toolbarViewController.expanded)
     [self expandOmniboxAnimated:YES];
 }
 
 - (void)locationBarHasResignedFirstResponder {
   [self.delegate locationBarDidResignFirstResponder];
+  if (IsIPadIdiom())
+    [self.toolbarViewController locationBarIsFirstResonderOnIPad:NO];
   if (self.toolbarViewController.expanded)
     [self contractOmnibox];
 }
