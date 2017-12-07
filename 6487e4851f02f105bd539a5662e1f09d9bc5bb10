@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7e14a2_d6ca9da3",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T19:20:03Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "6487e4851f02f105bd539a5662e1f09d9bc5bb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9571febd_19ac5d6e",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-07T19:20:03Z",
+      "side": 1,
+      "message": "nit: put this in alphabetical order below kChromeHomeShowGoogleG*",
+      "range": {
+        "startLine": 1038,
+        "startChar": 0,
+        "endLine": 1039,
+        "endChar": 55
+      },
+      "revId": "6487e4851f02f105bd539a5662e1f09d9bc5bb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
