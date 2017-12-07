@@ -22,6 +22,30 @@
       "revId": "8df4b4272105c1563292a931927d6f341ec3480c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15820e77_2f3fde3f",
+        "filename": "chromeos/components/tether/host_connection_metrics_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-07T00:18:00Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2166bb88_9bb9f22e",
+      "range": {
+        "startLine": 191,
+        "startChar": 10,
+        "endLine": 191,
+        "endChar": 89
+      },
+      "revId": "8df4b4272105c1563292a931927d6f341ec3480c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
