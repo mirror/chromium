@@ -39,6 +39,24 @@
       "revId": "3db0d259c2606f2cb602fa037326f7dccfb52b99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182325b2_d2e60ec9",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevicesTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-07T17:08:12Z",
+      "side": 1,
+      "message": "Frankly speaking I myself wasn\u0027t very comfortable with the current approach. As I wasn\u0027t sure if it would be appropriate to add more changes(callbacks, virtual methods, etc.) to MediaDevices class exclusively for the purpose of testing, I had no other choice but to end up with this approach.\n\nI shall now proceed as per your suggestion. Thank you.",
+      "parentUuid": "0c61a8d8_1204de51",
+      "revId": "3db0d259c2606f2cb602fa037326f7dccfb52b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
