@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d3ba196_da3a635f",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb35d07_619c355f",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62992a28_753bfe1c",
         "filename": "chromeos/dbus/fake_power_manager_client.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d5888f_f757bc9d",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62992a28_753bfe1c",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59686b85_64984a14",
+        "filename": "chromeos/dbus/fake_power_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc8ec20_cbdfa3bf",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d502b2a3_0e00a7eb",
         "filename": "chromeos/dbus/fake_power_manager_client.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39f7c65_4333ddd7",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d502b2a3_0e00a7eb",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0d768b57_e7ad843e",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45306cb2_adde0afb",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "249a6cc3_44ff461b",
         "filename": "chromeos/dbus/fake_power_manager_client.h",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ea68b9_06894632",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249a6cc3_44ff461b",
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478603d8_455c2abe",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-07T00:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9349f9d_f7449c53",
+      "range": {
+        "startLine": 188,
+        "startChar": 5,
+        "endLine": 188,
+        "endChar": 15
+      },
+      "revId": "5e026729314257ae4aa8db28fc538b7e732e6683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
