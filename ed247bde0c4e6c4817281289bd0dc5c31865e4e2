@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44daff1a_a9a8ecad",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f1602e_57ef0ee7",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4199659_f3cf18fd",
         "filename": "components/os_crypt/key_storage_linux.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "21f6e10c_56db894d",
+        "filename": "components/os_crypt/key_storage_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-07T20:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4199659_f3cf18fd",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a32a993b_1ec717d3",
         "filename": "components/os_crypt/key_storage_linux.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b350f640_0daa8752",
+        "filename": "components/os_crypt/key_storage_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-12-07T20:06:59Z",
+      "side": 1,
+      "message": "There is no good term for it I think. All of OSCrypt is \"blocking\" and all of it is \"synchronous\".\n\nHow about literally calling out the method name?\nBlockOnGetKeyImplThenSignal()?\n\nSame below",
+      "parentUuid": "a32a993b_1ec717d3",
+      "revId": "ed247bde0c4e6c4817281289bd0dc5c31865e4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
