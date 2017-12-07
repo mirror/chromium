@@ -7,14 +7,14 @@
 #include "ui/gfx/render_text.h"
 #include "ui/views/corewm/tooltip_aura.h"
 
-namespace views {
-namespace corewm {
-namespace test {
+//namespace views {
+//namespace corewm {
+//namespace test {
 
 gfx::RenderText* TooltipAuraTestApi::GetRenderText() {
-  return tooltip_aura_->GetRenderTextForTest();
+  return GetRenderTextForTest3(tooltip_aura_);
 }
 
-}  // namespace test
-}  // namespace corewm
-}  // namespace views
+//}  // namespace test
+//}  // namespace corewm
+//}  // namespace views
