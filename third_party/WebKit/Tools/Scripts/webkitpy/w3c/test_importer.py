@@ -612,8 +612,8 @@ class TestImporter(object):
     def _get_last_imported_wpt_revision(self):
         """Finds the last imported WPT revision."""
         # TODO(robertma): Only match commit subjects.
-        output = self.chromium_git.most_recent_log_matching('^Import wpt@')
-        result = re.search(r'Import wpt@(\w+)', output)
+        output = self.chromium_git.most_recent_log_matching('^Import wpt@', self.finder.chromium_base())
+        result = re.search(r'^Import wpt@(\w+)', output)
         if result:
             return result.group(1)
         else:
