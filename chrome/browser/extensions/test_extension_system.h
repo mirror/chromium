@@ -50,6 +50,7 @@ class TestExtensionSystem : public ExtensionSystem {
 
   void CreateSocketManager();
 
+  void Init(bool extensions_enabled) override {}
   void InitForRegularProfile(bool extensions_enabled) override {}
   void SetExtensionService(ExtensionService* service);
   ExtensionService* extension_service() override;
