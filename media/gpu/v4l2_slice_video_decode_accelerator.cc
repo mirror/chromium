@@ -272,13 +272,14 @@ class V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator
   // H264Decoder::H264Accelerator implementation.
   scoped_refptr<H264Picture> CreateH264Picture() override;
 
-  bool SubmitFrameMetadata(const H264SPS* sps,
-                           const H264PPS* pps,
-                           const H264DPB& dpb,
-                           const H264Picture::Vector& ref_pic_listp0,
-                           const H264Picture::Vector& ref_pic_listb0,
-                           const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+  H264Decoder::MetadataResult SubmitFrameMetadata(
+      const H264SPS* sps,
+      const H264PPS* pps,
+      const H264DPB& dpb,
+      const H264Picture::Vector& ref_pic_listp0,
+      const H264Picture::Vector& ref_pic_listb0,
+      const H264Picture::Vector& ref_pic_listb1,
+      const scoped_refptr<H264Picture>& pic) override;
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
@@ -1445,6 +1446,11 @@ void V4L2SliceVideoDecodeAccelerator::DecodeBufferTask() {
         VLOGF(1) << "Error decoding stream";
         NOTIFY_ERROR(PLATFORM_FAILURE);
         return;
+
+      case AcceleratedVideoDecoder::kTryAgain:
+        VLOGF(1) << "kTryAgain is not supported";
+        NOTIFY_ERROR(PLATFORM_FAILURE);
+        return;
     }
   }
 }
@@ -2003,6 +2009,8 @@ void V4L2SliceVideoDecodeAccelerator::Reset() {
   decoder_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&V4L2SliceVideoDecodeAccelerator::ResetTask,
                             base::Unretained(this)));
+
+  return;
 }
 
 void V4L2SliceVideoDecodeAccelerator::ResetTask() {
@@ -2147,7 +2155,8 @@ void V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::H264DPBToV4L2DPB(
   }
 }
 
-bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitFrameMetadata(
+H264Decoder::MetadataResult
+V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitFrameMetadata(
     const H264SPS* sps,
     const H264PPS* pps,
     const H264DPB& dpb,
@@ -2322,7 +2331,7 @@ bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitFrameMetadata(
   H264DPBToV4L2DPB(dpb, &ref_surfaces);
   dec_surface->SetReferenceSurfaces(ref_surfaces);
 
-  return true;
+  return H264Decoder::MetadataResult::kOk;
 }
 
 bool V4L2SliceVideoDecodeAccelerator::V4L2H264Accelerator::SubmitSlice(

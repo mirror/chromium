@@ -138,13 +138,14 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
   // H264Decoder::H264Accelerator implementation.
   scoped_refptr<H264Picture> CreateH264Picture() override;
 
-  bool SubmitFrameMetadata(const H264SPS* sps,
-                           const H264PPS* pps,
-                           const H264DPB& dpb,
-                           const H264Picture::Vector& ref_pic_listp0,
-                           const H264Picture::Vector& ref_pic_listb0,
-                           const H264Picture::Vector& ref_pic_listb1,
-                           const scoped_refptr<H264Picture>& pic) override;
+  H264Decoder::MetadataResult SubmitFrameMetadata(
+      const H264SPS* sps,
+      const H264PPS* pps,
+      const H264DPB& dpb,
+      const H264Picture::Vector& ref_pic_listp0,
+      const H264Picture::Vector& ref_pic_listb0,
+      const H264Picture::Vector& ref_pic_listb1,
+      const scoped_refptr<H264Picture>& pic) override;
 
   bool SubmitSlice(const H264PPS* pps,
                    const H264SliceHeader* slice_hdr,
@@ -157,7 +158,7 @@ class VaapiVideoDecodeAccelerator::VaapiH264Accelerator
   bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
   bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
 
-  void Reset() override;
+  bool Reset() override;
 
  private:
   scoped_refptr<VaapiDecodeSurface> H264PictureToVaapiDecodeSurface(
@@ -656,6 +657,11 @@ void VaapiVideoDecodeAccelerator::DecodeTask() {
 
       case AcceleratedVideoDecoder::kDecodeError:
         RETURN_AND_NOTIFY_ON_FAILURE(false, "Error decoding stream",
+                                     PLATFORM_FAILURE, );
+        return;
+
+      case AcceleratedVideoDecoder::kTryAgain:
+        RETURN_AND_NOTIFY_ON_FAILURE(false, "kTryAgain is not supported",
                                      PLATFORM_FAILURE, );
         return;
     }
@@ -1160,7 +1166,8 @@ static void InitVAPicture(VAPictureH264* va_pic) {
   va_pic->flags = VA_PICTURE_H264_INVALID;
 }
 
-bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
+H264Decoder::MetadataResult
+VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
     const H264SPS* sps,
     const H264PPS* pps,
     const H264DPB& dpb,
@@ -1239,7 +1246,7 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
 
   if (!vaapi_wrapper_->SubmitBuffer(VAPictureParameterBufferType,
                                     sizeof(pic_param), &pic_param))
-    return false;
+    return H264Decoder::MetadataResult::kFailed;
 
   VAIQMatrixBufferH264 iq_matrix_buf;
   memset(&iq_matrix_buf, 0, sizeof(iq_matrix_buf));
@@ -1271,7 +1278,9 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitFrameMetadata(
   }
 
   return vaapi_wrapper_->SubmitBuffer(VAIQMatrixBufferType,
-                                      sizeof(iq_matrix_buf), &iq_matrix_buf);
+                                      sizeof(iq_matrix_buf), &iq_matrix_buf)
+             ? H264Decoder::MetadataResult::kOk
+             : H264Decoder::MetadataResult::kFailed;
 }
 
 bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::SubmitSlice(
@@ -1399,8 +1408,9 @@ bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::OutputPicture(
   return true;
 }
 
-void VaapiVideoDecodeAccelerator::VaapiH264Accelerator::Reset() {
+bool VaapiVideoDecodeAccelerator::VaapiH264Accelerator::Reset() {
   vaapi_wrapper_->DestroyPendingBuffers();
+  return true;
 }
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>

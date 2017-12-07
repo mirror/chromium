@@ -361,14 +361,7 @@ D3D11PictureBuffer* D3D11VideoDecoderImpl::GetPicture() {
   return nullptr;
 }
 
-size_t D3D11VideoDecoderImpl::input_buffer_id() const {
-  // NOTE: nobody uses this for anything.  it just gets returned to us with
-  // OutputResult.  It can be removed once we replace the VDA.
-  return 0;
-}
-
-void D3D11VideoDecoderImpl::OutputResult(D3D11PictureBuffer* buffer,
-                                         size_t input_buffer_id) {
+void D3D11VideoDecoderImpl::OutputResult(D3D11PictureBuffer* buffer) {
   buffer->set_in_client_use(true);
 
   // Note: The pixel format doesn't matter.
