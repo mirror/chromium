@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06b52720_211ed48c",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "better to pass \"const mojom::MtpFileEntry\u0026\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 42,
+        "endLine": 38,
+        "endChar": 64
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1540bac3_60988997",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "Change to \"std::move(file_entry)\". Then define the FileInfoFromMTPFileEntry() as:\nFileInfoFromMTPFileEntry(device::mojom::MtpFileEntryPtr file_entry).",
+      "range": {
+        "startLine": 237,
+        "startChar": 59,
+        "endLine": 237,
+        "endChar": 71
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d257d84_d7e5a38f",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "Pass the ownership of file_entries to MTPDeviceObjectEnumerator.\nThen MTPDeviceObjectEnumerator shouldn\u0027t define its member as a reference type.",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 52
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e20952a_a754c518",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "same as above.",
+      "range": {
+        "startLine": 298,
+        "startChar": 56,
+        "endLine": 298,
+        "endChar": 66
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce11dd2_5ae33af7",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "\"const MtpStorageInfo\u0026 storage_info\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f1c6e7_3c8c4992",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb9a987_d1ec64e8",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "if (!storage_info)",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 29
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98287a3_869132c3",
+        "filename": "components/storage_monitor/test_media_transfer_protocol_manager_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "return nullptr;",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa40fa1_9365a567",
+        "filename": "components/storage_monitor/test_media_transfer_protocol_manager_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-07T07:58:10Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
