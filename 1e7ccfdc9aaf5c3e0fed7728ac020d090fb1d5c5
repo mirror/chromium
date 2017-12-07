@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7052a47_832a27f4",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T00:44:14Z",
+      "side": 1,
+      "message": "Wait, did you disable the right check?",
+      "revId": "1e7ccfdc9aaf5c3e0fed7728ac020d090fb1d5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

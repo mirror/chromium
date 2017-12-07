@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfeeb1f2_ee4b1521",
+        "filename": "chrome/installer/linux/debian/build.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-07T00:44:14Z",
+      "side": 1,
+      "message": "Indent 1 more.",
+      "range": {
+        "startLine": 147,
+        "startChar": 20,
+        "endLine": 147,
+        "endChar": 26
+      },
+      "revId": "3097d7b0fc8a2607a3a78d708638d9f17623840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
