@@ -248,6 +248,15 @@ bool FakeShillProfileClient::GetService(const std::string& service_path,
   return found_profile;
 }
 
+bool FakeShillProfileClient::HasService(const std::string& service_path) {
+  for (const auto& profile : profiles_) {
+    if (GetServiceDataFromProfile(profile.get(), service_path, nullptr))
+      return true;
+  }
+
+  return false;
+}
+
 void FakeShillProfileClient::ClearProfiles() {
   profiles_.clear();
 }

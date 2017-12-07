@@ -62,6 +62,7 @@ class CHROMEOS_EXPORT FakeShillProfileClient :
   bool GetService(const std::string& service_path,
                   std::string* profile_path,
                   base::DictionaryValue* properties) override;
+  bool HasService(const std::string& service_path) override;
   void ClearProfiles() override;
 
  private:
