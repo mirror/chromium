@@ -111,6 +111,10 @@ float FilterGroup::MixAndFilter(int chunk_size) {
       volume = tmp;
       loudest_content_type = input->content_type();
     }
+    if (tmp == volume && input->primary()) {
+      // Primary inputs win tiebreaks.
+      loudest_content_type = input->content_type();
+    }
   }
 
   mixed_->ToInterleaved<::media::FloatSampleTypeTraits<float>>(chunk_size,
