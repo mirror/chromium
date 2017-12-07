@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc153b3_d9aa3c20",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "It might be good to add:\n\n  producer_handle_.set_connection_handler(Bind(this-\u003eOnPipeError());\n\n...so OnPipeError() could cancel an in-progress write that fails because the data pipe got closed unexpectedly.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 3
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4ae9f0_afafe514",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "IMHO, you should support sending zero-byte buffers. Sometimes codecs (e.g., Opus, IIRC) can produce 0-byte frames. The semantics of this, from both the producer\u0027s and consumer\u0027s point-of-view would be that a 0-byte frame is being sent/received.\n\n...\n\nOh, I just looked at the code later on, and realized you\u0027re not sending the payload size through the data pipe, like we had discussed earlier. Can we add that? Some use cases, such as CastRemotingSender, would benefit from not having to have the separate message to signal when to Read() from the pipe. Actually, it would solve a huge complexity issue regarding a race condition: Mojo doesn\u0027t guarantee whether the other endpoint will see bytes in the data pipe before or after the message is received. Last year, this led me to have to write some complex task queuing code: https://cs.chromium.org/chromium/src/chrome/browser/media/cast_remoting_sender.cc?rcl\u003d7e81dda83e2309e9faa74cda282d6f9ed4a6f870\u0026l\u003d332\n\nNote that this might change your Read() interface, since the number of bytes to be read wouldn\u0027t be known ahead of time. Maybe do something like to mitigate that:\n\n  using DoneCB \u003d base::OnceCallback\u003cvoid(std::unique_ptr\u003cstd::string\u003e buffer)\u003e;\n  void Read(std::unique_ptr\u003cstd::string\u003e buffer, DoneCB done_cb);\n\n(This would allow re-use of the same std::string as it gets passed in/out to/from each Read() operation, hopefully avoiding lots of heap reallocs.)",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 29
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e0fb7e_60f9b41e",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "The !done_cb_.is_null() is superfluous since the DCHECK() above checked that.",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 25
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7259fd0e_630bf42c",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "The current_buffer_size_ part is also not needed, right? |current-buffer_| will always be null.",
+      "range": {
+        "startLine": 168,
+        "startChar": 48,
+        "endLine": 168,
+        "endChar": 68
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917f859e_17835e6e",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "I\u0027m thinking this should all be a DCHECK(): It\u0027s a logic flaw in the code to call Write() while a previous write is in-progress.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1561bebb_a3b25172",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "I\u0027d set bytes_written_ to 0 here, since this is the point in the code where the write from the first byte begins.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 37
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f556fb5f_102009d4",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "nit: It\u0027s probably sufficient to just set |current_buffer_| to null and then run the |done_cb_|. The other fields will get re-initialized on the next call to Write() anyway.",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 27
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d6925a_745d7229",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-07T04:44:39Z",
+      "side": 1,
+      "message": "nit: Comment not necessary. The handle is a move-only type and named as such, so this is implied.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 44
+      },
+      "revId": "1f2eda9ace02b527b6c50679f51cd7388ce9601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
