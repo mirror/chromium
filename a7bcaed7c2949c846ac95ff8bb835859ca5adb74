@@ -22,6 +22,30 @@
       "revId": "a7bcaed7c2949c846ac95ff8bb835859ca5adb74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69d50c0_6f79160a",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-07T21:18:50Z",
+      "side": 1,
+      "message": "That makes things much simpler! Done!",
+      "parentUuid": "58c683a2_5aa5b389",
+      "range": {
+        "startLine": 173,
+        "startChar": 20,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "a7bcaed7c2949c846ac95ff8bb835859ca5adb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
