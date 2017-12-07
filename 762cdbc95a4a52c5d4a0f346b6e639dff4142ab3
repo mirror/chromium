@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5082bd7b_c182b098",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/FileAPI/unicode.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-07T09:43:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure why you\u0027re including this script? I don\u0027t think you\u0027re using anything from it...",
+      "revId": "762cdbc95a4a52c5d4a0f346b6e639dff4142ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
