@@ -201,7 +201,6 @@ class BBJSONGenerator(object):
     # TODO(kbr): until this script is merged with the GPU test generator, a few
     # arguments will be unused.
     del waterfall
-    del tester_config
     # Currently, the only reason a test should not run on a given tester is that
     # it's in the exceptions. (Once the GPU waterfall generation script is
     # incorporated here, the rules will become more complex.)
@@ -212,19 +211,34 @@ class BBJSONGenerator(object):
     if not remove_from:
       # Having difficulty getting coverage for the next line
       return True # pragma: no cover
-    return tester_name not in remove_from
+    if tester_name in remove_from:
+      return False
+    # If this bot mirrors another, try the original one.
+    if 'mirrors' in tester_config:
+      return tester_config['mirrors']['machine'] not in remove_from
+    return True
 
-  def get_test_modifications(self, test, test_name, tester_name):
+  def get_test_modifications(self, test, test_name, tester_name, tester_config):
     exception = self.get_exception_for_test(test_name, test)
     if not exception:
       return None
-    return exception.get('modifications', {}).get(tester_name)
+    result = exception.get('modifications', {}).get(tester_name)
+    if (not result) and ('mirrors' in tester_config):
+      # If this bot mirrors another, try the original one.
+      result = exception.get('modifications', {}).get(
+        tester_config['mirrors']['machine'])
+    return result
 
-  def get_test_key_removals(self, test_name, tester_name):
+  def get_test_key_removals(self, test_name, tester_name, tester_config):
     exception = self.exceptions.get(test_name)
     if not exception:
       return []
-    return exception.get('key_removals', {}).get(tester_name, [])
+    removals = exception.get('key_removals', {})
+    removal = removals.get(tester_name, [])
+    if (not removal) and ('mirrors' in tester_config):
+      # If this bot mirrors another, try the original one.
+      removal = removals.get(tester_config['mirrors']['machine'], [])
+    return removal
 
   def dictionary_merge(self, a, b, path=None, update=True):
     """http://stackoverflow.com/questions/7204805/
@@ -301,13 +315,15 @@ class BBJSONGenerator(object):
         if k != 'can_use_on_swarming_builders': # pragma: no cover
           del swarming_dict[k] # pragma: no cover
 
-  def update_and_cleanup_test(self, test, test_name, tester_name):
+  def update_and_cleanup_test(self, test, test_name, tester_name,
+                              tester_config):
     # See if there are any exceptions that need to be merged into this
     # test's specification.
-    modifications = self.get_test_modifications(test, test_name, tester_name)
+    modifications = self.get_test_modifications(test, test_name, tester_name,
+                                                tester_config)
     if modifications:
       test = self.dictionary_merge(test, modifications)
-    for k in self.get_test_key_removals(test_name, tester_name):
+    for k in self.get_test_key_removals(test_name, tester_name, tester_config):
       del test[k]
     self.clean_swarming_dictionary(test['swarming'])
     return test
@@ -354,7 +370,8 @@ class BBJSONGenerator(object):
             'name': 'shard #${SHARD_INDEX} logcats',
           },
         ]
-    result = self.update_and_cleanup_test(result, test_name, tester_name)
+    result = self.update_and_cleanup_test(result, test_name, tester_name,
+                                          tester_config)
     return result
 
   def generate_isolated_script_test(self, waterfall, tester_name, tester_config,
@@ -366,7 +383,8 @@ class BBJSONGenerator(object):
     result['isolate_name'] = result.get('isolate_name', test_name)
     result['name'] = test_name
     self.initialize_swarming_dictionary_for_test(result, tester_config)
-    result = self.update_and_cleanup_test(result, test_name, tester_name)
+    result = self.update_and_cleanup_test(result, test_name, tester_name,
+                                          tester_config)
     return result
 
   def generate_script_test(self, waterfall, tester_name, tester_config,
@@ -409,6 +427,29 @@ class BBJSONGenerator(object):
       'scripts': ScriptGenerator(self),
     }
 
+  def find_waterfall(self, name):
+    for waterfall in self.waterfalls:
+      if waterfall['name'] == name:
+        return waterfall
+    return None
+
+  def resolve_mirrored_bots(self):
+    for waterfall in self.waterfalls:
+      for bot_name, bot in waterfall['machines'].iteritems():
+        mirror = bot.get('mirrors', {})
+        if mirror:
+          waterfall_name = mirror['waterfall']
+          mirrored_waterfall = self.find_waterfall(waterfall_name)
+          if not mirrored_waterfall:
+            raise BBGenErr(
+              'Unknown mirrored waterfall %s in definition for %s on %s' %
+              (mirror['waterfall'], bot_name, waterfall_name))
+          mirrored_machine = mirrored_waterfall['machines'][mirror['machine']]
+          # We need to make a deep copy of the original machine because we
+          # mustn't share dictionaries like test_suites between the bots, or the
+          # resolution of test suites breaks later.
+          self.dictionary_merge(bot, copy.deepcopy(mirrored_machine))
+
   def check_composition_test_suites(self):
     # Pre-pass to catch errors reliably.
     for name, value in self.test_suites.iteritems():
@@ -446,6 +487,7 @@ class BBJSONGenerator(object):
     self.exceptions = self.load_pyl_file('test_suite_exceptions.pyl')
 
   def resolve_configuration_files(self):
+    self.resolve_mirrored_bots()
     self.resolve_composition_test_suites()
     self.link_waterfalls_to_test_suites()
 
