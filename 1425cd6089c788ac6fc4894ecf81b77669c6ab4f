@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "159c3a8f_31ace78d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-07T23:29:21Z",
+      "side": 1,
+      "message": "I agree with this general sentiment, I think the similarity in code is fine considering the limited uses of this that we currently have.",
+      "parentUuid": "22dd4b7c_4c1e0062",
+      "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d56af79_c56b01a5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I think +mdjones would be a much better person for this question",
       "parentUuid": "4d56af79_c56b01a5",
+      "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5277a89f_cfbdcb5c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-07T23:29:21Z",
+      "side": 1,
+      "message": "Unfortunately that\u0027s a known bug: crbug.com/764860\n\nIdeally the bottom sheet animates any time it closes; we should have to wait for the scrolling state before the above check. What you have here is fine for now, but can you add a todo for me to fix this once 764860 is fixed?",
+      "parentUuid": "4f251490_553bac9a",
       "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
