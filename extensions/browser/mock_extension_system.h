@@ -29,6 +29,7 @@ class MockExtensionSystem : public ExtensionSystem {
   content::BrowserContext* browser_context() { return browser_context_; }
 
   // ExtensionSystem overrides:
+  void Init(bool extensions_enabled) override;
   void InitForRegularProfile(bool extensions_enabled) override;
   ExtensionService* extension_service() override;
   RuntimeData* runtime_data() override;

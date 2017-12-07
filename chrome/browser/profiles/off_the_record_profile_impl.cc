@@ -194,6 +194,7 @@ void OffTheRecordProfileImpl::Init() {
       new extensions::ExtensionIconSource(profile_);
   content::URLDataSource::Add(this, icon_source);
 
+  extensions::ExtensionSystem::Get(this)->Init(false);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&NotifyOTRProfileCreatedOnIOThread, profile_, this));
