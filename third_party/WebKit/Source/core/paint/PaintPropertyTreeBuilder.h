@@ -161,6 +161,7 @@ class ObjectPaintPropertyTreeBuilder {
 
   const LayoutObject& object_;
   PaintPropertyTreeBuilderContext& context_;
+  CompositingReasons direct_compositing_reasons_ = CompositingReason::kNone;
 };
 
 }  // namespace blink

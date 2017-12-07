@@ -549,7 +549,10 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
             transform_properties->Transform()->Matrix());
   // The value is zero without a transform property that needs transform-offset.
   EXPECT_EQ(FloatPoint3D(0, 0, 0), transform_properties->Transform()->Origin());
-  EXPECT_EQ(nullptr, transform_properties->PaintOffsetTranslation());
+  EXPECT_EQ(TransformationMatrix().Translate(50, 100),
+            transform_properties->PaintOffsetTranslation()->Matrix());
+  EXPECT_EQ(LayoutPoint(),
+            transform->GetLayoutObject()->FirstFragment().PaintOffset());
   EXPECT_TRUE(transform_properties->Transform()->HasDirectCompositingReasons());
 
   CHECK_EXACT_VISUAL_RECT(LayoutRect(50, 100, 400, 300),
