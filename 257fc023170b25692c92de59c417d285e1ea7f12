@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4d4eec_5cc82ebe",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T07:49:54Z",
+      "side": 1,
+      "message": "Do a lot of callsites use an empty source code? Seems surprising. Why run a worker thread with empty source code?",
+      "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e750114_ddea78f9",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-07T07:49:54Z",
+      "side": 1,
+      "message": "nullptr default cached_meta_data probably makes sense,  but why is the default empty String() default needed?",
+      "revId": "257fc023170b25692c92de59c417d285e1ea7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
