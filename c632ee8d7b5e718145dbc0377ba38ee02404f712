@@ -1,0 +1,456 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54e2eb50_bd3174ac",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "s/Set/Sets \n\nsame comment for other places\n\nFrom Style Guide: \"Use descriptive form (\"Opens the file\") rather than imperative form (\"Open the file\") for method and function comments. The comment describes the function; it does not tell the function what to do.\"\n\nhttp://go/objc-style#Declaration_Comments",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337367ff_24785139",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "From Style Guide: \"Every non-trivial interface, public and private, should have an accompanying comment describing its purpose and how it fits into the larger picture.\"\n\nhttp://go/objc-style#Declaration_Comments",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb15c909_a83ec346",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Do we need a category here? Can we use a function instead? Category like this has a chance of runtime naming collision and Cronet is a library not an app.\n\nIf you absolutely has to use category, please follow these naming recommendations:\nhttp://go/objc-style#Category_Names",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b364deaf_8e92f00b",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Please add comments.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b7a0ce_36461cff",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "task_metrics_map_lock_",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5130746c_231a872d",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Line break after this:\nhttp://go/objc-style#Order_of_Includes",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b473b3c_91ee74d9",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "s/include/import",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b09a6c_c4c4b93c",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Do these comments belong to URLSessionTaskDelegateProxy class?",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81db9a3a_3fae6ab7",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "_respondsToDidFinishCollectingMetrics",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6419dcb9_ba8aec37",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Should this call be inside SetUp?",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897b3717_846216e3",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "De wee need constructor/destructor here?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153e946e_5a6b8852",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "CronetMetricsTest::SetUp() ?",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b03d07_b6699c52",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Do you want to add comments to test methods? They don\u0027t look trivial.",
+      "range": {
+        "startLine": 128,
+        "startChar": 26,
+        "endLine": 128,
+        "endChar": 40
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12b5355_a49ee582",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Do we need this? Same question for other places where NSLog is called",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 20
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9c9578_6d985831",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Please use dot syntax consistently. There is code which uses |[]| for properties (e.g. request.URL)",
+      "range": {
+        "startLine": 149,
+        "startChar": 51,
+        "endLine": 149,
+        "endChar": 56
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1458711_8629c961",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "EXPECT_NE takes first argument as expected result and second as actual result.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 27
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7022c606_2159bc86",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9017f35b_37f3f4fd",
+        "filename": "components/cronet/ios/test/cronet_test_base.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d1ed3_601aeb6e",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "nit: s/include/import\n\nhttp://go/objc-style##import_and_#include",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e70132_9a76429e",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Do we need to use scoped_nsobject here? Can we pass NSURLSessionTask instead?",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3626952_ec3686cd",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Unrelated to your CL, but a good cahnge to fix the code:\nexplicit HttpProtocolHandlerCore(NSURLSessionTask* task);",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 25
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d706f2c_1e0cbcce",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-07T19:22:32Z",
+      "side": 1,
+      "message": "Is there a reason why we convert URL to string and back? Please document in the comments.",
+      "range": {
+        "startLine": 241,
+        "startChar": 48,
+        "endLine": 241,
+        "endChar": 62
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
