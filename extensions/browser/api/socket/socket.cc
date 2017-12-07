@@ -55,10 +55,9 @@ void Socket::WriteData() {
   DCHECK(request.byte_count >= request.bytes_written);
   io_buffer_write_ = new net::WrappedIOBuffer(request.io_buffer->data() +
                                               request.bytes_written);
-  int result =
-      WriteImpl(io_buffer_write_.get(),
-                request.byte_count - request.bytes_written,
-                base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
+  int result = WriteImpl(
+      io_buffer_write_.get(), request.byte_count - request.bytes_written,
+      base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
 
   if (result != net::ERR_IO_PENDING)
     OnWriteComplete(result);
@@ -139,5 +138,34 @@ Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 
 Socket::WriteRequest::~WriteRequest() {}
+
+// static
+net::NetworkTrafficAnnotationTag Socket::GetNetworkTrafficAnnotationTag() {
+  return net::DefineNetworkTrafficAnnotation("socket_extension_api", R"(
+        semantics {
+          sender: "Extensions Socket API"
+          description:
+            "Chrome Extensions can use this API to send and receive data over "
+            "the network using TCP and UDP connections."
+          trigger: "A request from an Extension."
+          data: "Any data that the extension sends."
+          destination: OTHER
+          destination_other:
+            "The extension can select any destination for the sent data."
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "No settings control. This API function will not be used if user "
+            "does not install any extension that uses Socket API."
+          chrome_policy {
+            ExtensionInstallBlacklist {
+              ExtensionInstallBlacklist: {
+                entries: '*'
+              }
+            }
+          }
+        })");
+}
 
 }  // namespace extensions
