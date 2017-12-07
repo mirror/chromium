@@ -255,6 +255,8 @@ void NetErrorHelper::GenerateLocalizedErrorPage(
 
 void NetErrorHelper::LoadErrorPage(const std::string& html,
                                    const GURL& failed_url) {
+  printf("***** LoadErrorPage (%s) \n", failed_url.spec().c_str());
+
   render_frame()->GetWebFrame()->LoadHTMLString(
       html, GURL(kUnreachableWebDataURL), failed_url, true);
 }
@@ -267,6 +269,8 @@ void NetErrorHelper::EnablePageHelperFunctions() {
 void NetErrorHelper::UpdateErrorPage(const error_page::Error& error,
                                      bool is_failed_post,
                                      bool can_show_network_diagnostics_dialog) {
+  printf("NetErrorHelper::UpdateErrorPage\n");
+
   base::DictionaryValue error_strings;
   LocalizedError::GetStrings(
       error.reason(), error.domain(), error.url(), is_failed_post,
@@ -294,12 +298,14 @@ void NetErrorHelper::FetchNavigationCorrections(
     const std::string& navigation_correction_request_body) {
   DCHECK(!correction_fetcher_.get());
 
+  printf("******* FetchNavigationCorrections\n");
   correction_fetcher_ =
       content::ResourceFetcher::Create(navigation_correction_url);
   correction_fetcher_->SetMethod("POST");
   correction_fetcher_->SetBody(navigation_correction_request_body);
   correction_fetcher_->SetHeader("Content-Type", "application/json");
 
+  printf("Making a call to fetch the corrections list!\n");
   correction_fetcher_->Start(
       render_frame()->GetWebFrame(),
       blink::WebURLRequest::kRequestContextInternal,

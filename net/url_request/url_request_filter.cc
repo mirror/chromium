@@ -144,6 +144,8 @@ URLRequestJob* URLRequestFilter::MaybeInterceptRequest(
 }
 
 URLRequestFilter::URLRequestFilter() : hit_count_(0) {
+  printf("*********** URLRequestFilter\n");
+
   DCHECK(OnMessageLoopForInterceptorAddition());
   URLRequestJobFactoryImpl::SetInterceptorForTesting(this);
 }

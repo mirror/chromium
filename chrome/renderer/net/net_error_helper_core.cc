@@ -167,8 +167,11 @@ bool ShouldUseFixUrlServiceForError(const error_page::Error& error,
   }
   if (IsNetDnsError(error)) {
     *error_param = "dnserror";
+    printf("asdf!\n");
     return true;
   }
+  printf("asd2222f!\n");
+
   if (domain == net::kErrorDomain &&
       (error.reason() == net::ERR_CONNECTION_FAILED ||
        error.reason() == net::ERR_CONNECTION_REFUSED ||
@@ -265,6 +268,7 @@ base::string16 FormatURLForDisplay(const GURL& url, bool is_rtl) {
 
 std::unique_ptr<NavigationCorrectionResponse> ParseNavigationCorrectionResponse(
     const std::string raw_response) {
+  printf("ParseNavigationCorrectionResponse:  \n%s\n", raw_response.c_str());
   // TODO(mmenke):  Open source related protocol buffers and use them directly.
   std::unique_ptr<base::Value> parsed = base::JSONReader::Read(raw_response);
   std::unique_ptr<NavigationCorrectionResponse> response(
@@ -530,12 +534,15 @@ void NetErrorHelperCore::CancelPendingFetches() {
     committed_error_page_info_->needs_load_navigation_corrections = false;
   if (pending_error_page_info_)
     pending_error_page_info_->needs_load_navigation_corrections = false;
+
+  printf("Cancelling fetch navigation corrections \n");
   delegate_->CancelFetchNavigationCorrections();
   auto_reload_timer_->Stop();
   auto_reload_paused_ = false;
 }
 
 void NetErrorHelperCore::OnStop() {
+  printf("************** OnStop\n");
   if (committed_error_page_info_ &&
       committed_error_page_info_->auto_reload_triggered) {
     ReportAutoReloadFailure(committed_error_page_info_->error,
@@ -548,6 +555,8 @@ void NetErrorHelperCore::OnStop() {
 }
 
 void NetErrorHelperCore::OnWasShown() {
+  printf("************** OnWasShown\n");
+
   visible_ = true;
   if (!auto_reload_visible_only_)
     return;
@@ -556,6 +565,8 @@ void NetErrorHelperCore::OnWasShown() {
 }
 
 void NetErrorHelperCore::OnWasHidden() {
+  printf("************** OnWasHidden\n");
+
   visible_ = false;
   if (!auto_reload_visible_only_)
     return;
@@ -563,6 +574,8 @@ void NetErrorHelperCore::OnWasHidden() {
 }
 
 void NetErrorHelperCore::OnStartLoad(FrameType frame_type, PageType page_type) {
+  printf("************** OnStartLoad\n");
+
   if (frame_type != MAIN_FRAME)
     return;
 
@@ -575,8 +588,12 @@ void NetErrorHelperCore::OnStartLoad(FrameType frame_type, PageType page_type) {
 }
 
 void NetErrorHelperCore::OnCommitLoad(FrameType frame_type, const GURL& url) {
+  printf("************** OnCommitLoad\n");
+
   if (frame_type != MAIN_FRAME)
     return;
+
+  printf("************** OnCommitLoad (a) \n");
 
   // If a page is committing, either it's an error page and autoreload will be
   // started again below, or it's a success page and we need to clear autoreload
@@ -599,6 +616,9 @@ void NetErrorHelperCore::OnCommitLoad(FrameType frame_type, const GURL& url) {
           pending_error_page_info_->error.url()) {
     DCHECK(navigation_from_button_ == RELOAD_BUTTON ||
            navigation_from_button_ == SHOW_SAVED_COPY_BUTTON);
+
+    printf("************** OnCommitLoad (b) \n");
+
     RecordEvent(
         navigation_from_button_ == RELOAD_BUTTON
             ? error_page::NETWORK_ERROR_PAGE_RELOAD_BUTTON_ERROR
@@ -610,21 +630,33 @@ void NetErrorHelperCore::OnCommitLoad(FrameType frame_type, const GURL& url) {
       committed_error_page_info_->auto_reload_triggered) {
     const error_page::Error& error = committed_error_page_info_->error;
     const GURL& error_url = error.url();
-    if (url == error_url)
+    if (url == error_url) {
+      printf("************** OnCommitLoad (c) \n");
+
       ReportAutoReloadSuccess(error, auto_reload_count_);
-    else if (url != content::kUnreachableWebDataURL)
+    } else if (url != content::kUnreachableWebDataURL) {
+      printf("************** OnCommitLoad (d) \n");
+
       ReportAutoReloadFailure(error, auto_reload_count_);
+    }
   }
 
   committed_error_page_info_ = std::move(pending_error_page_info_);
 }
 
 void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
-  if (frame_type != MAIN_FRAME)
+  printf("************** OnFinishLoad\n");
+
+  if (frame_type != MAIN_FRAME) {
+    printf("************** OnFinishLoad: not main frame\n");
+
     return;
+  }
 
   if (!committed_error_page_info_) {
     auto_reload_count_ = 0;
+    printf("************** OnFinishLoad: early retuyrn\n");
+
     return;
   }
 
@@ -654,6 +686,8 @@ void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
   delegate_->EnablePageHelperFunctions();
 
   if (committed_error_page_info_->needs_load_navigation_corrections) {
+    printf("************** OnFinishLoad :  FetchNavigationCorrections!\n");
+
     // If there is another pending error page load, |fix_url| should have been
     // cleared.
     DCHECK(!pending_error_page_info_);
@@ -665,6 +699,10 @@ void NetErrorHelperCore::OnFinishLoad(FrameType frame_type) {
             *committed_error_page_info_->navigation_correction_params));
   } else if (auto_reload_enabled_ &&
              IsReloadableError(*committed_error_page_info_)) {
+    printf(
+        "************** OnFinishLoad :  no "
+        "needs_load_navigation_corrections!\n");
+
     MaybeStartAutoReloadTimer();
   }
 
@@ -687,6 +725,8 @@ void NetErrorHelperCore::GetErrorHTML(FrameType frame_type,
     DCHECK(!committed_error_page_info_ ||
            !committed_error_page_info_->needs_load_navigation_corrections);
 
+    printf("GetErrorHTML\n");
+
     pending_error_page_info_.reset(
         new ErrorPageInfo(error, is_failed_post, is_ignoring_cache));
     pending_error_page_info_->navigation_correction_params.reset(
@@ -708,6 +748,8 @@ void NetErrorHelperCore::GetErrorHTML(FrameType frame_type,
 }
 
 void NetErrorHelperCore::OnNetErrorInfo(error_page::DnsProbeStatus status) {
+  printf("************** OnNetErrorInfo\n");
+
   DCHECK_NE(error_page::DNS_PROBE_POSSIBLE, status);
 
   last_probe_status_ = status;
@@ -732,6 +774,8 @@ void NetErrorHelperCore::OnSetNavigationCorrectionInfo(
     const std::string& country_code,
     const std::string& api_key,
     const GURL& search_url) {
+  printf("************** OnSetNavigationCorrectionInfo\n");
+
   navigation_correction_params_.url = navigation_correction_url;
   navigation_correction_params_.language = language;
   navigation_correction_params_.country_code = country_code;
@@ -745,12 +789,17 @@ void NetErrorHelperCore::GetErrorHtmlForMainFrame(
   std::string error_param;
   error_page::Error error = pending_error_page_info->error;
 
+  printf("GetErrorHtmlForMainFrame\n");
+
   if (pending_error_page_info->navigation_correction_params &&
       pending_error_page_info->navigation_correction_params->url.is_valid() &&
       ShouldUseFixUrlServiceForError(error, &error_param)) {
     pending_error_page_info->needs_load_navigation_corrections = true;
+    printf("GetErrorHtmlForMainFrame : 1\n");
+
     return;
   }
+  printf("GetErrorHtmlForMainFrame : 2\n");
 
   if (IsNetDnsError(pending_error_page_info->error)) {
     // The last probe status needs to be reset if this is a DNS error.  This
@@ -761,6 +810,7 @@ void NetErrorHelperCore::GetErrorHtmlForMainFrame(
     last_probe_status_ = error_page::DNS_PROBE_POSSIBLE;
     pending_error_page_info->needs_dns_updates = true;
     error = GetUpdatedError(error);
+    printf("GetErrorHtmlForMainFrame : 3\n");
   }
 
   delegate_->GenerateLocalizedErrorPage(
@@ -773,6 +823,8 @@ void NetErrorHelperCore::GetErrorHtmlForMainFrame(
 }
 
 void NetErrorHelperCore::UpdateErrorPage() {
+  printf("************** UpdateErrorPage\n");
+
   DCHECK(committed_error_page_info_->needs_dns_updates);
   DCHECK(committed_error_page_info_->is_finished_loading);
   DCHECK_NE(error_page::DNS_PROBE_POSSIBLE, last_probe_status_);
@@ -796,6 +848,7 @@ void NetErrorHelperCore::UpdateErrorPage() {
 void NetErrorHelperCore::OnNavigationCorrectionsFetched(
     const std::string& corrections,
     bool is_rtl) {
+  printf("************** OnNavigationCorrectionsFetched\n");
   // Loading suggestions only starts when a blank error page finishes loading,
   // and is cancelled with a new load.
   DCHECK(!pending_error_page_info_);
@@ -813,6 +866,7 @@ void NetErrorHelperCore::OnNavigationCorrectionsFetched(
   std::string error_html;
   std::unique_ptr<error_page::ErrorPageParams> params;
   if (pending_error_page_info_->navigation_correction_response) {
+    printf("     **** 1\n");
     // Copy navigation correction parameters used for the request, so tracking
     // requests can still be sent if the configuration changes.
     pending_error_page_info_->navigation_correction_params.reset(
@@ -831,6 +885,8 @@ void NetErrorHelperCore::OnNavigationCorrectionsFetched(
         &pending_error_page_info_->show_cached_copy_button_in_page,
         &pending_error_page_info_->download_button_in_page, &error_html);
   } else {
+    printf("     **** 2\n");
+
     // Since |navigation_correction_params| in |pending_error_page_info_| is
     // NULL, this won't trigger another attempt to load corrections.
     GetErrorHtmlForMainFrame(pending_error_page_info_.get(), &error_html);

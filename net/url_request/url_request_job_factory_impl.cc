@@ -48,6 +48,9 @@ URLRequestJob* URLRequestJobFactoryImpl::MaybeCreateJobWithProtocolHandler(
     NetworkDelegate* network_delegate) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (g_interceptor_for_testing) {
+    printf("********* MaybeCreateJobWithProtocolHandler (%s)\n",
+           request->url().spec().c_str());
+
     URLRequestJob* job = g_interceptor_for_testing->MaybeInterceptRequest(
         request, network_delegate);
     if (job)
@@ -100,6 +103,8 @@ bool URLRequestJobFactoryImpl::IsSafeRedirectTarget(
 void URLRequestJobFactoryImpl::SetInterceptorForTesting(
     URLRequestInterceptor* interceptor) {
   DCHECK(!interceptor || !g_interceptor_for_testing);
+
+  printf("***  URLRequestJobFactoryImpl::SetInterceptorForTesting*\n");
 
   g_interceptor_for_testing = interceptor;
 }
