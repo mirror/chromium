@@ -93,6 +93,30 @@
       "revId": "08296611dcdab94ad6645ac68a0a36b387e59180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b701d_f11dc1ed",
+        "filename": "cc/paint/scoped_raster_flags.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-07T14:38:16Z",
+      "side": 1,
+      "message": "Excellent!",
+      "parentUuid": "9d02e17b_b10f7915",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 61
+      },
+      "revId": "08296611dcdab94ad6645ac68a0a36b387e59180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
