@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4766e4ec_87f95902",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-07T14:59:02Z",
+      "side": 1,
+      "message": "s/in/on/, threads are thin and we can\u0027t be \"in\" them :-)",
+      "range": {
+        "startLine": 9,
+        "startChar": 39,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "34c14efbd8bf2ca9cca92d254b8dcafb94fc4dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dc290e_c320a3d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-07T14:59:02Z",
+      "side": 1,
+      "message": "Would you mind adding   \n  SEQUENCE_CHECKER(sequence_checker_);\nthroughout the inner accelerators (like in crrev.com/c/794091), \nto document in code the assumptions we write in prose?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 6
+      },
+      "revId": "34c14efbd8bf2ca9cca92d254b8dcafb94fc4dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb956520_e4cf3188",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-07T14:59:02Z",
+      "side": 1,
+      "message": "nit: no need to specify chromium: in chromium project, please\nremove.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "34c14efbd8bf2ca9cca92d254b8dcafb94fc4dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4befaa4d_b76fb5b5",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-07T14:59:02Z",
+      "side": 1,
+      "message": "s/reference/referenced/",
+      "range": {
+        "startLine": 1058,
+        "startChar": 11,
+        "endLine": 1058,
+        "endChar": 20
+      },
+      "revId": "34c14efbd8bf2ca9cca92d254b8dcafb94fc4dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276559e7_a8e839e6",
+        "filename": "media/gpu/vaapi/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-07T14:59:02Z",
+      "side": 1,
+      "message": "ResetTask() in l.1060 posts a FinishReset() back to us [1]\nwhich will race with this statement here, wouldn\u0027t it?\n\nNote that decoder_-\u003eReset() in [2] is different between\nh264 and vpx, i.e. VP9Decoder::Reset() [3] is a short \noperation whereas H264Decoder::Reset() [4] boils down to \nVaapiH264Accelerator::Reset() [5] which goes down into \nvaapi.\n\n[1] https://cs.chromium.org/chromium/src/media/gpu/vaapi/vaapi_video_decode_accelerator.cc?type\u003dcs\u0026q\u003dVaapiVideoDecodeAccelerator::ResetTask\u0026sq\u003dpackage:chromium\u0026l\u003d979\n[2] https://cs.chromium.org/chromium/src/media/gpu/vaapi/vaapi_video_decode_accelerator.cc?type\u003dcs\u0026q\u003dVaapiVideoDecodeAccelerator::ResetTask\u0026sq\u003dpackage:chromium\u0026l\u003d968\n[3] https://cs.chromium.org/chromium/src/media/gpu/vp9_decoder.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d43\n[4] https://cs.chromium.org/chromium/src/media/gpu/h264_decoder.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d36\n[5] https://cs.chromium.org/chromium/src/media/gpu/vaapi/vaapi_video_decode_accelerator.cc?type\u003dcs\u0026q\u003dVaapiVideoDecodeAccelerator::ResetTask\u0026sq\u003dpackage:chromium\u0026l\u003d1403",
+      "range": {
+        "startLine": 1064,
+        "startChar": 0,
+        "endLine": 1064,
+        "endChar": 42
+      },
+      "revId": "34c14efbd8bf2ca9cca92d254b8dcafb94fc4dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
