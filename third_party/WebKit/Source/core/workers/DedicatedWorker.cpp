@@ -30,6 +30,7 @@ namespace blink {
 
 DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
                                          const String& url,
+                                         const WorkerOptions& options,
                                          ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   Document* document = ToDocument(context);
@@ -45,15 +46,17 @@ DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
   if (!script_url.IsValid())
     return nullptr;
 
-  DedicatedWorker* worker = new DedicatedWorker(context, script_url);
+  DedicatedWorker* worker = new DedicatedWorker(context, script_url, options);
   worker->Start();
   return worker;
 }
 
 DedicatedWorker::DedicatedWorker(ExecutionContext* context,
-                                 const KURL& script_url)
+                                 const KURL& script_url,
+                                 const WorkerOptions& options)
     : AbstractWorker(context),
       script_url_(script_url),
+      options_(options),
       context_proxy_(CreateMessagingProxy(context)) {
   DCHECK(IsMainThread());
   DCHECK(script_url_.IsValid());
