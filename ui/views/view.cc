@@ -2285,6 +2285,7 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   if (needs_layout_ || previous_bounds.size() != size()) {
     needs_layout_ = false;
     Layout();
+    NotifyAccessibilityEvent(ui::AX_EVENT_LOCATION_CHANGED, false);
   }
 
   if (GetNeedsNotificationWhenVisibleBoundsChange())
