@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c0c76b_11196e98",
+        "filename": "third_party/crashpad/crashpad/util/win/process_info_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-12-07T01:23:38Z",
+      "side": 1,
+      "message": "Normally we just write DISABLED_OtherProcess to statically disable. DISABLED_TEST() would be for dynamic disabling, if you wanted to detect Windows 10. But since this is in the Chromium copy only and should be temporary, it’s OK to let this land.",
+      "revId": "fb8574a8c9e4ded8aaa018c4e765effc7688c84d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
