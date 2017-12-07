@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fbced1b_872e56e3",
+        "filename": "content/renderer/loader/web_url_loader_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-07T01:07:03Z",
+      "side": 1,
+      "message": "Unfortunately this test doesn\u0027t work because WebURLResponse::ToResourceResponse is inside an #if INSIDE_BLINK\" block, and also third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h isn\u0027t allowed by DEPS to be included from this file. \n\nAny ideas?",
+      "range": {
+        "startLine": 714,
+        "startChar": 6,
+        "endLine": 714,
+        "endChar": 41
+      },
+      "revId": "5461e4e8f371ff0a3accb42b43b782351afdfca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
