@@ -16,6 +16,24 @@
       "revId": "335bb4679b94b9ad3f3e1984b827bde50985badc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ef4306_1400405b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSScale.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-07T03:57:59Z",
+      "side": 1,
+      "message": "Oh yeah, this needs normalization of numeric values to work first. I\u0027m gonna land that first and fix this.",
+      "parentUuid": "4ba3d79f_9fa82225",
+      "revId": "335bb4679b94b9ad3f3e1984b827bde50985badc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
