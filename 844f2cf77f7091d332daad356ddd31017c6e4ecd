@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "579f0288_e682d6b2",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-07T07:56:29Z",
+      "side": 1,
+      "message": "Since you don\u0027t have much time left in this year, can we leave the elimination of primary direction to the next year, so that we don\u0027t block the NG version of LocalCaretRect?",
+      "parentUuid": "06863b5c_2cbc2fa2",
+      "revId": "844f2cf77f7091d332daad356ddd31017c6e4ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ba88d46_bdf8a4cb",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 6
