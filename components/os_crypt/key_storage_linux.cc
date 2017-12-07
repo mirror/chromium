@@ -150,13 +150,11 @@ void KeyStorageLinux::BlockOnPasswordThenSignal(
     base::WaitableEvent* on_password_received,
     std::string* password) {
   *password = GetKeyImpl();
-  if (on_password_received)
-    on_password_received->Signal();
+  on_password_received->Signal();
 }
 
 void KeyStorageLinux::BlockOnInitThenSignal(base::WaitableEvent* on_inited,
                                             bool* success) {
   *success = Init();
-  if (on_inited)
-    on_inited->Signal();
+  on_inited->Signal();
 }
