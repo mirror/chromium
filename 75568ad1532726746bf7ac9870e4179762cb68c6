@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1e720ae4_fbd9871b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T08:16:39Z",
+      "side": 1,
+      "message": "It is the same logic. It is not written the same way as the layout is different but the effect is the same.",
+      "parentUuid": "fd4ad4b3_7510ebe8",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7737e26c_de84f0a2",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -142,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "17f3e832_c812caf4",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T08:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7737e26c_de84f0a2",
+      "range": {
+        "startLine": 160,
+        "startChar": 45,
+        "endLine": 160,
+        "endChar": 48
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6670253d_6a8e8972",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -162,6 +210,30 @@
       "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a8741b_ffd2350b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-07T08:16:39Z",
+      "side": 1,
+      "message": "The previous value is NO. So we are setting it back to its previous value :)",
+      "parentUuid": "6670253d_6a8e8972",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 38
+      },
+      "revId": "75568ad1532726746bf7ac9870e4179762cb68c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
