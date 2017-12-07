@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f781da46_794314f4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7baabc_5f188d1c",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc935c60_024457f1",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
         "patchSetId": 10
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "97dffcb4_d1ba2f7f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/UserDataMap.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Ah should have been deleted already.",
+      "parentUuid": "cc935c60_024457f1",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c348e6_36cce012",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 10
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-06T00:07:43Z",
       "side": 1,
       "message": "Nit: Why the if-construct? You seem to only want to assert in the other case, so just do the assert here?",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db757ea3_a59d67d0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Removed the assert and just made it return here.",
+      "parentUuid": "98c348e6_36cce012",
       "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "10209dcc_b9177ec7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Not sure what needs to be done. Logging is the least I can do. Done.",
+      "parentUuid": "9030c1d6_18cf171f",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19ed158a_53d6798e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 10
@@ -116,6 +188,30 @@
       "writtenOn": "2017-12-06T00:07:43Z",
       "side": 1,
       "message": "This is the same as getUserDataMap() below, so unnecessary.",
+      "range": {
+        "startLine": 762,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 42
+      },
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4f04d8_acc1f2bb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Yes meant to replace it. Done.",
+      "parentUuid": "19ed158a_53d6798e",
       "range": {
         "startLine": 762,
         "startChar": 0,
@@ -145,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "1769414a_f5494a25",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "It was mainly to attach the annotation at this assignment. Can make it easier to read now that the annotation is moved elsewhere. Done.",
+      "parentUuid": "af9f0331_4dbcd2f1",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e4af27_0be05baa",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
         "patchSetId": 10
@@ -156,6 +270,30 @@
       "writtenOn": "2017-12-05T22:35:10Z",
       "side": 1,
       "message": "this should be on the impl type? makes it impossible for embedder to accidentally insert the interface type into webcontents",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d97f87e_8c9df306",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "As suggested, inheritance was now replaced with composition.",
+      "parentUuid": "e0e4af27_0be05baa",
       "range": {
         "startLine": 14,
         "startChar": 40,
@@ -185,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "9f0b0850_35fd3234",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Moved the code to WebContentsUserData and added the annotation/comment. I can\u0027t see the warning though. The annotation there is mostly for casting from Object to T.",
+      "parentUuid": "88b7a1b8_5540e265",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f6b85bd_90c51905",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
         "patchSetId": 10
@@ -202,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "34197d32_77081948",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Right it doesn\u0027t have to be public. Move to internal package org.chromium.content.browser.webcontents.",
+      "parentUuid": "7f6b85bd_90c51905",
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8e8569_84fb7c6e",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
         "patchSetId": 10
@@ -213,6 +387,30 @@
       "writtenOn": "2017-12-06T00:07:43Z",
       "side": 1,
       "message": "I don\u0027t think this refers to the right class.",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "4f3c242b42c0e4ffbdc279cd83e4df2dd759f06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5baaf2_11905ed6",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-07T01:59:19Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "6a8e8569_84fb7c6e",
       "range": {
         "startLine": 9,
         "startChar": 54,
