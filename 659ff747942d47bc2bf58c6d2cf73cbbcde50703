@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4463c4f7_aec8aaa0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-07T11:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfea02d8_dad1630d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3045f8dd_7adbaf17",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d328eb34_4dd651b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-07T11:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3045f8dd_7adbaf17",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bbcef89d_074a1fc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-07T11:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9991b913_4b495c94",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d5aa90_8758106f",
         "filename": "extensions/browser/api/socket/socket.h",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4215197_bfcc6e97",
+        "filename": "extensions/browser/api/socket/socket.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-07T11:49:24Z",
+      "side": 1,
+      "message": "Absolutely right. I move extension files to another CL.",
+      "parentUuid": "60d5aa90_8758106f",
+      "revId": "659ff747942d47bc2bf58c6d2cf73cbbcde50703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
