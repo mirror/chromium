@@ -16,6 +16,24 @@
       "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f28d9bd_520bff4e",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-07T01:56:08Z",
+      "side": 1,
+      "message": "+1.\n\nLooks like SetAllRequestExpirations() is called in SetDevToolsAttached() and we haven\u0027t had a test for a combination of worker restart and DevTools. Can we make it?",
+      "parentUuid": "96262642_4e46a4d3",
+      "revId": "1a34688ecbda0c96cf7fc113d0f03abccd721137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
