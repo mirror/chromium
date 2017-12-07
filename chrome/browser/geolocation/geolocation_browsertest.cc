@@ -35,6 +35,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "device/geolocation/network_location_request.h"
+#include "device/geolocation/public/cpp/fake_geolocation.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
@@ -235,7 +236,6 @@ class GeolocationBrowserTest : public InProcessBrowserTest {
   ~GeolocationBrowserTest() override;
 
   // InProcessBrowserTest:
-  void SetUpOnMainThread() override;
   void TearDownInProcessBrowserTestFixture() override;
 
   Browser* current_browser() { return current_browser_; }
@@ -321,18 +321,20 @@ class GeolocationBrowserTest : public InProcessBrowserTest {
   double fake_latitude_ = 1.23;
   double fake_longitude_ = 4.56;
 
+  std::unique_ptr<device::ScopedGeolocationOverrider> geolocation_overrider_;
+
   DISALLOW_COPY_AND_ASSIGN(GeolocationBrowserTest);
 };
 
 GeolocationBrowserTest::GeolocationBrowserTest() {
+  // The WebContentImpl tries to connect Device Service earlier than calling
+  // the SetUpOnMainThread(), so we create the |geolocation_overrider_| in
+  // constructor.
+  geolocation_overrider_ = std::make_unique<device::ScopedGeolocationOverrider>(
+      fake_latitude_, fake_longitude_);
 }
 
-GeolocationBrowserTest::~GeolocationBrowserTest() {
-}
-
-void GeolocationBrowserTest::SetUpOnMainThread() {
-  ui_test_utils::OverrideGeolocation(fake_latitude_, fake_longitude_);
-}
+GeolocationBrowserTest::~GeolocationBrowserTest() {}
 
 void GeolocationBrowserTest::TearDownInProcessBrowserTestFixture() {
   LOG(WARNING) << "TearDownInProcessBrowserTestFixture. Test Finished.";
@@ -455,7 +457,8 @@ bool GeolocationBrowserTest::SetPositionAndWaitUntilUpdated(double latitude,
 
   fake_latitude_ = latitude;
   fake_longitude_ = longitude;
-  ui_test_utils::OverrideGeolocation(latitude, longitude);
+
+  geolocation_overrider_->UpdateLocation(fake_latitude_, fake_longitude_);
 
   std::string result;
   if (!dom_message_queue.WaitForMessage(&result))
@@ -501,7 +504,10 @@ IN_PROC_BROWSER_TEST_F(GeolocationBrowserTest, Geoposition) {
 // detected in a scan: https://crbug.com/767300.
 #define MAYBE_UrlWithApiKey DISABLED_UrlWithApiKey
 #else
-#define MAYBE_UrlWithApiKey UrlWithApiKey
+#define MAYBE_UrlWithApiKey DISABLED_UrlWithApiKey
+// TODO(ke.he@intel.com): Move the UrlWithApiKey test to service_unittest.
+// This test is disabled because the FakeGeolocationContext which is used by
+// this GeolocationBrowserTest never calls the URLFetcher.
 #endif
 // Tests that Chrome makes a network geolocation request to the correct URL
 // including Google API key query param.

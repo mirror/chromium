@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/extensions/extension_apitest.h"
-#include "chrome/test/base/ui_test_utils.h"
 
 class GeolocationApiTest : public ExtensionApiTest {
  public:
@@ -12,7 +11,9 @@ class GeolocationApiTest : public ExtensionApiTest {
 
   // InProcessBrowserTest
   void SetUpOnMainThread() override {
-    ui_test_utils::OverrideGeolocation(0, 0);
+    // Use the FakeGeolocationContext when enable this test. See more info
+    // in "device/geolocation/public/cpp/fake_geolocation.h".
+    // ui_test_utils::OverrideGeolocation(0, 0);
   }
 };
 
