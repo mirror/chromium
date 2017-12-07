@@ -163,7 +163,7 @@ TooltipAura::~TooltipAura() {
   DestroyWidget();
 }
 
-gfx::RenderText* TooltipAura::GetRenderTextForTest() {
+gfx::RenderText* TooltipAura::GetRenderTextForTest2() {
   return tooltip_view_->render_text_for_test();
 }
 

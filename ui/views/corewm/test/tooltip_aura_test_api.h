@@ -16,24 +16,26 @@ class RenderText;
 namespace views {
 namespace corewm {
 class TooltipAura;
+}
+}
 
-namespace test {
+//namespace test {
 
 class TooltipAuraTestApi {
  public:
-  explicit TooltipAuraTestApi(TooltipAura* tooltip_aura)
+  explicit TooltipAuraTestApi(views::corewm::TooltipAura* tooltip_aura)
       : tooltip_aura_(tooltip_aura) {}
 
   gfx::RenderText* GetRenderText();
 
  private:
-  TooltipAura* tooltip_aura_;
+  views::corewm::TooltipAura* tooltip_aura_;
 
   DISALLOW_COPY_AND_ASSIGN(TooltipAuraTestApi);
 };
 
-}  // namespace test
-}  // namespace corewm
-}  // namespace views
+//}  // namespace test
+//}  // namespace corewm
+//}  // namespace views
 
 #endif  // UI_VIEWS_COREWM_TEST_TOOLTIP_AURA_TEST_API_H_

@@ -16,14 +16,16 @@ class RenderText;
 class Size;
 }  // namespace gfx
 
+class TooltipAuraTestApi;
+
 namespace views {
 
 class Widget;
 
 namespace corewm {
-namespace test {
-class TooltipAuraTestApi;
-}
+//namespace test {
+//class TooltipAuraTestApi;
+//}
 
 // Implementation of Tooltip that shows the tooltip using a Widget and Label.
 class VIEWS_EXPORT TooltipAura : public Tooltip, public WidgetObserver {
@@ -34,8 +36,11 @@ class VIEWS_EXPORT TooltipAura : public Tooltip, public WidgetObserver {
  private:
   class TooltipView;
 
-  friend class test::TooltipAuraTestApi;
-  gfx::RenderText* GetRenderTextForTest();
+  //  friend class test::TooltipAuraTestApi;
+  friend class TooltipAuraTestApi;
+ public:
+  gfx::RenderText* GetRenderTextForTest2();
+ private:
 
   // Adjusts the bounds given by the arguments to fit inside the desktop
   // and applies the adjusted bounds to the label_.
