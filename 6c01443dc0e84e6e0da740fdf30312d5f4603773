@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37e2bfc7_c055668e",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d20f90dd_a811ac8e",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a502355_2936f5ee",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d812afd_dbb3f7b5",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a502355_2936f5ee",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "00569933_b4d22aca",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc503cb9_646dd2b1",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3582f21d_5b244eae",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cccaa1a1_adadc8eb",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done\n\nNothing for now. In the future, probably log certain metrics.",
+      "parentUuid": "3582f21d_5b244eae",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8378f04_1fc896ee",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-06T23:57:47Z",
       "side": 1,
       "message": "are there cases where you expect the ImageLoaderClient to be unavailable?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caea0296_ae565480",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "No. This can be called only after ui is running.",
+      "parentUuid": "e8378f04_1fc896ee",
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d8f90023_f003c38f",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Thanks for reminding me of this. I agree.\nI filed a bug earlier to improve unit testing (788467) and keep track of this effort.",
+      "parentUuid": "543c4b8a_720f95cf",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da866071_53d29225",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12192764_a666b55f",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da866071_53d29225",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "213e8f3d_e8cf5883",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318c8b3d_eedb3d87",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c038ed5_64d94f2d",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 6
@@ -149,6 +293,24 @@
       "writtenOn": "2017-12-06T23:57:47Z",
       "side": 1,
       "message": "what\u0027s the reason for this class that just contains static methods? would it be cleaner to make these be regular functions in their own namespace, or for them to be regular functions with \"CrOS\" in their names at the top of the component_updater namespace?",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93a9eef_3abc2cd4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "This class is to put all methods in one umbrella so we can friend them in OnDemandUpdater:\n\nhttps://cs.chromium.org/chromium/src/components/component_updater/component_updater_service.h?q\u003ddemandupdate\u0026sq\u003dpackage:chromium\u0026l\u003d163",
+      "parentUuid": "5c038ed5_64d94f2d",
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "68cca055_5fd7b008",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d792039a_e67383d2",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 12
+      },
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed55b87_1c6a7db5",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 6
@@ -192,6 +378,24 @@
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404ec684_994b36e4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed55b87_1c6a7db5",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "7cb2034d_38215253",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a73979ea_ca35fd0d",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a93606a4_f9b91526",
         "filename": "chromeos/dbus/image_loader_client.h",
         "patchSetId": 6
@@ -223,6 +445,30 @@
       "writtenOn": "2017-12-06T23:57:47Z",
       "side": 1,
       "message": "if this undoes the work performed by LoadComponent, either this should be named UnloadComponent or LoadComponent should be renamed to MountComponent.",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99589065_841963f3",
+        "filename": "chromeos/dbus/image_loader_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "I agree. This is a bit misleading as the naming conventions in imageloader is LoadComponent vs UnmountComponent for their own reasons. I will improve this (792981).",
+      "parentUuid": "a93606a4_f9b91526",
       "range": {
         "startLine": 54,
         "startChar": 15,
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "6b2ed555_a5c38ab3",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "is_successful is set in CrOSComponent::UnloadComponent. It is set to be false, either |component_name| does not exist or UnregisterComponent call returns false. Otherwise, it is set to be true.",
+      "parentUuid": "844ac8ca_e4bbe048",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb1e8dac_52a14b0e",
         "filename": "chromeos/dbus/services/component_updater_service_provider.h",
         "patchSetId": 6
@@ -266,6 +530,24 @@
       "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec12714_d29db498",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-07T18:44:30Z",
+      "side": 1,
+      "message": "Done\n\nI was also changing component dbus API name to be Load/Unload to be consistent across boards. Otherwise it will be hard to change after this CL is merged.",
+      "parentUuid": "cb1e8dac_52a14b0e",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
