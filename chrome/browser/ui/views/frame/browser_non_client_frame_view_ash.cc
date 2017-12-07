@@ -351,6 +351,8 @@ void BrowserNonClientFrameViewAsh::ChildPreferredSizeChanged(
 // ash::ShellObserver:
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
+  frame()->UpdateWindowIcon();
+
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
   OnOverviewModeChanged(true);

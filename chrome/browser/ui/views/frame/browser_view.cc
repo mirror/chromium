@@ -1684,6 +1684,11 @@ gfx::ImageSkia BrowserView::GetWindowIcon() {
   if (browser_->is_app() || browser_->is_type_popup())
     return browser_->GetCurrentPageIcon().AsImageSkia();
 
+  if (browser_->is_type_tabbed()) {
+    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+    return rb.GetImageNamed(IDR_PRODUCT_LOGO_32).AsImageSkia();
+  }
+
   return gfx::ImageSkia();
 }
 
