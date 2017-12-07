@@ -146,6 +146,9 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 #import "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
@@ -396,6 +399,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     CRWNativeContentProvider,
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
+                                    FullscreenUIElement,
                                     LegacyFullscreenControllerDelegate,
                                     InfobarContainerStateDelegate,
                                     KeyCommandsPlumbing,
@@ -586,6 +590,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 
   // The forwarder for web scroll view interation events.
   WebScrollViewMainContentUIForwarder* _webMainContentUIForwarder;
+
+  // The updater that adjusts the toolbar's layout for fullscreen events.
+  std::unique_ptr<FullscreenUIUpdater> _fullscreenUIUpdater;
 
   // Coordinator for the External Search UI.
   ExternalSearchCoordinator* _externalSearchCoordinator;
@@ -1182,9 +1189,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     // TODO(crbug.com/790886): Use the Browser's broadcaster once Browsers are
     // supported.
-    ChromeBroadcaster* broadcaster = FullscreenControllerFactory::GetInstance()
-                                         ->GetForBrowserState(_browserState)
-                                         ->broadcaster();
+    FullscreenController* fullscreenController =
+        FullscreenControllerFactory::GetInstance()->GetForBrowserState(
+            _browserState);
+    ChromeBroadcaster* broadcaster = fullscreenController->broadcaster();
     if (_broadcasting) {
       _toolbarUIUpdater = [[LegacyToolbarUIUpdater alloc]
           initWithToolbarUI:[[ToolbarUIState alloc] init]
@@ -1192,12 +1200,18 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                webStateList:[_model webStateList]];
       [_toolbarUIUpdater startUpdating];
       StartBroadcastingToolbarUI(_toolbarUIUpdater.toolbarUI, broadcaster);
+
       _mainContentUIUpdater = [[MainContentUIStateUpdater alloc]
           initWithState:[[MainContentUIState alloc] init]];
       _webMainContentUIForwarder = [[WebScrollViewMainContentUIForwarder alloc]
           initWithUpdater:_mainContentUIUpdater
              webStateList:[_model webStateList]];
       StartBroadcastingMainContentUI(self, broadcaster);
+
+      _fullscreenUIUpdater = base::MakeUnique<FullscreenUIUpdater>(self);
+      fullscreenController->AddObserver(_fullscreenUIUpdater.get());
+
+      fullscreenController->SetWebStateList([_model webStateList]);
     } else {
       StopBroadcastingToolbarUI(broadcaster);
       StopBroadcastingMainContentUI(broadcaster);
@@ -1206,6 +1220,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       _mainContentUIUpdater = nil;
       [_webMainContentUIForwarder disconnect];
       _webMainContentUIForwarder = nil;
+      fullscreenController->RemoveObserver(_fullscreenUIUpdater.get());
+      _fullscreenUIUpdater = nullptr;
+      fullscreenController->SetWebStateList(nullptr);
     }
   }
 }
@@ -1918,6 +1935,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_dispatcher startDispatchingToTarget:_toolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
   [_toolbarCoordinator setTabCount:[_model count]];
+  [_toolbarCoordinator start];
   [self updateBroadcastState];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(
@@ -3570,6 +3588,56 @@ bubblePresenterForFeature:(const base::Feature&)feature
       DCHECK([[iteratedTab view] isDescendantOfView:self.contentArea]);
       break;
     }
+  }
+}
+
+#pragma mark - FullscreenUIElement methods
+
+- (void)updateForFullscreenProgress:(CGFloat)progress {
+  [self updateHeadersForFullscreenProgress:progress];
+  [self updateContentViewTopPaddingForFullscreenProgress:progress];
+}
+
+- (void)updateForFullscreenEnabled:(BOOL)enabled {
+  if (!enabled)
+    [self updateForFullscreenProgress:1.0];
+}
+
+- (void)finishFullscreenScrollWithAnimator:
+    (FullscreenScrollEndAnimator*)animator {
+  BOOL showingToolbar = animator.finalProgress > animator.startProgress;
+  CGFloat finalProgress = animator.finalProgress;
+  // WKWebView does not re-render its content until its model layer's bounds
+  // have been updated at the end of the animation.  If the animator is going
+  // to hide the toolbar, update the content view's top padding early so that
+  // content is correctly rendered behind the toolbar that's being animated
+  // away.
+  if (!showingToolbar)
+    [self updateContentViewTopPaddingForFullscreenProgress:finalProgress];
+  [animator addAnimations:^{
+    [self updateHeadersForFullscreenProgress:finalProgress];
+  }];
+  // If the toolbar is being animated to become visible, update the content view
+  // top padding in the completion block so that fixed-position elements can be
+  // properly laid out in the new viewport.
+  if (showingToolbar) {
+    __weak FullscreenScrollEndAnimator* weakAnimator = animator;
+    [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+      [self updateContentViewTopPaddingForFullscreenProgress:
+                [weakAnimator progressForAnimatingPosition:finalPosition]];
+    }];
+  }
+}
+
+- (void)updateHeadersForFullscreenProgress:(CGFloat)progress {
+  [self setFramesForHeaders:[self headerViews]
+                   atOffset:(1.0 - progress) * [self toolbarHeight]];
+}
+
+- (void)updateContentViewTopPaddingForFullscreenProgress:(CGFloat)progress {
+  if (self.currentWebState) {
+    self.currentWebState->GetWebViewProxy().topContentPadding =
+        progress * [self toolbarHeight];
   }
 }
 
