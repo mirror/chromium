@@ -8,6 +8,7 @@
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
+#include "base/strings/sys_string_conversions.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -46,16 +47,17 @@
 }
 
 - (void)fillForm:(NSString*)dataString
-    forceFillFieldName:(NSString*)forceFillFieldName
-     completionHandler:(ProceduralBlock)completionHandler {
+    forceFillFieldIdentifier:(NSString*)forceFillFieldIdentifier
+           completionHandler:(ProceduralBlock)completionHandler {
   DCHECK(completionHandler);
-  std::string fieldName =
-      forceFillFieldName
-          ? base::GetQuotedJSONString([forceFillFieldName UTF8String])
+  std::string fieldIdentifier =
+      forceFillFieldIdentifier
+          ? base::GetQuotedJSONString(
+                base::SysNSStringToUTF8(forceFillFieldIdentifier))
           : "null";
   NSString* fillFormJS =
       [NSString stringWithFormat:@"__gCrWeb.autofill.fillForm(%@, %s);",
-                                 dataString, fieldName.c_str()];
+                                 dataString, fieldIdentifier.c_str()];
   [self executeJavaScript:fillFormJS completionHandler:^(id, NSError*) {
     completionHandler();
   }];
