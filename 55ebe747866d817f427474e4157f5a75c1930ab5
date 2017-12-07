@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10b9679a_beddd0cf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54501,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-07T18:15:16Z",
+      "side": 1,
+      "message": "This is a tangled mess, and some of it is confusing.  What is an \"inner working\"?  Do you mean internals?\n\nIf I\u0027m interpreting it correctly, you can probably write something like:\nCounts when the offline pages prefetch store is opened or closed.\n\nAlso, can you please slightly revise the enums.xml description for this:\ncurrent:\n\u003cenum name\u003d\"OfflinePagesStoreEvent\"\u003e\n  \u003cint value\u003d\"0\" label\u003d\"Store opened for the first time\"/\u003e\n  \u003cint value\u003d\"1\" label\u003d\"Store reopened\"/\u003e\n  \u003cint value\u003d\"2\" label\u003d\"Store closed\"/\u003e\n  \u003cint value\u003d\"3\" label\u003d\"Store closing skipped\"/\u003e\n\u003c/enum\u003e\nBut\nenum\u003d0 should be \"store opened for the first time this session\"\nAnd enum\u003d3 should probably be something like \"store closing skipped because store never completed initialization\" (or something more precise)",
+      "revId": "55ebe747866d817f427474e4157f5a75c1930ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef4c080_5c461148",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54508,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-07T18:15:16Z",
+      "side": 1,
+      "message": "nit: add \"within a session\"\n(Otherwise people might think it count over chrome restarts.  I know you clarify this below.  The clarification should be more prominent.  You could move the last sentence up here if you want instead.)",
+      "range": {
+        "startLine": 54508,
+        "startChar": 61,
+        "endLine": 54508,
+        "endChar": 62
+      },
+      "revId": "55ebe747866d817f427474e4157f5a75c1930ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
