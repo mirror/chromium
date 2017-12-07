@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1befb817_79248afc",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "We\u0027re restoring the browser changed on 150. We return the found browser (which the caller can do whatever they want with.)",
+      "parentUuid": "e26e4f88_cc63a9a4",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e22f1ded_1d17b867",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1872fe42_737855bf",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Singleton doesn\u0027t look outside the current window, thus has no need to show it.",
+      "parentUuid": "e22f1ded_1d17b867",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fe7396b1_3d09fccf",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Good point; I narrowed it but I suppose if you could construct a history of NTPs, this wouldn\u0027t close it. That seems like a corner case to me.",
+      "parentUuid": "4eca47b6_248a20cb",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acdfb9b7_2eed3ed5",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1987d59_c9b5ac8e",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Line 608 appears to be saying we do.",
+      "parentUuid": "acdfb9b7_2eed3ed5",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "95c7fb25_f19ddb90",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a309b2_92d468c8",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a025b6d5_e1de6818",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50dc23f_f1162d29",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a025b6d5_e1de6818",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f72b89cf_1541e002",
+        "filename": "components/omnibox/browser/omnibox_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "I think it\u0027s useful to explain why we\u0027re doing something weird with these unrelated items. I updated it.",
+      "parentUuid": "0b22d5e9_df786721",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0846ca2_3d5d6659",
         "filename": "components/omnibox/browser/omnibox_view.h",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5576de3c_1baecf04",
+        "filename": "components/omnibox/browser/omnibox_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "\u003e Nit: Usually inlined setters like this would be named set_shift_key_pressed()\n\nI had in mind that we were going to do something when the user pressed shift. I can change it but would prefer when we\u0027re certain that nothing will happen at this event.\n\n\u003e Also, I recommend naming all this stuff \"down\" rather than \"pressed\", because \"pressed\" can read like past tense of \"press\", i.e. \"the shift key has at some point been pressed\", rather than \"the shift key is currently down\".  This matches how we name the ControlKeyState values.\n\nDone.",
+      "parentUuid": "e0846ca2_3d5d6659",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e9eb6f_f2391879",
         "filename": "ui/base/window_open_disposition.h",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec6a366_a6948806",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-07T21:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e9eb6f_f2391879",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
