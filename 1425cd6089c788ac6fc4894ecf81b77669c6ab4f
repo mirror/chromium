@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "22dd4b7c_4c1e0062",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-07T22:36:22Z",
+      "side": 1,
+      "message": "After offline discussion, leaving it as is may be better for now. The difference between how the two tests focus, and what they wait for before typing is too different that there would be if conditions which aren\u0027t great for parameterizing.\n\nPerhaps some larger refactoring could be done, but I\u0027m not sure if it\u0027s worth effort for this limited amount of code.",
+      "parentUuid": "ef0cb784_499cc339",
+      "revId": "1425cd6089c788ac6fc4894ecf81b77669c6ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d56af79_c56b01a5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
         "patchSetId": 1
