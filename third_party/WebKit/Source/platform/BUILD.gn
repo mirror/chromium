@@ -584,7 +584,6 @@ jumbo_component("platform") {
     "exported/WebImageGenerator.cpp",
     "exported/WebInputEvent.cpp",
     "exported/WebMediaConstraints.cpp",
-    "exported/WebMediaDeviceInfo.cpp",
     "exported/WebMediaPlayerClient.cpp",
     "exported/WebMediaPlayerEncryptedMediaClient.cpp",
     "exported/WebMediaPlayerSource.cpp",
