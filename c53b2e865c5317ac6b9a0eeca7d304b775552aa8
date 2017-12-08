@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f395d05_739dbd30",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-08T19:09:15Z",
+      "side": 1,
+      "message": "Can you clarify what \"stays in sync\" means? Currently, enums.xml keeps the old values and marks them as obsolete, while they are mostly turned into comments here. Please either add a note explaining that old values must be kept here as comments and not reused, or use the kUnused* naming scheme for all of them instead of partially turning them into comments.",
+      "range": {
+        "startLine": 272,
+        "startChar": 3,
+        "endLine": 272,
+        "endChar": 72
+      },
+      "revId": "c53b2e865c5317ac6b9a0eeca7d304b775552aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
