@@ -606,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "63604b53_905c0cb1",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-12-08T05:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3beaade1_af3ce169",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f9a2594_3719d2b0",
         "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
         "patchSetId": 1
@@ -919,6 +937,24 @@
       "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b27ecad_2b44a337",
+        "filename": "device/media_transfer_protocol/public/interfaces/media_transfer_protocol.mojom.bak",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-12-08T05:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01226485_24e3c8e6",
+      "revId": "431027e0e0a933597aa60c0c5640368f09599bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
