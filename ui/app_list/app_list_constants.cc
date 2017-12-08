@@ -176,6 +176,11 @@ const size_t kMaxFolderNameChars = 80;
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;
 
+// The UMA histogram that logs the commands which are executed on app context
+// menus in the system UI.
+constexpr char kAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.FromApp";
+
 // The UMA histogram that logs usage of suggested and regular apps.
 const char kAppListAppLaunched[] = "Apps.AppListAppLaunched";
 

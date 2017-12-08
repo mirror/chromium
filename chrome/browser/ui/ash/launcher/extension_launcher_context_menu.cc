@@ -7,6 +7,7 @@
 #include "ash/scoped_root_window_for_new_windows.h"  // mash-ok
 #include "ash/shell.h"                               // mash-ok
 #include "base/bind.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/extensions/context_menu_matcher.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -193,8 +194,10 @@ void ExtensionLauncherContextMenu::ExecuteCommand(int command_id,
       if (extension_items_) {
         extension_items_->ExecuteCommand(command_id, nullptr, nullptr,
                                          content::ContextMenuParams());
+        return;
       }
   }
+  LauncherContextMenu::RecordHistogram(command_id);
 }
 
 extensions::LaunchType ExtensionLauncherContextMenu::GetLaunchType() const {
