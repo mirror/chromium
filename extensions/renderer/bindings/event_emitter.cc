@@ -205,6 +205,7 @@ void EventEmitter::DispatchAsync(v8::Local<v8::Context> context,
                                  JSRunner::ResultCallback callback) {
   v8::Isolate* isolate = context->GetIsolate();
   v8::HandleScope handle_scope(isolate);
+  DCHECK(context == isolate->GetCurrentContext());
 
   // In order to dispatch (potentially) asynchronously (such as when script is
   // suspended), use a helper function to run once JS is allowed to run,
