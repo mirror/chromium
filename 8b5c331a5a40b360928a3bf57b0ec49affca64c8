@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e546e7f_8df3f8fa",
+        "filename": "ios/chrome/browser/autocomplete/autocomplete_provider_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-08T17:12:12Z",
+      "side": 1,
+      "message": "Autocomplete does not care if we return nullptr here?",
+      "revId": "8b5c331a5a40b360928a3bf57b0ec49affca64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
