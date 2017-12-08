@@ -433,6 +433,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     opacity: 0.5;
 }
 
+.CodeMirror .text-editor-value-decoration .object-properties-preview {
+    white-space: nowrap;
+}
+
 .CodeMirror .text-editor-line-decoration-icon {
     position: absolute;
     cursor: pointer;
