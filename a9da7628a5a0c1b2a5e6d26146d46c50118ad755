@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb7f24a9_9d3e066f",
+        "filename": "content/test/data/accessibility/aria/aria-expanded.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-08T17:24:55Z",
+      "side": 1,
+      "message": "Please add an HTML comment \u003c!-- blablabla --\u003e above this line to explain that the following ARIA roles are not permitted to have aria-expanded.",
+      "revId": "a9da7628a5a0c1b2a5e6d26146d46c50118ad755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
