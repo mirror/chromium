@@ -43,6 +43,9 @@ class ChromeNetworkServiceRestartBrowserTest : public InProcessBrowserTest {
 
     network_service_test->SimulateCrash();
     run_loop.Run();
+
+    // Make sure the cached NetworkServicePtr receives error notification.
+    FlushNetworkServiceInstanceForTesting();
   }
 
   int LoadBasicRequest(mojom::NetworkContext* network_context) {
