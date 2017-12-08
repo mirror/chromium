@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4a86612_cfe3d26b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:22:41Z",
+      "side": 1,
+      "message": "is card.number() equivalent here?",
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b175649_9ec44c67",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:22:41Z",
+      "side": 1,
+      "message": "Can you combine this test with the last one in this file?",
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a99dde7_0511991f",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:22:41Z",
+      "side": 1,
+      "message": "mention what the argument should be, not how it\u0027s eventually used.",
+      "range": {
+        "startLine": 133,
+        "startChar": 21,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
