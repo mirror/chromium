@@ -296,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "0fc38b57_ad4cc9a7",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-12-08T07:16:46Z",
+      "side": 1,
+      "message": "\u003e \u003e It seems that this API never gets invoked in Finnur\u0027s case. \n\u003e \n\u003e No, as far as I can tell, the API is reliably being calling in my case (as long as the shortcut exists and has the right GUID assigned to it).\n\nSorry I misunderstood your earlier comment. Glad to know it\u0027s working now!",
+      "parentUuid": "5f4c7219_c117e3aa",
+      "revId": "de986b6760b25c1854d211b5e227387fb2c9d282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5583bfe_1dd7ba85",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 5
