@@ -23,6 +23,8 @@ cr.define('extensions', function() {
     onLinkTap_: function(e) {
       e.preventDefault();
       extensions.navigation.navigateTo({page: e.target.dataset.path});
+      // Using 'cancel' instead of 'close' so it would animate.
+      this.fire('cancel');
     }
   });
 
