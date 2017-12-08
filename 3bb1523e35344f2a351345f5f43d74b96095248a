@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb61b9eb_6870bfab",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-08T08:45:28Z",
+      "side": 1,
+      "message": "Oh, sorry, I need it in previous code but the code was deleted now.",
+      "parentUuid": "243ce6dd_f9d8066e",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74b1ff99_5234f09d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T08:20:02Z",
       "side": 1,
       "message": "I don\u0027t see what registration object host has to with this.\n\nthe comment should explain why this can\u0027t die before the call back is invoked.",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1791b3_58cead9f",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-08T08:45:28Z",
+      "side": 1,
+      "message": "Sorry, my fault.\n\nHow about:\n// As ServiceWorkerVersion holds the mojo connection to |this| while the worker is running, so we can guarantee |this| is alive before the callback is invoked.",
+      "parentUuid": "74b1ff99_5234f09d",
       "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
