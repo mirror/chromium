@@ -13,7 +13,7 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget_observer.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 class LocationBarBubbleDelegateView;
 
 namespace gfx {
@@ -41,7 +41,7 @@ class BubbleIconView : public views::InkDropHostView,
     EXECUTE_SOURCE_GESTURE,
   };
 
-  BubbleIconView(CommandUpdater* command_updater, int command_id);
+  BubbleIconView(CommandUpdaterProxy* command_updater_proxy, int command_id);
   ~BubbleIconView() override;
 
   // Returns true if a related bubble is showing.
@@ -115,8 +115,8 @@ class BubbleIconView : public views::InkDropHostView,
   // The image shown in the button.
   views::ImageView* image_;
 
-  // The CommandUpdater for the Browser object that owns the location bar.
-  CommandUpdater* command_updater_;
+  // The CommandUpdaterProxy for the Browser object that owns the location bar.
+  CommandUpdaterProxy* command_updater_proxy_;
 
   // The command ID executed when the user clicks this icon.
   const int command_id_;

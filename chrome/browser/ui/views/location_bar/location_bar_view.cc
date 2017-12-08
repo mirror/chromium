@@ -14,7 +14,7 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
@@ -125,11 +125,11 @@ const char LocationBarView::kViewClassName[] = "LocationBarView";
 
 LocationBarView::LocationBarView(Browser* browser,
                                  Profile* profile,
-                                 CommandUpdater* command_updater,
+                                 CommandUpdaterProxy* command_updater_proxy,
                                  Delegate* delegate,
                                  bool is_popup_mode)
     : LocationBar(profile),
-      ChromeOmniboxEditController(command_updater),
+      ChromeOmniboxEditController(command_updater_proxy),
       browser_(browser),
       delegate_(delegate),
       is_popup_mode_(is_popup_mode) {
@@ -190,7 +190,7 @@ void LocationBarView::Init() {
   // Initialize the Omnibox view.
   omnibox_view_ = new OmniboxViewViews(
       this, base::MakeUnique<ChromeOmniboxClient>(this, profile()),
-      command_updater(), is_popup_mode_, this, font_list);
+      command_updater_proxy(), is_popup_mode_, this, font_list);
   omnibox_view_->Init();
   AddChildView(omnibox_view_);
 
@@ -238,15 +238,16 @@ void LocationBarView::Init() {
 
   add_icon(zoom_view_ = new ZoomView(delegate_));
   add_icon(manage_passwords_icon_view_ =
-               new ManagePasswordsIconViews(command_updater()));
-  add_icon(save_credit_card_icon_view_ =
-               new autofill::SaveCardIconView(command_updater(), browser_));
-  add_icon(translate_icon_view_ = new TranslateIconView(command_updater()));
+               new ManagePasswordsIconViews(command_updater_proxy()));
+  add_icon(save_credit_card_icon_view_ = new autofill::SaveCardIconView(
+               command_updater_proxy(), browser_));
+  add_icon(translate_icon_view_ =
+               new TranslateIconView(command_updater_proxy()));
 #if defined(OS_CHROMEOS)
   add_icon(intent_picker_view_ = new IntentPickerView(browser_));
 #endif
   add_icon(find_bar_icon_ = new FindBarIcon());
-  add_icon(star_view_ = new StarView(command_updater(), browser_));
+  add_icon(star_view_ = new StarView(command_updater_proxy(), browser_));
 
   clear_all_button_ = views::CreateVectorImageButton(this);
   clear_all_button_->SetTooltipText(
@@ -776,8 +777,11 @@ bool LocationBarView::RefreshSaveCreditCardIconView() {
   autofill::SaveCardBubbleControllerImpl* controller =
       autofill::SaveCardBubbleControllerImpl::FromWebContents(web_contents);
   bool enabled = controller && controller->IsIconVisible();
-  command_updater()->UpdateCommandEnabled(IDC_SAVE_CREDIT_CARD_FOR_PAGE,
-                                          enabled);
+  if (!command_updater_proxy()->UpdateCommandEnabled(
+          IDC_SAVE_CREDIT_CARD_FOR_PAGE, enabled)) {
+    enabled = command_updater_proxy()->IsCommandEnabled(
+        IDC_SAVE_CREDIT_CARD_FOR_PAGE);
+  }
   save_credit_card_icon_view_->SetVisible(enabled);
 
   return was_visible != save_credit_card_icon_view_->visible();
@@ -804,7 +808,10 @@ void LocationBarView::RefreshTranslateIcon() {
   translate::LanguageState& language_state =
       ChromeTranslateClient::FromWebContents(web_contents)->GetLanguageState();
   bool enabled = language_state.translate_enabled();
-  command_updater()->UpdateCommandEnabled(IDC_TRANSLATE_PAGE, enabled);
+  if (!command_updater_proxy()->UpdateCommandEnabled(
+          IDC_TRANSLATE_PAGE, enabled)) {
+    enabled = command_updater_proxy()->IsCommandEnabled(IDC_TRANSLATE_PAGE);
+  }
   translate_icon_view_->SetVisible(enabled);
   if (!enabled)
     TranslateBubbleView::CloseCurrentBubble();

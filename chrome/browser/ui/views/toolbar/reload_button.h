@@ -11,7 +11,7 @@
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/views/controls/button/button.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -32,7 +32,7 @@ class ReloadButton : public ToolbarButton,
   // The button's class name.
   static const char kViewClassName[];
 
-  ReloadButton(Profile* profile, CommandUpdater* command_updater);
+  ReloadButton(Profile* profile, CommandUpdaterProxy* command_updater_proxy);
   ~ReloadButton() override;
 
   // Ask for a specified button state.  If |force| is true this will be applied
@@ -83,7 +83,7 @@ class ReloadButton : public ToolbarButton,
   base::OneShotTimer mode_switch_timer_;
 
   // This may be NULL when testing.
-  CommandUpdater* command_updater_;
+  CommandUpdaterProxy* command_updater_proxy_;
 
   // The mode we should be in assuming no timers are running.
   Mode intended_mode_;
