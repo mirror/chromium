@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "ba45d683_d354f5c3",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T12:22:02Z",
+      "side": 1,
+      "message": "Sorry for the confusion. Yes, I meant that \"this particular function will not be invoked at all on the sign-in screen\".",
+      "parentUuid": "4d21cec8_182f2347",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921d21e2_ecf2515f",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 11
