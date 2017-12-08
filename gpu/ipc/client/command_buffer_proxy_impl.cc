@@ -33,7 +33,7 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_switches.h"
-
+#include "base/debug/stack_trace.h" 
 namespace gpu {
 
 namespace {
@@ -75,6 +75,8 @@ ContextResult CommandBufferProxyImpl::Initialize(
     gpu::SchedulingPriority stream_priority,
     const gpu::gles2::ContextCreationAttribHelper& attribs,
     const GURL& active_url) {
+  LOG(ERROR) << "MSW HERE!"; 
+  base::debug::StackTrace().Print(); 
   DCHECK(!share_group || (stream_id_ == share_group->stream_id_));
   TRACE_EVENT1("gpu", "GpuChannelHost::CreateViewCommandBuffer",
                "surface_handle", surface_handle);
