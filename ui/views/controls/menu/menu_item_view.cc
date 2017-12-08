@@ -181,6 +181,8 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     case NORMAL:
     case SEPARATOR:
     case EMPTY:
+    case BUTTON:
+    case CHECKBUTTON:  // probably move and adapt to checkbox/radio
       // No additional accessibility states currently for these menu states.
       break;
   }
@@ -290,6 +292,13 @@ MenuItemView* MenuItemView::AppendMenuItem(int item_id,
                                            Type type) {
   return AppendMenuItemImpl(item_id, label, base::string16(), base::string16(),
       gfx::ImageSkia(), type, ui::NORMAL_SEPARATOR);
+}
+MenuItemView* MenuItemView::AppendMenuItem(int item_id,
+                                           const base::string16& label,
+                                           gfx::ImageSkia& icon,
+                                           Type type) {
+  return AppendMenuItemImpl(item_id, label, base::string16(), base::string16(),
+                            icon, type, ui::NORMAL_SEPARATOR);
 }
 
 MenuItemView* MenuItemView::AppendSubMenu(int item_id,
@@ -433,8 +442,12 @@ gfx::Size MenuItemView::CalculatePreferredSize() const {
 
 int MenuItemView::GetHeightForWidth(int width) const {
   // If this isn't a container, we can just use the preferred size's height.
-  if (!IsContainer())
+  if (!IsContainer()) {
+    if (GetType() == Type::BUTTON || GetType() == Type::CHECKBUTTON) {
+      return 70;
+    }
     return GetPreferredSize().height();
+  }
 
   int height = child_at(0)->GetHeightForWidth(width);
   if (!icon_view_ && GetRootMenuItem()->has_icons())
@@ -553,51 +566,80 @@ void MenuItemView::Layout() {
   if (IsContainer()) {
     View* child = child_at(0);
     gfx::Size size = child->GetPreferredSize();
+    child->SetPreferredSize(gfx::Size(size.width(), size.height() + 20));
+    size = child->GetPreferredSize();
     child->SetBounds(0, GetTopMargin(), size.width(), size.height());
   } else {
-    // Child views are laid out right aligned and given the full height. To
-    // right align start with the last view and progress to the first.
-    int x = width() - (use_right_margin_ ? item_right_margin_ : 0);
-    for (int i = child_count() - 1; i >= 0; --i) {
-      View* child = child_at(i);
-      if (icon_view_ == child)
-        continue;
-      if (radio_check_image_view_ == child)
-        continue;
-      if (submenu_arrow_image_view_ == child)
-        continue;
-      int width = child->GetPreferredSize().width();
-      child->SetBounds(x - width, 0, width, height());
-      x -= width + kChildXPadding;
-    }
-    // Position |icon_view|.
-    const MenuConfig& config = MenuConfig::instance();
-    if (icon_view_) {
-      icon_view_->SizeToPreferredSize();
-      gfx::Size size = icon_view_->GetPreferredSize();
-      int x = config.item_left_margin + left_icon_margin_ +
-              (icon_area_width_ - size.width()) / 2;
-      if (config.icons_in_label || type_ == CHECKBOX || type_ == RADIO)
-        x = label_start_;
-      int y =
-          (height() + GetTopMargin() - GetBottomMargin() - size.height()) / 2;
-      icon_view_->SetPosition(gfx::Point(x, y));
-    }
+    if (GetType() == Type::BUTTON || GetType() == Type::CHECKBUTTON) {
+      // Button views should only exist with other button  views.
+      // They are laid out right aligned with the other buttons, stacked right
+      // to left in a single row.
+      int x = width();
+      for (int i = child_count() - 1; i >= 0; --i) {
+        View* child = child_at(i);
+        int width = child->GetPreferredSize().width();
+        if (icon_view_ == child) {
+          continue;
+        }
+        child->SetBounds(x - width, 0, width, height());
+      }
+      if (icon_view_) {
+        icon_view_->SizeToPreferredSize();
+        gfx::Size size = icon_view_->GetPreferredSize();
+        int x = width() / 2 - size.width() / 2;
 
-    if (radio_check_image_view_) {
-      int x = config.item_left_margin + left_icon_margin_;
-      int y =
-          (height() + GetTopMargin() - GetBottomMargin() - kMenuCheckSize) / 2;
-      radio_check_image_view_->SetBounds(x, y, kMenuCheckSize, kMenuCheckSize);
-    }
+        int y = 0;  // (height() + GetTopMargin() - GetBottomMargin() -
+                    // size.height()) / 2;
+        icon_view_->SetPosition(gfx::Point(x, y));
+      }
+    } else {
+      // Child views are laid out right aligned and given the full height. To
+      // right align start with the last view and progress to the first.
+      int x = width() - (use_right_margin_ ? item_right_margin_ : 0);
+      for (int i = child_count() - 1; i >= 0; --i) {
+        View* child = child_at(i);
+        if (icon_view_ == child)
+          continue;
+        if (radio_check_image_view_ == child)
+          continue;
+        if (submenu_arrow_image_view_ == child)
+          continue;
+        int width = child->GetPreferredSize().width();
+        child->SetBounds(x - width, 0, width, height());
+        x -= width + kChildXPadding;
+      }
+      // Position |icon_view|.
+      const MenuConfig& config = MenuConfig::instance();
+      if (icon_view_) {
+        icon_view_->SizeToPreferredSize();
+        gfx::Size size = icon_view_->GetPreferredSize();
+        int x = config.item_left_margin + left_icon_margin_ +
+                (icon_area_width_ - size.width()) / 2;
+        if (config.icons_in_label || type_ == CHECKBOX || type_ == RADIO)
+          x = label_start_;
+        int y =
+            (height() + GetTopMargin() - GetBottomMargin() - size.height()) / 2;
+        icon_view_->SetPosition(gfx::Point(x, y));
+      }
 
-    if (submenu_arrow_image_view_) {
-      int x = this->width() - config.arrow_width - config.arrow_to_edge_padding;
-      int y =
-          (height() + GetTopMargin() - GetBottomMargin() - kSubmenuArrowSize) /
-          2;
-      submenu_arrow_image_view_->SetBounds(x, y, config.arrow_width,
-                                           kSubmenuArrowSize);
+      if (radio_check_image_view_) {
+        int x = config.item_left_margin + left_icon_margin_;
+        int y =
+            (height() + GetTopMargin() - GetBottomMargin() - kMenuCheckSize) /
+            2;
+        radio_check_image_view_->SetBounds(x, y, kMenuCheckSize,
+                                           kMenuCheckSize);
+      }
+
+      if (submenu_arrow_image_view_) {
+        int x =
+            this->width() - config.arrow_width - config.arrow_to_edge_padding;
+        int y = (height() + GetTopMargin() - GetBottomMargin() -
+                 kSubmenuArrowSize) /
+                2;
+        submenu_arrow_image_view_->SetBounds(x, y, config.arrow_width,
+                                             kSubmenuArrowSize);
+      }
     }
   }
 }
@@ -689,7 +731,8 @@ void MenuItemView::Init(MenuItemView* parent,
   // Assign our ID, this allows SubmenuItemView to find MenuItemViews.
   set_id(kMenuItemViewID);
   has_icons_ = false;
-
+  if (type == MenuItemView::Type::BUTTON)
+    LOG(ERROR) << "Added a button!!!!!";
   if (type_ == CHECKBOX || type_ == RADIO) {
     radio_check_image_view_ = new ImageView();
     bool show_check_radio_icon =

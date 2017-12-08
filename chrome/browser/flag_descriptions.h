@@ -330,6 +330,9 @@ extern const char kEnablePWAFullCodeCacheDescription[];
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
 
+extern const char kEnableTouchableAppContextMenuName[];
+extern const char kEnableTouchableAppContextMenuDescription[];
+
 extern const char kEnableUsernameCorrectionName[];
 extern const char kEnableUsernameCorrectionDescription[];
 

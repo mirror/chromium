@@ -513,6 +513,12 @@ const char kEnablePixelCanvasRecordingDescription[] =
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
 
+extern const char kEnableTouchableAppContextMenuName[] =
+    "Enable Touchable App Context Menus.";
+extern const char kEnableTouchableAppContextMenuDescription[] =
+    "Enable the new app context menus which will be active on the shelf and "
+    "launcher.";
+
 const char kEnableUsernameCorrectionName[] = "Enable username correction";
 const char kEnableUsernameCorrectionDescription[] =
     "While on the pending password state, add an edit button to the bubble so "

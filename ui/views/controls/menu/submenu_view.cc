@@ -8,6 +8,7 @@
 
 #include "base/compiler_specific.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/aura/window.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/events/event.h"
@@ -112,6 +113,22 @@ void SubmenuView::Layout() {
   if (!parent())
     return;
 
+  // LOG(ERROR) << parent()->width();
+  gfx::Rect bounds = parent()->GetWidget()->GetNativeView()->bounds();
+  LOG(ERROR) << "MenuHost bounds: " << bounds.ToString();
+
+  bounds.set_width(600);
+  bounds.set_height(70);  // This is the HeightForWidth val for
+                          // MenuItemView::GetHeightForWidth.
+  const gfx::Rect& const_bounds = bounds;
+  parent()->GetWidget()->GetNativeView()->SetBounds(const_bounds);
+  // Get contents view's preferred size, set the height to be equal to the
+  // widget.
+  gfx::Size pref = GetPreferredSize();
+  pref.set_height(bounds.width());
+  pref.set_width(bounds.width());
+  SetPreferredSize(pref);
+
   // Use our current y, unless it means part of the menu isn't visible anymore.
   int pref_height = GetPreferredSize().height();
   int new_y;
@@ -119,18 +136,25 @@ void SubmenuView::Layout() {
     new_y = std::max(parent()->height() - pref_height, y());
   else
     new_y = 0;
-  SetBounds(x(), new_y, parent()->width(), pref_height);
 
+  // Set bounds of the view to the proper x/y, width/height.
+  SetBounds(x(), new_y, bounds.width() /*182old width*/, bounds.height());
+  LOG(ERROR) << "SubmenuView Bounds: " << this->bounds().ToString();
+  LOG(ERROR) << "Scrollview Container bounds: "
+             << scroll_view_container_->bounds().ToString();
   gfx::Insets insets = GetInsets();
   int x = insets.left();
   int y = insets.top();
-  int menu_item_width = width() - insets.width();
+  int menu_item_width = 200;  //= width() - insets.width();
   for (int i = 0; i < child_count(); ++i) {
     View* child = child_at(i);
     if (child->visible()) {
       int child_height = child->GetHeightForWidth(menu_item_width);
       child->SetBounds(x, y, menu_item_width, child_height);
-      y += child_height;
+      // y += child_height;
+      x += menu_item_width;
+      LOG(ERROR) << "Child " << i
+                 << "'s Bounds: " << child->bounds().ToString();
     }
   }
 }

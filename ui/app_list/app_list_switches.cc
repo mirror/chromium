@@ -25,6 +25,9 @@ const char kEnableAppList[] = "enable-app-list";
 const char kEnableSyncAppList[] = "enable-sync-app-list";
 const char kDisableSyncAppList[] = "disable-sync-app-list";
 
+const char kEnableTouchableAppContextMenu[] =
+    "enable-touchable-app-context-menus";
+
 // Enable/disable drive search in chrome launcher.
 const char kEnableDriveSearchInChromeLauncher[] =
     "enable-drive-search-in-app-launcher";
@@ -50,6 +53,11 @@ bool IsFolderUIEnabled() {
 bool IsVoiceSearchEnabled() {
   // Speech recognition in AppList is only for ChromeOS right now.
   return true;
+}
+
+bool IsTouchableAppContextMenuEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      kEnableTouchableAppContextMenu);
 }
 
 bool ShouldNotDismissOnBlur() {

@@ -2639,6 +2639,10 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(
          chromeos::switches::kEnableEncryptionMigration,
          chromeos::switches::kDisableEncryptionMigration)},
+    {"enable-touchable-app-context-menus",
+     flag_descriptions::kEnableTouchableAppContextMenuName,
+     flag_descriptions::kEnableTouchableAppContextMenuDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(app_list::switches::kEnableTouchableAppContextMenu)},
 #endif  // OS_CHROMEOS
 #if !defined(OS_ANDROID) && defined(GOOGLE_CHROME_BUILD)
     {"enable-google-branded-context-menu",

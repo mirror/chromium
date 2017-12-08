@@ -21,6 +21,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "content/public/common/context_menu_params.h"
 #include "extensions/browser/extension_prefs.h"
+#include "ui/app_list/app_list_features.h"
 
 namespace {
 
@@ -53,7 +54,8 @@ void ExtensionLauncherContextMenu::Init() {
                           ? IDS_APP_LIST_CONTEXT_MENU_NEW_TAB
                           : IDS_APP_LIST_CONTEXT_MENU_NEW_WINDOW;
       AddItemWithStringId(MENU_OPEN_NEW, string_id);
-      AddSeparator(ui::NORMAL_SEPARATOR);
+      if (!app_list::features::IsTouchableAppContextMenuEnabled())
+        AddSeparator(ui::NORMAL_SEPARATOR);
     }
 
     AddPinMenu();

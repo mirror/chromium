@@ -36,11 +36,16 @@ APP_LIST_EXPORT extern const base::Feature kEnablePlayStoreAppSearch;
 // stable.
 APP_LIST_EXPORT extern const base::Feature kEnableAppListFocus;
 
+// Enables the touchable app context menus. In this mode, all context menus
+// originating from app icons will have a new look and feel.
+APP_LIST_EXPORT extern const base::Feature kEnableTouchableAppContextMenu;
+
 bool APP_LIST_EXPORT IsAnswerCardEnabled();
 bool APP_LIST_EXPORT IsBackgroundBlurEnabled();
 bool APP_LIST_EXPORT IsFullscreenAppListEnabled();
 bool APP_LIST_EXPORT IsPlayStoreAppSearchEnabled();
 bool APP_LIST_EXPORT IsAppListFocusEnabled();
+bool APP_LIST_EXPORT IsTouchableAppContextMenuEnabled();
 std::string APP_LIST_EXPORT AnswerServerUrl();
 std::string APP_LIST_EXPORT AnswerServerQuerySuffix();
 

@@ -39,8 +39,7 @@ class MenuScrollButton : public View {
       : host_(host),
         is_up_(is_up),
         // Make our height the same as that of other MenuItemViews.
-        pref_height_(MenuItemView::pref_menu_height()) {
-  }
+        pref_height_(0 /*MenuItemView::pref_menu_height()*/) {}
 
   gfx::Size CalculatePreferredSize() const override {
     return gfx::Size(MenuConfig::instance().scroll_arrow_height * 2 - 1,
@@ -232,7 +231,7 @@ void MenuScrollViewContainer::Layout() {
                                  width, pref.height());
   content_height -= pref.height();
 
-  scroll_view_->SetBounds(x, scroll_view_y, width, content_height);
+  scroll_view_->SetBounds(x, scroll_view_y, 600, content_height);
   scroll_view_->Layout();
 }
 

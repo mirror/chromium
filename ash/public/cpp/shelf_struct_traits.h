@@ -32,6 +32,12 @@ struct EnumTraits<ash::mojom::MenuItemType, ui::MenuModel::ItemType> {
         return ash::mojom::MenuItemType::COMMAND;
       case ui::MenuModel::TYPE_SUBMENU:
         return ash::mojom::MenuItemType::SUBMENU;
+      case ui::MenuModel::TYPE_TOUCHABLE_BUTTON:
+        LOG(ERROR) << "Crap!!!!! mojom for touchable button?";
+        return ash::mojom::MenuItemType::COMMAND;
+      case ui::MenuModel::TYPE_TOUCHABLE_CHECK_BUTTON:
+        LOG(ERROR) << "Crap!! mojom for check button?";
+        return ash::mojom::MenuItemType::COMMAND;
     }
     NOTREACHED();
     return ash::mojom::MenuItemType::COMMAND;
