@@ -41,6 +41,7 @@ void SyncAppListHelper::SetupIfNecessary(SyncTest* test) {
   }
   test_ = test;
   for (auto* profile : test_->GetAllProfiles()) {
+    extensions::ExtensionSystem::Get(profile)->Init();
     extensions::ExtensionSystem::Get(profile)->InitForRegularProfile(true);
   }
 

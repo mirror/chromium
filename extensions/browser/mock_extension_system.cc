@@ -16,6 +16,8 @@ MockExtensionSystem::MockExtensionSystem(content::BrowserContext* context)
 MockExtensionSystem::~MockExtensionSystem() {
 }
 
+void MockExtensionSystem::Init() {}
+
 void MockExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
 }
 
