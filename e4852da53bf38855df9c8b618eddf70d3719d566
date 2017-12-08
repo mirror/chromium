@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d26df7fd_5c9bc9b0",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-08T22:49:25Z",
+      "side": 1,
+      "message": "And we can\u0027t move this to the end of this fn, right? I realize that would be a change in behavior",
+      "revId": "e4852da53bf38855df9c8b618eddf70d3719d566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
