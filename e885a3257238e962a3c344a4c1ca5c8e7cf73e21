@@ -34,6 +34,24 @@
       "revId": "e885a3257238e962a3c344a4c1ca5c8e7cf73e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca6bd57_b3c94d2b",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-08T17:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4f57ca8_69de1c09",
+      "revId": "e885a3257238e962a3c344a4c1ca5c8e7cf73e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
