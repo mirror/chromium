@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35df6ce7_07d16ce9",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T20:36:21Z",
+      "side": 1,
+      "message": "I still don\u0027t love this idea since the lifetimes are not synchronized. You really should keep the weak references in the parent class because the parent class *must* ensure that all print jobs and discovery sessions are cancelled when Shutdown() is called.\n\nOtherwise you\u0027ll have hard-to-debug crashes.",
+      "range": {
+        "startLine": 305,
+        "startChar": 19,
+        "endLine": 305,
+        "endChar": 44
+      },
+      "revId": "b7fccdccb09ba12a2e52fb9b36d39dcb9fbaebd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa042580_7fdb3c07",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T20:36:21Z",
+      "side": 1,
+      "message": "Can we at least expose a method to manipulate the mapping instead of accessing private fields?",
+      "range": {
+        "startLine": 331,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 37
+      },
+      "revId": "b7fccdccb09ba12a2e52fb9b36d39dcb9fbaebd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ffd4c8_688a1608",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T20:36:21Z",
+      "side": 1,
+      "message": "Please pass this as a parameter and hold it in a \"CupsPrintJobManager* const\".",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 29
+      },
+      "revId": "b7fccdccb09ba12a2e52fb9b36d39dcb9fbaebd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfd2032_02e03cbb",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T20:36:21Z",
+      "side": 1,
+      "message": "At least make this const and note that the parent always outlives it, since it will destroy it upon Shutdown().",
+      "range": {
+        "startLine": 432,
+        "startChar": 19,
+        "endLine": 432,
+        "endChar": 27
+      },
+      "revId": "b7fccdccb09ba12a2e52fb9b36d39dcb9fbaebd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
