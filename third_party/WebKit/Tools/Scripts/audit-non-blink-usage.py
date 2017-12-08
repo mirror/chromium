@@ -45,10 +45,16 @@ _CONFIG = [
 
             # //base/callback.h is allowed, but you need to use WTF::Bind or
             # WTF::BindRepeating to create callbacks in Blink.
+            'base::BarrierClosure',
             'base::OnceCallback',
             'base::OnceClosure',
             'base::RepeatingCallback',
             'base::RepeatingClosure',
+
+            # Allows //base/synchronization/lock.h.
+            'base::AutoLock',
+            'base::ConditionVariable',
+            'base::Lock',
 
             # Debugging helpers from //base/debug are allowed everywhere.
             'base::debug::.+',
