@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a28264c0_b3d381b7",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-08T11:06:46Z",
+      "side": 1,
+      "message": "In Patch Set 17, I added \"gl_image_ \u003d image;\" and I moved the \"bind_image_cb_.Run...\" out of the USE_OZONE block in VaapiDrmPicture::Initialize()",
+      "parentUuid": "c2617abb_df714425",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a6b01d_352fc3b1",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 17
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I don\u0027t understand. GLImageNativePixmap extends publicly GLImageEGL.\nGLImageEGL has a public method Initizialize/4, while the Initialize in GLImageNativePixmap has only two parameters. Why can\u0027t you call GLImageEGL::Initizialize/4 from a pointer to GLImageNativePixmap?\n\nA better approach might be to make GLImageEGL::Initialize/4 protected and to expose a different API in GLImageNativePixmap that does GLImageEGL::Initialize and ExportHandle.",
       "parentUuid": "a18378c2_f28fae49",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41144aa0_3a4b8af6",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-08T11:06:46Z",
+      "side": 1,
+      "message": "You are right I can directly call image-\u003eGLImageEGL::Initialize, thx. (Done in Patch Set 22)\nI will work on your other suggestion, let me know if you want this api change prior this CL or if I can do it afterward.",
+      "parentUuid": "a17abd60_c5098a53",
       "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

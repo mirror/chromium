@@ -16,6 +16,24 @@
       "revId": "782b5ce4e3de8f7e9e43e1c680c373181a0415f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72b5dd1_1b8a7cb5",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-08T11:06:46Z",
+      "side": 1,
+      "message": "The GLImageNativePixmap\u0027s constructor checks this by calling HasEGLExtension(\"EGL_MESA_image_dma_buf_export\"). Then GLImageNativePixmap::ExportHandle() will early return if !has_image_dma_buf_export_. In vaapi_drm_picture.cc I will add a check on native_pixmap_handle.planes.size() even if there is already a check thanks to the \"AreDmaBufFdsValid()\" call below. \nDone in Patch Set 22",
+      "parentUuid": "80dc3e08_ac7a199f",
+      "revId": "782b5ce4e3de8f7e9e43e1c680c373181a0415f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
