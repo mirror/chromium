@@ -1555,15 +1555,7 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   //   the document of the previously committed navigation.
   DCHECK(document_scoped_interface_provider_binding_.is_bound());
 
-  if (validated_params->was_within_same_document) {
-    // The security origin never changes for same-document navigations, the
-    // RenderFrame is expected to keep using the existing interface connection.
-    if (interface_provider_request.is_pending()) {
-      bad_message::ReceivedBadMessage(
-          process, bad_message::RFH_INTERFACE_PROVIDER_SUPERFLUOUS);
-      return;
-    }
-  } else if (interface_provider_request.is_pending()) {
+  if (interface_provider_request.is_pending()) {
     // Otherwise, as a general rule, expect the RenderFrame to have supplied the
     // request end of a new InterfaceProvider connection that will be used by
     // the new document to issue interface requests to access RenderFrameHost
@@ -1615,53 +1607,8 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         100);
   }
 
-  // Attempts to commit certain off-limits URL should be caught more strictly
-  // than our FilterURL checks below.  If a renderer violates this policy, it
-  // should be killed.
-  if (!CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
-    bad_message::ReceivedBadMessage(process,
-                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
+  if (!ValidateProvisionalCommitParams(validated_params.get()))
     return;
-  }
-
-  // Verify that the origin passed from the renderer process is valid and can
-  // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
-    return;
-  }
-
-  // Without this check, an evil renderer can trick the browser into creating
-  // a navigation entry for a banned URL.  If the user clicks the back button
-  // followed by the forward button (or clicks reload, or round-trips through
-  // session restore, etc), we'll think that the browser commanded the
-  // renderer to load the URL and grant the renderer the privileges to request
-  // the URL.  To prevent this attack, we block the renderer from inserting
-  // banned URLs into the navigation controller in the first place.
-  //
-  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
-  // from the renderer, it overwrites that URL to about:blank, which requires
-  // |validated_params| to be mutable. Once we kill the renderer instead, the
-  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
-  // to take |validated_params| by const reference.
-  process->FilterURL(false, &validated_params->url);
-  process->FilterURL(true, &validated_params->referrer.url);
-  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
-       it != validated_params->redirects.end(); ++it) {
-    process->FilterURL(false, &(*it));
-  }
-  process->FilterURL(true, &validated_params->searchable_form_url);
-
-  // Without this check, the renderer can trick the browser into using
-  // filenames it can't access in a future session restore.
-  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
-    bad_message::ReceivedBadMessage(
-        GetProcess(), bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
-    return;
-  }
 
   // PlzNavigate
   if (!navigation_handle_ && IsBrowserSideNavigationEnabled()) {
@@ -1677,8 +1624,63 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   }
 
   // Find the appropriate NavigationHandle for this navigation.
-  std::unique_ptr<NavigationHandleImpl> navigation_handle =
-      TakeNavigationHandleForCommit(*validated_params);
+  std::unique_ptr<NavigationHandleImpl> navigation_handle;
+
+  // Determine if the current NavigationHandle can be used.
+  if (navigation_handle_ &&
+      navigation_handle_->GetURL() == validated_params->url) {
+    navigation_handle = std::move(navigation_handle_);
+  } else {
+    // If the URL does not match what the NavigationHandle expects, treat the
+    // commit as a new navigation. This can happen when loading a Data
+    // navigation with LoadDataWithBaseURL.
+    //
+    // TODO(csharrison): Data navigations loaded with LoadDataWithBaseURL get
+    // reset here, because the NavigationHandle tracks the URL but the
+    // params.url tracks the data. The trick of saving the old entry ids for
+    // these navigations should go away when this is properly handled. See
+    // crbug.com/588317.
+    int entry_id_for_data_nav = 0;
+    bool is_renderer_initiated = true;
+
+    // Make sure that the pending entry was really loaded via
+    // LoadDataWithBaseURL and that it matches this handle.  TODO(csharrison):
+    // The pending entry's base url should equal |params.base_url|. This is not
+    // the case for loads with invalid base urls.
+    if (navigation_handle_) {
+      NavigationEntryImpl* pending_entry =
+          NavigationEntryImpl::FromNavigationEntry(frame_tree_node()
+                                                       ->navigator()
+                                                       ->GetController()
+                                                       ->GetPendingEntry());
+      bool pending_entry_matches_handle =
+          pending_entry && pending_entry->GetUniqueID() ==
+                               navigation_handle_->pending_nav_entry_id();
+      // TODO(csharrison): The pending entry's base url should equal
+      // |validated_params.base_url|. This is not the case for loads with
+      // invalid base urls.
+      if (navigation_handle_->GetURL() == validated_params->base_url &&
+          pending_entry_matches_handle &&
+          !pending_entry->GetBaseURLForDataURL().is_empty()) {
+        entry_id_for_data_nav = navigation_handle_->pending_nav_entry_id();
+        is_renderer_initiated = pending_entry->is_renderer_initiated();
+      }
+
+      // Reset any existing NavigationHandle.
+      navigation_handle_.reset();
+    }
+
+    // There is no pending NavigationEntry in these cases, so pass 0 as the
+    // pending_nav_entry_id. If the previous handle was a prematurely aborted
+    // navigation loaded via LoadDataWithBaseURL, propagate the entry id.
+    navigation_handle = NavigationHandleImpl::Create(
+        validated_params->url, validated_params->redirects, frame_tree_node_,
+        is_renderer_initiated, validated_params->was_within_same_document,
+        base::TimeTicks::Now(), entry_id_for_data_nav,
+        false,                  // started_from_context_menu
+        CSPDisposition::CHECK,  // should_check_main_world_csp
+        false);                 // is_form_submission
+  }
   DCHECK(navigation_handle);
 
   // Update the site url if the navigation was successful and the page is not an
@@ -3033,6 +3035,120 @@ void RenderFrameHostImpl::SubresourceResponseStarted(const GURL& url,
                                                      uint32_t cert_status) {
   delegate_->SubresourceResponseStarted(url, referrer, method, resource_type,
                                         ip, cert_status);
+}
+
+void RenderFrameHostImpl::DidCommitSameDocumentNavigation(
+    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+        validated_params) {
+  ScopedCommitStateResetter commit_state_resetter(this);
+  RenderProcessHost* process = GetProcess();
+
+  TRACE_EVENT2("navigation",
+               "RenderFrameHostImpl::DidCommitSameDocumentNavigation",
+               "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
+               validated_params->url.possibly_invalid_spec());
+
+  // Sanity-check the page transition for frame type.
+  DCHECK_EQ(ui::PageTransitionIsMainFrame(validated_params->transition),
+            !GetParent());
+
+  // Notify the resource scheduler of the navigation committing.
+  NotifyResourceSchedulerOfNavigation(process->GetID(), *validated_params);
+
+  // If we're waiting for an unload ack from this renderer and we receive a
+  // Navigate message, then the renderer was navigating before it received the
+  // unload request.  It will either respond to the unload request soon or our
+  // timer will expire.  Either way, we should ignore this message, because we
+  // have already committed to closing this renderer.
+  if (IsWaitingForUnloadACK())
+    return;
+
+  if (!ValidateProvisionalCommitParams(validated_params.get()))
+    return;
+
+  if (validated_params->report_type ==
+      FrameMsg_UILoadMetricsReportType::REPORT_LINK) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Navigation.UI_OnCommitProvisionalLoad.Link",
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
+        base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
+        100);
+  } else if (validated_params->report_type ==
+             FrameMsg_UILoadMetricsReportType::REPORT_INTENT) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(
+        "Navigation.UI_OnCommitProvisionalLoad.Intent",
+        base::TimeTicks::Now() - validated_params->ui_timestamp,
+        base::TimeDelta::FromMilliseconds(10), base::TimeDelta::FromMinutes(10),
+        100);
+  }
+
+  // PlzNavigate
+  if (!navigation_handle_ && IsBrowserSideNavigationEnabled()) {
+    // PlzNavigate: the browser has not been notified about the start of the
+    // load in this renderer yet (e.g., for same-document navigations that start
+    // in the renderer). Do it now.
+    if (!is_loading()) {
+      bool was_loading = frame_tree_node()->frame_tree()->IsLoading();
+      is_loading_ = true;
+      frame_tree_node()->DidStartLoading(true, was_loading);
+    }
+    pending_commit_ = false;
+  }
+
+  // Find the appropriate NavigationHandle for this navigation.
+  std::unique_ptr<NavigationHandleImpl> navigation_handle;
+  if (IsBrowserSideNavigationEnabled()) {
+    // When browser-side navigation is enabled, a NavigationHandle is created
+    // for browser-initiated same-document navigation. Try to take it if it's
+    // still available and matches the current navigation.
+    bool is_browser_initiated = (validated_params->nav_entry_id != 0);
+    if (is_browser_initiated && navigation_handle_ &&
+        navigation_handle_->IsSameDocument() &&
+        navigation_handle_->GetURL() == validated_params->url) {
+      navigation_handle = std::move(navigation_handle_);
+    } else {
+      // No existing NavigationHandle has been found. Create a new one, but
+      // don't reset any NavigationHandle tracking an ongoing navigation, since
+      // this may lead to the cancellation of the navigation. First, determine
+      // if the navigation corresponds to the pending navigation entry. This is
+      // the case for a browser-initiated same-document navigation, which does
+      // not cause a NavigationHandle to be created because it does not go
+      // through DidStartProvisionalLoad.
+      bool is_renderer_initiated = true;
+      int pending_nav_entry_id = 0;
+      NavigationEntryImpl* pending_entry =
+          NavigationEntryImpl::FromNavigationEntry(frame_tree_node()
+                                                       ->navigator()
+                                                       ->GetController()
+                                                       ->GetPendingEntry());
+      if (pending_entry &&
+          pending_entry->GetUniqueID() == validated_params->nav_entry_id) {
+        pending_nav_entry_id = validated_params->nav_entry_id;
+        is_renderer_initiated = pending_entry->is_renderer_initiated();
+      }
+
+      navigation_handle = NavigationHandleImpl::Create(
+          validated_params->url, validated_params->redirects, frame_tree_node_,
+          is_renderer_initiated, validated_params->was_within_same_document,
+          base::TimeTicks::Now(), pending_nav_entry_id,
+          false,                  // started_from_context_menu
+          CSPDisposition::CHECK,  // should_check_main_world_csp
+          false);                 // is_form_submission
+    }
+  } else {
+    // When browser-side navigation is disabled, there is never any existing
+    // NavigationHandle to use for the navigation. We don't ever expect
+    // navigation_handle_ to match.
+    DCHECK(!navigation_handle_ || !navigation_handle_->IsSameDocument());
+  }
+  DCHECK(navigation_handle);
+
+  accessibility_reset_count_ = 0;
+  frame_tree_node()->navigator()->DidNavigate(this, *validated_params,
+                                              std::move(navigation_handle));
+
+  // Since we didn't early return, it's safe to keep the commit state.
+  commit_state_resetter.disable();
 }
 
 namespace {
@@ -4611,6 +4727,61 @@ mojom::FrameNavigationControl* RenderFrameHostImpl::GetNavigationControl() {
   if (!navigation_control_)
     GetRemoteAssociatedInterfaces()->GetInterface(&navigation_control_);
   return navigation_control_.get();
+}
+
+bool RenderFrameHostImpl::ValidateProvisionalCommitParams(
+    FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params) {
+  RenderProcessHost* process = GetProcess();
+
+  // Attempts to commit certain off-limits URL should be caught more strictly
+  // than our FilterURL checks.  If a renderer violates this policy, it
+  // should be killed.
+  if (!CanCommitURL(validated_params->url)) {
+    VLOG(1) << "Blocked URL " << validated_params->url.spec();
+    // Kills the process.
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
+    return false;
+  }
+
+  // Verify that the origin passed from the renderer process is valid and can
+  // be allowed to commit in this RenderFrameHost.
+  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
+    bad_message::ReceivedBadMessage(process,
+                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
+    return false;
+  }
+
+  // Without this check, an evil renderer can trick the browser into creating
+  // a navigation entry for a banned URL.  If the user clicks the back button
+  // followed by the forward button (or clicks reload, or round-trips through
+  // session restore, etc), we'll think that the browser commanded the
+  // renderer to load the URL and grant the renderer the privileges to request
+  // the URL.  To prevent this attack, we block the renderer from inserting
+  // banned URLs into the navigation controller in the first place.
+  //
+  // TODO(crbug.com/172694): Currently, when FilterURL detects a bad URL coming
+  // from the renderer, it overwrites that URL to about:blank, which requires
+  // |validated_params| to be mutable. Once we kill the renderer instead, the
+  // signature of RenderFrameHostImpl::DidCommitProvisionalLoad can be modified
+  // to take |validated_params| by const reference.
+  process->FilterURL(false, &validated_params->url);
+  process->FilterURL(true, &validated_params->referrer.url);
+  for (std::vector<GURL>::iterator it(validated_params->redirects.begin());
+       it != validated_params->redirects.end(); ++it) {
+    process->FilterURL(false, &(*it));
+  }
+  process->FilterURL(true, &validated_params->searchable_form_url);
+
+  // Without this check, the renderer can trick the browser into using
+  // filenames it can't access in a future session restore.
+  if (!CanAccessFilesOfPageState(validated_params->page_state)) {
+    bad_message::ReceivedBadMessage(
+        process, bad_message::RFH_CAN_ACCESS_FILES_OF_PAGE_STATE);
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace content
