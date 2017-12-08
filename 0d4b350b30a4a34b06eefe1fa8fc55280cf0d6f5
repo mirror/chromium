@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4089f43_0b2e1126",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-08T14:55:56Z",
+      "side": 1,
+      "message": "While you are here:\ns/requires/require",
+      "range": {
+        "startLine": 168,
+        "startChar": 53,
+        "endLine": 168,
+        "endChar": 61
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460a168d_613ff624",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-08T14:55:56Z",
+      "side": 1,
+      "message": "Have you tested that not passing the any Gaia id in the mirror header works well and does not break anything on the server?",
+      "range": {
+        "startLine": 170,
+        "startChar": 32,
+        "endLine": 170,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a91fc77_651c2017",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-08T14:55:56Z",
+      "side": 1,
+      "message": "I think the tests for ChromeHeaderHelper are part of signin_header_helper_unittest.cc. The ChromeConnectedHeaderHelper is just an internal class of the SigninHeaderHelper, so all the tests were added in signin_header_helper_unittest.cc.\n\nAre the new tests that you are adding testing new cases that are not already covered in SigninHeaderHelperTest?",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
