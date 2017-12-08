@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10703fbd_b90b6491",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-08T16:51:11Z",
+      "side": 1,
+      "message": "As mentioned offline, could you please add a comment explaining why this is needed for the test?\n\nThanks!",
+      "range": {
+        "startLine": 807,
+        "startChar": 5,
+        "endLine": 808,
+        "endChar": 36
+      },
+      "revId": "72fa86a2007fc9630aa03b60b4cda7bcc8617c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
