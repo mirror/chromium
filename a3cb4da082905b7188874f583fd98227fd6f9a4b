@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa65311_4a0b6876",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 27
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:36:09Z",
+      "side": 1,
+      "message": "The seed corpus is valid CBOR bytes from \nhttps://github.com/cbor/test-vectors/blob/master/appendix_a.json",
+      "range": {
+        "startLine": 111,
+        "startChar": 1,
+        "endLine": 111,
+        "endChar": 50
+      },
+      "revId": "a3cb4da082905b7188874f583fd98227fd6f9a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
