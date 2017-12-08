@@ -11,13 +11,14 @@
 
 namespace viz {
 
-ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator() : next_id_(1u) {}
+ParentLocalSurfaceIdAllocator::ParentLocalSurfaceIdAllocator()
+    : next_parent_id_(1u) {}
 
 ParentLocalSurfaceIdAllocator::~ParentLocalSurfaceIdAllocator() {}
 
 LocalSurfaceId ParentLocalSurfaceIdAllocator::GenerateId() {
-  LocalSurfaceId id(next_id_, base::UnguessableToken::Create());
-  next_id_++;
+  LocalSurfaceId id(next_parent_id_, base::UnguessableToken::Create());
+  next_parent_id_++;
   return id;
 }
 
