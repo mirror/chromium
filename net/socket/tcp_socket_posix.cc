@@ -36,6 +36,7 @@
 #include "net/socket/socket_net_log_params.h"
 #include "net/socket/socket_options.h"
 #include "net/socket/socket_posix.h"
+#include "net/socket/socket_tag.h"
 
 // If we don't have a definition for TCPI_OPT_SYN_DATA, create one.
 #if !defined(TCPI_OPT_SYN_DATA)
@@ -193,6 +194,8 @@ int TCPSocketPosix::Open(AddressFamily family) {
   int rv = socket_->Open(ConvertAddressFamily(family));
   if (rv != OK)
     socket_.reset();
+  if (rv == OK && tag_ != SocketTag())
+    tag_.Apply(socket_->socket_fd());
   return rv;
 }
 
@@ -211,6 +214,8 @@ int TCPSocketPosix::AdoptConnectedSocket(SocketDescriptor socket,
   int rv = socket_->AdoptConnectedSocket(socket, storage);
   if (rv != OK)
     socket_.reset();
+  if (rv == OK && tag_ != SocketTag())
+    tag_.Apply(socket_->socket_fd());
   return rv;
 }
 
@@ -221,6 +226,8 @@ int TCPSocketPosix::AdoptUnconnectedSocket(SocketDescriptor socket) {
   int rv = socket_->AdoptUnconnectedSocket(socket);
   if (rv != OK)
     socket_.reset();
+  if (rv == OK && tag_ != SocketTag())
+    tag_.Apply(socket_->socket_fd());
   return rv;
 }
 
@@ -476,6 +483,7 @@ void TCPSocketPosix::Close() {
   tcp_fastopen_connected_ = false;
   tcp_fastopen_write_attempted_ = false;
   tcp_fastopen_status_ = TCP_FASTOPEN_STATUS_UNKNOWN;
+  tag_ = SocketTag();
 }
 
 void TCPSocketPosix::EnableTCPFastOpenIfSupported() {
@@ -523,6 +531,13 @@ SocketDescriptor TCPSocketPosix::ReleaseSocketDescriptorForTesting() {
   SocketDescriptor socket_descriptor = socket_->ReleaseConnectedSocket();
   socket_.reset();
   return socket_descriptor;
+}
+
+void TCPSocketPosix::ApplySocketTag(const SocketTag& tag) {
+  if (IsValid() && tag != tag_) {
+    tag.Apply(socket_->socket_fd());
+  }
+  tag_ = tag;
 }
 
 void TCPSocketPosix::AcceptCompleted(
@@ -580,6 +595,7 @@ int TCPSocketPosix::HandleConnectCompleted(int rv) {
   if (rv != OK) {
     net_log_.EndEvent(NetLogEventType::TCP_CONNECT_ATTEMPT,
                       NetLog::IntCallback("os_error", errno));
+    tag_ = SocketTag();
   } else {
     net_log_.EndEvent(NetLogEventType::TCP_CONNECT_ATTEMPT);
     NotifySocketPerformanceWatcher();
