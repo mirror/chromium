@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00683024_de1d2bdc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T23:56:41Z",
+      "side": 1,
+      "message": "Well, I do intend to use it in this patch.\nI posed a few questions for how we want to use it.\n\nThe reason I want to use it here is to verify its design.",
+      "parentUuid": "e7dd0825_9f646a94",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f261e74_a08cf3a4",
         "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-08T01:46:53Z",
       "side": 1,
       "message": "I don\u0027t think the parent_id is fixed. Maybe there should be a setter? Also, we are now using id vs. sequence_number inconsistent. sadrul@ felt that ID is a misnomer. This is no longer an identifier so much as it is a sequence number.",
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85414cd3_9d5bd6b3",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T23:56:41Z",
+      "side": 1,
+      "message": "You\u0027re right about the sequence number.\nI\u0027ll fix that.\n\nBut I think the parent_id is fixed. Maybe I am thinking on a different track.\nI was thinking once a parent-allocated surface comes in (which child sequence number defaulted to 1), we can begin incrementing the child sequence number when ever the child needs to allocate a new surface.\n\nSo for that chain of child-allocated surfaces, the parent id never changes.\n\nIf the parent sends a new surface id, we start a new chain.\n\n\nWe could add a setter for the parent_id and make it not fixed. If we do that, do we want to reset the child sequence number back to 1? And if we do reset, do we prefer that over just allocating a new ChildLocalSurfaceIdAllocator?",
+      "parentUuid": "4f261e74_a08cf3a4",
       "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
