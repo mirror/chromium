@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19a8f7d_3c75a7a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-08T23:33:14Z",
+      "side": 1,
+      "message": "nit: Please cleanup. (I think you only need the first sentence of the description now.)",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "6d9d32ea614a1f62c8e5a939cd36222f299476e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5254b4_25dbf2c3",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-08T23:33:14Z",
+      "side": 1,
+      "message": "Maybe s/callback_helper/network_callback_helper?",
+      "range": {
+        "startLine": 75,
+        "startChar": 48,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "6d9d32ea614a1f62c8e5a939cd36222f299476e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc3b5d7_22ffcd44",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-08T23:33:14Z",
+      "side": 1,
+      "message": "nit: I know these are just being moved, but could you please try to add comments to all instance variables?",
+      "revId": "6d9d32ea614a1f62c8e5a939cd36222f299476e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b427b07f_f7b67f31",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-08T23:33:14Z",
+      "side": 1,
+      "message": "nit: I know these are just being moved, but could you please try to add comments to all instance variables?",
+      "revId": "6d9d32ea614a1f62c8e5a939cd36222f299476e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdce585_a4424611",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-08T23:33:14Z",
+      "side": 1,
+      "message": "Maybe s/callback_helper/network_callback_helper?",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "6d9d32ea614a1f62c8e5a939cd36222f299476e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
