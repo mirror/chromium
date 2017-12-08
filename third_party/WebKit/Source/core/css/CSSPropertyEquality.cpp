@@ -66,8 +66,10 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
   }
   switch (property.GetCSSProperty().PropertyID()) {
     case CSSPropertyBackgroundColor:
-      return a.BackgroundColor() == b.BackgroundColor() &&
-             a.VisitedLinkBackgroundColor() == b.VisitedLinkBackgroundColor();
+      return a.BackgroundColorIgnoringVisited() ==
+                 b.BackgroundColorIgnoringVisited() &&
+             a.BackgroundColorIgnoringUnvisited() ==
+                 b.BackgroundColorIgnoringUnvisited();
     case CSSPropertyBackgroundImage:
       return FillLayersEqual<CSSPropertyBackgroundImage>(a.BackgroundLayers(),
                                                          b.BackgroundLayers());
@@ -83,9 +85,10 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyBaselineShift:
       return a.BaselineShiftValue() == b.BaselineShiftValue();
     case CSSPropertyBorderBottomColor:
-      return a.BorderBottomColor() == b.BorderBottomColor() &&
-             a.VisitedLinkBorderBottomColor() ==
-                 b.VisitedLinkBorderBottomColor();
+      return a.BorderBottomColorIgnoringVisited() ==
+                 b.BorderBottomColorIgnoringVisited() &&
+             a.BorderBottomColorIgnoringUnvisited() ==
+                 b.BorderBottomColorIgnoringUnvisited();
     case CSSPropertyBorderBottomLeftRadius:
       return a.BorderBottomLeftRadius() == b.BorderBottomLeftRadius();
     case CSSPropertyBorderBottomRightRadius:
@@ -101,18 +104,24 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyBorderImageWidth:
       return a.BorderImageWidth() == b.BorderImageWidth();
     case CSSPropertyBorderLeftColor:
-      return a.BorderLeftColor() == b.BorderLeftColor() &&
-             a.VisitedLinkBorderLeftColor() == b.VisitedLinkBorderLeftColor();
+      return a.BorderLeftColorIgnoringVisited() ==
+                 b.BorderLeftColorIgnoringVisited() &&
+             a.BorderLeftColorIgnoringUnvisited() ==
+                 b.BorderLeftColorIgnoringUnvisited();
     case CSSPropertyBorderLeftWidth:
       return a.BorderLeftWidth() == b.BorderLeftWidth();
     case CSSPropertyBorderRightColor:
-      return a.BorderRightColor() == b.BorderRightColor() &&
-             a.VisitedLinkBorderRightColor() == b.VisitedLinkBorderRightColor();
+      return a.BorderRightColorIgnoringVisited() ==
+                 b.BorderRightColorIgnoringVisited() &&
+             a.BorderRightColorIgnoringUnvisited() ==
+                 b.BorderRightColorIgnoringUnvisited();
     case CSSPropertyBorderRightWidth:
       return a.BorderRightWidth() == b.BorderRightWidth();
     case CSSPropertyBorderTopColor:
-      return a.BorderTopColor() == b.BorderTopColor() &&
-             a.VisitedLinkBorderTopColor() == b.VisitedLinkBorderTopColor();
+      return a.BorderTopColorIgnoringVisited() ==
+                 b.BorderTopColorIgnoringVisited() &&
+             a.BorderTopColorIgnoringUnvisited() ==
+                 b.BorderTopColorIgnoringUnvisited();
     case CSSPropertyBorderTopLeftRadius:
       return a.BorderTopLeftRadius() == b.BorderTopLeftRadius();
     case CSSPropertyBorderTopRightRadius:
@@ -124,12 +133,12 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyBoxShadow:
       return DataEquivalent(a.BoxShadow(), b.BoxShadow());
     case CSSPropertyCaretColor:
-      return a.CaretColor() == b.CaretColor() &&
-             a.VisitedLinkCaretColor() == b.VisitedLinkCaretColor();
+      return a.CaretColorIgnoringVisited() == b.CaretColorIgnoringVisited() &&
+             a.CaretColorIgnoringUnvisited() == b.CaretColorIgnoringUnvisited();
     case CSSPropertyClip:
       return a.Clip() == b.Clip();
     case CSSPropertyColor:
-      return a.GetColor() == b.GetColor() &&
+      return a.ColorIgnoringVisited() == b.ColorIgnoringVisited() &&
              a.VisitedLinkColor() == b.VisitedLinkColor();
     case CSSPropertyFill: {
       const SVGComputedStyle& a_svg = a.SvgStyle();
@@ -152,7 +161,7 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyFlexShrink:
       return a.FlexShrink() == b.FlexShrink();
     case CSSPropertyFloodColor:
-      return a.FloodColor() == b.FloodColor();
+      return a.FloodColorIgnoringVisited() == b.FloodColorIgnoringVisited();
     case CSSPropertyFloodOpacity:
       return a.FloodOpacity() == b.FloodOpacity();
     case CSSPropertyFontSize:
@@ -179,7 +188,8 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyLetterSpacing:
       return a.LetterSpacing() == b.LetterSpacing();
     case CSSPropertyLightingColor:
-      return a.LightingColor() == b.LightingColor();
+      return a.LightingColorIgnoringVisited() ==
+             b.LightingColorIgnoringVisited();
     case CSSPropertyLineHeight:
       return a.SpecifiedLineHeight() == b.SpecifiedLineHeight();
     case CSSPropertyListStyleImage:
@@ -219,8 +229,10 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyOrphans:
       return a.Orphans() == b.Orphans();
     case CSSPropertyOutlineColor:
-      return a.OutlineColor() == b.OutlineColor() &&
-             a.VisitedLinkOutlineColor() == b.VisitedLinkOutlineColor();
+      return a.OutlineColorIgnoringVisited() ==
+                 b.OutlineColorIgnoringVisited() &&
+             a.OutlineColorIgnoringUnvisited() ==
+                 b.OutlineColorIgnoringUnvisited();
     case CSSPropertyOutlineOffset:
       return a.OutlineOffset() == b.OutlineOffset();
     case CSSPropertyOutlineWidth:
@@ -242,7 +254,7 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyShapeOutside:
       return DataEquivalent(a.ShapeOutside(), b.ShapeOutside());
     case CSSPropertyStopColor:
-      return a.StopColor() == b.StopColor();
+      return a.StopColorIgnoringVisited() == b.StopColorIgnoringVisited();
     case CSSPropertyStopOpacity:
       return a.StopOpacity() == b.StopOpacity();
     case CSSPropertyStroke: {
@@ -269,8 +281,8 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
       return a.StrokeWidth() == b.StrokeWidth();
     case CSSPropertyTextDecorationColor:
       return a.TextDecorationColor() == b.TextDecorationColor() &&
-             a.VisitedLinkTextDecorationColor() ==
-                 b.VisitedLinkTextDecorationColor();
+             a.TextDecorationColorIgnoringUnvisited() ==
+                 b.TextDecorationColorIgnoringUnvisited();
     case CSSPropertyTextDecorationSkipInk:
       return a.TextDecorationSkipInk() == b.TextDecorationSkipInk();
     case CSSPropertyTextIndent:
@@ -296,8 +308,10 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
     case CSSPropertyColumnGap:
       return a.ColumnGap() == b.ColumnGap();
     case CSSPropertyColumnRuleColor:
-      return a.ColumnRuleColor() == b.ColumnRuleColor() &&
-             a.VisitedLinkColumnRuleColor() == b.VisitedLinkColumnRuleColor();
+      return a.ColumnRuleColorIgnoringVisited() ==
+                 b.ColumnRuleColorIgnoringVisited() &&
+             a.ColumnRuleColorIgnoringUnvisited() ==
+                 b.ColumnRuleColorIgnoringUnvisited();
     case CSSPropertyColumnRuleWidth:
       return a.ColumnRuleWidth() == b.ColumnRuleWidth();
     case CSSPropertyColumnWidth:
@@ -331,8 +345,10 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
       return a.PerspectiveOriginX() == b.PerspectiveOriginX() &&
              a.PerspectiveOriginY() == b.PerspectiveOriginY();
     case CSSPropertyWebkitTextStrokeColor:
-      return a.TextStrokeColor() == b.TextStrokeColor() &&
-             a.VisitedLinkTextStrokeColor() == b.VisitedLinkTextStrokeColor();
+      return a.TextStrokeColorIgnoringVisited() ==
+                 b.TextStrokeColorIgnoringVisited() &&
+             a.TextStrokeColorIgnoringUnvisited() ==
+                 b.TextStrokeColorIgnoringUnvisited();
     case CSSPropertyTransform:
       return a.Transform() == b.Transform();
     case CSSPropertyTranslate:
