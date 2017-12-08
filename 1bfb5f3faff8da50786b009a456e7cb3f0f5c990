@@ -16,6 +16,24 @@
       "revId": "1bfb5f3faff8da50786b009a456e7cb3f0f5c990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d1a4ab_269c7d9e",
+        "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-12-08T13:13:34Z",
+      "side": 1,
+      "message": "i replaced it to use just one vector. it seems like more better.",
+      "parentUuid": "e0bc6b2e_14b11e48",
+      "revId": "1bfb5f3faff8da50786b009a456e7cb3f0f5c990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
