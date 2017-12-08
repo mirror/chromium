@@ -131,24 +131,9 @@ int AudioLatency::GetRtcBufferSize(int sample_rate, int hardware_buffer_size) {
 // static
 int AudioLatency::GetInteractiveBufferSize(int hardware_buffer_size) {
 #if defined(OS_ANDROID)
-  // The optimum low-latency hardware buffer size is usually too small on
-  // Android for WebAudio to render without glitching. So, if it is small, use
-  // a larger size.
-  //
-  // Since WebAudio renders in 128-frame blocks, the small buffer sizes (144 for
-  // a Galaxy Nexus), cause significant processing jitter. Sometimes multiple
-  // blocks will processed, but other times will not be since the WebAudio can't
-  // satisfy the request. By using a larger render buffer size, we smooth out
-  // the jitter.
-  const int kSmallBufferSize = 1024;
-  const int kDefaultCallbackBufferSize = 2048;
-
+  // Always log this because it's relatively hard to get this
+  // information out.
   LOG(INFO) << "audioHardwareBufferSize = " << hardware_buffer_size;
-
-  if (hardware_buffer_size <= kSmallBufferSize)
-    hardware_buffer_size = kDefaultCallbackBufferSize;
-
-  LOG(INFO) << "callbackBufferSize      = " << hardware_buffer_size;
 #endif
 
   return hardware_buffer_size;
@@ -175,10 +160,10 @@ int AudioLatency::GetExactBufferSize(base::TimeDelta duration,
   minimum_buffer_size = limits::kMinAudioBufferSize;
 #endif
 
-  // Round the requested size to the nearest multiple of the hardware size
+  // Round the requested size up to the next multiple of the hardware size.
   const int buffer_size =
-      std::round(std::max(requested_buffer_size, 1.0) / hardware_buffer_size) *
-      hardware_buffer_size;
+      std::ceil(std::max(requested_buffer_size, 1.0) / minimum_buffer_size) *
+      minimum_buffer_size;
 
   return std::min(static_cast<int>(limits::kMaxAudioBufferSize),
                   std::max(buffer_size, minimum_buffer_size));
