@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a64d48cd_6231beac",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T14:39:16Z",
+      "side": 1,
+      "message": "nit: not from this CL, but let\u0027s rewrite this as cause !\u003d INSERTED, rather than !(cause \u003d\u003d INSERTED)",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "810ddb89_83755478",
         "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
         "patchSetId": 3
@@ -42,6 +65,69 @@
         "startChar": 31,
         "endLine": 197,
         "endChar": 34
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c674ac05_e8524612",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T14:39:16Z",
+      "side": 1,
+      "message": "This bool seems wrong.  In ExtensionSystem, it\u0027s declared as \"extensions_enabled\", but that\u0027s not globally false for incognito profiles.\n\nAdditionally, the bool never seems to be actually used.  Maybe just remove it?",
+      "range": {
+        "startLine": 197,
+        "startChar": 47,
+        "endLine": 197,
+        "endChar": 52
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0cbd08_7dbd6f4a",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T14:39:16Z",
+      "side": 1,
+      "message": "Can we comment on ordering/stage relative to the rest of profile initialization?",
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f056d36_47393f39",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T14:39:16Z",
+      "side": 1,
+      "message": "I never really liked \"regular\" for this.  Let\u0027s maybe say \"on-the-record\"?",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 48
       },
       "revId": "736eab02486f47c26f237375a94b4346faac7836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
