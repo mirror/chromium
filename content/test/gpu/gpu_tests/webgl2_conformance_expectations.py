@@ -184,16 +184,11 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Flaky('deqp/functional/gles3/multisample.html',
         ['win', ('amd', 0x6613)], bug=687374)
 
-    self.Skip('conformance2/textures/misc/copy-texture-image.html',
-        ['win', 'intel', 'd3d11'], bug=617449)
     # Seems to cause the harness to fail immediately afterward
     self.Skip('conformance2/textures/video/tex-2d-rgba16f-rgba-half_float.html',
         ['win', 'intel', 'd3d11'], bug=648337)
     self.Flaky('deqp/functional/gles3/lifetime.html',
         ['win', 'intel', 'd3d11'], bug=620379)
-    self.Skip('deqp/functional/gles3/texturespecification/' +
-        'teximage3d_depth_pbo.html',
-        ['win', 'intel', 'd3d11'], bug=617449)
     self.Flaky('deqp/functional/gles3/textureformat/unsized_3d.html',
         ['win', 'intel', 'd3d11'], bug=614418)
 
