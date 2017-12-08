@@ -72,9 +72,7 @@ void WMHelper::RemoveFocusObserver(
 }
 
 void WMHelper::AddCursorObserver(aura::client::CursorClientObserver* observer) {
-  // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
-  if (ash::Shell::GetAshConfig() == ash::Config::CLASSIC)
-    ash::Shell::Get()->cursor_manager()->AddObserver(observer);
+  ash::Shell::Get()->cursor_manager()->AddObserver(observer);
 }
 
 void WMHelper::RemoveCursorObserver(
@@ -183,18 +181,10 @@ aura::Window* WMHelper::GetFocusedWindow() const {
 }
 
 ui::CursorSize WMHelper::GetCursorSize() const {
-  // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
-  if (ash::Shell::GetAshConfig() == ash::Config::MUS)
-    return ui::CursorSize::kNormal;
   return ash::Shell::Get()->cursor_manager()->GetCursorSize();
 }
 
 const display::Display& WMHelper::GetCursorDisplay() const {
-  // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
-  if (ash::Shell::GetAshConfig() == ash::Config::MUS) {
-    static const display::Display display;
-    return display;
-  }
   return ash::Shell::Get()->cursor_manager()->GetDisplay();
 }
 
