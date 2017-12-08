@@ -46,6 +46,30 @@
       "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be18367_d4cf0aa8",
+        "filename": "chrome/app/android/chrome_main_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-08T06:56:03Z",
+      "side": 0,
+      "message": "Ya, sorry for not being clear - I meant where is it getting set after this change. I see that it wasn\u0027t intentional :)\n\n\"On Android it mixes a Java clock with a native one, which is extra broken\" - are you sure? If I\u0027m not mistaken, we looked at the sources at the time and they were referencing the same underlying values assuming an OEM doesn\u0027t muck with java impl.",
+      "parentUuid": "98b3408f_9facf32f",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
