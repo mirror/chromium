@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3b3f2a_c39a2bc3",
+        "filename": "chrome/browser/extensions/extension_geolocation_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:22:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change: Why isn\u0027t this using a ScopedGeolocationOverrider instead?",
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c03ba41_135d92ea",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:22:26Z",
+      "side": 1,
+      "message": "nit: you can do this in initializer list.",
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357af749_b5401a3a",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:22:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this comment. Was this test running against the real geolocation implementation before?",
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d203f65_2a258b80",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:22:26Z",
+      "side": 1,
+      "message": "Is there a reason that we can\u0027t just change this test to work the way the other browsertests do?\ni.e., pass in the default Connector (whatever the other browsertests are using by default) and use a ScopedGeolocationOverrider here as we\u0027re doing in the other tests? It doesn\u0027t seem like this test should be fundamentally different from the others.",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
