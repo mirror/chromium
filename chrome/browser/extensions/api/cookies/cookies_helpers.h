@@ -15,8 +15,9 @@
 #include <vector>
 
 #include "chrome/common/extensions/api/cookies.h"
-#include "net/cookies/cookie_monster.h"
 #include "net/cookies/canonical_cookie.h"
+#include "net/cookies/cookie_monster.h"
+#include "net/cookies/cookie_options.h"
 
 class Browser;
 class Profile;
@@ -55,12 +56,8 @@ api::cookies::CookieStore CreateCookieStore(
     Profile* profile,
     std::unique_ptr<base::ListValue> tab_ids);
 
-// Retrieves all cookies from the given cookie store corresponding to the given
-// URL. If the URL is empty, all cookies in the cookie store are retrieved.
-// This can only be called on the IO thread.
-void GetCookieListFromStore(net::CookieStore* cookie_store,
-                            const GURL& url,
-                            net::CookieMonster::GetCookieListCallback callback);
+// Constructs "the usual" cookie options for use by the extension code.
+void CreateCookieOptions(net::CookieOptions* options);
 
 // Constructs a URL from a cookie's information for use in checking
 // a cookie against the extension's host permissions. The Secure
