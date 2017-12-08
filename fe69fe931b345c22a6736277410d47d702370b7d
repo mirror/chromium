@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "7d817a7e_b8eb9722",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-08T01:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5fbbad1_a5ffc693",
+      "range": {
+        "startLine": 108,
+        "startChar": 53,
+        "endLine": 108,
+        "endChar": 71
+      },
+      "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "125aa9d0_cbb7a868",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
         "patchSetId": 4
@@ -62,6 +86,30 @@
       "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb5059d_ca533580",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-08T01:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "125aa9d0_cbb7a868",
+      "range": {
+        "startLine": 122,
+        "startChar": 78,
+        "endLine": 122,
+        "endChar": 85
+      },
+      "revId": "fe69fe931b345c22a6736277410d47d702370b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
