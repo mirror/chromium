@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49b52ca_dfa79b79",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-08T22:57:22Z",
+      "side": 1,
+      "message": "static?  That might fix linux_chromium_asan_rel_ng reporting a leak when allocating this in one of the tests.",
+      "range": {
+        "startLine": 1068,
+        "startChar": 4,
+        "endLine": 1068,
+        "endChar": 10
+      },
+      "revId": "c009fc2cfb662c32e29037508d09469bfbf21d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
