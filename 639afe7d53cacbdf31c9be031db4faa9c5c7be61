@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8876c42_63556b13",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-08T11:16:31Z",
+      "side": 1,
+      "message": "The callback should run at the end.",
+      "range": {
+        "startLine": 298,
+        "startChar": 6,
+        "endLine": 298,
+        "endChar": 37
+      },
+      "revId": "639afe7d53cacbdf31c9be031db4faa9c5c7be61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f935796_c2ac4710",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-08T11:16:31Z",
+      "side": 1,
+      "message": "Use OnceClosure instead (it\u0027s equivalent). Also, It\u0027s probably better to avoid defining ConnectionErrorCallback and using base::OnceClosure directly.",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 52
+      },
+      "revId": "639afe7d53cacbdf31c9be031db4faa9c5c7be61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
