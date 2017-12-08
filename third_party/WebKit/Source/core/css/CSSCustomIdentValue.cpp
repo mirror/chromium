@@ -5,6 +5,7 @@
 #include "core/css/CSSCustomIdentValue.h"
 
 #include "core/css/CSSMarkup.h"
+#include "core/css/properties/CSSProperty.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -22,7 +23,7 @@ CSSCustomIdentValue::CSSCustomIdentValue(CSSPropertyID id)
 
 String CSSCustomIdentValue::CustomCSSText() const {
   if (IsKnownPropertyID())
-    return getPropertyNameAtomicString(property_id_);
+    return CSSProperty::Get(property_id_).GetPropertyNameAtomicString();
   StringBuilder builder;
   SerializeIdentifier(string_, builder);
   return builder.ToString();
