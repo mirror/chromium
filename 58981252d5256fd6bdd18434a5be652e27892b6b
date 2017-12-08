@@ -51,6 +51,24 @@
       "revId": "58981252d5256fd6bdd18434a5be652e27892b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6694fa1c_8395a9d7",
+        "filename": "third_party/crashpad/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-08T23:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afaffb20_5380d73a",
+      "revId": "58981252d5256fd6bdd18434a5be652e27892b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
