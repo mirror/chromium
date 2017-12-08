@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09dde0d_24a1fba3",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T22:30:22Z",
+      "side": 1,
+      "message": "|callback| (refer to the variable not the type)",
+      "range": {
+        "startLine": 54,
+        "startChar": 51,
+        "endLine": 54,
+        "endChar": 59
+      },
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275a02d7_7bf34bd6",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T22:30:22Z",
+      "side": 1,
+      "message": "This parameter is unused. Why does it need to be passed here?",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baf6547_7a2ec887",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T22:30:22Z",
+      "side": 1,
+      "message": "Call this BuildFaceDetectionResult?",
+      "range": {
+        "startLine": 114,
+        "startChar": 41,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a717b5dc_ce18e3e6",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T22:30:22Z",
+      "side": 1,
+      "message": "Don\u0027t put using directives in the global namespace of header files. This can be lumped in with the rest of the using directives in FaceDetectionImplWin.",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8881aae7_a72ed6f0",
+        "filename": "services/shape_detection/face_detection_provider_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T22:30:22Z",
+      "side": 1,
+      "message": "Does this still need to be a friend?",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
