@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d200296c_a98d06ff",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T01:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a740c478_3f768ea2",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 39
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6a2d17d_2a675b4c",
         "filename": "ash/display/display_move_window_util_unittest.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "56f89701_2bb27ad6",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T01:26:22Z",
+      "side": 1,
+      "message": "Done by ScreenUtil::GetMaximizedWindowBoundsInParent.",
+      "parentUuid": "e6a2d17d_2a675b4c",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2fe5173_c7e16941",
         "filename": "ash/display/display_move_window_util_unittest.cc",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3375747b_f1272f7e",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T01:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fe5173_c7e16941",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,24 @@
       "side": 1,
       "message": "But neither snapping nor restoring from snapping should adjust the snapped ratio should they?",
       "parentUuid": "74394227_aeffd7fb",
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426e4317_33b7d7fc",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T01:26:22Z",
+      "side": 1,
+      "message": "There is a basic fact here: snapping by shortcut or by dragging window to snap will give us a default 0.5 snapped width ratio: [1]\n\nSo snapping or not snapping should update ratio, considering we have:\n(1) snap window to left by shortcut (press alt + [).\n(2) drag right edge of window to change ratio.\n(3) press alt + [ again to restore.\n(4) press alt + [ again to snap left (in this step, it is forced to be 0.5 instead of the ratio from step (2)).\n(5) then move window to right display (if we don\u0027t update ratio, it will use the stale ratio from step (2), not the latest ratio, which is from step (4).\n\nWe either need to change the code in [1]. Or do the update on all non-workspace events. I think it would be better in this way. WDYT?\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/default_state.cc?sq\u003dpackage:chromium\u0026l\u003d561",
+      "parentUuid": "61755dda_ab978277",
       "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
