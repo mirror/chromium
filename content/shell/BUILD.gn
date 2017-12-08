@@ -560,9 +560,6 @@ if (is_android) {
 
     data_deps = [
       ":pak",
-    ]
-
-    public_deps = [
       "//tools/v8_context_snapshot:v8_context_snapshot",
     ]
 
@@ -651,14 +648,15 @@ if (is_mac) {
 
     public_deps = [
       ":pak",
-      "//tools/v8_context_snapshot:v8_context_snapshot",
+    ]
+
+    deps = [
+      "//tools/v8_context_snapshot:generate_v8_context_snapshot",
     ]
 
     if (icu_use_data_file) {
       sources += [ "$root_out_dir/icudtl.dat" ]
-      deps = [
-        "//third_party/icu:icudata",
-      ]
+      deps += [ "//third_party/icu:icudata" ]
     }
 
     if (v8_use_external_startup_data) {
