@@ -549,6 +549,18 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
                              std::vector<uint8_t>(bytes, bytes + length));
   }
 
+  // Get Manufacturer Data.
+  BluetoothDevice::ManufacturerDataMap manufacturer_data_map;
+  NSData* manufacturer_data =
+      [advertisement_data objectForKey:CBAdvertisementDataManufacturerDataKey];
+  const uint8_t* bytes = static_cast<const uint8_t*>([manufacturer_data bytes]);
+  size_t length = [manufacturer_data length];
+  if (length > 1) {
+    const uint16_t manufacturer_id = bytes[0] | bytes[1] << 8;
+    manufacturer_data_map.emplace(
+        manufacturer_id, std::vector<uint8_t>(bytes + 2, bytes + length));
+  }
+
   // Get Tx Power.
   NSNumber* tx_power =
       [advertisement_data objectForKey:CBAdvertisementDataTxPowerLevelKey];
@@ -556,7 +568,7 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
 
   device_mac->UpdateAdvertisementData(
       BluetoothDevice::ClampPower(rssi), std::move(advertised_uuids),
-      std::move(service_data_map),
+      std::move(service_data_map), std::move(manufacturer_data_map),
       tx_power == nil ? nullptr : &clamped_tx_power);
 
   if (is_new_device) {

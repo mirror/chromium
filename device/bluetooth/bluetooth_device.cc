@@ -413,16 +413,19 @@ std::string BluetoothDevice::CanonicalizeAddress(const std::string& address) {
 
 std::string BluetoothDevice::GetIdentifier() const { return GetAddress(); }
 
-void BluetoothDevice::UpdateAdvertisementData(int8_t rssi,
-                                              UUIDList advertised_uuids,
-                                              ServiceDataMap service_data,
-                                              const int8_t* tx_power) {
+void BluetoothDevice::UpdateAdvertisementData(
+    int8_t rssi,
+    UUIDList advertised_uuids,
+    ServiceDataMap service_data,
+    ManufacturerDataMap manufacturer_data,
+    const int8_t* tx_power) {
   UpdateTimestamp();
 
   inquiry_rssi_ = rssi;
 
   device_uuids_.ReplaceAdvertisedUUIDs(std::move(advertised_uuids));
   service_data_ = std::move(service_data);
+  manufacturer_data_ = std::move(manufacturer_data);
 
   if (tx_power != nullptr) {
     inquiry_tx_power_ = *tx_power;
