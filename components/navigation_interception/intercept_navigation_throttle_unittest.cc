@@ -167,4 +167,17 @@ TEST_F(InterceptNavigationThrottleTest,
   EXPECT_EQ(NavigationThrottle::PROCEED, result);
 }
 
+TEST_F(InterceptNavigationThrottleTest, PostIsCancelledAtStart) {
+  ON_CALL(*mock_callback_receiver_, ShouldIgnoreNavigation(_, _))
+      .WillByDefault(Return(true));
+  auto throttle_inserter = CreateThrottleInserter();
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(GURL(kTestUrl),
+                                                            main_rfh());
+  simulator->SetMethod("POST");
+  simulator->Start();
+  auto result = simulator->GetLastThrottleCheckResult();
+  EXPECT_EQ(NavigationThrottle::CANCEL_AND_IGNORE, result);
+}
+
 }  // namespace navigation_interception
