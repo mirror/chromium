@@ -445,12 +445,15 @@ struct ServiceWorkerContextClient::WorkerContextData {
   base::IDMap<std::unique_ptr<NavigationPreloadRequest>> preload_requests;
 
   // S13nServiceWorker
-  std::unique_ptr<ControllerServiceWorkerImpl> controller_impl;
-
-  // S13nServiceWorker
   // Timer triggered when the service worker considers it should be stopped or
   // an event should be aborted.
   std::unique_ptr<ServiceWorkerTimeoutTimer> timeout_timer;
+
+  // S13nServiceWorker
+  // This should be destructed before |timeout_timer| since callbacks of the
+  // events dispatched through this pipe may be silently descarded by
+  // disconnecting the pipe before running the callbacks.
+  std::unique_ptr<ControllerServiceWorkerImpl> controller_impl;
 
   base::ThreadChecker thread_checker;
   base::WeakPtrFactory<ServiceWorkerContextClient> weak_factory;
@@ -1257,6 +1260,22 @@ void ServiceWorkerContextClient::Claim(
   Send(new ServiceWorkerHostMsg_ClaimClients(GetRoutingID(), request_id));
 }
 
+void ServiceWorkerContextClient::DispatchOrQueueFetchEvent(
+    const ResourceRequest& request,
+    mojom::FetchEventPreloadHandlePtr preload_handle,
+    mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
+    DispatchFetchEventCallback callback) {
+  if (IsIdle()) {
+    context_->timeout_timer->PushPendingTask(
+        base::BindOnce(&ServiceWorkerContextClient::DispatchFetchEvent,
+                       GetWeakPtr(), request, std::move(preload_handle),
+                       std::move(response_callback), std::move(callback)));
+    return;
+  }
+  DispatchFetchEvent(request, std::move(preload_handle),
+                     std::move(response_callback), std::move(callback));
+}
+
 void ServiceWorkerContextClient::DispatchSyncEvent(
     const std::string& tag,
     blink::mojom::BackgroundSyncEventLastChance last_chance,
@@ -1831,9 +1850,14 @@ void ServiceWorkerContextClient::SetupNavigationPreload(
 }
 
 void ServiceWorkerContextClient::OnIdle() {
+  DCHECK(IsIdle());
   // TODO(crbug.com/774374): Ignore events from clients after this point until
   // an event from the browser process or StopWorker() is received.
   (*instance_host_)->RequestTermination();
+}
+
+bool ServiceWorkerContextClient::IsIdle() const {
+  return context_->timeout_timer->IsIdle();
 }
 
 base::WeakPtr<ServiceWorkerContextClient>
@@ -1846,6 +1870,12 @@ ServiceWorkerContextClient::GetWeakPtr() {
 // static
 void ServiceWorkerContextClient::ResetThreadSpecificInstanceForTesting() {
   g_worker_client_tls.Pointer()->Set(nullptr);
+}
+
+void ServiceWorkerContextClient::SetTimeoutTimerForTesting(
+    std::unique_ptr<ServiceWorkerTimeoutTimer> timeout_timer) {
+  DCHECK(context_);
+  context_->timeout_timer = std::move(timeout_timer);
 }
 
 }  // namespace content
