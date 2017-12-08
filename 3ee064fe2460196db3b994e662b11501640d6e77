@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "c9d9fa5b_d0ff6c3b",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-08T11:31:05Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know that. I was basing it on https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#types, which implies int may have different sizes. I\u0027ve switched to int32 now.",
+      "parentUuid": "6489699a_021cb6ad",
+      "revId": "3ee064fe2460196db3b994e662b11501640d6e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cc6526c_48cf1c61",
         "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
         "patchSetId": 19
