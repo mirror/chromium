@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d08f1b38_a9d22d11",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5473547_7bdfe715",
+      "range": {
+        "startLine": 518,
+        "startChar": 54,
+        "endLine": 518,
+        "endChar": 55
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43dcc376_a67c3301",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e1477c52_a4759ff1",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43dcc376_a67c3301",
+      "range": {
+        "startLine": 524,
+        "startChar": 39,
+        "endLine": 524,
+        "endChar": 59
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c6c4eec_3f9b842a",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 5
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "The downside of what I mentioned regarding NSS\u0027s caching behaviour is that there\u0027s no guarantee this test won\u0027t be flakey.\n\nIf NSS has cached in memory (e.g. from a previous verification) this certificate, this test will fail, although not for it being wrong.\n\nUnfortunately, I don\u0027t have a good suggestion on how to deflake this - there\u0027s no way to force-clear that cache to gain deterministic behaviour, short of ensuring dedicated process launches. The test runner \u0027should\u0027 do this, but it\u0027s somewhat gross to depend on.\n\nI mention this for two reasons:\n- If it flakes, now you know why\n- Wondering if a future design (code cleanup rather than feature blocking) would be to supply the ONC certs to the ClientCertStore, now that we have that, and then have the tests check that the ClientCertStore had the ONC policies made available to them.\n\nThis avoids the complications of the original plan (importing into the NSS trust database and segmenting them), and allows greater future flexibility, while also not being potentially-flaky.\n\nNote the same applies for the *Known test below :)",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9e53bb_08fc06b4",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Re: Cached-\u003eFlakes:\nYeah, this depends on the certificate not being in the cache.\nArguably, we can remove this and only leave in the case which depends on the certificate being available. It\u0027s not adding much value to know that we reliably can\u0027t find a certificate if an intermediate is unknown (except for documenting why we need the intermediate, maybe).\"\nThe *Known test at least still passes if the intermediate is in the cache, though that\u0027s not much better.\n\nAnother thing we could do is not re-use client*.pem from net\u0027s test cert directory, but generate a unique cert chain for each test, so we\u0027re at least confident that caching between different test cases does not affect the results WDYT?\n\nRe: Supply the ONC certs to ClientCertStore:\nI\u0027m not sure I understand. What ClientCertStore also just hold them the way UntrustedAuthorityCache does now (after all, the cert matching logic is not in ClientCertStore)?\nIf yes, would we simply not test the actual client cert matching across intermediate cert then, and only test what arrived in ClientCertStore?",
+      "parentUuid": "4c6c4eec_3f9b842a",
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0fa3854f_3cdbb748",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "100500c9_485b4742",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b4d5a7e_cfd24df4",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
@@ -108,6 +198,30 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6412ac45_f0c9af11",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4d5a7e_cfd24df4",
+      "range": {
+        "startLine": 67,
+        "startChar": 47,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "173144b8_b65b9b06",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "461fd2e8_64d7d1ce",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c50c893c_afe99619",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "deb75029_70114d1e",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c50c893c_afe99619",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f09403b6_984412b6",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
@@ -162,6 +318,24 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "Should this be a LOG(ERROR)? I\u0027m not sure the ChromeOS policies around logging, but normally I\u0027d push back on shipping this sort of log statement to the user, especially if ONC files are created by the server.\n\nMy $.02",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c455ea36_add9f4fc",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Hrm, good question. I made this correspond to onc_certificate_importer_impl.cc\u0027s behavior [1].\n\nWe should not reach from the policy code this, as onc_validator.cc should drop Certificate ONC elements with type\u003dAuthority and no X509 field in [2]. However, it doesn\u0027t check for the field being empty (otherwise we could probably just DCHECK here).\nMaksim, do you have a preference? \n\n[1] https://cs.chromium.org/chromium/src/chromeos/network/onc/onc_certificate_importer_impl.cc?rcl\u003dc7e1c873fe7f49ec1d6b4f155defe9e056af79ef\u0026l\u003d203\n[2] https://cs.chromium.org/chromium/src/chromeos/network/onc/onc_validator.cc?rcl\u003dac57fe328ab67b3dd8e1e17fdacace0a4b5ba628\u0026l\u003d1008",
+      "parentUuid": "f09403b6_984412b6",
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "7eb7f64e_c96ed781",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a20e735_a6540847",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011953c0_ace3c4d8",
         "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
         "patchSetId": 5
@@ -208,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "25904611_a49e1e1e",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "011953c0_ace3c4d8",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ccc351_a68250e7",
         "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
         "patchSetId": 5
@@ -219,6 +435,24 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "Seems spammy - remove?",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0c91be_dd7cb472",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Note that this function just appears to have been moved down (because parts of it were extracted to another function) I\u0027m not sure if I should mess with its logging behavior at that occassion.",
+      "parentUuid": "81ccc351_a68250e7",
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "21649406_cf00e140",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Whoops, sorry, must have slipped through copy+pasting.",
+      "parentUuid": "69a17ba8_a46af92a",
+      "range": {
+        "startLine": 68,
+        "startChar": 41,
+        "endLine": 68,
+        "endChar": 78
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75337bc_a5ab1764",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.cc",
         "patchSetId": 5
@@ -271,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "d9de991d_2b33a74e",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75337bc_a5ab1764",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb10a5a_9979beb0",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
         "patchSetId": 5
@@ -285,6 +567,24 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e54d6eb_fd3956af",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "deb10a5a_9979beb0",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "7443ae87_d742300d",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "f36e12c1_18caff5d",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef496ac_b7950ede",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
         "patchSetId": 5
@@ -334,6 +658,30 @@
     },
     {
       "key": {
+        "uuid": "b9252644_93358270",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef496ac_b7950ede",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85334d5_f1938dbb",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
         "patchSetId": 5
@@ -348,6 +696,24 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e3bcfc_2d1f0b80",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Very good idea. Done.",
+      "parentUuid": "c85334d5_f1938dbb",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +740,30 @@
     },
     {
       "key": {
+        "uuid": "6f3e1ace_53e5a5b5",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3406ca_64a32839",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e910c69_311e2453",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
         "patchSetId": 5
@@ -388,6 +778,24 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cee6df9_bc41be9a",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e910c69_311e2453",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -414,6 +822,30 @@
     },
     {
       "key": {
+        "uuid": "c3a4cd25_e702227d",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "577286d5_70e7bce1",
+      "range": {
+        "startLine": 46,
+        "startChar": 64,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d4cb94_9c3e4ca1",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
         "patchSetId": 5
@@ -434,6 +866,30 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df0554f_e266639e",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d4cb94_9c3e4ca1",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -460,6 +916,30 @@
     },
     {
       "key": {
+        "uuid": "d7abfb86_a501d3a9",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b00af821_daa04582",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 67
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5943f67_ad9db4ac",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
         "patchSetId": 5
@@ -480,6 +960,30 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce4d1d2_d695ae0a",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5943f67_ad9db4ac",
+      "range": {
+        "startLine": 114,
+        "startChar": 35,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -506,6 +1010,30 @@
     },
     {
       "key": {
+        "uuid": "01eef058_cd5a633f",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve started asking for this in my reviews too now, as there was a very similar situation :-)",
+      "parentUuid": "3032d668_a523b3c1",
+      "range": {
+        "startLine": 124,
+        "startChar": 33,
+        "endLine": 124,
+        "endChar": 38
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6e113a_58ff9131",
         "filename": "chromeos/network/onc/onc_utils.h",
         "patchSetId": 5
@@ -520,6 +1048,24 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1566c5ad_474faca2",
+        "filename": "chromeos/network/onc/onc_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T12:35:48Z",
+      "side": 1,
+      "message": "Actually, it was something in between :) . Made it consistent (false returned for any validation error in any segment) and made this clear in this comment.",
+      "parentUuid": "ea6e113a_58ff9131",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
