@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "17289fd2_fa5f389b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-08T17:21:55Z",
+      "side": 1,
+      "message": "ShouldShowWindowIcon always return false in cros to prevent the icon and title from showing on the frame. We only want the icon updated for overview mode, otherwise if UpdateTitle or UpdateIcon get called after exiting overview, the icon will show up on the window frame (which would also happen with this current change, but I havent seen it). Enter/exit overview does not also trigger a UpdateTitle call. \n\nIm thinking either to \n1. Use something like ScopedIconChanger to modify kWindowIconKey on overview enter/exit.\n2. Always grab the icon on app init and move the chromeos show icon to where the icon gets drawn. (maybe [1]?)\n\nWDYT?\n\nBut i guess 2 would be kind of weird that ShouldShowIcon returns true but doesn\u0027t actually show the icon..\n\n[1]https://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc?rcl\u003d42c78a82903338fb92e11dd4121a7db81139f578\u0026l\u003d100",
+      "parentUuid": "17c0f387_1d6eaafe",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab2a87_eda128bd",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
