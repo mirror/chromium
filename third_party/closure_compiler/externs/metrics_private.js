@@ -154,3 +154,23 @@ chrome.metricsPrivate.recordSparseValue = function(metricName, value) {};
  * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordValue
  */
 chrome.metricsPrivate.recordValue = function(metric, value) {};
+
+/**
+ * Records a boolean value to the given metric. Analogous to
+ * base::UmaHistogramBoolean().
+ * @param {string} metricName
+ * @param {boolean} value
+ * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordBoolean
+ */
+chrome.metricsPrivate.recordBoolean = function(metricName, value) {};
+
+/**
+ * Records an enumeration value to the given metric. Analogous to
+ * base::UmaHistogramEnumeration(). Assumes the enum starts at 0 and increases
+ * by 1.
+ * @param {string} metricName
+ * @param {number} value
+ * @param {number} enumSize
+ * @see https://developer.chrome.com/extensions/metricsPrivate#method-recordEnumerationValue
+ */
+chrome.metricsPrivate.recordEnumerationValue = function(metricName, value, enumSize) {};
