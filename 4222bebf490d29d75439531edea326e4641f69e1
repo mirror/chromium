@@ -476,6 +476,29 @@
     },
     {
       "key": {
+        "uuid": "7be37395_e798cc96",
+        "filename": "net/disk_cache/blockfile/sparse_control.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-08T16:59:01Z",
+      "side": 1,
+      "message": "This was actually unneeded",
+      "range": {
+        "startLine": 832,
+        "startChar": 15,
+        "endLine": 832,
+        "endChar": 0
+      },
+      "revId": "4222bebf490d29d75439531edea326e4641f69e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd307819_cfaa9950",
         "filename": "net/disk_cache/entry_unittest.cc",
         "patchSetId": 8
