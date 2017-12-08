@@ -650,7 +650,9 @@ if (is_win) {
     }
 
     foreach(locale, locales_as_mac_outputs) {
-      outputs += [ "$target_gen_dir/app_infoplist_strings/$locale.lproj/InfoPlist.strings" ]
+      outputs += [
+        "$target_gen_dir/app_infoplist_strings/$locale.lproj/InfoPlist.strings",
+      ]
     }
 
     args =
@@ -867,7 +869,10 @@ if (is_win) {
     public_deps = [
       ":packed_resources",
       "//chrome/app_shim:app_mode_loader",
-      "//tools/v8_context_snapshot",
+    ]
+
+    deps = [
+      "//tools/v8_context_snapshot:generate_v8_context_snapshot",
     ]
 
     if (is_chrome_branded) {
