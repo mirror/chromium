@@ -58,6 +58,11 @@ class ExtensionSystem : public KeyedService {
   // Initializes extensions machinery.
   // Component extensions are always enabled, external and user extensions are
   // controlled by |extensions_enabled|.
+  // |Init()| is called for regular and incognito profiles,
+  // |InitForRegularProfile()| only for regular profiles.
+  // These calls should occur after the profile IO data is initialized,
+  // as extensions initialization depends on that.
+  virtual void Init() = 0;
   virtual void InitForRegularProfile(bool extensions_enabled) = 0;
 
   // The ExtensionService is created at startup. ExtensionService is only

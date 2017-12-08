@@ -53,6 +53,7 @@ class ShellExtensionSystem : public ExtensionSystem {
   void Shutdown() override;
 
   // ExtensionSystem implementation:
+  void Init() override;
   void InitForRegularProfile(bool extensions_enabled) override;
   ExtensionService* extension_service() override;
   RuntimeData* runtime_data() override;
