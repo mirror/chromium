@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c00ffa19_f7e67ab4",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T00:44:22Z",
+      "side": 1,
+      "message": "Good to know it works, thanks!",
+      "parentUuid": "3bead6ef_7d292e8e",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70715f0d_b4965ab1",
         "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T21:39:18Z",
       "side": 1,
       "message": "I suggest just making accessors and getting rid of network_context_ and loader_factory_ - think it\u0027s cleaner than a setup method that we need to call.",
+      "range": {
+        "startLine": 201,
+        "startChar": 23,
+        "endLine": 201,
+        "endChar": 0
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ffc9a7_db3bde4c",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T00:44:22Z",
+      "side": 1,
+      "message": "Done. Changed accessors to retrieve and return pointers directly.\n(Need to cache |Browser* incognito_| though.)",
+      "parentUuid": "70715f0d_b4965ab1",
       "range": {
         "startLine": 201,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ff909fde_cbc7d817",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T00:44:22Z",
+      "side": 1,
+      "message": "Hmmm ok. Removed checks about pointers.\nShould be safe to assume |SimulateNetworkServiceCrash()| will indeed crash the process. Will remove the pointer check from |(Chrome)NetworkServiceRestartBrowserTest| if flakiness was discovered.",
+      "parentUuid": "3a58792c_d8f384a3",
+      "range": {
+        "startLine": 259,
+        "startChar": 33,
+        "endLine": 259,
+        "endChar": 35
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df04051_0c25991c",
         "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0849405c_f7a75739",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T00:44:22Z",
+      "side": 1,
+      "message": "Done. Changed to \u0027OSX\u0027. (I thought it was renamed to \u0027macOS\u0027 but \u0027OSX\u0027 is probably more common and less confusing)",
+      "parentUuid": "8df04051_0c25991c",
+      "range": {
+        "startLine": 693,
+        "startChar": 63,
+        "endLine": 693,
+        "endChar": 68
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e6f8c33_28874c7e",
         "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-07T21:39:18Z",
       "side": 1,
       "message": "nit:  I think it\u0027s more common to use !defined(OS_MACOSX) for #else clauses.",
+      "range": {
+        "startLine": 751,
+        "startChar": 19,
+        "endLine": 751,
+        "endChar": 28
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5964d1c_4d3ae33d",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T00:44:22Z",
+      "side": 1,
+      "message": "Sorry but I\u0027m a little bit confused... My current #else-endif clause is already for !defined(OS_MACOSX) stuff.\n\nI\u0027ve changed the last line to:\n  \u0027#endif  // !defined(OS_MACOSX)\u0027\n\nOr do you actually want me to swap the content between #if-else and #else-endif?",
+      "parentUuid": "5e6f8c33_28874c7e",
       "range": {
         "startLine": 751,
         "startChar": 19,
