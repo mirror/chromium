@@ -114,9 +114,13 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         mWebContents = webContents;
         mRegistrationId = registrationId;
 
-        // Sublabel and/or icon are set to null if fetching or processing the corresponding web app
-        // manifest failed. Then do not preselect this payment app.
-        mCanPreselect = !TextUtils.isEmpty(sublabel) && icon != null;
+        // tertiarylabel and/or icon are set to null if fetching or processing the corresponding web
+        // app manifest failed. Then do not preselect this payment app.
+        // Note that: label indicates the name of the payment app. tertiarylabel indicates the
+        // origin of the payment app. The origin of the payment app is used as the name if name is
+        // not available from the web app manifest, then tertiarylabel is set to null in this case
+        // to avoid duplication.
+        mCanPreselect = !TextUtils.isEmpty(tertiarylabel) && icon != null;
 
         mMethodNames = new HashSet<>();
         for (int i = 0; i < methodNames.length; i++) {
