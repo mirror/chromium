@@ -22,6 +22,30 @@
       "revId": "ee61e926b3fc13f03744b44db1ba40a4c153a9c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8308eb0c_9fab58f0",
+        "filename": "components/payments/core/payment_currency_amount.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-08T22:28:32Z",
+      "side": 1,
+      "message": "Let\u0027s not have the C++ fallback as discussed offline.",
+      "parentUuid": "a5366110_87be72b0",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "ee61e926b3fc13f03744b44db1ba40a4c153a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

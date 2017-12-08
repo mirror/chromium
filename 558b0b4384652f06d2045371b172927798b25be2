@@ -22,6 +22,30 @@
       "revId": "558b0b4384652f06d2045371b172927798b25be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe010e1b_5b046c0b",
+        "filename": "components/payments/core/payment_currency_amount_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-12-08T22:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdcb340c_dda8a95b",
+      "range": {
+        "startLine": 54,
+        "startChar": 41,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "558b0b4384652f06d2045371b172927798b25be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
