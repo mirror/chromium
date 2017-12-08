@@ -62,6 +62,7 @@ SaveCardBubbleViews::SaveCardBubbleViews(views::View* anchor_view,
     : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
       controller_(controller) {
   DCHECK(controller);
+  mouse_handler_.reset(new WebContentMouseHandler(this, web_contents));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::SAVE_CARD);
 }
 
@@ -71,6 +72,7 @@ void SaveCardBubbleViews::Show(DisplayReason reason) {
 
 void SaveCardBubbleViews::Hide() {
   controller_ = nullptr;
+  mouse_handler_.reset();
   CloseBubble();
 }
 
