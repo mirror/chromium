@@ -38,6 +38,8 @@ source_set("coordinator") {
     "//ios/chrome/browser",
     "//ios/chrome/browser/tabs",
     "//ios/chrome/browser/ui/commands",
+    "//ios/chrome/browser/ui/fullscreen",
+    "//ios/chrome/browser/ui/fullscreen:new_fullscreen",
     "//ios/chrome/browser/ui/history_popup/requirements",
   ]
 }

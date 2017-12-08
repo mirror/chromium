@@ -2025,6 +2025,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _tabHistoryCoordinator =
       [[LegacyTabHistoryCoordinator alloc] initWithBaseViewController:self];
   _tabHistoryCoordinator.dispatcher = _dispatcher;
+  _tabHistoryCoordinator.browserState = _browserState;
   _tabHistoryCoordinator.positionProvider =
       [_toolbarCoordinator tabHistoryPositioner];
   _tabHistoryCoordinator.tabModel = _model;
