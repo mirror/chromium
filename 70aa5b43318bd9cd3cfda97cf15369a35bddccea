@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f7f57b3_968b7292",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T15:40:29Z",
+      "side": 1,
+      "message": "const maybe?",
+      "range": {
+        "startLine": 186,
+        "startChar": 17,
+        "endLine": 186,
+        "endChar": 22
+      },
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e61de9_4d130970",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T15:40:29Z",
+      "side": 1,
+      "message": "can return updater-\u003eUnregisterComponent(id);",
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3973142b_7359a301",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T15:40:29Z",
+      "side": 1,
+      "message": "minor nit, comment is not needed imo.",
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31186e2a_37078253",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 10
