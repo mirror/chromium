@@ -1,0 +1,49 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="chrome://resources/cr_elements/shared_vars_css.html">
+<link rel="import" href="chrome://resources/html/util.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
+<link rel="import" href="../settings_shared_css.html">
+<link rel="import" href="chrome_cleanup_proxy.html">
+
+<dom-module id="items-to-remove-list">
+  <template>
+    <style include="settings-shared">
+      #items-to-remove-container {
+        padding: 0 var(--settings-box-row-padding);
+        /* Use the full available width for items shown to avoid inconsistent
+         * line breaks when zooming in or out */
+        width: calc(var(--settings-card-max-width) -
+            2 * var(--settings-box-row-padding));
+      }
+
+      #items-to-remove-list {
+        margin: 0;
+        word-break: break-all;
+      }
+
+      #more-items-link {
+        color: var(--google-blue-500);
+        cursor: pointer;
+      }
+    </style>
+    <div id="items-to-remove-container">
+      <div id="title" class="secondary" hidden="[[!titleVisible]]">
+        [[title]]
+      </div>
+      <ul id="list" class="secondary">
+        <template is="dom-repeat" items="[[visibleItems_]]" as="visibleItem">
+          <li class="visible-item">
+            [[visibleItem]]
+          </li>
+        </template>
+        <li id="show-more-items" hidden="[[expanded_]]">
+          <a id="more-items-link" on-tap="expandList_">
+            [[moreItemsLinkText_]]
+          </a>
+        </li>
+      </ul>
+    </div>
+  </template>
+  <script src="items_to_remove_list.js"></script>
+</dom-module>
