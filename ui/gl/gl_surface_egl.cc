@@ -33,7 +33,7 @@
 #include "ui/gl/gl_utils.h"
 #include "ui/gl/scoped_make_current.h"
 #include "ui/gl/sync_control_vsync_provider.h"
-
+#include "base/debug/stack_trace.h" 
 #if defined(USE_X11)
 #include "ui/gfx/x/x11.h"
 
@@ -937,6 +937,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
   if (!surface_) {
     LOG(ERROR) << "eglCreateWindowSurface failed with error "
                << GetLastEGLErrorString();
+    base::debug::StackTrace().Print(); 
     Destroy();
     return false;
   }

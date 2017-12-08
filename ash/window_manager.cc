@@ -12,8 +12,10 @@
 
 #include "ash/accelerators/accelerator_handler.h"
 #include "ash/accelerators/accelerator_ids.h"
+#include "ash/display/mirror_window_controller.h"
 #include "ash/drag_drop/drag_image_view.h"
 #include "ash/event_matcher_util.h"
+#include "ash/host/ash_window_tree_host.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/window_pin_type.h"
@@ -355,6 +357,19 @@ void WindowManager::OnWmAcceleratedWidgetAvailableForDisplay(
   if (window) {
     auto* host = static_cast<aura::WindowTreeHostMus*>(window->GetHost());
     host->OverrideAcceleratedWidget(widget);
+  } else {
+    // Notify mirror display hosts, which do not have root window controllers.
+    MirrorWindowController* mirror_window_controller =
+        Shell::Get()->window_tree_host_manager()->mirror_window_controller();
+    AshWindowTreeHost* host_ash =
+        mirror_window_controller->GetAshWindowTreeHostForDisplayId(display_id);
+    if (host_ash) {
+      aura::WindowTreeHost* host = host_ash->AsWindowTreeHost();
+      auto* host_mus = static_cast<aura::WindowTreeHostMus*>(host);
+      host_mus->OverrideAcceleratedWidget(widget);
+    } else {
+      NOTREACHED() << "No WindowTreeHost found for the display:" << display_id;
+    }
   }
 }
 
