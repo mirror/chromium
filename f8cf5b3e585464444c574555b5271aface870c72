@@ -16,6 +16,24 @@
       "revId": "f8cf5b3e585464444c574555b5271aface870c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4300a2db_2d9f3720",
+        "filename": "content/public/browser/network_service_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-08T23:06:58Z",
+      "side": 1,
+      "message": "(Posted our offline discussion here.)\nWe don\u0027t have |RunUntilMojoIdle()| and in general waiting for message loop becoming idle is not recommended, because there is no guarantee that at any given point of our test, the message loop stays busy.\n\nSo your currently approach seems reasonable to me.",
+      "parentUuid": "2b09b750_a8812a39",
+      "revId": "f8cf5b3e585464444c574555b5271aface870c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
