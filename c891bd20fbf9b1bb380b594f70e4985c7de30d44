@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa3334d_eb349988",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "Can we replace most of the body of this function with a call to Cronet_Buffer_CreateWithDataAndOnDestroyFunc?",
+      "range": {
+        "startLine": 23,
+        "startChar": 70,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf5243e_99225518",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "Not sure what we can do, but I feel like we should do something if malloc() returns null or if size_t is 32-bit and size \u003e 2^31",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2405d3_48b7ad56",
+        "filename": "components/cronet/native/executors.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "I feel like this should take a SequenceTaskRunner as an argument rather than create one.\nCreateTaskRunner-\u003eCreateFromTaskRunner",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dde21a_b2308f80",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "what\u0027s this GRPC stuff for?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67946805_2f263ca3",
+        "filename": "components/cronet/native/include/cronet_c.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "This should go in another header file, like net/base/net_export.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 6
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77077be_1a50cb48",
+        "filename": "components/cronet/native/runnables.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "nit: This is implementation inheritance, which I generally shy away from, but I don\u0027t have a better idea, so marking resolved.\nhttps://google.github.io/styleguide/cppguide.html#Inheritance",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd69b33a_7b4f169d",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:20:34Z",
+      "side": 1,
+      "message": "any particular reason we override these with empty definitions?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
