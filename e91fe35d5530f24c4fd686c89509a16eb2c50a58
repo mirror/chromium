@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abf0e76_86b27059",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-08T22:58:16Z",
+      "side": 1,
+      "message": "Regexes and symbols can wrap today when they should not. https://imgur.com/a/BZ7jo",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 42
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5164c44_29d01f77",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-08T22:58:16Z",
+      "side": 1,
+      "message": "This allows console object titles to stay wrapped when their content box overflows due to expanding a treeoutline with long properties: https://imgur.com/a/4nLqz",
+      "range": {
+        "startLine": 390,
+        "startChar": 4,
+        "endLine": 391,
+        "endChar": 20
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32c5e37_c2a4526a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-08T22:58:16Z",
+      "side": 1,
+      "message": "In some cases (object without preview) TreeOutline\u0027s styles set nowrap, but we still need the text to wrap: https://imgur.com/a/VZ7Av",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 396,
+        "endChar": 26
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3242e5d9_2ff48007",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-08T22:58:16Z",
+      "side": 1,
+      "message": "This will allow top-level previews to wrap, and only set nowrap to previews inside values (when you expand an object, there is a key, a colon \":\" and a value) https://imgur.com/a/EJBzc\n\nWhy do we need this rule at all?  https://imgur.com/a/QuQdh",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aac80df_198fa520",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_editor/cmdevtools.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-08T22:58:16Z",
+      "side": 1,
+      "message": "If we do the change on objectValue.css L94, we need this to preserve current behavior: https://imgur.com/a/W4CH5",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 24
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
