@@ -5005,7 +5005,6 @@ crbug.com/714962 compositing/gestures/gesture-tapHighlight-with-squashing.html [
 crbug.com/714962 compositing/images/direct-image-clip-path.html [ Failure ]
 crbug.com/714962 compositing/images/direct-image-dynamic-clip-path.html [ Failure ]
 crbug.com/714962 compositing/overflow/absolute-element-in-isolated-composited-ancestor.html [ Failure ]
-crbug.com/591099 compositing/overflow/border-radius-composited-subframe.html [ Failure ]
 crbug.com/591099 compositing/overflow/border-radius-on-squashed-layers.html [ Failure Pass ]
 crbug.com/591099 compositing/overflow/composited-scroll-with-fractional-translation.html [ Pass ]
 crbug.com/591099 compositing/overflow/do-not-crash-use-after-free-update-widget-positions.html [ Crash ]
