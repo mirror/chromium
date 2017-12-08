@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f89cab_7f6563af",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-08T12:30:12Z",
+      "side": 1,
+      "message": "nit: no need for braces for one line blocks.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a03949_857d37b3",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-08T12:30:12Z",
+      "side": 1,
+      "message": "Imho Allowed is better in the name of this policy. WDYT?",
+      "range": {
+        "startLine": 2721,
+        "startChar": 31,
+        "endLine": 2721,
+        "endChar": 38
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1037871f_7a9fc685",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-08T12:30:12Z",
+      "side": 1,
+      "message": "You need to add some verb here. Provided you accept my suggestion for the rename you can put \"Allow Multiple Sign-in Within the Browser\" here. Granted ChromeOS policies do not show this anywhere but still having nice consistent contents might benefit future efforts.",
+      "range": {
+        "startLine": 4507,
+        "startChar": 19,
+        "endLine": 4507,
+        "endChar": 55
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70cbd4a_e33372d2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4509,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-08T12:30:12Z",
+      "side": 1,
+      "message": "I don\u0027t think it is necessary to reference the tracking bug here.",
+      "range": {
+        "startLine": 4509,
+        "startChar": 8,
+        "endLine": 4509,
+        "endChar": 24
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdc226c_db22de90",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4510,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-08T12:30:12Z",
+      "side": 1,
+      "message": "I think it is worth being even more precise here \"...withing the content area of their browser...\". Until now I thought you were speaking about the switching of users until I read the rest of the description here.",
+      "range": {
+        "startLine": 4510,
+        "startChar": 84,
+        "endLine": 4510,
+        "endChar": 90
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
