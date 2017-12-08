@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297aa539_5c47a4e1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-08T18:08:02Z",
+      "side": 1,
+      "message": "Can we just put the assert on each line and drop the devices and push variables?  It shouldn\u0027t need to be multiple lines:\n.then(device \u003d\u003e assert_equals(device.constructor.name, \u0027BluetoothDevice\u0027))",
+      "revId": "833a1191c38bd119de79dfcbb98a3f5a42a7dd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
