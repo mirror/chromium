@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4eee904_f62027ff",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:15:58Z",
+      "side": 1,
+      "message": "Thanks for the catch. I decided to remove the comment entirely since the following lines clarify this.",
+      "parentUuid": "1415f114_9d9194ce",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 66
+      },
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fe80af1_a4aaaa21",
         "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5462b6e0_19cd4bf4",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe80af1_a4aaaa21",
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f180f2a_4133aada",
         "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a91bdb_d6bc1315",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f180f2a_4133aada",
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
