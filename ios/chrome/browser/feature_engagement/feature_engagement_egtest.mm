@@ -93,6 +93,7 @@ void EnableBadgedReadingListTriggering(
 // Verifies that the Badged Reading List feature shows when triggering
 // conditions are met.
 - (void)testBadgedReadingListFeatureShouldShow {
+//  LoadFeatureEngagementTracker();
   base::test::ScopedFeatureList scoped_feature_list;
 
   EnableBadgedReadingListTriggering(scoped_feature_list);
@@ -116,6 +117,7 @@ void EnableBadgedReadingListTriggering(
 // Verifies that the Badged Reading List feature does not show if Chrome has
 // not opened enough times.
 - (void)testBadgedReadingListFeatureTooFewChromeOpens {
+//  LoadFeatureEngagementTracker();
   base::test::ScopedFeatureList scoped_feature_list;
 
   EnableBadgedReadingListTriggering(scoped_feature_list);
@@ -132,4 +134,58 @@ void EnableBadgedReadingListTriggering(
   [[EarlGrey selectElementWithMatcher:ReadingListTextBadge()]
       assertWithMatcher:grey_notVisible()];
 }
+
+// Verifies that the Badged Reading List feature does not show if the reading
+// list has already been used.
+- (void)testBadgedReadingListFeatureReadingListAlreadyUsed {
+//  LoadFeatureEngagementTracker();
+  base::test::ScopedFeatureList scoped_feature_list;
+
+  EnableBadgedReadingListTriggering(scoped_feature_list);
+
+  // Ensure that the FeatureEngagementTracker picks up the new feature
+  // configuration provided by |scoped_feature_list|.
+  LoadFeatureEngagementTracker();
+
+  // Ensure that Chrome has been launched enough times to mee the trigger
+  // condition
+  for (int index = 0; index < kMinChromeOpensRequired; index++) {
+    SimulateChromeOpenedEvent();
+  }
+
+  [chrome_test_util::BrowserCommandDispatcherForMainBVC() showReadingList];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Done")]
+      performAction:grey_tap()];
+
+  [ChromeEarlGreyUI openToolsMenu];
+
+  [[EarlGrey selectElementWithMatcher:ReadingListTextBadge()]
+      assertWithMatcher:grey_notVisible()];
+}
+
+//// Verifies that the Badged Reading List feature does not show if the reading
+//// list has already been used.
+//- (void)testBadgedReadingListFeatureReadingListAlreadyUsed {
+//  base::test::ScopedFeatureList scoped_feature_list;
+//
+//  EnableBadgedReadingListTriggering(scoped_feature_list);
+//
+//  // Ensure that the FeatureEngagementTracker picks up the new feature
+//  // configuration provided by |scoped_feature_list|.
+//  feature_engagement::TrackerFactory::GetInstance()->SetTestingFactory(
+//                                                                       chrome_test_util::GetOriginalBrowserState(),
+//                                                                       feature_engagement::CreateFeatureEngagementTracker);
+//
+//  // Ensure that Chrome has been launched enough times to mee the trigger
+//  // condition
+//  for (int index = 0; index < kMinChromeOpensRequired; index++) {
+//    SimulateChromeOpenedEvent();
+//  }
+//
+//  [ChromeEarlGreyUI openToolsMenu];
+//
+//  [[EarlGrey selectElementWithMatcher:ReadingListTextBadge()]
+//   assertWithMatcher:grey_notVisible()];
+//}
+
 @end
