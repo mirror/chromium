@@ -22,6 +22,52 @@
       "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31ff7a1_456c09ba",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-08T14:44:36Z",
+      "side": 0,
+      "message": "I\u0027m confused. You say the icon isn\u0027t used, but here you are removing its use. And code search shows this is used elsewhere too... And the CL description says you are removing png and icon files, not icons defined in vectors. Am I missing something? Oh, is this because it has no definition in the vector_icons.cc? At the very least, the CL description needs updating, does it not?",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b823b9_2f81426b",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-08T14:44:36Z",
+      "side": 0,
+      "message": "I don\u0027t quite understand the reasoning you give in the CL description for removing this. This code isn\u0027t just used on Chrome OS, right?",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
