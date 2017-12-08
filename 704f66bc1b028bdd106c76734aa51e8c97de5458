@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "72404766_2f4632cc",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9b245de_653711a8",
+      "range": {
+        "startLine": 105,
+        "startChar": 40,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e17aee_3e1c5290",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e3b248_e6c394da",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e17aee_3e1c5290",
+      "range": {
+        "startLine": 108,
+        "startChar": 45,
+        "endLine": 108,
+        "endChar": 60
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8a3802e9_1aca11c5",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a562f114_d09f2015",
+      "range": {
+        "startLine": 109,
+        "startChar": 48,
+        "endLine": 109,
+        "endChar": 67
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29423653_e21b3197",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9274f234_931b10a9",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29423653_e21b3197",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "25166294_3696b5ba",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3db4728_df0a7738",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 32
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5969ec6d_5a4f7149",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef31df6_11883b1b",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Added to EntryView::Layout().",
+      "parentUuid": "5969ec6d_5a4f7149",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5792aece_6d5aa44f",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b370c7_9a3a5442",
+      "range": {
+        "startLine": 286,
+        "startChar": 6,
+        "endLine": 286,
+        "endChar": 26
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53818917_f05faec4",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9849b7_e9a746c4",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "I filed the bug for this. https://crbug.com/793207\n\nLet me fix this in another CL with GetFontListForSizeAndWeight removal as it\u0027s also used in other files.\nhttps://cs.chromium.org/search/?q\u003dGetFontListForSizeAndWeight\u0026sq\u003dpackage:chromium\n\nSame problem exists in NotificationViewMD, but it\u0027s harder to fix, because we should first implement a mechanism to sync the base font size with ARC. (It is also important that ARC notification and NotificationViewMD feels identical to users.)",
+      "parentUuid": "53818917_f05faec4",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 53
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "6ea71f9a_125b4438",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done. FYI: This is going to be removed. https://crbug.com/791089#c10",
+      "parentUuid": "4bb55a57_a15f89ae",
+      "range": {
+        "startLine": 321,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 59
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5218cf88_cb5a0ef9",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4
@@ -229,6 +445,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a70187_5b424360",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5218cf88_cb5a0ef9",
+      "range": {
+        "startLine": 333,
+        "startChar": 28,
+        "endLine": 333,
+        "endChar": 51
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "ce7571ea_42048778",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6daff0b_6ed5c837",
+      "range": {
+        "startLine": 440,
+        "startChar": 4,
+        "endLine": 440,
+        "endChar": 17
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c523b58_8f4bb1aa",
         "filename": "ash/message_center/notifier_settings_view.h",
         "patchSetId": 4
@@ -275,6 +539,30 @@
       "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8981a40e_ca536bfc",
+        "filename": "ash/message_center/notifier_settings_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c523b58_8f4bb1aa",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "cc9bb1a0_15ca9333",
+        "filename": "chrome/browser/notifications/extension_notifier_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "I tried this on my laptop and I could manually disable notifications from force-installed extensions. Not sure if there is a way for an admin to prevent it (my quick grep before sending this CL couldn\u0027t find the way).",
+      "parentUuid": "da345d1f_51485f07",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d32c3977_28bb44bf",
         "filename": "chrome/browser/notifications/web_page_notifier_controller.cc",
         "patchSetId": 4
@@ -312,6 +624,30 @@
       "writtenOn": "2017-12-07T18:02:48Z",
       "side": 1,
       "message": "what about other types like SUPERVISED? wouldn\u0027t you want to respect superviser settings?",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 62
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc8fbbe_7c9bdc97",
+        "filename": "chrome/browser/notifications/web_page_notifier_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-08T06:20:59Z",
+      "side": 1,
+      "message": "I couldn\u0027t find the way for a supervised user to enforce notification settings from chrome.com/manage. Also, we\u0027re showing enterprise icon for NotifierUiData.enforced \u003d\u003d true, so I think we need another UX feedback if SETTING_SOURCE_SUPERVISED is possible here.",
+      "parentUuid": "d32c3977_28bb44bf",
       "range": {
         "startLine": 55,
         "startChar": 23,
