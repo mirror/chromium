@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f10dbe_e8b9ed62",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "(note: I forgot to remove the registrations from this file too)",
+      "revId": "c4a4e5d02e3190d807d5dda9397f091385ad78cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

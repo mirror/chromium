@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "592d9810_56ef2834",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "Sure, thanks for pointing out doc deficiencies. It\u0027s helpful to get feedback from people not familiar with the system. Will update the docs in a separate CL (https://chromium-review.googlesource.com/#/c/chromium/src/+/817794 ).",
+      "parentUuid": "9ff979ec_3fc565e7",
+      "range": {
+        "startLine": 475,
+        "startChar": 25,
+        "endLine": 475,
+        "endChar": 39
+      },
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b81abf08_60324846",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9afd74c_e4d95936",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "It\u0027s not possible because the CrashKeyString ctor has to be constexpr to not create static initializers. The Set method performs non-constexpr work to register the key with the storage system.",
+      "parentUuid": "b81abf08_60324846",
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "84e85277_5562b6a5",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "There\u0027s no magic values (though powers of 2 are always nice, and ultimately struct alignment kicks in for actual memory usage). I dremeled upper bounds and 50 for \"ap\" and 32 for \"cohort-name\" seem appropriate.",
+      "parentUuid": "e7e5d595_2f8e9bab",
+      "range": {
+        "startLine": 483,
+        "startChar": 40,
+        "endLine": 483,
+        "endChar": 42
+      },
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd9446d1_ea6d585d",
         "filename": "chrome/installer/setup/installer_crash_reporting.cc",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "ea1689c7_72184507",
+        "filename": "chrome/installer/setup/installer_crash_reporting.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "Because it\u0027s really going to be 8 with alignment, and I haven\u0027t been worrying about perfect-sizing during the conversion. I\u0027ll switch to 6 here.",
+      "parentUuid": "fd9446d1_ea6d585d",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98403cfc_da823b28",
         "filename": "chrome/installer/setup/installer_crash_reporting.cc",
         "patchSetId": 1
@@ -102,6 +192,24 @@
       "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943dd149_d43e13b9",
+        "filename": "chrome/installer/setup/installer_crash_reporting.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98403cfc_da823b28",
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888282ea_8576651f",
+        "filename": "chrome/installer/setup/installer_crash_reporting.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T16:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c517e864_eaa46efb",
+      "range": {
+        "startLine": 138,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 24
+      },
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
