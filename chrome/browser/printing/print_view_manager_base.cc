@@ -146,6 +146,7 @@ void PrintViewManagerBase::OnComposePdfDone(
 }
 
 void PrintViewManagerBase::OnDidPrintPage(
+    content::RenderFrameHost* render_frame_host,
     const PrintHostMsg_DidPrintPage_Params& params) {
 // TODO(rbpotter): Remove this check once there are no more spurious
 // DidPrintPage messages.
@@ -179,8 +180,10 @@ void PrintViewManagerBase::OnDidPrintPage(
     auto* client = PrintCompositeClient::FromWebContents(web_contents());
     if (IsOopifEnabled() && !client->for_preview() &&
         !document->settings().is_modifiable()) {
-      client->DoComposite(
+      client->DoCompositeToPdf(
+          render_frame_host->GetRoutingID(), params.page_number,
           params.metafile_data_handle, params.data_size,
+          std::vector<uint32_t>(),
           base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
                          weak_ptr_factory_.GetWeakPtr(), params));
       return;
@@ -278,7 +281,8 @@ void PrintViewManagerBase::OnPrintingFailed(int cookie) {
       content::NotificationService::NoDetails());
 }
 
-void PrintViewManagerBase::OnShowInvalidPrinterSettingsError() {
+void PrintViewManagerBase::OnShowInvalidPrinterSettingsError(
+    content::RenderFrameHost* render_frame_host) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(&ShowWarningMessageBox,
                                 l10n_util::GetStringUTF16(
@@ -329,7 +333,8 @@ bool PrintViewManagerBase::OnMessageReceived(
     const IPC::Message& message,
     content::RenderFrameHost* render_frame_host) {
   bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(PrintViewManagerBase, message)
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(PrintViewManagerBase, message,
+                                   render_frame_host)
     IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintPage, OnDidPrintPage)
     IPC_MESSAGE_HANDLER(PrintHostMsg_ShowInvalidPrinterSettingsError,
                         OnShowInvalidPrinterSettingsError)
