@@ -198,6 +198,8 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   void PumpPendingSpeculations();
 
   bool CanTakeNextToken();
+  template <bool supports16bit>
+  void PumpTokenizer();
   void PumpTokenizer();
   void PumpTokenizerIfPossible();
   void ConstructTreeFromHTMLToken();
