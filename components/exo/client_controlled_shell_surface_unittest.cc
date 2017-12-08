@@ -34,6 +34,7 @@
 
 namespace exo {
 namespace {
+
 using ClientControlledShellSurfaceTest = test::ExoTestBase;
 
 bool HasBackdrop() {
