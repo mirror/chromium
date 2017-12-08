@@ -521,6 +521,7 @@ void UserMediaRequest::Fail(WebUserMediaRequest::Error name,
       ec = kNotAllowedError;
       break;
     case WebUserMediaRequest::Error::kDevicesNotFound:
+      LOG(ERROR) << __PRETTY_FUNCTION__ << ": NOT FOUND";
       ec = kNotFoundError;
       break;
     case WebUserMediaRequest::Error::kTabCapture:
@@ -540,6 +541,7 @@ void UserMediaRequest::Fail(WebUserMediaRequest::Error name,
     default:
       NOTREACHED();
   }
+  LOG(ERROR) << __PRETTY_FUNCTION__ << "MESSAGE = " << message;
   error_callback_->handleEvent(
       DOMExceptionOrOverconstrainedError::FromDOMException(
           DOMException::Create(ec, message)));
