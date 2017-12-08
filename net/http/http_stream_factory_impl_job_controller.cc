@@ -559,19 +559,17 @@ void HttpStreamFactoryImpl::JobController::ResumeMainJobLater(
     const base::TimeDelta& delay) {
   net_log_.AddEvent(NetLogEventType::HTTP_STREAM_JOB_DELAYED,
                     NetLog::Int64Callback("delay", delay.InMilliseconds()));
-  resume_main_job_callback_.Reset(
-      base::BindOnce(&HttpStreamFactoryImpl::JobController::ResumeMainJob,
-                     ptr_factory_.GetWeakPtr()));
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, resume_main_job_callback_.callback(), delay);
+      FROM_HERE,
+      base::Bind(&HttpStreamFactoryImpl::JobController::ResumeMainJob,
+                 ptr_factory_.GetWeakPtr()),
+      delay);
 }
 
 void HttpStreamFactoryImpl::JobController::ResumeMainJob() {
-  DCHECK(main_job_);
-
-  if (main_job_is_resumed_) {
+  if (main_job_is_resumed_)
     return;
-  }
+
   main_job_is_resumed_ = true;
   main_job_->net_log().AddEvent(
       NetLogEventType::HTTP_STREAM_JOB_RESUMED,
@@ -1320,13 +1318,6 @@ int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,
     bound_job_ = nullptr;
     alternative_job_.reset();
     main_job_.reset();
-    // Also resets states that related to the old main job. In particular,
-    // cancels |resume_main_job_callback_| so there won't be any delayed
-    // ResumeMainJob() left in the task queue.
-    resume_main_job_callback_.Cancel();
-    main_job_is_resumed_ = false;
-    main_job_is_blocked_ = false;
-
     next_state_ = STATE_RESOLVE_PROXY_COMPLETE;
   } else {
     // If ReconsiderProxyAfterError() failed synchronously, it means
