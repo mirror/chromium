@@ -18,6 +18,11 @@ or a header + implementation file of stubs suitable for use in a posix system.
 This script also handles varidiac functions, e.g.
 void printf(const char* s, ...);
 
+Because Control Flow Integrity indirect call checking can not verify calls to
+dynamically resolved function pointers, function pointers are placed in a
+base::ProtectedMemory container to keep them read-only except for when they are
+initialized, and called using base::UnsanitizedCfiCall to disable CFI checking.
+
 TODO(hclam): Fix the situation for varidiac functions.
 Stub for the above function will be generated and inside the stub function it
 is translated to:
@@ -93,7 +98,7 @@ FILE_TYPE_WIN_DEF = 'windows_def'
 STUB_FUNCTION_DEFINITION = (
     """extern %(return_type)s %(name)s(%(params)s) __attribute__((weak));
 %(return_type)s %(export)s %(name)s(%(params)s) {
-  %(return_prefix)s%(name)s_ptr(%(arg_list)s);
+  %(return_prefix)sbase::UnsanitizedCfiCall(protected_ptrs, &ProtectedPtrs::%(name)s_ptr)(%(arg_list)s);
 }""")
 
 # Template for generating a variadic stub function definition with return
@@ -113,7 +118,7 @@ VARIADIC_STUB_FUNCTION_DEFINITION = (
 %(return_type)s %(export)s %(name)s(%(params)s) {
   va_list args___;
   va_start(args___, %(last_named_arg)s);
-  %(return_type)s ret___ = %(name)s_ptr(%(arg_list)s, va_arg(args___, void*));
+  %(return_type)s ret___ = base::UnsanitizedCfiCall(protected_ptrs, &ProtectedPtrs::%(name)s_ptr)(%(arg_list)s, va_arg(args___, void*));
   va_end(args___);
   return ret___;
 }""")
@@ -134,7 +139,7 @@ VOID_VARIADIC_STUB_FUNCTION_DEFINITION = (
 void %(export)s %(name)s(%(params)s) {
   va_list args___;
   va_start(args___, %(last_named_arg)s);
-  %(name)s_ptr(%(arg_list)s, va_arg(args___, void*));
+  base::UnsanitizedCfiCall(protected_ptrs, &ProtectedPtrs::%(name)s_ptr)(%(arg_list)s, va_arg(args___, void*));
   va_end(args___);
 }""")
 
@@ -172,6 +177,9 @@ STUB_HEADER_CLOSER = """}  // namespace %(namespace)s
 IMPLEMENTATION_PREAMBLE = """// This is generated file. Do not modify directly.
 
 #include "%s"
+
+#include "base/memory/protected_memory.h"
+#include "base/memory/protected_memory_cfi.h"
 
 #include <stdlib.h>  // For NULL.
 #include <dlfcn.h>   // For dysym, dlopen.
@@ -231,15 +239,15 @@ bool %s() {
 
 """)
 
-# Template for the line that initialize the stub pointer.  This template takes
+# Template for the line that initializes a stub pointer.  This template takes
 # the following named parameters:
 #   name: The name of the function.
 #   return_type: The return type.
 #   params: The parameters to the function.
-STUB_POINTER_INITIALIZER = """  %(name)s_ptr =
+STUB_POINTER_INITIALIZER = """  protected_ptrs->%(name)s_ptr =
     reinterpret_cast<%(return_type)s (*)(%(parameters)s)>(
       dlsym(module, "%(name)s"));
-    VLOG_IF(1, !%(name)s_ptr) << "Couldn't load %(name)s, dlerror() says:\\n"
+    VLOG_IF(1, !protected_ptrs->%(name)s_ptr) << "Couldn't load %(name)s, dlerror() says:\\n"
         << dlerror();
 """
 
@@ -247,20 +255,21 @@ STUB_POINTER_INITIALIZER = """  %(name)s_ptr =
 # one parameter which is the initializer function name.
 MODULE_INITIALIZE_START = """// Initializes the module stubs.
 void %s(void* module) {
+  auto writer = base::AutoWritableMemory::Create(protected_ptrs);
 """
 MODULE_INITIALIZE_END = """}
 
 """
 
-# Template for module uninitializer function start and end.  This template
-# takes one parameter which is the initializer function name.
-MODULE_UNINITIALIZE_START = (
+# Template for the module uninitializer function.  This template takes one
+# parameter which is the initializer function name.
+MODULE_UNINITIALIZE = (
     """// Uninitialize the module stubs.  Reset pointers to NULL.
 void %s() {
+  auto writer = base::AutoWritableMemory::Create(protected_ptrs);
+  memset(&*protected_ptrs, 0, sizeof(*protected_ptrs));
+}
 """)
-MODULE_UNINITIALIZE_END = """}
-
-"""
 
 
 # Open namespace and add typedef for internal data structures used by the
@@ -614,18 +623,17 @@ class PosixStubWriter(object):
 
   @classmethod
   def StubFunctionPointer(cls, signature):
-    """Generates a function pointer declaration for the given signature.
+    """Generates a function pointer definition for the given signature.
 
     Args:
       signature: A signature hash, as produced by ParseSignatures,
                  representating the function signature.
 
     Returns:
-      A string with the declaration of the function pointer for the signature.
+      A string with the definition of the function pointer for the signature.
     """
-    return 'static %s (*%s_ptr)(%s) = NULL;' % (signature['return_type'],
-                                                signature['name'],
-                                                ', '.join(signature['params']))
+    return '%s (*%s_ptr)(%s);' % (signature['return_type'], signature['name'],
+                                  ', '.join(signature['params']))
 
   @classmethod
   def StubFunction(cls, signature):
@@ -780,7 +788,7 @@ class PosixStubWriter(object):
       outfile: The file handle to populate.
     """
     outfile.write(IMPLEMENTATION_CONTENTS_C_START)
-    self.WriteFunctionPointers(outfile)
+    self.WriteFunctionPointerStruct(outfile)
     self.WriteStubFunctions(outfile)
     outfile.write(IMPLEMENTATION_CONTENTS_C_END)
 
@@ -788,23 +796,30 @@ class PosixStubWriter(object):
     self.WriteModuleInitializeFunctions(outfile)
     outfile.write(NAMESPACE_END % namespace)
 
-  def WriteFunctionPointers(self, outfile):
-    """Write the function pointer declarations needed by the stubs.
+  def WriteFunctionPointerStruct(self, outfile):
+    """Write the struct definition/declaration holding the function pointers
+    needed by the stubs.
 
     We need function pointers to hold the actual location of the function
-    implementation returned by dlsym.  This function outputs a pointer
-    definition for each signature in the module.
+    implementation returned by dlsym.  This function outputs a struct
+    definition holding function pointers for every signature in the module.
 
-    Pointers will be named with the following pattern "FuntionName_ptr".
+    Lastly, the struct is declared in a base::ProtectedMemory container so
+    that they can be safely called with Control Flow Integrity checking
+    disabled.
+
+    Pointers will be named with the following pattern "FunctionName_ptr".
 
     Args:
       outfile: The file handle to populate with pointer definitions.
     """
     outfile.write(FUNCTION_POINTER_SECTION_COMMENT)
 
+    outfile.write('struct ProtectedPtrs {\n')
     for sig in self.signatures:
-      outfile.write('%s\n' % PosixStubWriter.StubFunctionPointer(sig))
-    outfile.write('\n')
+      outfile.write('  %s\n' % PosixStubWriter.StubFunctionPointer(sig))
+    outfile.write('};\n')
+    outfile.write('PROTECTED_MEMORY_SECTION base::ProtectedMemory<ProtectedPtrs> protected_ptrs;\n')
 
   def WriteStubFunctions(self, outfile):
     """Write the function stubs to handle dispatching to real implementations.
@@ -844,7 +859,7 @@ class PosixStubWriter(object):
     Args:
       outfile: The file handle to populate.
     """
-    ptr_names = ['%s_ptr' % sig['name'] for sig in self.signatures]
+    ptr_names = ['protected_ptrs->%s_ptr' % sig['name'] for sig in self.signatures]
 
     # Construct the conditional expression to check the initialization of
     # all the function pointers above.  It should generate a conjuntion
@@ -868,11 +883,8 @@ class PosixStubWriter(object):
 
     # Create function that uninitializes the module (sets all pointers to
     # NULL).
-    outfile.write(MODULE_UNINITIALIZE_START %
+    outfile.write(MODULE_UNINITIALIZE %
                   PosixStubWriter.UninitializeModuleName(self.module_name))
-    for sig in self.signatures:
-      outfile.write('  %s_ptr = NULL;\n' % sig['name'])
-    outfile.write(MODULE_UNINITIALIZE_END)
 
 
 def CreateOptionParser():

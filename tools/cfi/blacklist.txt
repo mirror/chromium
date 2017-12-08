@@ -143,9 +143,6 @@ fun:*BrokerProcessDispatcher*
 # base/bind_internal.h
 fun:*FunctorTraits*
 
-# Calls to auto-generated stubs by generate_stubs.py
-src:*audio/pulse/pulse_stubs.cc
-
 # Calls to auto-generated stubs by generate_library_loader.py
 src:*device/udev_linux/udev1_loader.cc
 src:*net/proxy/proxy_config_service_linux.cc
