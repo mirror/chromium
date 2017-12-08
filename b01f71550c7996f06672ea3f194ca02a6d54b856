@@ -404,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "cc724ee0_7fe5fa0e",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T01:57:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8181eebf_69a77474",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518ae66c_309c50b1",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
         "patchSetId": 9
@@ -469,6 +487,24 @@
       "side": 1,
       "message": "Added a unique check as discussed.",
       "parentUuid": "7e824fe5_e7b8b6e8",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ea2476_ef791eee",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T01:57:52Z",
+      "side": 1,
+      "message": "\u003e Added a unique check as discussed.\n\nThanks!",
+      "parentUuid": "e2b44647_8cda1f5f",
       "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -574,6 +610,24 @@
       "side": 1,
       "message": "Done. Delegate interface changed slightly, but still needed for logging the hosted app frame stat.",
       "parentUuid": "02d80f5a_720a4be7",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a735327c_673787c1",
+        "filename": "chrome/browser/ui/views/location_bar/content_setting_image_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T01:57:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c96a218_e373fa2d",
       "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
