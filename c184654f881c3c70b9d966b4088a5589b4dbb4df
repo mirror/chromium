@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d74e21d1_9794fa16",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-08T20:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a50e9a86_aec608f2",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54313203_51c552ff",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
         "patchSetId": 30
@@ -45,6 +69,30 @@
       "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41259c8a_1b963cef",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-08T20:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54313203_51c552ff",
+      "range": {
+        "startLine": 164,
+        "startChar": 9,
+        "endLine": 164,
+        "endChar": 12
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "078c4096_03fd7272",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-08T20:00:23Z",
+      "side": 1,
+      "message": "I never do and should never want to iterate |jobs_| as long as it can be avoided (exception is shutdown). The moments where I\u0027d need to prune weak references are not well defined. That would create a memory leak.\n\nI moved RemoveObserver to Shutdown, that avoids trying to reference CupsPrintJobManagerFactory after it\u0027s possibly destroyed.",
+      "parentUuid": "6218497f_f6a86160",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "712cbd57_708261f9",
         "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
         "patchSetId": 30
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c196ef36_17cd4fdc",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-08T20:00:23Z",
+      "side": 1,
+      "message": "The only way I see how to do this is to make each PrintJobHostImpl a CupsPrintJobManager::Observer which means that events will be handled in O(N_jobs) instead of amortized O(1).",
+      "parentUuid": "712cbd57_708261f9",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1eae6a9_393e2ce0",
         "filename": "chrome/browser/chromeos/arc/print/print_struct_traits.cc",
         "patchSetId": 30
@@ -114,6 +210,30 @@
       "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae10de25_53bbbc7c",
+        "filename": "chrome/browser/chromeos/arc/print/print_struct_traits.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-12-08T20:00:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1eae6a9_393e2ce0",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
