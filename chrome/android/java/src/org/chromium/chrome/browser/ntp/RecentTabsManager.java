@@ -236,7 +236,7 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
      */
     public void openHistoryPage() {
         if (mIsDestroyed) return;
-        HistoryManagerUtils.showHistoryManager(mTab.getActivity(), mTab);
+        HistoryManagerUtils.showHistoryManager(mTab.getActivity(), mTab, false);
         StartupMetrics.getInstance().recordOpenedHistory();
     }
 

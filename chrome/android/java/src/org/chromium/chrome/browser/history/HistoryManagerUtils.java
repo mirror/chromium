@@ -26,11 +26,17 @@ public class HistoryManagerUtils {
      * @param activity The {@link ChromeActivity} that owns the {@link HistoryManager}.
      * @param tab The {@link Tab} to used to display the native page version of the
      *            {@link HistoryManager}.
+     * @param fromMenu Whether history is being triggered from the overflow menu.
      */
-    public static void showHistoryManager(ChromeActivity activity, Tab tab) {
+    public static void showHistoryManager(ChromeActivity activity, Tab tab, boolean fromMenu) {
         Context appContext = ContextUtils.getApplicationContext();
         if (activity.getBottomSheet() != null) {
-            activity.getBottomSheetContentController().showContentAndOpenSheet(R.id.action_history);
+            if (fromMenu) {
+                activity.getBottomSheet().openBottomSheetForMenuItem(R.id.action_history);
+            } else {
+                activity.getBottomSheetContentController().showContentAndOpenSheet(
+                        R.id.action_history, true);
+            }
         } else if (DeviceFormFactor.isTablet()) {
             // History shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.NATIVE_HISTORY_URL);
