@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9df5d0_85652700",
+        "filename": "components/autofill/core/browser/phone_number.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-08T20:33:54Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 12
+      },
+      "revId": "631bd8e37e8d8218ce60f4c6e618880ad529a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54eeec6_86c0f461",
+        "filename": "components/autofill/core/browser/phone_number.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-08T20:33:54Z",
+      "side": 1,
+      "message": "nit: responds",
+      "range": {
+        "startLine": 145,
+        "startChar": 5,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "631bd8e37e8d8218ce60f4c6e618880ad529a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca93af9_91befd90",
+        "filename": "components/autofill/core/browser/phone_number_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-08T20:33:54Z",
+      "side": 1,
+      "message": "Why the move? :)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 58
+      },
+      "revId": "631bd8e37e8d8218ce60f4c6e618880ad529a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960619df_4521cbb4",
+        "filename": "components/autofill/core/browser/phone_number_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-08T20:33:54Z",
+      "side": 1,
+      "message": "Can you add a test for if you try to get the area code or things like that? Thanks!",
+      "range": {
+        "startLine": 136,
+        "startChar": 58,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "631bd8e37e8d8218ce60f4c6e618880ad529a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
