@@ -59,6 +59,7 @@ source_set("snapshots_internal") {
   sources = [
     "snapshot_generator.h",
     "snapshot_generator.mm",
+    "snapshot_generator_delegate.h",
     "snapshot_overlay_provider.h",
   ]
   deps = [
