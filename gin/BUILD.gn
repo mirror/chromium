@@ -85,6 +85,10 @@ component("gin") {
     ]
     if (use_v8_context_snapshot) {
       data += [ "$root_out_dir/v8_context_snapshot.bin" ]
+      # TODO(tikuta): comment out below (gn generate cyclic depedency)
+      # data_deps = [
+      #    "//tools/v8_context_snapshot:v8_context_snapshot",
+      # ]
     }
   }
 
@@ -152,8 +156,11 @@ source_set("gin_test") {
   ]
   deps = [
     "//base/test:test_support",
-    "//tools/v8_context_snapshot",
     "//v8",
+  ]
+
+  data_deps = [
+    "//tools/v8_context_snapshot",
   ]
 
   configs += [
