@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce475d31_1bb9d078",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-08T17:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52739a61_ffc05020",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44182d3b_8a4990c1",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "862d6b5b90873173a6e650501822233efd84ce02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca529f86_cc2973ab",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-08T17:06:11Z",
+      "side": 1,
+      "message": "I think the function is broken. It\u0027s essentially looking at the _local_ NTP URL twice:\n\n  if url \u003d\u003d GetLocalNtpUrl() || url \u003d\u003d literal_local_ntp_url;\n\nIt does:\n\n  if IsNTPOrServiceWorkerURL(url, profile) || url \u003d\u003d chrome::kChromeSearchLocalNtpUrl)\n\nNote the second condition. But IsNTPOrServiceWorkerURL() does:\n\n  GURL new_tab_url \u003d GetNewTabPageURL(profile);\n  return ... MatchesOriginAndPath(url, new_tab_url) ...\n\nand GetNewTabPageURL() does:\n\n  return NewTabURLDetails::ForProfile(profile).url;\n\nwhich does (for me, or if a flag is set):\n\n  GURL local_url \u003d chrome::kChromeSearchLocalNtpUrl;\n\n  // if feature enabled\n  if (ShouldShowLocalNewTab(profile))\n    return NewTabURLDetails(local_url, NEW_TAB_URL_VALID);\n\nThe string that I see is:\n\n\"chrome-search://local-ntp/local-ntp.html\"\n\nMaybe it broke when the flag was added? I think they could fix it fairly simply by adding\n|| url \u003d\u003d chrome::kChromeUINewTabURL;\n\nI looked at the nearby functions for a replacement, but this \"looks\" the most appropriate. So I added an additional condition to the call-site.",
+      "parentUuid": "44182d3b_8a4990c1",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ea4b43fc_6f62ea9b",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-08T17:06:11Z",
+      "side": 1,
+      "message": "It certainly looks like it, once the choice of URL is fixed.",
+      "parentUuid": "e896f6ba_a8ff00a2",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e6a38d_0ca5f2cc",
         "filename": "ui/base/window_open_disposition.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "862d6b5b90873173a6e650501822233efd84ce02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395d84b0_8a67407d",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-08T17:06:11Z",
+      "side": 1,
+      "message": "Done with minor clarifications",
+      "parentUuid": "80e6a38d_0ca5f2cc",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
