@@ -86,8 +86,7 @@ instead of "initial value".
 |     <shadow:root>
 |       "inserted value"
 |   <shadow:root>
-|     <content>
-|       select="option,optgroup,hr"
+|     <slot>
 | "input.value: initial value"
 | "internals.suggestedValue(input): suggested value"
 | "input.selectionStart: 0"

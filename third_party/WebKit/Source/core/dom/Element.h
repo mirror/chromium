@@ -491,7 +491,8 @@ class CORE_EXPORT Element : public ContainerNode {
                            const ShadowRootInit&,
                            ExceptionState&);
   ShadowRoot& CreateShadowRootInternal();
-  ShadowRoot& CreateUserAgentShadowRoot();
+  ShadowRoot& CreateLegacyUserAgentShadowRootV0();
+  ShadowRoot& CreateUserAgentShadowRootV1();
   ShadowRoot& AttachShadowRootInternal(ShadowRootType,
                                        bool delegates_focus = false);
 

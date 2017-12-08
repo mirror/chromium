@@ -2489,10 +2489,15 @@ ShadowRoot& Element::CreateShadowRootInternal() {
   return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
 }
 
-ShadowRoot& Element::CreateUserAgentShadowRoot() {
+ShadowRoot& Element::CreateLegacyUserAgentShadowRootV0() {
   DCHECK(!GetShadowRoot());
   return EnsureShadow().AddShadowRoot(*this,
                                       ShadowRootType::kLegacyUserAgentV0);
+}
+
+ShadowRoot& Element::CreateUserAgentShadowRootV1() {
+  DCHECK(!GetShadowRoot());
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgentV1);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
