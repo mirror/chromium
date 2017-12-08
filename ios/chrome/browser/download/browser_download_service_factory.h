@@ -19,8 +19,8 @@ namespace web {
 class BrowserState;
 }  // namespace web
 
-// Singleton that creates BrowserDownloadService and associates that service
-// with web::BrowserState.
+// Singleton that owns the BrowserDownloadService and associates with with
+// web::BrowserState.
 class BrowserDownloadServiceFactory : public BrowserStateKeyedServiceFactory {
  public:
   static BrowserDownloadService* GetForBrowserState(
@@ -37,7 +37,6 @@ class BrowserDownloadServiceFactory : public BrowserStateKeyedServiceFactory {
   std::unique_ptr<KeyedService> BuildServiceInstanceFor(
       web::BrowserState* context) const override;
   bool ServiceIsCreatedWithBrowserState() const override;
-  web::BrowserState* GetBrowserStateToUse(web::BrowserState*) const override;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserDownloadServiceFactory);
 };

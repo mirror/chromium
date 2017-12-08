@@ -18,7 +18,7 @@ class WebState;
 }  // namespace web
 
 // Keyed Service which acts as web::DownloadController delegate and routes
-// download tasks to the appropriate TabHelper for download.
+// download tasks to approprivate TabHelper for download.
 class BrowserDownloadService : public KeyedService,
                                public web::DownloadControllerDelegate {
  public:
