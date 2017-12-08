@@ -16,6 +16,24 @@
       "revId": "22f388b4b85623051a027435e4263828031ce641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c04bc1_859505fc",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-08T19:14:15Z",
+      "side": 1,
+      "message": "I asked. It is intentional.",
+      "parentUuid": "c76e904a_a4a6a0c0",
+      "revId": "22f388b4b85623051a027435e4263828031ce641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
