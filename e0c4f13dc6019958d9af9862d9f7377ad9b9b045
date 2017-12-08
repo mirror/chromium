@@ -33,6 +33,24 @@
       "revId": "e0c4f13dc6019958d9af9862d9f7377ad9b9b045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6829807e_6bf03601",
+        "filename": "gpu/command_buffer/service/context_state.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-08T18:11:23Z",
+      "side": 1,
+      "message": "Yike, you are right (thanks!) and I am like Dory and totally forgot my own design! :(",
+      "parentUuid": "12692ae8_7be2c6e3",
+      "revId": "e0c4f13dc6019958d9af9862d9f7377ad9b9b045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
