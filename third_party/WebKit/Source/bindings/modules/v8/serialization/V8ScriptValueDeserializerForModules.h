@@ -24,13 +24,10 @@ class MODULES_EXPORT V8ScriptValueDeserializerForModules final
                                       UnpackedSerializedScriptValue* unpacked,
                                       const Options& options = Options())
       : V8ScriptValueDeserializer(std::move(script_state), unpacked, options) {}
-  V8ScriptValueDeserializerForModules(
-      scoped_refptr<ScriptState> script_state,
-      scoped_refptr<SerializedScriptValue> value,
-      const Options& options = Options())
-      : V8ScriptValueDeserializer(std::move(script_state),
-                                  std::move(value),
-                                  options) {}
+  V8ScriptValueDeserializerForModules(scoped_refptr<ScriptState> script_state,
+                                      SerializedScriptValue* value,
+                                      const Options& options = Options())
+      : V8ScriptValueDeserializer(std::move(script_state), value, options) {}
 
  protected:
   ScriptWrappable* ReadDOMObject(SerializationTag) override;

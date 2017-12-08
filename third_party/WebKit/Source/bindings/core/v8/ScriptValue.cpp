@@ -30,6 +30,8 @@
 
 #include "bindings/core/v8/ScriptValue.h"
 
+#include <memory>
+
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 #include "platform/bindings/ScriptState.h"
@@ -62,7 +64,7 @@ v8::Local<v8::Value> ScriptValue::V8ValueFor(
 
   DCHECK(isolate->InContext());
   v8::Local<v8::Value> value = value_->NewLocal(isolate);
-  scoped_refptr<SerializedScriptValue> serialized =
+  std::unique_ptr<SerializedScriptValue> serialized =
       SerializedScriptValue::SerializeAndSwallowExceptions(isolate, value);
   return serialized->Deserialize(isolate);
 }

@@ -864,7 +864,7 @@ static void serializedScriptValueAttributeAttributeGetter(const v8::FunctionCall
 
   TestObject* impl = V8TestObject::ToImpl(holder);
 
-  V8SetReturnValue(info, V8Deserialize(info.GetIsolate(), WTF::GetPtr(impl->serializedScriptValueAttribute())));
+  V8SetReturnValue(info, V8Deserialize(info.GetIsolate(), WTF::GetPtr(impl->serializedScriptValueAttribute()).get()));
 }
 
 static void serializedScriptValueAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -879,11 +879,11 @@ static void serializedScriptValueAttributeAttributeSetter(v8::Local<v8::Value> v
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestObject", "serializedScriptValueAttribute");
 
   // Prepare the value to be set.
-  scoped_refptr<SerializedScriptValue> cppValue = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), v8Value, SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
+  std::unique_ptr<SerializedScriptValue> cppValue = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), v8Value, SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
   if (exceptionState.HadException())
     return;
 
-  impl->setSerializedScriptValueAttribute(cppValue);
+  impl->setSerializedScriptValueAttribute(std::move(cppValue));
 }
 
 static void anyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -5836,7 +5836,7 @@ static void promiseMethodWithoutExceptionStateMethod(const v8::FunctionCallbackI
 static void serializedScriptValueMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestObject* impl = V8TestObject::ToImpl(info.Holder());
 
-  V8SetReturnValue(info, V8Deserialize(info.GetIsolate(), impl->serializedScriptValueMethod()));
+  V8SetReturnValue(info, V8Deserialize(info.GetIsolate(), impl->serializedScriptValueMethod().get()));
 }
 
 static void xPathNSResolverMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -5909,12 +5909,12 @@ static void voidMethodSerializedScriptValueArgMethod(const v8::FunctionCallbackI
     return;
   }
 
-  scoped_refptr<SerializedScriptValue> serializedScriptValueArg;
+  std::unique_ptr<SerializedScriptValue> serializedScriptValueArg;
   serializedScriptValueArg = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), info[0], SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
   if (exceptionState.HadException())
     return;
 
-  impl->voidMethodSerializedScriptValueArg(serializedScriptValueArg);
+  impl->voidMethodSerializedScriptValueArg(std::move(serializedScriptValueArg));
 }
 
 static void voidMethodXPathNSResolverArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -8492,7 +8492,7 @@ static void postMessageImpl(const char* interfaceName, TestObject* instance, con
     }
   }
 
-  scoped_refptr<SerializedScriptValue> message;
+  std::unique_ptr<SerializedScriptValue> message;
   if (instance->CanTransferArrayBuffersAndImageBitmaps()) {
     // This instance supports sending array buffers by move semantics.
     SerializedScriptValue::SerializeOptions options;
@@ -8531,7 +8531,7 @@ static void postMessageImpl(const char* interfaceName, TestObject* instance, con
   // FIXME: Only pass scriptState/exceptionState if instance really requires it.
   ScriptState* scriptState = ScriptState::Current(info.GetIsolate());
   message->UnregisterMemoryAllocatedWithCurrentScriptContext();
-  instance->postMessage(scriptState, message.get(), transferables.message_ports, exceptionState);
+  instance->postMessage(scriptState, std::move(message), transferables.message_ports, exceptionState);
 }
 
 static void activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {

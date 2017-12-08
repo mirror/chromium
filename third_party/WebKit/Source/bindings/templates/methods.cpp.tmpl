@@ -462,7 +462,7 @@ static void postMessageImpl(const char* interfaceName, {{cpp_class}}* instance, 
     }
   }
 
-  scoped_refptr<SerializedScriptValue> message;
+  std::unique_ptr<SerializedScriptValue> message;
   if (instance->CanTransferArrayBuffersAndImageBitmaps()) {
     // This instance supports sending array buffers by move semantics.
     SerializedScriptValue::SerializeOptions options;
@@ -501,7 +501,7 @@ static void postMessageImpl(const char* interfaceName, {{cpp_class}}* instance, 
   // FIXME: Only pass scriptState/exceptionState if instance really requires it.
   ScriptState* scriptState = ScriptState::Current(info.GetIsolate());
   message->UnregisterMemoryAllocatedWithCurrentScriptContext();
-  instance->postMessage(scriptState, message.get(), transferables.message_ports, exceptionState);
+  instance->postMessage(scriptState, std::move(message), transferables.message_ports, exceptionState);
 }
 {% endmacro %}
 

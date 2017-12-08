@@ -24,18 +24,18 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
       const ExtendableMessageEventInit& initializer,
       WaitUntilObserver*);
   static ExtendableMessageEvent* Create(
-      scoped_refptr<SerializedScriptValue> data,
+      std::unique_ptr<SerializedScriptValue> data,
       const String& origin,
       MessagePortArray* ports,
       WaitUntilObserver*);
   static ExtendableMessageEvent* Create(
-      scoped_refptr<SerializedScriptValue> data,
+      std::unique_ptr<SerializedScriptValue> data,
       const String& origin,
       MessagePortArray* ports,
       ServiceWorkerClient* source,
       WaitUntilObserver*);
   static ExtendableMessageEvent* Create(
-      scoped_refptr<SerializedScriptValue> data,
+      std::unique_ptr<SerializedScriptValue> data,
       const String& origin,
       MessagePortArray* ports,
       ServiceWorker* source,
@@ -44,7 +44,8 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
   SerializedScriptValue* SerializedData() const {
     return serialized_data_.get();
   }
-  void SetSerializedData(scoped_refptr<SerializedScriptValue> serialized_data) {
+  void SetSerializedData(
+      std::unique_ptr<SerializedScriptValue> serialized_data) {
     serialized_data_ = std::move(serialized_data);
   }
   const String& origin() const { return origin_; }
@@ -62,12 +63,12 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
   ExtendableMessageEvent(const AtomicString& type,
                          const ExtendableMessageEventInit& initializer,
                          WaitUntilObserver*);
-  ExtendableMessageEvent(scoped_refptr<SerializedScriptValue> data,
+  ExtendableMessageEvent(std::unique_ptr<SerializedScriptValue> data,
                          const String& origin,
                          MessagePortArray* ports,
                          WaitUntilObserver*);
 
-  scoped_refptr<SerializedScriptValue> serialized_data_;
+  std::unique_ptr<SerializedScriptValue> serialized_data_;
   String origin_;
   String last_event_id_;
   Member<ServiceWorkerClient> source_as_client_;

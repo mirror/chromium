@@ -5,6 +5,7 @@
 #ifndef DedicatedWorker_h
 #define DedicatedWorker_h
 
+#include <memory>
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "core/CoreExport.h"
@@ -49,7 +50,7 @@ class CORE_EXPORT DedicatedWorker final
   ~DedicatedWorker() override;
 
   void postMessage(ScriptState*,
-                   scoped_refptr<SerializedScriptValue> message,
+                   std::unique_ptr<SerializedScriptValue> message,
                    const MessagePortArray&,
                    ExceptionState&);
   static bool CanTransferArrayBuffersAndImageBitmaps() { return true; }
