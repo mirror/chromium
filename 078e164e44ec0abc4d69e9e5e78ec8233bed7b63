@@ -69,6 +69,24 @@
       "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eea7fa4_7a68cd68",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-08T01:20:44Z",
+      "side": 1,
+      "message": "Sure. Please don\u0027t let this comment block this CL. Just thinking out loud.",
+      "parentUuid": "c27c1f20_0541321f",
+      "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
