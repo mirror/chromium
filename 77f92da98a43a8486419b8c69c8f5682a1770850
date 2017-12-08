@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc09ed8_0ea9cb23",
+        "filename": "chrome/test/chromedriver/test/test_expectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-08T20:45:14Z",
+      "side": 1,
+      "message": "These 3 lines shouldn\u0027t be part of this CL.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 73
+      },
+      "revId": "77f92da98a43a8486419b8c69c8f5682a1770850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
