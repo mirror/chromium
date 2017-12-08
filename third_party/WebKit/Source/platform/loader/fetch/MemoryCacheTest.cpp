@@ -129,10 +129,6 @@ TEST_F(MemoryCacheTest, VeryLargeResourceAccounting) {
   GetMemoryCache()->Add(cached_resource);
   EXPECT_EQ(cached_resource->size(), GetMemoryCache()->size());
 
-  Persistent<MockResourceClient> client =
-      new MockResourceClient(cached_resource);
-  EXPECT_EQ(cached_resource->size(), GetMemoryCache()->size());
-
   cached_resource->FakeEncodedSize(kResourceSize2);
   EXPECT_EQ(cached_resource->size(), GetMemoryCache()->size());
 }
@@ -185,7 +181,6 @@ static void TestResourcePruningAtEndOfTask(Resource* resource1,
   const char kData[6] = "abcde";
   resource1->AppendData(kData, 3u);
   resource1->FinishForTest();
-  Persistent<MockResourceClient> client = new MockResourceClient(resource2);
   resource2->AppendData(kData, 4u);
   resource2->FinishForTest();
 
@@ -234,14 +229,12 @@ TEST_F(MemoryCacheTest, ResourcePruningAtEndOfTask_MultipleResourceMaps) {
 }
 
 // Verifies that
-// - Resources are not pruned synchronously when ResourceClient is removed.
+// - Resources are not pruned synchronously.
 // - size() is updated appropriately when Resources are added to MemoryCache
 //   and garbage collected.
 static void TestClientRemoval(Resource* resource1, Resource* resource2) {
   const char kData[6] = "abcde";
-  Persistent<MockResourceClient> client1 = new MockResourceClient(resource1);
   resource1->AppendData(kData, 4u);
-  Persistent<MockResourceClient> client2 = new MockResourceClient(resource2);
   resource2->AppendData(kData, 4u);
 
   GetMemoryCache()->SetCapacity(0);
@@ -253,20 +246,6 @@ static void TestClientRemoval(Resource* resource1, Resource* resource2) {
   // Call prune. There is nothing to prune, but this will initialize
   // the prune timestamp, allowing future prunes to be deferred.
   GetMemoryCache()->Prune();
-  EXPECT_GT(resource1->DecodedSize(), 0u);
-  EXPECT_GT(resource2->DecodedSize(), 0u);
-  EXPECT_EQ(original_total_size, GetMemoryCache()->size());
-
-  // Removing the client from resource1 should not trigger pruning.
-  client1->RemoveAsClient();
-  EXPECT_GT(resource1->DecodedSize(), 0u);
-  EXPECT_GT(resource2->DecodedSize(), 0u);
-  EXPECT_EQ(original_total_size, GetMemoryCache()->size());
-  EXPECT_TRUE(GetMemoryCache()->Contains(resource1));
-  EXPECT_TRUE(GetMemoryCache()->Contains(resource2));
-
-  // Removing the client from resource2 should not trigger pruning.
-  client2->RemoveAsClient();
   EXPECT_GT(resource1->DecodedSize(), 0u);
   EXPECT_GT(resource2->DecodedSize(), 0u);
   EXPECT_EQ(original_total_size, GetMemoryCache()->size());
