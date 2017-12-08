@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10ffe1f2_8eb3654b",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d82f970b_40291d84",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ee5ec0d_1cf1dcba",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28419a5b_1d003092",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ee5ec0d_1cf1dcba",
+      "range": {
+        "startLine": 160,
+        "startChar": 34,
+        "endLine": 160,
+        "endChar": 47
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa55f863_da90b44d",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-07T19:31:29Z",
       "side": 1,
       "message": "it\u0027s a bit surprising that RequestPlanesReadyCallback calls the callback immediately. can we instead always past a task that runs the callback or have this return false to indicate that no callback is pending?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f245da_e65dd5a7",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Sure. I wanted to avoid the unnecessary overhead of rescheduling a task for the same thread that we are currently on, but I can see how this can be surprising from an API point of view. Always posting a task is a much cleaner API, but I think I will go with your second suggestion (returning a boolean) to avoid any unnecessary overhead.",
+      "parentUuid": "aa55f863_da90b44d",
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "13fb2bf6_91bbfb85",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "I considered this by I am not sure if it is a net gain in this case. Merging N fences and waiting on the merged one requires 2*N - 2 syscalls for N \u003e 1 (N - 1 merges, N - 2 closes of intermediate merged fences, 1 wait). Serially waiting on N fences requires N syscalls when using the libsync API which waits on a single fence at a time, perhaps fewer if we call poll() directly on all the fences. The total time taken to wait for all the fences should be approximately the same in all cases, since when waiting serially some fences will have been already been signaled and waits will return immediately  Finally, and perhaps more importantly, the current code to wait serially is super straightforward, whereas merging would require additional logic.\n\nAll things considered, given the above high-level evaluation, I am inclined to stick with the serial wait scheme until we have some indication that it\u0027s not good enough. However, in my evaluation above I am simplifying a bit, not taking into account the different cost of different syscalls etc, and I don\u0027t have any hard numbers. So, if you have more data that indicate that merging is strongly preferred for this use case, I am happy to change to that.",
+      "parentUuid": "bf14b0ef_9eeb3006",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d615714d_f1c4549f",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
         "patchSetId": 1
@@ -93,6 +177,24 @@
       "writtenOn": "2017-12-07T19:31:29Z",
       "side": 1,
       "message": "maybe a merged fence fd here that starts out as -1 and then we just pass that to the WaitForPlaneFences callback?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503f3699_3d6e1f7b",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Makes sense if we go with a merged fence approach.",
+      "parentUuid": "d615714d_f1c4549f",
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "9f10546a_5aec7bd1",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91222497_2c3fb81c",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 63
+      },
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33aaca3b_5436cb08",
         "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
         "patchSetId": 1
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "8dfa5400_212fa68a",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33aaca3b_5436cb08",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c6a9c2_3f511e05",
         "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
         "patchSetId": 1
@@ -150,6 +294,24 @@
       "writtenOn": "2017-12-07T19:31:29Z",
       "side": 1,
       "message": "hm, what\u0027s preventing us from just using \"base::ScopedFD fence_fd\" here?",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83dd186_b7da5ba9",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-08T13:47:05Z",
+      "side": 1,
+      "message": "I wanted to keep OverlayPlane copyable because:\n\n1. With this kind of struct there is negligible (if any) performance benefit in move vs copy.\n2. Keeping it copyable avoids extra churn in this commit (some function signatures would need to change).\n3. Making it move only would complicate some pieces of code. For example, in SchedulePageFlip we need to provide the planes to both the Closure and to RequestPlanesReadyCallback, but that\u0027s less straighforward with a move-only type.\n4. Wrapping a move-only type (ScopedFD) within a copyable OverlayPlane doesn\u0027t really break the semantics, since OverlayPlane is copyable as a convenience for use in other constructs, rather than because we actually want to keep around multiple long-term copies of it.\n\nKeeping OverlayPlane copyable with a plain ScopedFD would entail dup()-licating the FD which I wanted to avoid, hence I used a scoped_refptr. Ideally we could have a base::SharedFD kind of construct.",
+      "parentUuid": "39c6a9c2_3f511e05",
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
