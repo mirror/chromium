@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19b12990_253dc4a2",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T16:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a64d48cd_6231beac",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810ddb89_83755478",
         "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
         "patchSetId": 3
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4b49777d_f51272f2",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T16:07:51Z",
+      "side": 1,
+      "message": "Whoops, thanks for the reminder--I meant to remove it when I realized I wasn\u0027t going to use it.  Done.",
+      "parentUuid": "c674ac05_e8524612",
+      "range": {
+        "startLine": 197,
+        "startChar": 47,
+        "endLine": 197,
+        "endChar": 52
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc0cbd08_7dbd6f4a",
         "filename": "extensions/browser/extension_system.h",
         "patchSetId": 3
@@ -112,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "af913572_8a6396db",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T16:07:51Z",
+      "side": 1,
+      "message": "Fair and done; let me know if you have problems with my wording.",
+      "parentUuid": "cc0cbd08_7dbd6f4a",
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f056d36_47393f39",
         "filename": "extensions/browser/extension_system.h",
         "patchSetId": 3
@@ -123,6 +189,30 @@
       "writtenOn": "2017-12-08T14:39:16Z",
       "side": 1,
       "message": "I never really liked \"regular\" for this.  Let\u0027s maybe say \"on-the-record\"?",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502da2de_ddbc0491",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T16:07:51Z",
+      "side": 1,
+      "message": "So I agree with your concern, but I don\u0027t like \"on the record\" because I think a quick fuzzy pattern match (as developers do when they\u0027re scanning code) will return \"off the record\".  \"Non-incognito\"?\n\nAlso, were you suggesting changing this comment, or the name of InitForRegularProfile everywhere it\u0027s used?",
+      "parentUuid": "8f056d36_47393f39",
       "range": {
         "startLine": 62,
         "startChar": 40,
