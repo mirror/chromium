@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "137c9730_f971ea19",
+        "filename": "chrome/test/data/extensions/context_menus/checkboxes/test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T22:05:17Z",
+      "side": 1,
+      "message": "Here and below: you can use |resolve| as param directly.",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 5
+      },
+      "revId": "40efe0e1ba4c88fe92098046edd4a1f968fa75bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
