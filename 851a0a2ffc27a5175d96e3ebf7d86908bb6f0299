@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd767c50_ed99a7e1",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 54
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-08T18:31:19Z",
+      "side": 1,
+      "message": "Is it still used?",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "851a0a2ffc27a5175d96e3ebf7d86908bb6f0299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2670ad4_3ab8a4fc",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 54
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-08T18:31:19Z",
+      "side": 1,
+      "message": "This should also be under @synchronized(task_metrics_map_lock_).\nIf MetricsTaskMapSize() is not used, should we remove it?",
+      "range": {
+        "startLine": 290,
+        "startChar": 9,
+        "endLine": 290,
+        "endChar": 26
+      },
+      "revId": "851a0a2ffc27a5175d96e3ebf7d86908bb6f0299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
