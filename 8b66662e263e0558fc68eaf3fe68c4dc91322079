@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "984700e7_b67d68dc",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-08T19:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbf97e32_2e69f6ba",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c684aad6_1ef33a8b",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 3
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "What? Of course it\u0027s not guaranteed to be null. I\u0027m confused.\n\nBefore your CL, sync_metadata_database_ couldn\u0027t be null because we DCHECKed in the ctor. Well, I guess in release builds this could protect against a failed initialization.",
       "parentUuid": "7996189e_a4f05056",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "317b602e_3bccab2e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-08T19:31:42Z",
+      "side": 1,
+      "message": "I meant isn\u0027t guaranteed to be valid. It could be null if initialization fails. Before my change there were DCHECKS for sync_metadata_database_ in a few places, they indicated that the code was written with assumption that sync_metadata_database_ is always valid.",
+      "parentUuid": "2cd45144_35e786b4",
       "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

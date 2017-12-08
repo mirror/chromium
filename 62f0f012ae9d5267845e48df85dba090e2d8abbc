@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ef72737_8d356e6e",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-08T19:31:42Z",
+      "side": 1,
+      "message": "I think there is a layering violation here. HistoryDatabase is supposed to be implementation detail of HistoryBackend,it is not exposed from public methods of HistoryBackend. TypedURLSyncBridge sidesteps this by getting pointer to HistoryDatabse from backend\u0027s Init. I\u0027d rather prefer bridge to get to database through public methods of backend.",
+      "parentUuid": "2569bf3d_cf4378b9",
+      "revId": "62f0f012ae9d5267845e48df85dba090e2d8abbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141a4f9c_da5643a5",
         "filename": "components/history/core/browser/typed_url_sync_bridge.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "62f0f012ae9d5267845e48df85dba090e2d8abbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65997578_25223ef8",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-08T19:31:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "141a4f9c_da5643a5",
+      "revId": "62f0f012ae9d5267845e48df85dba090e2d8abbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
