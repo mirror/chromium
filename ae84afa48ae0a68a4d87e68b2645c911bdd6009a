@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3475d24_feaa6f22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-12-08T00:32:19Z",
+      "side": 1,
+      "message": "I\u0027ve removed the override of WindowClosing now.",
+      "parentUuid": "6cdd089a_1fc6c9ee",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e13491fd_341b8d4a",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "04ba382f_27801431",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-12-08T00:32:19Z",
+      "side": 1,
+      "message": "Yes I believe so - done.",
+      "parentUuid": "e13491fd_341b8d4a",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b848597d_4ece09be",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e0ee87_19980153",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-12-08T00:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b848597d_4ece09be",
+      "revId": "ae84afa48ae0a68a4d87e68b2645c911bdd6009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
