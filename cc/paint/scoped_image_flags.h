@@ -6,6 +6,7 @@
 #define CC_PAINT_SCOPED_IMAGE_FLAGS_H_
 
 #include "base/macros.h"
+#include "cc/paint/decode_stashing_image_provider.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_op_buffer.h"
 
@@ -32,26 +33,6 @@ class CC_PAINT_EXPORT ScopedImageFlags {
   }
 
  private:
-  // An ImageProvider that passes decode requests through to the
-  // |source_provider| but keeps the decode cached throughtout its lifetime,
-  // instead of passing the ref to the caller.
-  class DecodeStashingImageProvider : public ImageProvider {
-   public:
-    // |source_provider| must outlive this class.
-    explicit DecodeStashingImageProvider(ImageProvider* source_provider);
-    ~DecodeStashingImageProvider() override;
-
-    // ImageProvider implementation.
-    ScopedDecodedDrawImage GetDecodedDrawImage(
-        const DrawImage& draw_image) override;
-
-   private:
-    ImageProvider* source_provider_;
-    base::StackVector<ScopedDecodedDrawImage, 1> decoded_images_;
-
-    DISALLOW_COPY_AND_ASSIGN(DecodeStashingImageProvider);
-  };
-
   void DecodeImageShader(const PaintFlags* original, const SkMatrix& ctm);
   void DecodeRecordShader(const PaintFlags* original, const SkMatrix& ctm);
   void DecodeFailed();
