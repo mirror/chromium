@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c85c37_a537b61e",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T02:10:18Z",
+      "side": 1,
+      "message": "mouse_handler_ \u003d std::make_unique\u003cWebContentMouseHandler\u003e(this, web_contents);",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f3b9da_b27b8e72",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T02:10:18Z",
+      "side": 1,
+      "message": "note WebContentsMouseHandler has some lifetime issues - https://bugs.chromium.org/p/chromium/issues/detail?id\u003d739245\n\nI think that will be fixed in m65.",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e2bb02_721a6af3",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T02:10:18Z",
+      "side": 1,
+      "message": "There\u0027s also a fun lifetime issue specifically for SaveCardBubbleViews, related to controller_ being set null here\n\n https://bugs.chromium.org/p/chromium/issues/detail?id\u003d624560\n\nI think you are now exposing the dialog to the same lifetime issue on |mouse_handler_|. Specifically, the SaveCardBubbleControllerImpl destructor only calls Hide() when it still has a non-null |save_card_bubble_view_|, but the view can actually still exist and receive events at that point.",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5544877e_f48a4893",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T02:10:18Z",
+      "side": 1,
+      "message": "mouse_handler_ \u003d nullptr",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5358ead9_02cc27fb",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-08T02:10:18Z",
+      "side": 1,
+      "message": "This will also cause the bubble to close on some key events, per\n\nvoid LocationBarBubbleDelegateView::WebContentMouseHandler::OnKeyEvent(\n    ui::KeyEvent* event) {\n  if ((event-\u003ekey_code() \u003d\u003d ui::VKEY_ESCAPE ||\n       web_contents_-\u003eIsFocusedElementEditable()) \u0026\u0026\n      event-\u003etype() \u003d\u003d ui::ET_KEY_PRESSED)\n    bubble_-\u003eCloseBubble();\n}\n\ndo you want that as well?",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
