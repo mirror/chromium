@@ -19,8 +19,8 @@
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/content_export.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/config/gpu_memory_buffer_support.h"
 #include "gpu/ipc/common/surface_handle.h"
-#include "gpu/ipc/host/gpu_memory_buffer_support.h"
 
 namespace content {
 

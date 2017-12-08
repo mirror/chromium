@@ -17,10 +17,17 @@ const char kDisableGpuDriverBugWorkarounds[] =
 // Overrides the kEnableGpuRasterization and kForceGpuRasterization flags.
 const char kDisableGpuRasterization[] = "disable-gpu-rasterization";
 
+// Disables native GPU memory buffer support.
+const char kDisableNativeGpuMemoryBuffers[] =
+    "disable-native-gpu-memory-buffers";
+
 // Allow heuristics to determine when a layer tile should be drawn with the
 // Skia GPU backend. Only valid with GPU accelerated compositing +
 // impl-side painting.
 const char kEnableGpuRasterization[] = "enable-gpu-rasterization";
+
+// Enable native GPU memory buffer support when available.
+const char kEnableNativeGpuMemoryBuffers[] = "enable-native-gpu-memory-buffers";
 
 // Turns on out of process raster for the renderer whenever gpu raster
 // would have been used.  Enables the chromium_raster_transport extension.

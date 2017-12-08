@@ -11,8 +11,8 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory_handle.h"
+#include "gpu/config/gpu_memory_buffer_support.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
-#include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace gpu {
