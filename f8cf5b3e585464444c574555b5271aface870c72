@@ -34,6 +34,24 @@
       "revId": "f8cf5b3e585464444c574555b5271aface870c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fdb9d8_d9868b1e",
+        "filename": "content/public/browser/network_service_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T23:13:08Z",
+      "side": 1,
+      "message": "Thanks for the explanation!\n(Since you are here) can you also review this CL to see if it looks good to you? Thanks!",
+      "parentUuid": "4300a2db_2d9f3720",
+      "revId": "f8cf5b3e585464444c574555b5271aface870c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
