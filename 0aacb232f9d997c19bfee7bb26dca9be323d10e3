@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8098bb64_ce0d8d15",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T19:33:11Z",
+      "side": 1,
+      "message": "Should be savedSettings[key2], without any quotes. I guess no test currently breaks because of this.",
+      "range": {
+        "startLine": 369,
+        "startChar": 23,
+        "endLine": 369,
+        "endChar": 31
+      },
+      "revId": "0aacb232f9d997c19bfee7bb26dca9be323d10e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
