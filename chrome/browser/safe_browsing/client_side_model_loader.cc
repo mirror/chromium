@@ -103,6 +103,7 @@ ModelLoader::ModelLoader(base::Closure update_renderers_callback,
       update_renderers_callback_(update_renderers_callback),
       request_context_getter_(NULL),
       weak_factory_(this) {
+  NOTREACHED();
   DCHECK(url_.is_valid());
 }
 
@@ -235,6 +236,7 @@ void ModelLoader::EndFetch(ClientModelStatus status, base::TimeDelta max_age) {
 }
 
 void ModelLoader::ScheduleFetch(int64_t delay_ms) {
+  DCHECK(request_context_getter_);
   DCHECK(fetch_sequence_checker_.CalledOnValidSequence());
   base::SequencedTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,

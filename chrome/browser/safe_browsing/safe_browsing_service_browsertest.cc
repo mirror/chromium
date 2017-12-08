@@ -1667,6 +1667,7 @@ class SafeBrowsingServiceShutdownTest : public SafeBrowsingServiceTest {
   void OnUnblockOnProfileCreation(Profile* profile,
                                   Profile::CreateStatus status) {
     if (status == Profile::CREATE_STATUS_INITIALIZED) {
+      DLOG(ERROR) << "PROFILE INITIALIZED";
       profile2_ = profile;
       base::RunLoop::QuitCurrentWhenIdleDeprecated();
     }
@@ -1697,6 +1698,7 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceShutdownTest,
 
   // Create an additional profile.  We need to use the ProfileManager so that
   // the profile will get destroyed in the normal browser shutdown process.
+  DLOG(ERROR) << "CREATING NEW PROFILE";
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   {
     base::ScopedAllowBlockingForTesting allow_blocking;
@@ -1707,10 +1709,12 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceShutdownTest,
       base::Bind(&SafeBrowsingServiceShutdownTest::OnUnblockOnProfileCreation,
                  base::Unretained(this)),
       base::string16(), std::string(), std::string());
+  DLOG(ERROR) << "AFTER PROFILE CREATE";
 
   // Spin to allow profile creation to take place, loop is terminated
   // by OnUnblockOnProfileCreation when the profile is created.
   content::RunMessageLoop();
+  DLOG(ERROR) << "DONE WITH MESSAGE LOOP";
 
   PrefService* pref_service2 = profile2_->GetPrefs();
   EXPECT_TRUE(pref_service2->GetBoolean(prefs::kSafeBrowsingEnabled));
@@ -1719,6 +1723,8 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceShutdownTest,
   WaitForIOThread();
   EXPECT_EQ(1, TestProtocolManager::create_count());
   EXPECT_EQ(0, TestProtocolManager::delete_count());
+
+  DLOG(ERROR) << "SHUTTING DOWN THE TESTS";
 
   // End the test, shutting down the browser.
   // SafeBrowsingServiceShutdownTest::TearDown will check the create_count and
