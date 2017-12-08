@@ -108,7 +108,6 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
 
   using DataReductionProxyConfig::UpdateConfigForTesting;
   using DataReductionProxyConfig::OnInsecureProxyWarmupURLProbeStatusChange;
-  using DataReductionProxyConfig::HandleWarmupFetcherResponse;
 
  private:
   bool GetIsCaptivePortal() const override;
