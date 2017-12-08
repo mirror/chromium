@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ec47ee2_e5d8c33c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-08T10:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d642a475_a65fb7ce",
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "856adb4a_56ad3158",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 4
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "902668c1_f1b86505",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-08T10:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "856adb4a_56ad3158",
+      "range": {
+        "startLine": 1727,
+        "startChar": 6,
+        "endLine": 1727,
+        "endChar": 18
+      },
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "901707c9_ca7fce63",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 4
@@ -71,6 +113,24 @@
       "writtenOn": "2017-12-07T19:22:59Z",
       "side": 1,
       "message": "We still throw away this view and create a new view -- I wonder what happens for things like doodle animate-in animations.  Will they appear twice, once during animation, one when we swap the views?",
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa2712b_a82fe26a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-08T10:31:58Z",
+      "side": 1,
+      "message": "viewWillAppear will be called twice. But the page is only created once.\nI am not sure we have auto-playing animate-in animation for doodle. Do you have any example in mind?",
+      "parentUuid": "901707c9_ca7fce63",
       "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
