@@ -19,9 +19,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   SkImageInfo image_info = SkImageInfo::MakeN32(
       kRasterDimension, kRasterDimension, kOpaque_SkAlphaType);
   sk_sp<const GrGLInterface> gl_interface(GrGLCreateNullInterface());
-  sk_sp<GrContext> gr_context(GrContext::Create(
-      kOpenGL_GrBackend,
-      reinterpret_cast<GrBackendContext>(gl_interface.get())));
+  sk_sp<GrContext> gr_context = GrContext::MakeGL(std::move(gl_interface));
   sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
       gr_context.get(), SkBudgeted::kYes, image_info);
   SkCanvas* canvas = surface->getCanvas();
