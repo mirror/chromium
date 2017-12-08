@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4fb1d711_30ab280b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-08T18:38:57Z",
+      "side": 1,
+      "message": "Done. ARC_PLAY_STORE_SEARCH_REQUEST_STATE_COUNT is kind of too long, since it\u0027s in the enum, could we use STATE_COUNT? Like the next PS.",
+      "parentUuid": "7d753a81_be06ba3b",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5f3438_89f2cc20",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f0f770_01938035",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-08T18:38:57Z",
+      "side": 1,
+      "message": "Because we added a new state. But this will get deleted.",
+      "parentUuid": "aa5f3438_89f2cc20",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "551e0915_416823b7",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-08T18:38:57Z",
+      "side": 1,
+      "message": "Hmm.. I did check the Android side and couldn\u0027t find anything wrong. Maybe it was once wrong in history though. Just in case it gets wrong again, it\u0027s better to check here.",
+      "parentUuid": "f2fcc3fb_9fb77b04",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b2da9d0_16d2edfb",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919e8b28_83fd21c8",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-08T18:38:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b2da9d0_16d2edfb",
+      "range": {
+        "startLine": 56,
+        "startChar": 72,
+        "endLine": 56,
+        "endChar": 73
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
