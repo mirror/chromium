@@ -59,12 +59,12 @@ class SystemLogUploader : public UploadJob::Delegate {
   class Delegate {
    public:
     using LogUploadCallback =
-        base::Callback<void(std::unique_ptr<SystemLogs> system_logs)>;
+        base::OnceCallback<void(std::unique_ptr<SystemLogs> system_logs)>;
 
     virtual ~Delegate() {}
 
     // Loads system logs and invokes |upload_callback|.
-    virtual void LoadSystemLogs(const LogUploadCallback& upload_callback) = 0;
+    virtual void LoadSystemLogs(LogUploadCallback upload_callback) = 0;
 
     // Creates a new fully configured instance of an UploadJob. This method
     // will be called exactly once per every system log upload.
