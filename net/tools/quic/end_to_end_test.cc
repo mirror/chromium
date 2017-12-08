@@ -2966,10 +2966,8 @@ TEST_P(EndToEndTest, SendStatelessResetTokenInShlo) {
   ASSERT_TRUE(Initialize());
   EXPECT_TRUE(client_->client()->WaitForCryptoHandshakeConfirmed());
   QuicConfig* config = client_->client()->session()->config();
-  if (FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo) {
-    EXPECT_TRUE(config->HasReceivedStatelessResetToken());
-    EXPECT_EQ(1010101u, config->ReceivedStatelessResetToken());
-  }
+  EXPECT_TRUE(config->HasReceivedStatelessResetToken());
+  EXPECT_EQ(1010101u, config->ReceivedStatelessResetToken());
   client_->Disconnect();
 }
 

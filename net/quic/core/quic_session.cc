@@ -526,10 +526,7 @@ void QuicSession::OnConfigNegotiated() {
       }
     }
 
-    if (FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo) {
-      QUIC_FLAG_COUNT(quic_reloadable_flag_quic_send_reset_token_in_shlo);
-      config_.SetStatelessResetTokenToSend(GetStatelessResetToken());
-    }
+    config_.SetStatelessResetTokenToSend(GetStatelessResetToken());
   }
 
   // A small number of additional incoming streams beyond the limit should be

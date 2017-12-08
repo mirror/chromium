@@ -130,10 +130,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label,
           true)
 
-// If true, send stateless reset token in SHLO. This token is used in IETF
-// public reset packet.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo, true)
-
 // Default enable all cubic fixes in QUIC Cubic by default.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, true)
 
