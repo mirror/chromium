@@ -2776,7 +2776,6 @@ if (use_v8_in_net) {
     deps = [
       "//base",
       "//gin",
-      "//tools/v8_context_snapshot",
       "//url",
       "//v8",
     ]

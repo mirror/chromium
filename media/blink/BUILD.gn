@@ -120,10 +120,13 @@ test("media_blink_unittests") {
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
     "//third_party/WebKit/public:test_support",
-    "//tools/v8_context_snapshot",
     "//ui/gfx:test_support",
     "//ui/gfx/geometry",
     "//url",
+  ]
+
+  data_deps = [
+    "//tools/v8_context_snapshot",
   ]
 
   configs += [

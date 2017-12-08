@@ -55,8 +55,11 @@ source_set("tests") {
     "//skia",
     "//testing/gtest",
     "//third_party/WebKit/public:blink",
-    "//tools/v8_context_snapshot",
     "//ui/gfx",
+  ]
+
+  data_deps = [
+    "//tools/v8_context_snapshot",
   ]
 
   configs += [
