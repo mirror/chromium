@@ -21,6 +21,7 @@
           "ash::mojom::NewWindowController",
           "ash::mojom::NightLightController",
           "ash::mojom::NoteTakingController",
+          "ash::mojom::ProcessCreationTimeRecorder",
           "ash::mojom::SessionController",
           "ash::mojom::ShelfController",
           "ash::mojom::ShutdownController",
@@ -33,6 +34,7 @@
         ],
         // Test-only interfaces.
         "test": [
+          "ash::mojom::TimeToFirstPresentRecorderTestApi",
           "ash::mojom::ShelfTestApi",
           "ash::mojom::SystemTrayTestApi"
         ],

@@ -53,6 +53,9 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
   void PostMainMessageLoopRun() override;
 
  private:
+  // Set ash know the time the main process started at.
+  void PushProcessCreationTimeToAsh();
+
   std::unique_ptr<AccessibilityControllerClient>
       accessibility_controller_client_;
   std::unique_ptr<ChromeShellContentState> chrome_shell_content_state_;
