@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506affb3_9e1d6b74",
+        "filename": "components/exo/wm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-12-08T20:39:19Z",
+      "side": 0,
+      "message": "GetAshConfig() can return ash::Config::MASH, in which we don\u0027t have a cursor_manager() (as mash\u0027s model differs from the classic ash model substantially). I agree that it\u0027s wrong that we\u0027re not interacting with the cursor_manager() in ash::Config::MUS.\n\nPlease switch this to \u0027!\u003d ash::Config::MASH\u0027, along with the equivalent in other changes in this file.",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "ce8da4e667fcf61dbcc9d45e82188249d42c3ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
