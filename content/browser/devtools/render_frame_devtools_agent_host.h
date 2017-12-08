@@ -50,6 +50,8 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   static void AddAllAgentHosts(DevToolsAgentHost::List* result);
   static scoped_refptr<DevToolsAgentHost> GetOrCreateFor(
       FrameTreeNode* frame_tree_node);
+  static scoped_refptr<DevToolsAgentHost> GetOrCreateForUncommitted(
+      FrameTreeNode* frame_tree_node);
 
   static void OnCancelPendingNavigation(RenderFrameHost* pending,
                                         RenderFrameHost* current);
@@ -57,7 +59,9 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
                                  RenderFrameHost* pending);
   static void OnResetNavigationRequest(NavigationRequest* navigation_request);
 
-  static std::unique_ptr<NavigationThrottle> CreateThrottleForNavigation(
+  static std::unique_ptr<NavigationThrottle> CreateThrottleForNetwork(
+      NavigationHandle* navigation_handle);
+  static std::unique_ptr<NavigationThrottle> CreateThrottleForTarget(
       NavigationHandle* navigation_handle);
   static bool IsNetworkHandlerEnabled(FrameTreeNode* frame_tree_node);
   static void AppendDevToolsHeaders(FrameTreeNode* frame_tree_node,

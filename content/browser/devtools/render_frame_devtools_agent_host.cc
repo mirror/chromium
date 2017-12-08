@@ -361,6 +361,16 @@ scoped_refptr<DevToolsAgentHost> RenderFrameDevToolsAgentHost::GetOrCreateFor(
 }
 
 // static
+scoped_refptr<DevToolsAgentHost>
+RenderFrameDevToolsAgentHost::GetOrCreateForUncommitted(
+    FrameTreeNode* frame_tree_node) {
+  RenderFrameDevToolsAgentHost* result = FindAgentHost(frame_tree_node);
+  if (!result)
+    result = new RenderFrameDevToolsAgentHost(frame_tree_node);
+  return result;
+}
+
+// static
 bool DevToolsAgentHost::HasFor(WebContents* web_contents) {
   FrameTreeNode* node =
       static_cast<WebContentsImpl*>(web_contents)->GetFrameTree()->root();
@@ -433,7 +443,7 @@ void RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
 
 // static
 std::unique_ptr<NavigationThrottle>
-RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
+RenderFrameDevToolsAgentHost::CreateThrottleForNetwork(
     NavigationHandle* navigation_handle) {
   RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(
       static_cast<NavigationHandleImpl*>(navigation_handle)->frame_tree_node());
@@ -443,6 +453,29 @@ RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
        protocol::NetworkHandler::ForAgentHost(agent_host)) {
     std::unique_ptr<NavigationThrottle> throttle =
         network_handler->CreateThrottleForNavigation(navigation_handle);
+    if (throttle)
+      return throttle;
+  }
+  return nullptr;
+}
+
+// static
+std::unique_ptr<NavigationThrottle>
+RenderFrameDevToolsAgentHost::CreateThrottleForTarget(
+    NavigationHandle* navigation_handle) {
+  FrameTreeNode* frame_tree_node =
+      static_cast<NavigationHandleImpl*>(navigation_handle)->frame_tree_node();
+  if (frame_tree_node->has_committed_real_load() &&
+      ShouldCreateDevToolsForNode(frame_tree_node))
+    return nullptr;
+  frame_tree_node = GetFrameTreeNodeAncestor(frame_tree_node->parent());
+  RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
+  if (!agent_host)
+    return nullptr;
+  for (auto* target_handler :
+       protocol::TargetHandler::ForAgentHost(agent_host)) {
+    std::unique_ptr<NavigationThrottle> throttle =
+        target_handler->CreateThrottleForNavigation(navigation_handle);
     if (throttle)
       return throttle;
   }
