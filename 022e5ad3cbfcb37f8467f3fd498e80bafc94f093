@@ -34,6 +34,24 @@
       "revId": "022e5ad3cbfcb37f8467f3fd498e80bafc94f093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058f00d2_85128bbc",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-position-auto-rtl-expected.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-08T14:36:01Z",
+      "side": 1,
+      "message": "Ah, yes, similar names... this one seems it could move to WPT too, but that can be a follow-up.",
+      "parentUuid": "5d982743_3f594241",
+      "revId": "022e5ad3cbfcb37f8467f3fd498e80bafc94f093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
