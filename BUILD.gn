@@ -44,8 +44,10 @@ if (is_official_build) {
 
 # This file defines the following three main targets:
 #
-# "gn_all" should (transitively) cause everything to be built; if you run
-# 'ninja gn_all' and then 'ninja all', the second build should do no work.
+# "gn_all" should (transitively) cause everything to be built. "gn_all" is
+# defined explicitly in each BUILD.gn, in contrast to the GN in-build "all"
+# which builds everything defined by any reachable BUILD file. The two
+# should eventually converge so that "gn_all" can be removed.
 #
 # "gn_visibility": targets that are normally not visible to top-level targets,
 # but are built anyway by "all". Since we don't want any such targets, we have
