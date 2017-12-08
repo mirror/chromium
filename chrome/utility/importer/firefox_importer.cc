@@ -711,7 +711,8 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
     return;
   }
 
-  const char query[] =
+  bool has_favicons = true;
+  std::string query =
       "SELECT b.id, h.url, COALESCE(b.title, h.title), "
       "b.type, k.keyword, b.dateAdded, h.favicon_id "
       "FROM moz_bookmarks b "
@@ -719,7 +720,20 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
       "LEFT JOIN moz_keywords k ON k.id = b.keyword_id "
       "WHERE b.type IN (1,2) AND b.parent = ? "
       "ORDER BY b.position";
-  sql::Statement s(db->GetUniqueStatement(query));
+  if (!db->IsSQLValid(query.c_str())) {
+    // There is no moz_favicons table and no moz_places.favicon_id column in
+    // places.sqlite database in profile created on Firefox 57.0.
+    query =
+        "SELECT b.id, h.url, COALESCE(b.title, h.title), "
+        "b.type, k.keyword, b.dateAdded "
+        "FROM moz_bookmarks b "
+        "LEFT JOIN moz_places h ON b.fk = h.id "
+        "LEFT JOIN moz_keywords k ON k.id = b.keyword_id "
+        "WHERE b.type IN (1,2) AND b.parent = ? "
+        "ORDER BY b.position";
+    has_favicons = false;
+  }
+  sql::Statement s(db->GetUniqueStatement(query.c_str()));
   s.BindInt(0, (*list)[position]->id);
 
   BookmarkList temp_list;
@@ -732,7 +746,7 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
     item->type = static_cast<BookmarkItemType>(s.ColumnInt(3));
     item->keyword = s.ColumnString(4);
     item->date_added = base::Time::FromTimeT(s.ColumnInt64(5)/1000000);
-    item->favicon = s.ColumnInt64(6);
+    item->favicon = has_favicons ? s.ColumnInt64(6) : 0;
     item->empty_folder = true;
 
     temp_list.push_back(std::move(item));
