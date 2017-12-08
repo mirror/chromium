@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bff74cb_7b52a65f",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataPipeGetter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T08:43:43Z",
+      "side": 1,
+      "message": "You can create a WebDataConsumerHandle from a data pipe by Platform::CreateDataConsumerHandle, and you can create a BytesConsumer from a WebDataConsumerHandle. Maybe you don\u0027t need most if not all of this class?",
+      "revId": "6c94fbdf5cd13c994b6382ad9b15f76922a57838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dd4e42_3192b64c",
+        "filename": "third_party/WebKit/public/platform/WebHTTPBody.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T08:43:43Z",
+      "side": 1,
+      "message": "I\u0027m confused by the comment and the parameter type - which is correct?",
+      "revId": "6c94fbdf5cd13c994b6382ad9b15f76922a57838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
