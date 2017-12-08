@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c258970b_b153f06d",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-08T22:32:50Z",
+      "side": 1,
+      "message": "Looks like it; calling CreditCard::StripSeparators just in case as it seems everything else does as well.",
+      "parentUuid": "b4a86612_cfe3d26b",
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c307e64_ccd8fe77",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd70ab71_dcf6c43a",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-08T22:32:50Z",
+      "side": 1,
+      "message": "Indeed; it\u0027s checked on form import, before save is even considered:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/form_data_importer.cc?l\u003d327\u0026rcl\u003d1f3d485915bf2ecb8935d6c8c795966ab24e2ad3",
+      "parentUuid": "6c307e64_ccd8fe77",
+      "range": {
+        "startLine": 180,
+        "startChar": 11,
+        "endLine": 180,
+        "endChar": 17
+      },
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "fef32249_20bc7e4e",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-08T22:32:50Z",
+      "side": 1,
+      "message": "Done.  Note that turning the experiment on affects the flag but doesn\u0027t affect sending first6 to PaymentsClient, but that\u0027s probably fine...",
+      "parentUuid": "5b53b3ec_16756b5c",
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a99dde7_0511991f",
         "filename": "components/autofill/core/browser/payments/payments_client.h",
         "patchSetId": 1
@@ -97,6 +157,30 @@
       "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ca4ebf_e64c6956",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-08T22:32:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a99dde7_0511991f",
+      "range": {
+        "startLine": 133,
+        "startChar": 21,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "1b7e037609550d82a91fb03d503ccfacb8b47e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
