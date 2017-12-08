@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c098d7_043d162f",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-08T23:53:24Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer if we moved DeviceListChanged()\u0027s implementation to a helper function and call it from both places.",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 19
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1efa70_b926071f",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-08T23:53:24Z",
+      "side": 1,
+      "message": "Same nit as previous file.",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccb2e9d_293c0894",
+        "filename": "chromeos/network/network_device_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-08T23:53:24Z",
+      "side": 1,
+      "message": "nit: \" \u003d \" instead for readability.",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 116,
+        "endChar": 64
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
