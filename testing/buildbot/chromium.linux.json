@@ -1621,6 +1621,18 @@
       },
       {
         "args": [
+          "--xvfb"
+        ],
+        "isolate_name": "telemetry_perf_unittests",
+        "name": "telemetry_perf_unittests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "hard_timeout": 1500,
+          "shards": 15
+        }
+      },
+      {
+        "args": [
           "--jobs=1"
         ],
         "isolate_name": "telemetry_unittests",
