@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "e71c3207_7b889b28",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T03:43:49Z",
+      "side": 1,
+      "message": "Delegate and observer methods have a special strong convention for naming. From Coding Guidelines for Cocoa:\n\nDelegate methods (or delegation methods) are those that an object invokes in its delegate (if the delegate implements them) when certain events occur. They have a distinctive form, which apply equally to methods invoked in an object’s data source:\nStart the name by identifying the class of the object that’s sending the message:\n- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row;\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001803-BCIDAIJE\n\n\n\n\nThere is another acceptable naming pattern for delegate/observer where the method ends with the object name:\n- (nullable NSArray\u003cNSString *\u003e *)sectionIndexTitlesForTableView:(UITableView *)tableView;\n\nThis second form follow another recommendation, which is \"Make the word before the argument describe the argument.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH",
+      "parentUuid": "89b9b447_b764052d",
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a74e35f5_394e3d0f",
         "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
         "patchSetId": 7
