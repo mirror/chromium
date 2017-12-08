@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b1008e77_27d35963",
+        "filename": "chrome/browser/resources/feedback/js/sys_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T01:19:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be needed. If there\u0027s a display value, just favor that over value. And when you set the display value in feedback_private_api, make sure it\u0027s only set when value is nont empty.",
+      "range": {
+        "startLine": 209,
+        "startChar": 23,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5706bb2b_75f3aee2",
         "filename": "chrome/browser/resources/feedback/js/sys_info.js",
         "patchSetId": 5
@@ -30,6 +53,70 @@
       "writtenOn": "2017-12-08T00:10:45Z",
       "side": 1,
       "message": "should this be internationalized?",
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b1c450_bf272dbf",
+        "filename": "components/feedback/feedback_util_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T01:19:16Z",
+      "side": 1,
+      "message": "+1. Yes, please make it internationalized.",
+      "parentUuid": "2e4edc41_1e7ac36d",
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfda427b_72eaa994",
+        "filename": "components/feedback/feedback_util_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T01:19:16Z",
+      "side": 1,
+      "message": "Please make this return std::unique_ptr\u003cstd::string\u003e instead. \n\nThen in feedback_private_api.cc, you\u0027d be able to do:\n\nsys_info_entry.display_value \u003d GetDisplayValue(sys_info_entry.key);\n\nA null unique_ptr for an empty value is good enough.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 69
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2941643_8026f40e",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T01:19:16Z",
+      "side": 1,
+      "message": "So the huge obscure (possibly 10s of megabytes?) value is still sent to the feedback app? Wouldn\u0027t that create a big jank? Besides why set it at all if the app won\u0027t use it or show it?\n\nI thought we planned collect this data when the feedback report is being prepared for sending, and signal only here that it exists.",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
       "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -95,6 +182,30 @@
       "side": 1,
       "message": "yeah, but if this is set only when value is not empty, the feedback UI would not show that string",
       "parentUuid": "24c0c294_0650ac7d",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9d08f9_142e223c",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T01:19:16Z",
+      "side": 1,
+      "message": "+1 To Toni\u0027s suggestion.",
+      "parentUuid": "3ff793da_b2a705cd",
       "range": {
         "startLine": 18,
         "startChar": 6,
