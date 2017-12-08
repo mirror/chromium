@@ -192,8 +192,11 @@ void LabelFields(const FieldTypeMap& field_types,
       if (iter != field_types.end()) {
         type = iter->second;
         available_field_types->insert(type);
-        if (type == autofill::USERNAME)
+        if (type == autofill::USERNAME) {
           field->set_username_vote_type(username_vote_type);
+          DCHECK_NE(autofill::AutofillUploadContents::Field::NO_INFORMATION,
+                    username_vote_type);
+        }
       }
     }
 
