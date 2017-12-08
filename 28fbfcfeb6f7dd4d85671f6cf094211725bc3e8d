@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "098184d0_6e8e9097",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T16:38:03Z",
+      "side": 1,
+      "message": "Is this TODO resolved with this change? Is it closer to being fixed?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5f3438_89f2cc20",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T16:38:03Z",
+      "side": 1,
+      "message": "Why was this changed? Mainly out of curiosity, since it\u0027s not unsafe.",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fcc3fb_9fb77b04",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T16:38:03Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s caused because of this. After all, the API has been stable for several months!\n\nThe root cause is that the Android side is not being careful enough with filling the needed data. This sentence should be dropped.",
+      "range": {
+        "startLine": 52,
+        "startChar": 28,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2da9d0_16d2edfb",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T16:38:03Z",
+      "side": 1,
+      "message": "nit: don\u0027t elide braces since the if is not a one-liner.",
+      "range": {
+        "startLine": 56,
+        "startChar": 72,
+        "endLine": 56,
+        "endChar": 73
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
