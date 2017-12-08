@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_NET_CHROME_EXTENSIONS_NETWORK_DELEGATE_H_
 #define CHROME_BROWSER_NET_CHROME_EXTENSIONS_NETWORK_DELEGATE_H_
 
+#include <map>
+#include <memory>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -14,6 +17,7 @@
 namespace extensions {
 class EventRouterForwarder;
 class InfoMap;
+struct WebRequestInfo;
 }
 
 // ChromeExtensionsNetworkDelegate is the extensions-only portion of
@@ -76,11 +80,16 @@ class ChromeExtensionsNetworkDelegate : public net::NetworkDelegateImpl {
  protected:
   ChromeExtensionsNetworkDelegate();
 
+  extensions::WebRequestInfo* GetWebRequestInfo(net::URLRequest* request);
+
   void* profile_;
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   scoped_refptr<extensions::InfoMap> extension_info_map_;
 #endif
+
+  std::map<net::URLRequest*, std::unique_ptr<extensions::WebRequestInfo>>
+      active_requests_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeExtensionsNetworkDelegate);
 };
