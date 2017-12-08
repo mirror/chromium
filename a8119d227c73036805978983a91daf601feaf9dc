@@ -22,6 +22,30 @@
       "revId": "a8119d227c73036805978983a91daf601feaf9dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c569fc49_1744f822",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-08T10:27:30Z",
+      "side": 1,
+      "message": "Makes sense, I added a reference to crbug.com/792490 here.\n(My plan was to simply remove the condition soon, i.e. always set allow_google to true. The OGB has been enabled by default for a while, so it won\u0027t change anything in practice anyway.)",
+      "parentUuid": "d5904c16_6f609b50",
+      "range": {
+        "startLine": 626,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 43
+      },
+      "revId": "a8119d227c73036805978983a91daf601feaf9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
