@@ -5,39 +5,11 @@
 #ifndef GPU_IPC_HOST_GPU_MEMORY_BUFFER_SUPPORT_H_
 #define GPU_IPC_HOST_GPU_MEMORY_BUFFER_SUPPORT_H_
 
-#include "base/containers/hash_tables.h"
-#include "base/hash.h"
 #include "ui/gfx/buffer_types.h"
 
 namespace gpu {
 
-using GpuMemoryBufferConfigurationKey =
-    std::pair<gfx::BufferFormat, gfx::BufferUsage>;
-using GpuMemoryBufferConfigurationSet =
-    base::hash_set<GpuMemoryBufferConfigurationKey>;
-
-}  // namespace gpu
-
-namespace BASE_HASH_NAMESPACE {
-
-template <>
-struct hash<gpu::GpuMemoryBufferConfigurationKey> {
-  size_t operator()(const gpu::GpuMemoryBufferConfigurationKey& key) const {
-    return base::HashInts(static_cast<int>(key.first),
-                          static_cast<int>(key.second));
-  }
-};
-
-}  // namespace BASE_HASH_NAMESPACE
-
-namespace gpu {
-
-bool AreNativeGpuMemoryBuffersEnabled();
-
-// Returns the set of supported configurations.
-GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations();
-
-// Returns true of the OpenGL target to use for the combination of format/usage
+// Returns true if the OpenGL target to use for the combination of format/usage
 // is not GL_TEXTURE_2D but a platform specific texture target.
 bool GetImageNeedsPlatformSpecificTextureTarget(gfx::BufferFormat format,
                                                 gfx::BufferUsage usage);
