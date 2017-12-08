@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b69c0e21_58262518",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T23:12:47Z",
+      "side": 1,
+      "message": "can just \"return previews::DetermineCommittedClientPreviewsState(*request, previews_state);\" ?",
+      "revId": "c7baf47ded5c41b72c515ad8f86275cf46f14a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90aa4a75_b41c35b3",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T23:12:47Z",
+      "side": 1,
+      "message": "nit: std::make_unique over bare new.",
+      "range": {
+        "startLine": 92,
+        "startChar": 50,
+        "endLine": 92,
+        "endChar": 76
+      },
+      "revId": "c7baf47ded5c41b72c515ad8f86275cf46f14a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0347570c_bb327947",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T23:12:47Z",
+      "side": 1,
+      "message": "nit: std::make_unique over bare new. Same elsewhere",
+      "revId": "c7baf47ded5c41b72c515ad8f86275cf46f14a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
