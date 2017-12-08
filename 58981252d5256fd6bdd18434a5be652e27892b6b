@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d198b7e_bbafffd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-08T22:13:29Z",
+      "side": 1,
+      "message": "Do\u0027h/duh. 🤦‍♂️",
+      "revId": "58981252d5256fd6bdd18434a5be652e27892b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
