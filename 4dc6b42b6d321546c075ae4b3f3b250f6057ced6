@@ -50,6 +50,23 @@
       "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c433932_404a9b36",
+        "filename": "net/test/test_data_directory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-08T00:22:07Z",
+      "side": 1,
+      "message": "It seems a bit hacky to have to put this here, is there no other way to make PathService::Get(base::DIR_SOURCE_ROOT,...) do the right thing inside the network service?",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
