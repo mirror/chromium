@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd48255_69610919",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "nit: since this really attaches to an ExecutionContext and not a frame, just have it take ExecutionContext*?",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0b3546_a17328fa",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "unimplemented and unused?",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba86b8f_b1a34d9c",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "nit: This is slightly weird to me, because if the context is not paused then by definition this is not needed. OTOH, PausableScriptExecutor also does this?",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d637ee_2999e523",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "maybe also DCHECK that the context is not paused, since that\u0027s the point?",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954967de_beb266a7",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "Since this method isn\u0027t otherwise specifically related to script, I\u0027d rather this didn\u0027t take a context. It shouldn\u0027t be necessary, because we should be able to tell whether the ExecutionContext is okay from the frame+document alone, and if the callback is doing something with a particular context that requires additional checks, it can do them.\n\nI would suggest something like this ought to suffice:\n\nDocument* document \u003d GetFrame()-\u003eGetDocument();\nif (!document || document-\u003eIsContextDestroyed()) {\n  callback-\u003eRun(...);\n  return;\n}\nnew PausableInvoker(document, std::move(callback));\n\n(nit: it would also be reasonably convenient here to check whether the document is paused and call the callback synchronously here, without allocating the PausableInvoker object that won\u0027t actually be necessary 99.9999% of the time. Bonus: you can then inline Invoke into Fired.)",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04575751_d229d03c",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "nit: actually, I think it can even be a base::OnceCallback :)",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

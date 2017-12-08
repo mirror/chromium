@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c60f76b_b34954d7",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "The ScriptState should remain valid until the context is destroyed, yes. It only starts returning false if the context is collected (but it should be referenced while the context is alive) or the per-context data is disposed (which happens during shutdown).",
+      "parentUuid": "930ac7fa_5a46ef57",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63b73db8_5cc2735d",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 1
@@ -194,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "f0e70aa7_69bcf29c",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "Unless the distinction is interesting, I have a mild preference for saying \"yup, run\" or \"nope, you\u0027re never going to be run\", which is fairly simple. (Milder yet preference for just the former if no callers actually care about the latter, because it simplifies the interface. But if it\u0027s useful to callers, no need to make them work around it.)",
+      "parentUuid": "61e29eef_e8827fc8",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f12131e5_c0bef118",
         "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
         "patchSetId": 1
@@ -223,6 +259,24 @@
       "side": 1,
       "message": "\u003e nit: ...but it\u0027s not completed yet; we invoke the callback in order to complete it? \"Run\" seems more natural to me.\n\nThe pause was completed? ;)  Perhaps not.  Run() seems appropriate; changed.\n\n\u003e Aside: As long as this isn\u0027t a callback, separate methods for the various results seems slightly more natural.\n\nIn order to make this easier to wrap in a base::Callback and eventually convert to a base::Callback, I\u0027d prefer to keep it like this, unless you feel strongly.",
       "parentUuid": "f12131e5_c0bef118",
+      "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bec8529_56854aab",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T16:25:43Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "b8b99705_36413c1d",
       "revId": "a006c5f107e061df6690a9141a4bacd4fe71b494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
