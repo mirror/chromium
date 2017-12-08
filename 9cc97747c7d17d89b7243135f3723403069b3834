@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ccba2f7f_734efb54",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 7915,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-08T22:22:28Z",
+      "side": 1,
+      "message": "Forgot to resolve this.",
+      "parentUuid": "62cab753_10a32ab7",
+      "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "595dfd82_caa9f791",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732a6714_8a57f14e",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-08T22:22:28Z",
+      "side": 1,
+      "message": "Forgot to resolve this.",
+      "parentUuid": "1a90e6d8_517b226c",
+      "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
