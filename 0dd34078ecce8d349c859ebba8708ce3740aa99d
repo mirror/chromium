@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc43dc7a_729b590e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac807f18_09f93057",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e717871_c4b722dd",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e81f847_50b3a719",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e717871_c4b722dd",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5c6afab3_d5c6663a",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a90d489e_33ff285d",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc318cc_5c6a9197",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 26
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-07T23:00:30Z",
       "side": 1,
       "message": "Same question about error code here, and in ReadCBORMap.",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9195b4f_95cf72c7",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "For CBORMap and CBORArray this would not be necessary since by the time base::nullOpt has been returned for array/maps |error_code_| is already set by CBROReader::ReadUnsigned() , CBROReader::ReadString(), CBROReader::ReadBytes().",
+      "parentUuid": "bdc318cc_5c6a9197",
       "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dc49691e_1ee39ac4",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7199cadf_9bacdaa8",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c0afe1e_5a94b7da",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 26
@@ -101,6 +191,24 @@
       "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba16a46_2390e27c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-08T01:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0afe1e_5a94b7da",
+      "revId": "0dd34078ecce8d349c859ebba8708ce3740aa99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
