@@ -14,7 +14,8 @@ using sandbox::syscall_broker::MakeBrokerCommandSet;
 namespace content {
 
 bool NetworkPreSandboxHook(service_manager::SandboxLinux::Options options) {
-  service_manager::SandboxLinux::GetInstance()->StartBrokerProcess(
+  auto* instance = service_manager::SandboxLinux::GetInstance();
+  instance->StartBrokerProcess(
       MakeBrokerCommandSet({
           sandbox::syscall_broker::COMMAND_ACCESS,
           sandbox::syscall_broker::COMMAND_MKDIR,
@@ -28,6 +29,7 @@ bool NetworkPreSandboxHook(service_manager::SandboxLinux::Options options) {
       {BrokerFilePermission::ReadWriteCreateRecursive("/")},
       service_manager::SandboxLinux::PreSandboxHook(), options);
 
+  instance->EngageNamespaceSandbox(false /* from_zygote */);
   return true;
 }
 
