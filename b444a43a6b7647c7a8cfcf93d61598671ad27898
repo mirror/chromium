@@ -22,6 +22,30 @@
       "revId": "b444a43a6b7647c7a8cfcf93d61598671ad27898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec018651_b636c3c5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-08T16:52:39Z",
+      "side": 1,
+      "message": "Thanks! Will update it!",
+      "parentUuid": "ef135498_3cbe8f64",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 7
+      },
+      "revId": "b444a43a6b7647c7a8cfcf93d61598671ad27898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
