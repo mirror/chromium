@@ -229,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fd5ab638_502f43cd",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T00:08:29Z",
+      "side": 1,
+      "message": "mmh, I think the documentation is wrong. It returns true if there was a \"disjoint\" event, so that\u0027s what we need to handle. This only applies to kTimerTypeDisjoint, correct.",
+      "parentUuid": "2ad25f95_f7d840d7",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24a4519c_e7fa653c",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -328,6 +346,24 @@
       "side": 1,
       "message": "I feel it is better to update vsync parameters from SGIVideoSyncVSyncProvider regually. If we always compute the future vsync timestamp, there is no chance to update vsync parameters from SGIVideoSyncVSyncProvider. Do you have any suggestion how to update vsync parameters for SGIVideoVSyncProvider?",
       "parentUuid": "43bdcaf3_c8495557",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a502fcce_2aaa2ff9",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T00:08:29Z",
+      "side": 1,
+      "message": "I think it\u0027s ok to separate running the callback from getting updated information. One way could be to set a bool in this case (timestamp higher than latest timebase), and check on l.849, only returning early if it\u0027s not set (or already waiting for the update).",
+      "parentUuid": "9b330dd0_e57fcf23",
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
