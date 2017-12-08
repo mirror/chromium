@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a17f9a_5d494ee8",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-08T16:59:14Z",
+      "side": 1,
+      "message": "Interesting that before this change we never set the unknown bit back to true which was definitely wrong.",
+      "revId": "9e4b188562ae3c0a15ba1548ccf3f82ae8dbd9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
