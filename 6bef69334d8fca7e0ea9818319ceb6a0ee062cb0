@@ -22,6 +22,30 @@
       "revId": "6bef69334d8fca7e0ea9818319ceb6a0ee062cb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d895d0e7_3c82dc8f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-08T13:13:51Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "46dfd79e_2890c2cd",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "6bef69334d8fca7e0ea9818319ceb6a0ee062cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
