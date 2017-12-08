@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb25407a_8b6d3986",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-08T19:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3752067_f4a94bd2",
+      "range": {
+        "startLine": 216,
+        "startChar": 23,
+        "endLine": 216,
+        "endChar": 46
+      },
+      "revId": "65e19dc8b981bad36f16e03e475b49bc2f23a9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07f5060_66b191b7",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-08T18:30:05Z",
       "side": 1,
       "message": "Is this making the keyboard face the user?  If so, the angle is simply atan(kKeyboardVerticalOffsetDMM).",
+      "revId": "65e19dc8b981bad36f16e03e475b49bc2f23a9da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966bf51e_784fbcf1",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-08T19:57:55Z",
+      "side": 1,
+      "message": "atan(kKeyboardVerticalOffsetDMM) is too much because the KB itself adds some rotation. This is not enough rotation though. We should either 1) ask them to not add the rotation and do it ourself 2) Just not add the extra rotation. 1) is better for cross-platform support. I\u0027m going with adding \"some\" rotation at our end because it looks better IMO.",
+      "parentUuid": "f07f5060_66b191b7",
       "revId": "65e19dc8b981bad36f16e03e475b49bc2f23a9da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
