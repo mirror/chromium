@@ -243,8 +243,37 @@ void NGBoxFragmentPainter::PaintContents(const PaintInfo& paint_info,
   PaintChildren(box_fragment_.Children(), descendants_info, paint_offset);
 }
 
-void NGBoxFragmentPainter::PaintFloats(const PaintInfo&, const LayoutPoint&) {
-  // TODO(eae): Implement once we have a way to distinguish float fragments.
+void NGBoxFragmentPainter::PaintFloatingChildren(
+    const Vector<std::unique_ptr<NGPaintFragment>>& children,
+    const PaintInfo& paint_info,
+    const LayoutPoint& paint_offset) {
+  for (const auto& child : children) {
+    if (child->HasSelfPaintingLayer())
+      continue;
+
+    const NGPhysicalFragment& fragment = child->PhysicalFragment();
+    if (fragment.IsFloating()) {
+      NGBoxFragmentPainter(*child).PaintAllPhasesAtomically(paint_info,
+                                                            paint_offset);
+    }
+
+    else if (fragment.Type() == NGPhysicalFragment::kFragmentBox ||
+             fragment.Type() == NGPhysicalFragment::kFragmentLineBox) {
+      PaintFloatingChildren(child->Children(), paint_info, paint_offset);
+    }
+  }
+}
+
+void NGBoxFragmentPainter::PaintFloats(const PaintInfo& paint_info,
+                                       const LayoutPoint& paint_offset) {
+  DCHECK(paint_info.phase == PaintPhase::kFloat ||
+         paint_info.phase == PaintPhase::kSelection ||
+         paint_info.phase == PaintPhase::kTextClip);
+  PaintInfo float_info(paint_info);
+  if (paint_info.phase == PaintPhase::kFloat)
+    float_info.phase = PaintPhase::kForeground;
+
+  PaintFloatingChildren(box_fragment_.Children(), float_info, paint_offset);
 }
 
 void NGBoxFragmentPainter::PaintMask(const PaintInfo&, const LayoutPoint&) {
