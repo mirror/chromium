@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4c98be71_46562cd0",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-08T04:14:23Z",
+      "side": 1,
+      "message": "I think that decision is tangential to the fix here, and it\u0027s tough to actually decipher the intent of this logic: if the user has any per-display preference on any device (since we\u0027re checking the synced |path| values...) then prefer the default value, instead of the local pref\u0027s value??? I guess the idea is: \"if the user ever changed a shelf setting anywhere ever, then prefer to use the default value instead of the local value, if this specific display doesn\u0027t have a pref\". Perhaps I\u0027m mistaken, but it doesn\u0027t make a lot of sense...\n\nI\u0027d just as soon remove the |has_per_display_pref| logic, return the local value if it\u0027s recommended, and otherwise return the default value. That would seem to be a reasonable approximation of the logic here, I\u0027m not sure why we check for unrelated per-display prefs.\n\nAnyway, you can leave any changes to a separate CL",
+      "parentUuid": "32f1e298_23136819",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57c7f4c6_15e07d96",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 1
