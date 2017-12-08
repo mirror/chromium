@@ -7530,6 +7530,12 @@ I don't think this site should be blocked!
       <message name="IDS_PROFILES_TURN_ON_SYNC_BUTTON" desc="Button in the profile user menu to turn on Sync.">
         Turn on Sync
       </message>
+      <message name="IDS_PROFILES_DICE_SIGNIN_FIRST_ACCOUNT_BUTTON" desc="Button to sign in and turn on Sync for a specific web account.">
+        Sync to <ph name="ACCOUNT_FULL_NAME">$1<ex>John Doe</ex></ph>
+      </message>
+      <message name="IDS_PROFILES_DICE_SIGNIN_WITH_ANOTHER_ACCOUNT_BUTTON" desc="Button to sign in and turn on Sync with another web account.">
+        Sync to another account
+      </message>
       <message name="IDS_PROFILES_TURN_ON_SYNC_PROMO" desc="Text describing the benefits of turning on Sync.">
         Turn on Sync to get your bookmarks, history, passwords, and other settings on all your devices.
       </message>
