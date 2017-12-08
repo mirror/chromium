@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "513e12c5_17e56a6d",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-08T22:23:38Z",
+      "side": 1,
+      "message": "That\u0027s right, we want to know the count distribution, so 0 is also useful.",
+      "parentUuid": "92ea71c7_bd82a98f",
+      "revId": "36679f5648d0f4ca5f4abc0dac8e9ba064df4834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11395e4d_f8756ad4",
         "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-08T22:17:43Z",
       "side": 1,
       "message": "Why are the counts 1?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "36679f5648d0f4ca5f4abc0dac8e9ba064df4834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff249ca4_08b8a946",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-08T22:23:38Z",
+      "side": 1,
+      "message": "It\u0027s the count of entry, it means we report one time.",
+      "parentUuid": "11395e4d_f8756ad4",
       "range": {
         "startLine": 71,
         "startChar": 0,
