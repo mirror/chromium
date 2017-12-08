@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80dc3e08_ac7a199f",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-08T03:47:23Z",
+      "side": 1,
+      "message": "gl::GLImageNativePixmap::ExportHandle uses eglExportDMABUFImageMESA.\nHow can we be sure at this point that EGL_MESA_image_dma_buf_export is available?",
+      "revId": "782b5ce4e3de8f7e9e43e1c680c373181a0415f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

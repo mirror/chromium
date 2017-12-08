@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c2617abb_df714425",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-08T03:47:23Z",
+      "side": 1,
+      "message": "I don\u0027t see where you did this.",
+      "parentUuid": "4d4f2b0d_e93eef00",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a6b01d_352fc3b1",
         "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
         "patchSetId": 17
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "It needs to use the parent\u0027s initialiser which is more generic. I have defined GLImageNativePixmap::ExportHandle() in GLImageNativePixmap and not GLImageEGL to keep all dmabuf usages in GLImageNativePixmap.",
       "parentUuid": "08a6b01d_352fc3b1",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a17abd60_c5098a53",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-08T03:47:23Z",
+      "side": 1,
+      "message": "I don\u0027t understand. GLImageNativePixmap extends publicly GLImageEGL.\nGLImageEGL has a public method Initizialize/4, while the Initialize in GLImageNativePixmap has only two parameters. Why can\u0027t you call GLImageEGL::Initizialize/4 from a pointer to GLImageNativePixmap?\n\nA better approach might be to make GLImageEGL::Initialize/4 protected and to expose a different API in GLImageNativePixmap that does GLImageEGL::Initialize and ExportHandle.",
+      "parentUuid": "a18378c2_f28fae49",
       "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
