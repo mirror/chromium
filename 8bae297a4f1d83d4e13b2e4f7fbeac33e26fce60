@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ae1b4e_539bd250",
+        "filename": "chrome/browser/extensions/launch_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T22:36:40Z",
+      "side": 1,
+      "message": "how about using std::optional\u003cLaunchContainer\u003e instead? that feels safer to me, in that we aren\u0027t using an arbitrary value to represent not having a result.",
+      "revId": "8bae297a4f1d83d4e13b2e4f7fbeac33e26fce60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
