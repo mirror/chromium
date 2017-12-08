@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff8e70e_d91105db",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T19:37:24Z",
+      "side": 1,
+      "message": "I wonder if we should add this type of functionality to PaintOpWriter? Seems fine for now in this simple case, but as we add more entry types / duplicate this code it may make sense.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac67b62e_c71d4aee",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T19:37:24Z",
+      "side": 1,
+      "message": "Why not just do this in the constructor and avoid the need for mutable / lazy? I don\u0027t believe we will ever create a client transfer cache entry without serializing it.",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2ebd78_9eec121a",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T19:37:24Z",
+      "side": 1,
+      "message": "If we send down a corrupt value what happens? Do we want to validate this before switching on it and set valid_ \u003d false if it\u0027s out of bounds?",
+      "range": {
+        "startLine": 135,
+        "startChar": 43,
+        "endLine": 135,
+        "endChar": 47
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
