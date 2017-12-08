@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10ac90da_6d544c42",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1185209
+      },
+      "writtenOn": "2017-12-08T14:20:35Z",
+      "side": 1,
+      "message": "So just FYI,that include was added originally since we weren\u0027t building with vulkan, and thus will still be needed in non vulkan builds (or chrome could use its own header in that case as well).",
+      "parentUuid": "ce3d1815_9f592076",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "d2010779acd4f7dc0669760d86bab86f81521ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79de678_a8f524c1",
         "filename": "skia/BUILD.gn",
         "patchSetId": 1
