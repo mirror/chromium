@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07c1d5dc_98dc4263",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-12-08T18:50:24Z",
+      "side": 1,
+      "message": "Yes, that makes sense for chromium - I can easily change these callsites and update BoringSSL in the same CL. On the google3 side I still need to bump BORINGSSL_API_VERSION.",
+      "parentUuid": "a6b4deb9_e4c97595",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 25
+      },
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26267ca6_b112f803",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d908b9fc_8ad21e4a",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-12-08T18:50:24Z",
+      "side": 1,
+      "message": "Huh, I\u0027ve never used that std::vector constructor before. That\u0027s a nice one to know.",
+      "parentUuid": "26267ca6_b112f803",
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bacafbea_3b643d89",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-12-08T18:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d918adfb_44d99474",
+      "range": {
+        "startLine": 1088,
+        "startChar": 25,
+        "endLine": 1088,
+        "endChar": 26
+      },
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77bf9000_040b3eb9",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b14e06_b94e19b5",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-12-08T18:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bf9000_040b3eb9",
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
