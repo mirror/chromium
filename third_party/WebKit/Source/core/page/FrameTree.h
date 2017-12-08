@@ -83,9 +83,8 @@ class CORE_EXPORT FrameTree final {
 
 }  // namespace blink
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
 // Outside the WebCore namespace for ease of invocation from gdb.
-void showFrameTree(const blink::Frame*);
-#endif
+//#endif
 
 #endif  // FrameTree_h
