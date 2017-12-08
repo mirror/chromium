@@ -194,7 +194,7 @@ if (!is_ios) {
     sources = [
       "array_traits_wtf_vector.h",
       "lib/string_traits_wtf.cc",
-      "lib/wtf_clone_equals_util.h",
+      "lib/wtf_clone_util.h",
       "lib/wtf_hash_util.h",
       "lib/wtf_serialization.h",
       "map_traits_wtf_hash_map.h",
