@@ -22,6 +22,30 @@
       "revId": "6a7a1416e21e339f58755ce3691cc2bd0d556b5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11a8c22_c195b5ac",
+        "filename": "ui/app_list/views/search_result_container_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:48:55Z",
+      "side": 1,
+      "message": "Ah I see, good to know. Fixed.",
+      "parentUuid": "80d8ca71_7eb59994",
+      "range": {
+        "startLine": 94,
+        "startChar": 44,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "6a7a1416e21e339f58755ce3691cc2bd0d556b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
