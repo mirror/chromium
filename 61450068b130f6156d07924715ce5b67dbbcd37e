@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "655c0626_cec2c911",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T17:55:00Z",
+      "side": 1,
+      "message": "I\u0027ve tried to find this guidance in the style guide before and have also failed though I swear it was in there at some point. I mostly see const std::string\u0026 in the codebase but I agree that std::string when taking ownership and base::StringPiece when read-only is better. This is probably left over from before std::move was allowed.\n\nI retract my comment and will probably start suggesting this on reviews going forward.",
+      "parentUuid": "711d6224_9a5f5266",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f0c7b67_9c581712",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
