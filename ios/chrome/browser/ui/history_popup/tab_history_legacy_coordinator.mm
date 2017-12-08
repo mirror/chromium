@@ -4,12 +4,17 @@
 
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
+#import "ios/chrome/browser/ui/fullscreen/scoped_fullscreen_disabler.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
@@ -24,7 +29,11 @@
 
 using base::UserMetricsAction;
 
-@interface LegacyTabHistoryCoordinator ()<PopupMenuDelegate>
+@interface LegacyTabHistoryCoordinator ()<PopupMenuDelegate> {
+  // The disabler that prevents the toolbar from being hidden while the history
+  // popup UI is displayed.
+  std::unique_ptr<ScopedFullscreenDisabler> _fullscreenDisabler;
+}
 
 // The TabHistoryPopupController instance that this coordinator will be
 // presenting.
@@ -36,11 +45,14 @@ using base::UserMetricsAction;
 @implementation LegacyTabHistoryCoordinator
 
 @synthesize dispatcher = _dispatcher;
+@synthesize browserState = _browserState;
 @synthesize positionProvider = _positionProvider;
 @synthesize presentationProvider = _presentationProvider;
 @synthesize tabHistoryPopupController = _tabHistoryPopupController;
 @synthesize tabHistoryUIUpdater = _tabHistoryUIUpdater;
 @synthesize tabModel = _tabModel;
+
+#pragma mark - Accessors
 
 - (void)disconnect {
   self.dispatcher = nil;
@@ -56,6 +68,24 @@ using base::UserMetricsAction;
   [dispatcher startDispatchingToTarget:self
                            forProtocol:@protocol(TabHistoryPopupCommands)];
   _dispatcher = dispatcher;
+}
+
+- (void)setTabHistoryPopupController:
+    (TabHistoryPopupController*)tabHistoryPopupController {
+  if (_tabHistoryPopupController == tabHistoryPopupController)
+    return;
+  _tabHistoryPopupController = tabHistoryPopupController;
+  if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
+    FullscreenController* fullscreenController =
+        self.browserState
+            ? FullscreenControllerFactory::GetInstance()->GetForBrowserState(
+                  self.browserState)
+            : nullptr;
+    _fullscreenDisabler =
+        _tabHistoryPopupController && fullscreenController
+            ? base::MakeUnique<ScopedFullscreenDisabler>(fullscreenController)
+            : nullptr;
+  }
 }
 
 #pragma mark - TabHistoryPopupCommands
