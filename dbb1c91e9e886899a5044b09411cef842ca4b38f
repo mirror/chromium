@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4abffec6_c21a8959",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T21:38:53Z",
+      "side": 1,
+      "message": "\u003e I see. The document for CheckAndResetTimerErrors() is totally wrong.\n\nYeah, it was... Thanks for the fix!",
+      "parentUuid": "f954e34f_ce7107f2",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba6b14a_a129af0f",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 11
