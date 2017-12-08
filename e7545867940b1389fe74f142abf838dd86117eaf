@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72e54338_72ab6cc7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-08T17:53:36Z",
+      "side": 1,
+      "message": "If we ever get into a situation where we\u0027re dropping 1/11 frames, we\u0027re producing frames *way* too quickly. Can you explain here how that would happen? I assume it\u0027s because we\u0027re no longer waiting for frames to be complete before we submit them, so gvr internally spends a lot of time waiting for our gpu work to finish while we start doing other work?\n\nAlso, it sounds like what we really need here is for gvr to add a callback to SubmitFrame that lets us know when the frame was actually complete? Or an API to ask what the time was for the last frame or something?",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 50
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75841313_1e33a806",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-08T17:53:36Z",
+      "side": 1,
+      "message": "If I\u0027m understanding this right, this path is to handle the js being too slow, and the path below is to handle the gpu being too slow? Could you add comments explaining that (and that this path isn\u0027t unstuffing, and hence doesn\u0027t need to respect the unstuff ratelimit)?",
+      "range": {
+        "startLine": 1350,
+        "startChar": 2,
+        "endLine": 1353,
+        "endChar": 3
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa44a742_84d0efed",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-08T17:53:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure I agree with this exactly... Wouldn\u0027t it be better to have something like a presentation capabilities object passed in when presentation is granted?",
+      "range": {
+        "startLine": 849,
+        "startChar": 19,
+        "endLine": 849,
+        "endChar": 72
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
