@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b2f41a_f8f54c04",
+        "filename": "ash/extended_desktop_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T22:23:46Z",
+      "side": 0,
+      "message": "I am not quite understanding why |w1_t1| should stays the same..",
+      "revId": "676e9ecab5f39e396c84f7a560471b55b0be9e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
