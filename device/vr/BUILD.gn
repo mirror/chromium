@@ -63,7 +63,9 @@ if (enable_vr) {
         "//third_party/WebKit/public:blink_headers",
       ]
       ldflags = [ "-landroid" ]
-      libs = [ "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a" ]
+      libs = [
+        "//third_party/gvr-android-sdk/libgvr_shim_static_${current_cpu}.a",
+      ]
       configs += [ "//third_party/gvr-android-sdk:libgvr_config" ]
     }
 
@@ -95,6 +97,10 @@ if (enable_vr) {
         "windows/flip_pixel_shader.h",
         "windows/flip_vertex_shader.h",
       ]
+    }
+
+    if (enable_oculus_vr) {
+      deps += [ "//third_party/libovr" ]
     }
   }
 
