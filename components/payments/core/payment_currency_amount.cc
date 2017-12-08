@@ -44,7 +44,12 @@ bool PaymentCurrencyAmount::FromDictionaryValue(
   }
 
   if (!dictionary_value.GetString(kPaymentCurrencyAmountValue, &value)) {
-    return false;
+    double fallback_value = 0;
+    if (!dictionary_value.GetDouble(kPaymentCurrencyAmountValue,
+                                    &fallback_value)) {
+      return false;
+    }
+    value = std::to_string(fallback_value);
   }
 
   // Currency_system is optional
