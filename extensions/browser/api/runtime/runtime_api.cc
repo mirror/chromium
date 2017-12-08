@@ -235,8 +235,8 @@ void RuntimeAPI::OnExtensionUninstalled(
     content::BrowserContext* browser_context,
     const Extension* extension,
     UninstallReason reason) {
-  RuntimeEventRouter::OnExtensionUninstalled(
-      browser_context_, extension->id(), reason);
+  RuntimeEventRouter::OnExtensionUninstalled(browser_context_, extension->id(),
+                                             reason);
 }
 
 void RuntimeAPI::Shutdown() {
@@ -571,6 +571,10 @@ void RuntimeEventRouter::OnExtensionUninstalled(
     // prefs. Now they're disallowed, but the old data may still exist.
     return;
   }
+
+  if (extensions::ExtensionPrefs::Get(context)->IsExtensionBlacklisted(
+          extension_id))
+    return;
 
   RuntimeAPI::GetFactoryInstance()->Get(context)->OpenURL(uninstall_url);
 }
