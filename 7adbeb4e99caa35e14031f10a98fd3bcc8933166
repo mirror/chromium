@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa818e61_01d0d4e4",
+        "filename": "components/offline_pages/core/model/persistent_pages_consistency_check_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T08:36:01Z",
+      "side": 1,
+      "message": "nit: You shouldn\u0027t need to use static_casts with the UMA_HISTOGRAM_ENUMERATION macro.",
+      "range": {
+        "startLine": 194,
+        "startChar": 6,
+        "endLine": 194,
+        "endChar": 22
+      },
+      "revId": "7adbeb4e99caa35e14031f10a98fd3bcc8933166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb456066_cd21a661",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T08:36:01Z",
+      "side": 1,
+      "message": "nit: You shouldn\u0027t need to use static_casts with the UMA_HISTOGRAM_ENUMERATION macro.",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 23
+      },
+      "revId": "7adbeb4e99caa35e14031f10a98fd3bcc8933166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a788ec_681178dd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30893,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T08:36:01Z",
+      "side": 1,
+      "message": "Optional nit: These detailed explanations will only be shown on hover.  I\u0027d suggest omitting them except possibly for cases where they provide a significant amount of extra clarity.",
+      "range": {
+        "startLine": 30893,
+        "startChar": 4,
+        "endLine": 30893,
+        "endChar": 39
+      },
+      "revId": "7adbeb4e99caa35e14031f10a98fd3bcc8933166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ee470a_738510ba",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 53986,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T08:36:01Z",
+      "side": 1,
+      "message": "nit: Please add an attribute units\u003d\"pages\".  Ditto for the other histograms.",
+      "range": {
+        "startLine": 53986,
+        "startChar": 80,
+        "endLine": 53986,
+        "endChar": 81
+      },
+      "revId": "7adbeb4e99caa35e14031f10a98fd3bcc8933166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
