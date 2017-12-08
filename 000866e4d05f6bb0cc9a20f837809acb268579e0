@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b1e3fc3_002a8380",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-08T19:53:23Z",
+      "side": 1,
+      "message": "This is not safe because it is mutating the map while iterating it. It could be fixed with an explicit iterator and using the return value from erase(), however please use base::EraseIf to perform multiple erasures per the documentation.",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "000866e4d05f6bb0cc9a20f837809acb268579e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
