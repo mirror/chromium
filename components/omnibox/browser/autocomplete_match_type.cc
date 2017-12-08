@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -53,6 +54,21 @@ static int AccessibilityLabelPrefixLength(base::string16 accessibility_label) {
       base::WideToUTF16(kAccessibilityLabelPrefixEndSentinal);
   auto length = accessibility_label.find(sentinal);
   return length == base::string16::npos ? 0 : static_cast<int>(length);
+}
+
+base::string16 AutocompleteMatchType::ToAccessibilityLabel(
+    AutocompleteMatchType::Type type,
+    const base::string16& match_text,
+    const base::string16& additional_descriptive_text,
+    size_t match_index,
+    size_t total_matches,
+    int* label_prefix_length) {
+  base::string16 result = ToAccessibilityLabel(
+      type, match_text, additional_descriptive_text, label_prefix_length);
+
+  return l10n_util::GetStringFUTF16(IDS_ACC_AUTOCOMPLETE_N_OF_M, result,
+                                    base::IntToString16(match_index + 1),
+                                    base::IntToString16(total_matches));
 }
 
 base::string16 AutocompleteMatchType::ToAccessibilityLabel(
