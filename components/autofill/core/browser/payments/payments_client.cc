@@ -261,10 +261,12 @@ class UnmaskCardRequest : public PaymentsRequest {
 class GetUploadDetailsRequest : public PaymentsRequest {
  public:
   GetUploadDetailsRequest(const std::vector<AutofillProfile>& addresses,
+                          const int detected_values,
                           const std::vector<const char*>& active_experiments,
                           const std::string& app_locale,
                           PaymentsClientSaveDelegate* delegate)
       : addresses_(addresses),
+        detected_values_(detected_values),
         active_experiments_(active_experiments),
         app_locale_(app_locale),
         delegate_(delegate) {}
@@ -294,6 +296,9 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     }
     request_dict.Set("address", std::move(addresses));
 
+    if (IsAutofillUpstreamSendDetectedValuesExperimentEnabled())
+      request_dict.SetInteger("detected_values", detected_values_);
+
     SetActiveExperiments(active_experiments_, &request_dict);
 
     std::string request_content;
@@ -320,6 +325,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
 
  private:
   const std::vector<AutofillProfile> addresses_;
+  const int detected_values_;
   const std::vector<const char*> active_experiments_;
   std::string app_locale_;
   PaymentsClientSaveDelegate* delegate_;
@@ -477,11 +483,13 @@ void PaymentsClient::UnmaskCard(
 
 void PaymentsClient::GetUploadDetails(
     const std::vector<AutofillProfile>& addresses,
+    const int detected_values,
     const std::vector<const char*>& active_experiments,
     const std::string& app_locale) {
   DCHECK(save_delegate_);
   IssueRequest(std::make_unique<GetUploadDetailsRequest>(
-                   addresses, active_experiments, app_locale, save_delegate_),
+                   addresses, detected_values, active_experiments, app_locale,
+                   save_delegate_),
                false);
 }
 
