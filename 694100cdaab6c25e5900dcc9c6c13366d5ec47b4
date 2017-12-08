@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b348b98d_ab2b09a7",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T23:45:03Z",
+      "side": 1,
+      "message": "Yes. The linux build is an example of file path not existing and we can see grey wallpaper as expected.",
+      "parentUuid": "105e0bda_e97bc165",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d136afbf_4df0c704",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T22:58:36Z",
       "side": 1,
       "message": "maybe we should get this info from GetUserWallpaperInfo() and also update this info？",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e45d414_0ce89e30",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T23:45:03Z",
+      "side": 1,
+      "message": "Since this code path is used by the case that custom wallpaper fails decoding and reverts to default wallpaper for one time, so it\u0027s not touching the actual user wallpaper info. The clients that want to set the info to default should already call the SetDefaultWallpaper() or RemoveUserWallpaper() in the interface. This temporary info it was added by me for color calculation purpose...",
+      "parentUuid": "d136afbf_4df0c704",
       "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43d3b01_cef53b93",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T23:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "119e9363_0e9bec21",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
