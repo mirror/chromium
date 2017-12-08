@@ -1599,7 +1599,8 @@ const char kWebrtcStunOriginDescription[] =
 const char kWebvrName[] = "WebVR";
 const char kWebvrDescription[] =
     "Allow web applications to access experimental "
-    "Virtual Reality APIs. Warning: Enabling this will also allow WebVR "
+    "Virtual Reality APIs. This feature will eventually be replaced by the "
+    "WebXR Device API. Warning: Enabling this will also allow WebVR "
     "content on insecure origins to access these powerful APIs, and may pose a "
     "security risk.";
 
@@ -1607,6 +1608,11 @@ const char kWebVrExperimentalRenderingName[] =
     "WebVR experimental rendering optimizations";
 const char kWebVrExperimentalRenderingDescription[] =
     "Experimental rendering path optimizations for WebVR.";
+
+const char kWebXrName[] = "WebXR Device API";
+const char kWebXrDescription[] =
+    "Allow web applications to access experimental APIs to interact with "
+    "Virtual Reality and Augmented Reality devices.";
 
 const char kWifiCredentialSyncName[] = "WiFi credential sync";
 const char kWifiCredentialSyncDescription[] =
