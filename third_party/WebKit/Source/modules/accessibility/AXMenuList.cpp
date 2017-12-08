@@ -110,6 +110,8 @@ AccessibilityExpanded AXMenuList::IsExpanded() const {
 }
 
 void AXMenuList::DidUpdateActiveOption(int option_index) {
+  if (NeedsToUpdateChildren())
+    return;
   bool suppress_notifications =
       (GetNode() && !GetNode()->IsFinishedParsingChildren());
 
