@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cca256e_d56da227",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T01:58:02Z",
+      "side": 1,
+      "message": "\u003cdiv\u003eabc|\u003cdiv dir\u003drtl\u003e\u003cbdo\u003eDEF\u003c/bdo\u003e\u003c/div\u003e for RightPositionOf() hits\nthis. Note: We don\u0027t need to have BDO element to reproduce.\n\nIn this case: \nComputeInlinePosition(\"DEF\"@0, LTR) \u003d\u003e \"DEF\"@3\nComputeInlinePosition(\"DEF\"@0, RTL) \u003d\u003e \"DEF\"@0\n\nBecause of we know the case to hit this DCHECK.\nIs it better to remove it?",
+      "revId": "e2337ddc84ca2ac160638857c079a0ee16a81913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
