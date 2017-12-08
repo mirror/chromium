@@ -18,7 +18,7 @@
 #include "components/security_state/core/security_state.h"
 #include "third_party/skia/include/core/SkColor.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 class OmniboxPopupView;
 class Profile;
 
@@ -40,7 +40,7 @@ class OmniboxViewMac : public OmniboxView,
 
   OmniboxViewMac(OmniboxEditController* controller,
                  Profile* profile,
-                 CommandUpdater* command_updater,
+                 CommandUpdaterProxy* command_updater_proxy,
                  AutocompleteTextField* field);
   ~OmniboxViewMac() override;
 

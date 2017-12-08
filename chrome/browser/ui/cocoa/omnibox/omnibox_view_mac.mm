@@ -159,7 +159,7 @@ NSColor* OmniboxViewMac::GetSecureTextColor(
 
 OmniboxViewMac::OmniboxViewMac(OmniboxEditController* controller,
                                Profile* profile,
-                               CommandUpdater* command_updater,
+                               CommandUpdaterProxy* command_updater_proxy,
                                AutocompleteTextField* field)
     : OmniboxView(
           controller,

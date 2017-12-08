@@ -121,13 +121,13 @@ class ToolbarControllerTest : public CocoaProfileTest {
     resizeDelegate_.reset([[ViewResizerPong alloc] init]);
 
     CommandUpdater* updater =
-        browser()->command_controller()->command_updater();
+        browser()->command_controller()->command_updater_for_tests();
     // The default state for the commands is true, set a couple to false to
     // ensure they get picked up correct on initialization
     updater->UpdateCommandEnabled(IDC_BACK, false);
     updater->UpdateCommandEnabled(IDC_FORWARD, false);
     bar_.reset([[TestToolbarController alloc]
-        initWithCommands:browser()->command_controller()->command_updater()
+        initWithCommands:browser()->command_controller()
                  profile:profile()
                  browser:browser()]);
     [[bar_ toolbarView] setResizeDelegate:resizeDelegate_.get()];

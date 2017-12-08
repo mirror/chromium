@@ -10,13 +10,13 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/cocoa/location_bar/image_decoration.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 // Star icon on the right side of the field.
 
 class StarDecoration : public ImageDecoration {
  public:
-  explicit StarDecoration(CommandUpdater* command_updater);
+  explicit StarDecoration(CommandUpdaterProxy* command_updater_proxy);
   ~StarDecoration() override;
 
   // Sets the image and tooltip based on |starred|.
@@ -42,7 +42,7 @@ class StarDecoration : public ImageDecoration {
 
  private:
   // For bringing up bookmark bar.
-  CommandUpdater* command_updater_;  // Weak, owned by Browser.
+  CommandUpdaterProxy* command_updater_proxy_;  // Weak, owned by Browser.
 
   // The string to show for a tooltip.
   base::scoped_nsobject<NSString> tooltip_;

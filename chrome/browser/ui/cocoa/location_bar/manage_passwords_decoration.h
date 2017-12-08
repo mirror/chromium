@@ -14,7 +14,7 @@
 #include "chrome/browser/ui/cocoa/location_bar/image_decoration.h"
 #include "chrome/browser/ui/passwords/manage_passwords_icon.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 class LocationBarViewMac;
 class ManagePasswordsDecoration;
 
@@ -38,7 +38,7 @@ class ManagePasswordsIconCocoa : public ManagePasswordsIcon {
 // password management is available on the current page.
 class ManagePasswordsDecoration : public ImageDecoration {
  public:
-  explicit ManagePasswordsDecoration(CommandUpdater* command_updater,
+  explicit ManagePasswordsDecoration(CommandUpdaterProxy* command_updater_proxy,
                                      LocationBarViewMac* location_bar);
   ~ManagePasswordsDecoration() override;
 
@@ -69,7 +69,7 @@ class ManagePasswordsDecoration : public ImageDecoration {
   void UpdateUIState();
 
   // Shows the manage passwords bubble.
-  CommandUpdater* command_updater_;  // Weak, owned by Browser.
+  CommandUpdaterProxy* command_updater_proxy_;  // Weak, owned by Browser.
 
   // Displays all the decorations.
   LocationBarViewMac* location_bar_;  // Weak, owns us.
