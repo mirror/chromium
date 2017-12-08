@@ -369,6 +369,15 @@ public class InfoBarContainer extends SwipableOverlayView {
     }
 
     /**
+     * Removes all info bars from the View hierarchy.
+     */
+    public void removeAllInfoBars() {
+        for (InfoBar infoBar : mInfoBars) {
+            removeInfoBar(infoBar);
+        }
+    }
+
+    /**
      * @return True when this container has been emptied and its native counterpart has been
      *         destroyed.
      */
