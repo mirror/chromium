@@ -883,7 +883,7 @@ static void serializedScriptValueAttributeAttributeSetter(v8::Local<v8::Value> v
   if (exceptionState.HadException())
     return;
 
-  impl->setSerializedScriptValueAttribute(cppValue);
+  impl->setSerializedScriptValueAttribute(std::move(cppValue));
 }
 
 static void anyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -5914,7 +5914,7 @@ static void voidMethodSerializedScriptValueArgMethod(const v8::FunctionCallbackI
   if (exceptionState.HadException())
     return;
 
-  impl->voidMethodSerializedScriptValueArg(serializedScriptValueArg);
+  impl->voidMethodSerializedScriptValueArg(std::move(serializedScriptValueArg));
 }
 
 static void voidMethodXPathNSResolverArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -8531,7 +8531,7 @@ static void postMessageImpl(const char* interfaceName, TestObject* instance, con
   // FIXME: Only pass scriptState/exceptionState if instance really requires it.
   ScriptState* scriptState = ScriptState::Current(info.GetIsolate());
   message->UnregisterMemoryAllocatedWithCurrentScriptContext();
-  instance->postMessage(scriptState, message.get(), transferables.message_ports, exceptionState);
+  instance->postMessage(scriptState, std::move(message), transferables.message_ports, exceptionState);
 }
 
 static void activityLoggingForAllWorldsPerWorldBindingsVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
