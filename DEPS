@@ -1289,6 +1289,14 @@ hooks = [
                 'src/third_party/gvr-android-sdk/test-apks/update.py',
     ],
   },
+  # Download Oculus SDK source only if we have access
+  {
+    'name': 'libovr',
+    'pattern': '.',
+    'action': ['python',
+              'src/third_party/libovr/download_ovr_source.py',
+    ],
+  },
   {
     # Pull doclava binaries if building for Android.
     'name': 'doclava',
