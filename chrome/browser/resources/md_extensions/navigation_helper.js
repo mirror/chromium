@@ -87,6 +87,7 @@ cr.define('extensions', function() {
            this.currentPath_ == '/shortcuts')) {
         window.history.replaceState(
             undefined /* stateObject */, '', '/shortcuts');
+        chrome.metricsPrivate.recordUserAction('Options_ExtensionCommands');
       } else if (this.currentPath_ !== '/') {
         window.history.replaceState(undefined /* stateObject */, '', '/');
       }
