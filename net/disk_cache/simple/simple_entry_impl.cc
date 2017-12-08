@@ -822,6 +822,10 @@ void SimpleEntryImpl::CloseInternal() {
 
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_CLOSE_BEGIN);
 
+  // Drop reference to our buffers so that SSE can delete them.
+  stream_0_data_ = nullptr;
+  stream_1_prefetch_data_ = nullptr;
+
   if (state_ == STATE_READY) {
     DCHECK(synchronous_entry_);
     state_ = STATE_IO_PENDING;
