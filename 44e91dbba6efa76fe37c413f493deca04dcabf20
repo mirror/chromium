@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1562213a_f50b9216",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 37
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-12-08T09:32:25Z",
+      "side": 1,
+      "message": "tts.mojom-shared.h in line 60 has ERROR identifier and windows header has\n#define ERROR 0.\nThat caused build error on windows. interesting!",
+      "revId": "44e91dbba6efa76fe37c413f493deca04dcabf20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
