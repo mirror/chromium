@@ -265,6 +265,7 @@ void NativeViewAccessibilityBase::PopulateChildWidgetVector(
 
   std::set<Widget*> child_widgets;
   Widget::GetAllOwnedWidgets(widget->GetNativeView(), &child_widgets);
+
   for (auto iter = child_widgets.begin(); iter != child_widgets.end(); ++iter) {
     Widget* child_widget = *iter;
     DCHECK_NE(widget, child_widget);
