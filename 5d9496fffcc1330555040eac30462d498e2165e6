@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a562e11_1f27299f",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-08T23:44:44Z",
+      "side": 1,
+      "message": "remove these spaces",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3ce724_308a86c6",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-08T23:44:44Z",
+      "side": 1,
+      "message": "go ahead and indent this 4 spaces.",
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6006cf3d_740e4021",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-08T23:44:44Z",
+      "side": 1,
+      "message": "remove empty line",
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
