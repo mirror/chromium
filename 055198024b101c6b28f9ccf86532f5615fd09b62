@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e4ddea_2d4ee0b4",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-08T20:56:48Z",
+      "side": 1,
+      "message": "nit: add wrapper_script_name while you\u0027re here?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 6,
+        "endLine": 1051,
+        "endChar": 25
+      },
+      "revId": "055198024b101c6b28f9ccf86532f5615fd09b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
