@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "23de6326_97b82d40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T12:30:50Z",
+      "side": 1,
+      "message": "Please refer the patch[1] to make yoichio@ happy.\n\nThis patch is a preparation of the patch[1] with avoiding to introduce\nbool parameter.\n\n[1] http://crrev.com/c/602087 Move SelectionTemplate:is_directional to FrameSelection",
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "871f6e35_43f2cff3",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 1
@@ -42,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "ecbb3b9a_4dbf2cf7",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T12:30:50Z",
+      "side": 1,
+      "message": "I asked to do this for the patch[1] for\n - Limited API is better than generic\n - This allows us not to have bool parameter |is_directional| in the patch[1].\n\nAlso, we don\u0027t want to provide more functionality than what we are using.\n\nNote: SelectionModifier class was extracted from FrameSelection for\nreducing source code size of FrameSelection. We don\u0027t expect to use\nSelectionModifier as general use.\n\nWebKit uses FrameSelection w/o Frame. This is the reason FrameSelection checked frame \u003d\u003d nullptr. In Blink, frame can not be nullptr.\nFrameSelection selection;\nselection.setSelection(endingSelection());\nselection.modify(FrameSelection::AlterationExtend, DirectionBackward, granularity);\nif (shouldAddToKillRing \u0026\u0026 selection.isCaret() \u0026\u0026 granularity !\u003d CharacterGranularity)\n  selection.modify(FrameSelection::AlterationExtend, DirectionBackward, CharacterGranularity);\n\n\n[1] http://crrev.com/c/602087: Move SelectionTemplate:is_directional to FrameSelection\n[2] https://github.com/whatwg/dom/issues/431 Range#expand()\n[3] https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/editing/TypingCommand.cpp#L666",
+      "parentUuid": "ea8a2784_aca82839",
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fff63f05_4dcfbdf4",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 1
@@ -53,6 +88,30 @@
       "writtenOn": "2017-12-07T21:43:37Z",
       "side": 1,
       "message": "Default parameters are discouraged (but still allowed).\n\nI prefer overloads.",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 77
+      },
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea402a98_1ed1932b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T12:30:50Z",
+      "side": 1,
+      "message": "+1 for overloads.\n\nBTW, the call site, there is only one call site, always pass this parameter.\nThus, we don\u0027t need to have overload or default value.",
+      "parentUuid": "fff63f05_4dcfbdf4",
       "range": {
         "startLine": 51,
         "startChar": 43,
