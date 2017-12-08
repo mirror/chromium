@@ -134,6 +134,24 @@
       "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2b547b_c300372c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-08T14:15:40Z",
+      "side": 1,
+      "message": "We animate the switch from the Google logo to the Doodle logo immediately.",
+      "parentUuid": "dfa2712b_a82fe26a",
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
