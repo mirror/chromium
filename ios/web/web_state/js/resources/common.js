@@ -259,7 +259,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     angular_element.injector().invoke(['$parse', function(parse) {
       var setter = parse(angular_model);
       setter.assign(angular_element.scope(), value);
-    }])
+    }]);
   }
 
   /**
@@ -455,16 +455,22 @@ __gCrWeb['common'] = __gCrWeb.common;
   };
 
   /**
-   * Returns the form's |name| attribute if not space only; otherwise the
-   * form's |id| attribute.
+   * Returns the field's |id| attribute if not space only; otherwise the
+   * form's |name| attribute if the field is part of a form. Otherwhise,
+   * generate a technical identifier
    *
-   * It is the name that should be used for the specified |element| when
-   * storing Autofill data. Various attributes are used to attempt to identify
-   * the element, beginning with 'name' and 'id' attributes. If both name and id
-   * are empty and the field is in a form, returns
-   * __gCrWeb.common.kNamelessFieldIDPrefix + index of the field in the form.
-   * Providing a uniquely reversible identifier for any element is a non-trivial
-   * problem; this solution attempts to satisfy the majority of cases.
+   * It is the identifier that should be used for the specified |element| when
+   * storing Autofill data. This identifier will be used when filling the field
+   * to lookup this field. The pair (getFormIdentifier, getFieldIdentifier) must
+   * be unique on the page.
+   * The following elements are considered to generate the identifier:
+   * - the id of the element
+   * - the name of the element if the element is part of a form
+   * - the order of the element in the form if the element is part of the form.
+   * - generate a xpath to the element and use it as an ID.
+   *
+   * Note: if this method returns '', the field will not be accessible and
+   * cannot be autofilled.
    *
    * It aims to provide the logic in
    *     WebString nameForAutofill() const;
@@ -479,6 +485,81 @@ __gCrWeb['common'] = __gCrWeb.common;
     if (!element) {
       return '';
     }
+    var trimmedIdentifier = element.id;
+    if (trimmedIdentifier) {
+      return __gCrWeb.common.trim(trimmedIdentifier);
+    }
+    if (element.form) {
+      // The name of an element is only relevant as an identifier if the element
+      // is part of a form.
+      trimmedIdentifier = element.name;
+      if (trimmedIdentifier) {
+        trimmedIdentifier = __gCrWeb.common.trim(trimmedIdentifier);
+        if (trimmedIdentifier.length > 0) {
+          return trimmedIdentifier;
+        }
+      }
+    }
+
+    if (element.form) {
+      var elements = __gCrWeb.common.getFormControlElements(element.form);
+      for (var index = 0; index < elements.length; index++) {
+        if (elements[index] === element) {
+          return __gCrWeb.common.kNamelessFieldIDPrefix + index;
+        }
+      }
+    }
+    // Element is not part of a form and has no name or id, or usable attribute.
+    // As best effort, try to find the closest ancestor with an id, then
+    // check the index of the element in the descendants of the ancestors with
+    // the same type.
+    var ancestor = element;
+    while (ancestor != null && ancestor.nodeType == Node.ELEMENT_NODE &&
+          (!ancestor.hasAttribute('id') || ancestor.id == '')) {
+      ancestor = ancestor.parentNode;
+    }
+    var query = element.tagName;
+    var ancestor_id = "";
+    if (!ancestor || ancestor.nodeType != Node.ELEMENT_NODE) {
+      ancestor = document.body;
+    }
+    if (ancestor.hasAttribute('id')) {
+      ancestor_id = '#'+ancestor.id;
+    }
+    var descendants = ancestor.querySelectorAll(element.tagName);
+    var i = 0;
+    for (i = 0; i < descendants.length; i++) {
+      if (descendants[i] === element) {
+        break;
+      }
+    }
+    if (i < descendants.length) {
+      return __gCrWeb.common.kNamelessFieldIDPrefix + ancestor_id +
+          '~' + element.tagName + '~' + i;
+    }
+
+    return '';
+  };
+
+ /**
+  * Returns the field's |name| attribute if not space only; otherwise the
+  * field's |id| attribute.
+  *
+  * The name will be used as a hint to infer the autofill type of the field.
+  *
+  * It aims to provide the logic in
+  *     WebString nameForAutofill() const;
+  * in chromium/src/third_party/WebKit/Source/WebKit/chromium/public/
+  *  WebFormControlElement.h
+  *
+  * @param {Element} element An element of which the name for Autofill will be
+  *     returned.
+  * @return {string} the name for Autofill.
+  */
+  __gCrWeb.common.getFieldName = function(element) {
+    if (!element) {
+      return '';
+    }
     var trimmedName = element.name;
     if (trimmedName) {
       trimmedName = __gCrWeb.common.trim(trimmedName);
@@ -490,14 +571,7 @@ __gCrWeb['common'] = __gCrWeb.common;
     if (trimmedName) {
       return __gCrWeb.common.trim(trimmedName);
     }
-    if (element.form) {
-      var elements = __gCrWeb.common.getFormControlElements(element.form);
-      for (var index = 0; index < elements.length; index++) {
-        if (elements[index] === element) {
-          return __gCrWeb.common.kNamelessFieldIDPrefix + index;
-        }
-      }
-    }
+
     return '';
   };
 
@@ -761,6 +835,6 @@ __gCrWeb['common'] = __gCrWeb.common;
    */
   __gCrWeb.common.isSameOrigin = function(url_one, url_two) {
     return new URL(url_one).origin == new URL(url_two).origin;
-  }
+  };
 
 }());  // End of anonymous object

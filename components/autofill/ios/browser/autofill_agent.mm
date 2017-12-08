@@ -55,19 +55,19 @@ using FormDataVector = std::vector<autofill::FormData>;
 // |fetchFormsWithName:minimumRequiredFieldsCount:pageURL:completionHandler|
 typedef void (^FetchFormsCompletionHandler)(BOOL, const FormDataVector&);
 
-// Gets the first focusable form and field specified by |fieldName| from
+// Gets the first focusable form and field specified by |fieldIdentifier| from
 // |forms|, modifying the returned field so that input elements are also
 // handled.
 void GetFormAndField(autofill::FormData* form,
                      autofill::FormFieldData* field,
                      const FormDataVector& forms,
-                     const std::string& fieldName,
+                     const std::string& fieldIdentifier,
                      const std::string& type) {
   DCHECK_GE(forms.size(), 1U);
   *form = forms[0];
-  const base::string16 fieldName16 = base::UTF8ToUTF16(fieldName);
+  const base::string16 fieldIdentifier16 = base::UTF8ToUTF16(fieldIdentifier);
   for (const auto& currentField : form->fields) {
-    if (currentField.name == fieldName16 && currentField.is_focusable) {
+    if (currentField.id == fieldIdentifier16 && currentField.is_focusable) {
       *field = currentField;
       break;
     }
@@ -132,13 +132,15 @@ void GetFormAndField(autofill::FormData* form,
 // detected and informs the AutofillManager.
 - (void)processFormActivityExtractedData:(const FormDataVector&)forms
                                fieldName:(const std::string&)fieldName
+                         fieldIdentifier:(const std::string&)fieldIdentifier
                                     type:(const std::string&)type
                                 webState:(web::WebState*)webState;
 
 // Sends a request to AutofillManager to retrieve suggestions for the specified
 // form and field.
 - (void)queryAutofillWithForms:(const FormDataVector&)forms
-                         field:(NSString*)fieldName
+                     fieldName:(NSString*)fieldName
+               fieldIdentifier:(NSString*)fieldIdentifier
                           type:(NSString*)type
                     typedValue:(NSString*)typedValue
                       webState:(web::WebState*)webState
@@ -256,6 +258,7 @@ void GetFormAndField(autofill::FormData* form,
 - (BOOL)extractFormField:(const base::DictionaryValue&)field
              asFieldData:(autofill::FormFieldData*)fieldData {
   if (!field.GetString("name", &fieldData->name) ||
+      !field.GetString("identifier", &fieldData->id) ||
       !field.GetString("form_control_type", &fieldData->form_control_type)) {
     return NO;
   }
@@ -524,7 +527,8 @@ void GetFormAndField(autofill::FormData* form,
 #pragma mark FormSuggestionProvider
 
 - (void)queryAutofillWithForms:(const FormDataVector&)forms
-                         field:(NSString*)fieldName
+                     fieldName:(NSString*)fieldName
+               fieldIdentifier:(NSString*)fieldIdentifier
                           type:(NSString*)type
                     typedValue:(NSString*)typedValue
                       webState:(web::WebState*)webState
@@ -540,7 +544,8 @@ void GetFormAndField(autofill::FormData* form,
   // Find the right form and field.
   autofill::FormFieldData field;
   autofill::FormData form;
-  GetFormAndField(&form, &field, forms, base::SysNSStringToUTF8(fieldName),
+  GetFormAndField(&form, &field, forms,
+                  base::SysNSStringToUTF8(fieldIdentifier),
                   base::SysNSStringToUTF8(type));
 
   // Save the completion and go look for suggestions.
@@ -553,7 +558,8 @@ void GetFormAndField(autofill::FormData* form,
 }
 
 - (void)checkIfSuggestionsAvailableForForm:(NSString*)formName
-                                     field:(NSString*)fieldName
+                                 fieldName:(NSString*)fieldName
+                           fieldIdentifier:(NSString*)fieldIdentifier
                                  fieldType:(NSString*)fieldType
                                       type:(NSString*)type
                                 typedValue:(NSString*)typedValue
@@ -574,7 +580,8 @@ void GetFormAndField(autofill::FormData* form,
   id completionHandler = ^(BOOL success, const FormDataVector& forms) {
     if (success && forms.size() == 1) {
       [weakSelf queryAutofillWithForms:forms
-                                 field:fieldName
+                             fieldName:fieldName
+                       fieldIdentifier:fieldIdentifier
                                   type:type
                             typedValue:typedValue
                               webState:webState
@@ -593,7 +600,8 @@ void GetFormAndField(autofill::FormData* form,
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
-                             field:(NSString*)fieldName
+                         fieldName:(NSString*)fieldName
+                   fieldIdentifier:(NSString*)fieldIdentifier
                          fieldType:(NSString*)fieldType
                               type:(NSString*)type
                         typedValue:(NSString*)typedValue
@@ -601,14 +609,16 @@ void GetFormAndField(autofill::FormData* form,
                  completionHandler:(SuggestionsReadyCompletion)completion {
   DCHECK(mostRecentSuggestions_)
       << "Requestor should have called "
-      << "|checkIfSuggestionsAvailableForForm:field:type:completionHandler:| "
+      << "|checkIfSuggestionsAvailableForForm:fieldName:fieldIdentifier:type:"
+      << "completionHandler:| "
       << "and waited for the result before calling "
       << "|retrieveSuggestionsForForm:field:type:completionHandler:|.";
   completion(mostRecentSuggestions_, self);
 }
 
 - (void)didSelectSuggestion:(FormSuggestion*)suggestion
-                   forField:(NSString*)fieldName
+                  fieldName:(NSString*)fieldName
+            fieldIdentifier:(NSString*)fieldIdentifier
                        form:(NSString*)formName
           completionHandler:(SuggestionHandledCompletion)completion {
   [[UIDevice currentDevice] playInputClick];
@@ -616,7 +626,7 @@ void GetFormAndField(autofill::FormData* form,
   mostRecentSelectedIdentifier_ = suggestion.identifier;
 
   if (suggestion.identifier > 0) {
-    pendingAutocompleteField_ = base::SysNSStringToUTF16(fieldName);
+    pendingAutocompleteField_ = base::SysNSStringToUTF16(fieldIdentifier);
     if (popupDelegate_) {
       popupDelegate_->DidAcceptSuggestion(
           base::SysNSStringToUTF16(suggestion.value), suggestion.identifier, 0);
@@ -624,7 +634,7 @@ void GetFormAndField(autofill::FormData* form,
   } else if (suggestion.identifier ==
              autofill::POPUP_ITEM_ID_AUTOCOMPLETE_ENTRY) {
     // FormSuggestion is a simple, single value that can be filled out now.
-    [self fillField:base::SysNSStringToUTF8(fieldName)
+    [self fillField:base::SysNSStringToUTF8(fieldIdentifier)
            formName:base::SysNSStringToUTF8(formName)
               value:base::SysNSStringToUTF16(suggestion.value)];
   } else if (suggestion.identifier == autofill::POPUP_ITEM_ID_CLEAR_FORM) {
@@ -778,6 +788,7 @@ void GetFormAndField(autofill::FormData* form,
 
   // Necessary so the strings can be used inside a block.
   std::string fieldNameCopy = params.field_name;
+  std::string fieldIdentifierCopy = params.field_identifier;
   std::string typeCopy = params.type;
 
   __weak AutofillAgent* weakSelf = self;
@@ -785,6 +796,7 @@ void GetFormAndField(autofill::FormData* form,
     if (success && forms.size() == 1) {
       [weakSelf processFormActivityExtractedData:forms
                                        fieldName:fieldNameCopy
+                                 fieldIdentifier:fieldIdentifierCopy
                                             type:typeCopy
                                         webState:webState];
     }
@@ -803,6 +815,7 @@ void GetFormAndField(autofill::FormData* form,
 
 - (void)processFormActivityExtractedData:(const FormDataVector&)forms
                                fieldName:(const std::string&)fieldName
+                         fieldIdentifier:(const std::string&)fieldIdentifier
                                     type:(const std::string&)type
                                 webState:(web::WebState*)webState {
   DCHECK_EQ(webState_, webState);
@@ -813,7 +826,7 @@ void GetFormAndField(autofill::FormData* form,
 
   autofill::FormFieldData field;
   autofill::FormData form;
-  GetFormAndField(&form, &field, forms, fieldName, type);
+  GetFormAndField(&form, &field, forms, fieldIdentifier, type);
 
   // Tell the manager about the form activity (for metrics).
   if (type.compare("input") == 0 && (field.form_control_type == "text" ||
@@ -833,11 +846,11 @@ void GetFormAndField(autofill::FormData* form,
 // object, which |dataString| is not because 'form' is not a specified member of
 // AutofillFormFieldData. fillFormField() also expects members 'max_length' and
 // 'is_checked' to exist.
-- (void)fillField:(const std::string&)fieldName
+- (void)fillField:(const std::string&)fieldIdentifier
          formName:(const std::string&)formName
             value:(const base::string16)value {
   base::DictionaryValue data;
-  data.SetString("name", fieldName);
+  data.SetString("identifier", fieldIdentifier);
   data.SetString("form", formName);
   data.SetString("value", value);
   std::string dataString;
@@ -858,7 +871,7 @@ void GetFormAndField(autofill::FormData* form,
 
   const std::vector<autofill::FormFieldData>& fields = form.fields;
   for (const auto& fieldData : fields) {
-    fieldsData->SetKey(base::UTF16ToUTF8(fieldData.name),
+    fieldsData->SetKey(base::UTF16ToUTF8(fieldData.id),
                        base::Value(fieldData.value));
   }
   formData->Set("fields", std::move(fieldsData));
@@ -872,10 +885,10 @@ void GetFormAndField(autofill::FormData* form,
   if (!suggestionHandledCompletion_)
     suggestionHandledCompletion_ = [^{
     } copy];
-  [jsAutofillManager_
-                fillForm:base::SysUTF8ToNSString(dataString)
-      forceFillFieldName:base::SysUTF16ToNSString(pendingAutocompleteField_)
-       completionHandler:suggestionHandledCompletion_];
+  [jsAutofillManager_ fillForm:base::SysUTF8ToNSString(dataString)
+      forceFillFieldIdentifier:base::SysUTF16ToNSString(
+                                   pendingAutocompleteField_)
+             completionHandler:suggestionHandledCompletion_];
   suggestionHandledCompletion_ = nil;
 }
 
@@ -912,7 +925,7 @@ void GetFormAndField(autofill::FormData* form,
       autofill::AutofillType type(field->Type());
       if (type.IsUnknown())
         continue;
-      formJSONData->SetKey(base::UTF16ToUTF8(field->name),
+      formJSONData->SetKey(base::UTF16ToUTF8(field->id),
                            base::Value(type.ToString()));
     }
     predictionData.SetWithoutPathExpansion(base::UTF16ToUTF8(formData.name),

@@ -566,7 +566,8 @@ __gCrWeb.autofill['extractForms'] = function(requiredFields) {
  */
 __gCrWeb.autofill['fillActiveFormField'] = function(data) {
   var activeElement = document.activeElement;
-  if (data['name'] !== __gCrWeb['common'].getFieldIdentifier(activeElement)) {
+  if (data['identifier'] !==
+      __gCrWeb['common'].getFieldIdentifier(activeElement)) {
     return;
   }
   __gCrWeb.autofill.lastAutoFilledElement = activeElement;
@@ -580,10 +581,10 @@ __gCrWeb.autofill['fillActiveFormField'] = function(data) {
  * |forceFillFieldName| will always be filled even if non-empty.
  *
  * @param {Object} data Dictionary of data to fill in.
- * @param {string} forceFillFieldName Named field will always be filled even if
- *     non-empty. May be null.
+ * @param {string} forceFillFieldIdentifier Identified field will always be
+ *     filled even if non-empty. May be null.
  */
-__gCrWeb.autofill['fillForm'] = function(data, forceFillFieldName) {
+__gCrWeb.autofill['fillForm'] = function(data, forceFillFieldIdentifier) {
   // Inject CSS to style the autofilled elements with a yellow background.
   if (!__gCrWeb.autofill.styleInjected) {
     var style = document.createElement('style');
@@ -617,19 +618,19 @@ __gCrWeb.autofill['fillForm'] = function(data, forceFillFieldName) {
     if (!__gCrWeb.autofill.isAutofillableElement(element)) {
       continue;
     }
-    var fieldName = __gCrWeb['common'].getFieldIdentifier(element);
+    var fieldIdentifier = __gCrWeb['common'].getFieldIdentifier(element);
 
     // Skip non-empty fields unless this is the forceFillFieldName or it's a
     // 'select-one' element. 'select-one' elements are always autofilled even
     // if non-empty; see AutofillManager::FillOrPreviewDataModelForm().
     if (element.value && element.value.length > 0 &&
         !__gCrWeb.autofill.isSelectElement(element) &&
-        fieldName !== forceFillFieldName) {
+        fieldIdentifier !== forceFillFieldIdentifier) {
       continue;
     }
 
     // Don't fill field if source value is empty or missing.
-    var value = data.fields[fieldName];
+    var value = data.fields[fieldIdentifier];
     if (!value)
       continue;
 
@@ -889,7 +890,7 @@ function unownedFormElementsAndFieldSetsToFormData_(
   form['name'] = '';
   form['origin'] = __gCrWeb.common.removeQueryAndReferenceFromURL(
       frame.location.href);
-  form['action'] = ''
+  form['action'] = '';
   form['is_form_tag'] = false;
 
   // For now this restriction only applies to English-language pages, because
@@ -1468,7 +1469,7 @@ __gCrWeb.autofill.inferLabelFromTableRow = function(element) {
 
   // Combine left + right.
   cellCount += cellPosition;
-  cellPositionEnd += cellPosition
+  cellPositionEnd += cellPosition;
 
   // Find the current row.
   var parentNode = element.parentNode;
@@ -1585,7 +1586,7 @@ __gCrWeb.autofill.inferLabelFromEnclosingLabel = function(element) {
     return __gCrWeb.autofill.findChildText(node);
   }
   return '';
-}
+};
 
 /**
  * Helper for |InferLabelForElement()| that infers a label, if possible, from
@@ -1730,7 +1731,7 @@ __gCrWeb.autofill.ancestorTagNames = function(element) {
     parentNode = parentNode.parentNode;
   }
   return tagNames;
-}
+};
 
 /**
  * Infers corresponding label for |element| from surrounding context in the DOM,
@@ -2076,7 +2077,8 @@ __gCrWeb.autofill.webFormControlElementToFormField = function(
   // The label is not officially part of a form control element; however, the
   // labels for all form control elements are scraped from the DOM and set in
   // form data.
-  field['name'] = __gCrWeb['common'].getFieldIdentifier(element);
+  field['identifier'] = __gCrWeb['common'].getFieldIdentifier(element);
+  field['name'] = __gCrWeb['common'].getFieldName(element);
   field['form_control_type'] = element.type;
   var autocomplete_attribute = element.getAttribute('autocomplete');
   if (autocomplete_attribute) {

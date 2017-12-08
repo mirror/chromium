@@ -53,6 +53,7 @@
   NSArray* _suggestions;
   NSString* _formName;
   NSString* _fieldName;
+  NSString* _fieldIdentifier;
   FormSuggestion* _suggestion;
 }
 
@@ -80,7 +81,8 @@
 }
 
 - (void)checkIfSuggestionsAvailableForForm:(NSString*)formName
-                                     field:(NSString*)fieldName
+                                 fieldName:(NSString*)fieldName
+                           fieldIdentifier:(NSString*)fieldIdentifier
                                  fieldType:(NSString*)fieldType
                                       type:(NSString*)type
                                 typedValue:(NSString*)typedValue
@@ -92,7 +94,8 @@
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
-                             field:(NSString*)fieldName
+                         fieldName:(NSString*)fieldName
+                   fieldIdentifier:(NSString*)fieldIdentifier
                          fieldType:(NSString*)fieldType
                               type:(NSString*)type
                         typedValue:(NSString*)typedValue
@@ -103,13 +106,15 @@
 }
 
 - (void)didSelectSuggestion:(FormSuggestion*)suggestion
-                   forField:(NSString*)fieldName
+                  fieldName:(NSString*)fieldName
+            fieldIdentifier:(NSString*)fieldIdentifier
                        form:(NSString*)formName
           completionHandler:(SuggestionHandledCompletion)completion {
   self.selected = YES;
   _suggestion = suggestion;
   _formName = [formName copy];
   _fieldName = [fieldName copy];
+  _fieldIdentifier = [fieldIdentifier copy];
   completion();
 }
 
@@ -289,6 +294,7 @@ TEST_F(FormSuggestionControllerTest,
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "type";
   params.value = "value";
@@ -307,6 +313,7 @@ TEST_F(FormSuggestionControllerTest, FormActivityBlurShouldBeIgnored) {
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "blur";  // blur!
   params.value = "value";
@@ -324,6 +331,7 @@ TEST_F(FormSuggestionControllerTest,
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "type";
   params.value = "value";
@@ -352,6 +360,7 @@ TEST_F(FormSuggestionControllerTest,
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "type";
   params.value = "value";
@@ -401,6 +410,7 @@ TEST_F(FormSuggestionControllerTest,
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "type";
   params.value = "value";
@@ -440,6 +450,7 @@ TEST_F(FormSuggestionControllerTest, SelectingSuggestionShouldNotifyDelegate) {
   web::FormActivityParams params;
   params.form_name = "form";
   params.field_name = "field";
+  params.field_identifier = "field_id";
   params.field_type = "text";
   params.type = "type";
   params.value = "value";
