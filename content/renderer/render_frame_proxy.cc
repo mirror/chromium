@@ -703,11 +703,15 @@ void RenderFrameProxy::FrameFocused() {
 #if defined(USE_AURA)
 void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
     const viz::SurfaceInfo& surface_info) {
-  SetChildFrameSurface(surface_info, viz::SurfaceSequence());
+  if (switches::IsMusHostingViz())
+    SetChildFrameSurface(surface_info, viz::SurfaceSequence());
 }
 
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
+  if (!switches::IsMusHostingViz())
+    return;
+
   frame_sink_id_ = frame_sink_id;
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
