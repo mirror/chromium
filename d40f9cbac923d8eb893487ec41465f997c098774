@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e8fd550_07b836a3",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_event.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-08T00:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c30fa1_c00eb3da",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd92ffa4_75e2c421",
         "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5c686596_29855333",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-08T00:08:05Z",
+      "side": 1,
+      "message": "Done. sorry. long week.",
+      "parentUuid": "cd92ffa4_75e2c421",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e985e5b2_ff8d4462",
         "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl_unittest.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-07T23:41:04Z",
       "side": 1,
       "message": "Add coverage of OTHER?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "d40f9cbac923d8eb893487ec41465f997c098774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f2b2f2_badf72c8",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-08T00:08:05Z",
+      "side": 1,
+      "message": "The next test covers OTHER with a bunch of cases.",
+      "parentUuid": "e985e5b2_ff8d4462",
       "range": {
         "startLine": 19,
         "startChar": 2,
