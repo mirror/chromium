@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "ea8a2784_aca82839",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-08T02:02:57Z",
+      "side": 1,
+      "message": "SelectionModifier modifies selection following its name\nand no one call by getting Position w/o SelectionInDOMTree.\nI recommend you declaring:\nSelectionModifier(const SelectionInDOMTree\u0026);\nSelectionModifier(const SelectionInDOMTree\u0026, LayoutUnit);",
+      "revId": "fd6bb1addfe45193d22af426ac872aaf36b052ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fff63f05_4dcfbdf4",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 1
