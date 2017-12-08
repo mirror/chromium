@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "495b3c54_c9dfe7a4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-08T19:42:47Z",
+      "side": 1,
+      "message": "It\u0027s better not to access FrameSelection here. We can get |editable| from EndingSelection().",
+      "range": {
+        "startLine": 651,
+        "startChar": 0,
+        "endLine": 653,
+        "endChar": 68
+      },
+      "revId": "614265f758487bc6b8210aff6de94c4dadb26cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
