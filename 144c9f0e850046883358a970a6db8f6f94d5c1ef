@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f15db642_ad7d7f36",
+        "filename": "cc/paint/transfer_cache_deserialize_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T19:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04eaeec5_0e4d486b",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "144c9f0e850046883358a970a6db8f6f94d5c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47464ef6_a977c03b",
         "filename": "cc/paint/transfer_cache_deserialize_helper.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T02:08:18Z",
       "side": 1,
       "message": "We could require that T has a static kType and just compare against that (pobs do this with entry-\u003eGetType() !\u003d T::kType)",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "144c9f0e850046883358a970a6db8f6f94d5c1ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da1dea8_785e978f",
+        "filename": "cc/paint/transfer_cache_deserialize_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T19:17:45Z",
+      "side": 1,
+      "message": "Re-did things this way - good suggestion.",
+      "parentUuid": "47464ef6_a977c03b",
       "range": {
         "startLine": 31,
         "startChar": 25,
