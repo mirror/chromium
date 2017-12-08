@@ -22,6 +22,30 @@
       "revId": "736eab02486f47c26f237375a94b4346faac7836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e37dba_b6e5c60f",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T13:53:00Z",
+      "side": 1,
+      "message": "My interpretation of that boolean was that it directed a regular profile to initialize itself and then call GetOffTheRecordProfile; see https://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_manager.cc?sq\u003dpackage:chromium\u0026l\u003d1180.  So I don\u0027t believe that DoFinalInitForServices() is called for OTR profiles.  Also consider that DoFinalInitForServices() calls ExtensionSystemImpl::InitForRegularProfile(), which has a DCHECK() that the profile isn\u0027t OTR.",
+      "parentUuid": "810ddb89_83755478",
+      "range": {
+        "startLine": 197,
+        "startChar": 31,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
