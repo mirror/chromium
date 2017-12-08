@@ -65,10 +65,11 @@ DedicatedWorker::~DedicatedWorker() {
   context_proxy_->ParentObjectDestroyed();
 }
 
-void DedicatedWorker::postMessage(ScriptState* script_state,
-                                  scoped_refptr<SerializedScriptValue> message,
-                                  const MessagePortArray& ports,
-                                  ExceptionState& exception_state) {
+void DedicatedWorker::postMessage(
+    ScriptState* script_state,
+    std::unique_ptr<SerializedScriptValue> message,
+    const MessagePortArray& ports,
+    ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   // Disentangle the port in preparation for sending it to the remote context.
   auto channels = MessagePort::DisentanglePorts(

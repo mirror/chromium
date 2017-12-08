@@ -4,6 +4,8 @@
 
 #include "bindings/core/v8/GeneratedCodeHelper.h"
 
+#include <memory>
+
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/ExecutionContext.h"
@@ -24,8 +26,9 @@ void V8ConstructorAttributeGetter(
                    per_context_data->ConstructorForType(wrapper_type_info));
 }
 
-v8::Local<v8::Value> V8Deserialize(v8::Isolate* isolate,
-                                   scoped_refptr<SerializedScriptValue> value) {
+v8::Local<v8::Value> V8Deserialize(
+    v8::Isolate* isolate,
+    std::unique_ptr<SerializedScriptValue> value) {
   if (value)
     return value->Deserialize(isolate);
   return v8::Null(isolate);

@@ -150,7 +150,7 @@ bool DOMWindow::IsInsecureScriptAccess(LocalDOMWindow& calling_window,
   return true;
 }
 
-void DOMWindow::postMessage(scoped_refptr<SerializedScriptValue> message,
+void DOMWindow::postMessage(std::unique_ptr<SerializedScriptValue> message,
                             const MessagePortArray& ports,
                             const String& target_origin,
                             LocalDOMWindow* source,

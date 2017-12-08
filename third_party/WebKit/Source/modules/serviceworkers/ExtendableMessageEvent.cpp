@@ -20,7 +20,7 @@ ExtendableMessageEvent* ExtendableMessageEvent::Create(
 }
 
 ExtendableMessageEvent* ExtendableMessageEvent::Create(
-    scoped_refptr<SerializedScriptValue> data,
+    std::unique_ptr<SerializedScriptValue> data,
     const String& origin,
     MessagePortArray* ports,
     WaitUntilObserver* observer) {
@@ -28,7 +28,7 @@ ExtendableMessageEvent* ExtendableMessageEvent::Create(
 }
 
 ExtendableMessageEvent* ExtendableMessageEvent::Create(
-    scoped_refptr<SerializedScriptValue> data,
+    std::unique_ptr<SerializedScriptValue> data,
     const String& origin,
     MessagePortArray* ports,
     ServiceWorkerClient* source,
@@ -40,7 +40,7 @@ ExtendableMessageEvent* ExtendableMessageEvent::Create(
 }
 
 ExtendableMessageEvent* ExtendableMessageEvent::Create(
-    scoped_refptr<SerializedScriptValue> data,
+    std::unique_ptr<SerializedScriptValue> data,
     const String& origin,
     MessagePortArray* ports,
     ServiceWorker* source,

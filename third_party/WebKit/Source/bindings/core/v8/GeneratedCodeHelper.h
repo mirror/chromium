@@ -11,7 +11,8 @@
 #ifndef GeneratedCodeHelper_h
 #define GeneratedCodeHelper_h
 
-#include "base/memory/scoped_refptr.h"
+#include <memory>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
@@ -29,7 +30,7 @@ CORE_EXPORT void V8ConstructorAttributeGetter(
 
 CORE_EXPORT v8::Local<v8::Value> V8Deserialize(
     v8::Isolate*,
-    scoped_refptr<SerializedScriptValue>);
+    std::unique_ptr<SerializedScriptValue>);
 
 // ExceptionToRejectPromiseScope converts a possible exception to a reject
 // promise and returns the promise instead of throwing the exception.
