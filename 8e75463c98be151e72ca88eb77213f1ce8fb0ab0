@@ -198,6 +198,24 @@
       "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857c7970_18bd0b84",
+        "filename": "device/vr/oculus/oculus_type_converters.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Where possible, we prefer StructTraits to type converters: it\u0027s generally fewer copies and it\u0027s more transparent to the code. However, if one Mojo struct needs to be created from different types, using TypeConverter is probably your best bet.",
+      "parentUuid": "e1f4c545_7696ffcf",
+      "revId": "8e75463c98be151e72ca88eb77213f1ce8fb0ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

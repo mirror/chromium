@@ -2,6 +2,132 @@
   "comments": [
     {
       "key": {
+        "uuid": "749b4818_a0fdd9bb",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: hmd_desc to match Chrome naming conventions.",
+      "range": {
+        "startLine": 23,
+        "startChar": 58,
+        "endLine": 23,
+        "endChar": 65
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a31bd14_5ba5190f",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Remove this, as it\u0027s not used.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7c03d4_13700f5e",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Use an initializer list for this, which will be more efficient:\n\ndisplay_info-\u003estageParameters-\u003estandingTransform \u003d {1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, floor_height, 0, 1};",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2eb9b_454f5144",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: please give this a more descriptive name.",
+      "range": {
+        "startLine": 123,
+        "startChar": 33,
+        "endLine": 123,
+        "endChar": 45
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4041d8af_95724bf4",
+        "filename": "device/vr/oculus/oculus_device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: prefer using A \u003d B; over typedef B A;\n\nAlso, unless there\u0027s a reason to deviate from Chromium naming conventions, this should be aliased to OvrSession.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f7e5b3_f607e8e7",
+        "filename": "device/vr/oculus/oculus_device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: explicit\n\n(I would personally prefer that the pointer not be in the type alias, to make it clear that the value is a pointer and cheap to copy)",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "944def24_748233b4",
         "filename": "device/vr/oculus/oculus_device_provider.cc",
         "patchSetId": 3
@@ -16,6 +142,114 @@
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed8b8690_849e9b64",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Chrome does not allow mutable reference arguments, so please pass this by ptr. Ditto below.",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e281be94_e5f5571f",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: I think there should be a comment here to explain the threshholds--i.e. why 0.1f and not 0.0f.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d10ab32_a5010766",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Any reason for the default case here? It\u0027s best to not add default cases unless really needed for some reason, as doing this prevents the compiler from warning about new enumerator values in the future.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c345252b_52be875d",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "This is repeated in several different header files. Please consolidate the type alias into one place if it\u0027s really needed.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee5a377_53b2f8f6",
+        "filename": "device/vr/oculus/oculus_render_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "NOTIMPLEMENTED() or NOTREACHED()? If this shouldn\u0027t ever be reached via Mojo, it would be helpful to understand why.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8979ea6_7f8fe790",
+        "filename": "device/vr/windows/d3d11_texture_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:22:10Z",
+      "side": 1,
+      "message": "Nit: should accessing this really copy? Maybe it should return a const Microsoft::WRL::ComPtr\u003cID3D11Device\u003e\u0026 - then the caller can copy if it really needs to, and the normal case (where no copy is needed) won\u0027t incur AddRef() churn.\n\nSame comment for GetBackBuffer(), though that\u0027s pre-existing.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
