@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2a1f6f_a4fb4e23",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T15:27:41Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer using PerformanceObservers. decltype is not widely used in Blink.",
+      "revId": "fc020df3308d3b7e07fdeac56f04dc2fd44414f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
