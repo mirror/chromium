@@ -22,6 +22,30 @@
       "revId": "bf54b51cf5f2546ecfb7ad6a880ebf45fddc02aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e80f39_ad7062b3",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T23:44:47Z",
+      "side": 0,
+      "message": "SGTM. Let\u0027s modify the message, but still print the error code in the console. It could help, when someone files a bug about something we can\u0027t easily repro yet.",
+      "parentUuid": "fdc25f0a_b36e56cf",
+      "range": {
+        "startLine": 1133,
+        "startChar": 0,
+        "endLine": 1133,
+        "endChar": 75
+      },
+      "revId": "bf54b51cf5f2546ecfb7ad6a880ebf45fddc02aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
