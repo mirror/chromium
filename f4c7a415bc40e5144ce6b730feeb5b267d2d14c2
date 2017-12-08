@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8af07d1_3fc506a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd5ac18_00e02a36",
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "511231f1_90ff5814",
         "filename": "chrome/common/extensions/docs/static/images/architecture_tutorial/load_extension.png",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb176d_350ca68c",
+        "filename": "chrome/common/extensions/docs/static/images/architecture_tutorial/load_extension.png",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "511231f1_90ff5814",
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "fdf126dc_0f62c894",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "248dd1f0_c195684b",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 38
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13aaad24_fca631dd",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -79,6 +139,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffcf065_7ea4d1b3",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13aaad24_fca631dd",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 79
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2169ac2e_cd8b186d",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c06ce2b_6ced9a9d",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00edc77a_d33d6314",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -125,6 +233,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a84687f_23866e19",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00edc77a_d33d6314",
+      "range": {
+        "startLine": 50,
+        "startChar": 12,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "0a80b136_ab479747",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5b3b38_f6afaa9f",
+      "range": {
+        "startLine": 59,
+        "startChar": 44,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3c9b93e_a405c7f3",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -171,6 +327,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63da4871_46574c24",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c9b93e_a405c7f3",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "aa9edcde_550f8edd",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb389339_dda7755d",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb6f91f_60240084",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -217,6 +421,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0f87f3_5f38350c",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eb6f91f_60240084",
+      "range": {
+        "startLine": 134,
+        "startChar": 61,
+        "endLine": 135,
+        "endChar": 8
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "de852f39_4ae08de3",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9dee4c1_b0be633d",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 7
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68147b0_76c8377c",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -263,6 +515,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff911a45_c1873c03",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68147b0_76c8377c",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 36
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "5d882324_2e113ef2",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778e2b17_58d1e29e",
+      "range": {
+        "startLine": 206,
+        "startChar": 38,
+        "endLine": 207,
+        "endChar": 18
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f7ae83c_672363de",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -309,6 +609,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90288941_328a7ad5",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7ae83c_672363de",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 18
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "4650c6a8_64dd12bd",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6081e68_451ce499",
+      "range": {
+        "startLine": 236,
+        "startChar": 55,
+        "endLine": 236,
+        "endChar": 56
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a2cc85e_a29aacf9",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -355,6 +703,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80751c8b_00726368",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2cc85e_a29aacf9",
+      "range": {
+        "startLine": 243,
+        "startChar": 35,
+        "endLine": 243,
+        "endChar": 36
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "26defb2a_63987f95",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26195e53_fd4eb0f5",
+      "range": {
+        "startLine": 256,
+        "startChar": 70,
+        "endLine": 256,
+        "endChar": 91
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2761ac2f_7992039f",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -404,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "a31e1958_b260f50b",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2761ac2f_7992039f",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 4
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a69ebb_e2ca9ac2",
         "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
         "patchSetId": 7
@@ -424,6 +844,30 @@
       "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d32cf53_1902cbf8",
+        "filename": "chrome/common/extensions/docs/templates/articles/architecture_tutorial.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-08T20:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a69ebb_e2ca9ac2",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 57
+      },
+      "revId": "f4c7a415bc40e5144ce6b730feeb5b267d2d14c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
