@@ -17,6 +17,7 @@
 
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
+#include "base/containers/flat_set.h"
 #include "base/containers/id_map.h"
 #include "base/files/file_path.h"
 #include "base/gtest_prod_util.h"
@@ -39,6 +40,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/unique_name_helper.h"
 #include "content/common/url_loader_factory_bundle.h"
+#include "content/common/webpackage_subresource_manager.mojom.h"
 #include "content/common/widget.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/javascript_dialog_type.h"
@@ -523,7 +525,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       mojo::ScopedDataPipeConsumerHandle body_data,
       base::Optional<URLLoaderFactoryBundle> subresource_loaders,
-      const base::UnguessableToken& devtools_navigation_token) override;
+      const base::UnguessableToken& devtools_navigation_token,
+      mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info) override;
 
   // mojom::HostZoom implementation:
   void SetHostZoomLevel(const GURL& url, double zoom_level) override;
@@ -1106,6 +1109,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const RequestNavigationParams& request_params,
       std::unique_ptr<StreamOverrideParameters> stream_params,
       base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+      mojom::WebPackageSubresourceInfoPtr webpackage_subresource_info,
       const base::UnguessableToken& devtools_navigation_token);
 
   // Returns a URLLoaderFactoryBundle which can be used to request subresources
@@ -1580,6 +1584,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // URLLoaderFactory instances used for subresource loading when the Network
   // Service is enabled.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories_;
+
+  base::flat_set<std::pair<GURL, std::string>> skip_throttler_requests_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;

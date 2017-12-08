@@ -5686,6 +5686,13 @@ bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
 
 #endif
 
+void WebContentsImpl::SetIsWPK(bool is_wpk) {
+  is_wpk_ = is_wpk;
+}
+bool WebContentsImpl::IsWPK() const {
+  return is_wpk_;
+}
+
 void WebContentsImpl::OnDidDownloadImage(
     const ImageDownloadCallback& callback,
     int id,
