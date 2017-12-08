@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244ad1a5_c99b2334",
+        "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-12-08T19:05:38Z",
+      "side": 1,
+      "message": "Is this just a random manufacturer id? Maybe use 0x00E0 instead, as that is Google\u0027s id.",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
