@@ -434,6 +434,33 @@ class URL_EXPORT GURL {
   size_t EstimateMemoryUsage() const;
 
  private:
+  // Returns whether the given replacement param will return this URL unchanged.
+  template <typename CHAR>
+  bool IsReplacementNoOp(const url::Replacements<CHAR>& replacements) const {
+    DCHECK(is_valid());
+    // Note: Schemes cannot be cleared.
+    return !replacements.IsSchemeOverridden() &&
+           (!replacements.IsHostOverridden() ||
+            (replacements.IsComponentCleared(parsed_.host) && !has_host())) &&
+           (!replacements.IsUsernameOverridden() ||
+            (replacements.IsComponentCleared(parsed_.username) &&
+             !has_username())) &&
+           (!replacements.IsPasswordOverridden() ||
+            (replacements.IsComponentCleared(parsed_.password) &&
+             !has_password())) &&
+           (!replacements.IsPortOverridden() ||
+            (replacements.IsComponentCleared(parsed_.port) && !has_port())) &&
+           // Paths are canonicalized to be be "/", so checking has_path() will
+           // usually return false.
+           (!replacements.IsPathOverridden() ||
+            (replacements.IsComponentCleared(parsed_.path) &&
+             path_piece().length() <= 1)) &&
+           (!replacements.IsQueryOverridden() ||
+            (replacements.IsComponentCleared(parsed_.query) && !has_query())) &&
+           (!replacements.IsRefOverridden() ||
+            (replacements.IsComponentCleared(parsed_.ref) && !has_ref()));
+  }
+
   // Variant of the string parsing constructor that allows the caller to elect
   // retain trailing whitespace, if any, on the passed URL spec, but only if
   // the scheme is one that allows trailing whitespace. The primary use-case is

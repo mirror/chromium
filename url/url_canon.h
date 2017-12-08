@@ -776,10 +776,14 @@ class Replacements {
   const URLComponentSource<CHAR>& sources() const { return sources_; }
   const Parsed& components() const { return components_; }
 
+  bool IsComponentCleared(const Component component) const {
+    return component == Component();
+  }
+
  private:
   // Returns a pointer to a static empty string that is used as a placeholder
   // to indicate a component should be deleted (see below).
-  const CHAR* Placeholder() {
+  const CHAR* Placeholder() const {
     static const CHAR empty_cstr = 0;
     return &empty_cstr;
   }
