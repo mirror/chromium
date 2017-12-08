@@ -34,6 +34,24 @@
       "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960a82a8_0c00bf3a",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T16:45:49Z",
+      "side": 1,
+      "message": "In many cases we recanonicalize the URL even if there are unchanged components. If this is in any sort of critical navigation path we should avoid it. I think it may be possible to change //url to fix this, maybe I will attempt to do that instead.\n\nThe GURL copy is much less expensive than re-canonicalizing, so I\u0027m much less worried about that.",
+      "parentUuid": "23c3d110_7d5729b7",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
