@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "80d35c56_d8e334eb",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T16:40:27Z",
+      "side": 1,
+      "message": "nit: Here\u0027s another occurrence of the deprecated GetStringWithoutPathExpansion(), please fix it as well :)",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b42a6a91_90268d77",
         "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
         "patchSetId": 6
