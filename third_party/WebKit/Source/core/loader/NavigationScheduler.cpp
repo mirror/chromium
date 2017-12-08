@@ -144,7 +144,7 @@ class ScheduledURLNavigation : public ScheduledNavigation {
         IsLocationChange() ? ScheduledNavigationType::kScheduledFrameNavigation
                            : ScheduledNavigationType::kScheduledURLNavigation;
     MaybeLogScheduledNavigationClobber(type, frame);
-    frame->Loader().Load(request);
+    frame->Loader().StartNavigation(request);
   }
 
   KURL Url() const override { return url_; }
@@ -183,7 +183,7 @@ class ScheduledRedirect final : public ScheduledURLNavigation {
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledRedirect, frame);
-    frame->Loader().Load(request);
+    frame->Loader().StartNavigation(request);
   }
 
  private:
@@ -253,7 +253,7 @@ class ScheduledReload final : public ScheduledNavigation {
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledReload, frame);
-    frame->Loader().Load(request, kFrameLoadTypeReload);
+    frame->Loader().StartNavigation(request, kFrameLoadTypeReload);
   }
 
   KURL Url() const override { return frame_->GetDocument()->Url(); }
@@ -312,7 +312,7 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
     frame_request.SetReplacesCurrentItem(ReplacesCurrentItem());
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledFormSubmission, frame);
-    frame->Loader().Load(frame_request);
+    frame->Loader().StartNavigation(frame_request);
   }
 
   KURL Url() const override { return submission_->RequestURL(); }
@@ -451,7 +451,7 @@ void NavigationScheduler::ScheduleFrameNavigation(Document* origin_document,
       request.SetReplacesCurrentItem(replaces_current_item);
       if (replaces_current_item)
         request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
-      frame_->Loader().Load(request);
+      frame_->Loader().StartNavigation(request);
       return;
     }
   }
