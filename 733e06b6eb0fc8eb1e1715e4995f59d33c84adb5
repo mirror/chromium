@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f3bd8a36_93b7319e",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-08T22:39:26Z",
+      "side": 1,
+      "message": "It should be replaced. We need only identifier.",
+      "parentUuid": "3aad54ac_ec8469be",
+      "range": {
+        "startLine": 703,
+        "startChar": 51,
+        "endLine": 703,
+        "endChar": 60
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "805f5097_bfd45fff",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 9
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "Changing this will have a lot of consequences because I will need to change also line 339, 348...\nIf you use the name to infer the type of the field, this may lead to regressions.\nDo you just need the identifier of the field, or should we pass both the name and identifier?",
       "parentUuid": "805f5097_bfd45fff",
+      "range": {
+        "startLine": 139,
+        "startChar": 25,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3573aa04_e3c364af",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-08T22:39:26Z",
+      "side": 1,
+      "message": "Yes, please replace all __gCrWeb.common.getFieldName to __gCrWeb.common.getFieldIdentifier.\n\nNo we don\u0027t use name for any type detections. We need only identifier.",
+      "parentUuid": "bcf3b8c1_4d3c79df",
       "range": {
         "startLine": 139,
         "startChar": 25,
@@ -139,6 +187,30 @@
       "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4265b3ec_baa358b8",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-08T22:39:26Z",
+      "side": 1,
+      "message": "Ok, I see. Thanks for explanation!",
+      "parentUuid": "a3a84977_e438ff9e",
+      "range": {
+        "startLine": 493,
+        "startChar": 6,
+        "endLine": 494,
+        "endChar": 27
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
