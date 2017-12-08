@@ -4,6 +4,11 @@
 
 import("//mojo/public/tools/bindings/mojom.gni")
 
+mojom("gfx") {
+  sources = [
+    "gfx.mojom",
+  ]
+}
 if (is_chromeos) {
   mojom("common") {
     sources = [
@@ -22,7 +27,6 @@ if (is_chromeos) {
       "crash_collector.mojom",
       "enterprise_reporting.mojom",
       "file_system.mojom",
-      "gfx.mojom",
       "ime.mojom",
       "intent_helper.mojom",
       "kiosk.mojom",
@@ -50,6 +54,7 @@ if (is_chromeos) {
     ]
 
     public_deps = [
+      ":gfx",
       ":media",
       "//mojo/common:common_custom_types",
       "//ui/gfx/geometry/mojo",
@@ -65,11 +70,13 @@ mojom("media") {
     "protected_buffer_manager.mojom",
     "video.mojom",
     "video_common.mojom",
+    "video_decode_accelerator.mojom",
     "video_decode_accelerator_deprecated.mojom",
     "video_encode_accelerator.mojom",
   ]
 
   public_deps = [
+    ":gfx",
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
   ]
