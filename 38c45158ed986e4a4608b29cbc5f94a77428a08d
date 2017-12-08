@@ -94,6 +94,30 @@
       "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb76cc17_2e8596d5",
+        "filename": "third_party/WebKit/common/message_port/transferable_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-08T00:08:27Z",
+      "side": 1,
+      "message": "I took a look on bots and see that gn analyze stage is failing when I am trying to include \"v8-inspector.h\" so I have two options, introduce intermediate structure in blink or pass value as vector\u003cuint8\u003e. I actually prefer second option with later update to intermediate structure and correct type mappings if it would be more then one usage of this structure in mojo.",
+      "parentUuid": "f3aa625c_d7d0cc9e",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "38c45158ed986e4a4608b29cbc5f94a77428a08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
