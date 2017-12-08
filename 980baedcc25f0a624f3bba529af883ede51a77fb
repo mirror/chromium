@@ -22,6 +22,29 @@
       "revId": "980baedcc25f0a624f3bba529af883ede51a77fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e2ef4e_2079dab7",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-08T16:26:50Z",
+      "side": 1,
+      "message": "Shall we use a repeating timer ?\n\nI guess the IPC comes in much more frequently than 1 min, so this gets called pretty frequently. And IIRC, taking timestamp is not free.",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 42
+      },
+      "revId": "980baedcc25f0a624f3bba529af883ede51a77fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
