@@ -52,26 +52,31 @@ static inline void AppendPercentEncoded(Vector<char>& buffer, unsigned char c) {
 }
 
 static void AppendQuotedString(Vector<char>& buffer, const CString& string) {
-  // Append a string as a quoted value, escaping quotes and line breaks.
-  // FIXME: Is it correct to use percent escaping here? Other browsers do not
-  // encode these characters yet, so we should test popular servers to find out
-  // if there is an encoding form they can handle.
+  // Append a string as a quoted value, escaping quotes, line breaks,
+  // and other ASCII control characters except U+001B <control> (ESC)
+  // (which needs to pass through unquoted for Web-compatible
+  // ISO-2022-JP) using the "percent-encoding" option of RFC 7578.
+  // https://tools.ietf.org/html/rfc5322#section-3.2.4
+  // https://tools.ietf.org/html/rfc7578#section-2
+  // https://encoding.spec.whatwg.org/#iso-2022-jp-encoder
+  //
+  // Also quote backslash by doubling it; otherwise it will confuse
+  // RFC 5322-style multipart processors which would interpret the
+  // backslash as the start of a quoted-pair.
+  // https://tools.ietf.org/html/rfc5322#section-3.2.1
   size_t length = string.length();
   for (size_t i = 0; i < length; ++i) {
     char c = string.data()[i];
 
-    switch (c) {
-      case 0x0a:
-        Append(buffer, "%0A");
-        break;
-      case 0x0d:
-        Append(buffer, "%0D");
-        break;
-      case '"':
-        Append(buffer, "%22");
-        break;
-      default:
+    if ((c >= 0x00 && c <= 0x1f && c != 0x1b) || c == '"' || c == 0x7f) {
+      Append(buffer, "%");
+      HexNumber::AppendByteAsHex(c, buffer);
+    } else {
+      if (c == '\\') {
+        // Append backslash twice to avoid starting a quoted-pair
         Append(buffer, c);
+      }
+      Append(buffer, c);
     }
   }
 }
