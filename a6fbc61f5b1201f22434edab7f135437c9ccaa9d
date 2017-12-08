@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "df890d96_9de7fbbb",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T02:12:13Z",
+      "side": 1,
+      "message": "perhaps very slightly\n\nif element-\u003eValue().IsEmpty() is true then SanitizedFieldIsEmpty() is also O(1).\n\nCreating an empty string doesn\u0027t allocate and there\u0027s nothing to iterate through.",
+      "parentUuid": "70bdafea_66a09b61",
+      "revId": "a6fbc61f5b1201f22434edab7f135437c9ccaa9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "155dbcf0_61ec1aba",
         "filename": "components/autofill/content/renderer/form_autofill_util.cc",
         "patchSetId": 11
