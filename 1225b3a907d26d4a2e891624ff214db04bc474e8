@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e8b3d6fa_132cac6d",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T00:09:43Z",
+      "side": 1,
+      "message": "you\u0027d still want to check that it\u0027s current here, passing false if it\u0027s not.",
+      "parentUuid": "db7a46a0_119e6255",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3ceb47_82dd152e",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
