@@ -18,10 +18,12 @@
 {
   'android_webview_unittests': {
     'remove_from': [
-      # On chromium.android, unclear why these aren't run on all bots.
+      # These shouldn't run below L because webview isn't updatable
+      # prior to L.
       'KitKat Phone Tester (dbg)',
       'KitKat Phone Tester (rel)',
       'KitKat Tablet Tester',
+      # These should eventually run here.
       'Nougat Phone Tester',
     ],
     'modifications': {
