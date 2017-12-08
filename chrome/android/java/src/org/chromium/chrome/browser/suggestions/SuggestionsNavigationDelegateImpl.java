@@ -72,7 +72,7 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     @Override
     public void navigateToBookmarks() {
         RecordUserAction.record("MobileNTPSwitchToBookmarks");
-        BookmarkUtils.showBookmarkManager(mActivity);
+        BookmarkUtils.showBookmarkManager(mActivity, false);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     @Override
     public void navigateToDownloadManager() {
         RecordUserAction.record("MobileNTPSwitchToDownloadManager");
-        DownloadUtils.showDownloadManager(mActivity, mHost.getActiveTab());
+        DownloadUtils.showDownloadManager(mActivity, mHost.getActiveTab(), false);
     }
 
     @Override

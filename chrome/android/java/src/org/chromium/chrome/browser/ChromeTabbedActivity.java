@@ -1674,7 +1674,8 @@ public class ChromeTabbedActivity
                 }
 
                 // Show the Chrome Home menu header if the Tracker allows it.
-                if (tracker.shouldTriggerHelpUI(FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE)) {
+                if (tracker.shouldTriggerHelpUI(FeatureConstants.CHROME_HOME_MENU_HEADER_FEATURE)
+                        && !AppMenuPropertiesDelegate.shouldShowNavMenuItems()) {
                     mChromeHomeIphMenuHeader = (ChromeHomeIphMenuHeader) inflater.inflate(
                             R.layout.chrome_home_iph_header, null);
                     mChromeHomeIphMenuHeader.initialize(ChromeTabbedActivity.this);
@@ -1807,10 +1808,10 @@ public class ChromeTabbedActivity
                 getTabCreator(true).launchNTP();
             }
         } else if (id == R.id.all_bookmarks_menu_id) {
-            if (currentTab != null) {
+            if (currentTab != null || getBottomSheet() != null) {
                 getCompositorViewHolder().hideKeyboard(() -> {
                     StartupMetrics.getInstance().recordOpenedBookmarks();
-                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this);
+                    BookmarkUtils.showBookmarkManager(ChromeTabbedActivity.this, true);
                 });
                 if (currentTabIsNtp) {
                     NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_BOOKMARKS_MANAGER);
@@ -1849,7 +1850,7 @@ public class ChromeTabbedActivity
                 getToolbarManager().setUrlBarFocus(true);
             }
         } else if (id == R.id.downloads_menu_id) {
-            DownloadUtils.showDownloadManager(this, currentTab);
+            DownloadUtils.showDownloadManager(this, currentTab, true);
             if (currentTabIsNtp) {
                 NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_DOWNLOADS_MANAGER);
             }
