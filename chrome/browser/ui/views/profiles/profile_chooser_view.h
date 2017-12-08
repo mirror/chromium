@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "chrome/browser/profiles/avatar_menu.h"
 #include "chrome/browser/profiles/avatar_menu_observer.h"
+#include "chrome/browser/profiles/profile_downloader_delegate.h"
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/sync/sync_ui_util.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -228,6 +229,22 @@ class ProfileChooserView : public content::WebContentsDelegate,
   const int menu_width_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileChooserView);
+
+  /* class TurnOnSyncProfileDownloaderDelegate: public
+   ProfileDownloaderDelegate{ public:
+
+    bool NeedsProfilePicture() const override { return true; };
+    int GetDesiredImageSideLength() const override { return 40; };
+    std::string GetCachedPictureURL() const override { return ""; };
+    Profile* GetBrowserProfile() override { return browser_->profile(); };
+    bool IsPreSignin() const override { return true; }
+    void OnProfileDownloadSuccess(ProfileDownloader* downloader) override {
+
+    }
+    void OnProfileDownloadFailure(
+        ProfileDownloader* downloader,
+        ProfileDownloaderDelegate::FailureReason reason) override {}
+        };*/
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_PROFILES_PROFILE_CHOOSER_VIEW_H_
