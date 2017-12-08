@@ -7,10 +7,12 @@
 #ifndef GPU_IPC_HOST_GPU_SWITCHES_H_
 #define GPU_IPC_HOST_GPU_SWITCHES_H_
 
+#include "gpu_export.h"
+
 namespace switches {
 
-extern const char kEnableNativeGpuMemoryBuffers[];
-extern const char kDisableNativeGpuMemoryBuffers[];
+GPU_EXPORT extern const char kEnableNativeGpuMemoryBuffers[];
+GPU_EXPORT extern const char kDisableNativeGpuMemoryBuffers[];
 
 }  // namespace switches
 
