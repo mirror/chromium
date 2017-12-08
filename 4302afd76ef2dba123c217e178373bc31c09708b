@@ -22,6 +22,30 @@
       "revId": "4302afd76ef2dba123c217e178373bc31c09708b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6039003_1c9086c9",
+        "filename": "chrome/browser/sync/test/integration/sync_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T21:42:57Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s about timing. Trying to remove an observer from a deleted PSS turns out to not work very well. I kind of just slapped this where other similar stuff was, although now that you\u0027re questioning this, I don\u0027t see why we\u0027d need to clear fake_server_invalidation_services_ or clients_. Maybe it\u0027s just an artifact of conversions from owning raw pointers to scoped pointers a long time ago.\n\nGoing to remove the two unnecessary ones and then add a comment.",
+      "parentUuid": "e6a064ac_33ff50c1",
+      "range": {
+        "startLine": 783,
+        "startChar": 35,
+        "endLine": 783,
+        "endChar": 0
+      },
+      "revId": "4302afd76ef2dba123c217e178373bc31c09708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
