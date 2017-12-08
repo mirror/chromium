@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fdf27da_a5a7e297",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T00:54:08Z",
+      "side": 1,
+      "message": "Looks like the legacy windows bot wants these to have a final return value.  Suggest just:\n\nNOTREACHED();\nreturn nullptr;",
+      "range": {
+        "startLine": 131,
+        "startChar": 5,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "9e22dfa81697026900eb9bf20fb68f71d4e5dca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -234,6 +234,30 @@
       "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a485e1a2_1c1991d0",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T00:54:08Z",
+      "side": 1,
+      "message": "You\u0027ve done just what I was trying to suggest.  This #endif ends the block when !defined(OS_MACOSX), so if you\u0027re scrolling up, ending it with !defined(OS_MACOSX) makes it clearer that you\u0027re scrolling into the non-OSX branch.\n\nSome places would end blocks like this with \"defined(OS_MACOSX)\", but I think that\u0027s the less common pattern.",
+      "parentUuid": "c5964d1c_4d3ae33d",
+      "range": {
+        "startLine": 751,
+        "startChar": 19,
+        "endLine": 751,
+        "endChar": 28
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
