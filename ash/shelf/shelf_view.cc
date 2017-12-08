@@ -354,6 +354,10 @@ bool ShelfView::IsShowingOverflowBubble() const {
   return overflow_bubble_.get() && overflow_bubble_->IsShowing();
 }
 
+void ShelfView::OnShelfButtonContextMenuShown() {
+  shelf_button_context_menu_time_ = base::Time::Now();
+}
+
 AppListButton* ShelfView::GetAppListButton() const {
   for (int i = 0; i < model_->item_count(); ++i) {
     if (model_->items()[i].type == TYPE_APP_LIST) {
@@ -1860,6 +1864,12 @@ void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
   context_menu_id_ = ShelfID();
 
   closing_event_time_ = launcher_menu_runner_->closing_event_time();
+  if (shelf_button_context_menu_time_ != base::Time()) {
+    // If the context menu came from a ShelfButton.
+    UMA_HISTOGRAM_TIMES(kShelfContextMenuUserJourneyTimeShelfButton,
+                        base::Time::Now() - shelf_button_context_menu_time_);
+    shelf_button_context_menu_time_ = base::Time();
+  }
 
   if (ink_drop)
     ink_drop->AnimateToState(views::InkDropState::DEACTIVATED);

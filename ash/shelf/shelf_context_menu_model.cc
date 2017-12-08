@@ -13,11 +13,13 @@
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
+#include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/numerics/safe_conversions.h"
 #include "components/prefs/pref_service.h"
@@ -249,10 +251,19 @@ void ShelfContextMenuModel::ExecuteCommand(int command_id, int event_flags) {
       break;
     default:
       // Have the shelf item delegate execute the context menu command.
-      if (delegate_)
+      if (delegate_) {
         delegate_->ExecuteCommand(true, command_id, event_flags, display_id_);
+        return;
+      }
       break;
   }
+  base::HistogramBase* histogram;
+  histogram = base::SparseHistogram::FactoryGet(
+      delegate_ ? kAppContextMenuExecuteCommand
+                : kNonAppContextMenuExecuteCommand,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  if (histogram)
+    histogram->Add(command_id);
 }
 
 }  // namespace ash
