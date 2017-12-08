@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/debug/crash_logging.h"
+#include "base/debug/leak_annotations.h"
 #include "components/crash/core/common/crash_key.h"
 
 namespace crash_reporter {
@@ -45,8 +46,14 @@ class CrashKeyBaseSupport : public base::debug::CrashKeyImplementation {
   base::debug::CrashKeyString* Allocate(
       const char name[],
       base::debug::CrashKeySize size) override {
-    SIZE_CLASS_OPERATION(size, return new, (name, size));
-    return nullptr;
+    base::debug::CrashKeyString* crash_key = nullptr;
+
+    SIZE_CLASS_OPERATION(size, crash_key = new, (name, size));
+
+    // Crash keys allocated through this API are never freed.
+    if (crash_key)
+      ANNOTATE_LEAKING_OBJECT_PTR(crash_key);
+    return crash_key;
   }
 
   void Set(base::debug::CrashKeyString* crash_key,
