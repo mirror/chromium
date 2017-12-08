@@ -114,6 +114,11 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
     }
 
     @Override
+    public boolean isQueryEnabled() {
+        return nativeIsQueryEnabled(mNativePointer);
+    }
+
+    @Override
     public void logFeature(Feature feature, Object value) {
         assert mIsLoggingReadyForPage : "mIsLoggingReadyForPage false.";
         assert !mHasInferenceOccurred;
@@ -260,4 +265,5 @@ public class ContextualSearchRankerLoggerImpl implements ContextualSearchRankerL
     // Returns an AssistRankerPrediction integer value.
     private native int nativeRunInference(long nativeContextualSearchRankerLoggerImpl);
     private native void nativeWriteLogAndReset(long nativeContextualSearchRankerLoggerImpl);
+    private native boolean nativeIsQueryEnabled(long nativeContextualSearchRankerLoggerImpl);
 }
