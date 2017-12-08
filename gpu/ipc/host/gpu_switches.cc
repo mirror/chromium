@@ -6,11 +6,5 @@
 
 namespace switches {
 
-// Enable native GPU memory buffer support when available.
-const char kEnableNativeGpuMemoryBuffers[] = "enable-native-gpu-memory-buffers";
-
-// Disables native GPU memory buffer support.
-const char kDisableNativeGpuMemoryBuffers[] =
-    "disable-native-gpu-memory-buffers";
 
 }  // namespace switches
