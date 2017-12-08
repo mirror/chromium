@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a53c2b7_6b3aad50",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5df811c_d366ba84",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707345a0_c40a9c69",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacd43f4_3308767d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "I\u0027d err on the side of renaming this when it\u0027s actually affecting the new API (which I think should be soon.)",
+      "parentUuid": "707345a0_c40a9c69",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7bea207_24ff2333",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Ditto. I\u0027d like to check with Klaus first on this. If nobody is using it we should remove it rather than rename it.",
+      "parentUuid": "983876aa_0b8ee8e5",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7602dba_d33a1eab",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8d20ee_ca0df1a1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7602dba_d33a1eab",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "5c500d82_89432665",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf70c90_256c4998",
+      "range": {
+        "startLine": 1602,
+        "startChar": 25,
+        "endLine": 1602,
+        "endChar": 26
+      },
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73fa0308_d3a75f5c",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "6f2a4122_bd9515a5",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73fa0308_d3a75f5c",
+      "range": {
+        "startLine": 1615,
+        "startChar": 5,
+        "endLine": 1615,
+        "endChar": 20
+      },
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e251bb_5cf33717",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 1
@@ -130,6 +250,24 @@
       "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4f0ec3_4ccb2aca",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-08T21:55:08Z",
+      "side": 1,
+      "message": "Correct. Thanks for that!",
+      "parentUuid": "b4e251bb_5cf33717",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
