@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd09e02_c716e06a",
+        "filename": "chrome/browser/extensions/data_deleter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T16:01:57Z",
+      "side": 1,
+      "message": "const \u0026?",
+      "revId": "204bae562c45b0ec3c8b16e910a69fb2e87acf9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61c9edf_04b346ec",
+        "filename": "chrome/browser/extensions/data_deleter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T16:01:57Z",
+      "side": 1,
+      "message": "const \u0026?",
+      "revId": "204bae562c45b0ec3c8b16e910a69fb2e87acf9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
