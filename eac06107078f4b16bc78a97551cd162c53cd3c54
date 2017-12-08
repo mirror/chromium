@@ -16,6 +16,24 @@
       "revId": "eac06107078f4b16bc78a97551cd162c53cd3c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47769892_0825ba70",
+        "filename": "chrome/test/chromedriver/net/websocket.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-08T07:34:29Z",
+      "side": 1,
+      "message": "Great! Wasn\u0027t sure about it.",
+      "parentUuid": "0666e725_7fa2d6f2",
+      "revId": "eac06107078f4b16bc78a97551cd162c53cd3c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
