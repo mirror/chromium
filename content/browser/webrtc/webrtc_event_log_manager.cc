@@ -60,7 +60,7 @@ WebRtcEventLogManager::WebRtcEventLogManager()
     : clock_for_testing_(nullptr),
       local_logs_observer_(nullptr),
       max_local_log_file_size_bytes_(kDefaultMaxLocalLogFileSizeBytes),
-      file_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+      task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -75,7 +75,7 @@ void WebRtcEventLogManager::PeerConnectionAdded(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::PeerConnectionAddedInternal,
                      base::Unretained(this), render_process_id, lid,
@@ -87,7 +87,7 @@ void WebRtcEventLogManager::PeerConnectionRemoved(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::PeerConnectionRemovedInternal,
                      base::Unretained(this), render_process_id, lid,
@@ -100,7 +100,7 @@ void WebRtcEventLogManager::EnableLocalLogging(
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!base_path.empty());
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::EnableLocalLoggingInternal,
                      base::Unretained(this), base_path, max_file_size_bytes,
@@ -110,7 +110,7 @@ void WebRtcEventLogManager::EnableLocalLogging(
 void WebRtcEventLogManager::DisableLocalLogging(
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::DisableLocalLoggingInternal,
                      base::Unretained(this), std::move(reply)));
@@ -122,17 +122,17 @@ void WebRtcEventLogManager::OnWebRtcEventLogWrite(
     const std::string& output,
     base::OnceCallback<void(bool)> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&WebRtcEventLogManager::WriteToLocalLogFile,
                                 base::Unretained(this), render_process_id, lid,
                                 output, std::move(reply)));
 }
 
 void WebRtcEventLogManager::SetLocalLogsObserver(
-    LocalLogsObserver* observer,
+    WebRtcLocalEventLogsObserver* observer,
     base::OnceCallback<void()> reply) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  file_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&WebRtcEventLogManager::SetLocalLogsObserverInternal,
                      base::Unretained(this), observer, std::move(reply)));
@@ -142,7 +142,7 @@ void WebRtcEventLogManager::PeerConnectionAddedInternal(
     int render_process_id,
     int lid,
     base::OnceCallback<void(bool)> reply) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   const auto result = active_peer_connections_.emplace(render_process_id, lid);
 
   if (!result.second) {  // PeerConnection already registered.
@@ -164,7 +164,7 @@ void WebRtcEventLogManager::PeerConnectionRemovedInternal(
     int render_process_id,
     int lid,
     base::OnceCallback<void(bool)> reply) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
   const PeerConnectionKey key = PeerConnectionKey(render_process_id, lid);
   auto peer_connection = active_peer_connections_.find(key);
@@ -230,9 +230,9 @@ void WebRtcEventLogManager::DisableLocalLoggingInternal(
 }
 
 void WebRtcEventLogManager::SetLocalLogsObserverInternal(
-    LocalLogsObserver* observer,
+    WebRtcLocalEventLogsObserver* observer,
     base::OnceCallback<void()> reply) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
   local_logs_observer_ = observer;
 
@@ -242,7 +242,7 @@ void WebRtcEventLogManager::SetLocalLogsObserverInternal(
 }
 
 void WebRtcEventLogManager::StartLocalLogFile(int render_process_id, int lid) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
   // Add some information to the name given by the caller.
   base::FilePath file_path =
@@ -289,7 +289,7 @@ void WebRtcEventLogManager::StartLocalLogFile(int render_process_id, int lid) {
 }
 
 void WebRtcEventLogManager::StopLocalLogFile(int render_process_id, int lid) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   auto it = local_logs_.find(PeerConnectionKey(render_process_id, lid));
   if (it == local_logs_.end()) {
     return;
@@ -303,7 +303,7 @@ void WebRtcEventLogManager::WriteToLocalLogFile(
     int lid,
     const std::string& output,
     base::OnceCallback<void(bool)> reply) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   DCHECK_LE(output.length(),
             static_cast<size_t>(std::numeric_limits<int>::max()));
 
@@ -353,7 +353,7 @@ void WebRtcEventLogManager::WriteToLocalLogFile(
 
 WebRtcEventLogManager::LocalLogFilesMap::iterator
 WebRtcEventLogManager::CloseLocalLogFile(LocalLogFilesMap::iterator it) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
   const PeerConnectionKey peer_connection = it->first;
 
@@ -370,7 +370,7 @@ WebRtcEventLogManager::CloseLocalLogFile(LocalLogFilesMap::iterator it) {
 void WebRtcEventLogManager::MaybeUpdateWebRtcEventLoggingState(
     int render_process_id,
     int lid) {
-  DCHECK(file_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   // Currently we only support local logging, so the state always needs to be
   // updated when this function is called. When remote logging will be added,
   // we'll need to enable WebRTC logging only when the first of local/remote
@@ -402,7 +402,7 @@ base::FilePath WebRtcEventLogManager::GetLocalFilePath(
     const base::FilePath& base_path,
     int render_process_id,
     int lid) {
-  // Expected to be called from within |file_task_runner_|, but there's no
+  // Expected to be called from within |task_runner_|, but there's no
   // real constraint for that.
   base::Time::Exploded now;
   if (clock_for_testing_) {

@@ -17,6 +17,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/time/clock.h"
 #include "build/build_config.h"
+#include "content/browser/webrtc/webrtc_event_log_manager_common.h"
 #include "content/common/content_export.h"
 
 namespace content {
@@ -31,36 +32,6 @@ namespace content {
 // https://crbug.com/775415
 class CONTENT_EXPORT WebRtcEventLogManager {
  public:
-  // For a given Chrome session, this is a unique key for PeerConnections.
-  // It's not, however, unique between sessions (after Chrome is restarted).
-  struct PeerConnectionKey {
-    constexpr PeerConnectionKey(int render_process_id, int lid)
-        : render_process_id(render_process_id), lid(lid) {}
-
-    bool operator==(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) ==
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    bool operator<(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) <
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    int render_process_id;
-    int lid;  // Renderer-local PeerConnection ID.
-  };
-
-  // Allow an observer to be registered for notifications of local log files
-  // being started/stopped, and the paths which will be used for these logs.
-  class LocalLogsObserver {
-   public:
-    virtual ~LocalLogsObserver() = default;
-    virtual void OnLocalLogsStarted(PeerConnectionKey peer_connection,
-                                    base::FilePath file_path) = 0;
-    virtual void OnLocalLogsStopped(PeerConnectionKey peer_connection) = 0;
-  };
-
   static constexpr size_t kUnlimitedFileSize = 0;
 
 #if defined(OS_ANDROID)
@@ -146,7 +117,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // If a reply callback is given, it will be posted back to BrowserThread::UI
   // after the observer has been set.
   void SetLocalLogsObserver(
-      LocalLogsObserver* observer,
+      WebRtcLocalEventLogsObserver* observer,
       base::OnceCallback<void()> reply = base::OnceCallback<void()>());
 
  protected:
@@ -182,7 +153,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
 
   void DisableLocalLoggingInternal(base::OnceCallback<void(bool)> reply);
 
-  void SetLocalLogsObserverInternal(LocalLogsObserver* observer,
+  void SetLocalLogsObserverInternal(WebRtcLocalEventLogsObserver* observer,
                                     base::OnceCallback<void()> reply);
 
   // Local log file handling.
@@ -233,7 +204,7 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // Observer which will be informed whenever a local log file is started or
   // stopped. Its callbacks are called synchronously from |file_task_runner_|,
   // so the observer needs to be able to either run from any (sequenced) runner.
-  LocalLogsObserver* local_logs_observer_;
+  WebRtcLocalEventLogsObserver* local_logs_observer_;
 
   // If FilePath is empty, local logging is disabled.
   // If nonempty, local logging is enabled, and all local logs will be saved
@@ -244,8 +215,12 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // a sentinel value (with a self-explanatory name).
   size_t max_local_log_file_size_bytes_;
 
-  // File operations will run sequentially on this runner.
-  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
+  // The main logic will run sequentially on this runner, on which blocking
+  // tasks are allowed.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // TODO: !!!
+  //  WebRtcEventLogManagerLocalLogsHandler local_logs_handler_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebRtcEventLogManager);
