@@ -28,7 +28,7 @@
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #endif
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 class LocationBarView;
 class OmniboxClient;
 class OmniboxPopupView;
@@ -60,7 +60,7 @@ class OmniboxViewViews : public OmniboxView,
 
   OmniboxViewViews(OmniboxEditController* controller,
                    std::unique_ptr<OmniboxClient> client,
-                   CommandUpdater* command_updater,
+                   CommandUpdaterProxy* command_updater_proxy,
                    bool popup_window_mode,
                    LocationBarView* location_bar,
                    const gfx::FontList& font_list);
