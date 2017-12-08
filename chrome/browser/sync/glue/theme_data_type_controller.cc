@@ -25,6 +25,7 @@ ThemeDataTypeController::~ThemeDataTypeController() {}
 
 bool ThemeDataTypeController::StartModels() {
   DCHECK(CalledOnValidThread());
+  extensions::ExtensionSystem::Get(profile_)->Init();
   extensions::ExtensionSystem::Get(profile_)->InitForRegularProfile(true);
   return true;
 }

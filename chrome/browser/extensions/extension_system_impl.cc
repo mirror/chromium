@@ -366,6 +366,10 @@ ExtensionSystemImpl::~ExtensionSystemImpl() {
 void ExtensionSystemImpl::Shutdown() {
 }
 
+void ExtensionSystemImpl::Init() {
+  cookie_notifier_ = std::make_unique<ExtensionCookieNotifier>(profile_);
+}
+
 void ExtensionSystemImpl::InitForRegularProfile(bool extensions_enabled) {
   TRACE_EVENT0("browser,startup", "ExtensionSystemImpl::InitForRegularProfile");
   DCHECK(!profile_->IsOffTheRecord());

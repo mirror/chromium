@@ -117,6 +117,8 @@ void ShellExtensionSystem::LaunchApp(const ExtensionId& extension_id) {
 void ShellExtensionSystem::Shutdown() {
 }
 
+void ShellExtensionSystem::Init(bool extensions_enabled) {}
+
 void ShellExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
   service_worker_manager_.reset(new ServiceWorkerManager(browser_context_));
   runtime_data_.reset(

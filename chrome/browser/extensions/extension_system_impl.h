@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/extension_cookie_notifier.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "extensions/browser/extension_system.h"
@@ -48,6 +49,7 @@ class ExtensionSystemImpl : public ExtensionSystem {
   // KeyedService implementation.
   void Shutdown() override;
 
+  void Init() override;
   void InitForRegularProfile(bool extensions_enabled) override;
 
   ExtensionService* extension_service() override;  // shared
@@ -159,6 +161,8 @@ class ExtensionSystemImpl : public ExtensionSystem {
 
     OneShotEvent ready_;
   };
+
+  std::unique_ptr<ExtensionCookieNotifier> cookie_notifier_;
 
   Profile* profile_;
 
