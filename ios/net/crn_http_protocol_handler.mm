@@ -22,6 +22,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ios/net/chunked_data_stream_uploader.h"
 #import "ios/net/clients/crn_network_client_protocol.h"
 #import "ios/net/crn_http_protocol_handler_proxy_with_client_thread.h"
 #import "ios/net/http_protocol_logging.h"
@@ -136,7 +137,8 @@ void HTTPProtocolHandlerDelegate::SetInstance(
 class HttpProtocolHandlerCore
     : public base::RefCountedThreadSafe<HttpProtocolHandlerCore,
                                         HttpProtocolHandlerCore>,
-      public URLRequest::Delegate {
+      public URLRequest::Delegate,
+      public ChunkedDataStreamUploader::Delegate {
  public:
   HttpProtocolHandlerCore(NSURLRequest* request);
   // Starts the network request, and forwards the data downloaded from the
@@ -160,6 +162,10 @@ class HttpProtocolHandlerCore
                              bool fatal) override;
   void OnResponseStarted(URLRequest* request, int net_error) override;
   void OnReadCompleted(URLRequest* request, int bytes_read) override;
+
+  // ChunkedDataStreamUploader::Delegate method:
+  int OnRead(char* buffer, int buffer_length) override;
+  void OnFinishUpload() override;
 
  private:
   friend class base::RefCountedThreadSafe<HttpProtocolHandlerCore,
@@ -208,6 +214,9 @@ class HttpProtocolHandlerCore
   // thread.
   URLRequest* net_request_;
 
+  base::WeakPtr<ChunkedDataStreamUploader> chunked_uploader_;
+  NSInputStream* pending_stream_;
+
   base::WeakPtr<RequestTracker> tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpProtocolHandlerCore);
@@ -217,7 +226,8 @@ HttpProtocolHandlerCore::HttpProtocolHandlerCore(NSURLRequest* request)
     : client_(nil),
       read_buffer_size_(kIOBufferMinSize),
       read_buffer_wrapper_(nullptr),
-      net_request_(nullptr) {
+      net_request_(nullptr),
+      pending_stream_(nullptr) {
   // The request will be accessed from another thread. It is safer to make a
   // copy to avoid conflicts.
   // The copy is mutable, because that request will be given to the client in
@@ -244,6 +254,11 @@ void HttpProtocolHandlerCore::HandleStreamEvent(NSStream* stream,
       StopRequestWithError(NSURLErrorUnknown, ERR_UNEXPECTED);
       break;
     case NSStreamEventEndEncountered:
+      if (chunked_uploader_) {
+        chunked_uploader_->UploadWhenReady(true);
+        break;
+      }
+
       StopListeningStream(stream);
       if (!post_data_readers_.empty()) {
         // NOTE: This call will result in |post_data_readers_| being cleared,
@@ -257,6 +272,12 @@ void HttpProtocolHandlerCore::HandleStreamEvent(NSStream* stream,
         tracker_->StartRequest(net_request_);
       break;
     case NSStreamEventHasBytesAvailable: {
+      if (chunked_uploader_) {
+        pending_stream_ = base::mac::ObjCCastStrict<NSInputStream>(stream);
+        chunked_uploader_->UploadWhenReady(false);
+        break;
+      }
+
       NSInteger length;
       // TODO(crbug.com/738025): Dynamically change the size of the read buffer
       // to improve the read (POST) performance, see AllocateReadBuffer(), &
@@ -691,6 +712,19 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
                             forMode:NSDefaultRunLoopMode];
     [input_stream open];
     // The request will be started when the stream is fully read.
+
+    if (!net_request_->extra_request_headers().HasHeader(
+            HttpRequestHeaders::kContentLength)) {
+      std::unique_ptr<ChunkedDataStreamUploader> uploader(
+          new ChunkedDataStreamUploader(this));
+      chunked_uploader_ = uploader->GetUploader();
+      net_request_->set_upload(std::move(uploader));
+
+      net_request_->Start();
+      if (tracker_)
+        tracker_->StartRequest(net_request_);
+    }
+
     return;
   }
 
@@ -812,6 +846,20 @@ void HttpProtocolHandlerCore::StripPostSpecificHeaders(
       HttpRequestHeaders::kContentType)];
   [request setValue:nil forHTTPHeaderField:base::SysUTF8ToNSString(
       HttpRequestHeaders::kOrigin)];
+}
+
+int HttpProtocolHandlerCore::OnRead(char* buffer, int buffer_length) {
+  int bytes_read = 0;
+  if (pending_stream_) {
+    bytes_read = [pending_stream_ read:reinterpret_cast<unsigned char*>(buffer)
+                             maxLength:buffer_length];
+  }
+  return bytes_read;
+}
+
+void HttpProtocolHandlerCore::OnFinishUpload() {
+  StopListeningStream(pending_stream_);
+  pending_stream_ = nullptr;
 }
 
 }  // namespace net
