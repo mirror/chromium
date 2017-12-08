@@ -39,6 +39,7 @@
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
+#include "ui/gfx/gpu_fence.h"
 
 #include <array>
 #include "core/dom/ExecutionContext.h"
@@ -692,6 +693,15 @@ void VRDisplay::submitFrame() {
   if (wait_for_previous_render_ == WaitPrevStrategy::kBeforeBitmap)
     wait_time += WaitForPreviousRenderToFinish();
 
+  if (prev_frame_fence_) {
+    DVLOG(3) << "CreateClientGpuFenceCHROMIUM(prev_frame_fence_)";
+    GLuint id = context_gl_->CreateClientGpuFenceCHROMIUM(
+        prev_frame_fence_->AsClientGpuFence());
+    context_gl_->WaitGpuFenceCHROMIUM(id);
+    context_gl_->DestroyGpuFenceCHROMIUM(id);
+    prev_frame_fence_.reset();
+  }
+
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
   scoped_refptr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
@@ -829,6 +839,20 @@ WTF::TimeDelta VRDisplay::WaitForPreviousRenderToFinish() {
     }
   }
   return WTF::TimeTicks::Now() - start;
+}
+
+void VRDisplay::OnSubmitFramePostRenderFence(
+    const gfx::GpuFenceHandle& handle) {
+  DVLOG(3) << __FUNCTION__ << ": got handle, fd=" << handle.native_fd.fd;
+  // If we get GpuFences, we want to wait a bit earlier.
+  //
+  // TODO(klausw): This should really be a flag in VRDisplayCapabilities, but
+  // currently this gets set up in gvr_device.cc in a way that makes it hard to
+  // apply runtime changes from vr_shell_gl.cc.
+  if (wait_for_previous_render_ == WaitPrevStrategy::kAfterBitmap) {
+    wait_for_previous_render_ = WaitPrevStrategy::kBeforeBitmap;
+  }
+  prev_frame_fence_ = std::make_unique<gfx::GpuFence>(handle);
 }
 
 Document* VRDisplay::GetDocument() {
