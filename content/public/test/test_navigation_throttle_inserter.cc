@@ -10,6 +10,32 @@
 
 namespace content {
 
+namespace {
+
+class ThrottleInserter : public content::NavigationThrottle {
+ public:
+  ThrottleInserter(content::NavigationHandle* handle,
+                   ThrottleInsertionCallback* callback)
+      : content::NavigationThrottle(handle), callback_(callback) {}
+  ~ThrottleInserter() override {}
+
+  // NavigationThrottle:
+  ThrottleCheckResult WillStartRequest() override {
+    DCHECK(callback_);
+    if (std::unique_ptr<NavigationThrottle> throttle =
+            callback_->Run(navigation_handle())) {
+      navigation_handle()->RegisterThrottleForTesting(std::move(throttle));
+    }
+    return PROCEED;
+  }
+  const char* GetNameForLogging() override { return "ThrottleInserter"; }
+
+ private:
+  ThrottleInsertionCallback* callback_;
+};
+
+}  // namespace
+
 TestNavigationThrottleInserter::TestNavigationThrottleInserter(
     WebContents* web_contents,
     ThrottleInsertionCallback callback)
@@ -19,10 +45,8 @@ TestNavigationThrottleInserter::~TestNavigationThrottleInserter() = default;
 
 void TestNavigationThrottleInserter::DidStartNavigation(
     NavigationHandle* navigation_handle) {
-  if (std::unique_ptr<NavigationThrottle> throttle =
-          callback_.Run(navigation_handle)) {
-    navigation_handle->RegisterThrottleForTesting(std::move(throttle));
-  }
+  navigation_handle->RegisterThrottleForTesting(
+      std::make_unique<ThrottleInserter>(navigation_handle, &callback_));
 }
 
 }  // namespace content
