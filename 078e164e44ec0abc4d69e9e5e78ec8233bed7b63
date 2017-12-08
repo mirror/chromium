@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ec64de7_982fb685",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-08T00:44:24Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll change it to \u0027CheckVersion\u0027.",
+      "parentUuid": "b826c5d1_85ba31e9",
+      "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a04bce4_3593a35f",
         "filename": "net/proxy/proxy_config_service_linux.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T00:03:09Z",
       "side": 1,
       "message": "BTW, do we know if there is still a leak?",
+      "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27c1f20_0541321f",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-08T00:44:24Z",
+      "side": 1,
+      "message": "The leak was in gtk somewhere. I\u0027m sure we\u0027ve updated our libraries since 2014, but I don\u0027t know if the leak has been fixed upstream. I\u0027ll try to reproduce it without the annotation, and if I can\u0027t submit it without this line.",
+      "parentUuid": "6a04bce4_3593a35f",
       "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
