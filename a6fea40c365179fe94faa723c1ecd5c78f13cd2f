@@ -16,6 +16,24 @@
       "revId": "a6fea40c365179fe94faa723c1ecd5c78f13cd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286db6f8_7007e6bc",
+        "filename": "chromeos/dbus/fake_shill_profile_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:38:16Z",
+      "side": 1,
+      "message": "Done. Reimplemented with new APIs for related methods. (I kept existing code as is in other methods since it is out of scope, I think).",
+      "parentUuid": "cef59200_8585bfc1",
+      "revId": "a6fea40c365179fe94faa723c1ecd5c78f13cd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5000607d_dc578dcc",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:38:16Z",
+      "side": 1,
+      "message": "Thank you for explanation.",
+      "parentUuid": "afa44141_a101dbf3",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90b55a13_4641c55e",
         "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
         "patchSetId": 2
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "All the more reason to add EXPECT_TRUE instead :)",
       "parentUuid": "545f4dcb_c9e1f3ee",
+      "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2261b74_41835f53",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:38:16Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "e9ed93c7_aa281cfd",
       "revId": "614bae7a05558388b1e99c792e5b17588515e09b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
