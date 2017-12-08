@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4985122_da3e272c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "Introduce",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc494a8f_2cc321db",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "nit: something like \"...implements toplevel surface for which position is managed by the shell\" to describe what it does instead of what it\u0027s used for",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fafa5bd_1519343d",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "nit: ShellSurfaceBase",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187542a4_8573a6d9",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "nit: remove this",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53174de3_df4035be",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "Please add:\n\nTODO(reveman): Remove virtual functions below to avoid FBC (Fragile base class) problem.\n\nabove all these virtual functions.",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0244088e_17f93606",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "not your change but do you mind moving this up to \"// Overridden from ui::EventHandler:\" while here?",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a304789_e74d8c75",
+        "filename": "components/exo/shell_surface_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:18:06Z",
+      "side": 1,
+      "message": "do we still need this here? have client controlled tests not been moved now so this is no longer needed?",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
