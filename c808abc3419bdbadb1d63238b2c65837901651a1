@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd42545_16f9d2c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/extensions/extensions-iframe-eval-expected.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-08T00:02:13Z",
+      "side": 0,
+      "message": "Needed to suppress this message because this line number churns from bundled integration_test_runner.js. See ExtensionServer.js below.",
+      "revId": "c808abc3419bdbadb1d63238b2c65837901651a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
