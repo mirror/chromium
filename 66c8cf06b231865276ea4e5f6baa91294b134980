@@ -22,6 +22,30 @@
       "revId": "66c8cf06b231865276ea4e5f6baa91294b134980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f481497f_ae961770",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T19:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6015eb0d_a333e2ce",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "66c8cf06b231865276ea4e5f6baa91294b134980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
