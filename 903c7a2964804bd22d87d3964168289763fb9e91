@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "aa6d1278_509aca44",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T17:53:55Z",
+      "side": 1,
+      "message": "I discussed with Oshima-san, and he thinks that the intentional behavior is for first-time-connected displays, prefer the default setting (which is bottom alignment in this case) if the user has ever changed it anywhere for other displays (as long as the local value is not recommended by policy). So I\u0027m going to keep this part as is.",
+      "parentUuid": "4c98be71_46562cd0",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57c7f4c6_15e07d96",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 1
@@ -90,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "31315144_97530dfd",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T17:53:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57c7f4c6_15e07d96",
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29f11461_29951410",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 1
@@ -104,6 +146,24 @@
       "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f63c175_9dd72774",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-08T17:53:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29f11461_29951410",
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
