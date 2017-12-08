@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfec74ae_dfb48d76",
+        "filename": "third_party/WebKit/Source/core/paint/RarePaintData.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-08T23:41:23Z",
+      "side": 0,
+      "message": "There was a bug here which caused crbug.com/793272. Should be \"else if ...\".\n\nHowever the new FragmentData::ContentsProperties() just returns PropertyTreeState(PostScrollTranslation(), PostOverflowClip(), LocalBorderBoxProperties()-\u003eEffect());\n\nThere was another bug of RarePaintData::ContentsProperties(): \nIf the object had no ScrollTranslation() but has Perspective(), it would return Transform().",
+      "revId": "182dd1a3b8d8a57d9eb796b6027bd6ed2009a2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
