@@ -14,9 +14,6 @@
 
 namespace blink {
 
-// TODO(crbug.com/793288): Remove this class and its subclasses, if possible,
-// once more of project Ribbon is done and all use of aliases can be found and
-// (hopefully) constrained.
 class CSSUnresolvedProperty {
  public:
   CORE_EXPORT static const CSSUnresolvedProperty& Get(CSSPropertyID);
@@ -29,8 +26,14 @@ class CSSUnresolvedProperty {
   CSSPropertyID PropertyID() const { return id_; }
   bool IDEquals(CSSPropertyID id) const { return id_ == id; }
   virtual bool IsResolvedProperty() const { return false; }
-  virtual const char* GetPropertyName() const { return getPropertyName(id_); }
-  virtual const WTF::AtomicString& GetPropertyNameAtomicString() const { return getPropertyNameAtomicString(id_); }
+  virtual const char* GetPropertyName() const {
+    NOTREACHED();
+    return nullptr;
+  }
+  virtual const WTF::AtomicString& GetPropertyNameAtomicString() const {
+    NOTREACHED();
+    return *(new WTF::AtomicString());
+  }
   WTF::String GetPropertyNameString() const {
     // We share the StringImpl with the AtomicStrings.
     return GetPropertyNameAtomicString().GetString();
