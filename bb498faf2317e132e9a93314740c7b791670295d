@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06792ca_1b4679f9",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-08T22:04:58Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why the IDs are generated here, and then passed on instead of say JavaScript/HTML code sequentially generating IDs as \"id1\", \"id2\". \"id3\" by itself?\n\nBased on the offline discussion, it seems that the reason is that we want the HTML DOM IDs to have sensible names, instead of just \"id1\", \"id2\", \"id3\" etc. That\u0027s a valid reason, but I would prefer that it be documented here since it was not immediately obvious (at least to me).",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "bb498faf2317e132e9a93314740c7b791670295d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
