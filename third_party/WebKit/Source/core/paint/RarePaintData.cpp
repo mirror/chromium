@@ -89,7 +89,7 @@ PropertyTreeState RarePaintData::ContentsProperties() const {
       contents.SetTransform(properties->ScrollTranslation());
     if (properties->OverflowClip())
       contents.SetClip(properties->OverflowClip());
-    if (properties->InnerBorderRadiusClip())
+    else if (properties->InnerBorderRadiusClip())
       contents.SetClip(properties->InnerBorderRadiusClip());
     else if (properties->CssClip())
       contents.SetClip(properties->CssClip());
