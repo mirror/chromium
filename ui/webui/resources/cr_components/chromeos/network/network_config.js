@@ -358,20 +358,22 @@ Polymer({
       return;
     this.propertiesSent_ = true;
     this.error_ = '';
+
+    var propertiesToSet = this.getPropertiesToSet_();
     if (!this.guid || this.getSource_() == CrOnc.Source.NONE) {
       // New network configurations default to 'AutoConnect' unless prohibited
       // by policy.
       CrOnc.setTypeProperty(
-          this.configProperties_, 'AutoConnect',
+          propertiesToSet, 'AutoConnect',
           !(this.globalPolicy &&
             this.globalPolicy.AllowOnlyPolicyNetworksToConnect));
 
       // Create the configuration, then connect to it in the callback.
       this.networkingPrivate.createNetwork(
-          this.shareNetwork_, this.configProperties_,
+          this.shareNetwork_, propertiesToSet,
           this.createNetworkCallback_.bind(this));
     } else {
-      var propertiesToSet = this.getPropertiesToSet_();
+      propertiesToSet.GUID = this.guid;
       this.networkingPrivate.setProperties(
           this.guid, propertiesToSet, this.setPropertiesCallback_.bind(this));
     }
@@ -886,17 +888,25 @@ Polymer({
    * @private
    */
   setSelectedCerts_: function(pem, certId) {
-    var serverCa = (!!pem && this.serverCaCerts_.find(function(cert) {
-                     return cert.pem == pem;
-                   })) ||
-        this.serverCaCerts_[0];
-    this.selectedServerCaHash_ = (serverCa && serverCa.hash) || '';
+    if (pem) {
+      var serverCa = this.serverCaCerts_.find(function(cert) {
+        return cert.pem == pem;
+      });
+      if (serverCa)
+        this.selectedServerCaHash_ = serverCa.hash;
+    }
+    if (!this.selectedServerCaHash_ && this.serverCaCerts_[0])
+      this.selectedServerCaHash_ = this.serverCaCerts_[0].hash;
 
-    var userCert = (!!certId && this.userCerts_.find(function(cert) {
-                     return cert.PKCS11Id == certId;
-                   })) ||
-        this.userCerts_[0];
-    this.selectedUserCertHash_ = (userCert && userCert.hash) || '';
+    if (certId) {
+      var userCert = this.userCerts_.find(function(cert) {
+        return cert.PKCS11Id == certId;
+      });
+      if (userCert)
+        this.selectedUserCertHash_ = userCert.hash;
+    }
+    if (!this.selectedUserCertHash_ && this.userCerts_[0])
+      this.selectedUserCertHash_ = this.userCerts_[0].hash;
   },
 
   /**
@@ -1059,7 +1069,6 @@ Polymer({
   /** @private */
   getPropertiesToSet_: function() {
     var propertiesToSet = Object.assign({}, this.configProperties_);
-    propertiesToSet.GUID = this.guid;
     var eap = this.getEap_(propertiesToSet);
     if (eap)
       this.setEapProperties_(eap);
