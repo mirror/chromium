@@ -2610,7 +2610,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kForceOverlayFullscreenVideo,
     switches::kForceVideoOverlays,
     switches::kFullMemoryCrashReport,
-    switches::kIgnoreAutoplayRestrictionsForTests,
     switches::kIPCConnectionTimeout,
     switches::kIsolateOrigins,
     switches::kJavaScriptFlags,
