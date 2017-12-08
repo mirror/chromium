@@ -52,6 +52,24 @@
       "revId": "022e5ad3cbfcb37f8467f3fd498e80bafc94f093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb37312a_04a32a11",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-cue-rendering-position-auto-rtl-expected.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T14:44:37Z",
+      "side": 1,
+      "message": "thanks, i will take it up as a follow up, landing this for now",
+      "parentUuid": "058f00d2_85128bbc",
+      "revId": "022e5ad3cbfcb37f8467f3fd498e80bafc94f093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
