@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560fdff5_f8c47b32",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-08T07:22:58Z",
+      "side": 1,
+      "message": "The original code is \u0027||\u0027, supposing it should be \u0027\u0026\u0026\u0027?",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 17
+      },
+      "revId": "d03f26e457e1293380ff976040385caca9060e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f990ef_735c5a75",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-08T07:22:58Z",
+      "side": 1,
+      "message": "TODO(leonhsl): revise this test file.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 5
+      },
+      "revId": "d03f26e457e1293380ff976040385caca9060e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

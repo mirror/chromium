@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2f912e_17222fe2",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-08T07:22:58Z",
+      "side": 0,
+      "message": "TODO(leonhsl): move these two test files into Blink modules/serviceworkers/ and revise accordingly.",
+      "range": {
+        "startLine": 1583,
+        "startChar": 3,
+        "endLine": 1584,
+        "endChar": 95
+      },
+      "revId": "7e2e998b236a8e3827d4d6290e766a5c0bdd69f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
