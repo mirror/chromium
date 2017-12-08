@@ -70,6 +70,30 @@
       "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bde3059_e552dd89",
+        "filename": "chrome/app/android/chrome_main_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-08T17:28:35Z",
+      "side": 0,
+      "message": "\u003e Ya, sorry for not being clear - I meant where is it getting set after this change. I see that it wasn\u0027t intentional :)\n\nso yeah, I intentionally wanted to remove the \"main entry point time\" from Android because it is misleading (entry to our code happens in Java, and we do a lot of stuff before the native-side fake \u0027main\u0027 entry point gets executed). In other words, when main entry point moves, it does not provide us with any signal on whether it was a good move or a bad one.\n\nI did not figure out why Telemetry depends on it (yet), also not sure why it is based on wallclock on desktop. I\u0027ll take a look.\n\n\u003e \"On Android it mixes a Java clock with a native one, which is extra broken\" - are you sure? If I\u0027m not mistaken, we looked at the sources at the time and they were referencing the same underlying values assuming an OEM doesn\u0027t muck with java impl.\n\nNot sure about wallclock (which is wrong to use anyway). For ticks we indeed have uptimeMillis() matching base::TimeTicks::Now() on how they call clock_gettime(2).\n\nOEM modifications .. hmm .. good point. They probably don\u0027t have much reason to touch these parts.",
+      "parentUuid": "4be18367_d4cf0aa8",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "a2b2cfcee178bb28f0b6c8ba6026a2a7121201c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
