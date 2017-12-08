@@ -127,9 +127,13 @@ const base::Feature kSimpleCachePrefetchExperiment = {
     "SimpleCachePrefetchExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
-int GetSimpleCachePrefetchSize() {
-  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
-                                                kSimplePrefetchBytesParam, 0);
+int GetSimpleCachePrefetchSize(net::CacheType cache_type) {
+/*  if (cache_type == net::DISK_CACHE || cache_type == net::MEDIA_CACHE) {
+    return base::GetFieldTrialParamByFeatureAsInt(
+        kSimpleCachePrefetchExperiment, kSimplePrefetchBytesParam, 0);
+  } else {*/
+    return 32768;
+  //}
 }
 
 SimpleEntryStat::SimpleEntryStat(base::Time last_used,
@@ -749,8 +753,11 @@ int SimpleSynchronousEntry::PreReadStreamPayload(
 
   int stream_size = entry_stat.data_size(stream_index);
   int read_size = stream_size + extra_size;
-  out->data = new net::GrowableIOBuffer();
-  out->data->SetCapacity(read_size);
+
+  if (!out->data) {
+    out->data = new net::GrowableIOBuffer();
+    out->data->SetCapacity(read_size);
+  }
   int file_offset = entry_stat.GetOffsetInFile(key_.size(), 0, stream_index);
   if (!ReadFromFileOrPrefetched(file, file_0_prefetch, 0, file_offset,
                                 read_size, out->data->data()))
@@ -1308,7 +1315,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   std::unique_ptr<char[]> prefetch_buf;
   base::StringPiece file_0_prefetch;
 
-  if (file_size > GetSimpleCachePrefetchSize()) {
+  if (file_size > GetSimpleCachePrefetchSize(cache_type_)) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
     RecordWhetherOpenDidPrefetch(cache_type_, true);
@@ -1371,8 +1378,12 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
                               /* stream_index = */ 1,
                               /* extra_size = */ 0, *out_entry_stat,
                               stream_1_eof, &stream_prefetch_data[1]);
-    if (rv != net::OK)
+    if (rv != net::OK) {
+      stream_prefetch_data[1].data->set_offset(32 * 1024);
       return rv;
+    }
+  } else {
+    stream_prefetch_data[1].data->set_offset(32 * 1024);
   }
 
   // If present, check the key SHA256.
