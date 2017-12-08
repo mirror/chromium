@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0279fd37_12b925bb",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T22:42:20Z",
+      "side": 1,
+      "message": "I believe you\u0027ve ended up with exactly the same API as CommandUpdater\u0027s public api, right (except for the DisableAll). Given that, I think you should make CommandUpdater implement this. That then tells me what is CommandUpdater should be renamed to CommandUpdaterImpl and then name this CommandUpdater. I believe that will mean fewer changes overall, and also clarify the relation between the classes.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "a3896846bac62e3f68a05ca79db624f753b95dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
