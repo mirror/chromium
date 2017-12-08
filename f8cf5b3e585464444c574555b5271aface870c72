@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b09b750_a8812a39",
+        "filename": "content/public/browser/network_service_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-08T22:48:23Z",
+      "side": 1,
+      "message": "yzshen@: Do you have some suggestions on how to make sure related |InterfacePtr|s received error notifications? (e.g. Do we have something like |RunUntilMojoIdle()|...?)\nIt\u0027s fairly easy to miss one or two if we are flushing them manually...",
+      "revId": "f8cf5b3e585464444c574555b5271aface870c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
