@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5986fcc8_aa081572",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-08T06:40:19Z",
+      "side": 1,
+      "message": "I don\u0027t yet fully understand the implementation of IntersectionObserver family nor the root cause.  But I\u0027m wondering why don\u0027t we use TrackingDocument() here?  I don\u0027t understand what the exact pre-condition of this method is.  Could you elaborate it?",
+      "revId": "61b806a5e537a692eeba40b7ad3efe587033cded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
