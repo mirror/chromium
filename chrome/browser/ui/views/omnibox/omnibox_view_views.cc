@@ -489,6 +489,7 @@ void OmniboxViewViews::OnTemporaryTextMaybeChanged(
                    : match.description;
   friendly_suggestion_text_ = AutocompleteMatchType::ToAccessibilityLabel(
       match.type, display_text, description,
+      model()->popup_model()->selected_line(), model()->result().size(),
       &friendly_suggestion_text_prefix_length_);
 
   SetWindowTextAndCaretPos(display_text, display_text.length(), false,
