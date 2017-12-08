@@ -187,6 +187,30 @@
     },
     {
       "key": {
+        "uuid": "3dfaa0e3_5acf442c",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-08T09:32:42Z",
+      "side": 1,
+      "message": "You look at |passwords_data_| and check that |state_| is still pending save or pending update. If the state is INACTIVE then you can\u0027t bring the bubble up.",
+      "parentUuid": "1bf7b008_5b8d52f4",
+      "range": {
+        "startLine": 643,
+        "startChar": 1,
+        "endLine": 643,
+        "endChar": 3
+      },
+      "revId": "4a38bc2fc9521642f216bed574f3a6b11b593d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a284f3d_f7cfbadb",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
         "patchSetId": 29
