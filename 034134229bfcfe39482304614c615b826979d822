@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cfe9e65_4c90d4e7",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-08T15:49:14Z",
+      "side": 0,
+      "message": "Note: there was a bug here. If the web_contents was destroyed, then browser is nullptr, which is not supported by DiceTurnSyncOnHelper.",
+      "revId": "034134229bfcfe39482304614c615b826979d822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
