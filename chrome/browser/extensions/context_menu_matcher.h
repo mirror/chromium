@@ -71,6 +71,8 @@ class ContextMenuMatcher {
                       content::RenderFrameHost* render_frame_host,
                       const content::ContextMenuParams& params);
 
+  void RecordHistogram(int command_id);
+
  private:
   friend class ::ExtensionContextMenuBrowserTest;
   friend class ExtensionContextMenuApiTest;
