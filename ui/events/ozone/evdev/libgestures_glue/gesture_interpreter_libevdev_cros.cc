@@ -157,7 +157,14 @@ void GestureInterpreterLibevdevCros::OnLibEvdevCrosOpen(
 void GestureInterpreterLibevdevCros::OnLibEvdevCrosEvent(Evdev* evdev,
                                                          EventStateRec* evstate,
                                                          const timeval& time) {
-  stime_t timestamp = StimeFromTimeval(&time);
+  // Check if this event has an MSC_TIMESTAMP field
+  stime_t timestamp;
+  if (EvdevBitIsSet(evdev->info.msc_bitmask, MSC_TIMESTAMP)) {
+    timestamp =
+        static_cast<stime_t>(Event_Get_Timestamp(evdev)) / 1000000.0 + 0.0;
+  } else {
+    timestamp = StimeFromTimeval(&time);
+  }
 
   // If the device has keys on it, dispatch any presses/release.
   DispatchChangedKeys(evdev->key_state_bitmask, timestamp);
