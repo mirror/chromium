@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebed4934_f0d0cc99",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-08T01:21:14Z",
+      "side": 1,
+      "message": "Is this ID persisted anywhere else or carry any meaningful data other than letting you link these IDs?",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "c5d23b1533a625d1b9e496bb8b62c70058b737b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
