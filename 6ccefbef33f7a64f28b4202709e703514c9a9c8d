@@ -22,6 +22,30 @@
       "revId": "6ccefbef33f7a64f28b4202709e703514c9a9c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f54a93_932d77cb",
+        "filename": "chrome/browser/chromeos/system_logs/debug_daemon_log_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-08T10:55:05Z",
+      "side": 1,
+      "message": "The documentation here actually guarantees that callback_ becomes null from the std::move: https://chromium.googlesource.com/chromium/src/+/62b22870744681a2005fc5aafe4474f5e2f74f3b/docs/callback.md",
+      "parentUuid": "87caac6b_eb2ec245",
+      "range": {
+        "startLine": 193,
+        "startChar": 1,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "6ccefbef33f7a64f28b4202709e703514c9a9c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
