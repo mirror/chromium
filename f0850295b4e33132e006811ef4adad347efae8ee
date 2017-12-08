@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8c4087_453e53af",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "bytes",
+      "range": {
+        "startLine": 76,
+        "startChar": 34,
+        "endLine": 76,
+        "endChar": 38
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a488d26c_2eeb6e70",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "is triggered",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6ede69_a12b2b76",
+        "filename": "ios/net/chunked_data_stream_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "\"When there is a Read() pending, call ...\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623ea969_12239333",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "\"It\u0027s a weak pointer because the ... \"",
+      "range": {
+        "startLine": 48,
+        "startChar": 54,
+        "endLine": 48,
+        "endChar": 65
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb558289_49a5c327",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "Prefer to avoid abbreviations in Chromium code -- so \"buffer\", \"buffer_length\", etc -- here and elsewhere in this CL.",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19532cf_3af42462",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "\"pointer to the network layer buffer\" ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ebb3ef_39ac007c",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "is_final_chunk_ is a clearer name for the variable.",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e200588_f4364093",
+        "filename": "ios/net/chunked_data_stream_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "is_front_of_stream_",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e476b20_d4826917",
+        "filename": "ios/net/chunked_data_stream_uploader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "Please add comments describing what each test is testing.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 6
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4373277_3c672921",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "Use ObjCCast\u003c\u003e() or ObjCCastStrict()\u003c\u003e from base/mac/foundation_utils.h instead of just a bare cast here.\n\n(ObjCCast() type-checks and returns nil if the cast is incorrect; ObjCCastStrict instead asserts if the cast isn\u0027t correct).",
+      "range": {
+        "startLine": 276,
+        "startChar": 27,
+        "endLine": 276,
+        "endChar": 40
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea55fd73_d3e01e51",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:29:34Z",
+      "side": 1,
+      "message": "static_cast\u003cunsigned char*\u003e(buf)",
+      "range": {
+        "startLine": 854,
+        "startChar": 40,
+        "endLine": 854,
+        "endChar": 48
+      },
+      "revId": "f0850295b4e33132e006811ef4adad347efae8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
