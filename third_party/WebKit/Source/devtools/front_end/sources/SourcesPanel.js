@@ -843,6 +843,14 @@ Sources.SourcesPanel = class extends UI.Panel {
   _appendUISourceCodeFrameItems(event, contextMenu, target) {
     if (!(target instanceof Sources.UISourceCodeFrame))
       return;
+    var uiSourceCode = target.uiSourceCode();
+    if (uiSourceCode.project().type() === Workspace.projectTypes.FileSystem) {
+      var binding = Persistence.persistence.binding(uiSourceCode);
+      uiSourceCode = binding ? binding.network : null;
+    }
+    var isSourceMapSource = uiSourceCode ? !!Bindings.CompilerScriptMapping.uiSourceCodeOrigin(uiSourceCode) : false;
+    if (isSourceMapSource)
+      return;
     contextMenu.debugSection().appendAction('debugger.evaluate-selection');
   }
 
