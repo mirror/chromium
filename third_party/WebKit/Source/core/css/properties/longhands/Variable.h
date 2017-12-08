@@ -15,7 +15,7 @@ namespace blink {
 
 class Variable : public CSSProperty {
  public:
-  constexpr Variable(CSSPropertyID id) : CSSProperty(id) {}
+  constexpr Variable() : CSSProperty() {}
 
   bool IsInherited() const override { return true; }
   bool IsAffectedByAll() const override { return false; }
