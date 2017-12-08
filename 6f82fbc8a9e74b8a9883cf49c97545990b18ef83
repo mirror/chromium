@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2a1a6da_3dd1c9f2",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-08T10:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b8a51c3_22d0af32",
+      "range": {
+        "startLine": 147,
+        "startChar": 39,
+        "endLine": 147,
+        "endChar": 43
+      },
+      "revId": "6f82fbc8a9e74b8a9883cf49c97545990b18ef83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e958b0dd_3a5d7471",
         "filename": "headless/public/util/compositor_controller.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6f82fbc8a9e74b8a9883cf49c97545990b18ef83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a894e6_144ea725",
+        "filename": "headless/public/util/compositor_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-08T10:20:56Z",
+      "side": 1,
+      "message": "yup, since these methods are private, call sites are only within this class. Thus, this is pretty safe.",
+      "parentUuid": "e958b0dd_3a5d7471",
+      "range": {
+        "startLine": 104,
+        "startChar": 18,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "6f82fbc8a9e74b8a9883cf49c97545990b18ef83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
