@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99694513_22d22da5",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-08T00:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e2de3d9_8128285a",
+      "range": {
+        "startLine": 166,
+        "startChar": 75,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21776eae_aacb90cf",
         "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T22:58:13Z",
       "side": 1,
       "message": "Similarly, I\u0027d prefer to use base::UmaHistogramEnumeration here.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 66
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3b29c9_8355d1c9",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-08T00:10:44Z",
+      "side": 1,
+      "message": "I\u0027m having trouble with this because of line 54 in histogram_functions.h that requires me to use an enum, when I\u0027m just getting a plain old integer from the javascript extension:\n\nstatic_assert(std::is_enum\u003cT\u003e::value,\n                \"Non enum passed to UmaHistogramEnumeration\");\n\nThe compile error is:\n../../base/metrics/histogram_functions.h:54:3: error: static_assert failed due to requirement \u0027std::is_enum\u003cint\u003e::value\u0027 \"Non enum passed to UmaHistogramEnumeration\"\n  static_assert(std::is_enum\u003cT\u003e::value,\n  ^             ~~~~~~~~~~~~~~~~~~~~~~\n\nDo you know how I could convert the params-\u003evalue into an appropriate enum type for this function?",
+      "parentUuid": "21776eae_aacb90cf",
       "range": {
         "startLine": 175,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48572fc6_99157579",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-08T00:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c354d0c2_d0371af9",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 68
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2440eacb_913b7218",
         "filename": "extensions/common/api/metrics_private.json",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408f42a8_5886e05c",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-08T00:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2440eacb_913b7218",
+      "range": {
+        "startLine": 194,
+        "startChar": 75,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
