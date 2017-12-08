@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31186e2a_37078253",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T03:24:37Z",
+      "side": 1,
+      "message": "please document the meaning of the return value. from the implementation, it looks like it might be:\n\n  // Returns true if the component was successfully unloaded\n  // or false if it couldn\u0027t be unloaded or already wasn\u0027t loaded.",
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769f79f1_f86336a3",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T03:24:37Z",
+      "side": 1,
+      "message": "you don\u0027t need to create this now; you can probably just do:\n\n  response_sender.Run(dbus::Response::FromMethodCall(method_call));",
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca90494_1c9cb213",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T03:24:37Z",
+      "side": 1,
+      "message": "same here:\n\n  response_sender.Run(dbus::ErrorResponse::FromMethodCall(...));",
+      "revId": "70aa5b43318bd9cd3cfda97cf15369a35bddccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
