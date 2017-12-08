@@ -504,9 +504,11 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
     bool is_signed_in =
         !is_off_the_record &&
         !io_data->google_services_account_id()->GetValue().empty();
+    // *** NOTE TO REVIEWER: the |is_signed_in| value was being set incorrectly
+    // because two parameters were swapped.  Think about what the consequences
+    // of this error are.
     variations::AppendVariationHeaders(
         request->url(), is_off_the_record, is_signed_in,
-        !is_off_the_record && io_data->GetMetricsEnabledStateOnIOThread(),
         &headers);
     request->SetExtraRequestHeaders(headers);
   }

@@ -230,7 +230,6 @@ void DataReductionProxyPingbackClient::CreateFetcherForDataAndStart() {
   // Attach variations headers.
   net::HttpRequestHeaders headers;
   variations::AppendVariationHeaders(pingback_url_, false /* incognito */,
-                                     false /* uma_enabled */,
                                      false /* is_signed_in */, &headers);
   if (!headers.IsEmpty())
     current_fetcher_->SetExtraRequestHeaders(headers.ToString());
