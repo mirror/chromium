@@ -37,9 +37,13 @@ class ScriptStreamingTest : public ::testing::Test {
                                  ->LoadingTaskRunner()),
         settings_(Settings::Create()),
         dummy_document_(Document::CreateForTest()) {
-    resource_ = ScriptResource::CreateForTest(
-        KURL("http://www.streaming-test.com/"), UTF8Encoding());
+    KURL url("http://www.streaming-test.com/");
+    resource_ = ScriptResource::CreateForTest(url, UTF8Encoding());
     resource_->SetStatus(ResourceStatus::kPending);
+    ResourceResponse response;
+    response.SetURL(url);
+    response.SetHTTPStatusCode(200);
+    resource_->SetResponse(response);
 
     MockScriptElementBase* element = MockScriptElementBase::Create();
     // Basically we are not interested in ScriptElementBase* calls, just making
