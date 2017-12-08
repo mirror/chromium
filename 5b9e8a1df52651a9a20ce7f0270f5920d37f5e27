@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "3b8d53a5_71e7c4f4",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876b5195_4677406f",
+      "range": {
+        "startLine": 992,
+        "startChar": 62,
+        "endLine": 992,
+        "endChar": 68
+      },
+      "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3229163f_5553e064",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f68d81_8a6d58cd",
+      "range": {
+        "startLine": 992,
+        "startChar": 70,
+        "endLine": 992,
+        "endChar": 71
+      },
+      "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49cc797b_aece1c14",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f00c65a_81e036fe",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49cc797b_aece1c14",
+      "range": {
+        "startLine": 1000,
+        "startChar": 52,
+        "endLine": 1000,
+        "endChar": 63
+      },
+      "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc3d1263_595bb249",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 1
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "e49b4020_061c4f2d",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc3d1263_595bb249",
+      "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f89a0d06_f0a99740",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 1
@@ -99,6 +189,24 @@
       "writtenOn": "2017-12-08T21:40:19Z",
       "side": 1,
       "message": "Is it okay to pretend that we don\u0027t have a first result here? Should we still get first result view just not put focus on it?",
+      "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ac8a58_e2a1981a",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T23:27:19Z",
+      "side": 1,
+      "message": "Yes, you are right. the first_result_view should always track the first result after search results are updated.",
+      "parentUuid": "f89a0d06_f0a99740",
       "revId": "5b9e8a1df52651a9a20ce7f0270f5920d37f5e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
