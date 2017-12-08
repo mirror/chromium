@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5366110_87be72b0",
+        "filename": "components/payments/core/payment_currency_amount.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-08T22:17:43Z",
+      "side": 1,
+      "message": "Please avoid specifying the number of floating points when converting from double, because (a) gas stations specify cost like 3.999/gallon in US (b) many currencies have more or less digits after a period.",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "ee61e926b3fc13f03744b44db1ba40a4c153a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
