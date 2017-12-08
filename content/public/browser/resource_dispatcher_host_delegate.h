@@ -27,7 +27,6 @@ class URLRequest;
 namespace content {
 
 class AppCacheService;
-class NavigationData;
 class ResourceContext;
 class ResourceDispatcherHostLoginDelegate;
 class ResourceThrottle;
@@ -131,7 +130,7 @@ class CONTENT_EXPORT ResourceDispatcherHostDelegate {
 
   // Asks the embedder for NavigationData related to this request. It is only
   // called for navigation requests.
-  virtual NavigationData* GetNavigationData(net::URLRequest* request) const;
+  virtual base::Value GetNavigationData(net::URLRequest* request) const;
 
   // Get platform ClientCertStore. May return nullptr.
   virtual std::unique_ptr<net::ClientCertStore> CreateClientCertStore(

@@ -35,7 +35,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/global_request_id.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
@@ -712,8 +711,9 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
   // switching to the data pipe.
   delegate_->OnResponseStarted(
       response_, nullptr, std::move(body), ssl_info_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      IsDownload(), false /* is_stream */,
+      base::Value() /* navigation_data */,
+      GlobalRequestID(-1, g_next_request_id), IsDownload(),
+      false /* is_stream */,
       request_controller_->TakeSubresourceLoaderParams());
 }
 

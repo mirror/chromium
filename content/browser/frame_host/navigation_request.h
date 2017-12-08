@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/values.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
@@ -30,7 +31,6 @@ class FrameTreeNode;
 class NavigationControllerImpl;
 class NavigationHandleImpl;
 class NavigationURLLoader;
-class NavigationData;
 class ResourceRequestBody;
 class SiteInstanceImpl;
 class StreamHandle;
@@ -226,7 +226,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          std::unique_ptr<StreamHandle> body,
                          mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const net::SSLInfo& ssl_info,
-                         std::unique_ptr<NavigationData> navigation_data,
+                         base::Value navigation_data,
                          const GlobalRequestID& request_id,
                          bool is_download,
                          bool is_stream,
