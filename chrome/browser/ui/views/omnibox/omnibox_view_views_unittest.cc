@@ -13,6 +13,7 @@
 #include "chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/search_engines/template_url_service_factory_test_util.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h"
@@ -51,7 +52,7 @@ class TestingOmniboxView : public OmniboxViewViews {
 
   TestingOmniboxView(OmniboxEditController* controller,
                      std::unique_ptr<OmniboxClient> client,
-                     CommandUpdater* command_updater);
+                     CommandUpdaterProxy* command_updater_proxy);
 
   static BaseTextEmphasis to_base_text_emphasis(bool emphasize) {
     return emphasize ? EMPHASIZED : DEEMPHASIZED;
@@ -98,12 +99,13 @@ class TestingOmniboxView : public OmniboxViewViews {
   DISALLOW_COPY_AND_ASSIGN(TestingOmniboxView);
 };
 
-TestingOmniboxView::TestingOmniboxView(OmniboxEditController* controller,
-                                       std::unique_ptr<OmniboxClient> client,
-                                       CommandUpdater* command_updater)
+TestingOmniboxView::TestingOmniboxView(
+    OmniboxEditController* controller,
+    std::unique_ptr<OmniboxClient> client,
+    CommandUpdaterProxy* command_updater_proxy)
     : OmniboxViewViews(controller,
                        std::move(client),
-                       command_updater,
+                       command_updater_proxy,
                        false,
                        nullptr,
                        gfx::FontList()) {}
@@ -157,9 +159,9 @@ void TestingOmniboxView::UpdateSchemeStyle(const Range& range) {
 
 class TestingOmniboxEditController : public ChromeOmniboxEditController {
  public:
-  TestingOmniboxEditController(CommandUpdater* command_updater,
+  TestingOmniboxEditController(CommandUpdaterProxy* command_updater_proxy,
                                ToolbarModel* toolbar_model)
-      : ChromeOmniboxEditController(command_updater),
+      : ChromeOmniboxEditController(command_updater_proxy),
         toolbar_model_(toolbar_model) {}
 
  private:
@@ -175,6 +177,48 @@ class TestingOmniboxEditController : public ChromeOmniboxEditController {
   ToolbarModel* toolbar_model_;
 
   DISALLOW_COPY_AND_ASSIGN(TestingOmniboxEditController);
+};
+
+class TestingCommandUpdaterProxy : public CommandUpdaterProxy {
+ public:
+  TestingCommandUpdaterProxy() : command_updater_(nullptr) {}
+  ~TestingCommandUpdaterProxy() override {}
+
+  bool SupportsCommand(int id) const override {
+    return command_updater_.SupportsCommand(id);
+  }
+
+  bool IsCommandEnabled(int id) const override {
+    return command_updater_.IsCommandEnabled(id);
+  }
+
+  bool ExecuteCommand(int id) override {
+    return command_updater_.ExecuteCommand(id);
+  }
+
+  bool ExecuteCommandWithDispositionProxy(
+      int id, WindowOpenDisposition disposition) override {
+    return command_updater_.ExecuteCommandWithDisposition(id, disposition);
+  }
+
+  void AddCommandObserver(int id, CommandObserver* observer) override {
+    command_updater_.AddCommandObserver(id, observer);
+  }
+
+  void RemoveCommandObserver(int id, CommandObserver* observer) override {
+    command_updater_.RemoveCommandObserver(id, observer);
+  }
+
+  void RemoveCommandObserver(CommandObserver* observer) override {
+    command_updater_.RemoveCommandObserver(observer);
+  }
+
+  void UpdateCommandEnabled(int id, bool state) override {
+    command_updater_.UpdateCommandEnabled(id, state);
+  }
+
+ private:
+  CommandUpdater command_updater_;
 };
 
 }  // namespace
@@ -208,7 +252,7 @@ class OmniboxViewViewsTest : public ChromeViewsTestBase {
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfile profile_;
   TemplateURLServiceFactoryTestUtil util_;
-  CommandUpdater command_updater_;
+  TestingCommandUpdaterProxy testing_command_updater_proxy_;
   TestToolbarModel toolbar_model_;
   TestingOmniboxEditController omnibox_edit_controller_;
   std::unique_ptr<TestingOmniboxView> omnibox_view_;
@@ -219,8 +263,8 @@ class OmniboxViewViewsTest : public ChromeViewsTestBase {
 
 OmniboxViewViewsTest::OmniboxViewViewsTest()
     : util_(&profile_),
-      command_updater_(nullptr),
-      omnibox_edit_controller_(&command_updater_, &toolbar_model_) {}
+      omnibox_edit_controller_(
+          &testing_command_updater_proxy_, &toolbar_model_) {}
 
 void OmniboxViewViewsTest::SetAndEmphasizeText(const std::string& new_text,
                                                bool accept_input) {
@@ -247,7 +291,7 @@ void OmniboxViewViewsTest::SetUp() {
       &omnibox_edit_controller_,
       base::MakeUnique<ChromeOmniboxClient>(&omnibox_edit_controller_,
                                             &profile_),
-      &command_updater_);
+      &testing_command_updater_proxy_);
   test_api_ = base::MakeUnique<views::TextfieldTestApi>(omnibox_view_.get());
   omnibox_view_->Init();
 }
