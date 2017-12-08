@@ -194,7 +194,7 @@ const formPostFileUploadTest = ({
       // exposed through the newer .files[0].name API. This check
       // verifies that assumption.
       assert_equals(
-          fileInput.files[0].name,
+          baseNameOfFilePath(fileInput.files[0].name),
           baseNameOfFilePath(fileInput.value),
           `The basename of the field's value should match its files[0].name`);
       form.submit();
@@ -219,6 +219,14 @@ const formPostFileUploadTest = ({
         `${fileBaseName}: multipart form data must end with ${boundary}--: ${
              JSON.stringify(formDataText)
            }`);
+    const toLf = str => str.replace(/\r\n?/g, '\n');
+    const toCrLf = str => toLf(str).replace(/\n/g, '\r\n')
+    const toQuotable = str => str
+          .replace(/[\0-\x1A\x1C-\x1F"\x7F]/g, encodeURIComponent)
+          .replace(/\\/g, '\\\\');
+    const quotableFileName = toQuotable(expectedEncodedBaseName);
+    const quotableName = toQuotable(toCrLf(expectedEncodedBaseName));
+    const textValue = toLf(expectedEncodedBaseName);
     const expectedText = [
       boundary,
       'Content-Disposition: form-data; name="_charset_"',
@@ -227,14 +235,14 @@ const formPostFileUploadTest = ({
       boundary,
       'Content-Disposition: form-data; name="filename"',
       '',
-      expectedEncodedBaseName,
+      textValue,
       boundary,
-      `Content-Disposition: form-data; name="${expectedEncodedBaseName}"`,
+      `Content-Disposition: form-data; name="${quotableName}"`,
       '',
       'filename',
       boundary,
       `Content-Disposition: form-data; name="file"; ` +
-          `filename="${expectedEncodedBaseName}"`,
+          `filename="${quotableFileName}"`,
       'Content-Type: text/plain',
       '',
       kTestChars,
