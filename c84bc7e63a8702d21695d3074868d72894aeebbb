@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0f67302_baf7800e",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-08T05:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75f559b6_0e4b052b",
+      "range": {
+        "startLine": 595,
+        "startChar": 38,
+        "endLine": 595,
+        "endChar": 47
+      },
+      "revId": "c84bc7e63a8702d21695d3074868d72894aeebbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2591d1c7_62c28bf6",
         "filename": "chrome/browser/extensions/tab_helper.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "c84bc7e63a8702d21695d3074868d72894aeebbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2350955d_2c56d822",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-08T05:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2591d1c7_62c28bf6",
+      "range": {
+        "startLine": 596,
+        "startChar": 37,
+        "endLine": 596,
+        "endChar": 41
+      },
+      "revId": "c84bc7e63a8702d21695d3074868d72894aeebbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
