@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1f5427d_83404e1b",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T19:23:33Z",
+      "side": 1,
+      "message": "Huh. No great reason I guess! Done.",
+      "parentUuid": "c99843bb_a4a013e8",
+      "range": {
+        "startLine": 48,
+        "startChar": 49,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "0f2db83e7a33e166e478dbcc1f9cb4490decb9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ee3c6a_cbb0b34c",
         "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "0f2db83e7a33e166e478dbcc1f9cb4490decb9a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a933ce6_c531bf27",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T19:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ee3c6a_cbb0b34c",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "0f2db83e7a33e166e478dbcc1f9cb4490decb9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
