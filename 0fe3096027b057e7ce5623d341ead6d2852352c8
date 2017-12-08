@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "916445c7_b2721bd9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-08T06:18:14Z",
+      "side": 1,
+      "message": "Wrapped.\n\nLet\u0027s leave the move to Java code on a follow up CL.",
+      "parentUuid": "b2ec2e24_a0de6f8d",
+      "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5bfd18b_bd8bc8ed",
         "filename": "content/common/frame.mojom",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b144762f_128bf066",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-08T06:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5bfd18b_bd8bc8ed",
+      "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9f7d2aff_5ca28ed7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2411,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-08T06:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c121bd93_dcf703a8",
+      "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b20eccf9_9c2f6c95",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432f051f_456fdd2d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2415,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-08T06:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20eccf9_9c2f6c95",
+      "revId": "0fe3096027b057e7ce5623d341ead6d2852352c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
