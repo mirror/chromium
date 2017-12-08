@@ -91,7 +91,7 @@ public class BottomSheetContentControllerTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity());
+                BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity(), false);
             }
         });
 
