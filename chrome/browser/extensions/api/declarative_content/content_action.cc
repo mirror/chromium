@@ -146,6 +146,8 @@ class SetIcon : public ContentAction {
   ExtensionAction* GetExtensionAction(Profile* profile,
                                       const Extension* extension) const {
     switch (action_type_) {
+      case ActionInfo::TYPE_ACTION:
+        return ExtensionActionManager::Get(profile)->GetAction(*extension);
       case ActionInfo::TYPE_BROWSER:
         return ExtensionActionManager::Get(profile)
             ->GetBrowserAction(*extension);

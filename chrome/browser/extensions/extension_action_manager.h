@@ -34,10 +34,11 @@ class ExtensionActionManager : public KeyedService,
   // shared between a profile and its incognito version.
   static ExtensionActionManager* Get(content::BrowserContext* browser_context);
 
-  // Retrieves the page action, browser action, or system indicator for
+  // Retrieves the action, page action, browser action, or system indicator for
   // |extension|.
   // If the result is not NULL, it remains valid until the extension is
   // unloaded.
+  ExtensionAction* GetAction(const Extension& extension) const;
   ExtensionAction* GetPageAction(const Extension& extension) const;
   ExtensionAction* GetBrowserAction(const Extension& extension) const;
   ExtensionAction* GetSystemIndicator(const Extension& extension) const;
@@ -74,6 +75,7 @@ class ExtensionActionManager : public KeyedService,
   // action.
   using ExtIdToActionMap =
       std::map<std::string, std::unique_ptr<ExtensionAction>>;
+  mutable ExtIdToActionMap actions_;
   mutable ExtIdToActionMap page_actions_;
   mutable ExtIdToActionMap browser_actions_;
   mutable ExtIdToActionMap system_indicators_;

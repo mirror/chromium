@@ -6,11 +6,11 @@ var tabId = -1;
 
 chrome.pageAction.onClicked.addListener(function(tab) {
   chrome.pageAction.hide(tabId);
-  chrome.test.sendMessage('clicked');
+  //chrome.test.sendMessage('clicked');
 });
 
 chrome.tabs.getSelected(null, function(tab) {
   tabId = tab.id;
   chrome.pageAction.show(tabId);
-  chrome.test.sendMessage('ready');
+  //chrome.test.sendMessage('ready');
 });

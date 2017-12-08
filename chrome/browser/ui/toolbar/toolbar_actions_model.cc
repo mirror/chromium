@@ -307,7 +307,6 @@ bool ToolbarActionsModel::ShouldAddExtension(
 void ToolbarActionsModel::AddExtension(const extensions::Extension* extension) {
   if (!ShouldAddExtension(extension))
     return;
-
   AddItem(ToolbarItem(extension->id(), EXTENSION_ACTION));
 }
 

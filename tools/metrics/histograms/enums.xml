@@ -12907,6 +12907,7 @@ Called by update_net_error_codes.py.-->
   <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
   <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
+  <int value="415" label="ACTION_ON_CLICKED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
@@ -14163,6 +14164,17 @@ Called by update_net_error_codes.py.-->
   <int value="1201" label="ACCESSIBILITY_PRIVATE_SETHIGHLIGHTS"/>
   <int value="1202" label="WEBRTCLOGGINGPRIVATE_GETLOGSDIRECTORY"/>
   <int value="1203" label="VIRTUALKEYBOARDPRIVATE_SETDRAGGABLEAREA"/>
+  <int value="1204" label="ACTION_SETICON"/>
+  <int value="1205" label="ACTION_SETTITLE"/>
+  <int value="1206" label="ACTION_SETPOPUP"/>
+  <int value="1207" label="ACTION_GETTITLE"/>
+  <int value="1208" label="ACTION_GETPOPUP"/>
+  <int value="1209" label="ACTION_SETBADGETEXT"/>
+  <int value="1210" label="ACTION_SETBADGEBACKGROUNDCOLOR"/>
+  <int value="1211" label="ACTION_GETBADGETEXT"/>
+  <int value="1212" label="ACTION_GETBADGEBACKGROUNDCOLOR"/>
+  <int value="1213" label="ACTION_ENABLE"/>
+  <int value="1214" label="ACTION_DISABLE"/>
 </enum>
 
 <enum name="ExtensionIconState">

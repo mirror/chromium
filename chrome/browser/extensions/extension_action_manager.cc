@@ -80,6 +80,7 @@ void ExtensionActionManager::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const Extension* extension,
     UnloadedExtensionReason reason) {
+  actions_.erase(extension->id());
   page_actions_.erase(extension->id());
   browser_actions_.erase(extension->id());
   system_indicators_.erase(extension->id());
@@ -126,6 +127,13 @@ ExtensionAction* GetOrCreateOrNull(
 }
 
 }  // namespace
+
+ExtensionAction* ExtensionActionManager::GetAction(
+    const Extension& extension) const {
+  return GetOrCreateOrNull(&actions_, extension, ActionInfo::TYPE_PAGE,
+                           ActionInfo::GetExtensionActionInfo(&extension),
+                           profile_);
+}
 
 ExtensionAction* ExtensionActionManager::GetPageAction(
     const Extension& extension) const {
@@ -175,8 +183,13 @@ ExtensionAction* ExtensionActionManager::GetSystemIndicator(
 
 ExtensionAction* ExtensionActionManager::GetExtensionAction(
     const Extension& extension) const {
-  ExtensionAction* action = GetBrowserAction(extension);
-  return action ? action : GetPageAction(extension);
+  ExtensionAction* action = GetAction(extension);
+  if (action) {
+    return action;
+  } else {
+    action = GetBrowserAction(extension);
+    return action ? action : GetPageAction(extension);
+  }
 }
 
 }  // namespace extensions

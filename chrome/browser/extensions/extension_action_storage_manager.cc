@@ -214,9 +214,11 @@ ExtensionActionStorageManager::~ExtensionActionStorageManager() {
 void ExtensionActionStorageManager::OnExtensionLoaded(
     content::BrowserContext* browser_context,
     const Extension* extension) {
-  if (!ExtensionActionManager::Get(browser_context_)->GetBrowserAction(
-          *extension))
+  if (!ExtensionActionManager::Get(browser_context_)
+           ->GetBrowserAction(*extension) &&
+      !ExtensionActionManager::Get(browser_context_)->GetAction(*extension)) {
     return;
+  }
 
   StateStore* store = GetStateStore();
   if (store) {
@@ -270,7 +272,9 @@ void ExtensionActionStorageManager::ReadFromStorage(
   ExtensionAction* browser_action =
       ExtensionActionManager::Get(browser_context_)->GetBrowserAction(
           *extension);
-  if (!browser_action) {
+  ExtensionAction* action =
+      ExtensionActionManager::Get(browser_context_)->GetAction(*extension);
+  if (!browser_action && !action) {
     // This can happen if the extension is updated between startup and when the
     // storage read comes back, and the update removes the browser action.
     // http://crbug.com/349371
@@ -281,7 +285,10 @@ void ExtensionActionStorageManager::ReadFromStorage(
   if (!value.get() || !value->GetAsDictionary(&dict))
     return;
 
-  SetDefaultsFromValue(dict, browser_action);
+  if (browser_action)
+    SetDefaultsFromValue(dict, browser_action);
+  else
+    SetDefaultsFromValue(dict, action);
 }
 
 StateStore* ExtensionActionStorageManager::GetStateStore() {
