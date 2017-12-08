@@ -287,9 +287,20 @@ TEST(TimeTicks, FromQPCValue) {
     const TimeTicks converted_value = TimeTicks::FromQPCValue(ticks);
     const double converted_microseconds_since_origin =
         static_cast<double>((converted_value - TimeTicks()).InMicroseconds());
+    // When we test with very large numbers we end up in a range where adjacent
+    // double values are far apart - 512.0 apart in one test failure. In that
+    // situation it makes no sense for our epsilon to be 1.0 - it should be
+    // DBL_EPSILON times the magnitude of the results times some small integer
+    // (for the number of Units in the Last Place of error we will tolerate).
+    const int max_ulps_error = 10;
+    double epsilon =
+        expected_microseconds_since_origin * DBL_EPSILON * max_ulps_error;
+    // Epsilon must be at least 1.0 because converted_microseconds_since_origin
+    // comes from an integral value and the rounding is not perfect.
+    if (epsilon < 1.0)
+      epsilon = 1.0;
     EXPECT_NEAR(expected_microseconds_since_origin,
-                converted_microseconds_since_origin,
-                1.0)
+                converted_microseconds_since_origin, epsilon)
         << "ticks=" << ticks << ", to be converted via logic path: "
         << (ticks < Time::kQPCOverflowThreshold ? "FAST" : "SAFE");
   }
