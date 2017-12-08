@@ -16,6 +16,24 @@
       "revId": "fc020df3308d3b7e07fdeac56f04dc2fd44414f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b44a6e_a64b029b",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-08T17:07:10Z",
+      "side": 1,
+      "message": "If we\u0027d like to always use the same type as |active_observers_| so that we \n can swap the content on the following line, I think that it\u0027s best to write \"the_same_type_as(active_observers_)\".  And I think this is the case.\n\nAnd, I don\u0027t like abuse of decltype though, it\u0027s not a good reason that we do not *yet* use decltype widely.  If it\u0027s a good tool like |auto|, then we should start using the right tools at the right places.  The problem is whether decltype is a good tool or not (worth using or not).",
+      "parentUuid": "fd2a1f6f_a4fb4e23",
+      "revId": "fc020df3308d3b7e07fdeac56f04dc2fd44414f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
