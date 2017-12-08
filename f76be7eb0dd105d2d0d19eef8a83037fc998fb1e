@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a25ce0a3_11bb4f20",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-08T05:08:14Z",
+      "side": 1,
+      "message": "I meant moving the code inside this \"if\" to NGPhysicalLineBoxFragment, but we can do it later, fine for now.",
+      "parentUuid": "1bc133de_dfa8ba4a",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb956ddd_18761895",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 3
@@ -174,6 +192,24 @@
       "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e723c0_fc608f8d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-08T05:08:14Z",
+      "side": 1,
+      "message": "Oh, never mind, I wasn\u0027t aware you\u0027re using NGInlineFragmentTraversal::DescendantsOf(). That one traverses all descendants including grandchildren, I thought this was looping only Children(), sorry.",
+      "parentUuid": "e4a3a60a_88996544",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "de531684_633f8433",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-08T05:08:14Z",
+      "side": 1,
+      "message": "Sounds good, thank you!",
+      "parentUuid": "85907f5e_89a5b4af",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55c899c6_2d160617",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
         "patchSetId": 3
@@ -241,6 +295,24 @@
       "side": 1,
       "message": "Done: 1. DISALLOW_NEW_EXCEPT_PLACEMENT_NEW()\n\nThere has been several times where in your CR you pointed out that my allocation strategy needs clarification. Is there a document that explains what macros should we use for different  allocation options so I can get it right the first time?\n\nDone: 2. scoped_refptr. Thanks for pointing this out. I am still a little unsure about when do we use refcounting.",
       "parentUuid": "55c899c6_2d160617",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c924864_2212e758",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-08T05:08:14Z",
+      "side": 1,
+      "message": "Here\u0027s the doc about memory allocation options.\nhttps://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/platform/heap/BlinkGCAPIReference.md",
+      "parentUuid": "ad6ab54c_5138fdf0",
       "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
