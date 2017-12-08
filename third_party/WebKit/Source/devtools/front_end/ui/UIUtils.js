@@ -1355,153 +1355,444 @@ UI.CheckboxLabel = class extends HTMLLabelElement {
   }
 };
 
-(function() {
-  UI.registerCustomElement('button', 'text-button', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      this.type = 'button';
-      var root = UI.createShadowRootWithCoreStyles(this, 'ui/textButton.css');
-      root.createChild('content');
-    },
-
-    __proto__: HTMLButtonElement.prototype
-  });
-
-  UI.registerCustomElement('label', 'dt-radio', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      this.radioElement = this.createChild('input', 'dt-radio-button');
-      this.radioElement.type = 'radio';
-      var root = UI.createShadowRootWithCoreStyles(this, 'ui/radioButton.css');
-      root.createChild('content').select = '.dt-radio-button';
-      root.createChild('content');
-      this.addEventListener('click', radioClickHandler, false);
-    },
-
-    __proto__: HTMLLabelElement.prototype
-  });
-
-  /**
-   * @param {!Event} event
-   * @suppressReceiverCheck
-   * @this {Element}
-   */
-  function radioClickHandler(event) {
-    if (this.radioElement.checked || this.radioElement.disabled)
-      return;
-    this.radioElement.checked = true;
-    this.radioElement.dispatchEvent(new Event('change'));
+/**
+ * @extends {HTMLElement}
+ */
+UI.BaseElement = class extends HTMLElement {
+  static get observedAttributes() {
+    return [
+      'flex',       'padding',    'padding-top',   'padding-bottom', 'padding-left', 'padding-right',
+      'margin',     'margin-top', 'margin-bottom', 'margin-left',    'margin-right', 'overflow',
+      'overflow-x', 'overflow-y', 'font-size',     'color',          'background',   'background-color',
+      'border',     'border-top', 'border-bottom', 'border-left',    'border-right'
+    ];
   }
 
-  UI.registerCustomElement('label', 'dt-icon-label', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      var root = UI.createShadowRootWithCoreStyles(this);
-      this._iconElement = UI.Icon.create();
-      this._iconElement.style.setProperty('margin-right', '4px');
-      root.appendChild(this._iconElement);
-      root.createChild('content');
-    },
-
-    /**
-     * @param {string} type
-     * @this {Element}
-     */
-    set type(type) {
-      this._iconElement.setIconType(type);
-    },
-
-    __proto__: HTMLLabelElement.prototype
-  });
-
-  UI.registerCustomElement('label', 'dt-slider', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      var root = UI.createShadowRootWithCoreStyles(this, 'ui/slider.css');
-      this.sliderElement = createElementWithClass('input', 'dt-range-input');
-      this.sliderElement.type = 'range';
-      root.appendChild(this.sliderElement);
-    },
-
-    /**
-     * @param {number} amount
-     * @this {Element}
-     */
-    set value(amount) {
-      this.sliderElement.value = amount;
-    },
-
-    /**
-     * @this {Element}
-     */
-    get value() {
-      return this.sliderElement.value;
-    },
-
-    __proto__: HTMLLabelElement.prototype
-  });
-
-  UI.registerCustomElement('label', 'dt-small-bubble', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      var root = UI.createShadowRootWithCoreStyles(this, 'ui/smallBubble.css');
-      this._textElement = root.createChild('div');
-      this._textElement.className = 'info';
-      this._textElement.createChild('content');
-    },
-
-    /**
-     * @param {string} type
-     * @this {Element}
-     */
-    set type(type) {
-      this._textElement.className = type;
-    },
-
-    __proto__: HTMLLabelElement.prototype
-  });
-
-  UI.registerCustomElement('div', 'dt-close-button', {
-    /**
-     * @this {Element}
-     */
-    createdCallback: function() {
-      var root = UI.createShadowRootWithCoreStyles(this, 'ui/closeButton.css');
-      this._buttonElement = root.createChild('div', 'close-button');
-      var regularIcon = UI.Icon.create('smallicon-cross', 'default-icon');
-      this._hoverIcon = UI.Icon.create('mediumicon-red-cross-hover', 'hover-icon');
-      this._activeIcon = UI.Icon.create('mediumicon-red-cross-active', 'active-icon');
-      this._buttonElement.appendChild(regularIcon);
-      this._buttonElement.appendChild(this._hoverIcon);
-      this._buttonElement.appendChild(this._activeIcon);
-    },
-
-    /**
-     * @param {boolean} gray
-     * @this {Element}
-     */
-    set gray(gray) {
-      if (gray) {
-        this._hoverIcon.setIconType('mediumicon-gray-cross-hover');
-        this._activeIcon.setIconType('mediumicon-gray-cross-active');
-      } else {
-        this._hoverIcon.setIconType('mediumicon-red-cross-hover');
-        this._activeIcon.setIconType('mediumicon-red-cross-active');
+  /**
+   * @param {string} attr
+   * @param {?string} oldValue
+   * @param {?string} newValue
+   * @override
+   */
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'flex') {
+      if (newValue === null)
+        this.style.removeProperty('flex');
+      else if (newValue === 'initial' || newValue === 'auto' || newValue === 'none' || newValue.indexOf(' ') !== -1)
+        this.style.setProperty('flex', newValue);
+      else
+        this.style.setProperty('flex', '0 0 ' + newValue);
+      return;
+    }
+    if (newValue === null) {
+      this.style.removeProperty(attr);
+      if (attr.startsWith('padding-') || attr.startsWith('margin-') || attr.startsWith('border-') ||
+          attr.startsWith('background-') || attr.startsWith('overflow-')) {
+        var shorthand = attr.substring(0, attr.indexOf('-'));
+        var shorthandValue = this.getAttribute(shorthand);
+        if (shorthandValue !== null)
+          this.style.setProperty(shorthand, shorthandValue);
       }
-    },
+    } else {
+      this.style.setProperty(attr, newValue);
+    }
+  }
+};
 
-    __proto__: HTMLDivElement.prototype
-  });
+
+/**
+ * @extends {UI.BaseElement}
+ */
+UI._ExternalLink = class extends UI.BaseElement {
+  constructor() {
+    super();
+
+    this.style.setProperty('display', 'inline');
+    UI.ARIAUtils.markAsLink(this);
+    this.tabIndex = 0;
+    this.setAttribute('target', '_blank');
+    this._clickable = true;
+    /** @type {?string} */
+    this._href = null;
+
+    this._onClick = event => {
+      event.consume(true);
+      InspectorFrontendHost.openInNewTab(/** @type {string} */ (this._href));
+    };
+    this._onKeyDown = event => {
+      if (event.key !== ' ' && !isEnterKey(event))
+        return;
+      event.consume(true);
+      InspectorFrontendHost.openInNewTab(/** @type {string} */ (this._href));
+    };
+  }
+
+  /**
+   * @return {!Array<string>}
+   */
+  static get observedAttributes() {
+    // TODO(chenwilliam): should be super, but does not compile.
+    return UI.BaseElement.observedAttributes.concat(['href', 'no-click']);
+  }
+
+  /**
+   * @param {string} attr
+   * @param {?string} oldValue
+   * @param {?string} newValue
+   * @override
+   */
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'no-click') {
+      this._clickable = !newValue;
+      this._updateClick();
+      return;
+    }
+
+    if (attr === 'href') {
+      var href = newValue;
+      if (newValue.trim().toLowerCase().startsWith('javascript:'))
+        href = null;
+      if (Common.ParsedURL.isRelativeURL(newValue))
+        href = null;
+      this.classList.toggle('valid-link', href !== null);
+
+      this._href = href;
+      this.title = newValue;
+      this._updateClick();
+      return;
+    }
+
+    super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+
+  _updateClick() {
+    if (this._href !== null && this._clickable) {
+      this.addEventListener('click', this._onClick, false);
+      this.addEventListener('keydown', this._onKeyDown, false);
+      this[UI._externalLinkSymbol] = true;
+      this.style.setProperty('cursor', 'pointer');
+    } else {
+      this.removeEventListener('click', this._onClick, false);
+      this.removeEventListener('keydown', this._onKeyDown, false);
+      delete this[UI._externalLinkSymbol];
+      this.style.removeProperty('cursor');
+    }
+  }
+};
+
+/**
+ * @extends {UI.BaseElement}
+ */
+UI._Checkbox = class extends UI.BaseElement {
+  constructor() {
+    super();
+    this.style.setProperty('display', 'inline');
+    UI._Checkbox._lastId = (UI._Checkbox._lastId || 0) + 1;
+    var id = 'ui-checkbox' + UI._Checkbox._lastId;
+    this._shadowRoot = UI.createShadowRootWithCoreStyles(this, 'ui/checkboxTextLabel.css');
+    this._input = /** @type {!HTMLInputElement} */ (this._shadowRoot.createChild('input'));
+    this._input.type = 'checkbox';
+    this._input.setAttribute('id', id);
+    this._text = this._shadowRoot.createChild('label', 'dt-checkbox-text');
+    this._text.setAttribute('for', id);
+    this._text.createChild('content');
+  }
+
+  get checked() {
+    return this._input.checked;
+  }
+
+  set checked(checked) {
+    this._input.checked = checked;
+  }
+
+  /**
+   * @override
+   */
+  addEventListener(event, listener, capture) {
+    this._input.addEventListener(event, listener, capture);
+  }
+
+  /**
+   * @override
+   */
+  removeEventListener(event, listener, capture) {
+    this._input.removeEventListener(event, listener, capture);
+  }
+};
+
+/**
+ * @param {function(new:HTMLElement)} base
+ * @param {!Object<string, string>} styles
+ * @return {function()}
+ */
+UI._stylesMixin = function(base, styles) {
+  /**
+   * @extends {HTMLElement}
+   */
+  return class extends base {
+    constructor() {
+      super();
+      for (var key of Object.keys(styles))
+        this.style.setProperty(key, styles[key]);
+    }
+  };
+};
+
+/**
+ * @extends {UI.BaseElement}
+ */
+UI._Box = class extends UI.BaseElement {
+  constructor() {
+    super();
+    this.style.setProperty('display', 'flex');
+  }
+
+  static get observedAttributes() {
+    // TODO(chenwilliam): should be super, but does not compile.
+    return UI.BaseElement.observedAttributes.concat(['x-start', 'x-center', 'x-stretch', 'x-baseline']);
+  }
+
+  /**
+   * @param {string} attr
+   * @param {?string} oldValue
+   * @param {?string} newValue
+   * @override
+   */
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'x-start' || attr === 'x-center' || attr === 'x-stretch' || attr === 'x-baseline') {
+      if (newValue === null)
+        this.style.removeProperty('align-items');
+      else
+        this.style.setProperty('align-items', attr === 'x-start' ? 'flex-start' : attr.substr(2));
+      return;
+    }
+    super.attributeChangedCallback(attr, oldValue, newValue);
+  }
+};
+
+/**
+ * @extends {UI.BaseElement}
+ */
+UI._Widget = class extends UI.BaseElement {
+  constructor() {
+    super();
+    this.style.setProperty('display', 'flex');
+    this.style.setProperty('flex-direction', 'column');
+    this.style.setProperty('align-items', 'stretch');
+    this.style.setProperty('justify-content', 'flex-start');
+    this.style.setProperty('contain', 'layout style');
+    this._visible = false;
+    /** @type {?DocumentFragment} */
+    this._shadowRoot;
+
+    if (!UI._Widget._observer) {
+      UI._Widget._observer = new ResizeObserver(entries => {
+        for (var entry of entries) {
+          if (entry.target._visible)
+            entry.target.onResize();
+        }
+      });
+    }
+    UI._Widget._observer.observe(this);
+  }
+
+  /**
+   * @param {string} cssFile
+   */
+  registerRequiredCSS(cssFile) {
+    UI.appendStyle(this._shadowRoot || this, cssFile);
+  }
+
+  /**
+   * @override
+   */
+  connectedCallback() {
+    this._visible = true;
+    this.onShow();
+  }
+
+  /**
+   * @override
+   */
+  disconnectedCallback() {
+    this._visible = false;
+    this.onHide();
+  }
+
+  onShow() {
+  }
+
+  onHide() {
+  }
+
+  onResize() {
+  }
+};
+
+(function() {
+window.customElements.define(
+    'x-vbox', UI._stylesMixin(UI._Box, {'flex-direction': 'column', 'justify-content': 'flex-start'}));
+window.customElements.define(
+    'x-hbox', UI._stylesMixin(UI._Box, {'flex-direction': 'row', 'justify-content': 'flex-start'}));
+window.customElements.define(
+    'x-cbox',
+    UI._stylesMixin(
+        UI.BaseElement,
+        {'display': 'flex', 'flex-direction': 'column', 'justify-content': 'center', 'align-items': 'center'}));
+window.customElements.define('x-text', UI._stylesMixin(UI.BaseElement, {'display': 'inline', 'white-space': 'pre'}));
+window.customElements.define('x-span', UI._stylesMixin(UI.BaseElement, {'display': 'inline'}));
+window.customElements.define('x-div', UI._stylesMixin(UI.BaseElement, {'display': 'block'}));
+window.customElements.define('x-link', UI._ExternalLink);
+window.customElements.define('x-checkbox', UI._Checkbox);
+window.customElements.define('x-widget', UI._Widget);
+
+UI.registerCustomElement('button', 'text-button', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    this.type = 'button';
+    var root = UI.createShadowRootWithCoreStyles(this, 'ui/textButton.css');
+    root.createChild('content');
+  },
+
+  __proto__: HTMLButtonElement.prototype
+});
+
+UI.registerCustomElement('label', 'dt-radio', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    this.radioElement = this.createChild('input', 'dt-radio-button');
+    this.radioElement.type = 'radio';
+    var root = UI.createShadowRootWithCoreStyles(this, 'ui/radioButton.css');
+    root.createChild('content').select = '.dt-radio-button';
+    root.createChild('content');
+    this.addEventListener('click', radioClickHandler, false);
+  },
+
+  __proto__: HTMLLabelElement.prototype
+});
+
+/**
+ * @param {!Event} event
+ * @suppressReceiverCheck
+ * @this {Element}
+ */
+function radioClickHandler(event) {
+  if (this.radioElement.checked || this.radioElement.disabled)
+    return;
+  this.radioElement.checked = true;
+  this.radioElement.dispatchEvent(new Event('change'));
+}
+
+UI.registerCustomElement('label', 'dt-icon-label', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    var root = UI.createShadowRootWithCoreStyles(this);
+    this._iconElement = UI.Icon.create();
+    this._iconElement.style.setProperty('margin-right', '4px');
+    root.appendChild(this._iconElement);
+    root.createChild('content');
+  },
+
+  /**
+   * @param {string} type
+   * @this {Element}
+   */
+  set type(type) {
+    this._iconElement.setIconType(type);
+  },
+
+  __proto__: HTMLLabelElement.prototype
+});
+
+UI.registerCustomElement('label', 'dt-slider', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    var root = UI.createShadowRootWithCoreStyles(this, 'ui/slider.css');
+    this.sliderElement = createElementWithClass('input', 'dt-range-input');
+    this.sliderElement.type = 'range';
+    root.appendChild(this.sliderElement);
+  },
+
+  /**
+   * @param {number} amount
+   * @this {Element}
+   */
+  set value(amount) {
+    this.sliderElement.value = amount;
+  },
+
+  /**
+   * @this {Element}
+   */
+  get value() {
+    return this.sliderElement.value;
+  },
+
+  __proto__: HTMLLabelElement.prototype
+});
+
+UI.registerCustomElement('label', 'dt-small-bubble', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    var root = UI.createShadowRootWithCoreStyles(this, 'ui/smallBubble.css');
+    this._textElement = root.createChild('div');
+    this._textElement.className = 'info';
+    this._textElement.createChild('content');
+  },
+
+  /**
+   * @param {string} type
+   * @this {Element}
+   */
+  set type(type) {
+    this._textElement.className = type;
+  },
+
+  __proto__: HTMLLabelElement.prototype
+});
+
+UI.registerCustomElement('div', 'dt-close-button', {
+  /**
+   * @this {Element}
+   */
+  createdCallback: function() {
+    var root = UI.createShadowRootWithCoreStyles(this, 'ui/closeButton.css');
+    this._buttonElement = root.createChild('div', 'close-button');
+    var regularIcon = UI.Icon.create('smallicon-cross', 'default-icon');
+    this._hoverIcon = UI.Icon.create('mediumicon-red-cross-hover', 'hover-icon');
+    this._activeIcon = UI.Icon.create('mediumicon-red-cross-active', 'active-icon');
+    this._buttonElement.appendChild(regularIcon);
+    this._buttonElement.appendChild(this._hoverIcon);
+    this._buttonElement.appendChild(this._activeIcon);
+  },
+
+  /**
+   * @param {boolean} gray
+   * @this {Element}
+   */
+  set gray(gray) {
+    if (gray) {
+      this._hoverIcon.setIconType('mediumicon-gray-cross-hover');
+      this._activeIcon.setIconType('mediumicon-gray-cross-active');
+    } else {
+      this._hoverIcon.setIconType('mediumicon-red-cross-hover');
+      this._activeIcon.setIconType('mediumicon-red-cross-active');
+    }
+  },
+
+  __proto__: HTMLDivElement.prototype
+});
 })();
 
 /**
@@ -1933,41 +2224,13 @@ UI.ThemeSupport.ColorUsage = {
 UI.createExternalLink = function(url, linkText, className, preventClick) {
   if (!linkText)
     linkText = url;
-
-  var a = createElementWithClass('span', className);
-  UI.ARIAUtils.markAsLink(a);
-  a.tabIndex = 0;
-
-  var href = url;
-  if (url.trim().toLowerCase().startsWith('javascript:'))
-    href = null;
-  if (Common.ParsedURL.isRelativeURL(url))
-    href = null;
-  if (href !== null) {
-    a.href = href;
-    a.classList.add('devtools-link');
-    if (!preventClick) {
-      a.addEventListener('click', event => {
-        event.consume(true);
-        InspectorFrontendHost.openInNewTab(/** @type {string} */ (href));
-      }, false);
-      a.addEventListener('keydown', event => {
-        if (event.key !== ' ' && !isEnterKey(event))
-          return;
-        event.consume(true);
-        InspectorFrontendHost.openInNewTab(/** @type {string} */ (href));
-      }, false);
-    } else {
-      a.classList.add('devtools-link-prevent-click');
-    }
-    a[UI._externalLinkSymbol] = true;
-  }
-  if (linkText !== url)
-    a.title = url;
-  a.textContent = linkText.trimMiddle(UI.MaxLengthForDisplayedURLs);
-  a.setAttribute('target', '_blank');
-
-  return a;
+  // clang-format off
+  return (UI.Fragment.cached`
+      <x-link href='${url}'
+              class='${className || ''}'
+              ${preventClick ? 'no-click' : ''}
+      >${linkText.trimMiddle(UI.MaxLengthForDisplayedURLs)}</x-link>`).element();
+  // clang-format on
 };
 
 UI._externalLinkSymbol = Symbol('UI._externalLink');
@@ -1987,12 +2250,12 @@ UI.ExternaLinkContextMenuProvider = class {
     var targetNode = /** @type {!Node} */ (target);
     while (targetNode && !targetNode[UI._externalLinkSymbol])
       targetNode = targetNode.parentNodeOrShadowHost();
-    if (!targetNode || !targetNode.href)
+    if (!targetNode || !targetNode._href)
       return;
     contextMenu.revealSection().appendItem(
-        UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode.href));
+        UI.openLinkExternallyLabel(), () => InspectorFrontendHost.openInNewTab(targetNode._href));
     contextMenu.revealSection().appendItem(
-        UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode.href));
+        UI.copyLinkAddressLabel(), () => InspectorFrontendHost.copyText(targetNode._href));
   }
 };
 

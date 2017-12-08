@@ -8,40 +8,44 @@ Devices.DevicesView = class extends UI.VBox {
     this.registerRequiredCSS('devices/devicesView.css');
     this.contentElement.classList.add('devices-view');
 
-    var hbox = this.contentElement.createChild('div', 'hbox devices-container');
-    var sidebar = hbox.createChild('div', 'devices-sidebar');
-    sidebar.createChild('div', 'devices-view-title').createTextChild(Common.UIString('Devices'));
-    this._sidebarList = sidebar.createChild('div', 'devices-sidebar-list');
+    this._fragment = UI.Fragment.build`
+      <x-hbox x-stretch flex=auto overflow=hidden>
+        <x-vbox x-stretch flex=150px padding-top=15px>
+          <x-vbox margin='0 0 15px 15px' padding-top=1px font-size=16px>Devices</x-vbox>
+          <x-vbox flex=none>
+            <x-vbox flex=none $=spacer></x-vbox>
+          </x-vbox>
+        </x-vbox>
+        <x-vbox x-stretch flex=auto $=viewContainer></x-vbox>
+      </x-hbox>
+      <x-hbox flex=none overflow=hidden padding='3px 10px' border-top='1px solid #cdcdcd' background-color=#f3f3f3>
+        <span $=deviceCount></span>
+        <x-text> Read <x-link
+            href='https://developers.google.com/chrome-developer-tools/docs/remote-debugging'
+            >remote debugging documentation</x-link> for more information</x-text>
+      </x-hbox>
+    `;
+    this.contentElement.appendChild(this._fragment.element());
 
     this._discoveryView = new Devices.DevicesView.DiscoveryView();
-    this._sidebarListSpacer = this._sidebarList.createChild('div', 'devices-sidebar-spacer');
-    this._discoveryListItem = this._sidebarList.createChild('div', 'devices-sidebar-item');
-    this._discoveryListItem.textContent = Common.UIString('Settings');
-    this._discoveryListItem.addEventListener(
-        'click', this._selectSidebarListItem.bind(this, this._discoveryListItem, this._discoveryView));
+    this._discoveryListItem = this._createSidebarListItem(this._discoveryView._widget);
+    this._discoveryListItem.$('title').textContent = ls`Settings`;
+    this._discoveryListItem.$('status').parentNode.remove();
+    this._fragment.$('spacer').parentNode.appendChild(this._discoveryListItem.element());
 
     /** @type {!Map<string, !Devices.DevicesView.DeviceView>} */
     this._viewById = new Map();
     /** @type {!Array<!Adb.Device>} */
     this._devices = [];
-    /** @type {!Map<string, !Element>} */
+    /** @type {!Map<string, !UI.Fragment>} */
     this._listItemById = new Map();
-    /** @type {?Element} */
+    /** @type {?UI.Fragment} */
     this._selectedListItem = null;
-    /** @type {?UI.Widget} */
+    /** @type {?UI.Widget|?Element} */
     this._visibleView = null;
 
-    this._viewContainer = hbox.createChild('div', 'flex-auto vbox');
-
-    var discoveryFooter = this.contentElement.createChild('div', 'devices-footer');
-    this._deviceCountSpan = discoveryFooter.createChild('span');
-    discoveryFooter.createChild('span').textContent = Common.UIString(' Read ');
-    discoveryFooter.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation')));
-    discoveryFooter.createChild('span').textContent = Common.UIString(' for more information.');
     this._updateFooter();
-    this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
+    this._selectSidebarListItem(this._discoveryListItem, this._discoveryView._widget);
 
     InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.DevicesUpdated, this._devicesUpdated, this);
@@ -65,22 +69,28 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   /**
-   * @param {!Element} listItem
-   * @param {!UI.Widget} view
+   * @param {!UI.Fragment} listItem
+   * @param {!UI.Widget|!Element} view
    */
   _selectSidebarListItem(listItem, view) {
     if (this._selectedListItem === listItem)
       return;
 
     if (this._selectedListItem) {
-      this._selectedListItem.classList.remove('selected');
-      this._visibleView.detach();
+      this._selectedListItem.setState('selected', false);
+      if (this._visibleView instanceof Element)
+        this._visibleView.remove();
+      else
+        this._visibleView.detach();
     }
 
     this._visibleView = view;
     this._selectedListItem = listItem;
-    this._visibleView.show(this._viewContainer);
-    this._selectedListItem.classList.add('selected');
+    if (this._visibleView instanceof Element)
+      this._fragment.$('viewContainer').appendChild(this._visibleView);
+    else
+      this._visibleView.show(this._fragment.$('viewContainer'));
+    this._selectedListItem.setState('selected', true);
   }
 
   /**
@@ -103,10 +113,10 @@ Devices.DevicesView = class extends UI.VBox {
     var selectedRemoved = false;
     for (var deviceId of this._viewById.keys()) {
       if (!ids.has(deviceId)) {
-        var listItem = /** @type {!Element} */ (this._listItemById.get(deviceId));
+        var listItem = /** @type {!UI.Fragment} */ (this._listItemById.get(deviceId));
         this._listItemById.remove(deviceId);
         this._viewById.remove(deviceId);
-        listItem.remove();
+        listItem.element().remove();
         if (listItem === this._selectedListItem)
           selectedRemoved = true;
       }
@@ -121,32 +131,38 @@ Devices.DevicesView = class extends UI.VBox {
         this._viewById.set(device.id, view);
         listItem = this._createSidebarListItem(view);
         this._listItemById.set(device.id, listItem);
-        this._sidebarList.insertBefore(listItem, this._sidebarListSpacer);
+        this._fragment.$('spacer').parentNode.insertBefore(listItem.element(), this._fragment.$('spacer'));
       }
 
-      listItem._title.textContent = device.adbModel;
-      listItem._status.textContent =
-          device.adbConnected ? Common.UIString('Connected') : Common.UIString('Pending Authorization');
-      listItem.classList.toggle('device-connected', device.adbConnected);
+      listItem.$('title').textContent = device.adbModel;
+      listItem.$('status').textContent = device.adbConnected ? ls`Connected` : ls`Pending Authorization`;
+      listItem.setState('connected', device.adbConnected);
       view.update(device);
     }
 
     if (selectedRemoved)
-      this._selectSidebarListItem(this._discoveryListItem, this._discoveryView);
+      this._selectSidebarListItem(this._discoveryListItem, this._discoveryView._widget);
 
     this._updateFooter();
   }
 
   /**
-   * @param {!UI.Widget} view
-   * @return {!Element}
+   * @param {!UI.Widget|!Element} view
+   * @return {!UI.Fragment}
    */
   _createSidebarListItem(view) {
-    var listItem = createElementWithClass('div', 'devices-sidebar-item');
-    listItem.addEventListener('click', this._selectSidebarListItem.bind(this, listItem, view));
-    listItem._title = listItem.createChild('div', 'devices-sidebar-item-title');
-    listItem._status = listItem.createChild('div', 'devices-sidebar-item-status');
-    return listItem;
+    var item = UI.Fragment.cached`
+      <x-vbox flex=auto padding='6px 6px 6px 16px' color=#222 font-size=14px
+          s-selected-border-left='6px solid #666' s-selected-padding-left=10px>
+        <div $=title></div>
+        <div>
+          <x-text margin='0 2px 0 -10px' color=red font-size=16px s-connected-color=green>\u25cf</x-text>
+          <x-span $=status font-size=12px></x-span>
+        </div>
+      </x-vbox>
+    `;
+    item.element().addEventListener('click', () => this._selectSidebarListItem(item, view), false);
+    return item;
   }
 
   /**
@@ -175,10 +191,9 @@ Devices.DevicesView = class extends UI.VBox {
   }
 
   _updateFooter() {
-    this._deviceCountSpan.textContent = !this._devices.length ?
-        Common.UIString('No devices detected.') :
-        this._devices.length === 1 ? Common.UIString('1 device detected.') :
-                                     Common.UIString('%d devices detected.', this._devices.length);
+    this._fragment.$('deviceCount').textContent = !this._devices.length ?
+        ls`No devices detected.` :
+        this._devices.length === 1 ? ls`1 device detected.` : ls`${this._devices.length} devices detected.`;
   }
 
   /**
@@ -202,29 +217,32 @@ Devices.DevicesView = class extends UI.VBox {
   }
 };
 
-Devices.DevicesView.DiscoveryView = class extends UI.VBox {
+Devices.DevicesView.DiscoveryView = class {
   constructor() {
-    super();
-    this.setMinimumSize(100, 100);
-    this.element.classList.add('discovery-view');
+    // TODO: this used to have this.setMinimumSize(100, 100);
 
-    this.contentElement.createChild('div', 'hbox device-text-row').createChild('div', 'view-title').textContent =
-        Common.UIString('Settings');
+    this._fragment = UI.Fragment.build`
+      <x-widget overflow-x=hidden overflow-y=auto padding='15px 15px 0 0'>
+        <x-shadow $=forWidgets>
+          <x-hbox x-baseline flex=none margin-right=25px>
+            <x-text flex=none font-size=16px>Settings</x-text>
+          </x-hbox>
+          <x-checkbox $=discoverUsbDevices flex=none padding-bottom=8px margin-top=20px>Discover USB devices</x-checkbox>
+          <x-text flex=none margin='5px 0 25px 25px'>Need help? Read Chrome <x-link
+              href='https://developers.google.com/chrome-developer-tools/docs/remote-debugging'
+              >remote debugging documentation.</x-link>
+          </x-text>
+        </x-shadow>
+      </x-widget>
+    `;
+    this._widget = /** @type {!UI._Widget} */ (this._fragment.element());
+    this._widget.registerRequiredCSS('devices/devicesView.css');
 
-    var discoverUsbDevicesCheckbox = UI.CheckboxLabel.create(Common.UIString('Discover USB devices'));
-    discoverUsbDevicesCheckbox.classList.add('usb-checkbox');
-    this.element.appendChild(discoverUsbDevicesCheckbox);
-    this._discoverUsbDevicesCheckbox = discoverUsbDevicesCheckbox.checkboxElement;
-    this._discoverUsbDevicesCheckbox.addEventListener('click', () => {
-      this._config.discoverUsbDevices = this._discoverUsbDevicesCheckbox.checked;
+    this._fragment.$('discoverUsbDevices').addEventListener('click', () => {
+      // TODO: this does not update!
+      this._config.discoverUsbDevices = this._fragment.$('discoverUsbDevices').checked;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     }, false);
-
-    var help = this.element.createChild('div', 'discovery-help');
-    help.createChild('span').textContent = Common.UIString('Need help? Read Chrome ');
-    help.appendChild(UI.createExternalLink(
-        'https://developers.google.com/chrome-developer-tools/docs/remote-debugging',
-        Common.UIString('remote debugging documentation.')));
 
     /** @type {!Adb.Config} */
     this._config;
@@ -236,14 +254,24 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
         this._config.portForwardingConfig[rule.port] = rule.address;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     });
-    this._portForwardingView.show(this.element);
+    this._portForwardingView.element.style.setProperty('flex', 'none');
 
     this._networkDiscoveryView = new Devices.DevicesView.NetworkDiscoveryView(false, (enabled, config) => {
       this._config.networkDiscoveryEnabled = enabled;
       this._config.networkDiscoveryConfig = config;
       InspectorFrontendHost.setDevicesDiscoveryConfig(this._config);
     });
-    this._networkDiscoveryView.show(this.element);
+    this._networkDiscoveryView.element.style.setProperty('flex', 'none');
+
+    // TODO: |first| is a hack!
+    var first = true;
+    this._widget.onShow = () => {
+      if (first) {
+        this._portForwardingView.show(this._fragment.$('forWidgets'));
+        this._networkDiscoveryView.show(this._fragment.$('forWidgets'));
+        first = false;
+      }
+    };
   }
 
   /**
@@ -251,7 +279,7 @@ Devices.DevicesView.DiscoveryView = class extends UI.VBox {
    */
   discoveryConfigChanged(config) {
     this._config = config;
-    this._discoverUsbDevicesCheckbox.checked = config.discoverUsbDevices;
+    this._fragment.$('discoverUsbDevices').checked = config.discoverUsbDevices;
     this._portForwardingView.discoveryConfigChanged(config.portForwardingEnabled, config.portForwardingConfig);
     this._networkDiscoveryView.discoveryConfigChanged(config.networkDiscoveryEnabled, config.networkDiscoveryConfig);
   }
