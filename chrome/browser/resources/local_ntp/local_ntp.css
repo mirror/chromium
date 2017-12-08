@@ -87,6 +87,7 @@ button {
 
 body.hide-fakebox-logo #logo,
 body.hide-fakebox-logo #fakebox {
+  opacity: 0;
   visibility: hidden;
 }
 
