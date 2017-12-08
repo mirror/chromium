@@ -66,7 +66,9 @@ WiredDisplayMediaRouteProvider::WiredDisplayMediaRouteProvider(
     mojom::MediaRouterPtr media_router,
     Profile* profile)
     : binding_(this, std::move(request)),
-      media_router_(std::move(media_router)) {
+      media_router_(std::move(media_router)),
+      profile_(profile) {
+  CHECK(profile_); // TODO: remove
   display::Screen::GetScreen()->AddObserver(this);
   ReportSinkAvailability(GetSinks());
 }
@@ -92,6 +94,20 @@ void WiredDisplayMediaRouteProvider::CreateRoute(
   route.set_local_presentation(true);
 
   // TODO(crbug.com/777654): Create a presentation receiver window.
+  std::vector<display::Display> displays =
+      display::Screen::GetScreen()->GetAllDisplays();
+  auto it = std::find_if(displays.begin(), displays.end(),
+                         [&sink_id](const display::Display& d) {
+                           return WiredDisplayMediaRouteProvider::kSinkPrefix +
+                                      std::to_string(d.id()) ==
+                                  sink_id;
+                         });
+  CHECK(it != displays.end());
+  display::Display display = *it;
+  presentation_window_ =
+      PresentationReceiverWindowController::CreateFromOriginalProfile(
+          profile_, display.bounds());
+  presentation_window_->Start(presentation_id, GURL(media_source));
   std::move(callback).Run(route, base::nullopt, RouteRequestResult::OK);
   routes_.emplace(presentation_id, std::move(route));
   NotifyRouteObservers();
@@ -131,6 +147,7 @@ void WiredDisplayMediaRouteProvider::TerminateRoute(
     TerminateRouteCallback callback) {
   routes_.erase(route_id);
   // TODO(crbug.com/777654): Destroy the presentation receiver window.
+  presentation_window_->Terminate(base::OnceClosure());
   NotifyRouteObservers();
   std::move(callback).Run(base::nullopt, RouteRequestResult::OK);
 }

@@ -8,6 +8,7 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
+#include "chrome/browser/ui/media_router/presentation_receiver_window_controller.h"
 #include "chrome/common/media_router/media_route_provider_helper.h"
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -121,6 +122,10 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
 
   // Mojo pointer to the Media Router.
   mojom::MediaRouterPtr media_router_;
+
+  Profile* profile_;
+
+  std::unique_ptr<PresentationReceiverWindowController> presentation_window_;
 
   // Active routes managed by this provider.
   base::flat_map<MediaRoute::Id, MediaRoute> routes_;
