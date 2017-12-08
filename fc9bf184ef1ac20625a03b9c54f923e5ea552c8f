@@ -525,6 +525,29 @@
     },
     {
       "key": {
+        "uuid": "7d5fca2c_2856b514",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-08T14:36:42Z",
+      "side": 1,
+      "message": "Deleting |timer_| cancels any pending callback https://cs.chromium.org/chromium/src/components/timers/alarm_timer_chromeos.cc?l\u003d45\u0026rcl\u003d820e27aed7dbd9a1b9c653d3af7a589726149870 so this could just be base::Unretained(this).",
+      "range": {
+        "startLine": 60,
+        "startChar": 51,
+        "endLine": 60,
+        "endChar": 75
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f38aa35_08701585",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 20
@@ -641,6 +664,29 @@
     },
     {
       "key": {
+        "uuid": "741734a9_374414d5",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-08T14:36:42Z",
+      "side": 1,
+      "message": "Timers use SimpleAlarmTimer which isn\u0027t supported on the main thread of Chrome processes. I recommend that you create the timers on a TaskScheduler sequence by changing this code to:\n\nstruct TimersAndProxies {\n  std::vector\u003cstd::unique_ptr\u003cArcTimer\u003e\u003e timers;\n  std::vector\u003cmojom::TimerPtr\u003e proxies;\n};\n\nvoid ArcTimerBridge::CreateTimers(\n    std::vector\u003cArcTimerRequest\u003e arc_timer_requests,\n    CreateTimersCallback callback) {\n  DVLOG(1) \u003c\u003c \"Received CreateTimers\";\n  base::PostTaskAndReplyWithResult(\n      sequenced_task_runner_.get(),\n      FROM_HERE,\n      base::BindOnce(\u0026CreateArcTimers, std::move(arc_timer_requests)),\n      base::BindOnce(\u0026OnArcTimersCreated, weak_factory_.GetWeakPtr(), std::move(callback)));\n}\n\nAnd adding this method:\n\nArcTimerBridge::OnArcTimersCreated(\n    CreateTimersCallback callback,\n    TimersAndProxies timers_and_proxies) {\n  arc_timers_ \u003d std::move(timers_and_proxies.timers);\n  std::move(callback).Run(std::move(timers_and_proxies.proxies));\n}\n\nAnd adding this member:\n\nscoped_refptr\u003cbase::SequencedTaskRunner\u003e sequenced_task_runner_ \u003d \n    base::CreateSequenceTaskRunnerWithTraits({base::MayBlock()});\n\n\nNote 1: To avoid accessing |this| on a separate sequence, CreateArcTimers() becomes a function in the anonymous namespace. Instead of accessing |arc_supported_timer_clocks_|, it can call a helper function:\n\nbool IsArcSupportedTimerClock(int32_t clock_id) {\n  return clock_id \u003d\u003d CLOCK_REALTIME_ALARM || \n         clock_id \u003d\u003d CLOCK_BOOTTIME_ALARM;\n}\n\nNote 2: Since the timers live on a TaskScheduler sequence, you can write to the file descriptor directly in ArcTimer::OnExpiration. You no longer need a RefCountedFd or a separate |expiration_io_task_runner_|.\n\nNote 3: If timers are created on |sequenced_task_runner|, they must also be deleted on |sequenced_task_runner|. You\u0027ll need to change ArcTimerBridge::DeleteArcTimers() to:\n\n// Delete the timers on |sequenced_task_runner_|.\nsequenced_task_runner_-\u003ePostTask(\n    FROM_HERE,\n    base::BindOnce([] (std::vector\u003cstd::unique_ptr\u003cArcTimer\u003e) {},\n                   std::move(arc_timers_)));",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 74
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94a76be3_b71585d2",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 20
@@ -657,6 +703,29 @@
         "startChar": 7,
         "endLine": 94,
         "endChar": 11
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49a8863_c6537d7f",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-08T14:36:42Z",
+      "side": 1,
+      "message": "Since you don\u0027t need to make lookups in this collection, you should use an std::vector.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 49
       },
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
