@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ebc7e4d_0b786cd3",
+        "filename": "tools/perf/benchmarks/v8.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-12-08T18:01:24Z",
+      "side": 1,
+      "message": "CL that disabled it was this:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/696431\n\nSetting it to the bug linked in it.",
+      "range": {
+        "startLine": 33,
+        "startChar": 37,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "2769f06c5f1033705d4535646e5d99ba739de892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
