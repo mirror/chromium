@@ -22,6 +22,30 @@
       "revId": "78dae160a7a99a9a2e4c425172c675eef95519d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de15c545_26850ba5",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1246609
+      },
+      "writtenOn": "2017-12-08T19:59:37Z",
+      "side": 1,
+      "message": "OK John, I\u0027ll open a new bug and add the bug number in here.",
+      "parentUuid": "b8f92a5e_7d9ee161",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 43
+      },
+      "revId": "78dae160a7a99a9a2e4c425172c675eef95519d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
