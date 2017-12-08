@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca004cf_34419265",
+        "filename": "chrome/browser/search/local_ntp_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-08T16:28:42Z",
+      "side": 1,
+      "message": "I prefer to avoid passing judgment in comments, but it\u0027s your call :)",
+      "range": {
+        "startLine": 35,
+        "startChar": 23,
+        "endLine": 35,
+        "endChar": 26
+      },
+      "revId": "772df60c99fec6304aa5b1b9bc7e18d730a2cf78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
