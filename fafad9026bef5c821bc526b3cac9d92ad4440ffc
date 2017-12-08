@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69446916_b3acc7f3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-12-08T12:06:40Z",
+      "side": 1,
+      "message": "Disabled-by-default?",
+      "revId": "fafad9026bef5c821bc526b3cac9d92ad4440ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32383ea8_42a2d0c0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-12-08T12:06:40Z",
+      "side": 1,
+      "message": "I found event names confusing. :: usually used as a method reference, but here we have blocks. Any chance it can be decomposed into individual functions?",
+      "revId": "fafad9026bef5c821bc526b3cac9d92ad4440ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
