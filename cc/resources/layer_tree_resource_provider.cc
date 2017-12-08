@@ -8,10 +8,10 @@
 #include "build/build_config.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "gpu/command_buffer/client/context_support.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 
-using gpu::gles2::GLES2Interface;
+using gpu::raster::RasterInterface;
 
 namespace cc {
 
@@ -82,7 +82,7 @@ void LayerTreeResourceProvider::PrepareSendToParent(
     const ResourceIdArray& export_ids,
     std::vector<viz::TransferableResource>* list) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  GLES2Interface* gl = ContextGL();
+  RasterInterface* rs = RasterContext();
 
   // This function goes through the array multiple times, store the resources
   // as pointers so we don't have to look up the resource id multiple times.
@@ -133,10 +133,10 @@ void LayerTreeResourceProvider::PrepareSendToParent(
   gpu::SyncToken new_sync_token;
   if (!need_synchronization_resources.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
-    DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    DCHECK(rs);
+    const uint64_t fence_sync = rs->InsertFenceSyncCHROMIUM();
+    rs->OrderingBarrierCHROMIUM();
+    rs->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
@@ -145,8 +145,8 @@ void LayerTreeResourceProvider::PrepareSendToParent(
 
   if (!unverified_sync_tokens.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
-    DCHECK(gl);
-    gl->VerifySyncTokensCHROMIUM(unverified_sync_tokens.data(),
+    DCHECK(rs);
+    rs->VerifySyncTokensCHROMIUM(unverified_sync_tokens.data(),
                                  unverified_sync_tokens.size());
   }
 
@@ -183,7 +183,7 @@ void LayerTreeResourceProvider::PrepareSendToParent(
 void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     const std::vector<viz::ReturnedResource>& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  GLES2Interface* gl = ContextGL();
+  RasterInterface* rs = RasterContext();
 
   for (const viz::ReturnedResource& returned : resources) {
     viz::ResourceId local_id = returned.id;
@@ -234,7 +234,7 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
       DCHECK(!resource->has_shared_bitmap_id);
       if (resource->origin == viz::internal::Resource::INTERNAL) {
         DCHECK(resource->gl_id);
-        gl->WaitSyncTokenCHROMIUM(returned.sync_token.GetConstData());
+        rs->WaitSyncTokenCHROMIUM(returned.sync_token.GetConstData());
         resource->SetSynchronized();
       } else {
         DCHECK(!resource->gl_id);

@@ -300,6 +300,7 @@ Scheduler::~Scheduler() {
 }
 
 SequenceId Scheduler::CreateSequence(SchedulingPriority priority) {
+  // priority = SchedulingPriority::kHigh;
   DCHECK(thread_checker_.CalledOnValidThread());
   base::AutoLock auto_lock(lock_);
   scoped_refptr<SyncPointOrderData> order_data =

@@ -55,6 +55,8 @@ source_set("common_sources") {
     "mailbox.h",
     "mailbox_holder.cc",
     "mailbox_holder.h",
+    "raster_texture_format_utils.cc",
+    "raster_texture_format_utils.h",
     "scheduling_priority.cc",
     "scheduling_priority.h",
     "swap_buffers_complete_params.cc",

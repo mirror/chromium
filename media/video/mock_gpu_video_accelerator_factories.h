@@ -26,7 +26,7 @@ namespace media {
 
 class MockGpuVideoAcceleratorFactories : public GpuVideoAcceleratorFactories {
  public:
-  explicit MockGpuVideoAcceleratorFactories(gpu::gles2::GLES2Interface* gles2);
+  explicit MockGpuVideoAcceleratorFactories(gpu::raster::RasterInterface* rs);
   ~MockGpuVideoAcceleratorFactories() override;
 
   bool IsGpuVideoAcceleratorEnabled() override;
@@ -88,7 +88,7 @@ class MockGpuVideoAcceleratorFactories : public GpuVideoAcceleratorFactories {
   std::unique_ptr<VideoEncodeAccelerator> CreateVideoEncodeAccelerator()
       override;
 
-  gpu::gles2::GLES2Interface* GetGLES2Interface() { return gles2_; }
+  gpu::raster::RasterInterface* GetRasterInterface() { return rs_; }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockGpuVideoAcceleratorFactories);
@@ -98,7 +98,7 @@ class MockGpuVideoAcceleratorFactories : public GpuVideoAcceleratorFactories {
 
   bool fail_to_allocate_gpu_memory_buffer_ = false;
 
-  gpu::gles2::GLES2Interface* gles2_;
+  gpu::raster::RasterInterface* rs_;
 };
 
 }  // namespace media

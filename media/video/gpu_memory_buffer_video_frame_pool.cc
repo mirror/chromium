@@ -25,7 +25,7 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/trace_event.h"
 #include "gpu/GLES2/gl2extchromium.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/video/gpu_video_accelerator_factories.h"
 #include "third_party/libyuv/include/libyuv.h"
@@ -650,7 +650,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
     frame_ready_cb.Run(video_frame);
     return;
   }
-  gpu::gles2::GLES2Interface* gles2 = lock->ContextGL();
+  gpu::raster::RasterInterface* rs = lock->RasterContext();
 
   const gfx::Size coded_size = CodedSize(video_frame, output_format_);
   gpu::MailboxHolder mailbox_holders[VideoFrame::kMaxPlanes];
@@ -661,20 +661,20 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
         GpuMemoryBufferFormat(output_format_, i);
     unsigned texture_target = gpu_factories_->ImageTextureTarget(buffer_format);
     // Bind the texture and create or rebind the image.
-    gles2->BindTexture(texture_target, plane_resource.texture_id);
+    rs->BindTexture(texture_target, plane_resource.texture_id);
     if (plane_resource.gpu_memory_buffer && !plane_resource.image_id) {
       const size_t width = VideoFrame::Columns(i, VideoFormat(output_format_),
                                                coded_size.width());
       const size_t height =
           VideoFrame::Rows(i, VideoFormat(output_format_), coded_size.height());
-      plane_resource.image_id = gles2->CreateImageCHROMIUM(
+      plane_resource.image_id = rs->CreateImageCHROMIUM(
           plane_resource.gpu_memory_buffer->AsClientBuffer(), width, height,
           ImageInternalFormat(output_format_, i));
     } else if (plane_resource.image_id) {
-      gles2->ReleaseTexImage2DCHROMIUM(texture_target, plane_resource.image_id);
+      rs->ReleaseTexImage2DCHROMIUM(texture_target, plane_resource.image_id);
     }
     if (plane_resource.image_id)
-      gles2->BindTexImage2DCHROMIUM(texture_target, plane_resource.image_id);
+      rs->BindTexImage2DCHROMIUM(texture_target, plane_resource.image_id);
     mailbox_holders[i] = gpu::MailboxHolder(plane_resource.mailbox,
                                             gpu::SyncToken(), texture_target);
   }
@@ -682,11 +682,11 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
   // Insert a sync_token, this is needed to make sure that the textures the
   // mailboxes refer to will be used only after all the previous commands posted
   // in the command buffer have been processed.
-  const GLuint64 fence_sync = gles2->InsertFenceSyncCHROMIUM();
-  gles2->OrderingBarrierCHROMIUM();
+  const GLuint64 fence_sync = rs->InsertFenceSyncCHROMIUM();
+  rs->OrderingBarrierCHROMIUM();
 
   gpu::SyncToken sync_token;
-  gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  rs->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   for (size_t i = 0; i < NumGpuMemoryBuffers(output_format_); i++)
     mailbox_holders[i].sync_token = sync_token;
 
@@ -802,8 +802,8 @@ GpuMemoryBufferVideoFramePool::PoolImpl::GetOrCreateFrameResources(
   if (!lock)
     return nullptr;
 
-  gpu::gles2::GLES2Interface* gles2 = lock->ContextGL();
-  gles2->ActiveTexture(GL_TEXTURE0);
+  gpu::raster::RasterInterface* rs = lock->RasterContext();
+  rs->ActiveTexture(GL_TEXTURE0);
   FrameResources* frame_resources = new FrameResources(size);
   resources_pool_.push_back(frame_resources);
   for (size_t i = 0; i < NumGpuMemoryBuffers(output_format_); i++) {
@@ -820,15 +820,15 @@ GpuMemoryBufferVideoFramePool::PoolImpl::GetOrCreateFrameResources(
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE);
 
     unsigned texture_target = gpu_factories_->ImageTextureTarget(buffer_format);
-    gles2->GenTextures(1, &plane_resource.texture_id);
-    gles2->BindTexture(texture_target, plane_resource.texture_id);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    gles2->GenMailboxCHROMIUM(plane_resource.mailbox.name);
-    gles2->ProduceTextureDirectCHROMIUM(plane_resource.texture_id,
-                                        plane_resource.mailbox.name);
+    rs->GenTextures(1, &plane_resource.texture_id);
+    rs->BindTexture(texture_target, plane_resource.texture_id);
+    rs->TexParameteri(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    rs->TexParameteri(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    rs->TexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    rs->TexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    rs->GenMailboxCHROMIUM(plane_resource.mailbox.name);
+    rs->ProduceTextureDirectCHROMIUM(plane_resource.texture_id,
+                                     plane_resource.mailbox.name);
   }
   return frame_resources;
 }
@@ -845,13 +845,13 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::DeleteFrameResources(
       gpu_factories->GetGLContextLock());
   if (!lock)
     return;
-  gpu::gles2::GLES2Interface* gles2 = lock->ContextGL();
+  gpu::raster::RasterInterface* rs = lock->RasterContext();
 
   for (PlaneResource& plane_resource : frame_resources->plane_resources) {
     if (plane_resource.image_id)
-      gles2->DestroyImageCHROMIUM(plane_resource.image_id);
+      rs->DestroyImageCHROMIUM(plane_resource.image_id);
     if (plane_resource.texture_id)
-      gles2->DeleteTextures(1, &plane_resource.texture_id);
+      rs->DeleteTextures(1, &plane_resource.texture_id);
   }
 }
 

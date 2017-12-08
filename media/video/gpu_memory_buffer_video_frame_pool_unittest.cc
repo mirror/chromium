@@ -10,6 +10,9 @@
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "gpu/command_buffer/client/gles2_interface_stub.h"
+#include "gpu/command_buffer/client/raster_implementation_gles.h"
+#include "gpu/command_buffer/client/raster_interface.h"
+#include "gpu/command_buffer/common/capabilities.h"
 #include "media/base/video_frame.h"
 #include "media/video/gpu_memory_buffer_video_frame_pool.h"
 #include "media/video/mock_gpu_video_accelerator_factories.h"
@@ -86,12 +89,13 @@ class GpuMemoryBufferVideoFramePoolTest : public ::testing::Test {
     test_clock_.Advance(base::TimeDelta::FromSeconds(1234));
 
     gles2_.reset(new TestGLES2Interface);
+    rs_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
+        gles2_.get(), capabilities_);
     media_task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
     copy_task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
     media_task_runner_handle_.reset(
         new base::ThreadTaskRunnerHandle(media_task_runner_));
-    mock_gpu_factories_.reset(
-        new MockGpuVideoAcceleratorFactories(gles2_.get()));
+    mock_gpu_factories_.reset(new MockGpuVideoAcceleratorFactories(rs_.get()));
     gpu_memory_buffer_pool_.reset(new GpuMemoryBufferVideoFramePool(
         media_task_runner_, copy_task_runner_.get(),
         mock_gpu_factories_.get()));
@@ -147,6 +151,8 @@ class GpuMemoryBufferVideoFramePoolTest : public ::testing::Test {
   // ThreadTaskRunnerHandle initialization.
   std::unique_ptr<base::ThreadTaskRunnerHandle> media_task_runner_handle_;
   std::unique_ptr<TestGLES2Interface> gles2_;
+  std::unique_ptr<gpu::raster::RasterInterface> rs_;
+  gpu::Capabilities capabilities_;
 };
 
 void MaybeCreateHardwareFrameCallback(

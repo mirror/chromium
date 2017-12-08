@@ -6,7 +6,7 @@
 
 #include "base/single_thread_task_runner.h"
 #include "gpu/GLES2/gl2extchromium.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/sync_token.h"
 #include "media/base/video_frame.h"
@@ -24,25 +24,25 @@ class VideoOverlayFactory::Texture {
     std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock> lock(
         gpu_factories_->GetGLContextLock());
     if (lock) {
-      gpu::gles2::GLES2Interface* gl = lock->ContextGL();
+      gpu::raster::RasterInterface* rs = lock->RasterContext();
       gpu_memory_buffer_ = gpu_factories_->CreateGpuMemoryBuffer(
           gfx::Size(1, 1), gfx::BufferFormat::RGBA_8888,
           gfx::BufferUsage::SCANOUT);
       if (gpu_memory_buffer_) {
-        image_id_ = gl->CreateImageCHROMIUM(
+        image_id_ = rs->CreateImageCHROMIUM(
             gpu_memory_buffer_->AsClientBuffer(), 1, 1, GL_RGBA);
       }
       if (image_id_) {
-        gl->GenTextures(1, &texture_id_);
-        gl->BindTexture(GL_TEXTURE_2D, texture_id_);
-        gl->BindTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id_);
+        rs->GenTextures(1, &texture_id_);
+        rs->BindTexture(GL_TEXTURE_2D, texture_id_);
+        rs->BindTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id_);
 
-        gl->GenMailboxCHROMIUM(mailbox_.name);
-        gl->ProduceTextureDirectCHROMIUM(texture_id_, mailbox_.name);
+        rs->GenMailboxCHROMIUM(mailbox_.name);
+        rs->ProduceTextureDirectCHROMIUM(texture_id_, mailbox_.name);
 
-        const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-        gl->ShallowFlushCHROMIUM();
-        gl->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
+        const GLuint64 fence_sync = rs->InsertFenceSyncCHROMIUM();
+        rs->ShallowFlushCHROMIUM();
+        rs->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
       }
     }
   }
@@ -54,11 +54,11 @@ class VideoOverlayFactory::Texture {
       std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock> lock(
           gpu_factories_->GetGLContextLock());
       if (lock) {
-        gpu::gles2::GLES2Interface* gl = lock->ContextGL();
-        gl->BindTexture(GL_TEXTURE_2D, texture_id_);
-        gl->ReleaseTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id_);
-        gl->DeleteTextures(1, &texture_id_);
-        gl->DestroyImageCHROMIUM(image_id_);
+        gpu::raster::RasterInterface* rs = lock->RasterContext();
+        rs->BindTexture(GL_TEXTURE_2D, texture_id_);
+        rs->ReleaseTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id_);
+        rs->DeleteTextures(1, &texture_id_);
+        rs->DestroyImageCHROMIUM(image_id_);
       }
     }
   }

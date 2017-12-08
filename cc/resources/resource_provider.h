@@ -54,6 +54,9 @@ class GpuMemoryBufferManager;
 namespace gles {
 class GLES2Interface;
 }
+namespace raster {
+class RasterInterface;
+}
 }
 
 namespace viz {
@@ -198,10 +201,10 @@ class CC_EXPORT ResourceProvider
 
     // Creates a texture id, allocating if necessary, on the given context. The
     // texture id must be deleted by the caller.
-    GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl);
+    GLuint ConsumeTexture(gpu::raster::RasterInterface* rs);
 
    private:
-    void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+    void LazyAllocate(gpu::raster::RasterInterface* rs, GLuint texture_id);
 
     ResourceProvider* const resource_provider_;
     const viz::ResourceId resource_id_;
@@ -319,9 +322,10 @@ class CC_EXPORT ResourceProvider
   size_t CountPromotionHintRequestsForTesting();
 #endif
 
-  static GLint GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl);
+  static GLint GetActiveTextureUnit(gpu::raster::RasterInterface* rs);
 
-  static gpu::SyncToken GenerateSyncTokenHelper(gpu::gles2::GLES2Interface* gl);
+  static gpu::SyncToken GenerateSyncTokenHelper(
+      gpu::raster::RasterInterface* rs);
 
   GLenum GetImageTextureTarget(gfx::BufferUsage usage,
                                viz::ResourceFormat format) const;
@@ -376,6 +380,9 @@ class CC_EXPORT ResourceProvider
 
   // Returns null if we do not have a viz::ContextProvider.
   gpu::gles2::GLES2Interface* ContextGL() const;
+
+  // Returns null if we do not have a viz::ContextProvider.
+  gpu::raster::RasterInterface* RasterContext() const;
 
   // Holds const settings for the ResourceProvider. Never changed after init.
   struct Settings {

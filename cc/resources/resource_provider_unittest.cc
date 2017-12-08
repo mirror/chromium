@@ -3529,7 +3529,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
                                      kWidth, kHeight, 0, GLDataFormat(format),
                                      GLDataType(format), nullptr));
     EXPECT_EQ(kWorkerTextureId,
-              lock.ConsumeTexture(context_provider->ContextGL()));
+              lock.ConsumeTexture(context_provider->RasterContext()));
     Mock::VerifyAndClearExpectations(context);
 
     EXPECT_CALL(*context, RetireTextureId(kWorkerTextureId));
@@ -3546,14 +3546,14 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox) {
     EXPECT_CALL(*context, createAndConsumeTextureCHROMIUM(_))
         .WillOnce(Return(kWorkerTextureId));
     EXPECT_EQ(kWorkerTextureId,
-              lock.ConsumeTexture(context_provider->ContextGL()));
+              lock.ConsumeTexture(context_provider->RasterContext()));
     Mock::VerifyAndClearExpectations(context);
 
     EXPECT_CALL(*context, RetireTextureId(kWorkerTextureId));
     context_provider->ContextGL()->DeleteTextures(1, &kWorkerTextureId);
 
     sync_token = ResourceProvider::GenerateSyncTokenHelper(
-        context_provider->ContextGL());
+        context_provider->RasterContext());
     lock.set_sync_token(sync_token);
     Mock::VerifyAndClearExpectations(context);
   }
@@ -3614,7 +3614,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox_Overlay) {
                                                     GL_SCANOUT_CHROMIUM, kWidth,
                                                     kHeight));
     EXPECT_EQ(kWorkerTextureId,
-              lock.ConsumeTexture(context_provider->ContextGL()));
+              lock.ConsumeTexture(context_provider->RasterContext()));
     Mock::VerifyAndClearExpectations(context);
 
     EXPECT_CALL(*context, RetireTextureId(kWorkerTextureId));
@@ -3631,11 +3631,11 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_Mailbox_Overlay) {
     EXPECT_CALL(*context, createAndConsumeTextureCHROMIUM(_))
         .WillOnce(Return(kWorkerTextureId));
     EXPECT_EQ(kWorkerTextureId,
-              lock.ConsumeTexture(context_provider->ContextGL()));
+              lock.ConsumeTexture(context_provider->RasterContext()));
     Mock::VerifyAndClearExpectations(context);
 
     sync_token = ResourceProvider::GenerateSyncTokenHelper(
-        context_provider->ContextGL());
+        context_provider->RasterContext());
     lock.set_sync_token(sync_token);
 
     EXPECT_CALL(*context, RetireTextureId(kWorkerTextureId));

@@ -17,8 +17,8 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/renderer/render_thread_impl.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
@@ -110,7 +110,7 @@ bool GpuVideoAcceleratorFactoriesImpl::CheckContextLost() {
     bool release_context_provider = false;
     {
       viz::ContextProvider::ScopedContextLock lock(context_provider_);
-      if (lock.ContextGL()->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
+      if (lock.RasterContext()->GetGraphicsResetStatusKHR() != GL_NO_ERROR) {
         context_provider_ = nullptr;
         release_context_provider = true;
       }
@@ -203,33 +203,32 @@ bool GpuVideoAcceleratorFactoriesImpl::CreateTextures(
   if (CheckContextLost())
     return false;
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  gpu::gles2::GLES2Interface* gles2 = lock.ContextGL();
+  gpu::raster::RasterInterface* rs = lock.RasterContext();
   texture_ids->resize(count);
   texture_mailboxes->resize(count);
-  gles2->GenTextures(count, &texture_ids->at(0));
+  rs->GenTextures(count, &texture_ids->at(0));
   for (int i = 0; i < count; ++i) {
-    gles2->ActiveTexture(GL_TEXTURE0);
+    rs->ActiveTexture(GL_TEXTURE0);
     uint32_t texture_id = texture_ids->at(i);
-    gles2->BindTexture(texture_target, texture_id);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    gles2->TexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    rs->BindTexture(texture_target, texture_id);
+    rs->TexParameteri(texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    rs->TexParameteri(texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    rs->TexParameteri(texture_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    rs->TexParameteri(texture_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     if (texture_target == GL_TEXTURE_2D) {
-      gles2->TexImage2D(texture_target, 0, GL_RGBA, size.width(), size.height(),
-                        0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+      rs->TexImage2D(texture_target, 0, GL_RGBA, size.width(), size.height(), 0,
+                     GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     }
-    gles2->GenMailboxCHROMIUM(texture_mailboxes->at(i).name);
-    gles2->ProduceTextureDirectCHROMIUM(texture_id,
-                                        texture_mailboxes->at(i).name);
+    rs->GenMailboxCHROMIUM(texture_mailboxes->at(i).name);
+    rs->ProduceTextureDirectCHROMIUM(texture_id, texture_mailboxes->at(i).name);
   }
 
   // We need ShallowFlushCHROMIUM() here to order the command buffer commands
   // with respect to IPC to the GPU process, to guarantee that the decoder in
   // the GPU process can use these textures as soon as it receives IPC
   // notification of them.
-  gles2->ShallowFlushCHROMIUM();
-  DCHECK_EQ(gles2->GetError(), static_cast<GLenum>(GL_NO_ERROR));
+  rs->ShallowFlushCHROMIUM();
+  DCHECK_EQ(rs->GetError(), static_cast<GLenum>(GL_NO_ERROR));
   return true;
 }
 
@@ -239,18 +238,18 @@ void GpuVideoAcceleratorFactoriesImpl::DeleteTexture(uint32_t texture_id) {
     return;
 
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  gpu::gles2::GLES2Interface* gles2 = lock.ContextGL();
-  gles2->DeleteTextures(1, &texture_id);
-  DCHECK_EQ(gles2->GetError(), static_cast<GLenum>(GL_NO_ERROR));
+  gpu::raster::RasterInterface* rs = lock.RasterContext();
+  rs->DeleteTextures(1, &texture_id);
+  DCHECK_EQ(rs->GetError(), static_cast<GLenum>(GL_NO_ERROR));
 }
 
 gpu::SyncToken GpuVideoAcceleratorFactoriesImpl::CreateSyncToken() {
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  gpu::gles2::GLES2Interface* gl = lock.ContextGL();
+  gpu::raster::RasterInterface* rs = lock.RasterContext();
   gpu::SyncToken sync_token;
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->ShallowFlushCHROMIUM();
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  const GLuint64 fence_sync = rs->InsertFenceSyncCHROMIUM();
+  rs->ShallowFlushCHROMIUM();
+  rs->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   return sync_token;
 }
 
@@ -261,12 +260,12 @@ void GpuVideoAcceleratorFactoriesImpl::WaitSyncToken(
     return;
 
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  gpu::gles2::GLES2Interface* gles2 = lock.ContextGL();
-  gles2->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
+  gpu::raster::RasterInterface* rs = lock.RasterContext();
+  rs->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
 
   // Callers expect the WaitSyncToken to affect the next IPCs. Make sure to
   // flush the command buffers to ensure that.
-  gles2->ShallowFlushCHROMIUM();
+  rs->ShallowFlushCHROMIUM();
 }
 
 void GpuVideoAcceleratorFactoriesImpl::ShallowFlushCHROMIUM() {
@@ -275,8 +274,8 @@ void GpuVideoAcceleratorFactoriesImpl::ShallowFlushCHROMIUM() {
     return;
 
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  gpu::gles2::GLES2Interface* gles2 = lock.ContextGL();
-  gles2->ShallowFlushCHROMIUM();
+  gpu::raster::RasterInterface* rs = lock.RasterContext();
+  rs->ShallowFlushCHROMIUM();
 }
 
 std::unique_ptr<gfx::GpuMemoryBuffer>
@@ -327,7 +326,9 @@ class ScopedGLContextLockImpl
  public:
   ScopedGLContextLockImpl(viz::ContextProvider* context_provider)
       : lock_(context_provider) {}
-  gpu::gles2::GLES2Interface* ContextGL() override { return lock_.ContextGL(); }
+  gpu::raster::RasterInterface* RasterContext() override {
+    return lock_.RasterContext();
+  }
 
  private:
   viz::ContextProvider::ScopedContextLock lock_;
