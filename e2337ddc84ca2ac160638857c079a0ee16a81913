@@ -16,6 +16,24 @@
       "revId": "e2337ddc84ca2ac160638857c079a0ee16a81913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d432ea8_d944c85c",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T02:06:59Z",
+      "side": 1,
+      "message": "Sorry, my previous message is wrong. Please ignore.\n\nAnyway, this DCHECK() can not catch enclosing block difference.\nIs it better to have:\n\nDCHECK_EQ(EnclosingBlockOf(position), EnclosingBlockOf(adjusted));\nNote: EnclosingBlockOf(position) does much more.\nWe may want to have simpler version though.",
+      "parentUuid": "9cca256e_d56da227",
+      "revId": "e2337ddc84ca2ac160638857c079a0ee16a81913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
