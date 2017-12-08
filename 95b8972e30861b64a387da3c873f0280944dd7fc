@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b729ff3f_dc8e85b3",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T01:38:43Z",
+      "side": 1,
+      "message": "Is there much cost to generating these? If cheap enough, ignore this :D\n\nOtherwise could we re-use the parent ID\u0027s token? Or are there security issues I\u0027m not thinking of?",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0eebcab_548261c2",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T01:38:43Z",
+      "side": 1,
+      "message": "Would usage be cleaner if we pass in a \"const LocalSurfaceId\u0026\", rather than forcing callers to call .parent_id() on it? This also means that if we make these IDs more complex in the future, we can pull whatever we need out of the parent to generate a new child, and don\u0027t have to update callsites.",
+      "range": {
+        "startLine": 23,
+        "startChar": 40,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e62ea6c_d6a0b7e2",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T01:38:43Z",
+      "side": 1,
+      "message": "nit: we are inconsistent on this in our code, but I like marking this as const if it\u0027s only ever set from the constructor. WDYT?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
