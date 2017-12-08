@@ -24,9 +24,7 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
     return;
 
   const FragmentData& fragment_data = object.FirstFragment();
-  const RarePaintData* rare_paint_data = fragment_data.GetRarePaintData();
-  DCHECK(rare_paint_data);
-  DCHECK(rare_paint_data->LocalBorderBoxProperties());
+  DCHECK(fragment_data.LocalBorderBoxProperties());
   // SPv1 compositing forces single fragment for composited elements.
   DCHECK(!fragment_data.NextFragment());
 
@@ -36,10 +34,10 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   DCHECK(layout_snapped_paint_offset == snapped_paint_offset);
 
   auto SetContainerLayerState =
-      [rare_paint_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
+      [&fragment_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
         if (graphics_layer) {
           graphics_layer->SetLayerState(
-              PropertyTreeState(*rare_paint_data->LocalBorderBoxProperties()),
+              PropertyTreeState(*fragment_data.LocalBorderBoxProperties()),
               snapped_paint_offset + graphics_layer->OffsetFromLayoutObject());
         }
       };
@@ -51,10 +49,10 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
   SetContainerLayerState(mapping->BackgroundLayer());
 
   auto SetContentsLayerState =
-      [rare_paint_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
+      [&fragment_data, &snapped_paint_offset](GraphicsLayer* graphics_layer) {
         if (graphics_layer) {
           graphics_layer->SetLayerState(
-              rare_paint_data->ContentsProperties(),
+              fragment_data.ContentsProperties(),
               snapped_paint_offset + graphics_layer->OffsetFromLayoutObject());
         }
       };
@@ -63,13 +61,13 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
 
   if (auto* squashing_layer = mapping->SquashingLayer()) {
     squashing_layer->SetLayerState(
-        rare_paint_data->PreEffectProperties(),
+        fragment_data.PreEffectProperties(),
         snapped_paint_offset + mapping->SquashingLayerOffsetFromLayoutObject());
   }
 
   if (auto* mask_layer = mapping->MaskLayer()) {
-    auto state = *rare_paint_data->LocalBorderBoxProperties();
-    const auto* properties = rare_paint_data->PaintProperties();
+    auto state = *fragment_data.LocalBorderBoxProperties();
+    const auto* properties = fragment_data.PaintProperties();
     DCHECK(properties && properties->Mask());
     state.SetEffect(properties->Mask());
     mask_layer->SetLayerState(
