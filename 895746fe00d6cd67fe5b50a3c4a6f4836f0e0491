@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddf95f3b_7b6ce0b3",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-08T16:59:46Z",
+      "side": 1,
+      "message": "I recommend making the comment a little more explicit about why this would be useful,\nit\u0027s pretty subtle after all, for example something like:\n\n   // The /dev/shm partition is too small in certain VM environments, causing Chrome\n   // to fail or crash (see crbug.com://715363). Use this flag to work-around this\n   // issue (a temporary directory will be used to create anonymous shared memory files).\n\nAlso, maybe consider something like \"disable-dev-shm-usage\" for the name, it is simpler.",
+      "revId": "895746fe00d6cd67fe5b50a3c4a6f4836f0e0491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01191e7_4b56adda",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-08T16:59:46Z",
+      "side": 1,
+      "message": "Since this is supposed to cover all previous cases, I\u0027d recommend instead to use value-parameterized tests here, this will ensure that if a test is added before this section, if will not be forgotten below, and may support additionnal modes in the future:\n\nEssentially, this means:\n\n  Write a parameterized test class like:\n\n   enum class Mode {\n      Default,\n      DisableDevShm \u003d 1,\n   };\n\n   class SharedMemoryTest : public ::testing::TestWithParam\u003cMode\u003e {\n    public:\n     void SetUp() override {\n       switch (GetParam()) {\n         case Mode::Default:\n           break;\n         case DisableDevShm:\n           CommandLine* cmdline \u003d CommandLine::ForCurrentProcess();\n           cmdline-\u003eAppendSwitchASCII(switches::kDisableDevShmUsage);\n           break;\n     }\n\n     void TearDown() override {\n        // I\u0027m unsure whether you need to cleanup the command-line here.\n     }\n   };\n\n   #if !defined(OS_ANDROID) \u0026\u0026 !defined(OS_FUCHSIA) \u0026\u0026 !defined(OS_MACOSX)\n   TEST_P(SharedMemoryTest, OpenClose) { ... }\n   #endif\n   ...\n   TEST_P(SharedMemoryTest, MappedId) { ... }\n\n   INSTANTIATE_TEST_CASE_P(Default, SharedMemoryTest, ::testing::Values(Mode::Default))\n   #if defined(OS_LINUX) || defined(OS_AIX)\n   INSTANTIATE_TEST_CASE_P(SkipDevShm, SharedMemoryTest, ::testing::Values(Mode::DisableDevShm))\n   #endif\n\nFor more information, see https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#how-to-write-value-parameterized-tests",
+      "revId": "895746fe00d6cd67fe5b50a3c4a6f4836f0e0491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
