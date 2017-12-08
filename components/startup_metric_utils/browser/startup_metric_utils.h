@@ -59,6 +59,10 @@ void RecordMainEntryPointTime(base::Time time);
 // contained in a separate dll, such as with chrome.exe / chrome.dll on Windows.
 void RecordExeMainEntryPointTicks(base::TimeTicks time);
 
+// Returns the value supplied to RecordExeMainEntryPointTicks(). If
+// RecordExeMainEntryPointTicks() was not called returns a null TimeTicks.
+base::TimeTicks GetExeMainEntryPointTicks();
+
 // Call this with the time recorded just before the message loop is started.
 // |is_first_run| - is the current launch part of a first run. |pref_service| is
 // used to store state for stats that span multiple startups.

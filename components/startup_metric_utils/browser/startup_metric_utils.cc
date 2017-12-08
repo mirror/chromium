@@ -554,6 +554,12 @@ void RecordMainEntryPointTime(base::Time time) {
   DCHECK(!g_browser_main_entry_point_ticks.Get().is_null());
 }
 
+base::TimeTicks GetExeMainEntryPointTicks() {
+  return g_browser_main_entry_point_ticks.Get().is_null()
+             ? base::TimeTicks()
+             : g_browser_main_entry_point_ticks.Get();
+}
+
 void RecordExeMainEntryPointTicks(base::TimeTicks ticks) {
   DCHECK(g_browser_exe_main_entry_point_ticks.Get().is_null());
   g_browser_exe_main_entry_point_ticks.Get() = ticks;
