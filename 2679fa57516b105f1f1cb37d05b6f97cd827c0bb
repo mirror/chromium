@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "024430bf_80337023",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-08T16:51:34Z",
+      "side": 1,
+      "message": "\u003e No more efficient, but fewer lines of code, would be:\n\u003e ExtensionFrameHelper* frame_helper \u003d Get(render_frame);\n\u003e source_view_type \u003d frame_helper ? frame_helper-\u003eview_type() : VIEW_TYPE_INVALID;\n\nGreat - thanks for pointing out the Get method.  I\u0027ve tried to search for \"static\" in extension_frame_helper.h and missed it (because it comes from the parent class - from RenderFrameObserverTracker).\n\u003e \n\u003e Also, is there any time that we wouldn\u0027t be able to find a frame helper for the frame?  (I don\u0027t think so, but maybe I\u0027m missing something?)  If not, can we DCHECK(frame_helper) (and then get rid of the ternary above)?\n\nI\u0027ll just access ExtensionFrameHelper::Get(relative_to_frame)-\u003eview_type() directly I think:\n\n1. Yes - each frame (even non-extension frames) should get a corresponding ExtensionFrameHelper instance created when ChromeExtensionsRendererClient::RenderFrameCreated executes.\n\n2. Even without a DCHECK we should know soon if there is a null dereference here.",
+      "parentUuid": "60b77bc8_3c6534be",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fcd0685_b0091280",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4

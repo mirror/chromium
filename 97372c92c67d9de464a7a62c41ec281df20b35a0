@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f6622b1_2ad641b1",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-08T16:51:34Z",
+      "side": 1,
+      "message": "You\u0027re right - this is the very same extension.  I\u0027ve consolidated the variables and UMAs.",
+      "parentUuid": "e1391bf7_174eb690",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37efd348_099155a1",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6645f277_f4331a39",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-08T16:51:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37efd348_099155a1",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d450b1d8_6e6a5c6f",
         "filename": "extensions/renderer/extension_frame_helper.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7033c125_d4050e91",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-08T16:51:34Z",
+      "side": 1,
+      "message": "You\u0027re right - I\u0027ve consolidated to Extensions.BrowsingInstanceViolation.ExtensionType",
+      "parentUuid": "d450b1d8_6e6a5c6f",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
