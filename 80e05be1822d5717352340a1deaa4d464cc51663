@@ -39,6 +39,24 @@
       "revId": "80e05be1822d5717352340a1deaa4d464cc51663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462c3153_cd96e8cd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T07:27:31Z",
+      "side": 1,
+      "message": "Yes please but also |current_selection|, other |change_selection| and\ncalling |FrameSelection::SetSelection()|. (I remembered I noticed |FrameSelection| usage in another CL.)\n\nUsing |FrameSelection| doesn\u0027t compatible with |Editor::InsertTextWithoutSendingTextEvent()|.",
+      "parentUuid": "a4ab34cd_4f1a2c60",
+      "revId": "80e05be1822d5717352340a1deaa4d464cc51663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
