@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bf2b6d5_fb97104e",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c85c37_a537b61e",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f3b9da_b27b8e72",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T02:10:18Z",
       "side": 1,
       "message": "note WebContentsMouseHandler has some lifetime issues - https://bugs.chromium.org/p/chromium/issues/detail?id\u003d739245\n\nI think that will be fixed in m65.",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed303bf_ea0158cb",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T18:15:30Z",
+      "side": 1,
+      "message": "The issue in this bug is that the web_contents can go away and |mouse_handler_| still gets events? Since SaveCardBubbleControllerImpl is a WebContentsObserver for WasHidden/WasDestroyed and will call into this method to reset |mouse_handler_|, I think we should be covered?",
+      "parentUuid": "98f3b9da_b27b8e72",
       "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a3545121_31814f54",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T18:15:30Z",
+      "side": 1,
+      "message": "I\u0027d forgotten about this, good catch. I\u0027m clearing the controller_ and mouse_handler_ in WindowClosing as well, and there doesn\u0027t appear to be a case anymore where one side would retain a pointer inappropriately. Do you think this improves the situation?",
+      "parentUuid": "f8e2bb02_721a6af3",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5544877e_f48a4893",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3b6f02b9_75099b58",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5544877e_f48a4893",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5358ead9_02cc27fb",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a7694f_920c6840",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T18:15:30Z",
+      "side": 1,
+      "message": "Yes, that\u0027s nice.",
+      "parentUuid": "5358ead9_02cc27fb",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
