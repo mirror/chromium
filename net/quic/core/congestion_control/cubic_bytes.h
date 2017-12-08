@@ -50,23 +50,6 @@ class QUIC_EXPORT_PRIVATE CubicBytes {
   // window. Resets Cubic state during quiescence.
   void OnApplicationLimited();
 
-  // If true, enable the fix for the convex-mode signing bug.  See
-  // b/32170105 for more information about the bug.
-  // TODO(jokulik):  Remove once the fix is enabled by default.
-  void SetFixConvexMode(bool fix_convex_mode);
-  // If true, fix CubicBytes quantization bug.  See b/33273459 for
-  // more information about the bug.
-  // TODO(jokulik): Remove once the fix is enabled by default.
-  void SetFixCubicQuantization(bool fix_cubic_quantization);
-  // If true, enable the fix for scaling BetaLastMax for n-nonnection
-  // emulation.  See b/33272010 for more information about the bug.
-  // TODO(jokulik):  Remove once the fix is enabled by default.
-  void SetFixBetaLastMax(bool fix_beta_last_max);
-  // If true, unconditionally enable each ack to update the congestion
-  // window.  See b/33410956 for further information about this bug.
-  // TODO(jokulik):  Remove once the fix is enabled by default.
-  void SetAllowPerAckUpdates(bool allow_per_ack_updates);
-
  private:
   friend class test::CubicBytesTest;
 
@@ -119,21 +102,21 @@ class QUIC_EXPORT_PRIVATE CubicBytes {
   QuicByteCount last_target_congestion_window_;
 
   // Fix convex mode for cubic.
-  // TODO(jokulik):  Remove once the cubic convex experiment is done.
-  bool fix_convex_mode_;
+  // TODO(ianswett):  Remove this.
+  const bool fix_convex_mode_;
 
   // Fix for quantization in cubic mode.
-  // TODO(jokulik):  Remove once the experiment is done.
-  bool fix_cubic_quantization_;
+  // TODO(ianswett):  Remove this.
+  const bool fix_cubic_quantization_;
 
   // Fix beta last max for n-connection-emulation.
-  // TODO(jokulik):  Remove once the corresponding experiment is done.
-  bool fix_beta_last_max_;
+  // TODO(ianswett):  Remove this.
+  const bool fix_beta_last_max_;
 
   // Allow per ack updates, rather than limiting the frequency of
   // updates when in cubic-mode.
-  // TODO(jokulik):  Remove once the experiment is done.
-  bool allow_per_ack_updates_;
+  // TODO(ianswett):  Remove this.
+  const bool allow_per_ack_updates_;
 
   DISALLOW_COPY_AND_ASSIGN(CubicBytes);
 };

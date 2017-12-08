@@ -42,14 +42,11 @@ CubicBytes::CubicBytes(const QuicClock* clock)
       num_connections_(kDefaultNumConnections),
       epoch_(QuicTime::Zero()),
       last_update_time_(QuicTime::Zero()),
-      fix_convex_mode_(FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes),
-      fix_cubic_quantization_(fix_convex_mode_),
-      fix_beta_last_max_(fix_convex_mode_),
-      allow_per_ack_updates_(fix_convex_mode_) {
+      fix_convex_mode_(true),
+      fix_cubic_quantization_(true),
+      fix_beta_last_max_(true),
+      allow_per_ack_updates_(true) {
   ResetCubicState();
-  if (fix_convex_mode_) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_enable_cubic_fixes, 2, 2);
-  }
 }
 
 void CubicBytes::SetNumConnections(int num_connections) {
@@ -92,22 +89,6 @@ void CubicBytes::ResetCubicState() {
   origin_point_congestion_window_ = 0;
   time_to_origin_point_ = 0;
   last_target_congestion_window_ = 0;
-}
-
-void CubicBytes::SetFixConvexMode(bool fix_convex_mode) {
-  fix_convex_mode_ = fix_convex_mode;
-}
-
-void CubicBytes::SetFixCubicQuantization(bool fix_cubic_quantization) {
-  fix_cubic_quantization_ = fix_cubic_quantization;
-}
-
-void CubicBytes::SetFixBetaLastMax(bool fix_beta_last_max) {
-  fix_beta_last_max_ = fix_beta_last_max;
-}
-
-void CubicBytes::SetAllowPerAckUpdates(bool allow_per_ack_updates) {
-  allow_per_ack_updates_ = allow_per_ack_updates;
 }
 
 void CubicBytes::OnApplicationLimited() {

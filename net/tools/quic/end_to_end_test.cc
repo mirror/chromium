@@ -376,15 +376,6 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
     // TODO(nimia): Consider setting the congestion control algorithm for the
     // client as well according to the test parameter.
     copt.push_back(GetParam().congestion_control_tag);
-    if (GetParam().congestion_control_tag == kQBIC) {
-      copt.push_back(kCCVX);
-    }
-    if (GetParam().congestion_control_tag == kQBIC) {
-      copt.push_back(kCBQT);
-    }
-    if (GetParam().congestion_control_tag == kQBIC) {
-      copt.push_back(kCPAU);
-    }
     if (GetParam().congestion_control_tag == kTPCC &&
         FLAGS_quic_reloadable_flag_quic_enable_pcc) {
       copt.push_back(kTPCC);
