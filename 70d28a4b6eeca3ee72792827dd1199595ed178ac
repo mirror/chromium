@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d578e35_5f6f13dd",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-08T02:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e96aa78_95e4c4ed",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "019e8425_13794ed0",
         "filename": "ios/chrome/browser/web/mailto_handler_manager.h",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "89b9b447_b764052d",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-08T02:01:20Z",
+      "side": 1,
+      "message": "I prefer a shorter name, but I understand the lack of context and (small) possibility of name conflict in the future. I changed this to something a bit shorter:\n - (void)mailtoHandlerDidChange:(MailtoHandlerManager*)manager;",
+      "parentUuid": "019e8425_13794ed0",
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a74e35f5_394e3d0f",
         "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-07T23:37:07Z",
       "side": 1,
       "message": "The old include order was correct",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20427717_03f7d96c",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-08T02:01:20Z",
+      "side": 1,
+      "message": "I don\u0027t know how/why it was moved.",
+      "parentUuid": "a74e35f5_394e3d0f",
       "range": {
         "startLine": 12,
         "startChar": 9,
@@ -85,6 +151,30 @@
       "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0310043_370dab00",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-08T02:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a47ae5d_2c56a76e",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 29
+      },
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
