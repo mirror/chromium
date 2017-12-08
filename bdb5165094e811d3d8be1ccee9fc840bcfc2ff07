@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b6f636_d21b0af5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Fragment.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-08T22:15:25Z",
+      "side": 1,
+      "message": "createElement should be fine",
+      "range": {
+        "startLine": 103,
+        "startChar": 19,
+        "endLine": 103,
+        "endChar": 25
+      },
+      "revId": "bdb5165094e811d3d8be1ccee9fc840bcfc2ff07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
