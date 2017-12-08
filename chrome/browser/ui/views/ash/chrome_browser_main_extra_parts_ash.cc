@@ -8,6 +8,8 @@
 #include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_state_type.h"
+#include "ash/public/interfaces/constants.mojom.h"
+#include "ash/public/interfaces/process_creation_time_recorder.mojom.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/public/interfaces/window_properties.mojom.h"
 #include "ash/public/interfaces/window_state_type.mojom.h"
@@ -33,6 +35,7 @@
 #include "chrome/browser/ui/views/frame/immersive_handler_factory_mus.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension.h"
 #include "chrome/browser/ui/views/select_file_dialog_extension_factory.h"
+#include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -104,6 +107,8 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
 void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   if (ash_util::ShouldOpenAshOnStartup())
     ash_init_ = base::MakeUnique<AshInit>();
+
+  PushProcessCreationTimeToAsh();
 
   if (ash_util::IsRunningInMash()) {
     immersive_context_ = base::MakeUnique<ImmersiveContextMus>();
@@ -188,4 +193,14 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   session_controller_client_.reset();
 
   ash_init_.reset();
+}
+
+void ChromeBrowserMainExtraPartsAsh::PushProcessCreationTimeToAsh() {
+  ash::mojom::ProcessCreationTimeRecorderPtr recorder;
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &recorder);
+  DCHECK(!startup_metric_utils::MainEntryPointTicks().is_null());
+  recorder->SetMainProcessCreationTime(
+      startup_metric_utils::MainEntryPointTicks());
 }
