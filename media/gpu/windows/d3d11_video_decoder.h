@@ -31,8 +31,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
  public:
   D3D11VideoDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-      base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb,
-      deprecated::OutputWithReleaseMailboxCB output_cb);
+      base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb);
   ~D3D11VideoDecoder() override;
 
   // VideoDecoder implementation:
@@ -70,8 +69,6 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
 
   // Task runner for |impl_|.  This must be the GPU main thread.
   scoped_refptr<base::SequencedTaskRunner> impl_task_runner_;
-
-  deprecated::OutputWithReleaseMailboxCB output_cb_;
 
   base::WeakPtrFactory<D3D11VideoDecoder> weak_factory_;
 

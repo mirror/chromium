@@ -46,17 +46,13 @@ namespace media {
 
 D3D11VideoDecoder::D3D11VideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-    base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb,
-    deprecated::OutputWithReleaseMailboxCB output_cb)
+    base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb)
     : impl_task_runner_(std::move(gpu_task_runner)), weak_factory_(this) {
   // We create |impl_| on the wrong thread, but we never use it here.
   // Note that the output callback will hop to our thread, post the video
   // frame, and along with a callback that will hop back to the impl thread
   // when it's released.
-  impl_ = base::MakeUnique<D3D11VideoDecoderImpl>(
-      get_stub_cb, media::BindToCurrentLoop(base::Bind(
-                       &D3D11VideoDecoder::OutputWithThreadHoppingRelease,
-                       weak_factory_.GetWeakPtr(), std::move(output_cb))));
+  impl_ = base::MakeUnique<D3D11VideoDecoderImpl>(get_stub_cb);
   impl_weak_ = impl_->GetWeakPtr();
 }
 
@@ -82,6 +78,12 @@ void D3D11VideoDecoder::Initialize(const VideoDecoderConfig& config,
     init_cb.Run(false);
     return;
   }
+
+  /*
+  output_cb_ = media::BindToCurrentLoop(base::Bind(
+                       &D3D11VideoDecoder::OutputWithThreadHoppingRelease,
+                       weak_factory_.GetWeakPtr(), std::move(output_cb)));
+                       */
 
   // Bind our own init / output cb that hop to this thread, so we don't call the
   // originals on some other thread.
