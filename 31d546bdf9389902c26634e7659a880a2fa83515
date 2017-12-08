@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b4deb9_e4c97595",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-08T17:51:40Z",
+      "side": 1,
+      "message": "As per comment, you should just make sure BoringSSL is rolled prior to this CL, and not do any API_VERSION logic (the Chromium/BoringSSL correspondence is set in DEPS, so this will either always be true or false.)",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 25
+      },
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26267ca6_b112f803",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-08T17:51:40Z",
+      "side": 1,
+      "message": "You could just make this std::vector\u003cuint8_t\u003e params(ssl_config_.token_binding_params.begin(), ....end()), instead of doing the for loop.",
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d918adfb_44d99474",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-08T17:51:40Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 1088,
+        "startChar": 25,
+        "endLine": 1088,
+        "endChar": 26
+      },
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bf9000_040b3eb9",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-08T17:51:40Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "31d546bdf9389902c26634e7659a880a2fa83515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
