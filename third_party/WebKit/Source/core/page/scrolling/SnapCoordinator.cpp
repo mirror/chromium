@@ -252,6 +252,70 @@ static float CalculateSnapOffset(SnapAlignment alignment,
   }
 }
 
+static FloatRect CalculateVisibleArea(const LayoutRect& container,
+                                      const LayoutRect& area) {
+  /* (min_x, min_y) is the minimum scroll_offset that ensures the visibility
+      of the snap_area
+    + + + + + + + + + + + + + + + + + + + + + + + + + + .  .  .  .  ^
+    +             ^                                   +             |
+    +             | min_y                             +     area.Y()|
+    +             v                                   +             |
+    +  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  + ^           |
+    +  \               scroll-padding              \  + |           |
+    +  \   . . . . . . snap_container. . . . . .   \  + |container  |
+    +  \   .                                   .   \  + |.MaxY()    |
+    +  \   .                                   .   \  + |           |
+    +  \   . . . . . . . . . . . . . . . . . . .  .\ .+ v .  .  .  .v
+    +  \       .                         .         \  +
+    +  \\\\\\\\.\\\\\\\\\\\\\\\\\\\\\\\\\.\\\\\\\\\\  +
+    +          .    |==============|     .            +
+    +          .    |              |     .            +
+    +          .    |   snap_area  |     .            +
+    +          .    |              |     .            +
+    +          .    |==============|     .            +
+    +          .                         .            +
+    +          .   scroll-snap-margin    .            +
+    +          . . . . . . . . . . . . . .            +
+    +                                                 +
+    +                                                 +
+    + + + + + + + + scrollable_content  + + + + + + + +
+
+  */
+  float min_x = (area.X() - container.MaxX()).ToFloat();
+  float min_y = (area.Y() - container.MaxY()).ToFloat();
+
+  /* (max_x, max_y) is the maximum scroll_offset that ensures the visibility
+      of the snap_area
+    + + + + + + + + + + + + + + + + + + + + + + + + + +  .  .  .  .  .  . ^
+    +  ^                                              +                   |
+    +  | max_y                                        +                   |
+    +  |       . . . . . . . . . . . . . .            +                   |
+    +  |       .                         .            +        area.MaxY()|
+    +  |       .   scroll-snap-margin    .            +                   |
+    +  |       .    |==============|     .            +                   |
+    +  |       .    |              |     .            +                   |
+    +  |       .    |   snap_area  |     .            +                   |
+    +  |       .    |              |     .            +                   |
+    +  v       .    |==============|     .            +                   |
+    +  \\\\\\\\.\\\\\\\\\\\\\\\\\\\\\\\\\.\\\\\\\\\\ .+ .  .  .  .  . ^   |
+    +  \       .                         .         \  +  container.Y()|   |
+    +  \   . . . . . . . . . . . . . . . . . . .  .\ .+ .  .  .  .  . v.  v
+    +  \   .                                   .   \  +
+    +  \   .                                   .   \  +
+    +  \   . . . . . . snap_container. . . . . .   \  +
+    +  \               scroll-padding              \  +
+    +  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\  +
+    +                                                 +
+    +                                                 +
+    + + + + + + + + scrollable_content  + + + + + + + +
+
+  */
+  float max_x = (area.MaxX() - container.X()).ToFloat();
+  float max_y = (area.MaxY() - container.Y()).ToFloat();
+
+  return FloatRect(min_x, min_y, max_x - min_x, max_y - min_y);
+}
+
 SnapAreaData SnapCoordinator::CalculateSnapAreaData(
     const LayoutBox& snap_area,
     const LayoutBox& snap_container,
@@ -331,6 +395,8 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
     snap_area_data.snap_axis = SnapAxis::kY;
   }
 
+  snap_area_data.visible_area = CalculateVisibleArea(container, area);
+
   snap_area_data.must_snap =
       (area_style->ScrollSnapStop() == EScrollSnapStop::kAlways);
 
@@ -345,7 +411,12 @@ ScrollOffset SnapCoordinator::FindSnapOffset(const ScrollOffset& current_offset,
   float smallest_distance_y = std::numeric_limits<float>::max();
   ScrollOffset snap_offset = current_offset;
   for (SnapAreaData snap_area_data : data.snap_area_list) {
-    // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
+    // Ignore the snap areas that are not currently visible.
+    if (!snap_area_data.visible_area.Contains(FloatPoint(current_offset)))
+      continue;
+
+    // TODO(sunyunjia): We should consider whether the snap area is larger than
+    // the snap container when choosing snap offset.
     if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
                              snap_area_data.snap_axis == SnapAxis::kBoth)) {
       float offset = snap_area_data.snap_offset.Width();
