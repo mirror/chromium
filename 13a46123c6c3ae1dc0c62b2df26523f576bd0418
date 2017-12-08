@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f14a03_77fe9230",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T23:34:10Z",
+      "side": 1,
+      "message": "That is the part where we need to be concerned with overlapped execution. \n\nThe idea here is that as soon as the function returns, the component updater is done handling this component, and it could allow an update check for this component, which could result in another ComponentReady() call.\n\nWe (the component updater owners) are in a tough spot here. There are many tasks serialized in the component updater execution flow. The component updater prefers to control the execution of these tasks and not rely on the installer code to call us back, had this call been non-blocking.",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa11961b_897b4d68",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T23:34:10Z",
+      "side": 1,
+      "message": "Maybe ask gab@ if a task scheduler task could be posted instead of using a browser thread api.",
+      "range": {
+        "startLine": 1111,
+        "startChar": 26,
+        "endLine": 1111,
+        "endChar": 46
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5baf59_16ed2914",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-08T23:34:10Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 188,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
