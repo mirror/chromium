@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "33eaf21a_f65fb9ed",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T17:33:18Z",
+      "side": 1,
+      "message": "Does it mean OnMakeCurrent() could be called with a nullptr?",
+      "parentUuid": "e8b3d6fa_132cac6d",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3ceb47_82dd152e",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -139,6 +157,24 @@
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aae75c4_84e3b8b3",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T17:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5fde3d3_671f2ef9",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "edbdaeab_431c26d2",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T17:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5ab638_502f43cd",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a4519c_e7fa653c",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 7
@@ -385,6 +439,24 @@
       "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b483a2b_eb6db1e4",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T17:33:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a502fcce_2aaa2ff9",
+      "revId": "1225b3a907d26d4a2e891624ff214db04bc474e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
