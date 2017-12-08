@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46b20cfb_329acceb",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "It ultimately goes to the preview area/custom margins controls, which is why I put it here. However, can remove it from properties for now, in case we do not end up using it when custom margins and preview area get migrated.",
+      "parentUuid": "4ca4f1b7_2403df75",
+      "range": {
+        "startLine": 306,
+        "startChar": 4,
+        "endLine": 306,
+        "endChar": 21
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0234f66_bb4eaa38",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47f56971_2ed9f598",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0234f66_bb4eaa38",
+      "range": {
+        "startLine": 348,
+        "startChar": 38,
+        "endLine": 348,
+        "endChar": 39
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9478a540_8cbe5b7b",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-07T23:29:41Z",
       "side": 1,
       "message": "I am afraid that every call to notifyPath() here, is triggering a new call to updateSettingsAvailable_(). Not sure what we can do about this, but seems a bit wasteful.",
+      "range": {
+        "startLine": 349,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 49
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cd6e05_ce479044",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "I think only documentInfo.isModifiable and documentInfo.hasSelection should be causing the calls to updateSettingsAvailable_ so far. However, ultimately the destination will also need to be updated. Added a boolean to try to prevent this, let me know what you think.",
+      "parentUuid": "9478a540_8cbe5b7b",
       "range": {
         "startLine": 349,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cee3d443_4cb253e7",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "Used updateFromStickySettings_, since the sticky settings are technically the serializedAppStateStr, not the settings in this file.",
+      "parentUuid": "c9c81d2b_627184da",
+      "range": {
+        "startLine": 353,
+        "startChar": 9,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d41488_0b1a773c",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-07T23:29:41Z",
       "side": 1,
       "message": "Same question about measurementSystem here. Is it involved in some data binding?",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 41
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e313954_3c0defb9",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "42d41488_0b1a773c",
       "range": {
         "startLine": 357,
         "startChar": 4,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3c7f1423_331a6406",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "I incorrectly assumed JSON.parse could fail and return null when it just throws an exception. Changed to try/catch.",
+      "parentUuid": "aa559f09_f5bfb495",
+      "range": {
+        "startLine": 371,
+        "startChar": 4,
+        "endLine": 372,
+        "endChar": 13
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c414a3e9_033659a4",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "404b197d_fc907aac",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c414a3e9_033659a4",
+      "range": {
+        "startLine": 374,
+        "startChar": 5,
+        "endLine": 374,
+        "endChar": 56
+      },
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a189be_7cc5c5c3",
         "filename": "chrome/browser/resources/print_preview/new/model.js",
         "patchSetId": 3
@@ -177,6 +345,24 @@
       "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fafee3_ae15f5f9",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T03:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a189be_7cc5c5c3",
+      "revId": "b5e834ca150dcd74786690df6cabaaa156e90284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
