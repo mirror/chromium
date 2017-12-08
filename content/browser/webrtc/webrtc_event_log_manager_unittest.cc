@@ -38,7 +38,6 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::NiceMock;
 using ::testing::StrictMock;
-using PeerConnectionKey = WebRtcEventLogManager::PeerConnectionKey;
 
 namespace {
 

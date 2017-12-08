@@ -17,6 +17,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/time/clock.h"
 #include "build/build_config.h"
+#include "content/browser/webrtc/webrtc_event_log_manager_common.h"
 #include "content/common/content_export.h"
 
 namespace content {
@@ -31,26 +32,6 @@ namespace content {
 // https://crbug.com/775415
 class CONTENT_EXPORT WebRtcEventLogManager {
  public:
-  // For a given Chrome session, this is a unique key for PeerConnections.
-  // It's not, however, unique between sessions (after Chrome is restarted).
-  struct PeerConnectionKey {
-    constexpr PeerConnectionKey(int render_process_id, int lid)
-        : render_process_id(render_process_id), lid(lid) {}
-
-    bool operator==(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) ==
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    bool operator<(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) <
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    int render_process_id;
-    int lid;  // Renderer-local PeerConnection ID.
-  };
-
   // Allow an observer to be registered for notifications of local log files
   // being started/stopped, and the paths which will be used for these logs.
   class LocalLogsObserver {
@@ -244,8 +225,12 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // a sentinel value (with a self-explanatory name).
   size_t max_local_log_file_size_bytes_;
 
-  // File operations will run sequentially on this runner.
-  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
+  // The main logic will run sequentially on this runner, on which blocking
+  // tasks are allowed.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // TODO: !!!
+//  WebRtcEventLogManagerLocalLogsHandler local_logs_handler_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebRtcEventLogManager);
