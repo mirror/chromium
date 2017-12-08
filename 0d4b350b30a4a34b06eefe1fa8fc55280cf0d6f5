@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7d2a3ede_74b95b20",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T17:24:10Z",
+      "side": 1,
+      "message": "Couple of things:\n1. There is an `\u0027if\u0027 condition already for `IsUrlEligibleToIncludeGaiaId\u0027 so there exists a bunch of services that exclude it already so it definitely works for them. In fact it seems as if the services for which it is \"required\" is a subset.\n2. I have tested it for Public Sessions, Guest Sessions, sign in page and vanilla sessions on Chrome OS and it works. If you\u0027ll notice, the only regression introduced in the diff is for ChromeOS. For other platforms it will work EXACTLY as it was working before (it is a double check of account_id.empty()). I have asked Max Kirsch to do a thorough regression testing by the QA team but from my side it looks good.",
+      "parentUuid": "460a168d_613ff624",
+      "range": {
+        "startLine": 170,
+        "startChar": 32,
+        "endLine": 170,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a91fc77_651c2017",
         "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
         "patchSetId": 17
