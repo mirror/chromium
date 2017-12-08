@@ -6,26 +6,29 @@
 <script src="../../resources/bluetooth/bluetooth-helpers.js"></script>
 <script>
 'use strict';
+const test_desc = 'Discover a device using alias, name, or UUID.';
+
 bluetooth_test(() => {
   let devices = [];
   let push = device => devices.push(device);
   // We can't use Promise.all() because Chrome will always close
   // the previous chooser in the process of handling a user gesture
   // for the next request.
-  return setBluetoothFakeAdapter('HeartRateAdapter')
+  return getHealthThermometerDevice()
     .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: [heart_rate.alias]}]}))
+      filters: [{ services: [health_thermometer.alias] }]
+    }))
     .then(push)
     .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: [heart_rate.name]}]}))
+      filters: [{ services: [health_thermometer.name] }]
+    }))
     .then(push)
     .then(() => requestDeviceWithTrustedClick({
-      filters: [{services: [heart_rate.uuid]}]}))
+      filters: [{ services: [health_thermometer.uuid] }]
+    }))
     .then(push)
-    .then(() => {
-      devices.forEach(device => {
-        assert_equals(device.constructor.name, 'BluetoothDevice');
-      });
+    devices.forEach(device => {
+      assert_equals(device.constructor.name, 'BluetoothDevice');
     });
-}, 'Mock will resolve.');
+}, test_desc);
 </script>
