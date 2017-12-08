@@ -22,6 +22,23 @@
       "revId": "89a7ea245f9b20fdaabfbdd958ec8d4093902d3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7caa1003_836adfde",
+        "filename": "ios/build/bots/scripts/test_runner.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-12-08T01:10:48Z",
+      "side": 1,
+      "message": "Use this comment to explain why, not what. What is clear from the code, why isn\u0027t. In particular, I\u0027d explain why we need to use intersection in one case and difference in another rather than just stating that we need to.",
+      "revId": "89a7ea245f9b20fdaabfbdd958ec8d4093902d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
