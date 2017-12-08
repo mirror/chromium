@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35f30801_2b4b9cb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-08T00:15:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "171c0569_133dc65b",
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e644fb67_c9f8ed98",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "73dff456_3149e55c",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-08T00:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e644fb67_c9f8ed98",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 51
+      },
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7254da9_e5cba577",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a81de0d_26173139",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-08T00:15:45Z",
+      "side": 1,
+      "message": "I don\u0027t think that behavior matches the original code however - If there\u0027s more than one text or html element in the WebDragData is would result in multiple writes, where as the original only captures the last value.\n\nPlus it\u0027s probably easier this way to deal with custom_data.",
+      "parentUuid": "a7254da9_e5cba577",
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
