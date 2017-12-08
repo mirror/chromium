@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7b0346a3_c419321c",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-08T18:10:39Z",
+      "side": 1,
+      "message": "For my understanding; why do we need to check if the user has ever changed the value anywhere? Can\u0027t we just apply the local value if it\u0027s recommended, and apply the default value otherwise? I\u0027m not sure why we\u0027d specifically want to apply the never-changed local value (shouldn\u0027t that just be equal to the default value?). I\u0027m probably failing to understand some part of the logic here; it\u0027d be nice to document the intent in comments here, if you have a clearer understanding.",
+      "parentUuid": "aa6d1278_509aca44",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57c7f4c6_15e07d96",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 1
