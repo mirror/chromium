@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "9496187c_1d8186ac",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T21:44:59Z",
+      "side": 1,
+      "message": "Reset properties inside |stop| per offline conversation.",
+      "parentUuid": "094b8411_4907d7dd",
+      "revId": "c1a2c524453c756e3d0b47bac6884a3f0092eba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46eaa9d7_2147104d",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 6
