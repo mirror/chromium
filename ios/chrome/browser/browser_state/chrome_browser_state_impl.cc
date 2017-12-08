@@ -18,6 +18,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/proxy_config/ios/proxy_service_factory.h"
 #include "components/proxy_config/pref_proxy_config_tracker.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "components/user_prefs/user_prefs.h"
 #include "ios/chrome/browser/application_context.h"
@@ -31,6 +32,10 @@
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/prefs/browser_prefs.h"
 #include "ios/chrome/browser/prefs/ios_chrome_pref_service_factory.h"
+#include "ios/chrome/browser/signin/account_tracker_service_factory.h"
+#include "ios/chrome/browser/signin/identity_service_creator.h"
+#include "ios/chrome/browser/signin/oauth2_token_service_factory.h"
+#include "ios/chrome/browser/signin/signin_manager_factory.h"
 #include "ios/web/public/web_thread.h"
 
 namespace {
@@ -172,6 +177,13 @@ bool ChromeBrowserStateImpl::IsOffTheRecord() const {
 
 base::FilePath ChromeBrowserStateImpl::GetStatePath() const {
   return state_path_;
+}
+
+void ChromeBrowserStateImpl::RegisterServices(StaticServiceMap* services) {
+  // TODO(crbug.com/787794): It would be nice to avoid ChromeBrowserState/
+  // Profile needing to know explicitly about every service that it is
+  // embedding.
+  RegisterIdentityServiceForBrowserState(this, services);
 }
 
 void ChromeBrowserStateImpl::SetOffTheRecordChromeBrowserState(
