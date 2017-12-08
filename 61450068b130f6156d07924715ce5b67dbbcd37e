@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cae184d_c98be37e",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb719bc4_8484e097",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa7ade2a_9abf2cec",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "226d060a_5a61a12e",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7ade2a_9abf2cec",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2cce8bf_d7ba3202",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T02:28:52Z",
       "side": 1,
       "message": "General style in Chromium code is to pass strings by const reference.",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711d6224_9a5f5266",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Could you point me to the relevant section of the styleguide? I wasn\u0027t able to find it myself. In general I pass strings by value if I unconditionally take ownership, or use a base::StringPiece if a read-only view is sufficient.",
+      "parentUuid": "b2cce8bf_d7ba3202",
       "range": {
         "startLine": 79,
         "startChar": 15,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e242418d_417b0afe",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f0c7b67_9c581712",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b46977_3b7bc5e4",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -108,6 +204,24 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92eb4a89_f2d177f9",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b46977_3b7bc5e4",
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b1dcae5e_eb7527ea",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c8c662e_b4323733",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47141834_9618bc68",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -154,6 +292,30 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79969fa_f0b75718",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done, I decided to change these strings to be base::Optionals. These are more explicit about missing values and also DCHECK if empty optionals are dereferenced. This allows us to drop all suggested DCHECKs except this one.",
+      "parentUuid": "47141834_9618bc68",
+      "range": {
+        "startLine": 122,
+        "startChar": 37,
+        "endLine": 122,
+        "endChar": 57
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "28a0104c_424f0743",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "834e1370_7e3f5402",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70693c19_25764bee",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -200,6 +386,30 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e83338_4eebbb3c",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70693c19_25764bee",
+      "range": {
+        "startLine": 218,
+        "startChar": 37,
+        "endLine": 218,
+        "endChar": 66
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "992ce133_5aff2f65",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b18516e_f539a2e7",
+      "range": {
+        "startLine": 454,
+        "startChar": 71,
+        "endLine": 454,
+        "endChar": 72
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b45bc4e_22b4d066",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "e560bd11_04da80a7",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b45bc4e_22b4d066",
+      "range": {
+        "startLine": 459,
+        "startChar": 21,
+        "endLine": 459,
+        "endChar": 42
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09bff050_8736e929",
         "filename": "device/u2f/u2f_ble_connection.h",
         "patchSetId": 13
@@ -269,6 +527,30 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779dec29_bf1ad0f6",
+        "filename": "device/u2f/u2f_ble_connection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done, added a comment as well.",
+      "parentUuid": "09bff050_8736e929",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 23
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +601,30 @@
     },
     {
       "key": {
+        "uuid": "6bf63e30_b0fd0757",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f89df40_f83f5a9a",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 22
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b9f3bc5_38c94e9b",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 13
@@ -333,6 +639,24 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8f870d_5d954f42",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done. Unfortunately a RunLoop does not allow multiple Run() calls, which is why having a naked RunLoop member does not really work here. I would like to be able to call WaitForResult multiple times on the same TestCallback instance. This requires wrapping the RunLoop in either a std::unique_ptr or base::Optional to be able to replace it with a new instance.",
+      "parentUuid": "3b9f3bc5_38c94e9b",
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "b2c186fd_040c8587",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd9e8a4_e6b38900",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 32
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb7767cd_b480c8b2",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 13
@@ -379,6 +727,30 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4889b7c5_856c2ba0",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7767cd_b480c8b2",
+      "range": {
+        "startLine": 252,
+        "startChar": 7,
+        "endLine": 252,
+        "endChar": 26
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "16893e8b_1109148c",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087fd8a6_131c3dd7",
+      "range": {
+        "startLine": 256,
+        "startChar": 49,
+        "endLine": 256,
+        "endChar": 57
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b983218d_2c01cd74",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 13
@@ -428,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "aab5d0ca_980ab3c3",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b983218d_2c01cd74",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 26
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1024daf_95503e34",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 13
@@ -448,6 +868,30 @@
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a4f2e5_d4f69301",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-08T13:47:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1024daf_95503e34",
+      "range": {
+        "startLine": 552,
+        "startChar": 0,
+        "endLine": 558,
+        "endChar": 1
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
