@@ -40,6 +40,10 @@
 
 #include <memory>
 
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+#include <arm_neon.h>
+#endif
+
 namespace blink {
 
 PNGImageDecoder::PNGImageDecoder(AlphaOption alpha_option,
@@ -275,6 +279,98 @@ void PNGImageDecoder::HeaderAvailable() {
   has_alpha_channel_ = (channels == 4);
 }
 
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+static void SetRGBARawRowNeon16(png_bytep src_ptr,
+                                const int pixel_count,
+                                ImageFrame::PixelData* dst_pixel,
+                                unsigned* alpha_mask) {
+  constexpr int kPixelsPerLoad = 16;
+  constexpr int kRgbaStep = kPixelsPerLoad * 4;
+  // Input registers.
+  uint8x16x4_t rgba;
+  // Output registers.
+  uint8x16x4_t bgra;
+  // Alpha mask.
+  uint8x16_t alpha_mask_vector = vdupq_n_u8(255);
+
+  int i = pixel_count;
+  for (; i >= kPixelsPerLoad; i -= kPixelsPerLoad) {
+    // Reads 16 pixels at once, each color channel in a different
+    // 128-bit register.
+    rgba = vld4q_u8(src_ptr);
+
+    // Re-order color channels for little endian.
+    bgra.val[0] = rgba.val[2];
+    bgra.val[1] = rgba.val[1];
+    bgra.val[2] = rgba.val[0];
+    bgra.val[3] = rgba.val[3];
+
+    // AND pixel alpha values with the alpha detection mask.
+    alpha_mask_vector = vandq_u8(alpha_mask_vector, rgba.val[3]);
+
+    // Write back (interleaved) results to memory.
+    vst4q_u8(reinterpret_cast<uint8_t*>(dst_pixel), bgra);
+
+    // Advance to next elements.
+    src_ptr += kRgbaStep;
+    dst_pixel += kPixelsPerLoad;
+  }
+
+  // AND together the 16 alpha values in the alpha_mask_vector.
+  uint64_t alpha_mask_u64 =
+      vget_lane_u64(vreinterpret_u64_u8(vget_low_u8(alpha_mask_vector)), 0);
+  alpha_mask_u64 &=
+      vget_lane_u64(vreinterpret_u64_u8(vget_high_u8(alpha_mask_vector)), 0);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 32);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 16);
+  alpha_mask_u64 &= (alpha_mask_u64 >> 8);
+  *alpha_mask &= alpha_mask_u64;
+
+  // Handle the tail elements.
+  for (; i > 0; i--, dst_pixel++, src_ptr += 4) {
+    ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2],
+                           src_ptr[3]);
+    *alpha_mask &= src_ptr[3];
+  }
+}
+
+static void SetRGBARawRowNoAlphaNeon16(png_bytep src_ptr,
+                                       const int pixel_count,
+                                       ImageFrame::PixelData* dst_pixel) {
+  constexpr int kPixelsPerLoad = 16;
+  constexpr int kRgbStep = kPixelsPerLoad * 3;
+  // Input registers.
+  uint8x16x3_t rgb;
+  // Output registers.
+  uint8x16x4_t bgra;
+
+  int i = pixel_count;
+  for (; i >= kPixelsPerLoad; i -= kPixelsPerLoad) {
+    // Reads 16 pixels at once, each color channel in a different
+    // 128-bit register.
+    rgb = vld3q_u8(src_ptr);
+
+    // Re-order color channels for little endian.
+    bgra.val[0] = rgb.val[2];
+    bgra.val[1] = rgb.val[1];
+    bgra.val[2] = rgb.val[0];
+    bgra.val[3] = vdupq_n_u8(255);
+
+    // Write back (interleaved) results to memory.
+    vst4q_u8(reinterpret_cast<uint8_t*>(dst_pixel), bgra);
+
+    // Advance to next elements.
+    src_ptr += kRgbStep;
+    dst_pixel += kPixelsPerLoad;
+  }
+
+  // Handle the tail elements.
+  for (; i > 0; i--, dst_pixel++, src_ptr += 3) {
+    ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2], 255);
+  }
+}
+#endif
+
 void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
                                    unsigned row_index,
                                    int) {
@@ -402,12 +498,16 @@ void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
           alpha_mask &= src_ptr[3];
         }
       } else {
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+        SetRGBARawRowNeon16(src_ptr, width, dst_row, &alpha_mask);
+#else
         for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
              dst_pixel++, src_ptr += 4) {
           ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2],
                                  src_ptr[3]);
           alpha_mask &= src_ptr[3];
         }
+#endif
       }
     } else {
       // Now, the blend method is ImageFrame::BlendAtopPreviousFrame. Since the
@@ -435,12 +535,15 @@ void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
       current_buffer_saw_alpha_ = true;
 
   } else {
+#if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+    SetRGBARawRowNoAlphaNeon16(src_ptr, width, dst_row);
+#else
     for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
          src_ptr += 3, ++dst_pixel) {
       ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2],
                              255);
     }
-
+#endif
     // We'll apply the color space xform to opaque pixels after they have been
     // written to the ImageFrame, purely because SkColorSpaceXform supports
     // RGBA (and not RGB).
