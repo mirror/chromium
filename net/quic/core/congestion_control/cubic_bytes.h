@@ -75,12 +75,6 @@ class QUIC_EXPORT_PRIVATE CubicBytes {
   // Time when this cycle started, after last loss event.
   QuicTime epoch_;
 
-  // Time when we updated last_congestion_window.
-  QuicTime last_update_time_;
-
-  // Last congestion window used.
-  QuicByteCount last_congestion_window_;
-
   // Max congestion window used just before last loss event.
   // Note: to improve fairness to other streams an additional back off is
   // applied to this value if the new value is below our latest value.
@@ -100,23 +94,6 @@ class QUIC_EXPORT_PRIVATE CubicBytes {
 
   // Last congestion window in packets computed by cubic function.
   QuicByteCount last_target_congestion_window_;
-
-  // Fix convex mode for cubic.
-  // TODO(ianswett):  Remove this.
-  const bool fix_convex_mode_;
-
-  // Fix for quantization in cubic mode.
-  // TODO(ianswett):  Remove this.
-  const bool fix_cubic_quantization_;
-
-  // Fix beta last max for n-connection-emulation.
-  // TODO(ianswett):  Remove this.
-  const bool fix_beta_last_max_;
-
-  // Allow per ack updates, rather than limiting the frequency of
-  // updates when in cubic-mode.
-  // TODO(ianswett):  Remove this.
-  const bool allow_per_ack_updates_;
 
   DISALLOW_COPY_AND_ASSIGN(CubicBytes);
 };
