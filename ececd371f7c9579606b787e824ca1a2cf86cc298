@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "862d0369_9d11e292",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T20:35:26Z",
+      "side": 1,
+      "message": "Since under the hood, the Profile* and the BrowserContext* are the same value, this magically works.  But it was certainly a bit strange.",
+      "parentUuid": "3983d800_7e7f00cb",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1652618_dfbfb466",
         "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
         "patchSetId": 1
