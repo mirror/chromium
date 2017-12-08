@@ -1377,9 +1377,8 @@ void ServiceWorkerStorage::DidStoreRegistration(
   if (quota_manager_proxy_) {
     // Can be nullptr in tests.
     quota_manager_proxy_->NotifyStorageModified(
-        storage::QuotaClient::kServiceWorker,
-        origin,
-        storage::StorageType::kStorageTypeTemporary,
+        storage::QuotaClient::kServiceWorker, origin,
+        blink::StorageType::kStorageTypeTemporary,
         new_version.resources_total_size_bytes -
             deleted_version.resources_total_size_bytes);
   }
@@ -1416,7 +1415,7 @@ void ServiceWorkerStorage::DidDeleteRegistration(
     // Can be nullptr in tests.
     quota_manager_proxy_->NotifyStorageModified(
         storage::QuotaClient::kServiceWorker, params->origin,
-        storage::StorageType::kStorageTypeTemporary,
+        blink::StorageType::kStorageTypeTemporary,
         -deleted_version.resources_total_size_bytes);
   }
   if (origin_state == OriginState::kDelete)

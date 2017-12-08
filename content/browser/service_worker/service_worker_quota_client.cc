@@ -27,8 +27,8 @@ void ReportOrigins(const QuotaClient::GetOriginsCallback& callback,
 
 void ReportToQuotaStatus(const QuotaClient::DeletionCallback& callback,
                          bool status) {
-  callback.Run(status ? storage::QuotaStatusCode::kQuotaStatusOk
-                      : storage::QuotaStatusCode::kQuotaStatusUnknown);
+  callback.Run(status ? blink::QuotaStatusCode::kQuotaStatusOk
+                      : blink::QuotaStatusCode::kQuotaStatusUnknown);
 }
 
 void FindUsageForOrigin(const QuotaClient::GetUsageCallback& callback,
@@ -62,9 +62,9 @@ void ServiceWorkerQuotaClient::OnQuotaManagerDestroyed() {
 
 void ServiceWorkerQuotaClient::GetOriginUsage(
     const GURL& origin,
-    storage::StorageType type,
+    blink::StorageType type,
     const GetUsageCallback& callback) {
-  if (type != storage::StorageType::kStorageTypeTemporary) {
+  if (type != blink::StorageType::kStorageTypeTemporary) {
     callback.Run(0);
     return;
   }
@@ -73,9 +73,9 @@ void ServiceWorkerQuotaClient::GetOriginUsage(
 }
 
 void ServiceWorkerQuotaClient::GetOriginsForType(
-    storage::StorageType type,
+    blink::StorageType type,
     const GetOriginsCallback& callback) {
-  if (type != storage::StorageType::kStorageTypeTemporary) {
+  if (type != blink::StorageType::kStorageTypeTemporary) {
     callback.Run(std::set<GURL>());
     return;
   }
@@ -83,10 +83,10 @@ void ServiceWorkerQuotaClient::GetOriginsForType(
 }
 
 void ServiceWorkerQuotaClient::GetOriginsForHost(
-    storage::StorageType type,
+    blink::StorageType type,
     const std::string& host,
     const GetOriginsCallback& callback) {
-  if (type != storage::StorageType::kStorageTypeTemporary) {
+  if (type != blink::StorageType::kStorageTypeTemporary) {
     callback.Run(std::set<GURL>());
     return;
   }
@@ -95,17 +95,17 @@ void ServiceWorkerQuotaClient::GetOriginsForHost(
 
 void ServiceWorkerQuotaClient::DeleteOriginData(
     const GURL& origin,
-    storage::StorageType type,
+    blink::StorageType type,
     const DeletionCallback& callback) {
-  if (type != storage::StorageType::kStorageTypeTemporary) {
-    callback.Run(storage::QuotaStatusCode::kQuotaStatusOk);
+  if (type != blink::StorageType::kStorageTypeTemporary) {
+    callback.Run(blink::QuotaStatusCode::kQuotaStatusOk);
     return;
   }
   context_->DeleteForOrigin(origin, base::Bind(&ReportToQuotaStatus, callback));
 }
 
-bool ServiceWorkerQuotaClient::DoesSupport(storage::StorageType type) const {
-  return type == storage::StorageType::kStorageTypeTemporary;
+bool ServiceWorkerQuotaClient::DoesSupport(blink::StorageType type) const {
+  return type == blink::StorageType::kStorageTypeTemporary;
 }
 
 }  // namespace content

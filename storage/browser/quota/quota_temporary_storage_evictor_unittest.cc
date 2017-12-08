@@ -21,7 +21,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using storage::QuotaTemporaryStorageEvictor;
-using storage::StorageType;
+using blink::StorageType;
 
 namespace content {
 
@@ -29,40 +29,41 @@ class QuotaTemporaryStorageEvictorTest;
 
 namespace {
 
-class MockQuotaEvictionHandler : public storage::QuotaEvictionHandler {
+class Mocblink::kQuotaEvictionHandler : public storage::QuotaEvictionHandler {
  public:
-  explicit MockQuotaEvictionHandler(QuotaTemporaryStorageEvictorTest* test)
+  explicit Mocblink::kQuotaEvictionHandler(
+      QuotaTemporaryStorageEvictorTest* test)
       : available_space_(0),
         error_on_evict_origin_data_(false),
         error_on_get_usage_and_quota_(false) {}
 
   void EvictOriginData(const GURL& origin,
-                       StorageType type,
+                       blink::StorageType type,
                        const storage::StatusCallback& callback) override {
     if (error_on_evict_origin_data_) {
-      callback.Run(storage::kQuotaErrorInvalidModification);
+      callback.Run(blink::kQuotaErrorInvalidModification);
       return;
     }
     int64_t origin_usage = EnsureOriginRemoved(origin);
     if (origin_usage >= 0)
       available_space_ += origin_usage;
-    callback.Run(storage::kQuotaStatusOk);
+    callback.Run(blink::kQuotaStatusOk);
   }
 
   void GetEvictionRoundInfo(
       const EvictionRoundInfoCallback& callback) override {
     if (error_on_get_usage_and_quota_) {
-      callback.Run(storage::kQuotaErrorAbort, storage::QuotaSettings(), 0, 0,
-                   0, false);
+      callback.Run(blink::kQuotaErrorAbort, storage::QuotaSettings(), 0, 0, 0,
+                   false);
       return;
     }
     if (!task_for_get_usage_and_quota_.is_null())
       task_for_get_usage_and_quota_.Run();
-    callback.Run(storage::kQuotaStatusOk, settings_, available_space_,
+    callback.Run(blink::kQuotaStatusOk, settings_, available_space_,
                  available_space_ * 2, GetUsage(), true);
   }
 
-  void GetEvictionOrigin(StorageType type,
+  void GetEvictionOrigin(blink::StorageType type,
                          const std::set<GURL>& exceptions,
                          int64_t global_quota,
                          const storage::GetOriginCallback& callback) override {
@@ -150,7 +151,7 @@ class QuotaTemporaryStorageEvictorTest : public testing::Test {
         weak_factory_(this) {}
 
   void SetUp() override {
-    quota_eviction_handler_.reset(new MockQuotaEvictionHandler(this));
+    quota_eviction_handler_.reset(new Mocblink::kQuotaEvictionHandler(this));
 
     // Run multiple evictions in a single RunUntilIdle() when interval_ms == 0
     temporary_storage_evictor_.reset(new QuotaTemporaryStorageEvictor(
@@ -189,8 +190,8 @@ class QuotaTemporaryStorageEvictorTest : public testing::Test {
   }
 
  protected:
-  MockQuotaEvictionHandler* quota_eviction_handler() const {
-    return static_cast<MockQuotaEvictionHandler*>(
+  Mocblink::kQuotaEvictionHandler* quota_eviction_handler() const {
+    return static_cast<Mocblink::kQuotaEvictionHandler*>(
         quota_eviction_handler_.get());
   }
 
@@ -211,7 +212,7 @@ class QuotaTemporaryStorageEvictorTest : public testing::Test {
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  std::unique_ptr<MockQuotaEvictionHandler> quota_eviction_handler_;
+  std::unique_ptr<Mocblink::kQuotaEvictionHandler> quota_eviction_handler_;
   std::unique_ptr<QuotaTemporaryStorageEvictor> temporary_storage_evictor_;
   int num_get_usage_and_quota_for_eviction_;
   base::WeakPtrFactory<QuotaTemporaryStorageEvictorTest> weak_factory_;

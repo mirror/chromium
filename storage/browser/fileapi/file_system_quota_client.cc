@@ -20,16 +20,15 @@
 #include "storage/common/fileapi/file_system_util.h"
 #include "url/gurl.h"
 
-using storage::StorageType;
+using blink::StorageType;
 
 namespace storage {
 
 namespace {
 
-void GetOriginsForTypeOnFileTaskRunner(
-    FileSystemContext* context,
-    StorageType storage_type,
-    std::set<GURL>* origins_ptr) {
+void GetOriginsForTypeOnFileTaskRunner(FileSystemContext* context,
+                                       blink::StorageType storage_type,
+                                       std::set<GURL>* origins_ptr) {
   FileSystemType type = QuotaStorageTypeToFileSystemType(storage_type);
   DCHECK(type != kFileSystemTypeUnknown);
 
@@ -39,11 +38,10 @@ void GetOriginsForTypeOnFileTaskRunner(
   quota_util->GetOriginsForTypeOnFileTaskRunner(type, origins_ptr);
 }
 
-void GetOriginsForHostOnFileTaskRunner(
-    FileSystemContext* context,
-    StorageType storage_type,
-    const std::string& host,
-    std::set<GURL>* origins_ptr) {
+void GetOriginsForHostOnFileTaskRunner(FileSystemContext* context,
+                                       blink::StorageType storage_type,
+                                       const std::string& host,
+                                       std::set<GURL>* origins_ptr) {
   FileSystemType type = QuotaStorageTypeToFileSystemType(storage_type);
   DCHECK(type != kFileSystemTypeUnknown);
 
@@ -58,19 +56,18 @@ void DidGetOrigins(const storage::QuotaClient::GetOriginsCallback& callback,
   callback.Run(*origins_ptr);
 }
 
-storage::QuotaStatusCode DeleteOriginOnFileTaskRunner(
-    FileSystemContext* context,
-    const GURL& origin,
-    FileSystemType type) {
+blink::QuotaStatusCode DeleteOriginOnFileTaskRunner(FileSystemContext* context,
+                                                    const GURL& origin,
+                                                    FileSystemType type) {
   FileSystemBackend* provider = context->GetFileSystemBackend(type);
   if (!provider || !provider->GetQuotaUtil())
-    return storage::kQuotaErrorNotSupported;
+    return blink::kQuotaErrorNotSupported;
   base::File::Error result =
       provider->GetQuotaUtil()->DeleteOriginDataOnFileTaskRunner(
           context, context->quota_manager_proxy(), origin, type);
   if (result == base::File::FILE_OK)
-    return storage::kQuotaStatusOk;
-  return storage::kQuotaErrorInvalidModification;
+    return blink::kQuotaStatusOk;
+  return blink::kQuotaErrorInvalidModification;
 }
 
 }  // namespace
@@ -92,10 +89,9 @@ void FileSystemQuotaClient::OnQuotaManagerDestroyed() {
   delete this;
 }
 
-void FileSystemQuotaClient::GetOriginUsage(
-    const GURL& origin_url,
-    StorageType storage_type,
-    const GetUsageCallback& callback) {
+void FileSystemQuotaClient::GetOriginUsage(const GURL& origin_url,
+                                           blink::StorageType storage_type,
+                                           const GetUsageCallback& callback) {
   DCHECK(!callback.is_null());
 
   if (is_incognito_) {
@@ -123,7 +119,7 @@ void FileSystemQuotaClient::GetOriginUsage(
 }
 
 void FileSystemQuotaClient::GetOriginsForType(
-    StorageType storage_type,
+    blink::StorageType storage_type,
     const GetOriginsCallback& callback) {
   DCHECK(!callback.is_null());
 
@@ -143,7 +139,7 @@ void FileSystemQuotaClient::GetOriginsForType(
 }
 
 void FileSystemQuotaClient::GetOriginsForHost(
-    StorageType storage_type,
+    blink::StorageType storage_type,
     const std::string& host,
     const GetOriginsCallback& callback) {
   DCHECK(!callback.is_null());
@@ -163,10 +159,9 @@ void FileSystemQuotaClient::GetOriginsForHost(
       base::Bind(&DidGetOrigins, callback, base::Owned(origins_ptr)));
 }
 
-void FileSystemQuotaClient::DeleteOriginData(
-    const GURL& origin,
-    StorageType type,
-    const DeletionCallback& callback) {
+void FileSystemQuotaClient::DeleteOriginData(const GURL& origin,
+                                             blink::StorageType type,
+                                             const DeletionCallback& callback) {
   FileSystemType fs_type = QuotaStorageTypeToFileSystemType(type);
   DCHECK(fs_type != kFileSystemTypeUnknown);
 
@@ -177,8 +172,7 @@ void FileSystemQuotaClient::DeleteOriginData(
       callback);
 }
 
-bool FileSystemQuotaClient::DoesSupport(
-    storage::StorageType storage_type) const {
+bool FileSystemQuotaClient::DoesSupport(blink::StorageType storage_type) const {
   FileSystemType type = QuotaStorageTypeToFileSystemType(storage_type);
   DCHECK(type != kFileSystemTypeUnknown);
   return file_system_context_->IsSandboxFileSystem(type);

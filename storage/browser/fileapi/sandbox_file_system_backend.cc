@@ -114,9 +114,9 @@ FileSystemOperation* SandboxFileSystemBackend::CreateFileSystemOperation(
 
   SpecialStoragePolicy* policy = delegate_->special_storage_policy();
   if (policy && policy->IsStorageUnlimited(url.origin()))
-    operation_context->set_quota_limit_type(storage::kQuotaLimitTypeUnlimited);
+    operation_context->set_quota_limit_type(kQuotaLimitTypeUnlimited);
   else
-    operation_context->set_quota_limit_type(storage::kQuotaLimitTypeLimited);
+    operation_context->set_quota_limit_type(kQuotaLimitTypeLimited);
 
   return FileSystemOperation::Create(url, context,
                                      std::move(operation_context));

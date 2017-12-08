@@ -16,12 +16,12 @@
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using storage::kQuotaStatusOk;
-using storage::kStorageTypeTemporary;
+using blink::kQuotaStatusOk;
+using blink::kStorageTypeTemporary;
 using storage::QuotaClient;
 using storage::QuotaClientList;
 using storage::SpecialStoragePolicy;
-using storage::StorageType;
+using blink::StorageType;
 using storage::UsageTracker;
 
 namespace content {
@@ -59,27 +59,27 @@ void DidGetUsageBreakdown(
 
 }  // namespace
 
-class MockQuotaClient : public QuotaClient {
+class Mocblink::kQuotaClient : public QuotaClient {
  public:
-  MockQuotaClient() = default;
-  ~MockQuotaClient() override = default;
+  Mocblink::kQuotaClient() = default;
+  ~Mocblink::kQuotaClient() override = default;
 
   ID id() const override { return kFileSystem; }
 
   void OnQuotaManagerDestroyed() override {}
 
   void GetOriginUsage(const GURL& origin,
-                      StorageType type,
+                      blink::StorageType type,
                       const GetUsageCallback& callback) override {
-    EXPECT_EQ(kStorageTypeTemporary, type);
+    EXPECT_EQ(blink::kStorageTypeTemporary, type);
     int64_t usage = GetUsage(origin);
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                   base::Bind(callback, usage));
   }
 
-  void GetOriginsForType(StorageType type,
+  void GetOriginsForType(blink::StorageType type,
                          const GetOriginsCallback& callback) override {
-    EXPECT_EQ(kStorageTypeTemporary, type);
+    EXPECT_EQ(blink::kStorageTypeTemporary, type);
     std::set<GURL> origins;
     for (UsageMap::const_iterator itr = usage_map_.begin();
          itr != usage_map_.end(); ++itr) {
@@ -89,10 +89,10 @@ class MockQuotaClient : public QuotaClient {
         FROM_HERE, base::Bind(callback, origins));
   }
 
-  void GetOriginsForHost(StorageType type,
+  void GetOriginsForHost(blink::StorageType type,
                          const std::string& host,
                          const GetOriginsCallback& callback) override {
-    EXPECT_EQ(kStorageTypeTemporary, type);
+    EXPECT_EQ(blink::kStorageTypeTemporary, type);
     std::set<GURL> origins;
     for (UsageMap::const_iterator itr = usage_map_.begin();
          itr != usage_map_.end(); ++itr) {
@@ -104,16 +104,16 @@ class MockQuotaClient : public QuotaClient {
   }
 
   void DeleteOriginData(const GURL& origin,
-                        StorageType type,
+                        blink::StorageType type,
                         const DeletionCallback& callback) override {
-    EXPECT_EQ(kStorageTypeTemporary, type);
+    EXPECT_EQ(blink::kStorageTypeTemporary, type);
     usage_map_.erase(origin);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, kQuotaStatusOk));
+        FROM_HERE, base::Bind(callback, blink::kQuotaStatusOk));
   }
 
-  bool DoesSupport(storage::StorageType type) const override {
-    return type == storage::kStorageTypeTemporary;
+  bool DoesSupport(blink::StorageType type) const override {
+    return type == blink::kStorageTypeTemporary;
   }
 
   int64_t GetUsage(const GURL& origin) {
@@ -136,16 +136,17 @@ class MockQuotaClient : public QuotaClient {
 
   UsageMap usage_map_;
 
-  DISALLOW_COPY_AND_ASSIGN(MockQuotaClient);
+  DISALLOW_COPY_AND_ASSIGN(Mocblink::kQuotaClient);
 };
 
 class UsageTrackerTest : public testing::Test {
  public:
   UsageTrackerTest()
       : storage_policy_(new MockSpecialStoragePolicy()),
-        usage_tracker_(GetUsageTrackerList(), kStorageTypeTemporary,
-                       storage_policy_.get(), NULL) {
-  }
+        usage_tracker_(GetUsageTrackerList(),
+                       blink::kStorageTypeTemporary,
+                       storage_policy_.get(),
+                       NULL) {}
 
   ~UsageTrackerTest() override = default;
 
@@ -233,7 +234,7 @@ class UsageTrackerTest : public testing::Test {
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   scoped_refptr<MockSpecialStoragePolicy> storage_policy_;
-  MockQuotaClient quota_client_;
+  Mocblink::kQuotaClient quota_client_;
   UsageTracker usage_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(UsageTrackerTest);

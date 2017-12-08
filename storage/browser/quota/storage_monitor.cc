@@ -12,7 +12,7 @@
 #include "base/trace_event/trace_event.h"
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager.h"
-#include "storage/common/quota/quota_status_code.h"
+#include "third_party/WebKit/common/quota/quota_status_code.h"
 
 namespace storage {
 
@@ -217,11 +217,11 @@ void HostStorageObservers::StartInitialization(
 
 void HostStorageObservers::GotHostUsageAndQuota(
     const StorageObserver::Filter& filter,
-    QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   initializing_ = false;
-  if (status != kQuotaStatusOk)
+  if (status != blink::kQuotaStatusOk)
     return;
   initialized_ = true;
   cached_quota_ = quota;
@@ -310,8 +310,8 @@ void StorageMonitor::AddObserver(
   DCHECK(observer);
 
   // Check preconditions.
-  if (params.filter.storage_type == kStorageTypeUnknown ||
-      params.filter.storage_type == kStorageTypeQuotaNotManaged ||
+  if (params.filter.storage_type == blink::kStorageTypeUnknown ||
+      params.filter.storage_type == blink::kStorageTypeQuotaNotManaged ||
       params.filter.origin.is_empty()) {
     NOTREACHED();
     return;
@@ -333,7 +333,7 @@ void StorageMonitor::RemoveObserver(StorageObserver* observer) {
 }
 
 const StorageTypeObservers* StorageMonitor::GetStorageTypeObservers(
-    StorageType storage_type) const {
+    blink::StorageType storage_type) const {
   auto it = storage_type_observers_map_.find(storage_type);
   if (it != storage_type_observers_map_.end())
     return it->second.get();
@@ -344,8 +344,8 @@ const StorageTypeObservers* StorageMonitor::GetStorageTypeObservers(
 void StorageMonitor::NotifyUsageChange(const StorageObserver::Filter& filter,
                                        int64_t delta) {
   // Check preconditions.
-  if (filter.storage_type == kStorageTypeUnknown ||
-      filter.storage_type == kStorageTypeQuotaNotManaged ||
+  if (filter.storage_type == blink::kStorageTypeUnknown ||
+      filter.storage_type == blink::kStorageTypeQuotaNotManaged ||
       filter.origin.is_empty()) {
     NOTREACHED();
     return;

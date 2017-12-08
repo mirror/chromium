@@ -279,7 +279,7 @@ base::File ObfuscatedFileUtil::CreateOrOpen(
     const FileSystemURL& url, int file_flags) {
   base::File file = CreateOrOpenInternal(context, url, file_flags);
   if (file.IsValid() && file_flags & base::File::FLAG_WRITE &&
-      context->quota_limit_type() == storage::kQuotaLimitTypeUnlimited &&
+      context->quota_limit_type() == kQuotaLimitTypeUnlimited &&
       sandbox_delegate_) {
     sandbox_delegate_->StickyInvalidateUsageCache(url.origin(), url.type());
   }

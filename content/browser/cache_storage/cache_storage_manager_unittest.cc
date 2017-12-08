@@ -226,10 +226,10 @@ class CacheStorageManagerTest : public testing::Test {
     mock_quota_manager_ = new MockQuotaManager(
         MemoryOnly(), temp_dir_path, base::ThreadTaskRunnerHandle::Get().get(),
         quota_policy_.get());
-    mock_quota_manager_->SetQuota(
-        GURL(origin1_), storage::kStorageTypeTemporary, 1024 * 1024 * 100);
-    mock_quota_manager_->SetQuota(
-        GURL(origin2_), storage::kStorageTypeTemporary, 1024 * 1024 * 100);
+    mock_quota_manager_->SetQuota(GURL(origin1_), blink::kStorageTypeTemporary,
+                                  1024 * 1024 * 100);
+    mock_quota_manager_->SetQuota(GURL(origin2_), blink::kStorageTypeTemporary,
+                                  1024 * 1024 * 100);
 
     quota_manager_proxy_ = new MockQuotaManagerProxy(
         mock_quota_manager_.get(), base::ThreadTaskRunnerHandle::Get().get());
@@ -557,7 +557,7 @@ class CacheStorageManagerTest : public testing::Test {
                               QuotaStatusCode status_code,
                               int64_t usage,
                               int64_t quota) {
-    if (status_code == storage::kQuotaStatusOk)
+    if (status_code == blink::kQuotaStatusOk)
       *out_usage = usage;
     run_loop->Quit();
   }
@@ -1672,7 +1672,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   }
 
   void DeleteOriginCallback(base::RunLoop* run_loop,
-                            storage::QuotaStatusCode status) {
+                            blink::QuotaStatusCode status) {
     callback_status_ = status;
     run_loop->Quit();
   }
@@ -1680,7 +1680,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   int64_t QuotaGetOriginUsage(const GURL& origin) {
     base::RunLoop loop;
     quota_client_->GetOriginUsage(
-        origin, storage::kStorageTypeTemporary,
+        origin, blink::kStorageTypeTemporary,
         base::Bind(&CacheStorageQuotaClientTest::QuotaUsageCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
@@ -1690,7 +1690,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   size_t QuotaGetOriginsForType() {
     base::RunLoop loop;
     quota_client_->GetOriginsForType(
-        storage::kStorageTypeTemporary,
+        blink::kStorageTypeTemporary,
         base::Bind(&CacheStorageQuotaClientTest::OriginsCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
@@ -1700,7 +1700,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   size_t QuotaGetOriginsForHost(const std::string& host) {
     base::RunLoop loop;
     quota_client_->GetOriginsForHost(
-        storage::kStorageTypeTemporary, host,
+        blink::kStorageTypeTemporary, host,
         base::Bind(&CacheStorageQuotaClientTest::OriginsCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
@@ -1710,20 +1710,20 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   bool QuotaDeleteOriginData(const GURL& origin) {
     base::RunLoop loop;
     quota_client_->DeleteOriginData(
-        origin, storage::kStorageTypeTemporary,
+        origin, blink::kStorageTypeTemporary,
         base::Bind(&CacheStorageQuotaClientTest::DeleteOriginCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
-    return callback_status_ == storage::kQuotaStatusOk;
+    return callback_status_ == blink::kQuotaStatusOk;
   }
 
-  bool QuotaDoesSupport(storage::StorageType type) {
+  bool QuotaDoesSupport(blink::StorageType type) {
     return quota_client_->DoesSupport(type);
   }
 
   std::unique_ptr<CacheStorageQuotaClient> quota_client_;
 
-  storage::QuotaStatusCode callback_status_;
+  blink::QuotaStatusCode callback_status_;
   int64_t callback_quota_usage_ = 0;
   std::set<GURL> callback_origins_;
 
@@ -1821,11 +1821,11 @@ TEST_F(CacheStorageQuotaClientDiskOnlyTest, QuotaDeleteUnloadedOriginData) {
 }
 
 TEST_P(CacheStorageQuotaClientTestP, QuotaDoesSupport) {
-  EXPECT_TRUE(QuotaDoesSupport(storage::kStorageTypeTemporary));
-  EXPECT_FALSE(QuotaDoesSupport(storage::kStorageTypePersistent));
-  EXPECT_FALSE(QuotaDoesSupport(storage::kStorageTypeSyncable));
-  EXPECT_FALSE(QuotaDoesSupport(storage::kStorageTypeQuotaNotManaged));
-  EXPECT_FALSE(QuotaDoesSupport(storage::kStorageTypeUnknown));
+  EXPECT_TRUE(QuotaDoesSupport(blink::kStorageTypeTemporary));
+  EXPECT_FALSE(QuotaDoesSupport(blink::kStorageTypePersistent));
+  EXPECT_FALSE(QuotaDoesSupport(blink::kStorageTypeSyncable));
+  EXPECT_FALSE(QuotaDoesSupport(blink::kStorageTypeQuotaNotManaged));
+  EXPECT_FALSE(QuotaDoesSupport(blink::kStorageTypeUnknown));
 }
 
 INSTANTIATE_TEST_CASE_P(CacheStorageManagerTests,

@@ -18,8 +18,8 @@
 
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::QuotaStatusCode;
-using storage::StorageType;
+using blink::QuotaStatusCode;
+using blink::StorageType;
 
 namespace content {
 
@@ -49,7 +49,7 @@ QuotaDispatcherHost::QuotaDispatcherHost(
 
 void QuotaDispatcherHost::QueryStorageUsageAndQuota(
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    blink::StorageType storage_type,
     QueryStorageUsageAndQuotaCallback callback) {
   quota_manager_->GetUsageAndQuotaForWebApps(
       origin.GetURL(), storage_type,
@@ -61,19 +61,19 @@ void QuotaDispatcherHost::QueryStorageUsageAndQuota(
 void QuotaDispatcherHost::RequestStorageQuota(
     int64_t render_frame_id,
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    blink::StorageType storage_type,
     uint64_t requested_size,
     mojom::QuotaDispatcherHost::RequestStorageQuotaCallback callback) {
-  if (storage_type != storage::kStorageTypeTemporary &&
-      storage_type != storage::kStorageTypePersistent) {
+  if (storage_type != blink::kStorageTypeTemporary &&
+      storage_type != blink::kStorageTypePersistent) {
     // Unsupported storage types.
-    std::move(callback).Run(storage::kQuotaErrorNotSupported, 0, 0);
+    std::move(callback).Run(blink::kQuotaErrorNotSupported, 0, 0);
     return;
   }
 
-  DCHECK(storage_type == storage::kStorageTypeTemporary ||
-         storage_type == storage::kStorageTypePersistent);
-  if (storage_type == storage::kStorageTypePersistent) {
+  DCHECK(storage_type == blink::kStorageTypeTemporary ||
+         storage_type == blink::kStorageTypePersistent);
+  if (storage_type == blink::kStorageTypePersistent) {
     quota_manager_->GetUsageAndQuotaForWebApps(
         origin.GetURL(), storage_type,
         base::Bind(&QuotaDispatcherHost::DidGetPersistentUsageAndQuota,
@@ -100,13 +100,13 @@ void QuotaDispatcherHost::DidQueryStorageUsageAndQuota(
 void QuotaDispatcherHost::DidGetPersistentUsageAndQuota(
     int64_t render_frame_id,
     const url::Origin& origin,
-    storage::StorageType storage_type,
+    blink::StorageType storage_type,
     uint64_t requested_quota,
     RequestStorageQuotaCallback callback,
     QuotaStatusCode status,
     int64_t current_usage,
     int64_t current_quota) {
-  if (status != storage::kQuotaStatusOk) {
+  if (status != blink::kQuotaStatusOk) {
     std::move(callback).Run(status, 0, 0);
     return;
   }
@@ -119,7 +119,7 @@ void QuotaDispatcherHost::DidGetPersistentUsageAndQuota(
       base::saturated_cast<int64_t>(requested_quota);
   if (quota_manager_->IsStorageUnlimited(origin.GetURL(), storage_type) ||
       requested_quota_signed <= current_quota) {
-    std::move(callback).Run(storage::kQuotaStatusOk, current_usage,
+    std::move(callback).Run(blink::kQuotaStatusOk, current_usage,
                             requested_quota);
     return;
   }
@@ -150,7 +150,7 @@ void QuotaDispatcherHost::DidGetPermissionResponse(
     QuotaPermissionContext::QuotaPermissionResponse response) {
   // If user didn't allow the new quota, just return the current quota.
   if (response != QuotaPermissionContext::QUOTA_PERMISSION_RESPONSE_ALLOW) {
-    std::move(callback).Run(storage::kQuotaStatusOk, current_usage,
+    std::move(callback).Run(blink::kQuotaStatusOk, current_usage,
                             current_quota);
     return;
   }

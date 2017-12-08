@@ -21,7 +21,7 @@ namespace {
 void DidGetUsageAndQuota(
     base::SequencedTaskRunner* original_task_runner,
     const QuotaManagerProxy::UsageAndQuotaCallback& callback,
-    QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   if (!original_task_runner->RunsTasksInCurrentSequence()) {
@@ -53,10 +53,9 @@ void QuotaManagerProxy::RegisterClient(QuotaClient* client) {
     client->OnQuotaManagerDestroyed();
 }
 
-void QuotaManagerProxy::NotifyStorageAccessed(
-    QuotaClient::ID client_id,
-    const GURL& origin,
-    StorageType type) {
+void QuotaManagerProxy::NotifyStorageAccessed(QuotaClient::ID client_id,
+                                              const GURL& origin,
+                                              blink::StorageType type) {
   if (!io_thread_->BelongsToCurrentThread()) {
     io_thread_->PostTask(
         FROM_HERE,
@@ -71,7 +70,7 @@ void QuotaManagerProxy::NotifyStorageAccessed(
 
 void QuotaManagerProxy::NotifyStorageModified(QuotaClient::ID client_id,
                                               const GURL& origin,
-                                              StorageType type,
+                                              blink::StorageType type,
                                               int64_t delta) {
   if (!io_thread_->BelongsToCurrentThread()) {
     io_thread_->PostTask(
@@ -113,7 +112,7 @@ void QuotaManagerProxy::NotifyOriginNoLongerInUse(
 
 void QuotaManagerProxy::SetUsageCacheEnabled(QuotaClient::ID client_id,
                                              const GURL& origin,
-                                             StorageType type,
+                                             blink::StorageType type,
                                              bool enabled) {
   if (!io_thread_->BelongsToCurrentThread()) {
     io_thread_->PostTask(
@@ -129,7 +128,7 @@ void QuotaManagerProxy::SetUsageCacheEnabled(QuotaClient::ID client_id,
 void QuotaManagerProxy::GetUsageAndQuota(
     base::SequencedTaskRunner* original_task_runner,
     const GURL& origin,
-    StorageType type,
+    blink::StorageType type,
     const UsageAndQuotaCallback& callback) {
   if (!io_thread_->BelongsToCurrentThread()) {
     io_thread_->PostTask(
@@ -139,7 +138,8 @@ void QuotaManagerProxy::GetUsageAndQuota(
     return;
   }
   if (!manager_) {
-    DidGetUsageAndQuota(original_task_runner, callback, kQuotaErrorAbort, 0, 0);
+    DidGetUsageAndQuota(original_task_runner, callback, blink::kQuotaErrorAbort,
+                        0, 0);
     return;
   }
 

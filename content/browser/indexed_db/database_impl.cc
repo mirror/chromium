@@ -130,7 +130,7 @@ class DatabaseImpl::IDBSequenceHelper {
                       const IndexedDBDatabaseError& error);
   void Commit(int64_t transaction_id);
   void OnGotUsageAndQuotaForCommit(int64_t transaction_id,
-                                   storage::QuotaStatusCode status,
+                                   blink::QuotaStatusCode status,
                                    int64_t usage,
                                    int64_t quota);
   void AckReceivedBlobs(const std::vector<std::string>& uuids);
@@ -916,14 +916,14 @@ void DatabaseImpl::IDBSequenceHelper::Commit(int64_t transaction_id) {
 
   indexed_db_context_->quota_manager_proxy()->GetUsageAndQuota(
       indexed_db_context_->TaskRunner(), origin_.GetURL(),
-      storage::kStorageTypeTemporary,
+      blink::kStorageTypeTemporary,
       base::Bind(&IDBSequenceHelper::OnGotUsageAndQuotaForCommit,
                  weak_factory_.GetWeakPtr(), transaction_id));
 }
 
 void DatabaseImpl::IDBSequenceHelper::OnGotUsageAndQuotaForCommit(
     int64_t transaction_id,
-    storage::QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -936,8 +936,7 @@ void DatabaseImpl::IDBSequenceHelper::OnGotUsageAndQuotaForCommit(
   if (!transaction)
     return;
 
-  if (status == storage::kQuotaStatusOk &&
-      usage + transaction->size() <= quota) {
+  if (status == blink::kQuotaStatusOk && usage + transaction->size() <= quota) {
     connection_->database()->Commit(transaction);
   } else {
     connection_->AbortTransaction(

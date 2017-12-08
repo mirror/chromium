@@ -105,11 +105,11 @@ class CONTENT_EXPORT StoragePartition {
     REMOVE_DATA_MASK_PLUGIN_PRIVATE_DATA = 1 << 9,
     REMOVE_DATA_MASK_ALL = 0xFFFFFFFF,
 
-    // Corresponds to storage::kStorageTypeTemporary.
+    // Corresponds to blink::kStorageTypeTemporary.
     QUOTA_MANAGED_STORAGE_MASK_TEMPORARY = 1 << 0,
-    // Corresponds to storage::kStorageTypePersistent.
+    // Corresponds to blink::kStorageTypePersistent.
     QUOTA_MANAGED_STORAGE_MASK_PERSISTENT = 1 << 1,
-    // Corresponds to storage::kStorageTypeSyncable.
+    // Corresponds to blink::kStorageTypeSyncable.
     QUOTA_MANAGED_STORAGE_MASK_SYNCABLE = 1 << 2,
     QUOTA_MANAGED_STORAGE_MASK_ALL = 0xFFFFFFFF,
   };

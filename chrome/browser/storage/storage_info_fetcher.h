@@ -20,8 +20,7 @@ class StorageInfoFetcher :
  public:
   using FetchCallback =
       base::Callback<void(const storage::UsageInfoEntries&)>;
-  using ClearCallback =
-      base::Callback<void(storage::QuotaStatusCode code)>;
+  using ClearCallback = base::Callback<void(blink::QuotaStatusCode code)>;
 
   explicit StorageInfoFetcher(Profile* profile);
 
@@ -29,10 +28,9 @@ class StorageInfoFetcher :
   void FetchStorageInfo(const FetchCallback& fetch_callback);
 
   // Asynchronously clears storage for the given host.
-  void ClearStorage(
-      const std::string& host,
-      storage::StorageType type,
-      const ClearCallback& clear_callback);
+  void ClearStorage(const std::string& host,
+                    blink::StorageType type,
+                    const ClearCallback& clear_callback);
 
  private:
   virtual ~StorageInfoFetcher();
@@ -49,10 +47,10 @@ class StorageInfoFetcher :
   void OnFetchCompleted();
 
   // Called when usage has been cleared.
-  void OnUsageClearedInternal(storage::QuotaStatusCode code);
+  void OnUsageClearedInternal(blink::QuotaStatusCode code);
 
   // Reports back to all observers that storage has been deleted.
-  void OnClearCompleted(storage::QuotaStatusCode code);
+  void OnClearCompleted(blink::QuotaStatusCode code);
 
   // The quota manager to use to calculate the storage usage.
   storage::QuotaManager* quota_manager_;
@@ -61,7 +59,7 @@ class StorageInfoFetcher :
   storage::UsageInfoEntries entries_;
 
   // The storage type to delete.
-  storage::StorageType type_to_delete_;
+  blink::StorageType type_to_delete_;
 
   // The callback to use when fetching is complete.
   FetchCallback fetch_callback_;

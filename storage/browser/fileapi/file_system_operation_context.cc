@@ -14,8 +14,7 @@ FileSystemOperationContext::FileSystemOperationContext(
     : file_system_context_(context),
       task_runner_(file_system_context_->default_file_task_runner()),
       allowed_bytes_growth_(0),
-      quota_limit_type_(storage::kQuotaLimitTypeUnknown) {
-}
+      quota_limit_type_(kQuotaLimitTypeUnknown) {}
 
 FileSystemOperationContext::FileSystemOperationContext(
     FileSystemContext* context,
@@ -23,8 +22,7 @@ FileSystemOperationContext::FileSystemOperationContext(
     : file_system_context_(context),
       task_runner_(task_runner),
       allowed_bytes_growth_(0),
-      quota_limit_type_(storage::kQuotaLimitTypeUnknown) {
-}
+      quota_limit_type_(kQuotaLimitTypeUnknown) {}
 
 FileSystemOperationContext::~FileSystemOperationContext() {
   DetachFromSequence();
