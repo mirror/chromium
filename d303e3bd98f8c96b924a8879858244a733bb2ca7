@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1f99f94_568a0374",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bacc7f1_1b642296",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71b802b9_506e6823",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3996fcf9_b16faaee",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71b802b9_506e6823",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9908d71f_f0245b98",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698a34bd_2f10d8c4",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d26d2c7_fa28c2ae",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
         "patchSetId": 22
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c430c655_a20521e4",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 22
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d26d2c7_fa28c2ae",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b705149f_0018baa5",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
         "patchSetId": 22
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-07T06:52:03Z",
       "side": 1,
       "message": "Is there ever not a superclass? If not we can simplify this.",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa1d251_465b6969",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "At this stage yes. We still instantiate Longhand for some properties. The follow up to this CL removes Longhand instances and cleans this up. https://chromium-review.googlesource.com/c/chromium/src/+/804645/15",
+      "parentUuid": "b705149f_0018baa5",
       "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "fbc87706_3ace635b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2731beb0_e51c3084",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d481ba8_4750e53f",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
         "patchSetId": 22
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-07T06:52:03Z",
       "side": 1,
       "message": "This seems unrelated?",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd228841_c5bafb94",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+        "patchSetId": 22
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "This is needed. This CL adds a property class for the property writing-mode, which causes an identifier collision. It confused me a first too!\n\nI put a comment about this in an earlier patch set. I wish gerrit were better at highlighting comments that are actually important :/",
+      "parentUuid": "7d481ba8_4750e53f",
       "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +261,24 @@
       "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c35706_8da67812",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySerializer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:41:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2700c8d_0b84a424",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
