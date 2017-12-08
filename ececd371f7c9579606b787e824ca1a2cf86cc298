@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3983d800_7e7f00cb",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T20:22:32Z",
+      "side": 1,
+      "message": "I think it worked because the generic type is just used to cast the pointer. The switch from browsercontext to profile in this CL wasn\u0027t strictly necessary, it just cut down on the number of casts (slightly), it seemed better to be more explicit, and it was consistent with similar profile/browsercontext-keyed classes I found elsewhere although I didn\u0027t do a thorough audit.",
+      "parentUuid": "53fd74ec_a29204fc",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1652618_dfbfb466",
         "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5dfaaee6_c4f9c7ea",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T20:22:32Z",
+      "side": 1,
+      "message": "I agree that it\u0027s annoyingly verbose, but I don\u0027t know that the variable helps that much, especially because we\u0027d need to put one in many different files if we thought of it as an improvement worth making. I\u0027d like to instead think of how we can improve NDS, e.g. flip the order of the arguments and default the type to TRANSIENT (since it\u0027s by far the most common, if you\u0027re counting by # of callsites). But that api is still in minor flux, and is outside the scope of this change.",
+      "parentUuid": "f1652618_dfbfb466",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3426578d_5abe6351",
         "filename": "chrome/browser/extensions/extension_storage_monitor_browsertest.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-08T19:29:19Z",
       "side": 1,
       "message": "nit: Any reason to not use Notification::ButtonClick()?  (I realize they are the same implementation, but it seems more straightforward to go through the Notification rather than poking through to the delegate).",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dcc38b_6b2cd580",
+        "filename": "chrome/browser/extensions/extension_storage_monitor_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T20:22:32Z",
+      "side": 1,
+      "message": "Not really, but I would kind of like to remove those pass-throughs as I don\u0027t see them as very useful. It\u0027s better to be explicit that you\u0027re relying on the delegate, given that not all notifications actually have a delegate (Notification::ButtonClick might give someone the false impression that it will work regardless of the presence of the delegate).\n\nFWIW, two of the four are already unused and the other two (ButtonClick and Click) are only used in a handful of tests.\n\nHere is the bug tracking my tangential work to simplify our message center classes and relationships: crbug.com/755413",
+      "parentUuid": "3426578d_5abe6351",
       "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
