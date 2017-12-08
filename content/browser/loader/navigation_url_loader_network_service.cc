@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
@@ -20,6 +21,7 @@
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/browser/loader/url_loader_request_handler.h"
+#include "content/browser/loader/webpackage_loader_manager.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
 #include "content/browser/service_worker/service_worker_navigation_handle_core.h"
@@ -52,6 +54,8 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
+#include "content/browser/loader/webpackage_loader.h"
+
 namespace content {
 
 namespace {
@@ -76,6 +80,19 @@ WebContents* GetWebContentsFromFrameTreeNodeID(int frame_tree_node_id) {
     return nullptr;
 
   return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
+}
+
+void SetIsWPK(int frame_tree_node_id, bool isWPK) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  FrameTreeNode* frame_tree_node =
+      FrameTreeNode::GloballyFindByID(frame_tree_node_id);
+  if (!frame_tree_node || !frame_tree_node->IsMainFrame())
+    return;
+  WebContents* web_contents =
+      WebContentsImpl::FromFrameTreeNode(frame_tree_node);
+  if (!web_contents)
+    return;
+  web_contents->SetIsWPK(isWPK);
 }
 
 const net::NetworkTrafficAnnotationTag kNavigationUrlLoaderTrafficAnnotation =
@@ -208,6 +225,13 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         handlers_.push_back(std::move(appcache_handler));
     }
 
+    // For webpackage.
+    std::unique_ptr<URLLoaderRequestHandler> webpkg_handler =
+        std::make_unique<WebPackageRequestHandler>(
+            *resource_request_, default_url_loader_factory_getter_);
+    handlers_.push_back(std::move(webpkg_handler));
+    wpk_handler_index_ = handlers_.size();
+
     Restart();
   }
 
@@ -222,6 +246,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_.reset();
     handler_index_ = 0;
     received_response_ = false;
+    is_wpk_handler_ = false;
     MaybeStartLoader(nullptr /* handler */, StartLoaderCallback());
   }
 
@@ -232,8 +257,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   void MaybeStartLoader(URLLoaderRequestHandler* handler,
                         StartLoaderCallback start_loader_callback) {
     if (start_loader_callback) {
+      is_wpk_handler_ = (handler_index_ == wpk_handler_index_);
       // |handler| wants to handle the request.
       DCHECK(handler);
+      // TODO(kinuko): Skip SafeBrowsing throttling after we redirect
+      // into the resource within a WebPackage.
       default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
@@ -283,6 +311,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_->FollowRedirect();
       return;
     }
+
+    is_wpk_handler_ = false;
 
     mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
@@ -422,7 +452,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveRedirect,
-                       owner_, redirect_info, response->DeepCopy()));
+                       owner_, redirect_info, response->DeepCopy(),
+                       is_wpk_handler_));
   }
 
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override {}
@@ -485,8 +516,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   }
 
   std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers_;
+  size_t wpk_handler_index_ = std::numeric_limits<std::size_t>::max();
+  bool is_wpk_handler_ = false;
   size_t handler_index_ = 0;
 
+  friend class NavigationURLLoaderNetworkService;
   std::unique_ptr<ResourceRequest> resource_request_;
   int frame_tree_node_id_ = 0;
   net::RedirectInfo redirect_info_;
@@ -552,14 +586,15 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
     : delegate_(delegate),
       allow_download_(request_info->common_params.allow_download),
       url_(request_info->common_params.url),
+      frame_tree_node_id_(request_info->frame_tree_node_id),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  int frame_tree_node_id = request_info->frame_tree_node_id;
+  SetIsWPK(frame_tree_node_id_, false);
 
   TRACE_EVENT_ASYNC_BEGIN_WITH_TIMESTAMP1(
       "navigation", "Navigation timeToResponseStarted", this,
       request_info->common_params.navigation_start, "FrameTreeNode id",
-      frame_tree_node_id);
+      frame_tree_node_id_);
 
   // TODO(scottmg): Port over stuff from RDHI::BeginNavigationRequest() here.
   auto new_request = std::make_unique<ResourceRequest>();
@@ -568,7 +603,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
   new_request->url = request_info->common_params.url;
   new_request->site_for_cookies = request_info->site_for_cookies;
   new_request->priority = net::HIGHEST;
-  new_request->render_frame_id = frame_tree_node_id;
+  new_request->render_frame_id = frame_tree_node_id_;
 
   // The code below to set fields like request_initiator, referrer, etc has
   // been copied from ResourceDispatcherHostImpl. We did not refactor the
@@ -607,7 +642,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
   // Check if a web UI scheme wants to handle this request.
   FrameTreeNode* frame_tree_node =
-      FrameTreeNode::GloballyFindByID(frame_tree_node_id);
+      FrameTreeNode::GloballyFindByID(frame_tree_node_id_);
   mojom::URLLoaderFactoryPtrInfo factory_for_webui;
   const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
   std::string scheme = new_request->url.scheme();
@@ -634,7 +669,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
                      appcache_handle ? appcache_handle->core() : nullptr,
                      base::Passed(std::move(request_info)),
                      base::Passed(std::move(factory_for_webui)),
-                     frame_tree_node_id,
+                     frame_tree_node_id_,
                      base::Passed(ServiceManagerConnection::GetForProcess()
                                       ->GetConnector()
                                       ->Clone())));
@@ -657,6 +692,9 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 }
 
 NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
+  // base::debug::StackTrace trace;
+  LOG(INFO)
+      << "** NavigationURLLoaderNetworkService: DTOR " /* << trace.ToString()*/;
   BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
                             request_controller_.release());
 }
@@ -683,6 +721,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
+  LOG(INFO) << "** NAVLOADER @UI: OnReceiveResponse ";
   // TODO(scottmg): This needs to do more of what
   // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
   // OnStartLoadingResponseBody().
@@ -693,7 +732,11 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
 
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    scoped_refptr<ResourceResponse> response) {
+    scoped_refptr<ResourceResponse> response,
+    bool is_wpk_redirection) {
+  SetIsWPK(frame_tree_node_id_, is_wpk_redirection);
+  LOG(INFO) << "** NAVLOADER @UI: OnReceiveRedirect " << redirect_info.new_url
+            << " is_wpk_redirection" << is_wpk_redirection;
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   url_ = redirect_info.new_url;
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
@@ -702,6 +745,9 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
 void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
   DCHECK(response_);
+
+  LOG(INFO) << "** NAVLOADER @UI: OnStartLoadingResponseBody "
+            << body.is_valid();
 
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
                          "&NavigationURLLoaderNetworkService", this, "success",
@@ -726,6 +772,8 @@ void NavigationURLLoaderNetworkService::OnComplete(
                          "&NavigationURLLoaderNetworkService", this, "success",
                          false);
 
+  LOG(INFO) << "*** OnComplete: " << request_controller_->resource_request_->url
+            << " " << status.error_code;
   delegate_->OnRequestFailed(status.exists_in_cache, status.error_code,
                              status.ssl_info);
 }

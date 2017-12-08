@@ -825,6 +825,9 @@ class WebContents : public PageNavigator,
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
 #endif  // OS_ANDROID
 
+  virtual void SetIsWPK(bool isWPK) = 0;
+  virtual bool IsWPK() const = 0;
+
  private:
   // This interface should only be implemented inside content.
   friend class WebContentsImpl;
