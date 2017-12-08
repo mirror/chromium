@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62cab753_10a32ab7",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 7915,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-08T22:21:25Z",
+      "side": 1,
+      "message": "telemetry_unittests was changed to run serially on all of the other waterfalls to work around race conditions. This is in the test_suites.pyl test description. I\u0027m positive that on this waterfall, telemetry_unittests was just missed. The script automatically normalized this test description so I\u0027m leaving it as is, rather than adding an exception which we\u0027ll just want to immediately remove.",
+      "parentUuid": "aa099323_30f58bf9",
+      "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "595dfd82_caa9f791",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T22:18:28Z",
       "side": 1,
       "message": "I see, you\u0027re sorting by the implicit mastername, then the buildername; I wasn\u0027t doing that.",
+      "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a90e6d8_517b226c",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-08T22:21:25Z",
+      "side": 1,
+      "message": "Yeah, I started doing that so that we can search by master name when deciding to remove entire blocks of exceptions.",
+      "parentUuid": "595dfd82_caa9f791",
       "revId": "9cc97747c7d17d89b7243135f3723403069b3834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
