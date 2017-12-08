@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd21c6d_34b9c212",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-08T09:03:51Z",
+      "side": 0,
+      "message": "Is removing if (is_chromeos) here ok?",
+      "revId": "8020338131f74ff3c2245d810b267777a51afe76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
