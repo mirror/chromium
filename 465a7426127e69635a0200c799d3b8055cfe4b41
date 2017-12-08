@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f64ed19a_ca8a2e85",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T21:36:55Z",
+      "side": 1,
+      "message": "Should this observer be defined at line 65 instead? Since it only depends on a single property?",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 46
+      },
+      "revId": "465a7426127e69635a0200c799d3b8055cfe4b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db073779_f4a29e96",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T21:36:55Z",
+      "side": 1,
+      "message": "I am wondering if there are cases where we are now triggering this twice, given that selectedEntry_ changes already trigger onSelectedErrorChanged_.\n\nShould we do the following instead?\n\n// Always set to -1 first.\nthis.selectedEntry_ \u003d -1;\nif (this.entries.length)\n  this.selectedEntry_ \u003d 0;\n\n// No need to call onSelectedErrorChanged_() manually anymore.",
+      "revId": "465a7426127e69635a0200c799d3b8055cfe4b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
