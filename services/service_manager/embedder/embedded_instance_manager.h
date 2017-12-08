@@ -31,8 +31,12 @@ namespace service_manager {
 
 class EmbeddedInstanceManagerTestApi;
 
-// EmbeddedInstanceManager is an implementation detail of EmbeddedServiceRunner.
-// Outside of tests there is no need to use it directly.
+// Creates and keeps ownership of a ServiceContext for each time the service is
+// bound. Creates a dedicated thread for the ServiceContext instances to
+// operate on if requested via |EmbeddedServiceInfo.use_own_thread|.
+// Invokes a given |quit_closure| when the connection to the last
+// ServiceContext is lost or when ShutDown() is called while a ServiceContext
+// still exists.
 class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
     : public base::RefCountedThreadSafe<EmbeddedInstanceManager> {
  public:
@@ -41,7 +45,6 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
                           const base::Closure& quit_closure);
 
   void BindServiceRequest(service_manager::mojom::ServiceRequest request);
-
   void ShutDown();
 
  private:
@@ -52,12 +55,9 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
 
   void BindServiceRequestOnServiceSequence(
       service_manager::mojom::ServiceRequest request);
-
   void OnInstanceLost(int instance_id);
-
   void QuitOnServiceSequence();
-
-  void QuitOnRunnerThread();
+  void QuitOnOwnerThread();
 
   const std::string name_;
   const EmbeddedServiceInfo::ServiceFactory factory_callback_;
@@ -65,33 +65,18 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
   base::MessageLoop::Type message_loop_type_;
   base::ThreadPriority thread_priority_;
   const base::Closure quit_closure_;
-  const scoped_refptr<base::SingleThreadTaskRunner> quit_task_runner_;
+  const scoped_refptr<base::SingleThreadTaskRunner> owner_task_runner_;
 
-  // Thread checker used to ensure certain operations happen only on the
-  // runner's (i.e. our owner's) thread.
-  THREAD_CHECKER(runner_thread_checker_);
-
-  // These fields must only be accessed from the runner's thread.
-  std::unique_ptr<base::Thread> thread_;
+  // These fields must only be accessed from |owner_task_runner_|.
+  std::unique_ptr<base::Thread> service_thread_;
   scoped_refptr<base::SequencedTaskRunner> service_task_runner_;
 
-  // These fields must only be accessed from the service thread, except in
-  // the destructor which may run on either the runner thread or the service
-  // thread.
-
-  // A map which owns all existing Service instances for this service.
-  using ServiceContextMap =
-      std::map<service_manager::ServiceContext*,
-               std::unique_ptr<service_manager::ServiceContext>>;
-  ServiceContextMap contexts_;
-
+  // These fields must only be accessed from |service_task_runner_|, except in
+  // the destructor which may run on either |owner_task_runner_| or
+  // |service_task_runner_|.
   int next_instance_id_ = 0;
-
-  // A mapping from instance ID to (not owned) ServiceContext.
-  //
-  // TODO(rockot): Remove this once we get rid of the quit closure argument to
-  // service factory functions.
-  std::map<int, service_manager::ServiceContext*> id_to_context_map_;
+  std::map<int, std::unique_ptr<service_manager::ServiceContext>>
+      id_to_context_map_;
 
   DISALLOW_COPY_AND_ASSIGN(EmbeddedInstanceManager);
 };

@@ -33,7 +33,7 @@ class EmbeddedInstanceManagerTestApi {
   EmbeddedInstanceManagerTestApi(EmbeddedInstanceManager* instance)
       : instance_(instance) {}
 
-  base::Thread* GetThread() { return instance_->thread_.get(); }
+  base::Thread* GetThread() { return instance_->service_thread_.get(); }
 
  private:
   EmbeddedInstanceManager* instance_;
@@ -61,8 +61,12 @@ TEST(EmbeddedInstanceManager, ShutdownWaitsForThreadToQuit) {
   EXPECT_FALSE(
       thread_task_runner->PostTask(FROM_HERE, base::Bind(&base::DoNothing)));
   // Because Shutdown() was explicitly called with the thread running the
-  // quit closure should not have run.
+  // quit closure should not have run (yet, because the invocation was posted
+  // to the end of the current message queue).
+  // Q: Do we actually want it to not be called at all?
   EXPECT_FALSE(quit_called);
+  scoped_task_environment.RunUntilIdle();
+  EXPECT_TRUE(quit_called);
 }
 
 }  // namespace service_manager
