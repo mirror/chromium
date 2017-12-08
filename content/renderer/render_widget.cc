@@ -1096,6 +1096,7 @@ void RenderWidget::FocusChangeComplete() {
 void RenderWidget::ObserveGestureEventAndResult(
     const blink::WebGestureEvent& gesture_event,
     const gfx::Vector2dF& unused_delta,
+    const cc::OverscrollBehavior& overscroll_behavior,
     bool event_processed) {
   if (!compositor_deps_->IsElasticOverscrollEnabled())
     return;
@@ -1104,6 +1105,7 @@ void RenderWidget::ObserveGestureEventAndResult(
   scroll_result.did_scroll = event_processed;
   scroll_result.did_overscroll_root = !unused_delta.IsZero();
   scroll_result.unused_scroll_delta = unused_delta;
+  scroll_result.overscroll_behavior = overscroll_behavior;
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   InputHandlerManager* input_handler_manager =
