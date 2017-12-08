@@ -111,6 +111,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // The NavigationRequest can be deleted while BeginNavigation() is called.
   void BeginNavigation();
 
+  std::unique_ptr<NavigationHandleImpl> DidNavigate();
+
   const CommonNavigationParams& common_params() const { return common_params_; }
 
   const mojom::BeginNavigationParams* begin_params() const {
@@ -168,14 +170,6 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Creates a NavigationHandle. This should be called after any previous
   // NavigationRequest for the FrameTreeNode has been destroyed.
   void CreateNavigationHandle();
-
-  // Transfers the ownership of the NavigationHandle to |render_frame_host|.
-  // This should be called when the navigation is ready to commit, because the
-  // NavigationHandle outlives the NavigationRequest. The NavigationHandle's
-  // lifetime is the entire navigation, while the NavigationRequest is
-  // destroyed when a navigation is ready for commit.
-  void TransferNavigationHandleOwnership(
-      RenderFrameHostImpl* render_frame_host);
 
   void set_on_start_checks_complete_closure_for_testing(
       const base::Closure& closure) {

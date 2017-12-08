@@ -4330,15 +4330,20 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
     const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
   bool is_browser_initiated = (params.nav_entry_id != 0);
 
+  NavigationRequest* navigation_request =
+      frame_tree_node()->navigation_request();
+
   if (params.was_within_same_document) {
     if (IsBrowserSideNavigationEnabled()) {
+      NavigationHandleImpl* navigation_handle =
+          navigation_request->navigation_handle();
       // When browser-side navigation is enabled, a NavigationHandle is created
       // for browser-initiated same-document navigation. Try to take it if it's
       // still available and matches the current navigation.
-      if (is_browser_initiated && navigation_handle_ &&
-          navigation_handle_->IsSameDocument() &&
-          navigation_handle_->GetURL() == params.url) {
-        return std::move(navigation_handle_);
+      if (is_browser_initiated && navigation_handle &&
+          navigation_handle->IsSameDocument() &&
+          navigation_handle->GetURL() == params.url) {
+        return navigation_request->DidNavigate();
       }
     } else {
       // When browser-side navigation is disabled, there is never any existing
