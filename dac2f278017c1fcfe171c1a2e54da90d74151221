@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e70cfb29_3a678b63",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T01:09:53Z",
+      "side": 1,
+      "message": "Ah, my bad!  I forgot that we landed a restriction that required specifically enum types to be used with UmaHistogramEnumeration.  Given the implementation in //base/metrics/histogram_functions.h, it looks like this could be base::UmaHistogramExactLinear() instead – the APIs are identical, except that UmaHistogramExactLinear allows for non-enum values.",
+      "parentUuid": "7e3b29c9_8355d1c9",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 66
+      },
+      "revId": "dac2f278017c1fcfe171c1a2e54da90d74151221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c354d0c2_d0371af9",
         "filename": "extensions/common/api/metrics_private.json",
         "patchSetId": 2
