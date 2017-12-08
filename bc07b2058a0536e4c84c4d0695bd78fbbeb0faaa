@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df1dde72_58c6acca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-08T15:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f4d79b_22a91018",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6282a9fc_58a13ee4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0f500e62_0c465e5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-08T15:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6282a9fc_58a13ee4",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc243eb3_9139d36d",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-fake-adapter.js",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff558515_9909c785",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-fake-adapter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-08T15:55:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc243eb3_9139d36d",
+      "revId": "bc07b2058a0536e4c84c4d0695bd78fbbeb0faaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
