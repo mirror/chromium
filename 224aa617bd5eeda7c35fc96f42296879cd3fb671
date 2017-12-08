@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "399a7eb5_76dd6789",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/respect-clip-for-non-composited-scrollers-when-prefering-compositing-over-lcd-text-expected.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-08T15:23:52Z",
+      "side": 0,
+      "message": "The name of the test implies that we\u0027re supposed to have a non-composited scroller with prefer compositing to LCD text, but it seems like we won\u0027t anymore because border-radius is supported? Should this test just go away as obsolete or can we still have a non composited scroller?",
+      "revId": "224aa617bd5eeda7c35fc96f42296879cd3fb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

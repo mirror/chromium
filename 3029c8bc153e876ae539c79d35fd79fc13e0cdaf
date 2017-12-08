@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "528a6dea_19371d4c",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-08T15:23:52Z",
+      "side": 1,
+      "message": "Why does this start failing?",
+      "revId": "3029c8bc153e876ae539c79d35fd79fc13e0cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c389e81_aad676b7",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/service-worker-script-streaming/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-08T15:23:52Z",
+      "side": 1,
+      "message": "Was this a flaky rebase result? It doesn\u0027t seem like it should be an expected change from your patch.",
+      "revId": "3029c8bc153e876ae539c79d35fd79fc13e0cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
