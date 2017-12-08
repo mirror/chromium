@@ -56,6 +56,29 @@
       "revId": "c7baf47ded5c41b72c515ad8f86275cf46f14a85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b285a54_d7932cfa",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-08T23:42:34Z",
+      "side": 1,
+      "message": "nit: For a DCHECK_EQ, the expected value should come first, then the actual value. Could you reorder these?",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "c7baf47ded5c41b72c515ad8f86275cf46f14a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
