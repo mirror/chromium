@@ -39,14 +39,21 @@ TEST(PaymentRequestTest, PaymentCurrencyAmountFromDictionaryValueFailure) {
   base::DictionaryValue amount_dict;
   EXPECT_FALSE(actual.FromDictionaryValue(amount_dict));
 
-  // Both values must be strings.
+  // Currency must be a string.
   amount_dict.SetInteger("currency", 842);
   amount_dict.SetString("value", "-438.23");
   EXPECT_FALSE(actual.FromDictionaryValue(amount_dict));
 
+  // Value can be a string or a number.
+  amount_dict.SetString("currency", "NZD");
+  amount_dict.SetString("value", "-438.23");
+  EXPECT_TRUE(actual.FromDictionaryValue(amount_dict));
+  EXPECT_EQ("-438.23", actual.value);
+
   amount_dict.SetString("currency", "NZD");
   amount_dict.SetDouble("value", -438.23);
-  EXPECT_FALSE(actual.FromDictionaryValue(amount_dict));
+  EXPECT_TRUE(actual.FromDictionaryValue(amount_dict));
+  EXPECT_EQ("-438.23", actual.value);
 }
 
 // Tests that two currency amount objects are not equal if their property values
