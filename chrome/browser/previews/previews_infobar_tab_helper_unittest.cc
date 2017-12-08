@@ -85,17 +85,12 @@ class PreviewsInfoBarTabHelperUnitTest
   }
 
   void SetPreviewsState(content::PreviewsState previews_state) {
-    ChromeNavigationData* nav_data =
-        static_cast<ChromeNavigationData*>(test_handle_->GetNavigationData());
-    if (nav_data) {
-      nav_data->set_previews_state(previews_state);
-      return;
-    }
-    std::unique_ptr<ChromeNavigationData> chrome_nav_data(
-        new ChromeNavigationData());
-    chrome_nav_data->set_previews_state(previews_state);
+    const base::Value& navigation_data = test_handle_->GetNavigationData();
+    ChromeNavigationData chrome_navigation_data(navigation_data);
+    chrome_navigation_data.set_previews_state(previews_state);
     content::WebContentsTester::For(web_contents())
-        ->SetNavigationData(test_handle_.get(), std::move(chrome_nav_data));
+        ->SetNavigationData(test_handle_.get(),
+                            chrome_navigation_data.ToValue());
   }
 
   void SimulateWillProcessResponseWithProxyHeader() {
@@ -128,17 +123,13 @@ class PreviewsInfoBarTabHelperUnitTest
     EXPECT_TRUE(test_handle_);
     EXPECT_TRUE(previews_user_data);
     // Store Previews information for this navigation.
-    ChromeNavigationData* nav_data =
-        static_cast<ChromeNavigationData*>(test_handle_->GetNavigationData());
-    if (nav_data) {
-      nav_data->set_previews_user_data(std::move(previews_user_data));
-      return;
-    }
-    std::unique_ptr<ChromeNavigationData> navigation_data =
-        base::MakeUnique<ChromeNavigationData>();
-    navigation_data->set_previews_user_data(std::move(previews_user_data));
+    const base::Value& navigation_data = test_handle_->GetNavigationData();
+    ChromeNavigationData chrome_navigation_data(navigation_data);
+    chrome_navigation_data.set_previews_user_data(
+        std::move(previews_user_data));
     content::WebContentsTester::For(web_contents())
-        ->SetNavigationData(test_handle_.get(), std::move(navigation_data));
+        ->SetNavigationData(test_handle_.get(),
+                            chrome_navigation_data.ToValue());
   }
 
  private:

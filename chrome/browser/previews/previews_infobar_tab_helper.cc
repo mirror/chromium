@@ -70,10 +70,13 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
 
   previews_user_data_.reset();
   // Store Previews information for this navigation.
-  ChromeNavigationData* nav_data = static_cast<ChromeNavigationData*>(
-      navigation_handle->GetNavigationData());
-  if (nav_data && nav_data->previews_user_data()) {
-    previews_user_data_ = nav_data->previews_user_data()->DeepCopy();
+  const base::Value& navigation_data = navigation_handle->GetNavigationData();
+  if (!navigation_data.is_none()) {
+    ChromeNavigationData chrome_navigation_data(navigation_data);
+    if (chrome_navigation_data.previews_user_data()) {
+      previews_user_data_ =
+          chrome_navigation_data.previews_user_data()->DeepCopy();
+    }
   }
 
   uint64_t page_id = (previews_user_data_) ? previews_user_data_->page_id() : 0;
@@ -142,8 +145,9 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
   }
 
   // Check for client previews.
-  if (nav_data) {
-    if (nav_data->previews_state() & content::NOSCRIPT_ON) {
+  if (!navigation_data.is_none()) {
+    ChromeNavigationData chrome_navigation_data(navigation_data);
+    if (chrome_navigation_data.previews_state() & content::NOSCRIPT_ON) {
       PreviewsInfoBarDelegate::Create(
           web_contents(), previews::PreviewsType::NOSCRIPT,
           base::Time() /* previews_freshness */, true /* is_data_saver_user */,
