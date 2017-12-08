@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340b9705_415b6c68",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T15:46:59Z",
+      "side": 1,
+      "message": "CL stalking perf nit: Avoid expensive ReplaceComponents by only doing so if the URL actually has a username or password (which will be quite rare).\n\nAdditionally, can remove a GURL copy by having a \"UrlNeedsSanitizing\" method.",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
