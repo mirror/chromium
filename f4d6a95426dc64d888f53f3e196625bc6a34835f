@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d10ff6a_f4be6356",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-08T23:42:43Z",
+      "side": 1,
+      "message": "This CL makes StartLoadingDynamicSheet() called when Fetch() returns nullptr.\nI\u0027m not sure what to do in this case...\nI couldn\u0027t find a method that cancels StartLoadingDynamicSheet().\nSome kind of NotifyFinished(nullptr) can be called, but I\u0027m not sure how to modify NotifyFinished() to accept nullptr Resource.",
+      "revId": "f4d6a95426dc64d888f53f3e196625bc6a34835f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
