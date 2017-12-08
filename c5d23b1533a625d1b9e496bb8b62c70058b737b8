@@ -22,6 +22,30 @@
       "revId": "c5d23b1533a625d1b9e496bb8b62c70058b737b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748200c3_339d931d",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T17:15:42Z",
+      "side": 1,
+      "message": "The ids are only meaningful for one run of chrome. As soon as you quit chrome new ids are assigned.",
+      "parentUuid": "ebed4934_f0d0cc99",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "c5d23b1533a625d1b9e496bb8b62c70058b737b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
