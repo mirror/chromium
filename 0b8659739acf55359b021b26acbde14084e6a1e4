@@ -34,6 +34,24 @@
       "revId": "0b8659739acf55359b021b26acbde14084e6a1e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbc3764_1ec09557",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-08T22:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c3b59e_ffbc4b41",
+      "revId": "0b8659739acf55359b021b26acbde14084e6a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
