@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f11900b_0d39d36e",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T18:55:48Z",
+      "side": 1,
+      "message": "AFAIK, Offline pages have https:// virtual URL and chrome:// URLs, so I believe this CL actually changes the counting.\n\nIs there another way to filter out session restoring web states?",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
