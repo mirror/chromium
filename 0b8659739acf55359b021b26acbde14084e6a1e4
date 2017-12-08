@@ -16,6 +16,24 @@
       "revId": "0b8659739acf55359b021b26acbde14084e6a1e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c3b59e_ffbc4b41",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-08T22:10:41Z",
+      "side": 1,
+      "message": "NM, just leave it (as per Reilly\u0027s suggestion).",
+      "parentUuid": "469f8ed6_737f1785",
+      "revId": "0b8659739acf55359b021b26acbde14084e6a1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
