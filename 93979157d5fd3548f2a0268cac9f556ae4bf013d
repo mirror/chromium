@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21500dbe_2dcbcc00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "\"offlineItems -\u003e {\"",
+      "range": {
+        "startLine": 742,
+        "startChar": 48,
+        "endLine": 742,
+        "endChar": 88
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eade0249_029f36aa",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Post so the behavior is consistent for all providers.  Should this no longer be a pointer since we can\u0027t control the lifecycle?",
+      "range": {
+        "startLine": 405,
+        "startChar": 2,
+        "endLine": 405,
+        "endChar": 40
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a897d66_63bcb115",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Post here too.",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 25
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d613452a_f750ff69",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e21fe4_658c4f83",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "does std::move(aggregated_items_) do this?  Try and test IMO!",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaa9681_ee38c901",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Do you need this after std::move?",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 39
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8dbefb_7640fa11",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Should we add this provider to the list if we have an outstanding GetAllItems request?",
+      "range": {
+        "startLine": 230,
+        "startChar": 4,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30c6cf6_dbb26eda",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "I think you can still post the callback when getAllItems is called with WillInvoke or something.",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b43208e_cfa03417",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "The earlier test was setting up expectations/setting up the mock.  Is this the same test behavior (I\u0027m ok if we want different test behavior)?",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 69
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6294c2e1_7151dcdc",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Do we need a few more tests with the new code?",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 75
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237f7ed6_f2a4063c",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Should this be base::Optional\u003cOfflineItem\u003e?",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466e53b2_2274f149",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Update comments/set expectations.  See the last line of GetVisualsForItem.  We should probably have the same sentence/expectation for these as well.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 62
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fb496c_5bef4ca2",
+        "filename": "components/offline_items_collection/core/test_support/mock_offline_content_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "I guess I\u0027m ok with this instead of gmock, just make sure we\u0027re validating the same thing in the aggregator tests!",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e281c23b_e9589c6b",
+        "filename": "components/offline_items_collection/core/test_support/mock_offline_content_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Post.  Same for GetItemById?",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651ad4e0_8483b118",
+        "filename": "components/offline_items_collection/core/throttled_offline_content_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Should we validate the actual items?",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 64
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe89c59_69ddcaf0",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "PostTask.",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 267,
+        "endChar": 37
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594e83be_204c7407",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Might make sense to build an OfflineItem and validate the equality that way.  So if we add new fields and they aren\u0027t tested/set properly it\u0027ll fail the equality check?  I\u0027ll leave it up to offline page owners though!",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 4
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3119ef_f0f41945",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "Do we need this at the end too?",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 13
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4daf27_b47a0899",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-08T19:50:02Z",
+      "side": 1,
+      "message": "PumpLoop for these at the end too now?",
+      "range": {
+        "startLine": 410,
+        "startChar": 2,
+        "endLine": 411,
+        "endChar": 65
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
