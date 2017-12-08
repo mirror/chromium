@@ -26,7 +26,7 @@ viz_component("host") {
     "//base",
     "//components/viz/common",
     "//gpu/ipc/client",
-    "//gpu/ipc/common",
+    "//gpu/ipc/host",
     "//services/viz/privileged/interfaces",
     "//ui/base",
     "//ui/gfx",
