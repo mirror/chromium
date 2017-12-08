@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a064ac_33ff50c1",
+        "filename": "chrome/browser/sync/test/integration/sync_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-12-08T21:23:49Z",
+      "side": 1,
+      "message": "is this necessary? Scoped ptrs are going to be automatically destroyed when the class is destroyed?",
+      "range": {
+        "startLine": 783,
+        "startChar": 35,
+        "endLine": 783,
+        "endChar": 0
+      },
+      "revId": "4302afd76ef2dba123c217e178373bc31c09708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
