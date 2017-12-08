@@ -494,6 +494,18 @@ TEST(GURLTest, Replacements) {
   }
 }
 
+TEST(GURLTest, NoOpReplacements) {
+  const GURL test("https://example.test/");
+  GURL::Replacements repl;
+  repl.ClearUsername();
+  repl.ClearPassword();
+  EXPECT_TRUE(repl.IsComponentCleared(
+      test.parsed_for_possibly_invalid_spec().username));
+  EXPECT_TRUE(repl.IsComponentCleared(
+      test.parsed_for_possibly_invalid_spec().password));
+  EXPECT_EQ(test, test.ReplaceComponents(repl));
+}
+
 TEST(GURLTest, ClearFragmentOnDataUrl) {
   // http://crbug.com/291747 - a data URL may legitimately have trailing
   // whitespace in the spec after the ref is cleared. Test this does not trigger

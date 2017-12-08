@@ -541,7 +541,7 @@ void KURL::SetPort(unsigned short port) {
 void KURL::SetUser(const String& user) {
   // This function is commonly called to clear the username, which we
   // normally don't have, so we optimize this case.
-  if (user.IsEmpty() && !parsed_.username.is_valid())
+  if (user.IsEmpty() && !parsed_.username.is_nonempty())
     return;
 
   // The canonicalizer will clear any usernames that are empty, so we

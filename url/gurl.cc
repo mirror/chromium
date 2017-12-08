@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <ostream>
 
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/strings/string_piece.h"
@@ -232,12 +233,14 @@ GURL GURL::Resolve(const base::string16& relative) const {
 // Note: code duplicated below (it's inconvenient to use a template here).
 GURL GURL::ReplaceComponents(
     const url::Replacements<char>& replacements) const {
-  GURL result;
-
   // Not allowed for invalid URLs.
   if (!is_valid_)
     return GURL();
 
+  if (IsReplacementNoOp(replacements))
+    return *this;
+
+  GURL result;
   url::StdStringCanonOutput output(&result.spec_);
   result.is_valid_ = url::ReplaceComponents(
       spec_.data(), static_cast<int>(spec_.length()), parsed_, replacements,
@@ -255,12 +258,14 @@ GURL GURL::ReplaceComponents(
 // Note: code duplicated above (it's inconvenient to use a template here).
 GURL GURL::ReplaceComponents(
     const url::Replacements<base::char16>& replacements) const {
-  GURL result;
-
   // Not allowed for invalid URLs.
   if (!is_valid_)
     return GURL();
 
+  if (IsReplacementNoOp(replacements))
+    return *this;
+
+  GURL result;
   url::StdStringCanonOutput output(&result.spec_);
   result.is_valid_ = url::ReplaceComponents(
       spec_.data(), static_cast<int>(spec_.length()), parsed_, replacements,
