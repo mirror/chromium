@@ -24,9 +24,8 @@ BytesConsumerForDataPipeGetter::BytesConsumerForDataPipeGetter(
   mojo::DataPipe data_pipe;
   data_pipe_getter_->Read(
       std::move(data_pipe.producer_handle),
-      ConvertToBaseCallback(
-          WTF::Bind(&BytesConsumerForDataPipeGetter::DataPipeGetterCallback,
-                    WrapWeakPersistent(this))));
+      WTF::Bind(&BytesConsumerForDataPipeGetter::DataPipeGetterCallback,
+                WrapWeakPersistent(this)));
   consumer_handle_ = std::move(data_pipe.consumer_handle);
   handle_watcher_.Watch(
       consumer_handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
@@ -148,13 +147,18 @@ BytesConsumer::PublicState BytesConsumerForDataPipeGetter::GetPublicState()
 
 void BytesConsumerForDataPipeGetter::DataPipeGetterCallback(int32_t status,
                                                             uint64_t size) {
-  LOG(ERROR) << "ReadCallback: " << status << ", " << size;
+  // The flag may have been manually set if the request was cancelled.
+  if (was_data_pipe_getter_callback_called_)
+    return;
+
   was_data_pipe_getter_callback_called_ = true;
   if (status != 0) {  // net::OK
     SetError();
     return;
   }
 
+  // The data pipe was already closed but now've we reached PublicState::kClosed
+  // so tell the client and end.
   if (state_ == InternalState::kClosed && client_) {
     client_->OnStateChange();
     ClearClient();

@@ -87,11 +87,12 @@ void ParamTraits<storage::DataElement>::Write(base::Pickle* m,
       break;
     }
     case storage::DataElement::TYPE_DATA_PIPE: {
-      WriteParam(m,
-                 const_cast<network::mojom::DataPipeGetterPtr&>(p.data_pipe())
-                     .PassInterface()
-                     .PassHandle()
-                     .release());
+      // Clone the data pipe getter so the original is still usable by the
+      // caller.
+      network::mojom::DataPipeGetterPtr cloned_ptr;
+      const_cast<network::mojom::DataPipeGetterPtr&>(p.data_pipe())
+          ->Clone(mojo::MakeRequest(&cloned_ptr));
+      WriteParam(m, cloned_ptr.PassInterface().PassHandle().release());
       break;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
