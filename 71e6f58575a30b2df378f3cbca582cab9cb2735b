@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b42a6a91_90268d77",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-08T16:30:22Z",
+      "side": 1,
+      "message": "S/Please don\u0027t/Don\u0027t/",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74d3cb7_6aad5c75",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-08T16:30:22Z",
+      "side": 1,
+      "message": "https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/NH-S6KCkr2M\n\nHowever, this is not an issue, as these certificates are not imported into\npermanent databases, nor are the trust settings mutated to trust them.",
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

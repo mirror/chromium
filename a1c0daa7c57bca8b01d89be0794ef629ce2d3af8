@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "05e14758_b4f6c614",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-08T16:30:22Z",
+      "side": 1,
+      "message": "Right, creating a unique chain is a possibility - the problem is it tends to be very performance expensive (and we try to avoid that)\n\nAnd regarding ClientCertStore testing - yes, exactly. That is, let\u0027s imagine we moved ClientCertStore matching to another implementation, or on another platform which didn\u0027t have the NSS side-effect (speaking hypothetically, but it\u0027s relevant for testing).\n\nThe expectation from an implementation side is that the ClientCertStore would use the list of certs it was provided as part of path building, trying to complete the chains in the SSLCertRequestInfo to match to client identities, using the server-supplied certificates as well as the ONC-provided certificates.\n\nRight now, it\u0027s these tests that are implicitly relying on NSS behaviour. I\u0027m willing to live with that, because we don\u0027t have any plans at the moment to change the client cert implementation on ChromeOS to use anything *other* than NSS, but it does mean that you\u0027ve got an extra hidden dependency, and thus the testing has the risk of flakes (because we can\u0027t reset the state of that hidden dependency). The idea of having the ONC -\u003e ClientCertStore path (rather than ONC -\u003e Signin Frame) was that then we can move the \u0027hidden\u0027 dependency from the Signin logic into the ClientCertStoreNSS, which already has an _explicit_ dependency to begin with on NSS :)\n\nIt then lets us test the two bits somewhat separately\n- Test ONC -\u003e ClientCertStore provides the right certs (and updates if/when device policy updates)\n- Test ClientCertStoreNSS\u0027s \"cache\" of the intermediates affects NSS path building\n\n\nAgain, I don\u0027t see this has a hard dependency right now - there\u0027s no plans to migrate that path building, and just like \u0027assume BoringSSL\u0027 is a reasonable assumption throughout the codebase for our TLS stack, \u0027assume NSS\u0027 is a reasonable assumption throughout ChromeOS right now for our key storage. But it does make testing somewhat simpler and give you a more localized assumption about behaviours, and I only realized it after seeing the tests :)",
+      "parentUuid": "7b9e53bb_08fc06b4",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "100500c9_485b4742",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
