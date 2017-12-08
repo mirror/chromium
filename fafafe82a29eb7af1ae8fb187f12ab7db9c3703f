@@ -89,6 +89,23 @@
     },
     {
       "key": {
+        "uuid": "03fea9f8_f13ee3c1",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-08T17:45:45Z",
+      "side": 1,
+      "message": "nit: This acually notifies any observers (which presumably but not necessarily includes the caller of Mount()).",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72808dc4_57dccc1c",
         "filename": "chromeos/dbus/fake_cros_disks_client.h",
         "patchSetId": 1
@@ -100,6 +117,23 @@
       "writtenOn": "2017-12-08T16:00:57Z",
       "side": 1,
       "message": "Note: renamed for consistency with other Client implementation, such as FakeCryptohomeClient or FakeSessionManagerClient.",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471ca6ac_8276e93f",
+        "filename": "chromeos/dbus/fake_cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-08T17:45:45Z",
+      "side": 1,
+      "message": "nit: blank line",
       "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
