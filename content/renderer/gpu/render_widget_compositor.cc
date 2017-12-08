@@ -1186,8 +1186,9 @@ void RenderWidgetCompositor::BeginMainFrameNotExpectedUntil(
       time);
 }
 
-void RenderWidgetCompositor::UpdateLayerTreeHost() {
-  delegate_->UpdateVisualState();
+void RenderWidgetCompositor::UpdateLayerTreeHost(
+    MainFrameLifecyclePhase target_phase) {
+  delegate_->UpdateVisualState(target_phase);
 }
 
 void RenderWidgetCompositor::ApplyViewportDeltas(

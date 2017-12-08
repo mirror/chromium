@@ -1037,7 +1037,13 @@ void RenderWidget::RequestScheduleAnimation() {
   ScheduleAnimation();
 }
 
-void RenderWidget::UpdateVisualState() {
+void RenderWidget::UpdateVisualState(MainFrameLifecyclePhase target_phase) {
+  if (target_phase == MainFrameLifecyclePhase::kLayoutClean) {
+    GetWebWidget()->UpdateLifecycleToLayoutClean();
+    GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(false);
+    return;
+  }
+
   GetWebWidget()->UpdateAllLifecyclePhases();
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(false);
 

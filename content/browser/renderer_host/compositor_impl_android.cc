@@ -661,7 +661,7 @@ void CompositorImpl::SetNeedsComposite() {
   host_->SetNeedsAnimate();
 }
 
-void CompositorImpl::UpdateLayerTreeHost() {
+void CompositorImpl::UpdateLayerTreeHost(MainFrameLifecyclePhase target_phase) {
   client_->UpdateLayerTreeHost();
   if (needs_animate_) {
     needs_animate_ = false;

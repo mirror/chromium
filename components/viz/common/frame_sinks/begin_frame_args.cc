@@ -33,7 +33,8 @@ BeginFrameArgs::BeginFrameArgs()
       source_id(0),
       sequence_number(kInvalidFrameNumber),
       type(BeginFrameArgs::INVALID),
-      on_critical_path(true) {}
+      on_critical_path(true),
+      skip_compositor_frame(false) {}
 
 BeginFrameArgs::BeginFrameArgs(uint64_t source_id,
                                uint64_t sequence_number,
@@ -47,7 +48,8 @@ BeginFrameArgs::BeginFrameArgs(uint64_t source_id,
       source_id(source_id),
       sequence_number(sequence_number),
       type(type),
-      on_critical_path(true) {
+      on_critical_path(true),
+      skip_compositor_frame(false) {
   DCHECK_LE(kStartingFrameNumber, sequence_number);
 }
 
@@ -91,6 +93,7 @@ void BeginFrameArgs::AsValueInto(base::trace_event::TracedValue* state) const {
   state->SetString("created_from", created_from.ToString());
 #endif
   state->SetBoolean("on_critical_path", on_critical_path);
+  state->SetBoolean("skip_compositor_frame", skip_compositor_frame);
 }
 
 // This is a hard-coded deadline adjustment that assumes 60Hz, to be used in

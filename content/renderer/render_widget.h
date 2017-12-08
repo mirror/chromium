@@ -254,7 +254,7 @@ class CONTENT_EXPORT RenderWidget
   void DidReceiveCompositorFrameAck() override;
   bool IsClosing() const override;
   void RequestScheduleAnimation() override;
-  void UpdateVisualState() override;
+  void UpdateVisualState(MainFrameLifecyclePhase target_phase) override;
   void WillBeginCompositorFrame() override;
   std::unique_ptr<cc::SwapPromise> RequestCopyOfOutputForLayoutTest(
       std::unique_ptr<viz::CopyOutputRequest> request) override;
