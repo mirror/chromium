@@ -1077,6 +1077,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ff8069_70f00628",
+        "filename": "components/assist_ranker/predictor_config.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:56:23Z",
+      "side": 1,
+      "message": "Responded offline",
+      "parentUuid": "e25842e0_70c57c82",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
