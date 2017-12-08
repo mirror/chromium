@@ -39,7 +39,7 @@ class CORE_EXPORT V8ScriptValueDeserializer
                             UnpackedSerializedScriptValue*,
                             const Options& = Options());
   V8ScriptValueDeserializer(scoped_refptr<ScriptState>,
-                            scoped_refptr<SerializedScriptValue>,
+                            SerializedScriptValue*,
                             const Options& = Options());
 
   v8::Local<v8::Value> Deserialize();
@@ -84,7 +84,7 @@ class CORE_EXPORT V8ScriptValueDeserializer
  private:
   V8ScriptValueDeserializer(scoped_refptr<ScriptState>,
                             UnpackedSerializedScriptValue*,
-                            scoped_refptr<SerializedScriptValue>,
+                            SerializedScriptValue*,
                             const Options&);
   void Transfer();
 
@@ -102,7 +102,7 @@ class CORE_EXPORT V8ScriptValueDeserializer
 
   scoped_refptr<ScriptState> script_state_;
   Member<UnpackedSerializedScriptValue> unpacked_value_;
-  scoped_refptr<SerializedScriptValue> serialized_script_value_;
+  SerializedScriptValue* serialized_script_value_;
   v8::ValueDeserializer deserializer_;
 
   // Message ports which were transferred in.

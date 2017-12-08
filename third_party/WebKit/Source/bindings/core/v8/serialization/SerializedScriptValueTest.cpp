@@ -21,20 +21,20 @@ TEST(SerializedScriptValueTest, WireFormatRoundTrip) {
   V8TestingScope scope;
 
   v8::Local<v8::Value> v8OriginalTrue = v8::True(scope.GetIsolate());
-  scoped_refptr<SerializedScriptValue> sourceSerializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> source_serialized_script_value =
       SerializedScriptValue::Serialize(
           scope.GetIsolate(), v8OriginalTrue,
           SerializedScriptValue::SerializeOptions(), ASSERT_NO_EXCEPTION);
 
-  StringView wire_data = sourceSerializedScriptValue->GetWireData();
+  StringView wire_data = source_serialized_script_value->GetWireData();
   DCHECK(wire_data.Is8Bit());
 
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(
           reinterpret_cast<const char*>(wire_data.Characters8()),
           wire_data.length());
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(scope.GetIsolate());
+      serialized_script_value->Deserialize(scope.GetIsolate());
   EXPECT_TRUE(deserialized->IsTrue());
 }
 
@@ -42,11 +42,11 @@ TEST(SerializedScriptValueTest, WireFormatVersion17NoByteSwapping) {
   V8TestingScope scope;
 
   const uint8_t data[] = {0xFF, 0x11, 0xFF, 0x0D, 0x54, 0x00};
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(reinterpret_cast<const char*>(data),
                                     sizeof(data));
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(scope.GetIsolate());
+      serialized_script_value->Deserialize(scope.GetIsolate());
   EXPECT_TRUE(deserialized->IsTrue());
 }
 
@@ -55,11 +55,11 @@ TEST(SerializedScriptValueTest, WireFormatVersion16ByteSwapping) {
 
   // Using UChar instead of uint8_t to get ntohs() byte swapping.
   const UChar data[] = {0xFF10, 0xFF0D, 0x5400};
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(reinterpret_cast<const char*>(data),
                                     sizeof(data));
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(scope.GetIsolate());
+      serialized_script_value->Deserialize(scope.GetIsolate());
   EXPECT_TRUE(deserialized->IsTrue());
 }
 
@@ -68,11 +68,11 @@ TEST(SerializedScriptValueTest, WireFormatVersion13ByteSwapping) {
 
   // Using UChar instead of uint8_t to get ntohs() byte swapping.
   const UChar data[] = {0xFF0D, 0x5400};
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(reinterpret_cast<const char*>(data),
                                     sizeof(data));
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(scope.GetIsolate());
+      serialized_script_value->Deserialize(scope.GetIsolate());
   EXPECT_TRUE(deserialized->IsTrue());
 }
 
@@ -81,11 +81,11 @@ TEST(SerializedScriptValueTest, WireFormatVersion0ByteSwapping) {
 
   // Using UChar instead of uint8_t to get ntohs() byte swapping.
   const UChar data[] = {0x5400};
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(reinterpret_cast<const char*>(data),
                                     sizeof(data));
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(scope.GetIsolate());
+      serialized_script_value->Deserialize(scope.GetIsolate());
   EXPECT_TRUE(deserialized->IsTrue());
 }
 
@@ -108,11 +108,11 @@ TEST(SerializedScriptValueTest, WireFormatVersion0ImageData) {
   data.push_back(0xFC03);
   data.resize(257);  // (508 pixel data + 6 header bytes) / 2
 
-  scoped_refptr<SerializedScriptValue> serializedScriptValue =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Create(reinterpret_cast<const char*>(data.data()),
                                     data.size() * sizeof(UChar));
   v8::Local<v8::Value> deserialized =
-      serializedScriptValue->Deserialize(isolate);
+      serialized_script_value->Deserialize(isolate);
   ASSERT_TRUE(deserialized->IsObject());
   v8::Local<v8::Object> deserializedObject = deserialized.As<v8::Object>();
   ASSERT_TRUE(V8ImageData::hasInstance(deserializedObject, isolate));
@@ -133,7 +133,7 @@ TEST(SerializedScriptValueTest, UserSelectedFile) {
 
   v8::Local<v8::Value> v8_original_file =
       ToV8(original_file, scope.GetContext()->Global(), scope.GetIsolate());
-  scoped_refptr<SerializedScriptValue> serialized_script_value =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Serialize(
           scope.GetIsolate(), v8_original_file,
           SerializedScriptValue::SerializeOptions(), ASSERT_NO_EXCEPTION);
@@ -157,7 +157,7 @@ TEST(SerializedScriptValueTest, FileConstructorFile) {
 
   v8::Local<v8::Value> v8_original_file =
       ToV8(original_file, scope.GetContext()->Global(), scope.GetIsolate());
-  scoped_refptr<SerializedScriptValue> serialized_script_value =
+  std::unique_ptr<SerializedScriptValue> serialized_script_value =
       SerializedScriptValue::Serialize(
           scope.GetIsolate(), v8_original_file,
           SerializedScriptValue::SerializeOptions(), ASSERT_NO_EXCEPTION);
