@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3abcdcbe_afee9c7a",
+        "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T00:51:48Z",
+      "side": 1,
+      "message": "I do not think this is OK. This does not necessarily only happen at (and in fact almost certainly does happen at times other than) process shutdown. We should join the thread from a blocking background task instead. That should be easy enough to implement.",
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
