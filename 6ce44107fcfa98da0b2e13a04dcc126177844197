@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "290befc1_be1c302c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-08T14:47:34Z",
+      "side": 1,
+      "message": "We discussed this offline and this comment can be ignored.",
+      "parentUuid": "5b17473c_0d52bdfc",
+      "revId": "6ce44107fcfa98da0b2e13a04dcc126177844197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2b0b440_ccc3b6ec",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "6ce44107fcfa98da0b2e13a04dcc126177844197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbc1753_22ae8895",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/BitmapUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-12-08T14:47:34Z",
+      "side": 1,
+      "message": "This is a good change to make, because then we can correctly track how many have no Exif defined. \n\nDone.",
+      "parentUuid": "f2b0b440_ccc3b6ec",
+      "revId": "6ce44107fcfa98da0b2e13a04dcc126177844197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
