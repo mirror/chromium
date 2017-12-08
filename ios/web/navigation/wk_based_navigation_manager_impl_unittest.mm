@@ -8,10 +8,12 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #import "ios/web/navigation/navigation_manager_delegate.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
+#import "ios/web/navigation/wk_based_restore_session_util.h"
 #include "ios/web/public/load_committed_details.h"
 #include "ios/web/public/navigation_item.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
@@ -585,6 +587,7 @@ TEST_F(WKBasedNavigationManagerTest, RestoreSessionWithHistory) {
   GURL pending_url = pending_item->GetURL();
   EXPECT_TRUE(pending_url.SchemeIsFile());
   EXPECT_EQ("restore_session.html", pending_url.ExtractFileName());
+  EXPECT_EQ(GURL("http://www.0.com"), pending_item->GetVirtualURL());
 
   std::string session_json;
   net::GetValueForKeyInQuery(pending_url, "session", &session_json);
@@ -661,6 +664,20 @@ TEST_F(WKBasedNavigationManagerTest, RestoreSessionWithEmptyHistory) {
                     std::vector<std::unique_ptr<NavigationItem>>());
 
   ASSERT_EQ(nullptr, manager_->GetPendingItem());
+}
+
+// Tests that the virtual URL of a restore_session redirect item is updated to
+// the target URL.
+TEST_F(WKBasedNavigationManagerTest, HideInternalRedirectUrl) {
+  GURL target_url = GURL("http://www.1.com?query=special%26chars");
+  GURL url = net::AppendQueryParameter(GetRestoreSessionBaseUrl(), "targetUrl",
+                                       target_url.spec());
+  NSString* url_spec = base::SysUTF8ToNSString(url.spec());
+  [mock_wk_list_ setCurrentURL:url_spec];
+  NavigationItem* item = manager_->GetItemAtIndex(0);
+  ASSERT_NE(item, nullptr);
+  EXPECT_EQ(target_url, item->GetVirtualURL());
+  EXPECT_EQ(url, item->GetURL());
 }
 
 }  // namespace web

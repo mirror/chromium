@@ -7,23 +7,19 @@
 #import <Foundation/Foundation.h>
 #include <memory>
 
-#include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/stringprintf.h"
-#include "base/strings/sys_string_conversions.h"
-#include "base/values.h"
 #import "ios/web/navigation/crw_navigation_item_holder.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #include "ios/web/navigation/navigation_item_impl_list.h"
 #import "ios/web/navigation/navigation_manager_delegate.h"
+#import "ios/web/navigation/wk_based_restore_session_util.h"
 #include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/web_client.h"
 #import "ios/web/web_state/ui/crw_web_view_navigation_proxy.h"
 #import "net/base/mac/url_conversions.h"
-#include "net/base/url_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -383,38 +379,14 @@ void WKBasedNavigationManagerImpl::Restore(
   // TODO(crbug.com/771200): Retain these original NavigationItems restored from
   // storage and associate them with new WKBackForwardListItems created after
   // history restore so information such as scroll position is restored.
-
-  // The URLs and titles of the restored entries are stored in two separate
-  // lists instead of a single list of objects to reduce the size of the JSON
-  // string to be included in the query parameter.
-  base::Value restored_urls(base::Value::Type::LIST);
-  base::Value restored_titles(base::Value::Type::LIST);
-  restored_urls.GetList().reserve(items.size());
-  restored_titles.GetList().reserve(items.size());
-  for (size_t index = 0; index < items.size(); index++) {
-    restored_urls.GetList().push_back(
-        base::Value(items[index]->GetURL().spec()));
-    restored_titles.GetList().push_back(base::Value(items[index]->GetTitle()));
-  }
-  base::Value session(base::Value::Type::DICTIONARY);
-  int offset = last_committed_item_index + 1 - items.size();
-  session.SetKey("offset", base::Value(offset));
-  session.SetKey("urls", std::move(restored_urls));
-  session.SetKey("titles", std::move(restored_titles));
-
-  std::string session_json;
-  base::JSONWriter::Write(session, &session_json);
-
-  std::string restore_session_resource_path = base::SysNSStringToUTF8(
-      [base::mac::FrameworkBundle() pathForResource:@"restore_session"
-                                             ofType:@"html"]);
-  std::string url_spec = base::StringPrintf(
-      "%s://%s", url::kFileScheme, restore_session_resource_path.c_str());
-  GURL url = net::AppendQueryParameter(GURL(url_spec), "session", session_json);
+  GURL url = CreateRestoreSessionUrl(last_committed_item_index, items);
 
   WebLoadParams params(url);
   params.transition_type = ui::PAGE_TRANSITION_RELOAD;
   LoadURLWithParams(params);
+
+  GetPendingItemImpl()->SetVirtualURL(
+      items[last_committed_item_index]->GetVirtualURL());
 }
 
 NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(
@@ -444,6 +416,13 @@ NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(
           net::GURLWithNSURL(prev_wk_item.URL),
           nullptr /* use default rewriters only */);
   new_item->SetTimestamp(time_smoother_.GetSmoothedTime(base::Time::Now()));
+  const GURL& url = new_item->GetURL();
+  if (IsRestoreSessionUrl(url)) {
+    GURL virtual_url;
+    DCHECK(ExtractTargetURL(url, &virtual_url));
+    new_item->SetVirtualURL(virtual_url);
+  }
+
   SetNavigationItemInWKItem(wk_item, std::move(new_item));
   return GetNavigationItemFromWKItem(wk_item);
 }
