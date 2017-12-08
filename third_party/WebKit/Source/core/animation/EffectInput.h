@@ -13,11 +13,12 @@
 namespace blink {
 
 class KeyframeEffectModelBase;
-class DictionarySequenceOrDictionary;
 class Dictionary;
 class Element;
 class ExceptionState;
 class ExecutionContext;
+class ScriptState;
+class ScriptValue;
 
 class CORE_EXPORT EffectInput {
   STATIC_ONLY(EffectInput);
@@ -25,9 +26,9 @@ class CORE_EXPORT EffectInput {
  public:
   // TODO(alancutter): Replace Element* parameter with Document&.
   static KeyframeEffectModelBase* Convert(Element*,
-                                          const DictionarySequenceOrDictionary&,
+                                          ScriptValue& keyframes,
                                           EffectModel::CompositeOperation,
-                                          ExecutionContext*,
+                                          ScriptState*,
                                           ExceptionState&);
 
  private:
