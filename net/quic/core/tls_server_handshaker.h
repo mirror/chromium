@@ -6,6 +6,7 @@
 #define NET_QUIC_CORE_TLS_SERVER_HANDSHAKER_H_
 
 #include "net/quic/core/crypto/quic_tls_adapter.h"
+#include "net/quic/core/proto/cached_network_parameters.pb.h"
 #include "net/quic/core/quic_crypto_server_stream.h"
 #include "net/quic/core/quic_crypto_stream.h"
 #include "net/quic/core/tls_handshaker.h"

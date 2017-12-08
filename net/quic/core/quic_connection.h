@@ -26,6 +26,7 @@
 
 #include "base/macros.h"
 #include "net/quic/core/crypto/quic_decrypter.h"
+#include "net/quic/core/proto/cached_network_parameters.pb.h"
 #include "net/quic/core/quic_alarm.h"
 #include "net/quic/core/quic_alarm_factory.h"
 #include "net/quic/core/quic_blocked_writer_interface.h"
