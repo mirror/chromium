@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c66f09c0_c3006ebf",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "Will calling twice cause the issue?S Shouldn\u0027t it be no-op?",
+      "parentUuid": "a5f458b0_d1328a70",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "6df81906_4415a57f",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "We should try to keep the logic as close to real scenario as possible. Let\u0027s discuss offline how to deal with it.",
+      "parentUuid": "06a93f73_abcb29c4",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06212b11_382e27c7",
         "filename": "ash/system/web_notification/web_notification_tray_unittest.cc",
         "patchSetId": 8
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "I tried, but I could not, because ManagedDisplayInfo is update everytime display configuration changes. e.g. We have Internal display I and external A. Then we turn on mirror mode. So we update ManagedDisplayInfo.mirrored to true for A. Then we close lid, we only have one display left, so we don\u0027t want to update ManagedDisplayInfo.mirrored, but the ManagedDisplayInfo will still be updated in DisplayManager so that the stored mirrored is lost.",
       "parentUuid": "48f3cdd0_39e077b4",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c45ae1c_6a68ad8f",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "Sorry I was going to remove the first comment after I wrote \"filter out index\" comment.\n\nThat\u0027s being said, you shouldn\u0027t change mirrored when you close the lid. The meaning of that flag should be \"use mirror mode if multiple displays are connected\".",
+      "parentUuid": "e59c5966_80472df2",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +330,24 @@
       "side": 1,
       "message": "We only store mirror mode for external display, so we should set internal display before adding displays.",
       "parentUuid": "cf0a4d63_5fd32456",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1a4efb_2cb23855",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "\u003e We only store mirror mode for external display, so we should set internal display before adding displays.\n\nI see. Can you add comment?",
+      "parentUuid": "aa40b952_982fcb58",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -399,6 +471,24 @@
       "side": 1,
       "message": "Display id is composed of manufacturer id, product code hash and output index. Actually for two monitor of the same model, I print out the ids and found that both manufacturer id and product code hash are the same, the only difference is index. (Both displays are connected with USB-C port.)",
       "parentUuid": "1e3c868f_70112167",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0c2d52_50de8b05",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "yes, this is to distinguish identical modals. You should be able to connect two identical displays, and change the rotation on one, and then change the resolution on another. If the above case works, there must be some error because these should be identified as different monitor from configuration point of view.",
+      "parentUuid": "bc39348f_bb3d157e",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

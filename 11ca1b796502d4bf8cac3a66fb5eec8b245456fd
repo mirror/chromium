@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a16b56_988087a4",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:41:07Z",
+      "side": 1,
+      "message": "It\u0027s still not clear if we really need these. Why can\u0027t we just make decision like\n\n1) If there was no display, nor only internal displays,\n   check newly connected displays has mixed state (mirror/extended), go mirror\n2) If there was external display connected, and new display(s) are connected,\n   use current state.\n3) Removal and addition can happen at the same time. In this case:\n   * If it\u0027s removed to internal only, then added,\n      make decisions based on news line like 1)\n   * If it\u0027s removed to single display, then added, use that display\u0027s mode.\n   * If it\u0027s removed to zero, then added, use 1)",
+      "revId": "11ca1b796502d4bf8cac3a66fb5eec8b245456fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
