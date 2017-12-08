@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e0fd62_d92415c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/setproperty-invalid.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-08T03:28:16Z",
+      "side": 1,
+      "message": "This file fails WPT lint:\ncss/cssom/setproperty-invalid.html: Support file not in support directory (SUPPORT-WRONG-DIR)\n\nSomehow wpt manifest thinks this is a support file instead of a test. @foolip, do you know why?",
+      "revId": "2a867c8e937baca48054dd214143f3a78a76e4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
