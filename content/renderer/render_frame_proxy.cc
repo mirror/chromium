@@ -708,6 +708,9 @@ void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
 
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
+  if (!switches::IsMusHostingViz())
+    return;
+
   frame_sink_id_ = frame_sink_id;
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
