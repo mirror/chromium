@@ -4,8 +4,8 @@
 
 // Defines all the command-line switches used by gpu/ipc/host
 
-#ifndef GPU_IPC_HOST_GPU_SWITCHES_H_
-#define GPU_IPC_HOST_GPU_SWITCHES_H_
+#ifndef GPU_IPC_COMMON_GPU_SWITCHES_H_
+#define GPU_IPC_COMMON_GPU_SWITCHES_H_
 
 namespace switches {
 
@@ -14,4 +14,4 @@ extern const char kDisableNativeGpuMemoryBuffers[];
 
 }  // namespace switches
 
-#endif  // GPU_IPC_HOST_GPU_SWITCHES_H_
+#endif  // GPU_IPC_COMMON_GPU_SWITCHES_H_
