@@ -35,7 +35,6 @@ class WizardInProcessBrowserTest : public InProcessBrowserTest {
   // Overriden from InProcessBrowserTest:
   void SetUpOnMainThread() override;
   void SetUpCommandLine(base::CommandLine* command_line) override;
-  void TearDownOnMainThread() override;
 
  private:
   OobeScreen screen_;
