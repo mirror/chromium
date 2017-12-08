@@ -245,7 +245,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // Grants a client to run,
   void Run(ClientId, ResourceLoadSchedulerClient*);
 
-  void SetOutstandingLimitAndMaybeRun(size_t limit);
+  size_t GetOutstandingLimit() const;
 
   // A flag to indicate an internal running state.
   // TODO(toyoshim): We may want to use enum once we start to have more states.
@@ -257,16 +257,18 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   ThrottlingPolicy policy_ = ThrottlingPolicy::kNormal;
 
-  // Used to limit outstanding requests when |policy_| is kTight.
+  // ResourceLoadScheduler threshold values for various circumstances. Some
+  // conditions can overlap, and ResourceLoadScheduler chooses the smallest
+  // value in such cases.
+
+  // Used when |policy_| is |kTight|.
   size_t tight_outstanding_limit_ = kOutstandingUnlimited;
 
-  // TODO(crbug.com/735410): If this throttling is enabled always, it makes some
-  // tests fail.
-  // Used to limit outstanding requests when |policy_| is kNormal.
-  size_t outstanding_limit_ = kOutstandingUnlimited;
+  // Used when |policy_| is |kNormal|.
+  size_t normal_outstanding_limit_ = kOutstandingUnlimited;
 
-  // Outstanding limit for throttled frames. Managed via the field trial.
-  const size_t outstanding_throttled_limit_;
+  // Used when |frame_scheduler_throttling_state_| is throttled.
+  const size_t outstanding_limit_for_throttled_frame_scheduler_;
 
   // The last used ClientId to calculate the next.
   ClientId current_id_ = kInvalidClientId;
