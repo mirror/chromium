@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e3110ade_e2e21062",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T13:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a03949_857d37b3",
+      "range": {
+        "startLine": 2721,
+        "startChar": 31,
+        "endLine": 2721,
+        "endChar": 38
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1037871f_7a9fc685",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 15
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1ace36a2_c4750b0b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4507,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T13:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1037871f_7a9fc685",
+      "range": {
+        "startLine": 4507,
+        "startChar": 19,
+        "endLine": 4507,
+        "endChar": 55
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70cbd4a_e33372d2",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 15
@@ -82,6 +130,30 @@
       "writtenOn": "2017-12-08T12:30:12Z",
       "side": 1,
       "message": "I don\u0027t think it is necessary to reference the tracking bug here.",
+      "range": {
+        "startLine": 4509,
+        "startChar": 8,
+        "endLine": 4509,
+        "endChar": 24
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328bf46c_a1dd5f35",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4509,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T13:45:35Z",
+      "side": 1,
+      "message": "I understand its unnecessary but I think it is possible to confuse this policy with the Multi Sign-In policy. Hence I included the bug link which has more context. I think it is helpful.",
+      "parentUuid": "b70cbd4a_e33372d2",
       "range": {
         "startLine": 4509,
         "startChar": 8,
@@ -114,6 +186,30 @@
       "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8d3b2f_e2fafccb",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 4510,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T13:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cdc226c_db22de90",
+      "range": {
+        "startLine": 4510,
+        "startChar": 84,
+        "endLine": 4510,
+        "endChar": 90
+      },
+      "revId": "d0cc6b4d731744fcf1959f73e266351f0a8c7348",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
