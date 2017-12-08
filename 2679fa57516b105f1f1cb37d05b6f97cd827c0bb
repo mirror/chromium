@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60b77bc8_3c6534be",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T01:04:05Z",
+      "side": 1,
+      "message": "No more efficient, but fewer lines of code, would be:\nExtensionFrameHelper* frame_helper \u003d Get(render_frame);\nsource_view_type \u003d frame_helper ? frame_helper-\u003eview_type() : VIEW_TYPE_INVALID;\n\nAlso, is there any time that we wouldn\u0027t be able to find a frame helper for the frame?  (I don\u0027t think so, but maybe I\u0027m missing something?)  If not, can we DCHECK(frame_helper) (and then get rid of the ternary above)?",
+      "parentUuid": "64729f0c_91ba048a",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "2679fa57516b105f1f1cb37d05b6f97cd827c0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fcd0685_b0091280",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1391bf7_174eb690",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T01:04:05Z",
+      "side": 1,
+      "message": "I\u0027m still a bit confused why we need this variable.  We know that source_extension \u003d\u003d target_extension after line 215, so can\u0027t we just use source_extension?",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37efd348_099155a1",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T01:04:05Z",
+      "side": 1,
+      "message": "See reply at https://chromium-review.googlesource.com/c/chromium/src/+/766469/4/extensions/renderer/extension_frame_helper.cc#228",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d450b1d8_6e6a5c6f",
+        "filename": "extensions/renderer/extension_frame_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T01:04:05Z",
+      "side": 1,
+      "message": "Related to above, we know that source_extension and target_extension are the same, so do we need this metric?",
+      "revId": "97372c92c67d9de464a7a62c41ec281df20b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
