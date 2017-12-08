@@ -4,6 +4,7 @@
 
 #include "components/payments/core/payment_currency_amount.h"
 
+#include "base/strings/stringprintf.h"
 #include "base/values.h"
 
 namespace payments {
@@ -44,7 +45,12 @@ bool PaymentCurrencyAmount::FromDictionaryValue(
   }
 
   if (!dictionary_value.GetString(kPaymentCurrencyAmountValue, &value)) {
-    return false;
+    double fallback_value = 0;
+    if (!dictionary_value.GetDouble(kPaymentCurrencyAmountValue,
+                                    &fallback_value)) {
+      return false;
+    }
+    value = base::StringPrintf("%.2f", fallback_value);
   }
 
   // Currency_system is optional
