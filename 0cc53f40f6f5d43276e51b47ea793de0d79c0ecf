@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "ac55e85f_b87b4b8f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "I\u0027m still not a fan of the way it\u0027s split, but I don\u0027t feel I have a super persuasive argument that it would be significantly better/more-readable otherwise.\n\nSo.... let\u0027s run with it as you\u0027ve implemented it.",
+      "parentUuid": "40985cf3_8331db7b",
+      "revId": "0cc53f40f6f5d43276e51b47ea793de0d79c0ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe94a47_d5e78911",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8

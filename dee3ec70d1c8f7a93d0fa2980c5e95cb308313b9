@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35bfb982_5e362242",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "what\u0027s this for? bad merge?",
+      "revId": "dee3ec70d1c8f7a93d0fa2980c5e95cb308313b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be05e51d_0b1ac033",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "nit: Iterate directly over form as a container (instead of by index)?\n\n  for (const auto\u0026 form_field : form) {\n    if  (field.value \u003d\u003d form_field-\u003evalue \u0026\u0026 form_field-\u003eis_autofilled)\n      return true;\n  }\n  return false;",
+      "revId": "dee3ec70d1c8f7a93d0fa2980c5e95cb308313b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533d2f00_281fcf96",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "these are still being passed by value (copy), not by ref.\n\n  const std::string\u0026",
+      "revId": "dee3ec70d1c8f7a93d0fa2980c5e95cb308313b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25717e7b_e012a9c0",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "these are still being passed by value (copy), not by ref.\n\n  const std::string\u0026",
+      "revId": "dee3ec70d1c8f7a93d0fa2980c5e95cb308313b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02706173_660cd700",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:54:00Z",
+      "side": 1,
+      "message": "const isn\u0027t needed",
+      "revId": "dee3ec70d1c8f7a93d0fa2980c5e95cb308313b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
