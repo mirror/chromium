@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "gin/public/gin_embedders.h"
 #include "gin/v8_foreground_task_runner.h"
 #include "gin/v8_foreground_task_runner_with_locker.h"
@@ -31,7 +30,7 @@ PerIsolateData::PerIsolateData(
     : isolate_(isolate), allocator_(allocator) {
   isolate_->SetData(kEmbedderNativeGin, this);
 
-  task_runner = task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get();
+  DCHECK(task_runner_);
   if (access_mode == IsolateHolder::kUseLocker) {
     task_runner_ = std::make_shared<V8ForegroundTaskRunnerWithLocker>(
         isolate, task_runner);
