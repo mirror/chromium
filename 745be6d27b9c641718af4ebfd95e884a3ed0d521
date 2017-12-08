@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d15de0f_7248d5fe",
+        "filename": "device/vr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-08T02:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5223a576_5e710e35",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cc4f83c_7dbd4d09",
         "filename": "device/vr/features/features.gni",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ac9548c8_dce35e77",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-08T02:36:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc4f83c_7dbd4d09",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "700a256d_7d614dab",
         "filename": "third_party/libovr/BUILD.gn",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-07T04:58:46Z",
       "side": 1,
       "message": "Unless you\u0027re going to change things, there\u0027s no need to have this as a separate config. You can just put the cflags \u003d ... line in the static library.\n\nYou only need to use a config to apply flags to multiple targets or dependent targets.",
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba13fd02_22bb2ff7",
+        "filename": "third_party/libovr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-08T02:36:59Z",
+      "side": 1,
+      "message": "That does give me an error.  Are we picking up a config somewhere that overrides the local setting?  I\u0027m not familiar enough with gn files to know what would cause your proposal not to work, and this to work.",
+      "parentUuid": "700a256d_7d614dab",
       "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "752c3f75_271fa0cb",
+        "filename": "third_party/libovr/LICENSE",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-08T02:36:59Z",
+      "side": 1,
+      "message": "This is the attribution clause that we need to include in about:credits.  If it makes more sense, I can rename the file to AttributionClause or something similar.",
+      "parentUuid": "8e9708f2_2bb43016",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1364df5_7884ecf2",
         "filename": "third_party/libovr/README.chromium",
         "patchSetId": 3
@@ -87,6 +165,30 @@
       "writtenOn": "2017-11-02T18:37:10Z",
       "side": 1,
       "message": "This commit doesn\u0027t include a libovr\\src\\LICENSE and libovr\\LICENSE doesn\u0027t appear to be the correct one? (See my note in that file)",
+      "range": {
+        "startLine": 14,
+        "startChar": 49,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "745be6d27b9c641718af4ebfd95e884a3ed0d521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d4d563_6fbfadce",
+        "filename": "third_party/libovr/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-08T02:36:59Z",
+      "side": 1,
+      "message": "I had originally planned to put the license in google storage as well, so it can be downloaded by Googlers.  This would be a good question for third_party licensing review - do I need to include the license here, or just a reference to it if we aren\u0027t distributing it ourselves?",
+      "parentUuid": "b1364df5_7884ecf2",
       "range": {
         "startLine": 14,
         "startChar": 49,
