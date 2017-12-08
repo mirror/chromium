@@ -189,6 +189,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b3041d_a97708f6",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-12-08T19:10:31Z",
+      "side": 1,
+      "message": "My vague recollection is because of dragging windows.\n\nOn linux, you have a subclass of WindowEventFilter which reacts to the drag by turning around and sending a raw X11 event to the window manager which tells it to treat the current mouse down operation as a drag. (The mus dragging is loosely based on this.)\n\nI don\u0027t remember why it had to be this way. I want to say that this was the cleanest way to plumb in a dependency on X11, but it\u0027s been so long since I wrote this that I have fairly low confidence that that isn\u0027t a rationalization.",
+      "parentUuid": "32ce9c41_da6a11d6",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
