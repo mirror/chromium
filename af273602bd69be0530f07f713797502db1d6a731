@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a9f8ba25_87b2026d",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-12-08T11:41:03Z",
+      "side": 1,
+      "message": "I added a check and a TODO to remove this wait when crbug.com/761485 is fixed.\nThe purpose of this test is to log something before sync is enabled. I think ActiveDatatypes will only change after I call SetupSync()?\nMy assumption was that this is a close approximation to:\n1. record a consent to sync\n2. actually sign in\n3. sync the consent to the server?",
+      "parentUuid": "7fd389d9_5f29037a",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a493ca6f_d9282e96",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 4
@@ -47,6 +65,30 @@
       "writtenOn": "2017-12-07T18:10:36Z",
       "side": 1,
       "message": "This is terrifying. Maybe record a histogram instead of DCHECK? Or, could post to this thread and try again. I don\u0027t think a DCHECK is safe. I wish 709094 and 761485 were fixed :(",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 8
+      },
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593b0c2f_4ee84b6d",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-12-08T11:41:03Z",
+      "side": 1,
+      "message": "I agree that this is a violation of abstraction levels. Is it ok to leave this with a TODO? Otherwise I will add something like a UserEventService::IsReadyToProcessEvents() method?",
+      "parentUuid": "a493ca6f_d9282e96",
       "range": {
         "startLine": 78,
         "startChar": 2,
@@ -73,6 +115,24 @@
       "revId": "af273602bd69be0530f07f713797502db1d6a731",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c95143_1f404fc9",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-12-08T11:41:03Z",
+      "side": 1,
+      "message": "It\u0027s is a bit ugly, that\u0027s why I only added a DCHECK and no actual logic to handle this case. \nThe DCHECK will help while developing but I think this should never happen at actual runtime?\nI added a TODO to remove this code.",
+      "parentUuid": "0034615b_992b389c",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
