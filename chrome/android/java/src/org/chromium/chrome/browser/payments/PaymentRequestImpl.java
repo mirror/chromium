@@ -664,7 +664,8 @@ public class PaymentRequestImpl
                 && mIsCurrentPaymentRequestShowing) {
             assert !mPaymentMethodsSection.isEmpty();
 
-            if (mPaymentMethodsSection.getSize() > 1) {
+            if (mPaymentMethodsSection.getSize() > 1
+                    || mPaymentMethodsSection.getSelectedItem() == null) {
                 mUI.show();
             } else {
                 mDidRecordShowEvent = true;
