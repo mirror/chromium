@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da72b2ea_06aa700d",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "s/similar/equal/ everywhere?",
+      "range": {
+        "startLine": 91,
+        "startChar": 53,
+        "endLine": 91,
+        "endChar": 60
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8103f6_60af6fd2",
+        "filename": "tools/traffic_annotation/auditor/auditor_result.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "What would be the justification?",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a3e526_06623201",
+        "filename": "tools/traffic_annotation/auditor/instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "Please clarify (and rename accordingly).\n\n\"extra\" implies \"more\", \"additional\", etc. What you want to say is that it requires a \"match\", \"pair\", etc.",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa911dc_9856ae33",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 118,
+        "startChar": 37,
+        "endLine": 118,
+        "endChar": 38
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff182400_c6fdb2cc",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "nit: Both the pair\u003cint, string\u003e AND the int which is the first component are referred to as \"id\"s.",
+      "range": {
+        "startLine": 401,
+        "startChar": 19,
+        "endLine": 403,
+        "endChar": 21
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d7e5e9_5d01dd18",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(expected, actual)\n\n(also below)",
+      "range": {
+        "startLine": 418,
+        "startChar": 14,
+        "endLine": 418,
+        "endChar": 34
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce20a06_93e9dd18",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "This is always 0?",
+      "range": {
+        "startLine": 845,
+        "startChar": 12,
+        "endLine": 845,
+        "endChar": 26
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaeed69_a022220c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 848,
+        "startChar": 58,
+        "endLine": 848,
+        "endChar": 72
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21f149a_626058a3",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "Be more descriptive please. Unittests are ignored to speed up etc. etc.",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 14
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d8099d_1903e649",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_id_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-08T11:59:16Z",
+      "side": 1,
+      "message": "nit: As above, please find a more descriptive name.",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "a8847f9c27bf3afb3f3fe312dfcc22176cec8aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
