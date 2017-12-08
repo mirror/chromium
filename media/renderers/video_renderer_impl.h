@@ -293,11 +293,7 @@ class MEDIA_EXPORT VideoRendererImpl
 
   // Keeps track of the number of frames decoded and dropped since the
   // last call to |statistics_cb_|. These must be accessed under lock.
-  int frames_decoded_;
-  int frames_dropped_;
-
-  // Keeps track of the number of power efficient decoded frames.
-  int frames_decoded_power_efficient_;
+  PipelineStatistics stats_;
 
   base::TickClock* tick_clock_;
 
@@ -315,10 +311,6 @@ class MEDIA_EXPORT VideoRendererImpl
   // Indicates whether or not media time is currently progressing or not.  Must
   // only be accessed from |task_runner_|.
   bool time_progressing_;
-
-  // Memory usage of |algorithm_| recorded during the last UpdateStats_Locked()
-  // call.
-  int64_t last_video_memory_usage_;
 
   // Indicates if a frame has been processed by CheckForMetadataChanges().
   bool have_renderered_frames_;
