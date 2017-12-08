@@ -56,7 +56,6 @@ class QuicEncrypter;
 class QuicRandom;
 
 namespace test {
-class PacketSavingConnection;
 class QuicConnectionPeer;
 }  // namespace test
 
@@ -266,7 +265,7 @@ class QUIC_EXPORT_PRIVATE QuicConnectionDebugVisitor
   virtual void OnSendConnectionState(
       const CachedNetworkParameters& cached_network_params) {}
 
-  // Called when a CachedNetworkParameters are recieved from the client.
+  // Called when a CachedNetworkParameters are received from the client.
   virtual void OnReceiveConnectionState(
       const CachedNetworkParameters& cached_network_params) {}
 
@@ -786,7 +785,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
  private:
   friend class test::QuicConnectionPeer;
-  friend class test::PacketSavingConnection;
 
   typedef std::list<SerializedPacket> QueuedPacketList;
 
