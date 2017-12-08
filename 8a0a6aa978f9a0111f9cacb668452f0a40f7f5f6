@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "95f30f4a_e97d7cea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "Thanks for clarifying that for me :-)",
+      "parentUuid": "0bd607b1_28eae15e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "635c1355_19799e78",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
         "patchSetId": 11
@@ -633,6 +657,30 @@
       "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d21cec8_182f2347",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "But |account_id| will also be empty on the sign-in screen, won\u0027t it? Or are you saying this particular function will not be invoked at all on the sign-in screen?\n\nAlso, AFAIK and FYI, there are plans to give gaia ids of \"shadow accounts\" to Active Directory logins (and |account_id| is a gaia id?) so that part may be obsolete soon.",
+      "parentUuid": "353f0f24_278304a4",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "8a0a6aa978f9a0111f9cacb668452f0a40f7f5f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

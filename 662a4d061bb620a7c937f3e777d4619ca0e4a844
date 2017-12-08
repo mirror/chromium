@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b260f5f3_10eeb4da",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: {} unnecessary",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 15
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c450085_dbac69a5",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: Now that I read this again, maybe it would make sense to invert this statement and put the result first?\nMirror consistency will be enabled when secondary sign-in is disabled.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 77
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0026b0b6_ca389348",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: Please either include or forward-declare this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5963528_dc940b4a",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: Please forward-declare this.",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe7d971_8ae420e6",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: I think we should #include \"base/macros.h\" for this",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668cb016_80940ec0",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-08T08:40:47Z",
+      "side": 1,
+      "message": "nit: Please DISALLOW_COPY_AND_ASSIGN + #include \"base/macros.h\" for that :-)",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "662a4d061bb620a7c937f3e777d4619ca0e4a844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
