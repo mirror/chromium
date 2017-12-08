@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8543f21e_10b3ebc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-08T07:28:37Z",
+      "side": 1,
+      "message": "my only q is whether this should be the full app name as opposed to short name. I thought short name was only for launcher (i.e. splash screen uses full name).",
+      "range": {
+        "startLine": 52,
+        "startChar": 37,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "879afad810442bbf0275538fa7d6f285e561f475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
