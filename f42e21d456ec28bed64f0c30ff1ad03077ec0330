@@ -45,6 +45,40 @@
       "revId": "f42e21d456ec28bed64f0c30ff1ad03077ec0330",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10ee771_3cb4e7eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappOfflineDialog.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-08T19:01:43Z",
+      "side": 1,
+      "message": "Should this message to be renamed to\nR.string.webapp_cannot_connect_to_site\n?",
+      "revId": "f42e21d456ec28bed64f0c30ff1ad03077ec0330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd71c7fc_24597a8e",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 3032,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-08T19:01:43Z",
+      "side": 1,
+      "message": "IDS_WEBAPK_OFFLINE_DIALOG has a period. Should this have a period as well?",
+      "revId": "f42e21d456ec28bed64f0c30ff1ad03077ec0330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
