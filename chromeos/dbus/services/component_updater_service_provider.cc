@@ -33,6 +33,14 @@ void ComponentUpdaterServiceProvider::Start(
                  weak_ptr_factory_.GetWeakPtr()),
       base::Bind(&ComponentUpdaterServiceProvider::OnExported,
                  weak_ptr_factory_.GetWeakPtr()));
+
+  exported_object->ExportMethod(
+      kComponentUpdaterServiceInterface,
+      kComponentUpdaterServiceUnloadComponentMethod,
+      base::Bind(&ComponentUpdaterServiceProvider::UnloadComponent,
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind(&ComponentUpdaterServiceProvider::OnExported,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ComponentUpdaterServiceProvider::OnExported(
@@ -78,6 +86,32 @@ void ComponentUpdaterServiceProvider::OnLoadComponent(
     std::unique_ptr<dbus::ErrorResponse> error_response =
         dbus::ErrorResponse::FromMethodCall(method_call, kErrorInternalError,
                                             "Failed to load component");
+    response_sender.Run(std::move(error_response));
+  }
+}
+
+void ComponentUpdaterServiceProvider::UnloadComponent(
+    dbus::MethodCall* method_call,
+    dbus::ExportedObject::ResponseSender response_sender) {
+  dbus::MessageReader reader(method_call);
+  std::string component_name;
+  if (reader.PopString(&component_name)) {
+    if (delegate_->UnloadComponent(component_name)) {
+      std::unique_ptr<dbus::Response> response =
+          dbus::Response::FromMethodCall(method_call);
+      dbus::MessageWriter writer(response.get());
+      response_sender.Run(std::move(response));
+    } else {
+      std::unique_ptr<dbus::ErrorResponse> error_response =
+          dbus::ErrorResponse::FromMethodCall(method_call, kErrorInternalError,
+                                              "Failed to unload component");
+      response_sender.Run(std::move(error_response));
+    }
+  } else {
+    std::unique_ptr<dbus::ErrorResponse> error_response =
+        dbus::ErrorResponse::FromMethodCall(
+            method_call, kErrorInvalidArgs,
+            "Missing component name string argument.");
     response_sender.Run(std::move(error_response));
   }
 }
