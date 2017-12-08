@@ -106,31 +106,16 @@ QuicTransportVersionVector FilterSupportedTransportVersions(
     if (version == QUIC_VERSION_43) {
       if (GetQuicFlag(FLAGS_quic_enable_version_43) &&
           GetQuicFlag(FLAGS_quic_enable_version_42) &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_41 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_39 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_38) {
+          FLAGS_quic_reloadable_flag_quic_enable_version_41) {
         filtered_versions.push_back(version);
       }
     } else if (version == QUIC_VERSION_42) {
       if (GetQuicFlag(FLAGS_quic_enable_version_42) &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_41 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_39 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_38) {
+          FLAGS_quic_reloadable_flag_quic_enable_version_41) {
         filtered_versions.push_back(version);
       }
     } else if (version == QUIC_VERSION_41) {
-      if (FLAGS_quic_reloadable_flag_quic_enable_version_41 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_39 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_38) {
-        filtered_versions.push_back(version);
-      }
-    } else if (version == QUIC_VERSION_39) {
-      if (FLAGS_quic_reloadable_flag_quic_enable_version_39 &&
-          FLAGS_quic_reloadable_flag_quic_enable_version_38) {
-        filtered_versions.push_back(version);
-      }
-    } else if (version == QUIC_VERSION_38) {
-      if (FLAGS_quic_reloadable_flag_quic_enable_version_38) {
+      if (FLAGS_quic_reloadable_flag_quic_enable_version_41) {
         filtered_versions.push_back(version);
       }
     } else {

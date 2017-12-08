@@ -2926,8 +2926,6 @@ class WindowUpdateObserver : public QuicConnectionDebugVisitor {
 };
 
 TEST_P(EndToEndTest, WindowUpdateInAck) {
-  FLAGS_quic_reloadable_flag_quic_enable_version_38 = true;
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = true;
   ASSERT_TRUE(Initialize());
   EXPECT_TRUE(client_->client()->WaitForCryptoHandshakeConfirmed());
   WindowUpdateObserver observer;

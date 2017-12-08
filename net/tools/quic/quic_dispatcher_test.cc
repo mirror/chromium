@@ -554,8 +554,6 @@ TEST_F(QuicDispatcherTest, TooBigSeqNoPacketToTimeWaitListManager) {
 TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
   static_assert(arraysize(kSupportedTransportVersions) == 7u,
                 "Supported versions out of sync");
-  FLAGS_quic_reloadable_flag_quic_enable_version_38 = true;
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = true;
   FLAGS_quic_reloadable_flag_quic_enable_version_41 = true;
   SetQuicFlag(&FLAGS_quic_enable_version_42, true);
   SetQuicFlag(&FLAGS_quic_enable_version_43, true);
@@ -695,18 +693,6 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
                 SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
                 PACKET_6BYTE_PACKET_NUMBER, 1);
 
-  // Turn off version 39.
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = false;
-  ++connection_id;
-  EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
-                                              QuicStringPiece("hq")))
-      .Times(0);
-  ProcessPacket(client_address, connection_id, true, QUIC_VERSION_39,
-                SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
-                PACKET_6BYTE_PACKET_NUMBER, 1);
-
-  // Turn on version 39.
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = true;
   ++connection_id;
   EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
                                               QuicStringPiece("hq")))

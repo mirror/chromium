@@ -283,40 +283,9 @@ TEST_F(QuicVersionsTest, QuicVersionToString) {
   }
 }
 
-TEST_F(QuicVersionsTest, FilterSupportedTransportVersionsNo38) {
-  QuicTransportVersionVector all_versions = {QUIC_VERSION_35, QUIC_VERSION_37,
-                                             QUIC_VERSION_38, QUIC_VERSION_39};
-
-  FLAGS_quic_reloadable_flag_quic_enable_version_38 = false;
-
-  QuicTransportVersionVector filtered_versions =
-      FilterSupportedTransportVersions(all_versions);
-  ASSERT_EQ(2u, filtered_versions.size());
-  EXPECT_EQ(QUIC_VERSION_35, filtered_versions[0]);
-  EXPECT_EQ(QUIC_VERSION_37, filtered_versions[1]);
-}
-
-TEST_F(QuicVersionsTest, FilterSupportedTransportVersionsNo39) {
-  QuicTransportVersionVector all_versions = {QUIC_VERSION_35, QUIC_VERSION_37,
-                                             QUIC_VERSION_38, QUIC_VERSION_39};
-
-  FLAGS_quic_reloadable_flag_quic_enable_version_38 = true;
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = false;
-
-  QuicTransportVersionVector filtered_versions =
-      FilterSupportedTransportVersions(all_versions);
-  ASSERT_EQ(3u, filtered_versions.size());
-  EXPECT_EQ(QUIC_VERSION_35, filtered_versions[0]);
-  EXPECT_EQ(QUIC_VERSION_37, filtered_versions[1]);
-  EXPECT_EQ(QUIC_VERSION_38, filtered_versions[2]);
-}
-
 TEST_F(QuicVersionsTest, FilterSupportedTransportVersionsAllVersions) {
   QuicTransportVersionVector all_versions = {QUIC_VERSION_35, QUIC_VERSION_37,
                                              QUIC_VERSION_38, QUIC_VERSION_39};
-
-  FLAGS_quic_reloadable_flag_quic_enable_version_38 = true;
-  FLAGS_quic_reloadable_flag_quic_enable_version_39 = true;
 
   QuicTransportVersionVector filtered_versions =
       FilterSupportedTransportVersions(all_versions);
