@@ -21,11 +21,6 @@ namespace {
 // Constructs a version label from the 4 bytes such that the on-the-wire
 // order will be: d, c, b, a.
 QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    return MakeQuicTag(a, b, c, d);
-  }
-  QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_net_byte_order_version_label,
-                    1, 10);
   return MakeQuicTag(d, c, b, a);
 }
 
@@ -165,11 +160,6 @@ QuicVersionLabel QuicVersionToQuicVersionLabel(
 }
 
 string QuicVersionLabelToString(QuicVersionLabel version_label) {
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    return QuicTagToString(version_label);
-  }
-  QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_net_byte_order_version_label,
-                    2, 10);
   return QuicTagToString(QuicEndian::HostToNet32(version_label));
 }
 

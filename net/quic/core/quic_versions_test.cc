@@ -15,9 +15,6 @@ namespace {
 class QuicVersionsTest : public QuicTest {
  protected:
   QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
-    if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-      return MakeQuicTag(a, b, c, d);
-    }
     return MakeQuicTag(d, c, b, a);
   }
 };
@@ -36,13 +33,8 @@ TEST_F(QuicVersionsTest, QuicVersionToQuicVersionLabel) {
 #endif
 
   // Explicitly test a specific version.
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    EXPECT_EQ(MakeQuicTag('Q', '0', '3', '5'),
-              QuicVersionToQuicVersionLabel(QUIC_VERSION_35));
-  } else {
     EXPECT_EQ(MakeQuicTag('5', '3', '0', 'Q'),
               QuicVersionToQuicVersionLabel(QUIC_VERSION_35));
-  }
 
   // Loop over all supported versions and make sure that we never hit the
   // default case (i.e. all supported versions should be successfully converted
@@ -83,13 +75,8 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToQuicTransportVersion) {
 #endif
 
   // Explicitly test specific versions.
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    EXPECT_EQ(QUIC_VERSION_35,
-              QuicVersionLabelToQuicVersion(MakeQuicTag('Q', '0', '3', '5')));
-  } else {
-    EXPECT_EQ(QUIC_VERSION_35,
-              QuicVersionLabelToQuicVersion(MakeQuicTag('5', '3', '0', 'Q')));
-  }
+  EXPECT_EQ(QUIC_VERSION_35,
+            QuicVersionLabelToQuicVersion(MakeQuicTag('5', '3', '0', 'Q')));
 
   for (size_t i = 0; i < arraysize(kSupportedTransportVersions); ++i) {
     QuicTransportVersion version = kSupportedTransportVersions[i];
@@ -111,15 +98,9 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToQuicVersionUnsupported) {
 #if 0
   ScopedMockLog log(kDoNotCaptureLogsYet);
 #ifndef NDEBUG
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    EXPECT_CALL(log, Log(base_logging::INFO, _,
-                         "Unsupported QuicVersionLabel version: FAKE"))
-        .Times(1);
-  } else {
-    EXPECT_CALL(log, Log(base_logging::INFO, _,
-                         "Unsupported QuicVersionLabel version: EKAF"))
-        .Times(1);
-  }
+  EXPECT_CALL(log, Log(base_logging::INFO, _,
+                       "Unsupported QuicVersionLabel version: EKAF"))
+      .Times(1);
 #endif
   log.StartCapturingLogs();
 #endif
@@ -145,12 +126,7 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToHandshakeProtocol) {
 
   // Test a TLS version:
   FLAGS_quic_supports_tls_handshake = true;
-  QuicTag tls_tag;
-  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
-    tls_tag = MakeQuicTag('T', '0', '4', '1');
-  } else {
-    tls_tag = MakeQuicTag('1', '4', '0', 'T');
-  }
+  QuicTag tls_tag = MakeQuicTag('1', '4', '0', 'T');
   EXPECT_EQ(PROTOCOL_TLS1_3, QuicVersionLabelToHandshakeProtocol(tls_tag));
 
   FLAGS_quic_supports_tls_handshake = false;
