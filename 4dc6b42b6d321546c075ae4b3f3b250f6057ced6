@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12095a65_b9f18f15",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/TestPathUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-08T00:15:17Z",
+      "side": 1,
+      "message": "Should we just annotate UrlUtils#getIsolatedTestRoot() with @CalledByNative instead?\n\nIf so, should we just have a native version of url_utils.[cc|h] instead maybe?",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5479ac_3e0f486e",
+        "filename": "base/test/android/path_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-08T00:15:17Z",
+      "side": 1,
+      "message": "Is this needed in the header?",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c99ea3_cc29fed0",
+        "filename": "base/test/android/path_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-08T00:15:17Z",
+      "side": 1,
+      "message": "If we move this to UrlUtils, should this be in a class? Like: base::android::UrlUtils::GetIsolatedTestRoot()?",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
