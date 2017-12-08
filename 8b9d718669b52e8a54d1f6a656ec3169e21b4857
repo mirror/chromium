@@ -70,6 +70,30 @@
       "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ce3545_bcd57886",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-08T19:57:17Z",
+      "side": 1,
+      "message": "Did something similar, just with different enum names.  (The suggested naming you provided would be too verbose in my opinion when using enum classes, which is what we need to avoid any implicit conversions.)  Please take a look.  (I did not bother changing the callers yet.)",
+      "parentUuid": "d6896042_737ee8b8",
+      "range": {
+        "startLine": 509,
+        "startChar": 25,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "8b9d718669b52e8a54d1f6a656ec3169e21b4857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
