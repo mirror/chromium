@@ -166,7 +166,8 @@ public class ChromeHomeDownloadManagerTest {
     }
 
     private void showDownloadManager() {
-        ThreadUtils.runOnUiThreadBlocking(() -> { DownloadUtils.showDownloadManager(null, null); });
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> { DownloadUtils.showDownloadManager(null, null, false); });
     }
 
     private void assertBottomSheetShowingDownloadsManager() {

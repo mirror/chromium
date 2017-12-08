@@ -875,7 +875,7 @@ public class DownloadManagerService
      * @param context Application context
      */
     public static void openDownloadsPage(Context context) {
-        if (DownloadUtils.showDownloadManager(null, null)) return;
+        if (DownloadUtils.showDownloadManager(null, null, false)) return;
 
         // Open the Android Download Manager.
         Intent pageView = new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS);

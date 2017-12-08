@@ -91,7 +91,7 @@ public class BottomSheetContentControllerTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity());
+                BookmarkUtils.showBookmarkManager(mBottomSheetTestRule.getActivity(), false);
             }
         });
 
@@ -114,7 +114,7 @@ public class BottomSheetContentControllerTest {
             @Override
             public void run() {
                 ChromeTabbedActivity activity = mBottomSheetTestRule.getActivity();
-                DownloadUtils.showDownloadManager(activity, activity.getActivityTab());
+                DownloadUtils.showDownloadManager(activity, activity.getActivityTab(), false);
             }
         });
 
