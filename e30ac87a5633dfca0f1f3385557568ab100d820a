@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ec3cacfc_951bd882",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T21:22:56Z",
+      "side": 1,
+      "message": "Now that those are weak pointers, I\u0027m less concerned since the delalyed task will self abort if it can\u0027t deref the weakptr back to the request. Once this destructor runs, the collection of pending loads should all be freed and all of their weakptr refs cleared.\n\n-----\n\nMy original concern would all be moot, I think, if destroying a cancelable callback automatically cancels it... which I wasn\u0027t able to figure out from a quick reading of the code. So I was left unsure how cleaning up with request queue would interact with the cancelable tasks that were bound to a raw pointer to the normalization request.",
+      "parentUuid": "259899f6_f07a5701",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e9d503_4cb2bee3",
         "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
         "patchSetId": 8
