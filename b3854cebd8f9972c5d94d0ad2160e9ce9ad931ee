@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c7438a1_3f4d49c5",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-08T22:27:44Z",
+      "side": 1,
+      "message": "Is it ever possible that vsync_timebase_ is in the future here?\nYou may want to use SnappedToNextTick to avoid % weirdness when the numerator is negative.\nOr DCHECK that vsync_timebase_ is always in the past.",
+      "revId": "b3854cebd8f9972c5d94d0ad2160e9ce9ad931ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
