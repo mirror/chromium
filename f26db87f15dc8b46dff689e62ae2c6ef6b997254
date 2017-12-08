@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d213efc0_50573e21",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "nit: Delegate:",
+      "range": {
+        "startLine": 75,
+        "startChar": 53,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c95731_71859825",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "nit: SNAP state",
+      "range": {
+        "startLine": 152,
+        "startChar": 37,
+        "endLine": 152,
+        "endChar": 46
+      },
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d335ac8b_e64ece2b",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d17025_0746c7d7",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "how can this happen?",
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c13811_192b6cfb",
+        "filename": "components/exo/test/test_client_controlled_state_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "\"Overridden from ash..\" to be consistent with rest of exo.\n\nwe should probably do a large rename of all these comments in exo to match whatever is the latest pattern suggested by the style guide but best to keep thinks consistent for now at least",
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d276ba6a_a1cee56d",
+        "filename": "components/exo/test/test_client_controlled_state_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T22:50:29Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "f26db87f15dc8b46dff689e62ae2c6ef6b997254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
