@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e68f9ca_7b0709f5",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T11:21:35Z",
+      "side": 1,
+      "message": "Which platform does this comment refer to? Also, I\u0027m not sure it\u0027s fine to publish specific UMA results in the comment - could you reformulate?",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cb0225_b553fe60",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T11:21:35Z",
+      "side": 1,
+      "message": "What is the purpose of this DCHECK if according to the comment above it is guaranteed to fail in 0.9% of cases?",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec46309_8c030b7b",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T11:21:35Z",
+      "side": 1,
+      "message": "Why do we need to have this function when we already have media::AudioLatency::GetExactBufferSize()? Why not to do all the maths there? WebAudio is the only client of it.\n\nAlso, if you override GetExactBufferSize result with GetPreferredWebAudioBufferSize, this test code [https://cs.chromium.org/chromium/src/content/shell/renderer/layout_test/layout_test_content_renderer_client.cc?type\u003dcs\u0026q\u003dGetExactBufferSize\u0026l\u003d205] seems to need an update.",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e7ee70_901be269",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T11:21:35Z",
+      "side": 1,
+      "message": "rtoy@ - Do I understand correctly that it has it been tested on a range of most common devices?",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9099d37d_980c416a",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T11:21:35Z",
+      "side": 1,
+      "message": "Comment is not valid any more on Mac and ChromeOS. (And why do we change the behavior there?)",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
