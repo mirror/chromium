@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6d369f_10023bec",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-08T15:41:32Z",
+      "side": 1,
+      "message": "I \rhave tried move WaitForWork call to here then I can receive DM_POINTERHITTEST but chrome will hang. Bruce, do you know what message cause this?",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
