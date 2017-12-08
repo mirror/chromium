@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c73001c_bdb88cdc",
+        "filename": "gpu/skia_bindings/grcontext_for_gles2_interface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:58:47Z",
+      "side": 1,
+      "message": "If you want I\u0027m not opposed to doing the base::SysInfo call in this method instead of forcing the caller to do it, since now it wouldn\u0027t be part of constructing the GrContextForGLES2Interface and wouldn\u0027t run in tests.",
+      "revId": "c18c3483de1aea93828a8e053eaba1e625d18b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
