@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76086aba_80dab905",
+        "filename": "base/synchronization/waitable_event_watcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-08T12:03:59Z",
+      "side": 1,
+      "message": "Hmm, as SequencedTaskRunnerHandle::Get() is not available here, it looks like it is inevitable to pass task runner not to the constructor but to StartWatching...",
+      "revId": "9e0cd635a370f98bb1d6aa908d512573c6449374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
