@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cbf97e32_2e69f6ba",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T17:33:42Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize this was getting called from the history side. I\u0027m sad that you went with the DCHECK, I thought the defensive approach was better. But they\u0027ll both work.\n\nEspecially because this class is the seam between sync logic and history logic. There\u0027s always going to be an ownership disconnect in these parts, and assuming good behavior and full understanding by any author seems like we\u0027re just asking for problems.",
+      "parentUuid": "4e2679ac_cb4eedcc",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c684aad6_1ef33a8b",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Actually sync_metadata_database_ isn\u0027t guaranteed to be null. Imagine what happens if HistoryBackend fails to initialize HistoryDatabase? I\u0027m removing DCHECK from ctor.",
       "parentUuid": "c684aad6_1ef33a8b",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cd45144_35e786b4",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T17:33:42Z",
+      "side": 1,
+      "message": "What? Of course it\u0027s not guaranteed to be null. I\u0027m confused.\n\nBefore your CL, sync_metadata_database_ couldn\u0027t be null because we DCHECKed in the ctor. Well, I guess in release builds this could protect against a failed initialization.",
+      "parentUuid": "7996189e_a4f05056",
       "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

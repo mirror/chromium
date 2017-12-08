@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2569bf3d_cf4378b9",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T17:33:42Z",
+      "side": 1,
+      "message": "I\u0027m not thrilled about the consistency here (and presumably all over this file)\n\n1) Non-metadata object doesn\u0027t get nulled, isn\u0027t checked in the bridge, but instead returns false/failure on calls. This is inconsistent/different from how the metadata side works. Would be nice if they are handled similarily, especially given that they\u0027re backed by the same source ultimately.\n2) We fail to distinguish between not finding a url and the db being gone here. And instead of raising a sync error, we continue if the db is gone.",
+      "revId": "62f0f012ae9d5267845e48df85dba090e2d8abbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141a4f9c_da5643a5",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T17:33:42Z",
+      "side": 1,
+      "message": "After thinking about this overnight, I\u0027m not sure the aggressive pushing of state to sync is the best approach.\n\nAnother approach could be to give the bridge a weak pointer that is then invalidated on error, but don\u0027t trigger a notification. Sync will still eventually hit an error, next time they try to use it. We could potentially waste resources, perform a GU that is doomed to fail, but our contract between these two classes is slightly more relaxed.\n\nHowever, after realizing there\u0027s an inconsistency with how we read non-metadata (see my other comment), I think eagerly pushing the error for now at least is probably better.",
+      "revId": "62f0f012ae9d5267845e48df85dba090e2d8abbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
