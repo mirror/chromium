@@ -10,6 +10,7 @@ import static junit.framework.Assert.assertNull;
 import android.os.Handler;
 import android.os.Looper;
 
+import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.download.DownloadInfo;
@@ -128,9 +129,7 @@ public class StubbedProvider implements BackendProvider {
         }
 
         @Override
-        public ArrayList<OfflineItem> getAllItems() {
-            return items;
-        }
+        public void getAllItems(Callback<ArrayList<OfflineItem>> callback) {}
 
         @Override
         public void removeItem(ContentId id) {
@@ -165,9 +164,7 @@ public class StubbedProvider implements BackendProvider {
         }
 
         @Override
-        public OfflineItem getItemById(ContentId id) {
-            return null;
-        }
+        public void getItemById(ContentId id, Callback<OfflineItem> callback) {}
 
         @Override
         public void getVisualsForItem(ContentId id, VisualsCallback callback) {}
