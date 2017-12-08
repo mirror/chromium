@@ -246,6 +246,24 @@
       "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f9bd06_51fedd60",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-08T02:06:36Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s a very good explanation. Maybe sprinkle some of that in here as a comment?\n\nWhether you want to record more than the default depends what you are using it for. If you want to know what mail client *users* prefer, then measuring only the default is sensible.\n\nIf (as your above explanation suggests --- \"We want protocol handler info because we suspect it can help us learn about the site\") you will probably want to store all of the handlers that the site offers, whether they have been accepted by the user or not.",
+      "parentUuid": "76e9296d_9625fad3",
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
