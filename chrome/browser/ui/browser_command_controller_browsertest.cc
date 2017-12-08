@@ -106,7 +106,7 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
   TemplateURLServiceFactory::GetForProfile(guest)->set_loaded(true);
 
   const CommandUpdater* command_updater =
-      browser->command_controller()->command_updater();
+      browser->command_controller()->command_updater_for_tests();
   #if defined(OS_CHROMEOS)
     // Chrome OS uses system tray menu to handle multi-profiles.
     EXPECT_FALSE(command_updater->IsCommandEnabled(IDC_SHOW_AVATAR_MENU));

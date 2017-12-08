@@ -6,7 +6,7 @@
 
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -15,9 +15,8 @@
 #include "ui/gfx/paint_vector_icon.h"
 
 SaveCreditCardDecoration::SaveCreditCardDecoration(
-    CommandUpdater* command_updater)
-    : command_updater_(command_updater) {
-}
+    CommandUpdaterProxy* command_updater_proxy)
+    : command_updater_proxy_(command_updater_proxy) {}
 
 SaveCreditCardDecoration::~SaveCreditCardDecoration() {}
 
@@ -39,7 +38,7 @@ AcceptsPress SaveCreditCardDecoration::AcceptsMousePress() {
 }
 
 bool SaveCreditCardDecoration::OnMousePressed(NSRect frame, NSPoint location) {
-  command_updater_->ExecuteCommand(IDC_SAVE_CREDIT_CARD_FOR_PAGE);
+  command_updater_proxy_->ExecuteCommand(IDC_SAVE_CREDIT_CARD_FOR_PAGE);
   return true;
 }
 

@@ -13,14 +13,15 @@
 // ToolbarButton subclass which defers certain state changes when the mouse
 // is hovering over it.
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 @interface ReloadButton : MenuButton<ImageButton> {
  @private
   // Timer used when setting reload mode while the mouse is hovered.
   NSTimer* pendingReloadTimer_;
   base::scoped_nsobject<NSMenu> menu_;
-  CommandUpdater* commandUpdater_; // weak, set by toolbar controller.
+  CommandUpdaterProxy*
+      commandUpdaterProxy_;  // weak, set by toolbar controller.
 }
 
 // Update the tag, and the image and tooltip to match.  If |anInt|
@@ -39,7 +40,7 @@ class CommandUpdater;
 // Changes whether reload button shows menu.
 - (void)setMenuEnabled:(BOOL)enabled;
 
-- (void)setCommandUpdater:(CommandUpdater*)commandUpdater;
+- (void)setCommandUpdaterProxy:(CommandUpdaterProxy*)commandUpdaterProxy;
 
 @end
 

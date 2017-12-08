@@ -82,6 +82,8 @@ static_library("test_support") {
     "base/testing_browser_process.h",
     "base/testing_browser_process_platform_part.cc",
     "base/testing_browser_process_platform_part.h",
+    "base/testing_command_updater_proxy.cc",
+    "base/testing_command_updater_proxy.h",
     "base/testing_profile.cc",
     "base/testing_profile.h",
     "base/testing_profile_manager.cc",

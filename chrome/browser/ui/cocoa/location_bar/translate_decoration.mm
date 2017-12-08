@@ -6,14 +6,15 @@
 
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #import "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
 
-TranslateDecoration::TranslateDecoration(CommandUpdater* command_updater)
-    : command_updater_(command_updater) {
+TranslateDecoration::TranslateDecoration(
+    CommandUpdaterProxy* command_updater_proxy)
+    : command_updater_proxy_(command_updater_proxy) {
   SetLit(false, false);
 }
 
@@ -33,7 +34,7 @@ AcceptsPress TranslateDecoration::AcceptsMousePress() {
 }
 
 bool TranslateDecoration::OnMousePressed(NSRect frame, NSPoint location) {
-  command_updater_->ExecuteCommand(IDC_TRANSLATE_PAGE);
+  command_updater_proxy_->ExecuteCommand(IDC_TRANSLATE_PAGE);
   return true;
 }
 

@@ -44,9 +44,9 @@ class MockOmniboxView : public OmniboxViewMac {
  public:
   MockOmniboxView(OmniboxEditController* controller,
                   Profile* profile,
-                  CommandUpdater* command_updater,
+                  CommandUpdaterProxy* command_updater_proxy,
                   AutocompleteTextField* field)
-      : OmniboxViewMac(controller, profile, command_updater, field) {}
+      : OmniboxViewMac(controller, profile, command_updater_proxy, field) {}
 
   // Sets if the MockOmniboxView should be empty or not.
   void set_is_empty(bool is_empty) { is_empty_ = is_empty; }
@@ -66,10 +66,10 @@ class MockOmniboxView : public OmniboxViewMac {
 class TestingLocationBarViewMac : public LocationBarViewMac {
  public:
   TestingLocationBarViewMac(AutocompleteTextField* field,
-                            CommandUpdater* command_updater,
+                            CommandUpdaterProxy* command_updater_proxy,
                             Profile* profile,
                             Browser* browser)
-      : LocationBarViewMac(field, command_updater, profile, browser) {}
+      : LocationBarViewMac(field, command_updater_proxy, profile, browser) {}
 
   // Overridden so that LocationBarViewMac will use the test ToolbarModel
   // instead.
@@ -154,16 +154,16 @@ class LocationBarViewMacTest : public CocoaProfileTest {
     field_.reset([[AutocompleteTextField alloc] initWithFrame:frame]);
 
     location_bar_.reset(new TestingLocationBarViewMac(
-        field_.get(), browser()->command_controller()->command_updater(),
-        browser()->profile(), browser()));
+        field_.get(), browser()->command_controller(), browser()->profile(),
+        browser()));
 
     location_bar_->page_info_decoration_.reset(
         new TestingPageInfoBubbleDecoration(location_bar_.get()));
     decoration()->disable_animations_during_testing_ = true;
 
-    omnibox_view_ = new MockOmniboxView(
-        nullptr, browser()->profile(),
-        browser()->command_controller()->command_updater(), field_.get());
+    omnibox_view_ =
+        new MockOmniboxView(nullptr, browser()->profile(),
+                            browser()->command_controller(), field_.get());
 
     location_bar_->omnibox_view_.reset(omnibox_view_);
   }
