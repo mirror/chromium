@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d1ae465_ceb4f222",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8505,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "you forgot a word",
+      "range": {
+        "startLine": 8505,
+        "startChar": 117,
+        "endLine": 8505,
+        "endChar": 121
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c990061_561b65e8",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8526,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "Is this still used? If not, delete it. If so, it might be okay to just delete the period from it, especially if it\u0027s (for example) only used in the cocoa version of the dialog.\n\n(Same comment for IDS_TRANSLATE_BUBBLE_COULD_NOT_TRANSLATE below)",
+      "range": {
+        "startLine": 8526,
+        "startChar": 25,
+        "endLine": 8526,
+        "endChar": 56
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf19187_383ddb84",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "nit: use \"default: NOTREACHED()\" instead",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 8
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785f142d_a8abe4fd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "I just checked this and it seems like a real bug to me. I would file one though, instead of leaving this TODO in the code.",
+      "range": {
+        "startLine": 325,
+        "startChar": 14,
+        "endLine": 325,
+        "endChar": 18
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12802195_e75f1c85",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "It seems like this check should be present in the first branch of the if? That might be a bug too. Then you could factor out everything except the final line (IDS_TRANSLATE_BUBBLE_ADVANCED_BUTTON). If not, you can still factor out the first line of each branch.",
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd75a9a_f45ab482",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "You can change change the name of this constant. Do we want a separate event for the menu vs the button?",
+      "range": {
+        "startLine": 370,
+        "startChar": 43,
+        "endLine": 370,
+        "endChar": 64
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12cfbcb_34e31ae9",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "I think you can remove this Use2016Q2UI clause and get them the essence of what they wanted with it. Show them a screenshot of it, at least?",
+      "range": {
+        "startLine": 646,
+        "startChar": 6,
+        "endLine": 646,
+        "endChar": 17
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a324414_12e8758d",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "Just going to register my annoyance that this method is nearly-duplicated three times, but you don\u0027t have to fix it in this patch.",
+      "range": {
+        "startLine": 679,
+        "startChar": 34,
+        "endLine": 679,
+        "endChar": 55
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf0335d_bd140929",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-08T01:50:09Z",
+      "side": 1,
+      "message": "if (Use2016Q2UI) { ... } else { ... }\n\n(and below)",
+      "range": {
+        "startLine": 710,
+        "startChar": 7,
+        "endLine": 710,
+        "endChar": 18
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
