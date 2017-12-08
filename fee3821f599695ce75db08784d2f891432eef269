@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ae3b9a58_b95f768a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:07:58Z",
+      "side": 1,
+      "message": "Got it.  I\u0027d like this comment (since it\u0027s in the implementation) to acknowledge the possibility of attaching files directly as well as through AttachFileForUpload() (since I now think of AttachFileForUpload() as a convenience method that the consumer could choose to use or not).  Maybe \"Files must eventually be sent to the network service via a DataElement of type TYPE_RAW_FILE as the network service cannot open files.\"  I think that\u0027s enough, but you could optionally add \"The consumer may produce this data element by use of AttachFileForUpload with a file path.\" or something like that.",
+      "parentUuid": "bd82ddb4_81b2f251",
+      "range": {
+        "startLine": 772,
+        "startChar": 39,
+        "endLine": 772,
+        "endChar": 41
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ffb2d69_a08e8578",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "fee3821f599695ce75db08784d2f891432eef269",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d34b02_6833209c",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:07:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "208a3490_bf8c9982",
+      "range": {
+        "startLine": 777,
+        "startChar": 31,
+        "endLine": 777,
+        "endChar": 38
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "This will use ResourceRequest-\u003eDataElement.  The problem is that I want to pass in a base::File to the network service (Can\u0027t do it yet, but this will do it eventually).  So something needs to open the base::File.  This can\u0027t be done on the UI thread, or the IO thread.\n\nRather than having a bunch of consumers jump over to another thread, this will handle that logic for them, though I\u0027ll still allow base::Files to be attached as DataElements directly, just not base::FilePaths.\n\nMoreover, base::Files can\u0027t be destroyed on a thread that doesn\u0027t allow blocking IO, so I\u0027ll also need to post a task to delete the ResourceRequest offthread, if it has one (Regardless of whether this method was used to attach a file or not).",
       "parentUuid": "18781b6b_f5daf000",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ddee43_4a08525b",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:07:58Z",
+      "side": 1,
+      "message": "\u003e This will use ResourceRequest-\u003eDataElement.  The problem is that I want to pass in a base::File to the network service (Can\u0027t do it yet, but this will do it eventually).  So something needs to open the base::File.  This can\u0027t be done on the UI thread, or the IO thread.\n\n\u003e Rather than having a bunch of consumers jump over to another thread, this will handle that logic for them, \n\nAh, gotcha.  How would you feel about commenting something like \"This is a helper method so that consumer won\u0027t need to open the file (with related thread hopping) themselves\"?  (I\u0027m not wedded to that, I just think it helps frame the context for the method and how it\u0027s expected to be used.)\n\nI\u0027d also keep an eye on how often consumers of this interface have to open files themselves; I find myself wondering if an async helper function to convert a base::FilePath -\u003e base::File wouldn\u0027t be a better way to address this use case.  (It\u0027s more general, but I consider that a minus unless the generality would actually be used.)\n\n\u003e though I\u0027ll still allow base::Files to be attached as DataElements directly, just not base::FilePaths.\n\nCould the Create() method have documentation on what DataElements are ok and what not?\n\n\u003e Moreover, base::Files can\u0027t be destroyed on a thread that doesn\u0027t allow blocking IO, so I\u0027ll also need to post a task to delete the ResourceRequest offthread, if it has one (Regardless of whether this method was used to attach a file or not).\n\nAck.  Where is the documentation that base::Files attached to DataElements for upload will be deleted by the request processing?  I presume that\u0027s pre-existing, but it wasn\u0027t obvious to me just based on this function.",
+      "parentUuid": "eee81c8f_09a59e0e",
       "range": {
         "startLine": 180,
         "startChar": 5,
