@@ -1079,6 +1079,10 @@ monochrome_public_apk_tmpl("monochrome_public_apk") {
   android_manifest_dep = ":monochrome_public_android_manifest"
   apk_name = "MonochromePublic"
 
+  # Whitelist resources used by the webview part of monochrome to only mark
+  # those as non-final and set their package id at runtime.
+  shared_resources_whitelist_target = "//android_webview:system_webview_apk"
+
   deps = [
     ":monochrome_java",
     "//base:base_java",

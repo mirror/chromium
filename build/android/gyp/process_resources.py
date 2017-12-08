@@ -130,6 +130,11 @@ def _ParseArgs(args):
       '--app-as-shared-lib',
       action='store_true',
       help='Make a resource package that can be loaded as shared library.')
+  parser.add_option(
+      '--shared-resources-whitelist',
+      help='An R.txt file acting as a whitelist for resources that should be '
+      'non-final and have their package id changed at runtime in R.java. All '
+      'resources are to be included if no whitelist is provided.')
 
   parser.add_option('--resource-dirs',
                     default='[]',
@@ -839,11 +844,13 @@ def main(args):
   if options.apk_path:
     input_strings.extend(_CreatePackageApkArgs(options))
 
-  input_paths = [
+  possible_input_paths = [
     options.aapt_path,
     options.android_manifest,
     options.android_sdk_jar,
+    options.shared_resources_whitelist,
   ]
+  input_paths = [x for x in possible_input_paths if x]
   input_paths.extend(options.dependencies_res_zips)
   input_paths.extend(options.extra_r_text_files)
 
