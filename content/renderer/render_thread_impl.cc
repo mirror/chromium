@@ -2007,6 +2007,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   viz::ClientLayerTreeFrameSink::InitParams params;
+  params.compositor_task_runner = compositor_task_runner_;
   params.enable_surface_synchronization =
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
