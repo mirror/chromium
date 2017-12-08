@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d10f6a9_5796721b",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-08T17:54:30Z",
+      "side": 1,
+      "message": "This is only a wrapper for ImageData(IntSize, ImageDataColorSettings). IMHO we don\u0027t need to repeat the previous tests for this.",
+      "parentUuid": "08f81b7f_79328b13",
+      "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc375198_ec3af301",
         "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T16:01:19Z",
       "side": 1,
       "message": "Where do you plan to use this Create function? Note that this call PaintImageForCurrentFrame() function in AcceleratedStaticBitmapImage will convert TextureHolder to SkiaHolder; so a call to this, immediately followed with some other calls like Transfer() will cause unnecessary conversion.",
+      "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5502877f_380e8efc",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-08T17:54:30Z",
+      "side": 1,
+      "message": "This is unavoidable. To create an ImageData we need to access the stored pixels and IMHO with the current StatiBitmapImage API this can be done only using the internal SkImage object, unless there is another way that I\u0027m unaware of.",
+      "parentUuid": "cc375198_ec3af301",
       "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8d9d2afc_4b6e9a09",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-08T17:54:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e3cc11f_11f10334",
+      "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c48054e_79c91e30",
         "filename": "third_party/WebKit/Source/core/html/ImageDataTest.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb54395_0539b368",
+        "filename": "third_party/WebKit/Source/core/html/ImageDataTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-12-08T17:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c48054e_79c91e30",
+      "revId": "162e95cc74281593d858fb02827ca6e9c2a0018e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
