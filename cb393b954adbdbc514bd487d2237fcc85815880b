@@ -16,6 +16,92 @@
       "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e3288d_ab79146d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/zero-rowspan-002-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-08T14:18:33Z",
+      "side": 1,
+      "message": "Makes sense to me as well to keep it under css/",
+      "parentUuid": "ee5126ed_d122e99c",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d87ac44_81f9b1f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables/zero-rowspan-002.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-08T14:18:33Z",
+      "side": 1,
+      "message": "Did you really mean to put \"2\" outside any table cell?",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d1a57f_be60849b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-08T14:18:33Z",
+      "side": 1,
+      "message": "Just wondering if this method name should have some sort of qualifier too. ResolvedRowSpan()?",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b6025a_5e4f8aa6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-08T14:18:33Z",
+      "side": 1,
+      "message": "DCHECK that !NeedsSectionRecalc()?",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae7d4a6_ba63185f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-08T14:18:33Z",
+      "side": 1,
+      "message": "Why do you need this? rowspan\u003d0 never affects the number of rows, does it?",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
