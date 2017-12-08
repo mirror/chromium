@@ -29,6 +29,38 @@ const char* SSLErrorNavigationThrottle::GetNameForLogging() {
 }
 
 content::NavigationThrottle::ThrottleCheckResult
+SSLErrorNavigationThrottle::WillProcessResponse() {
+  DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kCommittedInterstitials));
+  content::NavigationHandle* handle = navigation_handle();
+  // If there was no certificate error, SSLInfo will be empty.
+  int cert_status = handle->GetSSLInfo().cert_status;
+  if (!net::IsCertStatusError(cert_status) ||
+      net::IsCertStatusMinorError(cert_status)) {
+    return content::NavigationThrottle::PROCEED;
+  }
+
+  // LOG(ERROR) << "there's a certificate error";
+  // return content::NavigationThrottle::PROCEED;
+  // We don't know whether SSLErrorHandler will call the ShowInterstitial()
+  // callback synchronously, so we post a task that will run after this function
+  // defers the navigation. This ensures that ShowInterstitial() can always
+  // safely call CancelDeferredNavigation().
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          std::move(handle_ssl_error_callback_), handle->GetWebContents(),
+          net::MapCertStatusToNetError(cert_status), handle->GetSSLInfo(),
+          handle->GetURL(), false, std::move(ssl_cert_reporter_),
+          base::Callback<void(content::CertificateRequestResultType)>(),
+          base::BindOnce(&SSLErrorNavigationThrottle::ShowInterstitial,
+                         weak_ptr_factory_.GetWeakPtr())));
+
+  return content::NavigationThrottle::ThrottleCheckResult(
+      content::NavigationThrottle::DEFER);
+}
+
+content::NavigationThrottle::ThrottleCheckResult
 SSLErrorNavigationThrottle::WillFailRequest() {
   DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kCommittedInterstitials));

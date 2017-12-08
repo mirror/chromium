@@ -51,6 +51,7 @@ class SSLErrorNavigationThrottle : public content::NavigationThrottle {
 
   // content::NavigationThrottle:
   ThrottleCheckResult WillFailRequest() override;
+  ThrottleCheckResult WillProcessResponse() override;
   const char* GetNameForLogging() override;
 
  private:

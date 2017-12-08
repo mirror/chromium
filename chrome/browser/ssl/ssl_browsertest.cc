@@ -812,6 +812,17 @@ class SSLUITest : public InProcessBrowserTest {
                                  https_server_.GetURL(replacement_path));
   }
 
+  const extensions::Extension* InstallTestBookmarkApp(const GURL& app_url) {
+    WebApplicationInfo web_app_info;
+    web_app_info.app_url = app_url;
+    web_app_info.scope = app_url.GetWithoutFilename();
+    web_app_info.title = base::UTF8ToUTF16("Test app");
+    web_app_info.description = base::UTF8ToUTF16("Test description");
+
+    return extensions::browsertest_util::InstallBookmarkApp(
+        browser()->profile(), web_app_info);
+  }
+
  private:
   typedef net::SpawnedTestServer::SSLOptions SSLOptions;
 
@@ -1289,6 +1300,45 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
             tab->GetVisibleURL());
 }
 
+// Visits a page with https error and proceed. Then open app and proceed.
+IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
+                       HTTPSExpiredCertAndProceedInAppProceed) {
+  auto feature_list = base::MakeUnique<base::test::ScopedFeatureList>();
+  feature_list->InitAndEnableFeature(features::kDesktopPWAWindowing);
+
+  ASSERT_TRUE(https_server_expired_.Start());
+
+  const GURL app_url = https_server_expired_.GetURL("/ssl/google.html");
+  const extensions::Extension* app = InstallTestBookmarkApp(app_url);
+
+  // Go through the interstitial in a regular browser tab.
+  ui_test_utils::NavigateToURL(browser(), app_url);
+
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  WaitForInterstitial(tab);
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::SHOWING_INTERSTITIAL);
+
+  ProceedThroughInterstitial(tab);
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::NONE);
+
+  // Launch app and wait for it to load.
+  Profile* profile = browser()->profile();
+  ui_test_utils::UrlLoadObserver url_observer(
+      app_url, content::NotificationService::AllSources());
+  Browser* app_browser =
+      extensions::browsertest_util::LaunchAppBrowser(profile, app);
+  url_observer.Wait();
+
+  // Apps are not allowed to have SSL errors, so the interstitial should be
+  // showing even though the user proceeded through it in a regular tab.
+  WebContents* app_tab = app_browser->tab_strip_model()->GetActiveWebContents();
+  WaitForInterstitial(app_tab);
+  CheckAuthenticationBrokenState(app_tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::SHOWING_INTERSTITIAL);
+}
+
 // Visits a page in an app window with https error and proceed:
 IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
                        InAppTestHTTPSExpiredCertAndProceed) {
@@ -1298,19 +1348,12 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
   ASSERT_TRUE(https_server_expired_.Start());
   Profile* profile = browser()->profile();
 
-  // Install app.
-  WebApplicationInfo web_app_info;
-  web_app_info.app_url = https_server_expired_.GetURL("/ssl/google.html");
-  web_app_info.scope = https_server_expired_.GetURL("/ssl/");
-  web_app_info.title = base::UTF8ToUTF16("Test app");
-  web_app_info.description = base::UTF8ToUTF16("Test description");
-
-  const extensions::Extension* app =
-      extensions::browsertest_util::InstallBookmarkApp(profile, web_app_info);
+  const GURL app_url = https_server_expired_.GetURL("/ssl/google.html");
+  const extensions::Extension* app = InstallTestBookmarkApp(app_url);
 
   // Launch app and wait for it to load.
   ui_test_utils::UrlLoadObserver url_observer(
-      web_app_info.app_url, content::NotificationService::AllSources());
+      app_url, content::NotificationService::AllSources());
   Browser* app_browser =
       extensions::browsertest_util::LaunchAppBrowser(profile, app);
   url_observer.Wait();
@@ -1338,8 +1381,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITestTransientAndCommitted,
 
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
                                  AuthState::NONE);
-  EXPECT_EQ(https_server_expired_.GetURL("/ssl/google.html"),
-            tab->GetVisibleURL());
+  EXPECT_EQ(app_url, tab->GetVisibleURL());
 }
 
 // Visits a page with https error and don't proceed (and ensure we can still
