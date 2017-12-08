@@ -137,6 +137,11 @@ void LoginScreenController::SetDevChannelInfo(
   }
 }
 
+void LoginScreenController::IsAuthenticating(
+    IsAuthenticatingCallback callback) {
+  std::move(callback).Run(is_authenticating_);
+}
+
 void LoginScreenController::AuthenticateUser(const AccountId& account_id,
                                              const std::string& password,
                                              bool authenticated_by_pin,
@@ -302,8 +307,8 @@ void LoginScreenController::DoAuthenticateUser(const AccountId& account_id,
 void LoginScreenController::OnAuthenticateComplete(
     OnAuthenticateCallback callback,
     bool success) {
-  is_authenticating_ = false;
   std::move(callback).Run(success);
+  is_authenticating_ = false;
 }
 
 void LoginScreenController::OnGetSystemSalt(PendingDoAuthenticateUser then,

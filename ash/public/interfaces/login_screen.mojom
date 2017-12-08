@@ -78,6 +78,9 @@ interface LoginScreen {
   SetDevChannelInfo(string os_version_label_text,
                     string enterprise_info_text,
                     string bluetooth_name);
+
+  // Check if there's an authentication in progress.   
+  IsAuthenticating() => (bool is_authenticating);
 };
 
 // Allows ash lock screen to control a client (e.g. Chrome browser). Requests
