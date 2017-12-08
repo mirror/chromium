@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080af508_0595fc34",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "Can you outline why this code lives here? AFAICT it doesn\u0027t relate to the rest of the code in this class and the implementation doesn\u0027t use anything in this class either.",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf7d472_bf675676",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "Please use more descriptive names for your functions. Also, add comments.",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf87974b_5b975b9c",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "Why do you need for the flush to finish? Can\u0027t you execute them all at once?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78232c9_25896a11",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "The use of a callback here makes this code harder to follow? Why not move it all to application_lifetime_chromeos?",
+      "range": {
+        "startLine": 38,
+        "startChar": 46,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f1e7c0_46bc5da1",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "Generally namespaces are based on directory or file name. flush_on_exit is neither of these.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e290a8_10451c1f",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:43:12Z",
+      "side": 1,
+      "message": "Can the chromeos specific parts be moved into their file? Perhaps application_lifetime_chromeos?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
