@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b8fb2b_514eab69",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 55
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-08T20:26:31Z",
+      "side": 1,
+      "message": "We can run tests with and without swizzling. If we run a single tests that requires swizzling, it will never un-swizzled again. As the result, the subsequent tests will run with swizzled NSURLSession.",
+      "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04028c89_1cf43c78",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 55
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-08T20:26:31Z",
+      "side": 1,
+      "message": "Is there a guarantee that if this method is called then didFinishCollectingMetrics is always called too? If not, we may never remove an entry in the map that is added by  g_metrics_delegate-\u003eOnStartNetRequest().",
+      "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
