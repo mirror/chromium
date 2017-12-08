@@ -433,6 +433,24 @@
       ],
     },
     'chromevox_tests': {},
+    'content_browsertests --mus': {
+      'test': 'content_browsertests',
+      'override_isolate_target': 'content_browsertests',
+      'args': [
+        '--mus',
+        '--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter',
+      ],
+      'swarming': {
+        'shards': 2,
+      },
+    },
+    'content_unittests --mus': {
+      'test': 'content_unittests',
+      'override_isolate_target': 'content_unittests',
+      'args': [
+        '--mus'
+      ],
+    },
     'exo_unittests': {},
     'gl_unittests_ozone': {},
     'mash_browser_tests': {
@@ -458,17 +476,6 @@
       'swarming': {
         'hard_timeout': 1500,
         'shards': 5,
-      },
-    },
-    'content_browsertests --mus': {
-      'test': 'content_browsertests',
-      'override_isolate_target': 'content_browsertests',
-      'args': [
-        '--mus',
-        '--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter',
-      ],
-      'swarming': {
-        'shards': 2,
       },
     },
     'ozone_gl_unittests': {
