@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b826c5d1_85ba31e9",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-08T00:03:09Z",
+      "side": 1,
+      "message": "BTW, we are not really loading anymore.",
+      "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a04bce4_3593a35f",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-08T00:03:09Z",
+      "side": 1,
+      "message": "BTW, do we know if there is still a leak?",
+      "revId": "078e164e44ec0abc4d69e9e5e78ec8233bed7b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
