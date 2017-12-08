@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6f07657c_fe761996",
+        "filename": "chrome/browser/ui/app_list/app_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-08T20:42:26Z",
+      "side": 1,
+      "message": "I\u0027ll use this in the new split up CL, thanks for the recommendation.",
+      "parentUuid": "528a840d_a72f7e21",
+      "revId": "509f6c6b0112b1b8545d2e058f07a6c2b0745c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f703acbb_67d35aa5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -83,6 +101,30 @@
       "writtenOn": "2017-12-08T00:33:56Z",
       "side": 1,
       "message": "This doesn\u0027t sound right.  This isn\u0027t the context menu component, it\u0027s actually about the UI that sourced something.  For example, I\u0027m thinking this histogram suffix might be able to be reused in other UI logging, but no one would discover it with the current name.",
+      "range": {
+        "startLine": 99630,
+        "startChar": 26,
+        "endLine": 99630,
+        "endChar": 46
+      },
+      "revId": "509f6c6b0112b1b8545d2e058f07a6c2b0745c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1f08f3_0a71480d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 99630,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-08T20:42:26Z",
+      "side": 1,
+      "message": "How about AppUIComponent, since these are all different ways we show apps in CrOS.",
+      "parentUuid": "f703acbb_67d35aa5",
       "range": {
         "startLine": 99630,
         "startChar": 26,
@@ -115,6 +157,30 @@
       "revId": "509f6c6b0112b1b8545d2e058f07a6c2b0745c45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f84260_92b1501e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 101157,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-08T20:42:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b46da96_f2622d39",
+      "range": {
+        "startLine": 101157,
+        "startChar": 26,
+        "endLine": 101157,
+        "endChar": 32
+      },
+      "revId": "509f6c6b0112b1b8545d2e058f07a6c2b0745c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
