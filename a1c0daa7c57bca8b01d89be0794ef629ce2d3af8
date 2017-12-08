@@ -342,6 +342,24 @@
     },
     {
       "key": {
+        "uuid": "5e7132fe_79b82979",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T14:52:50Z",
+      "side": 1,
+      "message": "I\u0027m personally leaning towards having this kind of logging, because ONC-related issues can be quite difficult to investigate, and the knowledge of what was logged and what wasn\u0027t can be a big help. Even though the input data comes from the server, there can be misconceptions between client and server or server-side bugs as well (which was pretty much highlighted by the recent issue with the password fields missing in the sent ONC blobs).\n\nAnd I believe the usual concerns about binary size bloating due to logging aren\u0027t considered that important (although I can\u0027t point to any \"official\" statement regarding that).",
+      "parentUuid": "c455ea36_add9f4fc",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a20e735_a6540847",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.h",
         "patchSetId": 5
