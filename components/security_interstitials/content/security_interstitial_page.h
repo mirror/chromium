@@ -35,26 +35,34 @@ class SecurityInterstitialPage : public content::InterstitialPageDelegate {
       std::unique_ptr<SecurityInterstitialControllerClient> controller);
   ~SecurityInterstitialPage() override;
 
-  // Creates an interstitial and shows it.
+  // Creates an interstitial and shows it. This is used for the pre-committed
+  // interstitials code path, when an interstitial is generated as an
+  // overlay. For committed interstitials, use OnReadyToShowHTMLContents() which
+  // prepares the page to be shown but doesn't actually show it, just returning
+  // the HTML contents to the caller to display.
   virtual void Show();
 
   // Prevents creating the actual interstitial view for testing.
   void DontCreateViewForTesting();
 
+  // Sets up the security interstitial page to be shown and returns its HTML
+  // contents for the caller to display.
+  std::string OnReadyToShowHTMLContents();
+
+  // Must be called when the interstitial is closed, to give subclasses a chance
+  // to e.g. update metrics.
+  virtual void OnInterstitialClosing() = 0;
+
+ protected:
   // InterstitialPageDelegate method:
   std::string GetHTMLContents() override;
 
- protected:
   // Returns true if the interstitial should create a new navigation entry.
   virtual bool ShouldCreateNewNavigation() const = 0;
 
   // Populates the strings used to generate the HTML from the template.
   virtual void PopulateInterstitialStrings(
       base::DictionaryValue* load_time_data) = 0;
-
-  // Gives an opportunity for child classes to react to Show() having run. The
-  // interstitial_page_ will now have a value.
-  virtual void AfterShow() {}
 
   virtual int GetHTMLTemplateId();
 
@@ -71,6 +79,8 @@ class SecurityInterstitialPage : public content::InterstitialPageDelegate {
   void UpdateMetricsAfterSecurityInterstitial();
 
  private:
+  void SetUpMetricsOnShow();
+
   // The WebContents with which this interstitial page is
   // associated. Not available in ~SecurityInterstitialPage, since it
   // can be destroyed before this class is destroyed.
