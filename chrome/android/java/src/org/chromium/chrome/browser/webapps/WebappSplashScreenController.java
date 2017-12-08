@@ -18,6 +18,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
+import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.metrics.WebappUma;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
@@ -28,6 +29,9 @@ import org.chromium.net.NetworkChangeNotifier;
 
 /** Shows and hides splash screen. */
 class WebappSplashScreenController extends EmptyTabObserver {
+    // No error.
+    public static final int ERROR_OK = 0;
+
     /** Used to schedule splash screen hiding. */
     private CompositorViewHolder mCompositorViewHolder;
 
@@ -147,21 +151,21 @@ class WebappSplashScreenController extends EmptyTabObserver {
         if (mActivityType == WebappActivity.ACTIVITY_TYPE_WEBAPP) return;
 
         mErrorCode = errorCode;
-
         switch (mErrorCode) {
-            case NetError.ERR_NETWORK_CHANGED:
-                onNetworkChanged(tab);
-                break;
-            case NetError.ERR_INTERNET_DISCONNECTED:
-                onNetworkDisconnected(tab);
-                break;
-            default:
+            case ERROR_OK:
                 if (mOfflineDialog != null) {
                     mOfflineDialog.cancel();
                     mOfflineDialog = null;
                 }
                 break;
+            case NetError.ERR_NETWORK_CHANGED:
+                onNetworkChanged(tab);
+                break;
+            default:
+                onNetworkError(tab, errorCode);
+                break;
         }
+        WebApkUma.recordNetWorkErrorWhenLaunch(-errorCode);
     }
 
     protected boolean canHideSplashScreen() {
@@ -181,7 +185,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
         mAllowReloads = false;
     }
 
-    private void onNetworkDisconnected(final Tab tab) {
+    private void onNetworkError(final Tab tab, int errorCode) {
         if (mOfflineDialog != null || tab.getActivity() == null) return;
 
         final NetworkChangeNotifier.ConnectionTypeObserver observer =
@@ -199,8 +203,8 @@ class WebappSplashScreenController extends EmptyTabObserver {
 
         NetworkChangeNotifier.addConnectionTypeObserver(observer);
         mOfflineDialog = new WebappOfflineDialog();
-        mOfflineDialog.show(
-                tab.getActivity(), mAppName, mActivityType == WebappActivity.ACTIVITY_TYPE_WEBAPK);
+        mOfflineDialog.show(tab.getActivity(), mAppName,
+                mActivityType == WebappActivity.ACTIVITY_TYPE_WEBAPK, errorCode);
     }
 
     /** Sets the splash screen layout and sets the splash screen's title and icon. */
