@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "771f60bc_400f4234",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-08T17:58:07Z",
+      "side": 1,
+      "message": "This should probably have a different error code. The \"major type\" is \"simple value\". These are unsupported simple values.",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 38
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2170d575_00875c63",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -13,6 +36,52 @@
       "writtenOn": "2017-12-07T02:13:20Z",
       "side": 1,
       "message": "Let\u0027s note somewhere that the major type 7 handling only supports simple data types and not floating points numbers.",
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b97995b_dcf21d9f",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-08T17:58:07Z",
+      "side": 1,
+      "message": "Please also test non-floating unsupported simple values in the ranges\n* 0–19\n* 28–30\n* 32–255\n\nIt\u0027d be plausible to pass the 0–19 and 32–255 cases on to the caller, but 28–30 need to be rejected.",
+      "range": {
+        "startLine": 295,
+        "startChar": 21,
+        "endLine": 295,
+        "endChar": 45
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03ea8e9_f41c3f66",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-08T17:58:07Z",
+      "side": 1,
+      "message": "This needs to make sure that the simple value is in range. So, definitely reject values in [25, 31], inclusive, or above 255, and possibly reject any that aren\u0027t among the defined 4.",
+      "range": {
+        "startLine": 87,
+        "startChar": 47,
+        "endLine": 87,
+        "endChar": 56
+      },
       "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
