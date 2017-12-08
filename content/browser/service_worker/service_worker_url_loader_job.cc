@@ -349,6 +349,10 @@ void ServiceWorkerURLLoaderJob::FollowRedirect() {
   NOTIMPLEMENTED();
 }
 
+void ServiceWorkerURLLoaderJob::ProceedWithResponse() {
+  NOTREACHED();
+}
+
 void ServiceWorkerURLLoaderJob::SetPriority(net::RequestPriority priority,
                                             int32_t intra_priority_value) {
   NOTIMPLEMENTED();
