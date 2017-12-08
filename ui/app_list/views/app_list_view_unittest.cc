@@ -944,8 +944,8 @@ TEST_F(AppListViewFocusTest, CtrlASelectsAllTextInSearchbox) {
             search_box_view()->search_box()->GetSelectedRange());
 }
 
-// Tests that the first search result's view is always selected after search
-// results are updated, but the focus is always on search box.
+// Tests that the first search result's view is selected after search results
+// are updated when the focus is on search box.
 TEST_F(AppListViewFocusTest, FirstResultSelectedAfterSearchResultsUpdated) {
   Show();
 
@@ -984,6 +984,43 @@ TEST_F(AppListViewFocusTest, FirstResultSelectedAfterSearchResultsUpdated) {
   // Clear up all search results.
   SetUpSearchResults(0, 0, false);
   EXPECT_EQ(search_box_view()->search_box(), focused_view());
+  EXPECT_EQ(nullptr,
+            contents_view()->search_results_page_view()->first_result_view());
+}
+
+// Tests that the first search result's view is not selected after search
+// results are updated when the focus is on one of the search result ( This
+// happens when the user quickly hits Tab key after typing query and before
+// search results are updated for the new query).
+TEST_F(AppListViewFocusTest, FirstResultNotSelectedAfterQuicklyHittingTab) {
+  Show();
+
+  // Type something in search box to transition to HALF state and populate
+  // fake list results.
+  search_box_view()->search_box()->InsertText(base::UTF8ToUTF16("test1"));
+  const int kListResults = 2;
+  SetUpSearchResults(0, kListResults, false);
+  const views::View* results_container =
+      contents_view()
+          ->search_result_list_view_for_test()
+          ->results_container_for_test();
+  EXPECT_EQ(search_box_view()->search_box(), focused_view());
+  EXPECT_EQ(results_container->child_at(0),
+            contents_view()->search_results_page_view()->first_result_view());
+
+  // Type something else.
+  search_box_view()->search_box()->InsertText(base::UTF8ToUTF16("test2"));
+
+  // Simulate hitting Tab key to move focus to the first result before search
+  // results are updated.
+  SimulateKeyPress(ui::VKEY_TAB, false);
+  SimulateKeyPress(ui::VKEY_TAB, false);
+  EXPECT_EQ(results_container->child_at(0), focused_view());
+
+  // Update search results and add tile results.
+  const int kTileResults = 3;
+  SetUpSearchResults(kTileResults, kListResults, false);
+  EXPECT_EQ(results_container->child_at(0), focused_view());
   EXPECT_EQ(nullptr,
             contents_view()->search_results_page_view()->first_result_view());
 }
