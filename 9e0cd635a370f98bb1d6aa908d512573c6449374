@@ -52,6 +52,24 @@
       "revId": "9e0cd635a370f98bb1d6aa908d512573c6449374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6865fb63_9bc05e79",
+        "filename": "base/synchronization/waitable_event_watcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-08T12:23:52Z",
+      "side": 1,
+      "message": "Solved by delaying the initialization of the watcher",
+      "parentUuid": "f3f37456_11eafa5c",
+      "revId": "9e0cd635a370f98bb1d6aa908d512573c6449374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
