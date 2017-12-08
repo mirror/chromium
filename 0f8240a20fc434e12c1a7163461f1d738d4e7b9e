@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "623fc8d9_8ffbbad9",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef8c3c9_995ae992",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e09f2f8_f0f58421",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf94fc9_09bbafe7",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e09f2f8_f0f58421",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e5168109_de6c2564",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db80b95c_027052d3",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47d33ab4_a6f8e923",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2c5f2877_1a063842",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "As I understand it, this method can be called multiple times. I changed web_contents_ to unique_ptr for pointer clean up.",
+      "parentUuid": "47d33ab4_a6f8e923",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ccf66c1_5cf1312c",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 13
@@ -84,6 +156,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44acfdc_25e849a6",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Removed DCHECKs. \nI am not 100% sure assist_ranker_service cannot be nullptr, so I added a safeguard condition on the pointer.",
+      "parentUuid": "9ccf66c1_5cf1312c",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "c702d19d_7b8d5844",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Made it a unique_ptr.",
+      "parentUuid": "e07b84ef_a23b6b7c",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06225249_fc182026",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
         "patchSetId": 13
@@ -169,6 +277,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3f3ea9_0e55eb7d",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06225249_fc182026",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "7502ed5e_4bc66b0f",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1492649c_1ee2da3a",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a57c35_ca0e36bd",
         "filename": "components/assist_ranker/assist_ranker_service_impl.cc",
         "patchSetId": 13
@@ -203,6 +347,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7215a12_dfed044e",
+        "filename": "components/assist_ranker/assist_ranker_service_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a57c35_ca0e36bd",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "20d04969_fb0af4eb",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e7da587_fb5ea5f0",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082ac0ff_2f1e0627",
         "filename": "components/assist_ranker/base_predictor.cc",
         "patchSetId": 13
@@ -237,6 +417,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb4e4df_b05576a4",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082ac0ff_2f1e0627",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "cf4f0e21_fa26b43d",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91903b79_9d79649a",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4b7a65_5e0e4651",
         "filename": "components/assist_ranker/base_predictor.cc",
         "patchSetId": 13
@@ -271,6 +487,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce05ad3_f5e355c4",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4b7a65_5e0e4651",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +525,24 @@
     },
     {
       "key": {
+        "uuid": "f5bbe3fb_a0326ce7",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11b28d0b_b0bfb4d9",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c3ad72_9087969a",
         "filename": "components/assist_ranker/base_predictor.cc",
         "patchSetId": 13
@@ -305,6 +557,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722b6352_9bbb6bcb",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Agreed, but I still want to make it clear to the reader. I moved the comment up and removed the reset.",
+      "parentUuid": "c1c3ad72_9087969a",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +595,24 @@
     },
     {
       "key": {
+        "uuid": "c1b51e12_3f0615c8",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253a9651_c5fa66dc",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7791bf8e_7ff1d5f1",
         "filename": "components/assist_ranker/base_predictor.h",
         "patchSetId": 13
@@ -339,6 +627,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432948f_baa0edea",
+        "filename": "components/assist_ranker/base_predictor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done, and removed the default assignment in constructor.",
+      "parentUuid": "7791bf8e_7ff1d5f1",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +665,24 @@
     },
     {
       "key": {
+        "uuid": "76710ec0_b976a839",
+        "filename": "components/assist_ranker/base_predictor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc5c78d_9d0d56d9",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "825dd45c_d519221a",
         "filename": "components/assist_ranker/binary_classifier_predictor.cc",
         "patchSetId": 13
@@ -373,6 +697,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba801bd_a3d15231",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "It does fit on the previous line, but this is how \u0027git cl format\u0027 formats it.",
+      "parentUuid": "825dd45c_d519221a",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +735,24 @@
     },
     {
       "key": {
+        "uuid": "44c993a2_03c0a393",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "make_unique does not work with private constructors.",
+      "parentUuid": "622fc8c3_9953580d",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5bf32d_5778590d",
         "filename": "components/assist_ranker/binary_classifier_predictor.cc",
         "patchSetId": 13
@@ -407,6 +767,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c4e248_e0035605",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5bf32d_5778590d",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +805,24 @@
     },
     {
       "key": {
+        "uuid": "9cb434d8_cf2d416a",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b639508a_b9b6e2a9",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88d7337_7eb0abe2",
         "filename": "components/assist_ranker/binary_classifier_predictor.cc",
         "patchSetId": 13
@@ -441,6 +837,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ad6519_d9011c0b",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Added WARN_UNUSED_RESULT.",
+      "parentUuid": "e88d7337_7eb0abe2",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -467,6 +881,30 @@
     },
     {
       "key": {
+        "uuid": "6ad0a9bf_bccc1e9d",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333214ff_665ccf45",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 7
+      },
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bedbede0_5dbeb3d0",
         "filename": "components/assist_ranker/binary_classifier_predictor.h",
         "patchSetId": 13
@@ -481,6 +919,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5aeb037_a2c606dc",
+        "filename": "components/assist_ranker/binary_classifier_predictor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bedbede0_5dbeb3d0",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -501,6 +957,24 @@
     },
     {
       "key": {
+        "uuid": "026a7ffe_cb76793e",
+        "filename": "components/assist_ranker/binary_classifier_predictor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7a517f_c4197cbf",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cee1e5c_1fa48c65",
         "filename": "components/assist_ranker/binary_classifier_predictor_unittest.cc",
         "patchSetId": 13
@@ -515,6 +989,24 @@
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eee2304_64c3b204",
+        "filename": "components/assist_ranker/binary_classifier_predictor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "doesn\u0027t work for private constructor.",
+      "parentUuid": "7cee1e5c_1fa48c65",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -535,6 +1027,24 @@
     },
     {
       "key": {
+        "uuid": "ad7740c3_66d777b9",
+        "filename": "components/assist_ranker/generic_logistic_regression_inference.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5aa71e9_c73f30ad",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19c85f2f_dc9e4d22",
         "filename": "components/assist_ranker/predictor_config.h",
         "patchSetId": 13
@@ -546,6 +1056,24 @@
       "writtenOn": "2017-12-08T01:46:08Z",
       "side": 1,
       "message": "extern here and define it in a source file.\n\nThat said, this probably creates static constructor/destructor code.\n\nInstead add a getter like so...\n\nconst base::flat_set\u003cstd::string\u0026\u003e GetEmptyWhitelist() {\n  static auto\u0026 whitelist \u003d *(new base::flat_set\u003cstd::string\u003e());  // Leaked on shutdown.\n  return whitelist;\n}\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables",
+      "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25842e0_70c57c82",
+        "filename": "components/assist_ranker/predictor_config.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-08T20:04:50Z",
+      "side": 1,
+      "message": "Done. Implemented it so the function returns a pointer to the static list.\nCan you explain a bit more what you mean by \"Leaked on shutdown.\"?\nAlso, why do you suggest string refs? Or is it a typo?",
+      "parentUuid": "19c85f2f_dc9e4d22",
       "revId": "0f8240a20fc434e12c1a7163461f1d738d4e7b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
