@@ -34,6 +34,24 @@
       "revId": "44a83d1de950065d946c6f37249e89a3abae41cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b631274d_6741f66f",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 7029,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-08T22:49:16Z",
+      "side": 0,
+      "message": "SGTM",
+      "parentUuid": "37233628_9f838dd6",
+      "revId": "44a83d1de950065d946c6f37249e89a3abae41cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
