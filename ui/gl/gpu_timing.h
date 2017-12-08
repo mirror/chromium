@@ -132,6 +132,7 @@ class GL_EXPORT GPUTimingClient
   bool IsAvailable();
 
   const char* GetTimerTypeName() const;
+  GPUTiming::TimerType timer_type() const { return timer_type_; }
 
   // CheckAndResetTimerErrors has to be called before reading timestamps
   // from GPUTimers instances and after making sure all the timers
