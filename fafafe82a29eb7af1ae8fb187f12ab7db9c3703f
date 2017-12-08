@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422d4edc_c7e37663",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:00:57Z",
+      "side": 1,
+      "message": "Note: empty is recommended here.\nhttps://www.chromium.org/developers/chromium-string-usage",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186e4176_0c60e590",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:00:57Z",
+      "side": 1,
+      "message": "Removed PostTask for simplicity, because this is already the callback of asynchronous operation initiated by Mount().",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72808dc4_57dccc1c",
+        "filename": "chromeos/dbus/fake_cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T16:00:57Z",
+      "side": 1,
+      "message": "Note: renamed for consistency with other Client implementation, such as FakeCryptohomeClient or FakeSessionManagerClient.",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
