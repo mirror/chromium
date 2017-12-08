@@ -3727,6 +3727,9 @@ crbug.com/791941 [ Mac ] virtual/gpu-rasterization/images/color-profile-clip.htm
 crbug.com/791941 [ Mac ] virtual/gpu-rasterization/images/color-profile-munsell-adobe-to-srgb.html [ Pass Failure ]
 crbug.com/791941 [ Mac ] virtual/gpu-rasterization/images/color-profile-munsell-srgb-to-srgb.html [ Pass Failure ]
 
+crbug.com/740094 external/wpt/hr-time/performance-tojson.html [ Failure ]
+crbug.com/740094 external/wpt/longtask-timing/longtask-tojson.html [ Failure ]
+
 # These tests fail often on Linux. https://crbug.com/790549
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-cross-origin-feature-policy-delegation.html [ Failure Pass Timeout ]
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-cross-origin-feature-policy-disabled.html [ Failure Pass Timeout ]

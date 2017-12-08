@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+
+test(() => {
+  // Check Performance attributes.
+  assert_equals(typeof(performance.toJSON), 'function');
+  const json = performance.toJSON();
+  assert_equals(typeof(json), 'object');
+  assert_equals(json.timeOrigin, performance.timeOrigin);
+
+  // Check PerformanceTiming toJSON.
+  const jsonTiming = json.timing;
+  const timing = performance.timing;
+  assert_equals(typeof(timing.toJSON), 'function');
+  const json2 = timing.toJSON();
+  assert_equals(typeof(json2), 'object');
+  // Check PerformanceTiming attributes, from both:
+  // 1) |jsonTiming| from  Performance.
+  // 2) |json2| from PerformanceTiming.
+  assert_equals(jsonTiming.navigationStart, timing.navigationStart);
+  assert_equals(json2.navigationStart, timing.navigationStart);
+  assert_equals(jsonTiming.unloadEventStart, timing.unloadEventStart);
+  assert_equals(json2.unloadEventStart, timing.unloadEventStart);
+  assert_equals(jsonTiming.unloadEventEnd, timing.unloadEventEnd);
+  assert_equals(json2.unloadEventEnd, timing.unloadEventEnd);
+  assert_equals(jsonTiming.redirectStart, timing.redirectStart);
+  assert_equals(json2.redirectStart, timing.redirectStart);
+  assert_equals(jsonTiming.redirectEnd, timing.redirectEnd);
+  assert_equals(json2.redirectEnd, timing.redirectEnd);
+  assert_equals(jsonTiming.fetchStart, timing.fetchStart);
+  assert_equals(json2.fetchStart, timing.fetchStart);
+  assert_equals(jsonTiming.domainLookupStart, timing.domainLookupStart);
+  assert_equals(json2.domainLookupStart, timing.domainLookupStart);
+  assert_equals(jsonTiming.domainLookupEnd, timing.domainLookupEnd);
+  assert_equals(json2.domainLookupEnd, timing.domainLookupEnd);
+  assert_equals(jsonTiming.connectStart, timing.connectStart);
+  assert_equals(json2.connectStart, timing.connectStart);
+  assert_equals(jsonTiming.connectEnd, timing.connectEnd);
+  assert_equals(json2.connectEnd, timing.connectEnd);
+  assert_equals(jsonTiming.secureConnectionStart, timing.secureConnectionStart);
+  assert_equals(json2.secureConnectionStart, timing.secureConnectionStart);
+  assert_equals(jsonTiming.requestStart, timing.requestStart);
+  assert_equals(json2.requestStart, timing.requestStart);
+  assert_equals(jsonTiming.responseStart, timing.responseStart);
+  assert_equals(json2.responseStart, timing.responseStart);
+  assert_equals(jsonTiming.responseEnd, timing.responseEnd);
+  assert_equals(json2.responseEnd, timing.responseEnd);
+  assert_equals(jsonTiming.domLoading, timing.domLoading);
+  assert_equals(json2.domLoading, timing.domLoading);
+  assert_equals(jsonTiming.domInteractive, timing.domInteractive);
+  assert_equals(json2.domInteractive, timing.domInteractive);
+  assert_equals(jsonTiming.domContentLoadedEventStart, timing.domContentLoadedEventStart);
+  assert_equals(json2.domContentLoadedEventStart, timing.domContentLoadedEventStart);
+  assert_equals(jsonTiming.domContentLoadedEventEnd, timing.domContentLoadedEventEnd);
+  assert_equals(json2.domContentLoadedEventEnd, timing.domContentLoadedEventEnd);
+  assert_equals(jsonTiming.domComplete, timing.domComplete);
+  assert_equals(json2.domComplete, timing.domComplete);
+  assert_equals(jsonTiming.loadEventStart, timing.loadEventStart);
+  assert_equals(json2.loadEventStart, timing.loadEventStart);
+  assert_equals(jsonTiming.loadEventEnd, timing.loadEventEnd);
+  assert_equals(json2.loadEventEnd, timing.loadEventEnd);
+
+  // Check PerformanceNavigation toJSON.
+  const jsonNavigation = json.navigation;
+  const navigation = performance.navigation;
+  assert_equals(typeof(navigation.toJSON), 'function');
+  const json3 = navigation.toJSON();
+  assert_equals(typeof(json3), 'object');
+  // Check PerformanceNavigation attributes, from both:
+  // 1) |jsonNavigation| from  Performance.
+  // 2) |json3| from PerformanceNavigation.
+  assert_equals(jsonNavigation.type, navigation.type);
+  assert_equals(json3.type, navigation.type);
+  assert_equals(jsonNavigation.redirectCount, navigation.redirectCount);
+  assert_equals(json3.redirectCount, navigation.redirectCount);
+}, 'Test performance.toJSON()');
+</script>
+</body>
+</html>

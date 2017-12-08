@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+  const img_url = "resources/blue.png";
+  const img = document.createElement("img");
+  img.src = img_url;
+  window.onload = function() {
+    test(() => {
+      const entries = performance.getEntriesByType('resource');
+      assert_greater_than_equal(entries.length, 1);
+      const entry = entries[0];
+      assert_equals(typeof(entry.toJSON), 'function');
+      const json = entry.toJSON();
+      assert_equals(typeof(json), 'object');
+      // Check attributes inheritted from PerformanceEntry.
+      assert_equals(json.name, entry.name);
+      assert_equals(json.entryType, entry.entryType);
+      assert_equals(json.startTime, entry.startTime);
+      assert_equals(json.duration, entry.duration);
+
+      // Check PerformanceResourceTiming specific entries.
+      assert_equals(json.initiatorType, entry.initiatorType);
+      assert_equals(json.nextHopProtocol, entry.nextHopProtocol);
+      assert_equals(json.workerStart, entry.workerStart);
+      assert_equals(json.redirectStart, entry.redirectStart);
+      assert_equals(json.fetchStart, entry.fetchStart);
+      assert_equals(json.domainLookupStart, entry.domainLookupStart);
+      assert_equals(json.domainLookupEnd, entry.domainLookupEnd);
+      assert_equals(json.connectStart, entry.connectStart);
+      assert_equals(json.connectEnd, entry.connectEnd);
+      assert_equals(json.secureConnectionStart, entry.secureConnectionStart);
+      assert_equals(json.requestStart, entry.requestStart);
+      assert_equals(json.responseStart, entry.responseStart);
+      assert_equals(json.responseEnd, entry.responseEnd);
+      assert_equals(json.transferSize, entry.transferSize);
+      assert_equals(json.encodedBodySize, entry.encodedBodySize);
+      assert_equals(json.decodedBodySize, entry.decodedBodySize);
+    }, 'Test toJSON() in PerformanceResourceTiming');
+  };
+</script>
+</body>
+</html>
