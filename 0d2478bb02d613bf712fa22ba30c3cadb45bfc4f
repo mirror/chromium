@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "855496bb_092af4be",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "6127278e_14c0ac43",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002f0ce8_def1043e",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 9
@@ -50,6 +68,24 @@
       "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ea811a_5b01c5b1",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "002f0ce8_def1043e",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "3590905e_61936263",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "928d2471_8503d54d",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afff3795_c724da78",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 9
@@ -84,6 +138,24 @@
       "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db036fda_d91c0c34",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "afff3795_c724da78",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "f36ab0b9_a90a188a",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "Ok, I suspect this is probably \u0027good enough\u0027, although I haven\u0027t checked whether it adheres exactly to the JS spec for float equality.",
+      "parentUuid": "84256b71_4de633d0",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8030e5a_ebedf6cd",
         "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
         "patchSetId": 9
@@ -118,6 +208,24 @@
       "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507ddaf2_40df00d8",
+        "filename": "third_party/WebKit/Source/core/animation/Keyframe.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-08T16:58:27Z",
+      "side": 1,
+      "message": "No longer relevant (for this CL).",
+      "parentUuid": "a8030e5a_ebedf6cd",
+      "revId": "0d2478bb02d613bf712fa22ba30c3cadb45bfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
