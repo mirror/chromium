@@ -16,6 +16,24 @@
       "revId": "8020338131f74ff3c2245d810b267777a51afe76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e850d09_d61b81a9",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 36
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-08T11:55:31Z",
+      "side": 0,
+      "message": "I enclosed again.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/648538/33/components/arc/common/BUILD.gn#13",
+      "parentUuid": "0dd21c6d_34b9c212",
+      "revId": "8020338131f74ff3c2245d810b267777a51afe76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

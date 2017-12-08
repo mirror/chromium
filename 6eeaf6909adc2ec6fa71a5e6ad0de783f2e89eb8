@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dae6ebda_92683c71",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-08T11:55:31Z",
+      "side": 1,
+      "message": "Hmm, somehow windows tries to build them. \nWhat is worse, build is failed on windows. https://chromium-review.googlesource.com/c/chromium/src/+/648538/37/components/arc/common/BUILD.gn#49\nhttps://ci.chromium.org/buildbot/tryserver.chromium.win/win-msvc-rel/15986\nSo let us enclose this BUILD.gn by is_chromeos as workaround.",
+      "parentUuid": "15eda2d9_71820124",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "6eeaf6909adc2ec6fa71a5e6ad0de783f2e89eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db4618f6_a8e50e93",
         "filename": "components/arc/common/video.mojom",
         "patchSetId": 33
