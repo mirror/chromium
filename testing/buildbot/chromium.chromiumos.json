@@ -963,6 +963,17 @@
         "test": "content_unittests"
       },
       {
+        "args": [
+          "--mus"
+        ],
+        "name": "content_unittests --mus",
+        "override_isolate_target": "content_unittests",
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "content_unittests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
