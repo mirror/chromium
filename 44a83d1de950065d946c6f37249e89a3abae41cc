@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9a1c4c_1df92440",
+        "filename": "testing/buildbot/chromium.clang.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 7029,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-08T22:29:22Z",
+      "side": 0,
+      "message": "Is this intentional?",
+      "revId": "44a83d1de950065d946c6f37249e89a3abae41cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
