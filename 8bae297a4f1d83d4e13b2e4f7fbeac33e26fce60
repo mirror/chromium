@@ -34,6 +34,24 @@
       "revId": "8bae297a4f1d83d4e13b2e4f7fbeac33e26fce60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8f8430_9ca1a99f",
+        "filename": "chrome/browser/extensions/launch_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-08T22:44:16Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s a good idea.",
+      "parentUuid": "a7a4061e_50f9b614",
+      "revId": "8bae297a4f1d83d4e13b2e4f7fbeac33e26fce60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
