@@ -736,6 +736,64 @@ TEST_F(DeveloperPrivateApiUnitTest, LoadUnpackedRetryId) {
   }
 }
 
+TEST_F(DeveloperPrivateApiUnitTest,
+       DeveloperPrivateNotifyDragInstallInProgress) {
+  std::unique_ptr<content::WebContents> web_contents(
+      content::WebContentsTester::CreateTestWebContents(profile(), nullptr));
+
+  TestExtensionDir dir;
+  dir.WriteManifest(
+      R"({
+           "name": "foo",
+           "description": "bar",
+           "version": "1",
+           "manifest_version": 2
+         })");
+  base::FilePath path = dir.UnpackedPath();
+  api::DeveloperPrivateNotifyDragInstallInProgressFunction::
+      SetDropPathForTesting(&path);
+
+  DeveloperPrivateAPI::UnpackedRetryId retry_guid;
+  {
+    auto function = base::MakeRefCounted<
+        api::DeveloperPrivateNotifyDragInstallInProgressFunction>();
+    function->SetRenderFrameHost(web_contents->GetMainFrame());
+    std::unique_ptr<base::Value> result =
+        api_test_utils::RunFunctionAndReturnSingleResult(function.get(), "[]",
+                                                         profile());
+    ASSERT_TRUE(result);
+    ASSERT_TRUE(result->is_string());
+    retry_guid = result->GetString();
+  }
+
+  // Set the picker to choose an invalid path (the picker should be skipped if
+  // we supply a retry id).
+  base::FilePath empty_path;
+  api::EntryPicker::SkipPickerAndAlwaysSelectPathForTest(&empty_path);
+
+  {
+    // Try reloading the extension by supplying the retry id. It should succeed.
+    auto function =
+        base::MakeRefCounted<api::DeveloperPrivateLoadUnpackedFunction>();
+    function->SetRenderFrameHost(web_contents->GetMainFrame());
+    TestExtensionRegistryObserver observer(registry());
+    std::string args = base::StringPrintf(
+        "[{\"failQuietly\": true,"
+        "\"populateError\": true,"
+        "\"retryGuid\": \"%s\"}]",
+        retry_guid.c_str());
+    api_test_utils::RunFunction(function.get(), args, profile());
+    const Extension* extension = observer.WaitForExtensionLoaded();
+    ASSERT_TRUE(extension);
+    EXPECT_EQ(extension->path(), path);
+  }
+
+  // Cleanup.
+  api::DeveloperPrivateNotifyDragInstallInProgressFunction::
+      SetDropPathForTesting(nullptr);
+  api::EntryPicker::SkipPickerAndAlwaysSelectPathForTest(nullptr);
+}
+
 // Test developerPrivate.requestFileSource.
 TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateRequestFileSource) {
   // Testing of this function seems light, but that's because it basically just

@@ -17,7 +17,7 @@ cr.define('extensions', function() {
     this.eventTarget_ = target;
   }
 
-  // TODO(devlin): Un-chrome.send-ify this implementation.
+  // TODO(devlin): Finish un-chrome.send-ifying this implementation.
   DragAndDropHandler.prototype = {
     /** @type {boolean} */
     dragEnabled: false,
@@ -39,7 +39,12 @@ cr.define('extensions', function() {
 
     /** @override */
     doDragEnter: function() {
+      /** @type {string|undefined} */
+      this.loadGuid_ = undefined;
       chrome.send('startDrag');
+      chrome.developerPrivate.notifyDragInstallInProgress((guid) => {
+        this.loadGuid_ = guid;
+      });
       this.eventTarget_.dispatchEvent(
           new CustomEvent('extension-drag-started'));
     },
@@ -61,27 +66,33 @@ cr.define('extensions', function() {
       if (e.dataTransfer.files.length != 1)
         return;
 
-      let toSend = '';
+      let item = e.dataTransfer.items[0];
+      let handled = false;
       // Files lack a check if they're a directory, but we can find out through
       // its item entry.
-      for (let i = 0; i < e.dataTransfer.items.length; ++i) {
-        if (e.dataTransfer.items[i].kind == 'file' &&
-            e.dataTransfer.items[i].webkitGetAsEntry().isDirectory) {
-          toSend = 'installDroppedDirectory';
-          break;
-        }
-      }
-      // Only process files that look like extensions. Other files should
-      // navigate the browser normally.
-      if (!toSend &&
-          /\.(crx|user\.js|zip)$/i.test(e.dataTransfer.files[0].name)) {
-        toSend = 'installDroppedFile';
+      if (item.kind === 'file' && item.webkitGetAsEntry().isDirectory &&
+          this.loadGuid_) {
+        handled = true;
+
+        // TODO(devlin): Update this to use extensions.Service when it's not
+        // shared between the MD and non-MD pages.
+        chrome.developerPrivate.loadUnpacked(
+            {failQuietly: true, populateError: true, retryGuid: this.loadGuid_},
+            (loadError) => {
+              if (loadError) {
+                this.eventTarget_.dispatchEvent(new CustomEvent(
+                    'drag-and-drop-load-error', {detail: loadError}));
+              }
+            });
+      } else if (/\.(crx|user\.js|zip)$/i.test(e.dataTransfer.files[0].name)) {
+        // Only process files that look like extensions. Other files should
+        // navigate the browser normally.
+        handled = true;
+        chrome.send('installDroppedFile');
       }
 
-      if (toSend) {
+      if (handled)
         e.preventDefault();
-        chrome.send(toSend);
-      }
     },
 
     /** @private */
