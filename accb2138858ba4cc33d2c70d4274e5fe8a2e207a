@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4e2bbd09_e01dfb9f",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T21:16:42Z",
+      "side": 1,
+      "message": "ping (still a CHECK in PS11).\nAlso, no need to check for !context, that doesn\u0027t happen (OnMakeCurrent isn\u0027t called when releasing current - we\u0027d probably introduce OnReleaseCurrent if we wanted to).",
+      "parentUuid": "c3d5fa47_e0d53d00",
+      "revId": "accb2138858ba4cc33d2c70d4274e5fe8a2e207a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a81dc53_8e4bf1e8",
         "filename": "ui/gl/gl_surface_glx.h",
         "patchSetId": 9
