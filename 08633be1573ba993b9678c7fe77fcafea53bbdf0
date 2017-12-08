@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "c073e77b_9e3a3196",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-08T14:55:17Z",
+      "side": 1,
+      "message": "This sounds like we\u0027re using an inappropriate task runner\nnow :-)\nWhat about renaming the CL to sth like:\nHTMLMediaElementCapture: use Blink-provided foreground task runner\n?",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba7974f_e7a29b09",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-08T14:55:17Z",
+      "side": 1,
+      "message": "I agree with the overall CL but please rename this\nguy to something more generic, like |task_runner_|\nthroughout, because there is already a media task\nrunner somewhere in the Renderer process and this\nrenaming would be confusing.",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 70
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b823abe0_f99df416",
         "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source_unittest.cc",
         "patchSetId": 1
