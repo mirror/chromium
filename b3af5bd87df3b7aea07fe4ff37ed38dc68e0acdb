@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64508eec_e23f00d5",
+        "filename": "content/renderer/media/media_permission_dispatcher.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-08T23:51:15Z",
+      "side": 1,
+      "message": "Do you mind adding a TODO and filing a bug for the media team to clean this up as well?",
+      "revId": "b3af5bd87df3b7aea07fe4ff37ed38dc68e0acdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
