@@ -23,6 +23,24 @@ extern const char kBrowserActionsNamespace[];
 // Currently used for fallbacks like tests.
 extern const char kDefaultNamespace[];
 
+// Enum of namespaces used by metric collection.
+// See OfflinePageNamespace in enums.xml for histogram usages.
+enum class OfflinePageNamespace {
+  BOOKMARK,
+  LAST_N,
+  ASYNC_LOADING,
+  CUSTOM_TABS,
+  DOWNLOAD,
+  NTP_SUGGESTION,
+  SUGGESTED_ARTICLES,
+  BROWSER_ACTIONS,
+  DEFAULT,
+  // NOTE: always keep this entry at the end. Add new result types only
+  // immediately above this line. Make sure to update the corresponding
+  // histogram enum accordingly.
+  RESULT_COUNT,
+};
+
 }  // namespace offline_pages
 
 #endif  // COMPONENTS_OFFLINE_PAGES_CORE_CLIENT_NAMESPACE_CONSTANTS_H_

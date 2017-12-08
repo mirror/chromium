@@ -30608,6 +30608,18 @@ Called by update_net_trust_anchors.py.-->
       label="Account was not seeded before FireRefreshTokenAvailable"/>
 </enum>
 
+<enum name="OfflinePageNamespace">
+  <int value="0" label="Bookmark"/>
+  <int value="1" label="Last_N"/>
+  <int value="2" label="Async_loading"/>
+  <int value="3" label="Custom_tabs"/>
+  <int value="4" label="Download"/>
+  <int value="5" label="NTP_suggestions"/>
+  <int value="6" label="Suggested_articles"/>
+  <int value="7" label="Browser_actions"/>
+  <int value="8" label="Default"/>
+</enum>
+
 <enum name="OfflinePagePrefetchNotificationAction">
   <int value="0" label="Attempt to show pending content check"/>
   <int value="1" label="Showed notification"/>
