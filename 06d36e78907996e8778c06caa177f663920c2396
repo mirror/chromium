@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075e7257_16a54701",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-08T23:18:41Z",
+      "side": 0,
+      "message": "ImageResources never have clients any more. It\u0027s unclear to me if this test is still meaningful at all, but I think having it just exercise pruning is useful?",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a9bd2c_ef7b5052",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-08T23:18:41Z",
+      "side": 0,
+      "message": "ResourceClients are irrelevant to pruning policy, as far as I can tell. We don\u0027t prune on last client removal, and MemoryCache only prunes when it gets an OnPurgeMemory() callback.",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1fb3f5_05f6e292",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/MockResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-08T23:18:41Z",
+      "side": 0,
+      "message": "When using ResourceClient::resource_, this is unnecessary, as ResourceClient has its own pre-finalizers for resource_ cleanup.",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832a9fd3_e6cd0664",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/MockResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-08T23:18:41Z",
+      "side": 0,
+      "message": "Unused",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
