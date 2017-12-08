@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35086dbb_b63b2648",
+        "filename": "content/browser/accessibility/accessibility_event_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-08T02:45:33Z",
+      "side": 1,
+      "message": "I prefer \"using\".\nusing AccessibilityEventCallback \u003d ...",
+      "revId": "fb519e1e08fc40d2131409f58ef81c365e2f42db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6396dac_e0c21902",
+        "filename": "content/browser/accessibility/accessibility_win_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-08T02:45:33Z",
+      "side": 1,
+      "message": "Is there a LOG(DEBUG)?",
+      "revId": "fb519e1e08fc40d2131409f58ef81c365e2f42db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
