@@ -585,6 +585,12 @@ double PerformanceBase::ClampTimeResolution(double time_seconds) {
 }
 
 // static
+TimeDelta PerformanceBase::ClampTimeResolution(TimeDelta time) {
+  constexpr TimeDelta kResolution = TimeDelta::FromMicroseconds(5);
+  return (time / kResolution) * kResolution;
+}
+
+// static
 DOMHighResTimeStamp PerformanceBase::MonotonicTimeToDOMHighResTimeStamp(
     double time_origin,
     double monotonic_time,

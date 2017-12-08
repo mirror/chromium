@@ -26,7 +26,7 @@ class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
       : CanvasAsyncBlobCreator(image,
                                mime_type,
                                nullptr,
-                               0,
+                               TimeTicks(),
                                document,
                                nullptr) {
     if (fail_encoder_initialization)
@@ -46,7 +46,7 @@ class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
   void SignalAlternativeCodePathFinishedForTesting() override;
   void PostDelayedTaskToCurrentThread(const WebTraceLocation&,
                                       WTF::Closure,
-                                      double delay_ms) override;
+                                      TimeDelta delay) override;
 };
 
 void MockCanvasAsyncBlobCreator::SignalAlternativeCodePathFinishedForTesting() {
@@ -56,7 +56,7 @@ void MockCanvasAsyncBlobCreator::SignalAlternativeCodePathFinishedForTesting() {
 void MockCanvasAsyncBlobCreator::PostDelayedTaskToCurrentThread(
     const WebTraceLocation& location,
     WTF::Closure task,
-    double delay_ms) {
+    TimeDelta delay) {
   DCHECK(IsMainThread());
   Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
       location, std::move(task));
@@ -97,11 +97,10 @@ class MockCanvasAsyncBlobCreatorWithoutComplete
     Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
         BLINK_FROM_HERE,
         WTF::Bind(&MockCanvasAsyncBlobCreatorWithoutComplete::InitiateEncoding,
-                  WrapPersistent(this), quality,
-                  std::numeric_limits<double>::max()));
+                  WrapPersistent(this), quality, base::TimeTicks::Max()));
   }
 
-  void IdleEncodeRows(double deadline_seconds) override {
+  void IdleEncodeRows(base::TimeTicks deadline) override {
     // Deliberately make idleEncodeRows do nothing so that idle task never
     // completes
   }

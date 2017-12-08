@@ -54,8 +54,6 @@ class PLATFORM_EXPORT WebSchedulerImpl : public WebScheduler {
       scheduler::RendererScheduler::NavigatingFrameType type) override {}
 
  private:
-  static void RunIdleTask(WebThread::IdleTask task, base::TimeTicks deadline);
-
   ChildScheduler* child_scheduler_;  // NOT OWNED
   scoped_refptr<SingleThreadIdleTaskRunner> idle_task_runner_;
   scoped_refptr<WebTaskRunnerImpl> loading_web_task_runner_;

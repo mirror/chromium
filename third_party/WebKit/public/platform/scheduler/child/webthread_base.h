@@ -69,9 +69,6 @@ class BLINK_PLATFORM_EXPORT WebThreadBase : public WebThread {
   virtual void AddTaskTimeObserverInternal(TaskTimeObserver*) {}
   virtual void RemoveTaskTimeObserverInternal(TaskTimeObserver*) {}
 
-  static void RunWebThreadIdleTask(WebThread::IdleTask idle_task,
-                                   base::TimeTicks deadline);
-
  private:
   typedef std::map<TaskObserver*, TaskObserverAdapter*> TaskObserverMap;
   TaskObserverMap task_observer_map_;

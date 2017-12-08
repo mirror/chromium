@@ -29,12 +29,12 @@ namespace blink {
 
 namespace {
 
-const int kColdModeTimerIntervalMS = 1000;
-const int kConsecutiveColdModeTimerIntervalMS = 200;
-const int kHotModeRequestTimeoutMS = 200;
-const int kInvalidHandle = -1;
-const int kDummyHandleForForcedInvocation = -2;
-const double kForcedInvocationDeadlineSeconds = 10;
+constexpr int kColdModeTimerIntervalMS = 1000;
+constexpr int kConsecutiveColdModeTimerIntervalMS = 200;
+constexpr int kHotModeRequestTimeoutMS = 200;
+constexpr int kInvalidHandle = -1;
+constexpr int kDummyHandleForForcedInvocation = -2;
+constexpr TimeDelta kForcedInvocationDeadline = TimeDelta::FromSeconds(10);
 
 }  // namespace
 
@@ -207,9 +207,9 @@ void IdleSpellCheckCallback::ForceInvocationForTesting() {
   if (!IsSpellCheckingEnabled())
     return;
 
-  IdleDeadline* deadline = IdleDeadline::Create(
-      kForcedInvocationDeadlineSeconds + MonotonicallyIncreasingTime(),
-      IdleDeadline::CallbackType::kCalledWhenIdle);
+  IdleDeadline* deadline =
+      IdleDeadline::Create(kForcedInvocationDeadline + TimeTicks::Now(),
+                           IdleDeadline::CallbackType::kCalledWhenIdle);
 
   switch (state_) {
     case State::kColdModeTimerStarted:

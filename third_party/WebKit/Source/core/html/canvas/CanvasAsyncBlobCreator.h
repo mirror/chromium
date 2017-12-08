@@ -30,15 +30,15 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   static CanvasAsyncBlobCreator* Create(scoped_refptr<StaticBitmapImage>,
                                         const String& mime_type,
                                         V8BlobCallback*,
-                                        double start_time,
+                                        TimeTicks start_time,
                                         ExecutionContext*);
   static CanvasAsyncBlobCreator* Create(scoped_refptr<StaticBitmapImage>,
                                         const String& mime_type,
-                                        double start_time,
+                                        TimeTicks start_time,
                                         ExecutionContext*,
                                         ScriptPromiseResolver*);
 
-  void ScheduleAsyncBlobCreation(const double& quality);
+  void ScheduleAsyncBlobCreation(double quality);
   virtual ~CanvasAsyncBlobCreator();
   enum MimeType {
     kMimeTypePng,
@@ -75,20 +75,20 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   CanvasAsyncBlobCreator(scoped_refptr<StaticBitmapImage>,
                          MimeType,
                          V8BlobCallback*,
-                         double,
+                         TimeTicks,
                          ExecutionContext*,
                          ScriptPromiseResolver*);
   // Methods are virtual for unit testing
   virtual void ScheduleInitiateEncoding(double quality);
-  virtual void IdleEncodeRows(double deadline_seconds);
+  virtual void IdleEncodeRows(base::TimeTicks deadline);
   virtual void PostDelayedTaskToCurrentThread(const WebTraceLocation&,
                                               WTF::Closure,
-                                              double delay_ms);
+                                              TimeDelta delay);
   virtual void SignalAlternativeCodePathFinishedForTesting() {}
   virtual void CreateBlobAndReturnResult();
   virtual void CreateNullAndReturnResult();
 
-  void InitiateEncoding(double quality, double deadline_seconds);
+  void InitiateEncoding(double quality, base::TimeTicks deadline);
 
  protected:
   IdleTaskStatus idle_task_status_;
@@ -109,8 +109,8 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   const MimeType mime_type_;
 
   // Chrome metrics use
-  double start_time_;
-  double schedule_idle_task_start_time_;
+  TimeTicks start_time_;
+  TimeTicks schedule_idle_task_start_time_;
   bool static_bitmap_image_loaded_;
 
   ToBlobFunctionType function_type_;
@@ -130,7 +130,7 @@ class CORE_EXPORT CanvasAsyncBlobCreator
   Member<ScriptPromiseResolver> script_promise_resolver_;
 
   void LoadStaticBitmapImage();
-  bool EncodeImage(const double&);
+  bool EncodeImage(double);
 
   // PNG, JPEG
   bool InitializeEncoder(double quality);

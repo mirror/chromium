@@ -388,7 +388,7 @@ ScriptPromise OffscreenCanvas::convertToBlob(ScriptState* script_state,
     return exception_state.Reject(script_state);
   }
 
-  double start_time = WTF::MonotonicallyIncreasingTime();
+  TimeTicks start_time = TimeTicks::Now();
   String encoding_mime_type = ImageEncoderUtils::ToEncodingMimeType(
       options.type(), ImageEncoderUtils::kEncodeReasonConvertToBlobPromise);
 

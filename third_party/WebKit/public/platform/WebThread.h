@@ -33,6 +33,7 @@
 
 namespace base {
 class SingleThreadTaskRunner;
+class TimeTicks;
 }
 
 namespace blink {
@@ -54,7 +55,7 @@ class BLINK_PLATFORM_EXPORT WebThread {
  public:
   // An IdleTask is passed a deadline in CLOCK_MONOTONIC seconds and is
   // expected to complete before this deadline.
-  using IdleTask = base::OnceCallback<void(double deadline_seconds)>;
+  using IdleTask = base::OnceCallback<void(base::TimeTicks deadline)>;
 
   class BLINK_PLATFORM_EXPORT TaskObserver {
    public:
