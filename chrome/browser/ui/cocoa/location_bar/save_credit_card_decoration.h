@@ -10,14 +10,14 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/cocoa/location_bar/image_decoration.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 
 // Save credit card icon on the right side of the field. This appears when
 // the save credit card bubble is available on the current page. This icon is
 // never lit.
 class SaveCreditCardDecoration : public ImageDecoration {
  public:
-  explicit SaveCreditCardDecoration(CommandUpdater* command_updater);
+  explicit SaveCreditCardDecoration(CommandUpdaterProxy* command_updater_proxy);
   ~SaveCreditCardDecoration() override;
 
   // Set up the SaveCreditCardDecoration's icon to match the darkness of the
@@ -33,7 +33,7 @@ class SaveCreditCardDecoration : public ImageDecoration {
 
  private:
   // For showing the save credit card bubble.
-  CommandUpdater* command_updater_;  // Weak, owned by Browser.
+  CommandUpdaterProxy* command_updater_proxy_;  // Weak, owned by Browser.
 
   DISALLOW_COPY_AND_ASSIGN(SaveCreditCardDecoration);
 };

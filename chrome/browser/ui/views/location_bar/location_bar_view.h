@@ -30,7 +30,7 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/drag_controller.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 class ContentSettingBubbleModelDelegate;
 class FindBarIcon;
 class GURL;
@@ -109,7 +109,7 @@ class LocationBarView : public LocationBar,
 
   LocationBarView(Browser* browser,
                   Profile* profile,
-                  CommandUpdater* command_updater,
+                  CommandUpdaterProxy* command_updater_proxy,
                   Delegate* delegate,
                   bool is_popup_mode);
 

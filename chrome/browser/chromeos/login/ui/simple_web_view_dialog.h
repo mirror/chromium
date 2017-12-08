@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/command_updater_delegate.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "content/public/browser/page_navigator.h"
@@ -42,6 +43,7 @@ class SimpleWebViewDialog : public views::ButtonListener,
                             public LocationBarView::Delegate,
                             public ChromeToolbarModelDelegate,
                             public CommandUpdaterDelegate,
+                            public CommandUpdaterProxy,
                             public content::PageNavigator,
                             public content::WebContentsDelegate {
  public:
@@ -84,6 +86,17 @@ class SimpleWebViewDialog : public views::ButtonListener,
 
   // Implements CommandUpdaterDelegate:
   void ExecuteCommandWithDisposition(int id, WindowOpenDisposition) override;
+
+  // Implements CommandUpdaterProxy:
+  bool SupportsCommand(int id) const override;
+  bool IsCommandEnabled(int id) const override;
+  bool ExecuteCommand(int id) override;
+  bool ExecuteCommandWithDispositionProxy(
+      int id, WindowOpenDisposition disposition) override;
+  void AddCommandObserver(int id, CommandObserver* observer) override;
+  void RemoveCommandObserver(int id, CommandObserver* observer) override;
+  void RemoveCommandObserver(CommandObserver* observer) override;
+  bool UpdateCommandEnabled(int id, bool state) override;
 
  private:
   friend class SimpleWebViewDialogTest;

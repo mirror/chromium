@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/cocoa/location_bar/image_decoration.h"
 
-class CommandUpdater;
+class CommandUpdaterProxy;
 @class TranslateBubbleController;
 
 // Translate icon on the right side of the field. This appears when
@@ -18,7 +18,7 @@ class CommandUpdater;
 // translation is already done, otherwise not lit.
 class TranslateDecoration : public ImageDecoration {
  public:
-  explicit TranslateDecoration(CommandUpdater* command_updater);
+  explicit TranslateDecoration(CommandUpdaterProxy* command_updater_proxy);
   ~TranslateDecoration() override;
 
   // Toggles the icon on or off.
@@ -36,7 +36,7 @@ class TranslateDecoration : public ImageDecoration {
 
  private:
   // For showing the translate bubble up.
-  CommandUpdater* command_updater_;  // Weak, owned by Browser.
+  CommandUpdaterProxy* command_updater_proxy_;  // Weak, owned by Browser.
 
   DISALLOW_COPY_AND_ASSIGN(TranslateDecoration);
 };

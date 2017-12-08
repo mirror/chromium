@@ -5,7 +5,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/star_decoration.h"
 
 #include "chrome/app/chrome_command_ids.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #import "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #include "chrome/grit/generated_resources.h"
@@ -25,8 +25,8 @@ const CGFloat kStarPointYOffset = 2.0;
 
 }  // namespace
 
-StarDecoration::StarDecoration(CommandUpdater* command_updater)
-    : command_updater_(command_updater) {
+StarDecoration::StarDecoration(CommandUpdaterProxy* command_updater_proxy)
+    : command_updater_proxy_(command_updater_proxy) {
   SetVisible(true);
   SetStarred(false, false);
 }
@@ -51,7 +51,7 @@ AcceptsPress StarDecoration::AcceptsMousePress() {
 }
 
 bool StarDecoration::OnMousePressed(NSRect frame, NSPoint location) {
-  command_updater_->ExecuteCommand(IDC_BOOKMARK_PAGE);
+  command_updater_proxy_->ExecuteCommand(IDC_BOOKMARK_PAGE);
   return true;
 }
 

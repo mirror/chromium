@@ -21,7 +21,7 @@
 #include "chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/command_observer.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/recovery/recovery_install_global_error_factory.h"
 #include "chrome/browser/search/search.h"
@@ -116,7 +116,7 @@ const CGFloat kMinimumLocationBarWidth = 100.0;
 + (CGFloat)appMenuPadding;
 - (void)cleanUp;
 - (void)addAccessibilityDescriptions;
-- (void)initCommandStatus:(CommandUpdater*)commands;
+- (void)initCommandStatus:(CommandUpdaterProxy*)commands;
 - (void)prefChanged:(const std::string&)prefName;
 // Height of the toolbar in pixels when the bookmark bar is closed.
 - (CGFloat)baseToolbarHeight;
@@ -138,8 +138,8 @@ namespace ToolbarControllerInternal {
 
 // A C++ bridge class that handles listening for updates to commands and
 // passing them back to ToolbarController. ToolbarController will create one of
-// these bridges, pass them to CommandUpdater::AddCommandObserver, and then wait
-// for update notifications, delivered via
+// these bridges, pass them to CommandUpdaterProxy::AddCommandObserver, and then
+// wait for update notifications, delivered via
 // -enabledStateChangedForCommand:enabled:.
 class CommandObserverBridge : public CommandObserver {
  public:
@@ -210,7 +210,7 @@ class NotificationBridge : public AppMenuIconController::Delegate {
   return kButtonInset;
 }
 
-- (id)initWithCommands:(CommandUpdater*)commands
+- (id)initWithCommands:(CommandUpdaterProxy*)commands
                profile:(Profile*)profile
                browser:(Browser*)browser {
   DCHECK(commands && profile);
@@ -232,8 +232,8 @@ class NotificationBridge : public AppMenuIconController::Delegate {
     commands->AddCommandObserver(IDC_HOME, commandObserver_.get());
     commands->AddCommandObserver(IDC_BOOKMARK_PAGE, commandObserver_.get());
     // NOTE: Don't remove the command observers. ToolbarController is
-    // autoreleased at about the same time as the CommandUpdater (owned by the
-    // Browser), so |commands_| may not be valid any more.
+    // autoreleased at about the same time as the CommandUpdaterProxy (owned by
+    // the Browser), so |commands_| may not be valid any more.
 
     // Start global error services now so we badge the menu correctly.
     RecoveryInstallGlobalErrorFactory::GetForProfile(profile);
@@ -394,7 +394,7 @@ class NotificationBridge : public AppMenuIconController::Delegate {
   [homeButton_ setHandleMiddleClick:YES];
 
   [self initCommandStatus:commands_];
-  [reloadButton_ setCommandUpdater:commands_];
+  [reloadButton_ setCommandUpdaterProxy:commands_];
 
   locationBarView_.reset(new LocationBarViewMac(locationBar_, commands_,
                                                 profile_, browser_));
@@ -629,7 +629,7 @@ class NotificationBridge : public AppMenuIconController::Delegate {
 
 // Init the enabled state of the buttons on the toolbar to match the state in
 // the controller.
-- (void)initCommandStatus:(CommandUpdater*)commands {
+- (void)initCommandStatus:(CommandUpdaterProxy*)commands {
   [backButton_ setEnabled:commands->IsCommandEnabled(IDC_BACK) ? YES : NO];
   [forwardButton_
       setEnabled:commands->IsCommandEnabled(IDC_FORWARD) ? YES : NO];
