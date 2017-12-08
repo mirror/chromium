@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -44,8 +45,8 @@ namespace {
 
 // Helper function to ensure |owner| is valid until at least |callback| returns.
 void HoldRefCallback(const scoped_refptr<PrintJobWorkerOwner>& owner,
-                     const base::Closure& callback) {
-  callback.Run();
+                     base::OnceClosure callback) {
+  std::move(callback).Run();
 }
 
 class PrintingContextDelegate : public PrintingContext::Delegate {
@@ -188,8 +189,24 @@ void PrintJobWorker::SetSettings(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
           &HoldRefCallback, base::WrapRefCounted(owner_),
-          base::Bind(&PrintJobWorker::UpdatePrintSettings,
-                     base::Unretained(this), base::Passed(&new_settings))));
+          base::BindOnce(static_cast<void (PrintJobWorker::*)(
+                             std::unique_ptr<base::DictionaryValue>)>(
+                             &PrintJobWorker::UpdatePrintSettings),
+                         base::Unretained(this), std::move(new_settings))));
+}
+
+void PrintJobWorker::SetSettings(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &HoldRefCallback, base::WrapRefCounted(owner_),
+          base::BindOnce(static_cast<void (PrintJobWorker::*)(
+                             std::unique_ptr<printing::PrintSettings>)>(
+                             &PrintJobWorker::UpdatePrintSettings),
+                         base::Unretained(this), std::move(new_settings))));
 }
 
 void PrintJobWorker::UpdatePrintSettings(
@@ -197,6 +214,14 @@ void PrintJobWorker::UpdatePrintSettings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PrintingContext::Result result =
       printing_context_->UpdatePrintSettings(*new_settings);
+  GetSettingsDone(result);
+}
+
+void PrintJobWorker::UpdatePrintSettings(
+    std::unique_ptr<printing::PrintSettings> new_settings) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  PrintingContext::Result result =
+      printing_context_->UpdatePrintSettings(std::move(new_settings));
   GetSettingsDone(result);
 }
 
@@ -359,9 +384,9 @@ bool PrintJobWorker::IsRunning() const {
 }
 
 bool PrintJobWorker::PostTask(const base::Location& from_here,
-                              const base::Closure& task) {
+                              base::OnceClosure task) {
   if (task_runner_.get())
-    return task_runner_->PostTask(from_here, task);
+    return task_runner_->PostTask(from_here, std::move(task));
   return false;
 }
 

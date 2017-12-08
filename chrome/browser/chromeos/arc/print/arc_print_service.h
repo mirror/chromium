@@ -5,23 +5,30 @@
 #ifndef CHROME_BROWSER_CHROMEOS_ARC_PRINT_ARC_PRINT_SERVICE_H_
 #define CHROME_BROWSER_CHROMEOS_ARC_PRINT_ARC_PRINT_SERVICE_H_
 
-#include "base/files/file.h"
-#include "base/macros.h"
+#include <string>
+#include <unordered_map>
+
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
-#include "base/threading/thread_checker.h"
+#include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
 #include "components/arc/common/print.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
+
+class Profile;
 
 namespace content {
 class BrowserContext;
 }  // namespace content
+
+namespace chromeos {
+class CupsPrintJob;
+}  // namespace chromeos
 
 namespace arc {
 
 class ArcBridgeService;
 
 class ArcPrintService : public KeyedService,
+                        public chromeos::CupsPrintJobManager::Observer,
                         public mojom::PrintHost {
  public:
   // Returns singleton instance for the given BrowserContext,
@@ -33,19 +40,34 @@ class ArcPrintService : public KeyedService,
                   ArcBridgeService* bridge_service);
   ~ArcPrintService() override;
 
-  // mojom::PrintHost override:
-  void Print(mojo::ScopedHandle pdf_data) override;
+  // mojom::PrintHost overrides:
+  void PrintDeprecated(mojo::ScopedHandle pdf_data) override;
+  void Print(mojom::PrintJobInstancePtr instance,
+             mojom::PrintJobRequestPtr print_job,
+             PrintCallback callback) override;
+  void CreateDiscoverySession(
+      mojom::PrinterDiscoverySessionInstancePtr instance,
+      CreateDiscoverySessionCallback callback) override;
+
+  // KeyedService override.
+  void Shutdown() override;
+
+ protected:
+  // chromeos::CupsPrintJobManager::Observer overrides:
+  void OnPrintJobCreated(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobCancelled(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobError(chromeos::CupsPrintJob* job) override;
+  void OnPrintJobDone(chromeos::CupsPrintJob* job) override;
 
  private:
-  // Opens the pdf file at |file_path|.
-  // If given |file_path| is nullopt, do nothing.
-  void OpenPdf(base::Optional<base::FilePath> file_path) const;
+  class PrintJobHostImpl;
 
-  THREAD_CHECKER(thread_checker_);
-
+  Profile* const profile_;                      // Owned by ProfileManager.
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
-  base::WeakPtrFactory<ArcPrintService> weak_ptr_factory_;
+  // Managed by PrintJobHostImpl instances.
+  std::unordered_map<std::string, PrintJobHostImpl*> jobs_;
+
   DISALLOW_COPY_AND_ASSIGN(ArcPrintService);
 };
 
