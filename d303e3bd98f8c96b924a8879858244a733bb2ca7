@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "c086a081_49fe1894",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-08T04:45:48Z",
+      "side": 1,
+      "message": "Oh wait, you\u0027re right that the superclass can\u0027t be none for an alias. I am about to change this up a bit anyway, but good point.",
+      "parentUuid": "2fa1d251_465b6969",
+      "revId": "d303e3bd98f8c96b924a8879858244a733bb2ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2731beb0_e51c3084",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
         "patchSetId": 22
