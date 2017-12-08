@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "394bd2d4_a3e05f75",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T18:19:20Z",
+      "side": 1,
+      "message": "sounds good, thanks",
+      "parentUuid": "4e9849b7_e9a746c4",
+      "range": {
+        "startLine": 289,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 53
+      },
+      "revId": "704f66bc1b028bdd106c76734aa51e8c97de5458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb55a57_a15f89ae",
         "filename": "ash/message_center/notifier_settings_view.cc",
         "patchSetId": 4

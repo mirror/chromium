@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c0379d4_0e71841b",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T18:19:20Z",
+      "side": 1,
+      "message": "can we change the name of this? I\u0027m not sure what EntryView means, even with the comment. The more concrete you can make the comment, the better.",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "8628a20227a6caa0d4f418c74577c9668333d027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad60ab1a_5002543d",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T18:19:20Z",
+      "side": 1,
+      "message": "could you please give this the same treatment?",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 33
+      },
+      "revId": "8628a20227a6caa0d4f418c74577c9668333d027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
