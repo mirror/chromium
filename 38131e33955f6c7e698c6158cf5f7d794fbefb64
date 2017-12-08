@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b1b255c_038b3f8d",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbae4018_89aab4e6",
+      "range": {
+        "startLine": 808,
+        "startChar": 48,
+        "endLine": 808,
+        "endChar": 57
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "009403b0_47ee7a47",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cb8364_e37b6fdc",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Ok, make test class friend and added public wrapper in it. Please advise if have better pattern.",
+      "parentUuid": "009403b0_47ee7a47",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 58
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "411093eb_b52d9aba",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87e20cf_5dfbe96d",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f55e3209_e5ade40f",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
         "patchSetId": 3
@@ -117,6 +189,30 @@
       "writtenOn": "2017-12-07T22:55:35Z",
       "side": 1,
       "message": "May be I do not understand this. What happens if the http page contains https images? Would they get client LoFi because we are looking for SERVER_LOFI_ON bit as well for https images?",
+      "range": {
+        "startLine": 54,
+        "startChar": 9,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244b13a9_0db0d600",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Tried rewording a bit.\n\nBasically this is meant to clear ClientLoFi bit if we did use proxy and proxy did not give us page-polices\u003dempty-image. The proxy owns this decision and we want LoFi Yes or LoFi No but not a mix for the page load. On the otherhand, if response was not from proxy, we do not want to clear this Client LoFi bit (instead Client LoFi has its own logic to also do http image requests).\nWe can have Scott take a look at this part if not clear enough.",
+      "parentUuid": "f55e3209_e5ade40f",
       "range": {
         "startLine": 54,
         "startChar": 9,
@@ -149,6 +245,30 @@
       "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a288a771_03b202e1",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "978c8661_21126947",
+      "range": {
+        "startLine": 43,
+        "startChar": 29,
+        "endLine": 43,
+        "endChar": 43
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +327,30 @@
       "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3537653_e8e79b1f",
+        "filename": "components/data_reduction_proxy/content/renderer/content_previews_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "d9759d65_7baec7e5",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +435,30 @@
       "writtenOn": "2017-12-07T22:55:35Z",
       "side": 1,
       "message": "Is it possible for a page to have 2 committed previews type: e.g., client lofi, and noscript?",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6df048_5372230b",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T18:24:07Z",
+      "side": 1,
+      "message": "No, this approach is limiting us to one for now. We would have to design how we would want to support more than one (which could involve revisiting this or could be defining some specific hybrid types or something else). I don\u0027t think we should add the complexity here until we have a more specific motivation. It will involve more parts than just this object. Happy to discuss more offline.",
+      "parentUuid": "2efca5bd_0de82179",
       "range": {
         "startLine": 57,
         "startChar": 25,
