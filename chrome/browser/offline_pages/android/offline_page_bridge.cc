@@ -717,8 +717,9 @@ jboolean OfflinePageBridge::IsOfflinePage(
     const base::android::JavaParamRef<jobject>& j_web_contents) {
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(j_web_contents);
-  return offline_pages::OfflinePageUtils::GetOfflinePageFromWebContents(
-             web_contents) != nullptr;
+  bool res = offline_pages::OfflinePageUtils::GetOfflinePageFromWebContents(
+                 web_contents) != nullptr;
+  return res;
 }
 
 ScopedJavaLocalRef<jobject> OfflinePageBridge::GetOfflinePage(

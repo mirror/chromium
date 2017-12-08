@@ -43,6 +43,8 @@ class OfflinePageTabHelper :
     return offline_info_.offline_header;
   }
 
+  bool IsShowingTrustedOfflinePage() const;
+
   // Whether the page is an offline preview.
   bool IsShowingOfflinePreview() const;
 
@@ -91,6 +93,15 @@ class OfflinePageTabHelper :
       content::NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
+
+  // Finalize the offline info when the navigation is done.
+  void FinalizeOfflineInfo(content::NavigationHandle* navigation_handle);
+
+  void ReportOfflineMetrics(content::NavigationHandle* navigation_handle);
+
+  // Reload the URL in order to fetch the offline page on certain net errors.
+  void TryLoadingOfflinePageOnNetError(
+      content::NavigationHandle* navigation_handle);
 
   void SelectPageForURLDone(const OfflinePageItem* offline_page);
 
