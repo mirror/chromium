@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba413c8c_bb6cc94c",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T20:25:55Z",
+      "side": 1,
+      "message": "In other patches we ran into an interesting situation here.\n\nBecause this patch is being submitted to Chromium\u0027s forks (under the Chromium CLA), the only added copyright notice should be to the Chromium Authors.\n\nWhen this patch is submitted upstream, I believe it can be submitted with ARM\u0027s copyright notice.\n\nThen when Chromium later abandons its local patch and pulls the upstream version of the patch, the ARM copyright will show up here.",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 33
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e06ea0_c8a42eb5",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T20:25:55Z",
+      "side": 1,
+      "message": "Can it be defined to something other than 1?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca948fd_f98e54a0",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 4318,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T20:25:55Z",
+      "side": 1,
+      "message": "Once this \u0027i\u0027 was pulled out of the for loop, its meaning became less clear.\nIt is also interesting that the \u0027i\u0027 was never actually used in the loop.\nMaybe it would help to give it a better name like pixel_in_row?",
+      "range": {
+        "startLine": 4318,
+        "startChar": 15,
+        "endLine": 4318,
+        "endChar": 16
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633f5af8_58074e96",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 4350,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T20:25:55Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 4350,
+        "startChar": 15,
+        "endLine": 4350,
+        "endChar": 16
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba09e69_605f8937",
+        "filename": "third_party/libpng/pngstruct.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T20:25:55Z",
+      "side": 1,
+      "message": "It seems odd to me to split the type and the variable like this. Maybe split the comment into multiple lines? That seems to be what happens elsewhere in this file.",
+      "range": {
+        "startLine": 232,
+        "startChar": 3,
+        "endLine": 233,
+        "endChar": 22
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
