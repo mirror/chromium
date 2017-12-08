@@ -72,11 +72,16 @@ RenderFrameAudioInputStreamFactory::~RenderFrameAudioInputStreamFactory() {
 
 void RenderFrameAudioInputStreamFactory::CreateStream(
     mojom::RendererAudioInputStreamFactoryClientPtr client,
-    int32_t session_id,
+    int64_t session_id,
     const media::AudioParameters& audio_params,
     bool automatic_gain_control,
     uint32_t shared_memory_count) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (!base::IsValueInRangeForNumericType<int>(session_id)) {
+    mojo::ReportBadMessage("session_id is not in integer range");
+    return;
+  }
 
 #if defined(OS_CHROMEOS)
   if (audio_params.channel_layout() ==
@@ -96,7 +101,7 @@ void RenderFrameAudioInputStreamFactory::CreateStream(
 
 void RenderFrameAudioInputStreamFactory::DoCreateStream(
     mojom::RendererAudioInputStreamFactoryClientPtr client,
-    int session_id,
+    int64_t session_id,
     const media::AudioParameters& audio_params,
     bool automatic_gain_control,
     uint32_t shared_memory_count,

@@ -74,7 +74,7 @@ class FakeStreamCreator {
       : stream_(stream), binding_(stream_), initially_muted_(initially_muted) {}
 
   void Create(mojom::RendererAudioInputStreamFactoryClientPtr factory_client,
-              int32_t session_id,
+              int64_t session_id,
               const media::AudioParameters& params,
               bool automatic_gain_control,
               uint32_t total_segments) {
@@ -145,7 +145,7 @@ TEST(MojoAudioInputIPC, FactoryDisconnected_SendsError) {
   const std::unique_ptr<media::AudioInputIPC> ipc =
       std::make_unique<MojoAudioInputIPC>(base::BindRepeating(
           [](mojom::RendererAudioInputStreamFactoryClientPtr factory_client,
-             int32_t session_id, const media::AudioParameters& params,
+             int64_t session_id, const media::AudioParameters& params,
              bool automatic_gain_control, uint32_t total_segments) {}));
 
   EXPECT_CALL(delegate, OnError());

@@ -96,14 +96,14 @@ void MojoAudioOutputIPC::CreateStream(media::AudioOutputIPCDelegate* delegate,
 
 void MojoAudioOutputIPC::PlayStream() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(stream_.is_bound());
-  stream_->Play();
+  if (stream_.is_bound())
+    stream_->Play();
 }
 
 void MojoAudioOutputIPC::PauseStream() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(stream_.is_bound());
-  stream_->Pause();
+  if (stream_.is_bound())
+    stream_->Pause();
 }
 
 void MojoAudioOutputIPC::CloseStream() {
@@ -119,8 +119,8 @@ void MojoAudioOutputIPC::CloseStream() {
 
 void MojoAudioOutputIPC::SetVolume(double volume) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(stream_.is_bound());
-  stream_->SetVolume(volume);
+  if (stream_.is_bound())
+    stream_->SetVolume(volume);
 }
 
 void MojoAudioOutputIPC::OnError() {
@@ -176,8 +176,6 @@ bool MojoAudioOutputIPC::DoRequestDeviceAuthorization(
     return false;
   }
 
-  static_assert(sizeof(int) == sizeof(int32_t),
-                "sizeof(int) == sizeof(int32_t)");
   factory->RequestDeviceAuthorization(MakeProviderRequest(), session_id,
                                       device_id, std::move(callback));
   return true;

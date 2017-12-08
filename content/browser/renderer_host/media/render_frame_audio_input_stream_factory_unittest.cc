@@ -23,6 +23,7 @@
 #include "media/audio/mock_audio_manager.h"
 #include "media/audio/test_audio_thread.h"
 #include "media/base/audio_parameters.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -156,6 +157,34 @@ TEST_F(RenderFrameAudioInputStreamFactoryTest, CreateStream) {
 
   EXPECT_CALL(client_, Created());
   base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(RenderFrameAudioInputStreamFactoryTest, OutOfRangeSessionId_BadMessage) {
+  // This test checks that we get a bad message if session_id is too large
+  // to fit in an integer. This ensures that we don't overflow when casting the
+  // int64_t to an int
+  if (sizeof(int) >= sizeof(int64_t)) {
+    // In this case, any int64_t would fit in an int, and the case we are
+    // checking for is impossible.
+    return;
+  }
+
+  int64_t bad_session_id = std::numeric_limits<int>::max();
+  ++bad_session_id;
+
+  bool got_bad_message = false;
+  mojo::edk::SetDefaultProcessErrorCallback(
+      base::BindRepeating([](bool* got_bad_message,
+                             const std::string& s) { *got_bad_message = true; },
+                          &got_bad_message));
+
+  factory_ptr_->CreateStream(std::move(client_ptr_), bad_session_id,
+                             GetTestAudioParameters(), kAGC,
+                             kSharedMemoryCount);
+
+  EXPECT_FALSE(got_bad_message);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(got_bad_message);
 }
 
 }  // namespace content

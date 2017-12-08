@@ -75,11 +75,21 @@ RenderFrameAudioOutputStreamFactory::~RenderFrameAudioOutputStreamFactory() {
 
 void RenderFrameAudioOutputStreamFactory::RequestDeviceAuthorization(
     media::mojom::AudioOutputStreamProviderRequest stream_provider_request,
-    int32_t session_id,
+    int64_t session_id,
     const std::string& device_id,
     RequestDeviceAuthorizationCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   const base::TimeTicks auth_start_time = base::TimeTicks::Now();
+
+  if (!base::IsValueInRangeForNumericType<int>(session_id)) {
+    mojo::ReportBadMessage("session_id is not in integer range");
+    // Note: We must call the callback even though we are killing the renderer.
+    // This is mandated by mojo.
+    std::move(callback).Run(
+        media::OutputDeviceStatus::OUTPUT_DEVICE_STATUS_ERROR_NOT_AUTHORIZED,
+        media::AudioParameters::UnavailableDeviceParams(), std::string());
+    return;
+  }
 
   context_->RequestDeviceAuthorization(
       render_frame_id_, session_id, device_id,

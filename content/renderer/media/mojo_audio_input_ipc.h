@@ -27,16 +27,15 @@ class CONTENT_EXPORT MojoAudioInputIPC
       public mojom::RendererAudioInputStreamFactoryClient,
       public media::mojom::AudioInputStreamClient {
  public:
-  // This callback is used by MojoAudioInputIPC to create streams.
-  // It is expected that after calling, either client->StreamCreated() is
-  // called or |client| is destructed.
   using StreamCreatorCB = base::RepeatingCallback<void(
       mojom::RendererAudioInputStreamFactoryClientPtr client,
-      int32_t session_id,
+      int64_t session_id,
       const media::AudioParameters& params,
       bool automatic_gain_control,
       uint32_t total_segments)>;
 
+  // |stream_creator| is required to create a stream and call on_stream_created.
+  // It will get posted on the |main_task_runner| during CreateStream.
   explicit MojoAudioInputIPC(StreamCreatorCB stream_creator);
   ~MojoAudioInputIPC() override;
 

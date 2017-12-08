@@ -63,13 +63,13 @@ class CONTENT_EXPORT RenderFrameAudioInputStreamFactory
 
   // mojom::RendererAudioInputStreamFactory implementation.
   void CreateStream(mojom::RendererAudioInputStreamFactoryClientPtr client,
-                    int32_t session_id,
+                    int64_t session_id,
                     const media::AudioParameters& audio_params,
                     bool automatic_gain_control,
                     uint32_t shared_memory_count) override;
 
   void DoCreateStream(mojom::RendererAudioInputStreamFactoryClientPtr client,
-                      int session_id,
+                      int64_t session_id,
                       const media::AudioParameters& audio_params,
                       bool automatic_gain_control,
                       uint32_t shared_memory_count,

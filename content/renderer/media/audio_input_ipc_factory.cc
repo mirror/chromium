@@ -23,7 +23,7 @@ void CreateMojoAudioInputStream(
     scoped_refptr<base::SequencedTaskRunner> main_task_runner,
     int frame_id,
     mojom::RendererAudioInputStreamFactoryClientPtr client,
-    int32_t session_id,
+    int64_t session_id,
     const media::AudioParameters& params,
     bool automatic_gain_control,
     uint32_t total_segments) {
@@ -32,7 +32,7 @@ void CreateMojoAudioInputStream(
       base::BindOnce(
           [](int frame_id,
              mojom::RendererAudioInputStreamFactoryClientPtr client,
-             int32_t session_id, const media::AudioParameters& params,
+             int64_t session_id, const media::AudioParameters& params,
              bool automatic_gain_control, uint32_t total_segments) {
             RenderFrameImpl* frame = RenderFrameImpl::FromRoutingID(frame_id);
             if (frame)

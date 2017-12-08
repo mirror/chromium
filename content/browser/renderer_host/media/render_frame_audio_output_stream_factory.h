@@ -38,7 +38,7 @@ class CONTENT_EXPORT RenderFrameAudioOutputStreamFactory
   // mojom::RendererAudioOutputStreamFactory implementation.
   void RequestDeviceAuthorization(
       media::mojom::AudioOutputStreamProviderRequest stream_provider,
-      int32_t session_id,
+      int64_t session_id,
       const std::string& device_id,
       RequestDeviceAuthorizationCallback callback) override;
 
