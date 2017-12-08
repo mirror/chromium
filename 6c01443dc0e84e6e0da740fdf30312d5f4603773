@@ -461,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "1932cf30_161a17d5",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-08T19:25:36Z",
+      "side": 1,
+      "message": "I removed the documentation per another reviewer\u0027s request. I will try to make CrOSComponent a real object later in our unit testing efforts.",
+      "parentUuid": "79a07316_62a2352c",
+      "revId": "6c01443dc0e84e6e0da740fdf30312d5f4603773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d792039a_e67383d2",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 6
