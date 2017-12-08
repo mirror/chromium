@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d5d9ef9_3a0b879d",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_object_enumerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we need this.",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83544f2_3dac5077",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "same nit: I would omit these in general.",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b90c8608_ae9b1744",
         "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
         "patchSetId": 5
@@ -42,6 +76,40 @@
         "endLine": 69,
         "endChar": 28
       },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a01754_1c55906e",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "It seems useful to create a helper function to convert from PB to the Mojo struct.",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef089efa_5892b40e",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "Why is this not giving all the same parameters as the above conversion?",
       "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -117,6 +185,23 @@
     },
     {
       "key": {
+        "uuid": "88c2d166_e5ed609f",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "Is there a reason that this needs to change to be away from a const reference with no std::move?",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7cf6792_fbd18cfa",
         "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
         "patchSetId": 5
@@ -134,6 +219,57 @@
         "endLine": 548,
         "endChar": 45
       },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cfb177_e91fd1f8",
+        "filename": "device/media_transfer_protocol/public/interfaces/mtp.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "nit: eliminate this comment.",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed681fdf_a58bf915",
+        "filename": "device/media_transfer_protocol/public/interfaces/mtp.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "nit: I would split these each out into their own mojom files.",
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f49ae52_a6dfd4c2",
+        "filename": "device/media_transfer_protocol/public/interfaces/mtp.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-08T13:35:42Z",
+      "side": 1,
+      "message": "I assume that these comments come from the PB? I would eliminate them, as you\u0027ve already noted above that the canonical source of truth for this eum is the PB.",
       "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
