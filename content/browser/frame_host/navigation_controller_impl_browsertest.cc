@@ -113,7 +113,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, LoadDataWithBaseURL) {
   const GURL base_url("http://baseurl");
   const GURL history_url("http://historyurl");
   const std::string data = "<html><body>foo</body></html>";
-  const GURL data_url = GURL("data:text/html;charset=utf-8," + data);
+  const GURL data_url = GURL("data:mtext/html;charset=utf-8," + data);
 
   const NavigationControllerImpl& controller =
       static_cast<const NavigationControllerImpl&>(
@@ -135,6 +135,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, LoadDataWithBaseURL) {
 
   // Verify the last committed NavigationEntry.
   NavigationEntryImpl* entry = controller.GetLastCommittedEntry();
+  ASSERT_TRUE(entry);
   EXPECT_EQ(base_url, entry->GetBaseURLForDataURL());
   EXPECT_EQ(history_url, entry->GetVirtualURL());
   EXPECT_EQ(history_url, entry->GetHistoryURLForDataURL());

@@ -241,7 +241,7 @@ void Shell::LoadDataWithBaseURLInternal(const GURL& url,
 #endif
 
   NavigationController::LoadURLParams params(GURL::EmptyGURL());
-  const std::string data_url_header = "data:text/html;charset=utf-8,";
+  const std::string data_url_header = "data:mtext/html;charset=utf-8,";
   if (load_as_string) {
     params.url = GURL(data_url_header);
     std::string data_url_as_string = data_url_header + data;
