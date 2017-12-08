@@ -16,6 +16,24 @@
       "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcba5ec4_2ee04117",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-08T07:37:26Z",
+      "side": 1,
+      "message": "I think we should keep this, it just changes only the background and shouldn\u0027t be a big difference.\n\nThis value is also used not only in sidebar but in shelf. So I think it can even be used for Sidebar. And the default value of this flag looks varied with devices (maybe based on performance of each device).",
+      "parentUuid": "1bfc9326_a73bc85b",
+      "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
