@@ -16,6 +16,24 @@
       "revId": "ccb25013b65eb219f890d3549213fa5538b74f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c850d9e_cb6a6777",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-08T01:06:07Z",
+      "side": 1,
+      "message": "Non-boxes always call SetHasReflect(false): https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutInline.cpp?rcl\u003d74a43173297995475802e7cf5bf665c73fb2e819\u0026l\u003d142",
+      "parentUuid": "243c4654_2fb4fc1a",
+      "revId": "ccb25013b65eb219f890d3549213fa5538b74f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
