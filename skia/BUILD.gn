@@ -45,10 +45,12 @@ config("skia_config") {
     "//third_party/skia/include/pipe",
     "//third_party/skia/include/ports",
     "//third_party/skia/include/utils",
-    "//third_party/skia/third_party/vulkan",
   ]
   if (enable_vulkan) {
-    include_dirs += [ "$vulkan_sdk_path/include" ]
+    include_dirs += [
+      "$vulkan_sdk_path/include",
+      "//third_party/skia/third_party/vulkan",
+    ]
   }
 
   defines = skia_for_chromium_defines
@@ -61,7 +63,10 @@ config("skia_config") {
     defines += [ "SK_HAS_JPEG_LIBRARY" ]
   }
   if (enable_vulkan) {
-    defines += [ "SK_VULKAN=1" ]
+    defines += [
+      "SK_VULKAN_HEADER=\"../../skia/config/GrVulkanDefines.h\"",
+      "SK_VULKAN=1",
+    ]
   }
 
   if (is_component_build) {
