@@ -1468,13 +1468,6 @@ void Node::setTextContent(const String& text) {
       // FIXME: Merge this logic into replaceChildrenWithText.
       ContainerNode* container = ToContainerNode(this);
 
-      // Note: This is an intentional optimization.
-      // See crbug.com/352836 also.
-      // No need to do anything if the text is identical.
-      if (container->HasOneTextChild() &&
-          ToText(container->firstChild())->data() == text && !text.IsEmpty())
-        return;
-
       ChildListMutationScope mutation(*this);
       // Note: This API will not insert empty text nodes:
       // https://dom.spec.whatwg.org/#dom-node-textcontent
