@@ -25,6 +25,8 @@
 #include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
+#include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceMotionListener.h"
+#include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
@@ -37,6 +39,23 @@ class CONTENT_EXPORT DeviceSensorEventPump
   static constexpr int kDefaultPumpFrequencyHz = 60;
   static constexpr int kDefaultPumpDelayMicroseconds =
       base::Time::kMicrosecondsPerSecond / kDefaultPumpFrequencyHz;
+
+  // The sensor state is an automaton with allowed transitions as follows:
+  // NOT_INITIALIZED -> INITIALIZING
+  // INITIALIZING -> ACTIVE
+  // INITIALIZING -> SHOULD_SUSPEND
+  // ACTIVE -> SUSPENDED
+  // SHOULD_SUSPEND -> INITIALIZING
+  // SHOULD_SUSPEND -> SUSPENDED
+  // SUSPENDED -> ACTIVE
+  // { INITIALIZING, ACTIVE, SHOULD_SUSPEND, SUSPENDED } -> NOT_INITIALIZED
+  enum class SensorState {
+    NOT_INITIALIZED,
+    INITIALIZING,
+    ACTIVE,
+    SHOULD_SUSPEND,
+    SUSPENDED
+  };
 
   // PlatformEventObserver:
   void Start(blink::WebPlatformEventListener* listener) override {
@@ -70,6 +89,11 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
   void HandleSensorProviderError() { sensor_provider_.reset(); }
 
+  void SetSensorProviderForTesting(
+      device::mojom::SensorProviderPtr sensor_provider) {
+    sensor_provider_ = std::move(sensor_provider);
+  }
+
  protected:
   explicit DeviceSensorEventPump(RenderThread* thread)
       : PlatformEventObserver<ListenerType>(thread),
@@ -84,7 +108,10 @@ class CONTENT_EXPORT DeviceSensorEventPump
   struct SensorEntry : public device::mojom::SensorClient {
     SensorEntry(DeviceSensorEventPump* pump,
                 device::mojom::SensorType sensor_type)
-        : event_pump(pump), type(sensor_type), client_binding(this) {}
+        : event_pump(pump),
+          sensor_state(SensorState::NOT_INITIALIZED),
+          type(sensor_type),
+          client_binding(this) {}
 
     ~SensorEntry() override {}
 
@@ -102,6 +129,11 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
     // Mojo callback for SensorProvider::GetSensor().
     void OnSensorCreated(device::mojom::SensorInitParamsPtr params) {
+      // |sensor_state| can be SensorState::SHOULD_SUSPEND if Stop() is called
+      // before OnSensorCreated() is called.
+      DCHECK(sensor_state == SensorState::INITIALIZING ||
+             sensor_state == SensorState::SHOULD_SUSPEND);
+
       if (!params) {
         HandleSensorError();
         event_pump->DidStartIfPossible();
@@ -149,11 +181,19 @@ class CONTENT_EXPORT DeviceSensorEventPump
     void OnSensorAddConfiguration(bool success) {
       if (!success)
         HandleSensorError();
-      event_pump->DidStartIfPossible();
+
+      if (sensor_state == SensorState::INITIALIZING) {
+        sensor_state = SensorState::ACTIVE;
+        event_pump->DidStartIfPossible();
+      } else if (sensor_state == SensorState::SHOULD_SUSPEND) {
+        sensor->Suspend();
+        sensor_state = SensorState::SUSPENDED;
+      }
     }
 
     void HandleSensorError() {
       sensor.reset();
+      sensor_state = SensorState::NOT_INITIALIZED;
       shared_buffer_handle.reset();
       shared_buffer.reset();
       client_binding.Close();
@@ -176,6 +216,7 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
     DeviceSensorEventPump* event_pump;
     device::mojom::SensorPtr sensor;
+    SensorState sensor_state;
     device::mojom::SensorType type;
     device::mojom::ReportingMode mode;
     device::PlatformSensorConfiguration default_config;
@@ -190,26 +231,27 @@ class CONTENT_EXPORT DeviceSensorEventPump
   friend struct SensorEntry;
 
   void GetSensor(SensorEntry* sensor_entry) {
-    sensor_provider_->GetSensor(sensor_entry->type,
-                                base::Bind(&SensorEntry::OnSensorCreated,
-                                           base::Unretained(sensor_entry)));
+    if (sensor_entry->sensor_state == SensorState::NOT_INITIALIZED) {
+      sensor_entry->sensor_state = SensorState::INITIALIZING;
+      sensor_provider_->GetSensor(sensor_entry->type,
+                                  base::Bind(&SensorEntry::OnSensorCreated,
+                                             base::Unretained(sensor_entry)));
+    } else if (sensor_entry->sensor_state == SensorState::SHOULD_SUSPEND) {
+      // This can happen when calling Start(), Stop(), Start() in a sequence:
+      // After the first Start() call, the sensor state is
+      // SensorState::INITIALIZING. Then after the Stop() call, the sensor
+      // state is SensorState::SHOULD_SUSPEND, and the next Start() call needs
+      // to set the sensor state to be SensorState::INITIALIZING again.
+      sensor_entry->sensor_state = SensorState::INITIALIZING;
+    } else {
+      NOTREACHED();
+    }
   }
 
   virtual void DidStartIfPossible() {
     DVLOG(2) << "did start sensor event pump";
 
     if (state_ != PumpState::PENDING_START)
-      return;
-
-    // After the DeviceSensorEventPump::SendStartMessage() is called and before
-    // the DeviceSensorEventPump::SensorEntry::OnSensorCreated() callback has
-    // been executed, it is possible that the |sensor| is already initialized
-    // but its |shared_buffer| is not initialized yet. And in that case when
-    // DeviceSensorEventPump::SendStartMessage() is called again,
-    // SensorSharedBuffersReady() is used to make sure that the
-    // DeviceSensorEventPump can not be started when |shared_buffer| is not
-    // initialized.
-    if (!SensorSharedBuffersReady())
       return;
 
     DCHECK(!timer_.IsRunning());
@@ -238,13 +280,14 @@ class CONTENT_EXPORT DeviceSensorEventPump
   // RUNNING -> STOPPED
   enum class PumpState { STOPPED, RUNNING, PENDING_START };
 
-  virtual bool SensorSharedBuffersReady() const = 0;
-
   PumpState state_;
   base::RepeatingTimer timer_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceSensorEventPump);
 };
+
+template class DeviceSensorEventPump<blink::WebDeviceMotionListener>;
+template class DeviceSensorEventPump<blink::WebDeviceOrientationListener>;
 
 }  // namespace content
 
