@@ -98,8 +98,7 @@ LaunchContainer GetLaunchContainer(const ExtensionPrefs* prefs,
   LaunchContainer manifest_launch_container =
       AppLaunchInfo::GetLaunchContainer(extension);
 
-  const LaunchContainer kInvalidLaunchContainer =
-      static_cast<LaunchContainer>(-1);
+  const LaunchContainer kInvalidLaunchContainer = NUM_LAUNCH_CONTAINERS;
 
   LaunchContainer result = kInvalidLaunchContainer;
 
