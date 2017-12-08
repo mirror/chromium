@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98832bfa_f400a339",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-08T16:39:35Z",
+      "side": 1,
+      "message": "Just curious, did moving this fix any issues? I would expect that the IsAuthenticating call happens on the same thread as this one so behavior should be identical.",
+      "revId": "f5326516ea38f9dbcc9b2d7106131560cac23444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48e90ca_8a6e1474",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-08T16:39:35Z",
+      "side": 1,
+      "message": "I wonder if we should rename this to \"CanAcceptPassword()\", \"ReadyForPassword()\", or similar? Then it can also verify there is a lock screen instance. wdyt?",
+      "revId": "f5326516ea38f9dbcc9b2d7106131560cac23444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f5248e_bc39448b",
+        "filename": "chrome/common/extensions/api/autotest_private.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-08T16:39:35Z",
+      "side": 1,
+      "message": "isAuthenticating? Since the mojo call is not specific to LockScreen.",
+      "revId": "f5326516ea38f9dbcc9b2d7106131560cac23444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
