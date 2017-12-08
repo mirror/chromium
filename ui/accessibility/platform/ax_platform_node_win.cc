@@ -3794,6 +3794,7 @@ AXPlatformNodeWin* AXPlatformNodeWin::GetTargetFromChildID(
 
   AXPlatformNodeBase* base =
       FromNativeViewAccessible(node->GetNativeViewAccessible());
+
   if (base && !IsDescendant(base))
     base = nullptr;
 
