@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+
+test(() => {
+  assert_equals(typeof(performance.toJSON), 'function');
+  let json = performance.toJSON();
+  assert_equals(typeof(json), 'object');
+  assert_equals(json.timeOrigin, performance.timeOrigin);
+}, 'Test performance.toJSON()');
+</script>
+</body>
+</html>

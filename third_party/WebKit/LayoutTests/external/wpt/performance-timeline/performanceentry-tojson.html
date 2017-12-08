@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+
+test(() => {
+  performance.mark("markName");
+  performance.measure("measureName");
+
+  let entries = performance.getEntries();
+  for (let i = 0; i < entries.length; ++i) {
+    assert_equals(typeof(entries[i].toJSON), 'function');
+    let json = entries[i].toJSON();
+    assert_equals(typeof(json), 'object');
+    assert_equals(json.name, entries[i].name);
+    assert_equals(json.entryType, entries[i].entryType);
+    assert_equals(json.startTime, entries[i].startTime);
+    assert_equals(json.duration, entries[i].duration);
+  }
+}, 'Test toJSON() in PerformanceEntry');
+</script>
+</body>
+</html>

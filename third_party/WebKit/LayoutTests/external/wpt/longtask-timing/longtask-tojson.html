@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+  async_test(function (t) {
+    const observer = new PerformanceObserver(
+      t.step_func(function (entryList) {
+        const entries = entryList.getEntries();
+        assert_greater_than_equal(entries.length, 1);
+        const entry = entries[0];
+        assert_equals(typeof(entry.toJSON), 'function');
+        let json = entry.toJSON();
+        assert_equals(typeof(json), 'object');
+        // Check attributes inheritted from PerformanceEntry.
+        assert_equals(json.name, entry.name);
+        assert_equals(json.entryType, entry.entryType);
+        assert_equals(json.startTime, entry.startTime);
+        assert_equals(json.duration, entry.duration);
+
+        // Check PerformanceLongTaskTiming specific entries.
+        assert_equals(typeof(json.attribution), 'object');
+        let jsonAttribution = json.attribution[0];
+        assert_equals(typeof(jsonAttribution), 'object');
+        assert_equals(json.attribution.length, entry.attribution.length);
+
+        // Check TaskAttributionTiming toJSON.
+        let attribution = entry.attribution[0];
+        assert_equals(typeof(attribution.toJSON), 'function');
+        let json2 = attribution.toJSON();
+        assert_equals(typeof(json2), 'object');
+        // Check attributes inheritted from PerformanceEntry, from both:
+        // 1) |jsonAttribution| from  PerformanceLongTaskTiming.
+        // 2) |json2| from TaskAttributionTiming.
+        // Check attributes inheritted from PerformanceEntry.
+        assert_equals(json2.name, attribution.name);
+        assert_equals(jsonAttribution.name, attribution.name);
+        assert_equals(json2.entryType, attribution.entryType);
+        assert_equals(jsonAttribution.entryType, attribution.entryType);
+        assert_equals(json2.startTime, attribution.startTime);
+        assert_equals(jsonAttribution.startTime, attribution.startTime);
+        assert_equals(json2.duration, attribution.duration);
+        assert_equals(jsonAttribution.duration, attribution.duration);
+        // Check TaskAttributionTiming specific entries.
+        assert_equals(json2.containerType, attribution.containerType);
+        assert_equals(jsonAttribution.containerType, attribution.containerType);
+        assert_equals(json2.containerSrc, attribution.containerSrc);
+        assert_equals(jsonAttribution.containerSrc, attribution.containerSrc);
+        assert_equals(json2.containerId, attribution.containerId);
+        assert_equals(jsonAttribution.containerId, attribution.containerId);
+        assert_equals(json2.containerName, attribution.containerName);
+        assert_equals(jsonAttribution.containerName, attribution.containerName);
+        t.done();
+      })
+    );
+    observer.observe({entryTypes: ['longtask']});
+
+    // Trigger a long task.
+    const begin = window.performance.now();
+    while (window.performance.now() < begin + 51);
+  }, 'Test toJSON() in PerformanceLongTaskTiming and TaskAttributionTiming');
+</script>
+</body>
+</html>
