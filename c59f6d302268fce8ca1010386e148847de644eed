@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7969be17_fa93af0a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-08T05:48:31Z",
+      "side": 1,
+      "message": "Actually, we have one more experiments though ResourceLoadScheduler does not check the flag inside this class, but the switch exists in scheduler side.\nhttps://docs.google.com/document/d/1DEGgG9HfA2ixJpXQDsKbYCJJyHILWz3CQmuNEJr9Xho/edit?usp\u003dsharing\n\nIf the experiment is enabled, WebFrameScheduler::ThrottlingState::kStopped will be notified, and ResourceLoadScheduler stops all loading.\n\nMaybe we can add some more description at the line 67, i.e. If another scheduler-side experiment runs, it may stop all loading requests after being in background for 5 minutes.",
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6a0c6e_279bbd41",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-08T05:48:31Z",
+      "side": 1,
+      "message": "My bad, but any chance to make this const reference?",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4797ba_d627c14c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-08T05:48:31Z",
+      "side": 1,
+      "message": "Any reason for this renaming?\nStyle guide encourage to use aka unix_hacker_style() in this case.\n\n\u003e Simple accessors should generally be the only inline functions. These should be named unix_hacker_style().\n\nProbably, scheduler() or GetScheduler()?",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7662a1f7_bece8466",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-08T05:48:31Z",
+      "side": 1,
+      "message": "Don\u0027t you want to inherit ResourceLoadSchedulerTest instead?\nMost of following code can be removed, but readability may be a matter of taste. So, this is just a question.",
+      "range": {
+        "startLine": 64,
+        "startChar": 42,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a576fa_81d36078",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-08T05:48:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 88,
+        "startChar": 25,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
