@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "39ffd36c_7c8096fb",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 4318,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-08T20:48:57Z",
+      "side": 1,
+      "message": "Would it best to modify the 1-bit, 2-bit, and 4-bit loops to use pixel_in_row as well?",
+      "parentUuid": "260ea471_ec664ade",
+      "range": {
+        "startLine": 4318,
+        "startChar": 15,
+        "endLine": 4318,
+        "endChar": 16
+      },
+      "revId": "0b7a65a74c6e64ef9cd3b0e817c374de5c00ed98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "633f5af8_58074e96",
         "filename": "third_party/libpng/pngrtran.c",
         "patchSetId": 3
