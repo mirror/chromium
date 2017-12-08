@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c691e3d1_24f4c94f",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T23:57:48Z",
+      "side": 1,
+      "message": "Next line is not using paretheses. Let\u0027s be consistent within this file on whether to use parentheses around single parameter.",
+      "range": {
+        "startLine": 57,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 41
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b382ff71_416c942d",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T23:57:48Z",
+      "side": 1,
+      "message": "Is this class necessary? Can we just move testGenPreable() to CrExtensionsA11yTest directly and eliminate this class?",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44194dd1_4b89158d",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T23:57:48Z",
+      "side": 1,
+      "message": "Something seems off here. Should this line be deleted?",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 17
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
