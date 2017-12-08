@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "6890c48a_909e727e",
+        "filename": "components/omnibox/browser/omnibox_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-08T02:50:23Z",
+      "side": 1,
+      "message": "Might want to de-inline it for the time being, then.",
+      "parentUuid": "5576de3c_1baecf04",
+      "revId": "837e703b623dbbaff5079111cc9254068fb4c474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e9eb6f_f2391879",
         "filename": "ui/base/window_open_disposition.h",
         "patchSetId": 3

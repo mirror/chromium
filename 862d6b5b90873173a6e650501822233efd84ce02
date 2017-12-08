@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52739a61_ffc05020",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-08T02:50:23Z",
+      "side": 1,
+      "message": "Nit: This comment describes \"what\" more than \"why\".  Maybe: \"Close orphaned NTPs with no history when the user switches away from them.\"",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44182d3b_8a4990c1",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-08T02:50:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right way to check for the NTP since it won\u0027t catch all the forms of NTP URL?  I think we want something more like search::IsNTPURL(), which is what we key off to special-case NTP behavior in at least some other places.",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e896f6ba_a8ff00a2",
+        "filename": "chrome/browser/ui/singleton_tabs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-08T02:50:23Z",
+      "side": 1,
+      "message": "Wonder if this function should share code with the place where you try to special-case NTP handling...",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e6a38d_0ca5f2cc",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-08T02:50:23Z",
+      "side": 1,
+      "message": "Thanks for adding more detail.  I was a bit confused by the wording here, especially the multiple \"or\"s in successive sentences.  Maybe something like:\n\nActivates any existing tab containing the url, rather than navigating.  This is similar to SINGLETON_TAB, but searches across all windows from the current profile (instead of just the current one); closes the current tab on switching if the current tab was the NTP with no session history; and behaves like CURRENT_TAB instead of NEW_FOREGROUND_TAB when no existing tab is found.",
+      "revId": "862d6b5b90873173a6e650501822233efd84ce02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
