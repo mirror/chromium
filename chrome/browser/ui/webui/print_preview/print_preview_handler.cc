@@ -87,6 +87,10 @@ using printing::PrintViewManager;
 using printing::PrinterType;
 
 namespace {
+// Max size for PDFs sent to cloud print. Server side limit is currently 80MB,
+// but PDF will double in size when sent to JS.
+const int64_t kMaxCloudPrintPdfDataSizeInBytes =
+    static_cast<int64_t>(80 * 1024 * 1024 / 2);
 
 // This enum is used to back an UMA histogram, and should therefore be treated
 // as append only.
@@ -1083,6 +1087,11 @@ void PrintPreviewHandler::SendCloudPrintJob(const std::string& callback_id,
   std::string base64_data;
   base::Base64Encode(raw_data, &base64_data);
 
+  if (base64_data.size() >= kMaxCloudPrintPdfDataSizeInBytes) {
+    RejectJavascriptCallback(base::Value(callback_id),
+                             base::Value("OVERSIZED_PDF"));
+    return;
+  }
   ResolveJavascriptCallback(base::Value(callback_id), base::Value(base64_data));
 }
 
