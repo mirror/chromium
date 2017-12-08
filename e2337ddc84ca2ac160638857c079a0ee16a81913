@@ -34,6 +34,24 @@
       "revId": "e2337ddc84ca2ac160638857c079a0ee16a81913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0239c74e_7c226cba",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-08T02:15:05Z",
+      "side": 1,
+      "message": "We actually expect EnclosingBlockChange here -- ComputeInlineAdjustedPosition may change enclosing block if |position| is anchored to a block flow.\n\nRecall that the block flow traversal is the main reason why we need to break ComputeInlineBoxPosition to plug in NG implementations, instead of plugging in directly before CIBP.",
+      "parentUuid": "8d432ea8_d944c85c",
+      "revId": "e2337ddc84ca2ac160638857c079a0ee16a81913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
