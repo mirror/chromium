@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "994ef410_246337cf",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "Maybe, having the extra level of if { } does detract from readability for me ...",
+      "parentUuid": "f26e3294_86d93938",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376ed5c5_c2f8ba69",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 33
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ba21abce_f656247a",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "... but by following the adler32 build config (it has 2 sets of sources too), I create repetition in the config file, which I find is easier to follow / grok.\n\nAlternately, another source_set could be defined and used to inject the sources as a deps in cases where the sources list grows too large by some metric.  For a small sources list, as here, I\u0027m not too concerned about it.",
+      "parentUuid": "376ed5c5_c2f8ba69",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342a193a_9dbc8660",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 33
@@ -50,6 +86,24 @@
       "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4065208a_8bf20610",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "Release chrome android uses -Oz, and it is applied to all targets, unless they override.  Using -O3 here, we get smaller+faster code relative -Oz.",
+      "parentUuid": "342a193a_9dbc8660",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "585eb179_e747313e",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.c",
+        "patchSetId": 33
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "The _ is a constant reminder to me that it\u0027s a ZLIB_INTERNAL, and that it must be added to names.h therefore. \n\nzlib use ZLIB_INTERNAL for internal functions.  And so in review, if we see ZLIB_INTERNAL, please check that is has also been added to names.h, ok?",
+      "parentUuid": "51cfd782_4f6a9f25",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f4e22d0_d792498d",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 33
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "a6403def_b5580ea1",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "Nod.",
+      "parentUuid": "3f4e22d0_d792498d",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2a035b_343d9ff8",
         "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
         "patchSetId": 33
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "87c2e006_08aa87ab",
+        "filename": "third_party/zlib/contrib/optimizations/inffast_chunk.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "I prefer chunk ¯\\(ツ)/¯  I don\u0027t speak of this code as the \"fast chunky\" contrib when speaking to other engineers about it.  I instead use the term \"fast chunk\" contrib (or the \"chunk copy contrib\").",
+      "parentUuid": "dc2a035b_343d9ff8",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "984efc7f_0cea72ac",
         "filename": "third_party/zlib/contrib/optimizations/inflate.c",
         "patchSetId": 33
@@ -130,6 +250,24 @@
       "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f95c33_d499e983",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 33
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-08T08:29:31Z",
+      "side": 1,
+      "message": "Not a concern for chrome, agree.  It might be an issue if upstreaming, or it might not, but it can be just noted that this contrib depends on SSE2 (2001).  \n\nIf that becomes an issue upstream, eg., they want to add support for SSE machines (1998), then upstream can fix that I expect.",
+      "parentUuid": "984efc7f_0cea72ac",
+      "revId": "0b951c067e94e21b51d7d1267218cf2e0bad61c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
