@@ -198,7 +198,7 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
 
 bool UkmRecorderImpl::ShouldRestrictToWhitelistedSourceIds() const {
   return base::GetFieldTrialParamByFeatureAsBool(
-      kUkmFeature, "RestrictToWhitelistedSourceIds", true);
+      kUkmFeature, "RestrictToWhitelistedSourceIds", false);
 }
 
 void UkmRecorderImpl::UpdateSourceURL(SourceId source_id,
