@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84a7af21_65502b12",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-08T18:44:29Z",
+      "side": 1,
+      "message": "It\u0027s a bit different. This parameter is a sanity check since we expect frame overproduction to be a rare thing.\n\nThe current implementation needs some way to prevent the \"too fast\" heuristic from being applied on successive frames - if there\u0027s no new frame, the statistics don\u0027t update, and it could potentially end up in a situation where it permanently stops sending VSync based on the (stuck) averages. A rate limit seemed easier to implement than attempting to modify the statistics on a skip or adding additional complications to the heuristic. For this purpose, the exact value doesn\u0027t really matter, I picked a large-ish value to ensure that the averages should reflect a new steady state after the adjustment.\n\nOverproduction doesn\u0027t only happen when the application is running too fast. If there\u0027s a pipeline timing glitch where a submitted frame isn\u0027t ready in time for async reprojection, GVR will buffer the frame. The point of this unstuffing heuristic is to let a reliably-60fps app avoid triple buffering and save a frame of latency.\n\nI agree that having an explicit GVR API to get information about frame completion times and buffering status in general would be very useful here. Let\u0027s follow up on that separately.",
+      "parentUuid": "72e54338_72ab6cc7",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 50
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75841313_1e33a806",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d3071bbd_632f3439",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-08T18:44:29Z",
+      "side": 1,
+      "message": "I\u0027ll update the comments. This path is for the GPU rendering being too slow with \u003c60fps framerates, and it\u0027s preventing overstuffing the GVR queue. Without this heuristic, GVR would be in near-permanent \"all 3 buffers in use\" mode where VSync would get indirectly throttled as a side effect of GVR acquire/submit blocking the thread.\n\nBy contrast, the \"unstuff_ratelimit\" branch below tries to detect unnecessary triple buffering in GVR when frames are being reliably produced at 60fps.\n\nThere\u0027s no need to do any throttling or heuristics for JS being too slow, that\u0027s self-limiting. In that situation, both GVR acquire and submit would be reliably fast and it shouldn\u0027t be skipping any VSyncs.",
+      "parentUuid": "75841313_1e33a806",
+      "range": {
+        "startLine": 1350,
+        "startChar": 2,
+        "endLine": 1353,
+        "endChar": 3
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa44a742_84d0efed",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T17:53:36Z",
       "side": 1,
       "message": "I\u0027m not sure I agree with this exactly... Wouldn\u0027t it be better to have something like a presentation capabilities object passed in when presentation is granted?",
+      "range": {
+        "startLine": 849,
+        "startChar": 19,
+        "endLine": 849,
+        "endChar": 72
+      },
+      "revId": "e7545867940b1389fe74f142abf838dd86117eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb18f5f_b5f380b8",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-08T18:44:29Z",
+      "side": 1,
+      "message": "Good point - seems cleaner to extend the RequestPresent\u003d\u003e(bool success) to pass along more parameters along with the success value.\n\nAt the same time, the RequestPresent parameters should also include render path relevant parameters. For example, the preserveDrawingBuffer attribute conflicts with a per-frame drawing buffer.\n\nI\u0027ll look into adding both of these.\n\nAlso, we should also support a per-frame property object passed in OnVSync, i.e. if we end up needing to switch between 0-copy and 1-copy on the fly for compositing.",
+      "parentUuid": "fa44a742_84d0efed",
       "range": {
         "startLine": 849,
         "startChar": 19,
