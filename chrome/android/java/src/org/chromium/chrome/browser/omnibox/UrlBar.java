@@ -91,7 +91,7 @@ public class UrlBar extends AutocompleteEditText {
      * The gesture detector is used to detect long presses. Long presses require special treatment
      * because the URL bar has custom touch event handling. See: {@link #onTouchEvent}.
      */
-    private final GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector;
 
     private final KeyboardHideHelper mKeyboardHideHelper;
 
@@ -209,20 +209,6 @@ public class UrlBar extends AutocompleteEditText {
 
         setHint(OmniboxPlaceholderFieldTrial.getOmniboxPlaceholder());
 
-        mGestureDetector = new GestureDetector(
-                getContext(), new GestureDetector.SimpleOnGestureListener() {
-                    @Override
-                    public void onLongPress(MotionEvent e) {
-                        performLongClick();
-                    }
-
-                    @Override
-                    public boolean onSingleTapUp(MotionEvent e) {
-                        requestFocus();
-                        return true;
-                    }
-                });
-        mGestureDetector.setOnDoubleTapListener(null);
         mKeyboardHideHelper = new KeyboardHideHelper(this, new Runnable() {
             @Override
             public void run() {
@@ -398,6 +384,22 @@ public class UrlBar extends AutocompleteEditText {
         }
 
         if (!mFocused) {
+            if (mGestureDetector == null) {
+                mGestureDetector = new GestureDetector(
+                        getContext(), new GestureDetector.SimpleOnGestureListener() {
+                            @Override
+                            public void onLongPress(MotionEvent e) {
+                                performLongClick();
+                            }
+
+                            @Override
+                            public boolean onSingleTapUp(MotionEvent e) {
+                                requestFocus();
+                                return true;
+                            }
+                        });
+                mGestureDetector.setOnDoubleTapListener(null);
+            }
             mGestureDetector.onTouchEvent(event);
             return true;
         }
