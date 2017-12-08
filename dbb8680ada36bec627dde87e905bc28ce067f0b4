@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f9a0c2_5d254f70",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T15:15:49Z",
+      "side": 1,
+      "message": "nit: This comment makes me think that TakeSnapshot() reloads if CanTakeSnapshot() return false. How about s/\"without causing a reload of\"/\"without reloading\" ?",
+      "range": {
+        "startLine": 301,
+        "startChar": 21,
+        "endLine": 301,
+        "endChar": 22
+      },
+      "revId": "dbb8680ada36bec627dde87e905bc28ce067f0b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10ffd4d_3672bad2",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T15:15:49Z",
+      "side": 1,
+      "message": "Can we add tests for this method? F.e. this should return \"true\" after page load. \"False\" after setting web usage to false. False after setting web usage to \"true\" again. \"True\" after reloading the page. \"False\" after renderer crash (see SimulateWKWebViewCrash).\n\nI think the easiest place to add the tests is crw_web_controller_unittest.mm, even though your test will test a web state.",
+      "range": {
+        "startLine": 715,
+        "startChar": 19,
+        "endLine": 715,
+        "endChar": 34
+      },
+      "revId": "dbb8680ada36bec627dde87e905bc28ce067f0b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
