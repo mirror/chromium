@@ -129,6 +129,30 @@
       "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a9a0f0_3123faf3",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T17:13:32Z",
+      "side": 1,
+      "message": "I am not aware of a public list outside of the whitelist in code. These extensions cannot be uninstalled (they do not even appear in chrome://extensions unless you run Chrome with --show-component-extension-options). The source for most of these extensions is included with Chrome so they don\u0027t need to be fetched from the WebStore. There are some that are fetched after first load as well.",
+      "parentUuid": "e8c8ffa1_30f1d55a",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
