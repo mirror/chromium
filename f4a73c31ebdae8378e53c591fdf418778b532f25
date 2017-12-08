@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08e31ef1_febd5c03",
+        "filename": "extensions/shell/browser/shell_extension_system.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T19:03:34Z",
+      "side": 1,
+      "message": "Oof - Init(), InitForRegularProfile(), and InitShellExtensionSystem()... :/\n\nIt\u0027s outside of the scope of this CL to totally fix this, but maybe this would be better as \"FinishInitialization()\", since this is the last to be called?  That at least makes these a *little* less similar-sounding.",
+      "revId": "f4a73c31ebdae8378e53c591fdf418778b532f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

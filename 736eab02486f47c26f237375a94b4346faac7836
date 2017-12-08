@@ -222,6 +222,30 @@
       "revId": "736eab02486f47c26f237375a94b4346faac7836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a21fa34_1af62d24",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T19:03:34Z",
+      "side": 1,
+      "message": "Non-incognito is fine.  And I was just saying change the comment; InitForRegularProfile() is broadly enough used that it shouldn\u0027t be changed in this CL (if at all).",
+      "parentUuid": "502da2de_ddbc0491",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "736eab02486f47c26f237375a94b4346faac7836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
