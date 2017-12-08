@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75140b8_3b885b9a",
+        "filename": "content/browser/child_process_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:30:39Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be in priority. it just needs to live in RenderProcessHostImpl",
+      "revId": "4af9130c35469f2102a5ea615746e257d117d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de09f400_13960bc6",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3858,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:30:39Z",
+      "side": 1,
+      "message": "I assume this is the thing that needs to happen? How about just calling this at end of OnProcessLaunched. Seems overkill to require maintaining extra state just for this",
+      "revId": "4af9130c35469f2102a5ea615746e257d117d47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
