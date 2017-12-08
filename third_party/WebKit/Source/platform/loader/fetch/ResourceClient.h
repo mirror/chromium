@@ -84,6 +84,10 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
   // so SVGElementProxy handles it for those clients. SVGResourceClients should
   // have a better way to register themselves as clients. crbug.com/789198
   friend class SVGElementProxy;
+  // CSSFontFaceSrcValue only ever request a Resource once, and acts as an
+  // intermediate caching layer of sorts. It needs to be able to register
+  // additional clients.
+  friend class CSSFontFaceSrcValue;
 
   void ClearResource() { SetResource(nullptr); }
 

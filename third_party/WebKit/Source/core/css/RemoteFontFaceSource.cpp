@@ -6,6 +6,7 @@
 
 #include "core/css/CSSCustomFontData.h"
 #include "core/css/CSSFontFace.h"
+#include "core/css/CSSFontFaceSrcValue.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -26,25 +27,21 @@
 namespace blink {
 
 RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
-                                           FontResource* font,
+                                           const CSSFontFaceSrcValue& src_value,
+                                           ExecutionContext* context,
                                            FontSelector* font_selector,
                                            FontDisplay display)
     : face_(css_font_face),
       font_selector_(font_selector),
       display_(display),
       period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
-      histograms_(font->Url().ProtocolIsData()
-                      ? FontLoadHistograms::kFromDataURL
-                      : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
-                                         : FontLoadHistograms::kFromUnknown),
       is_intervention_triggered_(false) {
   DCHECK(face_);
   if (ShouldTriggerWebFontsIntervention()) {
     is_intervention_triggered_ = true;
     period_ = kSwapPeriod;
   }
-  // Note: this may call NotifyFinished() and ClearResource().
-  SetResource(font);
+  src_value.Fetch(context, this);
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() = default;
@@ -274,6 +271,8 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
     const FontResource* font) {
+  MaySetDataSource(DataSourceForLoadFinish(font));
+
   DEFINE_STATIC_LOCAL(EnumerationHistogram, cache_hit_histogram,
                       ("WebFont.CacheHit", kCacheHitEnumMax));
   cache_hit_histogram.Count(DataSourceMetricsValue());
