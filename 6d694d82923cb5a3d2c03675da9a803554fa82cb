@@ -22,6 +22,30 @@
       "revId": "6d694d82923cb5a3d2c03675da9a803554fa82cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ea0948_9c532f56",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T01:26:40Z",
+      "side": 1,
+      "message": "Are there ever cases where the same allocator is used to generate multiple surface IDs we need to track at once? In a case like that, we\u0027d still need to track these in local variables and the LastGeneratedId may be more of a distraction?\n\nIf not the pattern seems OK, but I wonder if GenerateId should be a void() function to make it clear that you are expected to retrieve the ID from the allocator itself?",
+      "parentUuid": "8bbd9224_e7252130",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3067,
+        "endChar": 3
+      },
+      "revId": "6d694d82923cb5a3d2c03675da9a803554fa82cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
