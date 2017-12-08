@@ -140,8 +140,8 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
                            bool is_gpu_host,
                            EstablishGpuChannelCallback callback) override;
   void CloseChannel(int32_t client_id) override;
-  void CreateArcVideoDecodeAccelerator(
-      arc::mojom::VideoDecodeAcceleratorRequest vda_request) override;
+  void CreateArcVideoDecodeAcceleratorDeprecated(
+      arc::mojom::VideoDecodeAcceleratorDeprecatedRequest vda_request) override;
   void CreateArcVideoEncodeAccelerator(
       arc::mojom::VideoEncodeAcceleratorRequest vea_request) override;
   void CreateArcProtectedBufferManager(
@@ -178,7 +178,7 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
 
 #if defined(OS_CHROMEOS)
   void CreateArcVideoDecodeAcceleratorOnMainThread(
-      arc::mojom::VideoDecodeAcceleratorRequest vda_request);
+      arc::mojom::VideoDecodeAcceleratorDeprecatedRequest vda_request);
   void CreateArcVideoEncodeAcceleratorOnMainThread(
       arc::mojom::VideoEncodeAcceleratorRequest vea_request);
   void CreateArcProtectedBufferManagerOnMainThread(
