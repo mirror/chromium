@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2101fcf_8176cc50",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-08T22:37:48Z",
+      "side": 1,
+      "message": "this offline_page_model_taskified.cc is the \u0027next gen\u0027 of offline_page_model_impl.cc, which is going to replace the other implementation. And since the data we\u0027re going to collect are the same thing, we didn\u0027t change the name of the UMA.\nThis file is not used in any production build yet, but we plan to have a patch switching from previous model_impl.cc to this model_taskified.cc in near future.",
+      "parentUuid": "585287b9_89767b34",
+      "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db81160_d7d5c2bc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T21:43:24Z",
       "side": 1,
       "message": "I still see this in recently submitted code in\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_model_impl.cc?type\u003dcs\u0026q\u003dOfflinePages.DeletePage.AccessCount\u0026l\u003d294\n\nin a file not touched in this changelist.  What gives?",
+      "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fac39e4_b15a4c62",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54043,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-08T22:37:48Z",
+      "side": 1,
+      "message": "similar to the comment above I think, we\u0027re deprecating the offline_page_model_impl and migrating to offline_page_model_taskified.\nI\u0027m making this metric obsolete because the name no longer makes sense (since it\u0027s no longer part of DeletePage) so I\u0027m making the change.",
+      "parentUuid": "2db81160_d7d5c2bc",
       "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d65513_81be72ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54353,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-08T22:37:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "357efc7b_e578b198",
+      "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
