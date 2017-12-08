@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "4f261e74_a08cf3a4",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-08T01:46:53Z",
+      "side": 1,
+      "message": "I don\u0027t think the parent_id is fixed. Maybe there should be a setter? Also, we are now using id vs. sequence_number inconsistent. sadrul@ felt that ID is a misnomer. This is no longer an identifier so much as it is a sequence number.",
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b729ff3f_dc8e85b3",
         "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
         "patchSetId": 2
@@ -36,6 +53,30 @@
       "writtenOn": "2017-12-08T01:38:43Z",
       "side": 1,
       "message": "Is there much cost to generating these? If cheap enough, ignore this :D\n\nOtherwise could we re-use the parent ID\u0027s token? Or are there security issues I\u0027m not thinking of?",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2398fcaa_cdee116c",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-08T01:46:53Z",
+      "side": 1,
+      "message": "Yea, I think we could reuse the parent\u0027s token but I\u0027d be a lot more comfortable if a security engineer thought about this too. Maybe tsepez@?",
+      "parentUuid": "b729ff3f_dc8e85b3",
       "range": {
         "startLine": 21,
         "startChar": 26,
