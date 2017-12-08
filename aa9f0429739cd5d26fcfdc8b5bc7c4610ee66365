@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5fa74cf_9a47baf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:43:37Z",
+      "side": 1,
+      "message": "This is not a real bug.",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "aa9f0429739cd5d26fcfdc8b5bc7c4610ee66365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
