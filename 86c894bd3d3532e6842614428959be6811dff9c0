@@ -22,6 +22,30 @@
       "revId": "86c894bd3d3532e6842614428959be6811dff9c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3723ca_2425ae8a",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T16:30:18Z",
+      "side": 1,
+      "message": "added a comment to explain |window_|\u0027s bounds.",
+      "parentUuid": "0040e5aa_dbfc680c",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 63
+      },
+      "revId": "86c894bd3d3532e6842614428959be6811dff9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
