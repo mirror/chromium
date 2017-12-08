@@ -22,6 +22,64 @@
       "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f1e298_23136819",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-08T00:38:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure. Mike?",
+      "parentUuid": "6f4af062_40fda2fd",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c7f4c6_15e07d96",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-08T00:38:35Z",
+      "side": 1,
+      "message": "aside: ugh, I wonder if there are other places that are assuming \u003c 0 is equivalent to invalid. :-(",
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f11461_29951410",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-08T00:38:35Z",
+      "side": 1,
+      "message": "Thank you for adding test coverage.",
+      "revId": "903c7a2964804bd22d87d3964168289763fb9e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
