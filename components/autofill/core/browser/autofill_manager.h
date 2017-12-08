@@ -10,7 +10,10 @@
 #include <string>
 #include <vector>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/callback_forward.h"
+#include "base/cancelable_callback.h"
 #include "base/compiler_specific.h"
 #include "base/containers/circular_deque.h"
 #include "base/gtest_prod_util.h"
@@ -280,6 +283,8 @@ class AutofillManager : public AutofillHandler,
     form_data_importer_.reset(form_data_importer);
   }
 
+  void TestFilling();
+
  private:
   // AutofillDownloadManager::Observer:
   void OnLoadedServerPredictions(
@@ -544,6 +549,14 @@ class AutofillManager : public AutofillHandler,
   // Note that the integers are not frontend IDs.
   mutable std::map<std::string, int> backend_to_int_map_;
   mutable std::map<int, std::string> int_to_backend_map_;
+
+  AutofillProfile temp_data_model_;
+  FieldSignature pending_form_field_signature_;
+  FormSignature pending_form_signature_;
+
+  bool tried_ = false;
+
+  std::map<FormSignature, AutofillDataModel*> dynamic_;
 
   // Delegate to perform external processing (display, selection) on
   // our behalf.  Weak.

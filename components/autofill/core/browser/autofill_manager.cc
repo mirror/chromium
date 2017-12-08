@@ -33,6 +33,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/autocomplete_history_manager.h"
@@ -314,6 +315,7 @@ bool AutofillManager::ShouldShowCreditCardSigninPromo(
 
 void AutofillManager::OnFormsSeen(const std::vector<FormData>& forms,
                                   const TimeTicks timestamp) {
+  LOG(ERROR) << "OnFormsSeen";
   if (!IsValidFormDataVector(forms))
     return;
 
@@ -446,6 +448,7 @@ void AutofillManager::StartUploadProcess(
 }
 
 void AutofillManager::UpdatePendingForm(const FormData& form) {
+  LOG(ERROR) << "UpdatePendingForm";
   // Process the current pending form if different than supplied |form|.
   if (pending_form_data_ && !pending_form_data_->SameFormAs(form)) {
     ProcessPendingFormForUpload();
@@ -747,9 +750,11 @@ void AutofillManager::FillOrPreviewProfileForm(
   AutofillField* autofill_field = nullptr;
   if (!GetCachedFormAndField(form, field, &form_structure, &autofill_field))
     return;
-  if (action == AutofillDriver::FORM_DATA_ACTION_FILL)
+  if (action == AutofillDriver::FORM_DATA_ACTION_FILL) {
     address_form_event_logger_->OnDidFillSuggestion(
         profile, form_structure->form_parsed_timestamp());
+    temp_data_model_ = profile;
+  }
 
   FillOrPreviewDataModelForm(
       action, query_id, form, field, profile, false /* is_credit_card */,
@@ -819,7 +824,32 @@ void AutofillManager::OnDidFillAutofillFormData(const FormData& form,
   // form is not present in our cache, which will happen rarely.
   if (FindCachedForm(form, &form_structure)) {
     form_types = form_structure->GetFormTypes();
+
+    bool found_filled_country = false;
+    bool found_unfilled_state = false;
+    FieldSignature unfilled_state_signature;
+
+    // Look for a state field that did not fill
+    for (const auto& field : *form_structure) {
+      ServerFieldType field_type = field->Type().GetStorableType();
+
+      if (field_type == ADDRESS_HOME_COUNTRY && field->is_autofilled)
+        found_filled_country = true;
+
+      if (field_type == ADDRESS_HOME_STATE && !field->is_autofilled) {
+        found_unfilled_state = true;
+        unfilled_state_signature = CalculateFieldSignatureByNameAndType(
+            field->name, field->form_control_type);
+      }
+    }
+
+    if (found_filled_country && found_unfilled_state) {
+      LOG(ERROR) << "FOUND " << unfilled_state_signature;
+      pending_form_field_signature_ = unfilled_state_signature;
+      pending_form_signature_ = form_structure->form_signature();
+    }
   }
+
   AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL,
                                           form_types);
   if (!user_did_autofill_) {
@@ -829,6 +859,52 @@ void AutofillManager::OnDidFillAutofillFormData(const FormData& form,
   }
 
   UpdateInitialInteractionTimestamp(timestamp);
+
+  if (!tried_) {
+    LOG(ERROR) << "Trying";
+    tried_ = true;
+    base::SequencedTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&AutofillManager::TestFilling, base::Unretained(this)),
+        base::TimeDelta::FromSeconds(2));
+  } else {
+    LOG(ERROR) << "Already tried";
+  }
+}
+
+void AutofillManager::TestFilling() {
+  LOG(ERROR) << "In the callback";
+
+  FormStructure* form_structure;
+  for (auto& cur_form : base::Reversed(form_structures_)) {
+    if (cur_form->form_signature() == pending_form_signature_) {
+      form_structure = cur_form.get();
+      break;
+    }
+  }
+
+  AutofillField* autofill_field;
+  for (const auto& field : *form_structure) {
+    if (CalculateFieldSignatureByNameAndType(field->name,
+                                             field->form_control_type) ==
+        pending_form_field_signature_) {
+      autofill_field = field.get();
+    }
+  }
+
+  if (!form_structure && !autofill_field) {
+    LOG(ERROR) << "Could not find them";
+    return;
+  }
+
+  FormFieldData field_data(*autofill_field);
+  base::string16 cvc;
+  if (field_filler_.FillFormField(*autofill_field, temp_data_model_,
+                                  &field_data, cvc)) {
+    LOG(ERROR) << "Filled";
+  } else {
+    LOG(ERROR) << "Could not fill";
+  }
 }
 
 void AutofillManager::DidShowSuggestions(bool is_new_popup,
@@ -1926,6 +2002,9 @@ void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
           /*value=*/data_model.GetInfo(autofill_field->Type(), app_locale_),
           /*profile_full_name=*/data_model.GetInfo(AutofillType(NAME_FULL),
                                                    app_locale_));
+    } else {
+      if (autofill_field->Type().GetStorableType() == ADDRESS_HOME_STATE) {
+      }
     }
   }
 }

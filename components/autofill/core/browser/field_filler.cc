@@ -60,6 +60,9 @@ bool SetSelectControlValue(const base::string16& value,
       break;
     }
 
+    LOG(ERROR) << "Comparing " << value << " " << field->option_values[i] << " "
+               << field->option_contents[i];
+
     if (compare.StringsEqual(value, field->option_values[i]) ||
         compare.StringsEqual(value, field->option_contents[i])) {
       // A match, but not in the same case. Save it in case an exact match is
@@ -222,6 +225,8 @@ bool FillStateSelectControl(const base::string16& value,
   base::string16 abbreviation;
   // |abbreviation| will be empty for non-US countries.
   state_names::GetNameAndAbbreviation(value, &full, &abbreviation);
+
+  LOG(ERROR) << "full: " << full << " abbr:" << abbreviation;
 
   // Try an exact match of the abbreviation first.
   if (!abbreviation.empty() && SetSelectControlValue(abbreviation, field)) {
@@ -448,14 +453,18 @@ bool FillSelectControl(const AutofillType& type,
     return FillExpirationMonthSelectControl(value, app_locale, field);
 
   // Search for exact matches.
-  if (SetSelectControlValue(value, field))
+  if (SetSelectControlValue(value, field)) {
+    LOG(ERROR) << "Found exact match " << value;
     return true;
+  }
 
   // If that fails, try specific fallbacks based on the field type.
   if (storable_type == ADDRESS_HOME_STATE) {
+    LOG(ERROR) << "Knows it's a state";
     // Safe to cast the data model to AutofillProfile here.
     const std::string country_code = data_util::GetCountryCodeWithFallback(
         static_cast<const AutofillProfile&>(data_model), app_locale);
+    LOG(ERROR) << country_code;
     return FillStateSelectControl(value, field, country_code,
                                   address_normalizer);
   }
@@ -645,6 +654,7 @@ bool FieldFiller::FillFormField(const AutofillField& field,
     return true;
   }
   if (field_data->form_control_type == "select-one") {
+    LOG(ERROR) << "Fill select";
     return FillSelectControl(type, value, field_data, data_model, app_locale_,
                              address_normalizer_);
   }
@@ -665,8 +675,10 @@ bool FieldFiller::FillFormField(const AutofillField& field,
     FillCreditCardNumberField(field, value, field_data);
     return true;
   }
-  if (type.GetStorableType() == ADDRESS_HOME_STATE)
+  if (type.GetStorableType() == ADDRESS_HOME_STATE) {
+    LOG(ERROR) << "TRying to fill a state";
     return FillStateText(value, field_data);
+  }
   if (field_data->form_control_type == "text" &&
       (type.GetStorableType() == CREDIT_CARD_EXP_2_DIGIT_YEAR ||
        type.GetStorableType() == CREDIT_CARD_EXP_4_DIGIT_YEAR)) {
