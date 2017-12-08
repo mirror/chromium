@@ -138,22 +138,20 @@ int64_t GetNextDisplay(const display::Display& origin_display,
 }  // namespace
 
 void HandleMoveWindowToDisplay(DisplayMoveWindowDirection direction) {
-  aura::Window* window = wm::GetActiveWindow();
-  if (!window)
-    return;
-
-  // When |window_list| is not empty, |window| can only be the first one of the
-  // fresh built list if it is in the list.
+  // When |window_list| is not empty, target window to be moved must be the
+  // first one of the fresh built list.
   MruWindowTracker::WindowList window_list =
       Shell::Get()->mru_window_tracker()->BuildWindowForCycleList();
-  if (window_list.empty() || window_list.front() != window)
+  if (window_list.empty())
     return;
 
+  aura::Window* window = window_list.front();
   display::Display origin_display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window);
   int64_t dest_display_id = GetNextDisplay(origin_display, direction);
   if (dest_display_id == display::kInvalidDisplayId)
     return;
+
   wm::MoveWindowToDisplay(window, dest_display_id);
 
   // Send a11y alert.

@@ -14,6 +14,9 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/base/class_property.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
+#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/transient_window_controller.h"
 #include "ui/wm/core/transient_window_observer.h"
 #include "ui/wm/core/transient_window_stacking_client.h"
@@ -27,6 +30,31 @@ namespace wm {
 namespace {
 
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(TransientWindowManager, kPropertyKey, NULL);
+
+// Move all transient children to |dst_root|, including the ones in the child
+// windows and transient children of the transient children.
+void MoveAllTransientChildrenToNewRoot(Window* window) {
+  Window* dst_root = window->GetRootWindow();
+  for (Window* transient_child : ::wm::GetTransientChildren(window)) {
+    const int container_id = transient_child->parent()->id();
+    DCHECK_GE(container_id, 0);
+    Window* container = dst_root->GetChildById(container_id);
+    if (container->Contains(transient_child))
+      continue;
+    gfx::Rect child_bounds = transient_child->bounds();
+    ::wm::ConvertRectToScreen(dst_root, &child_bounds);
+    container->AddChild(transient_child);
+    transient_child->SetBoundsInScreen(
+        child_bounds,
+        display::Screen::GetScreen()->GetDisplayNearestWindow(window));
+
+    // Transient children may have transient children.
+    MoveAllTransientChildrenToNewRoot(transient_child);
+  }
+  // Move transient children of the child windows if any.
+  for (Window* child : window->children())
+    MoveAllTransientChildrenToNewRoot(child);
+}
 
 }  // namespace
 
@@ -233,6 +261,11 @@ void TransientWindowManager::OnWindowDestroying(Window* window) {
   for (auto* child : transient_children)
     delete child;
   DCHECK(transient_children_.empty());
+}
+
+void TransientWindowManager::OnWindowAddedToRootWindow(Window* window) {
+  DCHECK_EQ(window_, window);
+  MoveAllTransientChildrenToNewRoot(window);
 }
 
 }  // namespace wm
