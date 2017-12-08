@@ -57,8 +57,7 @@ void X11WindowEventFilter::MaybeDispatchHostWindowDragMovement(
     // Get the |x_root_window_| location out of the native event.
     const gfx::Point x_root_location =
         ui::EventSystemLocationFromNative(event->native_event());
-    if (DispatchHostWindowDragMovement(hittest, x_root_location))
-      event->StopPropagation();
+    DispatchHostWindowDragMovement(hittest, x_root_location);
   }
 }
 
