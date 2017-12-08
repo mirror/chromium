@@ -311,6 +311,10 @@ void TestWebState::SetHasOpener(bool has_opener) {
   has_opener_ = has_opener;
 }
 
+bool TestWebState::CanTakeSnapshot() const {
+  return true;
+}
+
 void TestWebState::TakeSnapshot(const SnapshotCallback& callback,
                                 CGSize target_size) const {
   callback.Run(gfx::Image([[UIImage alloc] init]));
