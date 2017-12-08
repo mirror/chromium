@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5df811c_d366ba84",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "You can remove this now. :)",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707345a0_c40a9c69",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "I think this will apply to both APIs. klausw@ is repurposing this flag. Maybe we should take that opportunity to rename. That could be part of his CL or separate. Thoughts?",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983876aa_0b8ee8e5",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "This could also be renamed as I don\u0027t think anyone is using it.",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7602dba_d33a1eab",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "We should probably leave this one for now. It\u0027s enabled by default.",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf70c90_256c4998",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "We should probably be very explicit. For example `(\\\"WebVR 1.1\\\")`.",
+      "range": {
+        "startLine": 1602,
+        "startChar": 25,
+        "endLine": 1602,
+        "endChar": 26
+      },
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fa0308_d3a75f5c",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "People might search for \"VR\" in chrome://flags. It\u0027d be nice to include that somehow - maybe in parentheses?",
+      "range": {
+        "startLine": 1615,
+        "startChar": 5,
+        "endLine": 1615,
+        "endChar": 20
+      },
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e251bb_5cf33717",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T21:17:47Z",
+      "side": 1,
+      "message": "Does this no longer depend on WebVR now that I fixed navigator.vr?",
+      "revId": "9f512006fcdab2ea70b920e403aedcc4461bb768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
