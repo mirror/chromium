@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d1d0c2b_ac7d78fe",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T16:43:41Z",
+      "side": 1,
+      "message": "nit:  + const (I think it goes before the struct?  Not sure)",
+      "range": {
+        "startLine": 1470,
+        "startChar": 4,
+        "endLine": 1470,
+        "endChar": 14
+      },
+      "revId": "756d491b9437ab07e4da20418513236fad9c8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
