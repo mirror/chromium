@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd82a82_c5d4225e",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T22:22:05Z",
+      "side": 1,
+      "message": "can we rename fieldData and fieldsData to something more descriptive?",
+      "revId": "e11ecb9035a83b4541e6d1aac7891a7a78bda3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
