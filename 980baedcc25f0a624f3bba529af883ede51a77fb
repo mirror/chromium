@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "380fdf76_d1fac303",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-08T09:38:36Z",
+      "side": 1,
+      "message": "My intuition would be that we have more than 100 events per minute, especially when page is loading / doing something active. Shall we increase the upper limit to 1000 and the number of buckets to, let\u0027s say, 25?",
+      "range": {
+        "startLine": 14,
+        "startChar": 30,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "980baedcc25f0a624f3bba529af883ede51a77fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
