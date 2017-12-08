@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46fc1456_506d4838",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T23:20:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the same as looking at the active window. What makes you want to change this?",
+      "range": {
+        "startLine": 148,
+        "startChar": 25,
+        "endLine": 148,
+        "endChar": 44
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae972f5d_7ee6e851",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T23:20:38Z",
+      "side": 1,
+      "message": "Please provide a test in ui/wm/core as well.",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 60
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5773c6fb_b3e62549",
+        "filename": "ui/wm/core/transient_window_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T23:20:38Z",
+      "side": 1,
+      "message": "Sorry for leading you down the wrong path. The only way this code can work is if it knows container_ids line up on the two roots. There is no guarantee of that outside of ash. Additionally it\u0027s entirely possible to have a window with a transient parent in a different root. While weird, it\u0027s possible. So, in other words, I think this code belongs in ash.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
