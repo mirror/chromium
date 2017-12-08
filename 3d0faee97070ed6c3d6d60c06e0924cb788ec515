@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3234f30_a0726d8d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-08T01:07:09Z",
+      "side": 1,
+      "message": "This is not the cleanest, but its the best we can do without creating additional infrastructure for starting various PropertyAnimators at the same time.\nHad a quick chat with Kurt and Mark and we agreed that we can use this for now.",
+      "revId": "3d0faee97070ed6c3d6d60c06e0924cb788ec515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
