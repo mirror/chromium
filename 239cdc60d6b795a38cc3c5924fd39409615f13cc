@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48be78a7_2a2d13cf",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T19:25:25Z",
+      "side": 1,
+      "message": "Can we just do needs_blur !\u003d is_wallpaper_blurred_ ?",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a6bb27_f14197b2",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T19:25:25Z",
+      "side": 1,
+      "message": "I think we need to move everything to the if block, since we only want to notify observers when there\u0027s indeed a change.",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b21e7ea_63a73f82",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T19:25:25Z",
+      "side": 1,
+      "message": "It seems that\n\nsession_controller-\u003eIsUserSessionBlocked() ||\nsession_controller-\u003eIsUnlocking()\n\nis the same with\n\nSessionState state \u003d Shell::Get()-\u003esession_controller()-\u003eGetSessionState();\nstate !\u003d SessionState::ACTIVE \u0026\u0026\nstate !\u003d SessionState::LOGGED_IN_NOT_ACTIVE\n\nIf so can we directly check session state, so that you don\u0027t need to add an is_unlocking getter?\n\nAnd my previous code had a useless part: when |is_unlocking| is set to true, OnSessionStateChanged() is not called, so there\u0027s no signal to let wallpaper_controller know that and remove blur immediately. It will wait until SessionState actually changed to ACTIVE anyway..\n\nSo I believe this CL actually makes blur removal earlier than before (though maybe not noticeable), since it removes blur right after the lock animation finishes, and doesn\u0027t wait until session state changes. If this is not intended, then we can even simplify |PrepareWallpaperForLockScreenChange(bool locked)| to something like |PrepareWallpaperForPreLock()| without taking a parameter, as a one-time blur setter, because we don\u0027t need to rely on it to remove blur. It\u0027s up to you..",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e3d552_14937698",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-08T19:25:25Z",
+      "side": 1,
+      "message": "Maybe add crbug.com/775591 back to the comments?",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
