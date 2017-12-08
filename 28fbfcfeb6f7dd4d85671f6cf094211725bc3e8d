@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d753a81_be06ba3b",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-08T16:46:32Z",
+      "side": 1,
+      "message": "+1\n\nWe should fix this since we have a chrome enum now and replace |kAppListPlayStoreQueryStateNum| below with a ARC_PLAY_STORE_SEARCH_REQUEST_STATE_COUNT enum like other UMA enums.",
+      "parentUuid": "098184d0_6e8e9097",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "28fbfcfeb6f7dd4d85671f6cf094211725bc3e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5f3438_89f2cc20",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 4
