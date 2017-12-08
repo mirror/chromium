@@ -31,6 +31,8 @@ base::LazyInstance<base::ThreadLocalPointer<internal::MessageDispatchContext>>::
 base::LazyInstance<base::ThreadLocalPointer<SyncMessageResponseContext>>::Leaky
     g_tls_sync_response_context = LAZY_INSTANCE_INITIALIZER;
 
+BadMessageObserverForTest* g_bad_message_observer = nullptr;
+
 void DoNotifyBadMessage(Message message, const std::string& error) {
   message.NotifyBadMessage(error);
 }
@@ -499,6 +501,11 @@ MojoResult ReadMessage(MessagePipeHandle handle, Message* message) {
 void ReportBadMessage(const std::string& error) {
   internal::MessageDispatchContext* context =
       internal::MessageDispatchContext::current();
+  if (g_bad_message_observer) {
+    DCHECK(!context);
+    g_bad_message_observer->ReportBadMessage(error);
+    return;
+  }
   DCHECK(context);
   context->GetBadMessageCallback().Run(error);
 }
@@ -542,5 +549,18 @@ void SyncMessageResponseSetup::SetCurrentSyncResponseMessage(Message* message) {
 }
 
 }  // namespace internal
+
+BadMessageObserverForTest::BadMessageObserverForTest() {
+  DCHECK(!g_bad_message_observer);
+  g_bad_message_observer = this;
+}
+BadMessageObserverForTest::~BadMessageObserverForTest() {
+  DCHECK_EQ(g_bad_message_observer, this);
+  g_bad_message_observer = nullptr;
+}
+
+void BadMessageObserverForTest::ReportBadMessage(const std::string& error) {
+  errors_.push_back(error);
+}
 
 }  // namespace mojo
