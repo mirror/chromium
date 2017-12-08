@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95924cf4_ecb41dd3",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T01:35:12Z",
+      "side": 1,
+      "message": "Is it possible (reasonably) to calculate the line number of the previous highlight and the new highlight and subtract those, instead of involving pixel calculations (which force a relayout)?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "0702065c1b06b6aa9d1be5a5801dba71d1c4cbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde6e2c1_7a0e0882",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T01:35:12Z",
+      "side": 1,
+      "message": "s/s/S",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "0702065c1b06b6aa9d1be5a5801dba71d1c4cbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
