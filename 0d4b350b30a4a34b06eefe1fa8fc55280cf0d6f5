@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e8b9347_0d356882",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T17:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4089f43_0b2e1126",
+      "range": {
+        "startLine": 168,
+        "startChar": 53,
+        "endLine": 168,
+        "endChar": 61
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460a168d_613ff624",
         "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
         "patchSetId": 17
@@ -83,6 +107,30 @@
       "side": 1,
       "message": "Yes, I second this question.\nIt may be a good thing to have the tests here rather than in the other file, but I don\u0027t think we should have two implementations of the same tests.",
       "parentUuid": "7a91fc77_651c2017",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e36021_57140434",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-08T17:18:34Z",
+      "side": 1,
+      "message": "Good catch! IMHO these tests are more exhaustive and \"closer\" to the thing being tested; Happy to remove id+account_consistency+mode tests from the other file, but should it go in this CL? I think I\u0027ll create a separate on for that (If you agree that these tests should live?)",
+      "parentUuid": "a5f10945_3f085bc2",
       "range": {
         "startLine": 19,
         "startChar": 32,
