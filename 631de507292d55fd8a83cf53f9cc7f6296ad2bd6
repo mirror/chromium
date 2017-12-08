@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f878419_8cfc8470",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T22:09:46Z",
+      "side": 1,
+      "message": "This should be already available from url/url_constants.h, switch to using that.",
+      "revId": "631de507292d55fd8a83cf53f9cc7f6296ad2bd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
