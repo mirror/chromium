@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8908355_fc1b6318",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-08T00:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "737d3fe8_735312b9",
+      "range": {
+        "startLine": 1875,
+        "startChar": 34,
+        "endLine": 1875,
+        "endChar": 50
+      },
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e3af0a_19b1e5ce",
         "filename": "content/browser/android/gesture_listener_manager_android.h",
         "patchSetId": 11
@@ -255,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "18f63531_ce26939d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-08T00:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "994eb951_4847a393",
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca25962c_59bdd78c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
         "patchSetId": 11
@@ -269,6 +311,24 @@
       "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88e1fae_71cb9b05",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-08T00:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca25962c_59bdd78c",
+      "revId": "6c9435c4bd9d1420e9eaf156c218e9da638e16cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
