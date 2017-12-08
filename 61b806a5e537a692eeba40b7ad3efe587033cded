@@ -16,6 +16,24 @@
       "revId": "61b806a5e537a692eeba40b7ad3efe587033cded",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556eaae8_8e15447e",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-08T06:49:22Z",
+      "side": 1,
+      "message": "+szager@\n\nI\u0027m not very familiar with the implementation of IntersectionObserver. szager@, any inputs? (Looks like you are the owner of IntersectionObserver https://chromium-review.googlesource.com/c/chromium/src/+/569532#message-7bdaff6b4231ae733e15deb7e03d992bceee99a5)",
+      "parentUuid": "5986fcc8_aa081572",
+      "revId": "61b806a5e537a692eeba40b7ad3efe587033cded",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
