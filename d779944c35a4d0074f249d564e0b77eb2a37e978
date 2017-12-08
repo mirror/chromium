@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "485c682a_3683f7fc",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-08T22:41:11Z",
+      "side": 1,
+      "message": "Guess not.  Thanks.  Removed.",
+      "parentUuid": "c2ef80a8_eed5f1c6",
+      "revId": "d779944c35a4d0074f249d564e0b77eb2a37e978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffb8b705_565eea2b",
         "filename": "sandbox/linux/syscall_broker/broker_process.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T22:27:15Z",
       "side": 1,
       "message": "Does anything in your testing pass AT_REMOVEDIR, which would then map to rmdir?",
+      "revId": "d779944c35a4d0074f249d564e0b77eb2a37e978",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0a1b51_0c0a9b5f",
+        "filename": "sandbox/linux/syscall_broker/broker_process.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-08T22:41:11Z",
+      "side": 1,
+      "message": "Nope, added comment.",
+      "parentUuid": "ffb8b705_565eea2b",
       "revId": "d779944c35a4d0074f249d564e0b77eb2a37e978",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
