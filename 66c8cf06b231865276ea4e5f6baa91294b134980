@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6015eb0d_a333e2ce",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:26:58Z",
+      "side": 1,
+      "message": "nit: also need to include \u003cmemory\u003e (Which you can remove from the cc file, too)",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "66c8cf06b231865276ea4e5f6baa91294b134980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
