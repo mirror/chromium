@@ -1747,6 +1747,21 @@
           '--xvfb',
         ],
       },
+      'Linux Tests (dbg)(1)': {
+        'args': [
+          '--xvfb',
+        ],
+        'swarming': {
+          'hard_timeout': 1500,
+          'shards': 15,
+        },
+      },
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'hard_timeout': 1500,
+          'shards': 20,
+        },
+      },
       # Disable parallelism on all Mac bots.
       'Mac10.10 Tests': {
         'args': [
@@ -1765,11 +1780,9 @@
       },
     },
     'remove_from': [
-      'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
       'Mac10.9 Tests',
       'Mac10.9 Tests (dbg)',
-      'Win7 Tests (dbg)(1)',
     ],
   },
   'traffic_annotation_auditor_unittests': {
