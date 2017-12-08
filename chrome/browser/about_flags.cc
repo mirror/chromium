@@ -2918,6 +2918,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableAutofillCreditCardUploadNewUiName,
      flag_descriptions::kEnableAutofillCreditCardUploadNewUiDescription,
      kOsDesktop, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamShowNewUi)},
+    {"enable-autofill-credit-card-upload-send-pan-first-six",
+     flag_descriptions::kEnableAutofillCreditCardUploadSendPanFirstSixName,
+     flag_descriptions::
+         kEnableAutofillCreditCardUploadSendPanFirstSixDescription,
+     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamSendPanFirstSix)},
     {"enable-autofill-credit-card-ablation-experiment",
      flag_descriptions::kEnableAutofillCreditCardAblationExperimentDisplayName,
      flag_descriptions::kEnableAutofillCreditCardAblationExperimentDescription,
