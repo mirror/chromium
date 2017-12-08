@@ -3,25 +3,21 @@
 // found in the LICENSE file.
 
 #include "core/paint/FragmentData.h"
-#include "core/paint/ObjectPaintProperties.h"
+#include "core/paint/PaintLayer.h"
 
 namespace blink {
 
-FragmentData& FragmentData::EnsureNextFragment() {
-  if (!next_fragment_)
-    next_fragment_ = FragmentData::Create();
-  return *next_fragment_.get();
-}
+// These are defined here because of PaintLayer dependency.
 
-RarePaintData& FragmentData::EnsureRarePaintData() {
-  if (!rare_paint_data_)
-    rare_paint_data_ = std::make_unique<RarePaintData>(visual_rect_.Location());
-  return *rare_paint_data_.get();
-}
+FragmentData::RareData::RareData(const LayoutPoint& location_in_backing)
+    : unique_id(NewUniqueObjectId()),
+      location_in_backing(location_in_backing) {}
 
-void FragmentData::SetLocationInBacking(const LayoutPoint& point) {
-  if (rare_paint_data_ || point != VisualRect().Location())
-    EnsureRarePaintData().SetLocationInBacking(point);
+FragmentData::RareData::~RareData() {}
+
+void FragmentData::SetLayer(std::unique_ptr<PaintLayer> layer) {
+  if (rare_data_ || layer)
+    EnsureRareData().layer = std::move(layer);
 }
 
 }  // namespace blink
