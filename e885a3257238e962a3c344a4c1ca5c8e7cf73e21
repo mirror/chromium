@@ -16,6 +16,24 @@
       "revId": "e885a3257238e962a3c344a4c1ca5c8e7cf73e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f57ca8_69de1c09",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-12-08T17:55:25Z",
+      "side": 1,
+      "message": "Unfortunately, GrGLCreateNullInterface() returns a bare pointer so it\u0027d have to be something like sk_sp\u003cGrGLInterface\u003e(GrGLCreateNullInterface()) were it inlined.\n\nI separately want to make the GrGLInterface factories return sk_sp\u003c\u003e. However, I\u0027m also aiming to remove the null interface from Skia by having chrome tests use TestGLES2Interface instead. So I wasn\u0027t planning to add a sk_sp\u003c\u003e version that one.",
+      "parentUuid": "c3e010c2_6c719b2a",
+      "revId": "e885a3257238e962a3c344a4c1ca5c8e7cf73e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
