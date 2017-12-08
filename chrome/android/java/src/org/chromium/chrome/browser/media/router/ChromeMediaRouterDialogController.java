@@ -47,6 +47,7 @@ public class ChromeMediaRouterDialogController implements MediaRouteDialogDelega
         if (isShowingDialog()) return;
 
         MediaSource source = null;
+
         for (String sourceUrn : sourceUrns) {
             source = CastMediaSource.from(sourceUrn);
             if (source == null) source = RemotingMediaSource.from(sourceUrn);
