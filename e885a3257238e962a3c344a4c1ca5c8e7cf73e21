@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e010c2_6c719b2a",
+        "filename": "cc/paint/paint_op_buffer_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-08T17:45:46Z",
+      "side": 1,
+      "message": "nit: I would inline GrGLCreateNullInterface() here, and in most other places where we immediately std::move it.",
+      "revId": "e885a3257238e962a3c344a4c1ca5c8e7cf73e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
