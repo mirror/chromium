@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d090f_f8668d91",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20325,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T20:59:17Z",
+      "side": 1,
+      "message": "nit: DCHECK. Also could move to the constructor maybe?",
+      "revId": "fd14dca8ac76c5ad3f598ce3e581c7a28cbec2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
