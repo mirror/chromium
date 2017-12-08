@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f1067ba9_68d0d193",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-08T20:38:17Z",
+      "side": 1,
+      "message": "Yeah, that makes sense. However, your latest patch set returns settings.EmptyChromeCleanerScannerResults. This is risky, since the method returns a pointer to a global object instead of a copy.\n\nex.\n\n$foo \u003d {}\n{}\n$foo.bar \u003d {\u0027files\u0027: [\u0027a\u0027]}\n{files: Array(1)}\n$my_func \u003d function() { return foo.bar; }\nƒ () { return foo.bar; }\n$my_func()\n{files: Array(1)}\n$my_func()[\"registry\"] \u003d [\u0027b\u0027]\n[\"b\"]\n$my_func()\n{files: Array(1), registry: Array(1)}",
+      "parentUuid": "f382e314_7bddb159",
+      "range": {
+        "startLine": 212,
+        "startChar": 25,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1079d8f9_3ede29bb",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 6
