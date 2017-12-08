@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04bb3f25_84a99502",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-08T22:54:37Z",
+      "side": 1,
+      "message": "This metric looks like it\u0027s being tracked in two different locations in this CL (one for initial page load and another for side bar navigation). Can this be done in one place? Maybe in the shortcuts page code itself?",
+      "revId": "300682d7a5ab79bff5ef8a0394cdbfca8b26b706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
