@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "494b192c_7d193111",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-08T23:26:06Z",
+      "side": 0,
+      "message": "This was removing the \u003cdialog\u003e element and interrupting the animation early.",
+      "revId": "a5d05a651c26a56d6da526550d6dd8f655e42e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
