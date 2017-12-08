@@ -138,14 +138,8 @@ void CopyFragmentDataToLayoutBoxForInlineChildren(
         layout_box.SetLocation(child_offset.ToLayoutPoint());
       }
 
-      // The Location() of inline LayoutObject is relative to the
-      // LayoutBlockFlow. If |child| is a block layout root (e.g., inline block,
-      // float, etc.), it creates another inline formatting context. Do not copy
-      // to its descendants in this case.
-      if (!child->IsBlockLayoutRoot()) {
-        CopyFragmentDataToLayoutBoxForInlineChildren(
-            ToNGPhysicalContainerFragment(*child), child_offset);
-      }
+      CopyFragmentDataToLayoutBoxForInlineChildren(
+          ToNGPhysicalContainerFragment(*child), child_offset);
     }
   }
 }
@@ -463,9 +457,12 @@ void NGBlockNode::CopyChildFragmentPosition(
   // We should only be positioning children which are relative to ourselves.
   // The flow thread, however, is invisible to LayoutNG, so we need to make
   // an exception there.
-  DCHECK(box_ == layout_box->ContainingBlock() ||
-         (layout_box->ContainingBlock()->IsLayoutFlowThread() &&
-          box_ == layout_box->ContainingBlock()->ContainingBlock()));
+  DCHECK(
+      box_ == layout_box->ContainingBlock() ||
+      (layout_box->ContainingBlock()->IsLayoutFlowThread() &&
+       box_ == layout_box->ContainingBlock()->ContainingBlock()) ||
+      (layout_box->ContainingBlock()->IsInline() &&  // anonymous wrapper case
+       box_->Parent() == layout_box->ContainingBlock()));
 
   // LegacyLayout flips vertical-rl horizontal coordinates before paint.
   // NGLayout flips X location for LegacyLayout compatibility.
