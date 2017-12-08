@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22d7b57b_56ef8cba",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T07:20:23Z",
+      "side": 1,
+      "message": "The fingerprint_browsertest overrides its connector, which is different from other clients, so I didn\u0027t specially create another Overrider for it.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 63
+      },
+      "revId": "432c7cc130cb7f97030802a3422a603283473f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
