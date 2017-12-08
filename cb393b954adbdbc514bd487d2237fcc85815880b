@@ -174,6 +174,24 @@
       "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811bc6e2_db40718c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-12-08T23:56:29Z",
+      "side": 1,
+      "message": "Which part of AddCell are you referring to when you say \"calculating the row spans\"? Maybe the call to cell-\u003eRowSpan() which does the subtraction?\n\nBut AddCell() is already called with this cell on line 168. Though perhaps that\u0027s ok because its work will be thrown away when layout calls RecalcSectionsIfNeeded(), which will trigger a recalc because of setting SetNeedsCellRecalc on the next line?\n\nIf that understanding is correct, could you add a comment like this, but make it better? :)\n// When a cell has rowspan\u003d0 we need to set its span to the remaining number of rows in the section. But we won\u0027t know that number until layout time, so set this flag to make layout do a section recalc, which will allow us to set the rowspan\u003d0 cell correctly.\n\nI think \"completely built\" means the LayoutObject hierarchy is fully in place, rather than the section\u0027s grid is constructed, correct?",
+      "parentUuid": "798b2993_828c474c",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
