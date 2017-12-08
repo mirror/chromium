@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d2732b_593af6d9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-08T17:05:41Z",
+      "side": 1,
+      "message": "Nit: I usually remove the \"else:\" in places like this.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 23
+      },
+      "revId": "5fe984076751dc7d6e5be825b30df82d2eb4715a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9646529_30644cce",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-08T17:05:41Z",
+      "side": 1,
+      "message": "Side note: I just went and investigated whether the TEAM and COMPONENT bits are formally specified anywhere or just a convention... it seems they\u0027re just a convention and are not parsed by owners.py in depot_tools...\n\nIf I recall correctly, I think dimu@ added the COMPONENT part to owners files, within the last 1-2 years.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 9
+      },
+      "revId": "5fe984076751dc7d6e5be825b30df82d2eb4715a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
