@@ -39,7 +39,7 @@
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_lists_version.h"
-#include "gpu/ipc/host/gpu_memory_buffer_support.h"
+#include "gpu/config/gpu_memory_buffer_support.h"
 #include "skia/ext/skia_commit_hash.h"
 #include "third_party/angle/src/common/version.h"
 #include "third_party/skia/include/core/SkMilestone.h"
