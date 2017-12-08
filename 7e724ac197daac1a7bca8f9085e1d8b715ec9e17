@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05445e0a_05de906a",
+        "filename": "media/base/watch_time_keys.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:34:29Z",
+      "side": 1,
+      "message": "Due to the last CL you reviewed :) We\u0027re not reporting video-only stats to UMA currently.",
+      "parentUuid": "31586a93_545e650a",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "7e724ac197daac1a7bca8f9085e1d8b715ec9e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c80625dc_876e1972",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T02:27:58Z",
       "side": 1,
       "message": "What determines this limit? Can you expand the comment?",
+      "range": {
+        "startLine": 105,
+        "startChar": 5,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "7e724ac197daac1a7bca8f9085e1d8b715ec9e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1619e05b_52447968",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:34:29Z",
+      "side": 1,
+      "message": "From https://chromium-review.googlesource.com/#/c/516528/7/content/browser/media/media_internals.cc@355 :\n\n\"In the absolute worst case you\u0027ll run out of audio every time, which has a queuing strategy of 200ms, 400ms, 800ms, 1600ms, 3000ms - so a max of 5 underflow events in a 7 second period, or a minimum MTBR of 1.4s.\"\n\nIf we start logging video-only, then this wouldn\u0027t be true of course.",
+      "parentUuid": "c80625dc_876e1972",
       "range": {
         "startLine": 105,
         "startChar": 5,
@@ -68,6 +116,30 @@
       "revId": "7e724ac197daac1a7bca8f9085e1d8b715ec9e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5062d57_b6b672fd",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:34:29Z",
+      "side": 1,
+      "message": "See reply to your other comment.",
+      "parentUuid": "b06a4c3f_7ff6efa9",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "7e724ac197daac1a7bca8f9085e1d8b715ec9e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
