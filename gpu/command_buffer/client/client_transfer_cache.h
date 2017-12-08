@@ -7,6 +7,7 @@
 
 #include "cc/paint/transfer_cache_entry.h"
 #include "gpu/command_buffer/client/client_discardable_manager.h"
+#include "gpu/command_buffer/client/gles2_impl_export.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/transfer_cache_entry_id.h"
 
@@ -32,7 +33,7 @@ class MappedMemoryManager;
 // If an entry is no longer needed:
 //   5) DeleteTransferCacheEntry
 //
-class GPU_EXPORT ClientTransferCache {
+class GLES2_IMPL_EXPORT ClientTransferCache {
  public:
   ClientTransferCache();
   ~ClientTransferCache();
