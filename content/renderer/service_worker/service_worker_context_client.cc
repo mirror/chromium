@@ -369,8 +369,6 @@ void OnResponseBlobDispatchDone(
 struct ServiceWorkerContextClient::WorkerContextData {
   using ClientsCallbacksMap =
       base::IDMap<std::unique_ptr<blink::WebServiceWorkerClientsCallbacks>>;
-  using ClaimClientsCallbacksMap = base::IDMap<
-      std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks>>;
   using ClientCallbacksMap =
       base::IDMap<std::unique_ptr<blink::WebServiceWorkerClientCallbacks>>;
   using SkipWaitingCallbacksMap =
@@ -396,9 +394,6 @@ struct ServiceWorkerContextClient::WorkerContextData {
 
   // Pending callbacks for SkipWaiting().
   SkipWaitingCallbacksMap skip_waiting_callbacks;
-
-  // Pending callbacks for ClaimClients().
-  ClaimClientsCallbacksMap claim_clients_callbacks;
 
   // Maps for inflight event callbacks.
   // These are mapped from an event id issued from ServiceWorkerTimeoutTimer to
@@ -676,8 +671,6 @@ void ServiceWorkerContextClient::OnMessageReceived(
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_NavigateClientError,
                         OnNavigateClientError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidSkipWaiting, OnDidSkipWaiting)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidClaimClients, OnDidClaimClients)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ClaimClientsError, OnClaimClientsError)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   DCHECK(handled);
@@ -1250,8 +1243,10 @@ void ServiceWorkerContextClient::SkipWaiting(
 void ServiceWorkerContextClient::Claim(
     std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks> callbacks) {
   DCHECK(callbacks);
-  int request_id = context_->claim_clients_callbacks.Add(std::move(callbacks));
-  Send(new ServiceWorkerHostMsg_ClaimClients(GetRoutingID(), request_id));
+  DCHECK(context_->service_worker_host);
+  context_->service_worker_host->ClaimClients(
+      base::BindOnce(&ServiceWorkerContextClient::OnDidClaimClients,
+                     base::Unretained(this), std::move(callbacks)));
 }
 
 void ServiceWorkerContextClient::DispatchSyncEvent(
@@ -1756,34 +1751,22 @@ void ServiceWorkerContextClient::OnDidSkipWaiting(int request_id) {
   context_->skip_waiting_callbacks.Remove(request_id);
 }
 
-void ServiceWorkerContextClient::OnDidClaimClients(int request_id) {
+void ServiceWorkerContextClient::OnDidClaimClients(
+    std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks> callbacks,
+    blink::mojom::ServiceWorkerErrorType error,
+    const base::Optional<std::string>& error_msg) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnDidClaimClients");
-  blink::WebServiceWorkerClientsClaimCallbacks* callbacks =
-      context_->claim_clients_callbacks.Lookup(request_id);
-  if (!callbacks) {
-    NOTREACHED() << "Got stray response: " << request_id;
-    return;
-  }
-  callbacks->OnSuccess();
-  context_->claim_clients_callbacks.Remove(request_id);
-}
 
-void ServiceWorkerContextClient::OnClaimClientsError(
-    int request_id,
-    blink::mojom::ServiceWorkerErrorType error_type,
-    const base::string16& message) {
-  TRACE_EVENT0("ServiceWorker",
-               "ServiceWorkerContextClient::OnClaimClientsError");
-  blink::WebServiceWorkerClientsClaimCallbacks* callbacks =
-      context_->claim_clients_callbacks.Lookup(request_id);
-  if (!callbacks) {
-    NOTREACHED() << "Got stray response: " << request_id;
+  if (error != blink::mojom::ServiceWorkerErrorType::kNone) {
+    DCHECK(error_msg);
+    callbacks->OnError(blink::WebServiceWorkerError(
+        error, blink::WebString::FromUTF8(*error_msg)));
     return;
   }
-  callbacks->OnError(blink::WebServiceWorkerError(
-      error_type, blink::WebString::FromUTF16(message)));
-  context_->claim_clients_callbacks.Remove(request_id);
+
+  DCHECK(!error_msg);
+  callbacks->OnSuccess();
 }
 
 void ServiceWorkerContextClient::Ping(PingCallback callback) {

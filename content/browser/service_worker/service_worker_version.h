@@ -533,6 +533,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void SetCachedMetadata(const GURL& url,
                          const std::vector<uint8_t>& data) override;
   void ClearCachedMetadata(const GURL& url) override;
+  void ClaimClients(ClaimClientsCallback callback) override;
 
   void OnSetCachedMetadataFinished(int64_t callback_id,
                                    size_t size,
@@ -573,7 +574,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
                                 ServiceWorkerStatusCode status,
                                 const ServiceWorkerClientInfo& client_info);
   void OnSkipWaiting(int request_id);
-  void OnClaimClients(int request_id);
   void OnPongFromWorker();
 
   void OnFocusClientFinished(int request_id,
