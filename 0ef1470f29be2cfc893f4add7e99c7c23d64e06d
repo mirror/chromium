@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0e496049_37513c8e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-08T22:58:36Z",
+      "side": 1,
+      "message": "The logic seems complicated this way. Can you add a TODO(wzang|xdai) here so that we can revisit it later? We may not need the user_type here.",
+      "parentUuid": "638de94b_767cbc69",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c792b95d_faac2d85",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I think if wallpaper_util.h/cc are created, they will still be removed after the refactoring is done. All wallpaper decoding will happen within WallpaperController. So I just put them here temporarily. (It seems wallpaper_api also does wallpaper decoding, but I\u0027m not sure if we have time to refactor that. In addition, they won\u0027t depend on this ash decoder even if they are refactored. )",
       "parentUuid": "46977d9e_d40ff272",
+      "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fc42b0_6d7cb7cb",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-08T22:58:36Z",
+      "side": 1,
+      "message": "Even though all wallpaper decoding happen within WallpaperController, we still can extract some util functions that are independent on WallpaperController to a separated file to make this file slimmer:) But maybe it can wait after the refactoring since WallpaperManager is still using these functions.",
+      "parentUuid": "286baef0_937e563a",
       "revId": "0ef1470f29be2cfc893f4add7e99c7c23d64e06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "105e0bda_e97bc165",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-08T22:58:36Z",
+      "side": 1,
+      "message": "What if the provided file_path doesn\u0027t exist? Does ReadAndDecodeWallpaper() handle this case?",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d136afbf_4df0c704",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-08T22:58:36Z",
+      "side": 1,
+      "message": "maybe we should get this info from GetUserWallpaperInfo() and also update this info？",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119e9363_0e9bec21",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-08T22:58:36Z",
+      "side": 1,
+      "message": "nit:  // namespace base\nThe same as below",
+      "revId": "694100cdaab6c25e5900dcc9c6c13366d5ec47b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
