@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d8ca71_7eb59994",
+        "filename": "ui/app_list/views/search_result_container_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-08T23:39:20Z",
+      "side": 1,
+      "message": "The surround code is not const correct. \"const\" should not be used here because\n\n\"don\u0027t return pointers or references to non-const objects from const methods\"\n\nCheck out the following for full version:\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly",
+      "range": {
+        "startLine": 94,
+        "startChar": 44,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "6a7a1416e21e339f58755ce3691cc2bd0d556b5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
