@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5796fd3a_fb08d814",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-08T08:57:51Z",
+      "side": 0,
+      "message": "while this is a no-op, it might actually be a bug? Why was this test added like this in the first place?",
+      "revId": "79681532f16dc8a17b7dd12ba50d8d8180c82e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
