@@ -61,6 +61,11 @@ class ExtensionFrameHelper
   // isn't one in this process.
   static content::RenderFrame* GetBackgroundPageFrame(
       const std::string& extension_id);
+  // Same as above, but returns the background page's main frame, or
+  // v8::Undefined if there is none.
+  static v8::Local<v8::Value> GetV8BackgroundPageMainFrame(
+      v8::Isolate* isolate,
+      const std::string& extension_id);
 
   // Finds a neighboring extension frame with the same extension as the one
   // owning |relative_to_frame| (if |relative_to_frame| is not an extension
