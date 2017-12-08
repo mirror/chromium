@@ -4,6 +4,7 @@
 
 #include "chrome/browser/extensions/tab_helper.h"
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
@@ -61,6 +62,7 @@
 #include "extensions/common/feature_switch.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "url/url_constants.h"
 
 #if defined(OS_WIN)
@@ -322,8 +324,6 @@ bool TabHelper::OnMessageReceived(const IPC::Message& message,
                                   content::RenderFrameHost* sender) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(TabHelper, message, sender)
-    IPC_MESSAGE_HANDLER(ChromeFrameHostMsg_DidGetWebApplicationInfo,
-                        OnDidGetWebApplicationInfo)
     IPC_MESSAGE_HANDLER(ExtensionHostMsg_GetAppInstallState,
                         OnGetAppInstallState)
     IPC_MESSAGE_HANDLER(ExtensionHostMsg_ContentScriptsExecuting,
@@ -344,8 +344,8 @@ void TabHelper::DidCloneToNewWebContents(WebContents* old_web_contents,
   new_helper->extension_app_icon_ = extension_app_icon_;
 }
 
-void TabHelper::OnDidGetWebApplicationInfo(content::RenderFrameHost* sender,
-                                           const WebApplicationInfo& info) {
+void TabHelper::OnDidGetWebApplicationInfo(const WebApplicationInfo& info) {
+  web_app_info_provider_.reset();
   web_app_info_ = info;
 
   NavigationEntry* entry =
@@ -591,12 +591,16 @@ void TabHelper::GetApplicationInfo(WebAppAction action) {
   if (!entry)
     return;
 
+  // This DCHECK added to ensure this function is called only once.
+  DCHECK_EQ(pending_web_app_action_, NONE);
+
   pending_web_app_action_ = action;
   last_committed_nav_entry_unique_id_ = entry->GetUniqueID();
 
-  content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
-  main_frame->Send(
-      new ChromeFrameMsg_GetWebApplicationInfo(main_frame->GetRoutingID()));
+  web_contents()->GetMainFrame()->GetRemoteAssociatedInterfaces()->GetInterface(
+      &web_app_info_provider_);
+  web_app_info_provider_->GetWebApplicationInfo(base::Bind(
+      &TabHelper::OnDidGetWebApplicationInfo, base::Unretained(this)));
 }
 
 void TabHelper::SetTabId(content::RenderFrameHost* render_frame_host) {
