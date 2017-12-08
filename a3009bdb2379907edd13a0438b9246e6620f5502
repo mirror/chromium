@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c45b31_5591066e",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T02:27:04Z",
+      "side": 1,
+      "message": "Since this observer only depends on one Polymer property, you can declare it along with that property, as follows:\n\nproperties: {\n  capability: {\n    type: Object,\n    observer: \u0027capabilityChanged_\u0027,\n  },\n  ...\n}",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "a3009bdb2379907edd13a0438b9246e6620f5502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2db4c16_eab6b142",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T02:27:04Z",
+      "side": 1,
+      "message": "Let\u0027s move this at the top of this function.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "a3009bdb2379907edd13a0438b9246e6620f5502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e8c666_e5c0ca7e",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T02:27:04Z",
+      "side": 1,
+      "message": "A more Polymer-y approach would be to use a dom-repeat to construct the \u003coption\u003e elements? See example at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/search_page/search_page.html?l\u003d60-67. Something like\n\n\u003cselect\u003e\n  \u003ctemplate is\u003d\"dom-repeat\" items\u003d\"[[capability.option]]\"\u003e\n    \u003coption selected\u003d\"[[isSelected_(item)]]\" value\u003d\"[[getValueFor_(item)]]\"\u003e\n      [[getDisplayName_(item)]]\n    \u003c/option\u003e\n  \u003c/template\u003e\n\u003c/select\u003e\n\nNote: Other comments in this file are probably obsolete, if we go the dom-repeat approach.",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 60
+      },
+      "revId": "a3009bdb2379907edd13a0438b9246e6620f5502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11d1ca24_a172cf20",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T02:27:04Z",
+      "side": 1,
+      "message": "Is onUpdateCapability_ executed only once? Should we clear the contents of select before adding more children to it, as follows?\nselect.innerHTML \u003d \u0027\u0027;",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "a3009bdb2379907edd13a0438b9246e6620f5502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
