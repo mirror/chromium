@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a430a048_1e8c3013",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-08T21:48:51Z",
+      "side": 1,
+      "message": "Yeah agreed. This could be reworked to leverage the PaintOpWriter.",
+      "parentUuid": "dff8e70e_d91105db",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac67b62e_c71d4aee",
         "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "604fac0f_5aab2b34",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-08T21:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac67b62e_c71d4aee",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da2ebd78_9eec121a",
         "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f947990_6664a2d4",
+        "filename": "cc/paint/paint_typeface_transfer_cache_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-08T21:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2ebd78_9eec121a",
+      "range": {
+        "startLine": 135,
+        "startChar": 43,
+        "endLine": 135,
+        "endChar": 47
+      },
+      "revId": "c0d8d52bbfafe8745e70ad13552ce18c0ac955fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
