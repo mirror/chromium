@@ -144,6 +144,7 @@ void HTMLSlotElement::SaveAndClearDistribution() {
 }
 
 void HTMLSlotElement::DispatchSlotChangeEvent() {
+  DCHECK(!ContainingShadowRoot() || !ContainingShadowRoot()->IsUserAgent());
   Event* event = Event::CreateBubble(EventTypeNames::slotchange);
   event->SetTarget(this);
   DispatchScopedEvent(event);
@@ -395,7 +396,8 @@ void HTMLSlotElement::DidSlotChangeAfterRemovedFromShadowTree() {
 
 void HTMLSlotElement::DidSlotChangeAfterRenaming() {
   DCHECK(SupportsAssignment());
-  EnqueueSlotChangeEvent();
+  if (!ContainingShadowRoot()->IsUserAgent())
+    EnqueueSlotChangeEvent();
   SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
   CheckSlotChange(SlotChangeType::kSuppressSlotChangeEvent);
 }
@@ -418,7 +420,8 @@ void HTMLSlotElement::
 
 void HTMLSlotElement::DidSlotChange(SlotChangeType slot_change_type) {
   DCHECK(SupportsAssignment());
-  if (slot_change_type == SlotChangeType::kSignalSlotChangeEvent)
+  if (slot_change_type == SlotChangeType::kSignalSlotChangeEvent &&
+      !ContainingShadowRoot()->IsUserAgent())
     EnqueueSlotChangeEvent();
   SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
   // Check slotchange recursively since this slotchange may cause another
