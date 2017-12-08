@@ -33,6 +33,24 @@
       "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a09753c_ab4f4571",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 55
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-08T21:01:17Z",
+      "side": 1,
+      "message": "Per offline conversation we can move this into StartLoading if we verify that task is running: https://developer.apple.com/documentation/foundation/nsurlsessiontaskstate/nsurlsessiontaskstaterunning?language\u003dobjc",
+      "parentUuid": "04028c89_1cf43c78",
+      "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
