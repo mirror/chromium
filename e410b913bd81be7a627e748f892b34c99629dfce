@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98918a5b_883bac53",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "nit: const\u0026",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49604e03_4af2f067",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "I assume this branch will be removed once EffectModel::StringToCompositeOperation supports all enum values (at which point the bindings layer is responsible for throwing this exception). (It looks like that\u0027s crbug.com/788440, but I\u0027m just double-checking.)",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653ca785_b8031fbc",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "nit: const\u0026",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f436318e_a29aecab",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "remove debug logging",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622c3f27_43f3e271",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, undefined and null are also non-iterable, so simply \"iterator.IsNull()\" should suffice.",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f78fde1_72a24146",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "bikeshed: Hmm. Might it be easier to just have a sorted vector (or a balanced tree, but we don\u0027t really like std::map in Blink, if you want better behaviour in pathological cases -- I don\u0027t know how large this typically is)? This seems to me like it will at least get confused by the \"difference\" between 0 and -0, which have different bit patterns but compare equal (but I haven\u0027t read the spec to see what it means by \"identical\").\n\n  using OffsetKeyframePair \u003d std::pair\u003cdouble, scoped_refptr\u003cStringKeyframe\u003e\u003e;\n  Vector\u003cOffsetKeyframePair\u003e keyframes;\n  \n  // insertion like:\n  auto it \u003d std::lower_bound(keyframes.begin(), keyframes.end(), computed_offset,\n      [](const OffsetKeyframePair\u0026 p1, const OffsetKeyframePair\u0026 p2) {\n          return p1.first \u003c p2.first;\n      });\n  if (it-\u003efirst !\u003d computed_offset) {\n    // aside: this bit is a one-liner with std::vector, but WTF::Vector likes indices more than iterators...\n    size_t new_index \u003d it - keyframes.begin();\n    keyframes.insert(new_index, StringKeyframe::Create());\n    it \u003d keyframes.begin() + new_index;\n  }\n  SetKeyframeValue(element, *(it-\u003esecond), ...);\n\nBut on the bright side, you have exactly the sorted (offset, keyframe) pairs you want for the following loop without extra sorting and lookups.",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002246df_2cbf24d3",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "Not sure what you mean here. A hash map has to be in the order that the hash function dictates (up to probing order w/ collisions).",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd0481f_0b05658e",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "const ScriptValue\u0026, here and elsewhere",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d484184_eb57b76f",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInputTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "nit: you can use brace-initialization to make this slightly shorter (here and elsewhere):\n\nVector\u003cScriptValue\u003e blink_keyframes \u003d {keyframe1.GetScriptValue(),\n                                       keyframe2.GetScriptValue()};\n\nor even:\n\nVector\u003cScriptValue\u003e blink_keyframes \u003d {V8ObjectBuilder(script_state)\n                                           .AddString(\"width\", \"100px\")\n                                           .AddString(\"offset\", \"0\")\n                                           .GetScriptValue(),\n                                       V8ObjectBuilder(script_state)\n                                           .AddString(\"width\", \"0px\")\n                                           .AddString(\"offset\", \"1\")\n                                           .GetScriptValue()};",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0b3b18_ad217b2d",
+        "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "nit: const\u0026 (unless you need to change it)",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c28b300_a95c196b",
+        "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb734ea_2a8a24b9",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-08T20:21:04Z",
+      "side": 1,
+      "message": "nit: similarly, you can use brace initialization + the concise syntax for V8ObjectBuilder to make this a little shorter, if you\u0027d like:\n\nVector\u003cScriptValue\u003e blink_keyframes \u003d {\n    V8ObjectBuilder(script_state)\n        .AddString(\"width\", \"100px\")\n        .AddString(\"offset\", \"0\")\n        .AddString(\"easing\", \"ease-in-out\")\n        .GetScriptValue(),\n    V8ObjectBuilder(script_state)\n        .AddString(\"width\", \"0px\")\n        .AddString(\"offset\", \"1\")\n        .AddString(\"easing\", \"cubic-bezier(1, 1, 0.3, 0.3)\")\n        .GetScriptValue()};",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
