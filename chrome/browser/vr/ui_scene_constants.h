@@ -215,8 +215,9 @@ static constexpr int kSpeechRecognitionOpacityAnimationDurationMs = 200;
 
 static constexpr float kModalPromptFadeOpacity = 0.5f;
 
-static constexpr float kKeyboardDistance = 1.0f;
-static constexpr float kKeyboardVerticalOffset = -0.45f * kKeyboardDistance;
+static constexpr float kKeyboardDistanceDMM = 2.0f;
+static constexpr float kKeyboardVerticalOffsetDMM = -0.45f;
+static constexpr float kKeyboardRotationRad = -0.14;
 
 }  // namespace vr
 
