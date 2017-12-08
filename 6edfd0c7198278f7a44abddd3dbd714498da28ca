@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b062608_1d60bd27",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:11:29Z",
+      "side": 1,
+      "message": "Is this called before change is applied? (-ing is used pre event, while -ed is used post event)",
+      "revId": "6edfd0c7198278f7a44abddd3dbd714498da28ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3090aa40_029c961a",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-08T23:11:29Z",
+      "side": 1,
+      "message": "NotifyXxx is more common in chrome.",
+      "revId": "6edfd0c7198278f7a44abddd3dbd714498da28ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
