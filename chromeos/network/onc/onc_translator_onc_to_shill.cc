@@ -228,7 +228,9 @@ void LocalTranslator::TranslateIPsec() {
   CopyFieldFromONCToShill(::onc::vpn::kSaveCredentials,
                           shill::kSaveCredentialsProperty);
 
+  LOG(ERROR) << "TranslateIPsec1: " << *onc_object_;
   CopyFieldsAccordingToSignature();
+  LOG(ERROR) << "TranslateIPsec2: " << *shill_dictionary_;
 }
 
 void LocalTranslator::TranslateL2TP() {
