@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a887043_0a30ab3b",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-08T19:58:27Z",
+      "side": 1,
+      "message": "Clarifying: does ANGLE clamp the number of texture units reported by the driver to its own hardcoded limit? Otherwise it would be unfortunate if a driver or hardware upgrade made this fail.",
+      "revId": "dee932c233042af508a2c8c69664bd2454622e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
