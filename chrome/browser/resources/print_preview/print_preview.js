@@ -771,7 +771,8 @@ cr.define('print_preview', function() {
      */
     onCloudPrintEnable_: function(cloudPrintUrl, appKioskMode) {
       this.cloudPrintInterface_ = new cloudprint.CloudPrintInterface(
-          cloudPrintUrl, this.nativeLayer_, this.userInfo_, appKioskMode);
+          cloudPrintUrl, this.nativeLayer_, this.userInfo_,
+          this.listenerTracker, appKioskMode);
       this.tracker.add(
           this.cloudPrintInterface_,
           cloudprint.CloudPrintInterfaceEventType.SUBMIT_DONE,
@@ -799,10 +800,9 @@ cr.define('print_preview', function() {
 
     /**
      * Called from the native layer when ready to print to Google Cloud Print.
-     * @param {string} data The body to send in the HTTP request.
      * @private
      */
-    onPrintToCloud_: function(data) {
+    onPrintToCloud_: function() {
       assert(
           this.uiState_ == PrintPreviewUiState_.PRINTING,
           'Document ready to be sent to the cloud when not in printing ' +
@@ -813,7 +813,7 @@ cr.define('print_preview', function() {
       assert(this.destinationStore_.selectedDestination != null);
       this.cloudPrintInterface_.submit(
           this.destinationStore_.selectedDestination, this.printTicketStore_,
-          this.documentInfo_, data);
+          this.documentInfo_);
     },
 
     /**
