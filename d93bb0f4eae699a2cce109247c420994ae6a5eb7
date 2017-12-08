@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb35c09_717cecf5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "Why not the same style?",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47a6beb_1c4912f9",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "Ditto on style.",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc7019f_2aa1da46",
+        "filename": "content/renderer/media/audio_input_ipc_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "This feels pretty ugly. I feel like a anonymous static function would be clearer.",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65aeb74a_996c1994",
+        "filename": "content/renderer/media/audio_input_ipc_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "Needs{}",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4702db11_c33fb690",
+        "filename": "content/renderer/media/audio_input_ipc_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "Is the guidance const\u0026 for accessors like this? Should this return by value?",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc22e6b_402dba5b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-08T17:58:32Z",
+      "side": 1,
+      "message": "audio_output_message_filter",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
