@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "b030da64_0dfabc1c",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T23:13:38Z",
+      "side": 1,
+      "message": "I\u0027d expect the context switch cost of waking up this thread multiple times to be significantly more expensive than a few extra syscalls but current code is fine. Keeping it simple and not optimizing unless needed is the right approach. Can you just add a comment above this to explain that it\u0027s possible that merging the fences and waiting is more efficient?",
+      "parentUuid": "13fb2bf6_91bbfb85",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d615714d_f1c4549f",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
         "patchSetId": 1
@@ -198,6 +216,24 @@
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8c72fa_8184a42a",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T23:13:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "503f3699_3d6e1f7b",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +348,24 @@
       "side": 1,
       "message": "I wanted to keep OverlayPlane copyable because:\n\n1. With this kind of struct there is negligible (if any) performance benefit in move vs copy.\n2. Keeping it copyable avoids extra churn in this commit (some function signatures would need to change).\n3. Making it move only would complicate some pieces of code. For example, in SchedulePageFlip we need to provide the planes to both the Closure and to RequestPlanesReadyCallback, but that\u0027s less straighforward with a move-only type.\n4. Wrapping a move-only type (ScopedFD) within a copyable OverlayPlane doesn\u0027t really break the semantics, since OverlayPlane is copyable as a convenience for use in other constructs, rather than because we actually want to keep around multiple long-term copies of it.\n\nKeeping OverlayPlane copyable with a plain ScopedFD would entail dup()-licating the FD which I wanted to avoid, hence I used a scoped_refptr. Ideally we could have a base::SharedFD kind of construct.",
       "parentUuid": "39c6a9c2_3f511e05",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7d8dc2_c227e3a5",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-08T23:13:38Z",
+      "side": 1,
+      "message": "hm, let\u0027s just keep the FD ownership outside for now until we actually use this for non-test. maybe there\u0027s a better place for this ownership. so just \"int fence_fd\" for now.",
+      "parentUuid": "a83dd186_b7da5ba9",
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
