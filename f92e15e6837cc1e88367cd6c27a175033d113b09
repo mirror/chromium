@@ -22,6 +22,30 @@
       "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d10b31_21305027",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-08T10:37:51Z",
+      "side": 1,
+      "message": "I think that setting this flags for fields that are not autofilled is wrong. But I can move this out of the if if you prefer.",
+      "parentUuid": "9c54f8c7_56456631",
+      "range": {
+        "startLine": 653,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 74
+      },
+      "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
