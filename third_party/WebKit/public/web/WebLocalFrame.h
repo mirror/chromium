@@ -200,6 +200,17 @@ class WebLocalFrame : public WebFrame {
       bool is_client_redirect,
       const base::UnguessableToken& devtools_navigation_token) = 0;
 
+  // Commits a same-document navigation in the frame. For history navigations,
+  // a valid WebHistoryItem, as well as a WebHistoryLoadType. Returns true if
+  // the load started, false otherwise.
+  virtual bool CommitSameDocumentNavigation(
+      const WebURLRequest&,
+      WebFrameLoadType,
+      const WebHistoryItem&,
+      WebHistoryLoadType,
+      bool is_client_redirect,
+      const base::UnguessableToken& devtools_navigation_token) = 0;
+
   // This method is short-hand for calling LoadData, where mime_type is
   // "text/html" and text_encoding is "UTF-8".
   virtual void LoadHTMLString(const WebData& html,

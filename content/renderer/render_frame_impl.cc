@@ -6525,9 +6525,17 @@ void RenderFrameImpl::NavigateInternal(
                   is_client_redirect);
     } else {
       // Load the request.
-      frame_->Load(request, load_type, item_for_history_navigation,
-                   history_load_type, is_client_redirect,
-                   devtools_navigation_token);
+      bool navigation_started = false;
+      if (IsBrowserSideNavigationEnabled() && is_same_document) {
+        navigation_started = frame_->CommitSameDocumentNavigation(
+            request, load_type, item_for_history_navigation, history_load_type,
+            is_client_redirect, devtools_navigation_token);
+      } else {
+        navigation_started = true;
+        frame_->Load(request, load_type, item_for_history_navigation,
+                     history_load_type, is_client_redirect,
+                     devtools_navigation_token);
+      }
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this
@@ -6535,6 +6543,9 @@ void RenderFrameImpl::NavigateInternal(
       // otherwise it will result in a use-after-free bug.
       if (!weak_this)
         return;
+
+      if (!navigation_started && frame_ && !frame_->IsLoading())
+        Send(new FrameHostMsg_DidStopLoading(routing_id_));
     }
   } else {
     // The browser expects the frame to be loading this navigation. Inform it

@@ -97,6 +97,14 @@ class CORE_EXPORT FrameLoader final {
             HistoryItem* = nullptr,
             HistoryLoadType = kHistoryDifferentDocumentLoad);
 
+  // Called when the browser process has asked this renderer process to commit a
+  // same document navigation in that frame. Returns false if the navigation
+  // cannot commit, true otherwise.
+  bool CommitSameDocumentNavigation(const FrameLoadRequest&,
+                                    FrameLoadType = kFrameLoadTypeStandard,
+                                    HistoryItem* = nullptr,
+                                    HistoryLoadType = kHistoryDifferentDocumentLoad);
+
   // Warning: stopAllLoaders can and will detach the LocalFrame out from under
   // you. All callers need to either protect the LocalFrame or guarantee they
   // won't in any way access the LocalFrame after stopAllLoaders returns.

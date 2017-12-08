@@ -921,6 +921,9 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   FrameLoadType new_load_type = (frame_load_type == kFrameLoadTypeStandard)
                                     ? DetermineFrameLoadType(request)
                                     : frame_load_type;
+
+  // TODO(clamy): Once PlzNavigate ships, we will no longer have same-document
+  // history navigations going through this path. Remove their handling.
   bool same_document_history_navigation =
       IsBackForwardLoadType(new_load_type) &&
       history_load_type == kHistorySameDocumentLoad;
@@ -932,20 +935,8 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
 
   // Perform same document navigation.
   if (same_document_history_navigation || same_document_navigation) {
-    DCHECK(history_item || !same_document_history_navigation);
-    scoped_refptr<SerializedScriptValue> state_object =
-        same_document_history_navigation ? history_item->StateObject()
-                                         : nullptr;
-
-    if (!same_document_history_navigation) {
-      document_loader_->SetNavigationType(DetermineNavigationType(
-          new_load_type, false, request.TriggeringEvent()));
-      if (ShouldTreatURLAsSameAsCurrent(url))
-        new_load_type = kFrameLoadTypeReplaceCurrentItem;
-    }
-
-    LoadInSameDocument(url, state_object, new_load_type, history_item,
-                       request.ClientRedirect(), request.OriginDocument());
+    CommitSameDocumentNavigation(request, new_load_type, history_item,
+                                 history_load_type);
     return;
   }
 
@@ -958,6 +949,47 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
     return;
 
   StartLoad(request, new_load_type, policy, history_item);
+}
+
+bool FrameLoader::CommitSameDocumentNavigation(
+    const FrameLoadRequest& passed_request,
+    FrameLoadType frame_load_type,
+    HistoryItem* history_item,
+    HistoryLoadType history_load_type) {
+  DCHECK(frame_->GetDocument());
+
+  if (!frame_->IsNavigationAllowed() || in_stop_all_loaders_)
+    return false;
+
+  FrameLoadRequest request(passed_request);
+  const KURL& url = request.GetResourceRequest().Url();
+
+  bool same_document_history_navigation =
+      IsBackForwardLoadType(frame_load_type) &&
+      history_load_type == kHistorySameDocumentLoad;
+  bool same_document_navigation = ShouldPerformFragmentNavigation(
+      request.Form(), request.GetResourceRequest().HttpMethod(),
+      frame_load_type, url);
+
+  // Check that this is a same-document navigation.
+  if (!same_document_history_navigation && !same_document_navigation)
+    return false;
+
+  DCHECK(history_item || !same_document_history_navigation);
+  scoped_refptr<SerializedScriptValue> state_object =
+      same_document_history_navigation ? history_item->StateObject() : nullptr;
+
+  if (!same_document_history_navigation) {
+    document_loader_->SetNavigationType(DetermineNavigationType(
+        frame_load_type, false, request.TriggeringEvent()));
+    if (ShouldTreatURLAsSameAsCurrent(url))
+      frame_load_type = kFrameLoadTypeReplaceCurrentItem;
+  }
+
+  // Perform the same-document navigation.
+  LoadInSameDocument(url, state_object, frame_load_type, history_item,
+                     request.ClientRedirect(), request.OriginDocument());
+  return true;
 }
 
 SubstituteData FrameLoader::DefaultSubstituteDataForURL(const KURL& url) {
