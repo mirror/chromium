@@ -113,7 +113,7 @@ class PLATFORM_EXPORT WebScheduler {
 
 #ifdef INSIDE_BLINK
   // Helpers for posting bound functions as tasks.
-  typedef Function<void(double deadline_seconds)> IdleTask;
+  typedef base::OnceCallback<void(double deadline_seconds)> IdleTask;
 
   void PostIdleTask(const WebTraceLocation&, IdleTask);
   void PostNonNestableIdleTask(const WebTraceLocation&, IdleTask);
