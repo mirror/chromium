@@ -281,55 +281,7 @@ void FrameTree::Trace(blink::Visitor* visitor) {
   visitor->Trace(this_frame_);
 }
 
-}  // namespace blink
-
-#ifndef NDEBUG
-
-static void printIndent(int indent) {
-  for (int i = 0; i < indent; ++i)
-    printf("    ");
+//#ifndef NDEBUG
 }
 
-static void printFrames(const blink::Frame* frame,
-                        const blink::Frame* targetFrame,
-                        int indent) {
-  if (frame == targetFrame) {
-    printf("--> ");
-    printIndent(indent - 1);
-  } else {
-    printIndent(indent);
-  }
-
-  blink::LocalFrameView* view =
-      frame->IsLocalFrame() ? ToLocalFrame(frame)->View() : nullptr;
-  printf("Frame %p %dx%d\n", frame, view ? view->Width() : 0,
-         view ? view->Height() : 0);
-  printIndent(indent);
-  printf("  owner=%p\n", frame->Owner());
-  printIndent(indent);
-  printf("  frameView=%p\n", view);
-  printIndent(indent);
-  printf("  document=%p\n",
-         frame->IsLocalFrame() ? ToLocalFrame(frame)->GetDocument() : nullptr);
-  printIndent(indent);
-  printf(
-      "  uri=%s\n\n",
-      frame->IsLocalFrame()
-          ? ToLocalFrame(frame)->GetDocument()->Url().GetString().Utf8().data()
-          : nullptr);
-
-  for (blink::Frame* child = frame->Tree().FirstChild(); child;
-       child = child->Tree().NextSibling())
-    printFrames(child, targetFrame, indent + 1);
-}
-
-void showFrameTree(const blink::Frame* frame) {
-  if (!frame) {
-    printf("Null input frame\n");
-    return;
-  }
-
-  printFrames(&frame->Tree().Top(), frame, 0);
-}
-
-#endif
+//#endif
