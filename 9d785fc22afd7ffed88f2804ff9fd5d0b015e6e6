@@ -16,6 +16,24 @@
       "revId": "9d785fc22afd7ffed88f2804ff9fd5d0b015e6e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd150b68_269cf9ca",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-08T20:39:59Z",
+      "side": 1,
+      "message": "Good idea on the comment, added.\n\nThis is not the first Xlib function call. In the main gpu thread startup we setup X error handlers, make sure there is a X display, etc. I had looked at this issue with Ozone X11 and found some interest things.\n\nI don\u0027t think XInitThreads() actually needs to be the first Xlib function call, despite what the Xlib documentation says. You don\u0027t want to make Xlib function calls on another thread at the same time, calling InitThreads() from two threads simultaneously would be bad, but beyond that I think you just need call XInitThreads() from your first thread?\n\nhttps://github.com/mirror/libX11/blob/master/src/locking.c#L572\n\nIn Linux Chrome today we call XInitThreads() before starting a vsync thread. This happens after many other Xlib calls and happens later than the compositor thread would start. This is what calls it:\n\nhttps://cs.chromium.org/chromium/src/ui/gl/gl_surface_glx.cc?l\u003d406\n\nThere is no vsync thread (and no XInitThreads() call) with EGL, SwiftShader or software compositing, which is why we need to call it here. Subsequent calls to XInitThreads() just return harmlessly.",
+      "parentUuid": "ff00d5ac_e1bb33a0",
+      "revId": "9d785fc22afd7ffed88f2804ff9fd5d0b015e6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
