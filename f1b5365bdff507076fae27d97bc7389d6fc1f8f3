@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5706bb2b_75f3aee2",
+        "filename": "chrome/browser/resources/feedback/js/sys_info.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-08T00:10:45Z",
+      "side": 1,
+      "message": "can you use just\nitem.key, item.value, and item.displayValue?\n(these are items that come from the feedback API, right?)",
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4edc41_1e7ac36d",
+        "filename": "components/feedback/feedback_util_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-08T00:10:45Z",
+      "side": 1,
+      "message": "should this be internationalized?",
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35a41e6_dd6180d2",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-08T00:10:45Z",
+      "side": 1,
+      "message": "Given that this always comes from the platform, we could just ensure that displayValue is set only if value is non-empty. I think that would simplify the usage of this.\n\n(info.displayValue \u0026\u0026 info.value ? info.displayValue : info.value) is harder to parse than (info.displayValue || info.value)",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
