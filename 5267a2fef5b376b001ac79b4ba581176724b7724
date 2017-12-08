@@ -52,6 +52,24 @@
       "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c61d6ea_8947d85b",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-08T17:22:51Z",
+      "side": 1,
+      "message": "Sure, I can write something like this in spirit.\n\nNote that CloseCurrentSessionHelper() should not be called within a for loop, because (according to the comments for CloseCurrentSessionHelper() and CloseAllSessions() in the header file) there might be a possibility for SpdySession::CloseSessionOnError() to open up new sessions.\n\nWhat I just did is not equivalent, but probably close enough.  Unless, of course, in the course of closing sessions, a new session is created and made unavailable but not draining immediately (that is, STATE_GOING_AWAY).\n\nIn any case, CloseCurrentSessionHelper() needs to be called at least once, even if |available_sessions_| is empty.\n\nI think I would still prefer patchset 4, but I\u0027m happy to change it.\n\nAlso, I do not believe that new sessions could be created by CloseCurrentSessionHelper().  Maybe it\u0027s worth adding a DCHECK for that?  I\u0027ll do that in a follow-up CL.",
+      "parentUuid": "5adae35f_413278ff",
+      "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
