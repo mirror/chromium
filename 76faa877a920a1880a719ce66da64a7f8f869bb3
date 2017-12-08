@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8775ef_563b3a4e",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-08T22:23:53Z",
+      "side": 1,
+      "message": "IsReadyForPassword? Sorry, should have added explicit \u0027Is\u0027 before.",
+      "revId": "76faa877a920a1880a719ce66da64a7f8f869bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
