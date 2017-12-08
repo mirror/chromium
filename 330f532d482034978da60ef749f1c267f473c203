@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e62a5d3_9bc3b430",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-08T22:18:57Z",
+      "side": 1,
+      "message": "Yes, I have updated SharedMemoryHandleProviderTest to use MojoEnabledTestEnvironment instead of calling mojo::edk::Init directly, which causes memory leak. Good suggestion for uploading two PatchSets to easily see the changes between the original CL and the reland CL. Will abandon this CL and create a new one.",
+      "parentUuid": "66cc8bde_c92ab74f",
+      "revId": "330f532d482034978da60ef749f1c267f473c203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e96e88a_41c31a8e",
         "filename": "media/capture/video/mojo_enabled_test_environment.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T22:10:54Z",
       "side": 1,
       "message": "I appreciate this environment going to a class and pair of files for itself, which is already much closer to being reusable than having it buried in a *.cc file.\n\nNow the next step would be to move these files to a location that matches how general the provided functionality really is (this functionality is completely unspecific to media/capture/video). I have seen almost identical duplicates of this class in a few other places I believe (usually buried inside a *.cc file). If all these duplicates had been created at a canonical reusable place instead, they would be both reusable and discoverable and we would decrease the risk of ending up with duplicates.\n\nCould you do me a favor and see if you find any duplicates and merge them into one?",
+      "revId": "330f532d482034978da60ef749f1c267f473c203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4b4b0a_cf30eef9",
+        "filename": "media/capture/video/mojo_enabled_test_environment.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-08T22:18:57Z",
+      "side": 1,
+      "message": "Will do :)",
+      "parentUuid": "6e96e88a_41c31a8e",
       "revId": "330f532d482034978da60ef749f1c267f473c203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
