@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cf673d3_f6eb7a82",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_helpers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T23:54:31Z",
+      "side": 0,
+      "message": "I\u0027d actually prefer we keep (and update) this helper function, since we have many variants of:\n\n  if (url_.is_empty()) {\n    store_browser_cookie_manager_-\u003eGetAllCookies(\n        base::BindOnce(\u0026CookiesGetFunction::GetCookieCallback, this));\n  } else {\n    net::CookieOptions options;\n    cookies_helpers::CreateCookieOptions(\u0026options);\n    store_browser_cookie_manager_-\u003eGetCookieList(\n        url_, options,\n        base::BindOnce(\u0026CookiesGetFunction::GetCookieCallback, this));\n  }\n\nin the api file.",
+      "revId": "7108a3084da2ff67aae2cc4fd971e8f05f28b9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

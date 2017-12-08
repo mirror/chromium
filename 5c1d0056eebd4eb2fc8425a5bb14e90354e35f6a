@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e060a94_407c5918",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T23:54:31Z",
+      "side": 1,
+      "message": "nit: Not this CL, but can you remove the extra wrapping parens here?",
+      "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

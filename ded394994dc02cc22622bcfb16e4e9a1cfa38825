@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "6352fbff_51c774f6",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T23:54:31Z",
+      "side": 1,
+      "message": "With RVO, returning the structure should be perfectly efficient (no less efficient than populating through a passed-in pointer).  So let\u0027s go that route.",
+      "parentUuid": "f767ba18_76900165",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ea2d804_c74d4386",
         "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
         "patchSetId": 4
