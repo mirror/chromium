@@ -52,11 +52,13 @@ bool SharedMemoryHandleProvider::InitFromMojoHandle(
   DCHECK(!shared_memory_);
 
   base::SharedMemoryHandle memory_handle;
-  const MojoResult result =
-      mojo::UnwrapSharedMemoryHandle(std::move(buffer_handle), &memory_handle,
-                                     &mapped_size_, &read_only_flag_);
+  mojo::UnwrappedSharedMemoryHandleProtection protection;
+  const MojoResult result = mojo::UnwrapSharedMemoryHandle(
+      std::move(buffer_handle), &memory_handle, &mapped_size_, &protection);
   if (result != MOJO_RESULT_OK)
     return false;
+  read_only_flag_ =
+      protection == mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly;
   shared_memory_.emplace(memory_handle, read_only_flag_);
   return true;
 }
@@ -68,9 +70,15 @@ SharedMemoryHandleProvider::GetHandleForInterProcessTransit(bool read_only) {
     NOTREACHED();
     return mojo::ScopedSharedBufferHandle();
   }
-  return mojo::WrapSharedMemoryHandle(
-      base::SharedMemory::DuplicateHandle(shared_memory_->handle()),
-      mapped_size_, read_only);
+  if (read_only) {
+    return mojo::WrapSharedMemoryHandle(
+        shared_memory_->GetReadOnlyHandle(), mapped_size_,
+        mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
+  } else {
+    return mojo::WrapSharedMemoryHandle(
+        base::SharedMemory::DuplicateHandle(shared_memory_->handle()),
+        mapped_size_, mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite);
+  }
 }
 
 base::SharedMemoryHandle

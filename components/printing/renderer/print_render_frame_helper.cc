@@ -1428,9 +1428,9 @@ bool PrintRenderFrameHelper::FinalizePrintReadyDocument() {
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
   PrintHostMsg_DidPreviewDocument_Params preview_params;
 
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_params.metafile_data_handle)) {
-    LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+  if (!CopyMetafileDataToReadOnlySharedMem(
+          *metafile, &preview_params.metafile_data_handle)) {
+    LOG(ERROR) << "CopyMetafileDataToReadOnlySharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
@@ -1692,8 +1692,8 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params page_params;
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToReadOnlySharedMem(metafile,
+                                           &page_params.metafile_data_handle)) {
     return false;
   }
 
@@ -2037,7 +2037,7 @@ void PrintRenderFrameHelper::PrintPageInternal(
 }
 #endif  // !defined(OS_MACOSX)
 
-bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
+bool PrintRenderFrameHelper::CopyMetafileDataToReadOnlySharedMem(
     const PdfMetafileSkia& metafile,
     base::SharedMemoryHandle* shared_mem_handle) {
   uint32_t buf_size = metafile.GetDataSize();
@@ -2055,8 +2055,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
   if (!metafile.GetData(shared_buf->memory(), buf_size))
     return false;
 
-  *shared_mem_handle =
-      base::SharedMemory::DuplicateHandle(shared_buf->handle());
+  *shared_mem_handle = shared_buf->GetReadOnlyHandle();
   return true;
 }
 
@@ -2180,9 +2179,9 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
   }
 
   PrintHostMsg_DidPreviewPage_Params preview_page_params;
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_page_params.metafile_data_handle)) {
-    LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+  if (!CopyMetafileDataToReadOnlySharedMem(
+          *metafile, &preview_page_params.metafile_data_handle)) {
+    LOG(ERROR) << "CopyMetafileDataToReadOnlySharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
