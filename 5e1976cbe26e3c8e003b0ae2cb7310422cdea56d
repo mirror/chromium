@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a498bf_b6a91c3b",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "nit: compositor_thread_task_runner_ ?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524e4472_5d4dc7b2",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "Can we DCHECK that the task runner given in the constructor is the same thread that we\u0027re binding the thread checker too?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59de1a52_af39c39d",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "nit: fwiw I try to avoid passing a callback somewhere that passing a pointer would do, as they obscure the caller relationship in codesearch and in general. Like the ContextLostForwarder could have the weakptr back to the LTFS and a OnContextLostOnCompositorThread() that it bounced to and calls the LTFS (or its client) directly. If you feel similarly.",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ce93b5_b5ff002b",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "Not actually sure what this comment means. What does releasing the worker context mean, that we\u0027re not doing here? We do deref it below just the same as we do for context_provider_",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b184f6_27e5c3fa",
+        "filename": "cc/trees/layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "Can you explain what task runner this is in the comment above?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e5dc46_c49204e6",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "compositor_thread_task_runner?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b082d72_af77827d",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "would \"before or after\" be correct?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1b742b_d72ca2f7",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "compositor_task_runner?",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbc08e9_7a2a3867",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "nit: compositor-\u003etask_runner() is how we write this elsewhere in this method.. tho i see we use this elsewhere, a bit confusing imo. i\u0027d pref more use of the compositor accessor i think..",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2b7879_41b89105",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T18:11:38Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
