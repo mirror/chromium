@@ -37,8 +37,8 @@
 namespace gpu {
 namespace {
 
-constexpr int kDefaultRuns = 4;
-constexpr int kDefaultIterations = 10000;
+constexpr int kDefaultRuns = 10;
+constexpr int kDefaultIterations = 100000;
 
 // A command buffer that can record and replay commands
 // This goes through 3 states, allowing setting up of initial state before
