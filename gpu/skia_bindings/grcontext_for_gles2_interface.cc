@@ -56,10 +56,7 @@ GrContextForGLES2Interface::GrContextForGLES2Interface(
   options.fAllowPathMaskCaching = false;
   sk_sp<GrGLInterface> interface(
       skia_bindings::CreateGLES2InterfaceBindings(gl));
-  gr_context_ = sk_sp<GrContext>(GrContext::Create(
-      kOpenGL_GrBackend,
-      // GrContext takes ownership of |interface|.
-      reinterpret_cast<GrBackendContext>(interface.get()), options));
+  gr_context_ = GrContext::MakeGL(std::move(interface));
   if (gr_context_) {
     gr_context_->setResourceCacheLimits(kMaxGaneshResourceCacheCount,
                                         max_ganesh_resource_cache_bytes);
