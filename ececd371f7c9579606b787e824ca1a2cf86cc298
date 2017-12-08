@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1652618_dfbfb466",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T19:29:19Z",
+      "side": 1,
+      "message": "nit: this type is used a lot.  Would it be worth putting it as a const in an anonymous namespace?  e.g.\n\nconstexpr NotificationHandler::Type kStorageNotificationType \u003d\n    NotificationHandler::Type::TRANSIENT;",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3426578d_5abe6351",
+        "filename": "chrome/browser/extensions/extension_storage_monitor_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T19:29:19Z",
+      "side": 1,
+      "message": "nit: Any reason to not use Notification::ButtonClick()?  (I realize they are the same implementation, but it seems more straightforward to go through the Notification rather than poking through to the delegate).",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
