@@ -256,9 +256,10 @@ class RequestSameResourceOnComplete
   USING_GARBAGE_COLLECTED_MIXIN(RequestSameResourceOnComplete);
 
  public:
-  explicit RequestSameResourceOnComplete(Resource* resource)
+  explicit RequestSameResourceOnComplete(FetchParameters& params,
+                                         ResourceFetcher* fetcher)
       : notify_finished_called_(false) {
-    SetResource(resource);
+    MockResource::Fetch(params, fetcher, this);
   }
 
   void NotifyFinished(Resource* resource) override {
@@ -269,9 +270,10 @@ class RequestSameResourceOnComplete
     ResourceRequest resource_request2(GetResource()->Url());
     resource_request2.SetCacheMode(mojom::FetchCacheMode::kValidateCache);
     FetchParameters fetch_params2(resource_request2);
-    Resource* resource2 = MockResource::Fetch(fetch_params2, fetcher2);
+    Resource* resource2 = MockResource::Fetch(fetch_params2, fetcher2, nullptr);
     EXPECT_EQ(GetResource(), resource2);
     notify_finished_called_ = true;
+    ClearResource();
   }
   bool NotifyFinishedCalled() const { return notify_finished_called_; }
 
@@ -297,13 +299,10 @@ TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
   ResourceRequest request1(url);
   request1.SetHTTPHeaderField(HTTPNames::Cache_Control, "no-cache");
   FetchParameters fetch_params1(request1);
-  Resource* resource1 = MockResource::Fetch(fetch_params1, fetcher1);
   Persistent<RequestSameResourceOnComplete> client =
-      new RequestSameResourceOnComplete(resource1);
-  resource1->AddClient(client);
+      new RequestSameResourceOnComplete(fetch_params1, fetcher1);
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   EXPECT_TRUE(client->NotifyFinishedCalled());
-  resource1->RemoveClient(client);
 }
 
 TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
@@ -523,8 +522,8 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
 
   // Resource created by parser
   FetchParameters fetch_params{ResourceRequest(url)};
-  Resource* new_resource = MockResource::Fetch(fetch_params, fetcher);
-  Persistent<MockResourceClient> client = new MockResourceClient(new_resource);
+  Persistent<MockResourceClient> client = new MockResourceClient;
+  Resource* new_resource = MockResource::Fetch(fetch_params, fetcher, client);
   EXPECT_EQ(resource, new_resource);
   EXPECT_FALSE(resource->IsLinkPreload());
 
@@ -712,9 +711,9 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceMultipleFetchersAndMove) {
 
   // Resource created by parser on the second fetcher
   FetchParameters fetch_params2{ResourceRequest(url)};
-  Resource* new_resource2 = MockResource::Fetch(fetch_params2, fetcher2);
-  Persistent<MockResourceClient> client2 =
-      new MockResourceClient(new_resource2);
+  Persistent<MockResourceClient> client2 = new MockResourceClient;
+  Resource* new_resource2 =
+      MockResource::Fetch(fetch_params2, fetcher2, client2);
   EXPECT_NE(resource, new_resource2);
   EXPECT_EQ(0, fetcher2->BlockingRequestCount());
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
