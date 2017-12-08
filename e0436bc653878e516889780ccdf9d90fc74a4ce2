@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64347a1_0107a425",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 3646,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:26:35Z",
+      "side": 1,
+      "message": "pragma mark these as fullscreen helper methods, and add comments for each one.",
+      "range": {
+        "startLine": 3646,
+        "startChar": 8,
+        "endLine": 3646,
+        "endChar": 42
+      },
+      "revId": "e0436bc653878e516889780ccdf9d90fc74a4ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

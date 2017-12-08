@@ -16,6 +16,24 @@
       "revId": "cb9a278827c077411e51964eb4970e81d64e9f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94532cd2_575b0760",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:26:35Z",
+      "side": 1,
+      "message": "I don\u0027t have a better solution at the moment, and your comment provides a good explanation.",
+      "parentUuid": "eac2589e_147c4116",
+      "revId": "cb9a278827c077411e51964eb4970e81d64e9f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
