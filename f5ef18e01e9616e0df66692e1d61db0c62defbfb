@@ -16,6 +16,24 @@
       "revId": "f5ef18e01e9616e0df66692e1d61db0c62defbfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06c08cf_9d07348c",
+        "filename": "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-08T21:22:57Z",
+      "side": 0,
+      "message": "Whoops, this was removed by accident.  The comment was re-added in crrev.com/c/817648.",
+      "parentUuid": "00ad1f2f_58fb6ad0",
+      "revId": "f5ef18e01e9616e0df66692e1d61db0c62defbfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
