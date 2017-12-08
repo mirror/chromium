@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83de204a_61101c6a",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-08T17:27:52Z",
+      "side": 1,
+      "message": "Not necessarily to commit it, but I wanted to look at ordering stability, so I would prefer tp keep this function as is to avoid having to rewrite it for my experiments.",
+      "parentUuid": "9af7ff07_f9ce241e",
+      "revId": "297110b3d89a79782ecff32b67084f2538b79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49a8bfab_2c32680c",
         "filename": "tools/cygprofile/compare_orderfiles.py",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-08T17:15:06Z",
       "side": 1,
       "message": "You should also print the total number of symbols in order to get a sense of scale of the # removed/added.",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "297110b3d89a79782ecff32b67084f2538b79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45eea00b_5368bce5",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-08T17:27:52Z",
+      "side": 1,
+      "message": "It\u0027s done above, line 53 :-)",
+      "parentUuid": "49a8bfab_2c32680c",
       "range": {
         "startLine": 60,
         "startChar": 17,
