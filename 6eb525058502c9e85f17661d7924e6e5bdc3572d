@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e47b0cd4_75464ce2",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-08T21:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344f0aaa_1b269f7c",
+      "range": {
+        "startLine": 335,
+        "startChar": 3,
+        "endLine": 338,
+        "endChar": 54
+      },
+      "revId": "6eb525058502c9e85f17661d7924e6e5bdc3572d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76d7a5d_fd33ce11",
         "filename": "ui/events/blink/input_scroll_elasticity_controller.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "6eb525058502c9e85f17661d7924e6e5bdc3572d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d05d0ba_4f10d663",
+        "filename": "ui/events/blink/input_scroll_elasticity_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-08T21:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76d7a5d_fd33ce11",
+      "range": {
+        "startLine": 225,
+        "startChar": 34,
+        "endLine": 225,
+        "endChar": 37
+      },
+      "revId": "6eb525058502c9e85f17661d7924e6e5bdc3572d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
