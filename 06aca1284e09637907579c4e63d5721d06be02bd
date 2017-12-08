@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5521a201_a1042983",
+        "filename": "mojo/public/cpp/system/platform_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T22:41:22Z",
+      "side": 1,
+      "message": "How\u0027s current_protection sound? Also attempted to clarify the documentation a bit further.",
+      "parentUuid": "ef45b5e2_f7d25530",
+      "revId": "06aca1284e09637907579c4e63d5721d06be02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bcbcbbf_ba52d76d",
         "filename": "mojo/public/cpp/system/platform_handle.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T22:00:11Z",
       "side": 1,
       "message": "IIUC, if the caller passes in the wrong protection value, this may not fail, right?\nIf that is true, I think maybe it makes sense to say \"you must not attempt to map it to a writable memory segment\" instead.",
+      "revId": "06aca1284e09637907579c4e63d5721d06be02bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a8367b_d666199a",
+        "filename": "mojo/public/cpp/system/platform_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T22:41:22Z",
+      "side": 1,
+      "message": "I wrestled with this a bit. If the wrapping API is used incorrectly, it is a coding error which should never happen (i.e. if we *could* assert it, we would, and no such misuse could be committed). If the wrapping API is used *correctly*, then the claim here is accurate.\n\nI\u0027ve updated the comment to attempt to address your concerns. WDYT?",
+      "parentUuid": "0bcbcbbf_ba52d76d",
       "revId": "06aca1284e09637907579c4e63d5721d06be02bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
