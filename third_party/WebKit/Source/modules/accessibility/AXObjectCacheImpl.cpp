@@ -721,6 +721,11 @@ void AXObjectCacheImpl::ChildrenChanged(AXObject* obj,
 void AXObjectCacheImpl::NotificationPostTimerFired(TimerBase*) {
   notification_post_timer_.Stop();
 
+  if (document_->Lifecycle().GetState() < DocumentLifecycle::kStyleClean) {
+    notification_post_timer_.StartOneShot(0, BLINK_FROM_HERE);
+    return;
+  }
+
   unsigned i = 0, count = notifications_to_post_.size();
   for (i = 0; i < count; ++i) {
     AXObject* obj = notifications_to_post_[i].first;
@@ -748,6 +753,12 @@ void AXObjectCacheImpl::NotificationPostTimerFired(TimerBase*) {
     if (notification == kAXChildrenChanged && obj->ParentObjectIfExists() &&
         obj->LastKnownIsIgnoredValue() != obj->AccessibilityIsIgnored())
       ChildrenChanged(obj->ParentObject());
+
+    if (notification == kAXCheckedStateChanged) {
+      AXObject* listbox = obj->ParentObjectUnignored();
+      if (listbox && listbox->RoleValue() == kListBoxRole)
+        PostNotification(listbox, kAXSelectedChildrenChanged);
+    }
   }
 
   notifications_to_post_.clear();
@@ -847,12 +858,13 @@ void AXObjectCacheImpl::HandleLayoutComplete(LayoutObject* layout_object) {
 }
 
 void AXObjectCacheImpl::HandleClicked(Node* node) {
+  DCHECK(!node->NeedsDistributionRecalc());
   if (AXObject* obj = GetOrCreate(node))
     PostNotification(obj, kAXClicked);
 }
 
 void AXObjectCacheImpl::HandleAriaExpandedChange(Node* node) {
-  if (AXObject* obj = GetOrCreate(node))
+  if (AXObject* obj = Get(node))
     obj->HandleAriaExpandedChanged();
 }
 
@@ -862,10 +874,6 @@ void AXObjectCacheImpl::HandleAriaSelectedChanged(Node* node) {
     return;
 
   PostNotification(obj, kAXCheckedStateChanged);
-
-  AXObject* listbox = obj->ParentObjectUnignored();
-  if (listbox && listbox->RoleValue() == kListBoxRole)
-    PostNotification(listbox, kAXSelectedChildrenChanged);
 }
 
 void AXObjectCacheImpl::HandleActiveDescendantChanged(Node* node) {
@@ -1121,7 +1129,7 @@ void AXObjectCacheImpl::HandleValueChanged(Node* node) {
 
 void AXObjectCacheImpl::HandleUpdateActiveMenuOption(LayoutMenuList* menu_list,
                                                      int option_index) {
-  AXObject* obj = GetOrCreate(menu_list);
+  AXObject* obj = Get(menu_list);
   if (!obj || !obj->IsMenuList())
     return;
 
