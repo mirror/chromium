@@ -192,7 +192,6 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
     EntityChangeList entity_changes) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(sync_metadata_database_);
 
   std::vector<GURL> pending_deleted_urls;
   TypedURLVisitVector new_synced_visits;
@@ -203,7 +202,7 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
   for (const EntityChange& entity_change : entity_changes) {
     if (entity_change.type() == EntityChange::ACTION_DELETE) {
       URLRow url_row;
-      int64_t url_id = sync_metadata_database_->StorageKeyToURLID(
+      int64_t url_id = TypedURLSyncMetadataDatabase::StorageKeyToURLID(
           entity_change.storage_key());
       if (!history_backend_->GetURLByID(url_id, &url_row)) {
         // Ignoring the case that there is no matching URLRow with URLID
@@ -263,12 +262,11 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
 void TypedURLSyncBridge::GetData(StorageKeyList storage_keys,
                                  DataCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(sync_metadata_database_);
 
   auto batch = base::MakeUnique<MutableDataBatch>();
   for (const std::string& key : storage_keys) {
     URLRow url_row;
-    URLID url_id = sync_metadata_database_->StorageKeyToURLID(key);
+    URLID url_id = TypedURLSyncMetadataDatabase::StorageKeyToURLID(key);
 
     ++num_db_accesses_;
     if (!history_backend_->GetURLByID(url_id, &url_row)) {
@@ -416,7 +414,8 @@ void TypedURLSyncBridge::OnURLsDeleted(HistoryBackend* history_backend,
 
   if (all_history) {
     auto batch = base::MakeUnique<syncer::MetadataBatch>();
-    if (!sync_metadata_database_->GetAllSyncMetadata(batch.get())) {
+    if (!sync_metadata_database_ ||
+        !sync_metadata_database_->GetAllSyncMetadata(batch.get())) {
       change_processor()->ReportError(FROM_HERE,
                                       "Failed reading typed url metadata from "
                                       "TypedURLSyncMetadataDatabase.");
@@ -441,6 +440,12 @@ void TypedURLSyncBridge::Init() {
 
   history_backend_observer_.Add(history_backend_);
   LoadMetadata();
+}
+
+void TypedURLSyncBridge::OnDatabaseError() {
+  sync_metadata_database_ = nullptr;
+  change_processor()->ReportError(FROM_HERE,
+                                  "HistoryDatabase encountered error");
 }
 
 int TypedURLSyncBridge::GetErrorPercentage() const {
