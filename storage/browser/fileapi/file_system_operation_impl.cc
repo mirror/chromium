@@ -416,10 +416,10 @@ void FileSystemOperationImpl::GetUsageAndQuotaThenRunTask(
 void FileSystemOperationImpl::DidGetUsageAndQuotaAndRunTask(
     const base::Closure& task,
     const base::Closure& error_callback,
-    storage::QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
-  if (status != storage::kQuotaStatusOk) {
+  if (status != blink::kQuotaStatusOk) {
     LOG(WARNING) << "Got unexpected quota error : " << status;
     error_callback.Run();
     return;

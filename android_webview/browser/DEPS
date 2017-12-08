@@ -65,6 +65,8 @@ include_rules = [
   # AwContentBrowserClient::GetDefaultFavicon
   "!ui/resources/grit/ui_resources.h",
 
+  "+third_party/WebKit/common",
+
   # POD structure required by the find-in-page IPC messages.
   "+third_party/WebKit/public/web/WebFindOptions.h",
   # Interface required for in-process input event handling.

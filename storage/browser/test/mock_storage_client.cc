@@ -15,8 +15,8 @@
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 
-using storage::kQuotaErrorInvalidModification;
-using storage::kQuotaStatusOk;
+using blink::kQuotaErrorInvalidModification;
+using blink::kQuotaStatusOk;
 
 namespace content {
 
@@ -44,7 +44,7 @@ void MockStorageClient::Populate(
 MockStorageClient::~MockStorageClient() = default;
 
 void MockStorageClient::AddOriginAndNotify(const GURL& origin_url,
-                                           StorageType type,
+                                           blink::StorageType type,
                                            int64_t size) {
   DCHECK(origin_data_.find(make_pair(origin_url, type)) == origin_data_.end());
   DCHECK_GE(size, 0);
@@ -54,7 +54,7 @@ void MockStorageClient::AddOriginAndNotify(const GURL& origin_url,
 }
 
 void MockStorageClient::ModifyOriginAndNotify(const GURL& origin_url,
-                                              StorageType type,
+                                              blink::StorageType type,
                                               int64_t delta) {
   OriginDataMap::iterator find = origin_data_.find(make_pair(origin_url, type));
   DCHECK(find != origin_data_.end());
@@ -75,8 +75,8 @@ void MockStorageClient::TouchAllOriginsAndNotify() {
   }
 }
 
-void MockStorageClient::AddOriginToErrorSet(
-    const GURL& origin_url, StorageType type) {
+void MockStorageClient::AddOriginToErrorSet(const GURL& origin_url,
+                                            blink::StorageType type) {
   error_origins_.insert(make_pair(origin_url, type));
 }
 
@@ -94,7 +94,7 @@ void MockStorageClient::OnQuotaManagerDestroyed() {
 }
 
 void MockStorageClient::GetOriginUsage(const GURL& origin_url,
-                                       StorageType type,
+                                       blink::StorageType type,
                                        const GetUsageCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
@@ -102,37 +102,37 @@ void MockStorageClient::GetOriginUsage(const GURL& origin_url,
                  weak_factory_.GetWeakPtr(), origin_url, type, callback));
 }
 
-void MockStorageClient::GetOriginsForType(
-    StorageType type, const GetOriginsCallback& callback) {
+void MockStorageClient::GetOriginsForType(blink::StorageType type,
+                                          const GetOriginsCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&MockStorageClient::RunGetOriginsForType,
                             weak_factory_.GetWeakPtr(), type, callback));
 }
 
-void MockStorageClient::GetOriginsForHost(
-    StorageType type, const std::string& host,
-    const GetOriginsCallback& callback) {
+void MockStorageClient::GetOriginsForHost(blink::StorageType type,
+                                          const std::string& host,
+                                          const GetOriginsCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&MockStorageClient::RunGetOriginsForHost,
                             weak_factory_.GetWeakPtr(), type, host, callback));
 }
 
-void MockStorageClient::DeleteOriginData(
-    const GURL& origin, StorageType type,
-    const DeletionCallback& callback) {
+void MockStorageClient::DeleteOriginData(const GURL& origin,
+                                         blink::StorageType type,
+                                         const DeletionCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&MockStorageClient::RunDeleteOriginData,
                  weak_factory_.GetWeakPtr(), origin, type, callback));
 }
 
-bool MockStorageClient::DoesSupport(storage::StorageType type) const {
+bool MockStorageClient::DoesSupport(blink::StorageType type) const {
   return true;
 }
 
-void MockStorageClient::RunGetOriginUsage(
-    const GURL& origin_url, StorageType type,
-    const GetUsageCallback& callback) {
+void MockStorageClient::RunGetOriginUsage(const GURL& origin_url,
+                                          blink::StorageType type,
+                                          const GetUsageCallback& callback) {
   OriginDataMap::iterator find = origin_data_.find(make_pair(origin_url, type));
   if (find == origin_data_.end()) {
     callback.Run(0);
@@ -142,7 +142,8 @@ void MockStorageClient::RunGetOriginUsage(
 }
 
 void MockStorageClient::RunGetOriginsForType(
-    StorageType type, const GetOriginsCallback& callback) {
+    blink::StorageType type,
+    const GetOriginsCallback& callback) {
   std::set<GURL> origins;
   for (OriginDataMap::iterator iter = origin_data_.begin();
        iter != origin_data_.end(); ++iter) {
@@ -153,7 +154,8 @@ void MockStorageClient::RunGetOriginsForType(
 }
 
 void MockStorageClient::RunGetOriginsForHost(
-    StorageType type, const std::string& host,
+    blink::StorageType type,
+    const std::string& host,
     const GetOriginsCallback& callback) {
   std::set<GURL> origins;
   for (OriginDataMap::iterator iter = origin_data_.begin();
@@ -165,14 +167,13 @@ void MockStorageClient::RunGetOriginsForHost(
   callback.Run(origins);
 }
 
-void MockStorageClient::RunDeleteOriginData(
-    const GURL& origin_url,
-    StorageType type,
-    const DeletionCallback& callback) {
+void MockStorageClient::RunDeleteOriginData(const GURL& origin_url,
+                                            blink::StorageType type,
+                                            const DeletionCallback& callback) {
   ErrorOriginSet::iterator itr_error =
       error_origins_.find(make_pair(origin_url, type));
   if (itr_error != error_origins_.end()) {
-    callback.Run(kQuotaErrorInvalidModification);
+    callback.Run(blink::kQuotaErrorInvalidModification);
     return;
   }
 
@@ -185,7 +186,7 @@ void MockStorageClient::RunDeleteOriginData(
     origin_data_.erase(itr);
   }
 
-  callback.Run(kQuotaStatusOk);
+  callback.Run(blink::kQuotaStatusOk);
 }
 
 }  // namespace content

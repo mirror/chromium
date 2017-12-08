@@ -18,9 +18,9 @@
 #include "storage/browser/test/mock_storage_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using storage::kQuotaStatusOk;
-using storage::kStorageTypePersistent;
-using storage::kStorageTypeTemporary;
+using blink::kQuotaStatusOk;
+using blink::kStorageTypePersistent;
+using blink::kStorageTypeTemporary;
 
 namespace content {
 
@@ -32,8 +32,8 @@ const GURL kOrigin1(kTestOrigin1);
 const GURL kOrigin2(kTestOrigin2);
 const GURL kOrigin3(kTestOrigin3);
 
-const StorageType kTemporary = kStorageTypeTemporary;
-const StorageType kPersistent = kStorageTypePersistent;
+const blink::StorageType kTemporary = blink::kStorageTypeTemporary;
+const blink::StorageType kPersistent = blink::kStorageTypePersistent;
 
 const QuotaClient::ID kClientFile = QuotaClient::kFileSystem;
 const QuotaClient::ID kClientDB = QuotaClient::kIndexedDatabase;
@@ -59,29 +59,31 @@ class MockQuotaManagerTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
   }
 
-  void GetModifiedOrigins(StorageType type, base::Time since) {
+  void GetModifiedOrigins(blink::StorageType type, base::Time since) {
     manager_->GetOriginsModifiedSince(
         type, since,
         base::Bind(&MockQuotaManagerTest::GotModifiedOrigins,
                    weak_factory_.GetWeakPtr()));
   }
 
-  void GotModifiedOrigins(const std::set<GURL>& origins, StorageType type) {
+  void GotModifiedOrigins(const std::set<GURL>& origins,
+                          blink::StorageType type) {
     origins_ = origins;
     type_ = type;
   }
 
-  void DeleteOriginData(const GURL& origin, StorageType type,
-      int quota_client_mask) {
+  void DeleteOriginData(const GURL& origin,
+                        blink::StorageType type,
+                        int quota_client_mask) {
     manager_->DeleteOriginData(
         origin, type, quota_client_mask,
         base::Bind(&MockQuotaManagerTest::DeletedOriginData,
                    weak_factory_.GetWeakPtr()));
   }
 
-  void DeletedOriginData(QuotaStatusCode status) {
+  void DeletedOriginData(blink::QuotaStatusCode status) {
     ++deletion_callback_count_;
-    EXPECT_EQ(kQuotaStatusOk, status);
+    EXPECT_EQ(blink::kQuotaStatusOk, status);
   }
 
   int deletion_callback_count() const {
@@ -96,9 +98,7 @@ class MockQuotaManagerTest : public testing::Test {
     return origins_;
   }
 
-  const StorageType& type() const {
-    return type_;
-  }
+  const blink::StorageType& type() const { return type_; }
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
@@ -109,7 +109,7 @@ class MockQuotaManagerTest : public testing::Test {
   int deletion_callback_count_;
 
   std::set<GURL> origins_;
-  StorageType type_;
+  blink::StorageType type_;
 
   base::WeakPtrFactory<MockQuotaManagerTest> weak_factory_;
 

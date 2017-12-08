@@ -188,7 +188,7 @@ void InspectorDOMStorageAgent::DidDispatchDOMStorageEvent(
     const String& key,
     const String& old_value,
     const String& new_value,
-    StorageType storage_type,
+    blink::StorageType storage_type,
     const SecurityOrigin* security_origin) {
   if (!GetFrontend())
     return;

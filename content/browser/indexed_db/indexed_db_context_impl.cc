@@ -444,7 +444,7 @@ void IndexedDBContextImpl::ConnectionOpened(const Origin& origin,
   DCHECK(TaskRunner()->RunsTasksInCurrentSequence());
   quota_manager_proxy()->NotifyStorageAccessed(
       storage::QuotaClient::kIndexedDatabase, origin.GetURL(),
-      storage::kStorageTypeTemporary);
+      blink::kStorageTypeTemporary);
   if (AddToOriginSet(origin)) {
     // A newly created db, notify the quota system.
     QueryDiskAndUpdateQuotaUsage(origin);
@@ -458,7 +458,7 @@ void IndexedDBContextImpl::ConnectionClosed(const Origin& origin,
   DCHECK(TaskRunner()->RunsTasksInCurrentSequence());
   quota_manager_proxy()->NotifyStorageAccessed(
       storage::QuotaClient::kIndexedDatabase, origin.GetURL(),
-      storage::kStorageTypeTemporary);
+      blink::kStorageTypeTemporary);
   if (factory_.get() && factory_->GetConnectionCount(origin) == 0)
     QueryDiskAndUpdateQuotaUsage(origin);
 }
@@ -583,7 +583,7 @@ void IndexedDBContextImpl::QueryDiskAndUpdateQuotaUsage(const Origin& origin) {
     origin_size_map_[origin] = current_disk_usage;
     quota_manager_proxy()->NotifyStorageModified(
         storage::QuotaClient::kIndexedDatabase, origin.GetURL(),
-        storage::kStorageTypeTemporary, difference);
+        blink::kStorageTypeTemporary, difference);
     NotifyIndexedDBListChanged(origin);
   }
 }

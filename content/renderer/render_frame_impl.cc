@@ -4907,7 +4907,7 @@ void RenderFrameImpl::RequestStorageQuota(
     return;
   }
   RenderThreadImpl::current()->quota_dispatcher()->RequestStorageQuota(
-      routing_id_, origin, static_cast<storage::StorageType>(type),
+      routing_id_, origin, static_cast<blink::StorageType>(type),
       requested_size,
       QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(callbacks));
 }

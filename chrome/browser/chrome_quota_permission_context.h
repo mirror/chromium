@@ -7,7 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "content/public/browser/quota_permission_context.h"
-#include "storage/common/quota/quota_types.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 
 class ChromeQuotaPermissionContext : public content::QuotaPermissionContext {
  public:

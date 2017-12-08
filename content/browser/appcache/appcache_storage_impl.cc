@@ -601,7 +601,7 @@ class AppCacheStorageImpl::StoreGroupAndCacheTask : public StoreOrLoadTask {
                          AppCache* newest_cache);
 
   void GetQuotaThenSchedule();
-  void OnQuotaCallback(storage::QuotaStatusCode status,
+  void OnQuotaCallback(blink::QuotaStatusCode status,
                        int64_t usage,
                        int64_t quota);
 
@@ -667,17 +667,16 @@ void AppCacheStorageImpl::StoreGroupAndCacheTask::GetQuotaThenSchedule() {
   // We have to ask the quota manager for the value.
   storage_->pending_quota_queries_.insert(this);
   quota_manager->GetUsageAndQuota(
-      group_record_.origin,
-      storage::kStorageTypeTemporary,
+      group_record_.origin, blink::kStorageTypeTemporary,
       base::Bind(&StoreGroupAndCacheTask::OnQuotaCallback, this));
 }
 
 void AppCacheStorageImpl::StoreGroupAndCacheTask::OnQuotaCallback(
-    storage::QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   if (storage_) {
-    if (status == storage::kQuotaStatusOk)
+    if (status == blink::kQuotaStatusOk)
       space_available_ = std::max(static_cast<int64_t>(0), quota - usage);
     else
       space_available_ = 0;

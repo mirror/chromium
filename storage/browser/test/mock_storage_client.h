@@ -26,13 +26,13 @@ class QuotaManagerProxy;
 
 using storage::QuotaClient;
 using storage::QuotaManagerProxy;
-using storage::StorageType;
+using blink::StorageType;
 
 namespace content {
 
 struct MockOriginData {
   const char* origin;
-  StorageType type;
+  blink::StorageType type;
   int64_t usage;
 };
 
@@ -47,14 +47,14 @@ class MockStorageClient : public QuotaClient {
 
   // To add or modify mock data in this client.
   void AddOriginAndNotify(const GURL& origin_url,
-                          StorageType type,
+                          blink::StorageType type,
                           int64_t size);
   void ModifyOriginAndNotify(const GURL& origin_url,
-                             StorageType type,
+                             blink::StorageType type,
                              int64_t delta);
   void TouchAllOriginsAndNotify();
 
-  void AddOriginToErrorSet(const GURL& origin_url, StorageType type);
+  void AddOriginToErrorSet(const GURL& origin_url, blink::StorageType type);
 
   base::Time IncrementMockTime();
 
@@ -62,29 +62,29 @@ class MockStorageClient : public QuotaClient {
   QuotaClient::ID id() const override;
   void OnQuotaManagerDestroyed() override;
   void GetOriginUsage(const GURL& origin_url,
-                      StorageType type,
+                      blink::StorageType type,
                       const GetUsageCallback& callback) override;
-  void GetOriginsForType(StorageType type,
+  void GetOriginsForType(blink::StorageType type,
                          const GetOriginsCallback& callback) override;
-  void GetOriginsForHost(StorageType type,
+  void GetOriginsForHost(blink::StorageType type,
                          const std::string& host,
                          const GetOriginsCallback& callback) override;
   void DeleteOriginData(const GURL& origin,
-                        StorageType type,
+                        blink::StorageType type,
                         const DeletionCallback& callback) override;
-  bool DoesSupport(storage::StorageType type) const override;
+  bool DoesSupport(blink::StorageType type) const override;
 
  private:
   void RunGetOriginUsage(const GURL& origin_url,
-                         StorageType type,
+                         blink::StorageType type,
                          const GetUsageCallback& callback);
-  void RunGetOriginsForType(StorageType type,
+  void RunGetOriginsForType(blink::StorageType type,
                             const GetOriginsCallback& callback);
-  void RunGetOriginsForHost(StorageType type,
+  void RunGetOriginsForHost(blink::StorageType type,
                             const std::string& host,
                             const GetOriginsCallback& callback);
   void RunDeleteOriginData(const GURL& origin_url,
-                           StorageType type,
+                           blink::StorageType type,
                            const DeletionCallback& callback);
 
   void Populate(const MockOriginData* mock_data, size_t mock_data_size);
@@ -92,9 +92,9 @@ class MockStorageClient : public QuotaClient {
   scoped_refptr<QuotaManagerProxy> quota_manager_proxy_;
   const ID id_;
 
-  typedef std::map<std::pair<GURL, StorageType>, int64_t> OriginDataMap;
+  typedef std::map<std::pair<GURL, blink::StorageType>, int64_t> OriginDataMap;
   OriginDataMap origin_data_;
-  typedef std::set<std::pair<GURL, StorageType> > ErrorOriginSet;
+  typedef std::set<std::pair<GURL, blink::StorageType>> ErrorOriginSet;
   ErrorOriginSet error_origins_;
 
   int mock_time_counter_;

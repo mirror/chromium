@@ -95,7 +95,7 @@ class STORAGE_EXPORT HostStorageObservers {
  private:
   void StartInitialization(const StorageObserver::Filter& filter);
   void GotHostUsageAndQuota(const StorageObserver::Filter& filter,
-                            QuotaStatusCode status,
+                            blink::QuotaStatusCode status,
                             int64_t usage,
                             int64_t quota);
   void DispatchEvent(const StorageObserver::Filter& filter, bool is_update);
@@ -162,14 +162,14 @@ class STORAGE_EXPORT StorageMonitor {
 
   // Returns the observers of a specific storage type.
   const StorageTypeObservers* GetStorageTypeObservers(
-      StorageType storage_type) const;
+      blink::StorageType storage_type) const;
 
   // Handles a usage change.
   void NotifyUsageChange(const StorageObserver::Filter& filter, int64_t delta);
 
  private:
   QuotaManager* quota_manager_;
-  std::map<StorageType, std::unique_ptr<StorageTypeObservers>>
+  std::map<blink::StorageType, std::unique_ptr<StorageTypeObservers>>
       storage_type_observers_map_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageMonitor);

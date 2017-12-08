@@ -125,23 +125,19 @@ struct QuotaDatabase::QuotaTableImporter {
 
 // Clang requires explicit out-of-line constructors for them.
 QuotaDatabase::QuotaTableEntry::QuotaTableEntry()
-    : type(kStorageTypeUnknown),
-      quota(0) {
-}
+    : type(blink::kStorageTypeUnknown), quota(0) {}
 
 QuotaDatabase::QuotaTableEntry::QuotaTableEntry(const std::string& host,
-                                                StorageType type,
+                                                blink::StorageType type,
                                                 int64_t quota)
     : host(host), type(type), quota(quota) {}
 
 QuotaDatabase::OriginInfoTableEntry::OriginInfoTableEntry()
-    : type(kStorageTypeUnknown),
-      used_count(0) {
-}
+    : type(blink::kStorageTypeUnknown), used_count(0) {}
 
 QuotaDatabase::OriginInfoTableEntry::OriginInfoTableEntry(
     const GURL& origin,
-    StorageType type,
+    blink::StorageType type,
     int used_count,
     const base::Time& last_access_time,
     const base::Time& last_modified_time)
@@ -149,8 +145,7 @@ QuotaDatabase::OriginInfoTableEntry::OriginInfoTableEntry(
       type(type),
       used_count(used_count),
       last_access_time(last_access_time),
-      last_modified_time(last_modified_time) {
-}
+      last_modified_time(last_modified_time) {}
 
 // QuotaDatabase ------------------------------------------------------------
 QuotaDatabase::QuotaDatabase(const base::FilePath& path)
@@ -171,7 +166,7 @@ void QuotaDatabase::CloseConnection() {
 }
 
 bool QuotaDatabase::GetHostQuota(const std::string& host,
-                                 StorageType type,
+                                 blink::StorageType type,
                                  int64_t* quota) {
   DCHECK(quota);
   if (!LazyOpen(false))
@@ -194,7 +189,7 @@ bool QuotaDatabase::GetHostQuota(const std::string& host,
 }
 
 bool QuotaDatabase::SetHostQuota(const std::string& host,
-                                 StorageType type,
+                                 blink::StorageType type,
                                  int64_t quota) {
   DCHECK_GE(quota, 0);
   if (!LazyOpen(true))
@@ -205,8 +200,9 @@ bool QuotaDatabase::SetHostQuota(const std::string& host,
   return true;
 }
 
-bool QuotaDatabase::SetOriginLastAccessTime(
-    const GURL& origin, StorageType type, base::Time last_access_time) {
+bool QuotaDatabase::SetOriginLastAccessTime(const GURL& origin,
+                                            blink::StorageType type,
+                                            base::Time last_access_time) {
   if (!LazyOpen(true))
     return false;
 
@@ -241,8 +237,9 @@ bool QuotaDatabase::SetOriginLastAccessTime(
   return true;
 }
 
-bool QuotaDatabase::SetOriginLastModifiedTime(
-    const GURL& origin, StorageType type, base::Time last_modified_time) {
+bool QuotaDatabase::SetOriginLastModifiedTime(const GURL& origin,
+                                              blink::StorageType type,
+                                              base::Time last_modified_time) {
   if (!LazyOpen(true))
     return false;
 
@@ -274,7 +271,7 @@ bool QuotaDatabase::SetOriginLastModifiedTime(
 }
 
 bool QuotaDatabase::GetOriginLastEvictionTime(const GURL& origin,
-                                              StorageType type,
+                                              blink::StorageType type,
                                               base::Time* last_modified_time) {
   DCHECK(last_modified_time);
   if (!LazyOpen(false))
@@ -297,7 +294,7 @@ bool QuotaDatabase::GetOriginLastEvictionTime(const GURL& origin,
 }
 
 bool QuotaDatabase::SetOriginLastEvictionTime(const GURL& origin,
-                                              StorageType type,
+                                              blink::StorageType type,
                                               base::Time last_modified_time) {
   if (!LazyOpen(true))
     return false;
@@ -319,7 +316,7 @@ bool QuotaDatabase::SetOriginLastEvictionTime(const GURL& origin,
 }
 
 bool QuotaDatabase::DeleteOriginLastEvictionTime(const GURL& origin,
-                                                 StorageType type) {
+                                                 blink::StorageType type) {
   if (!LazyOpen(false))
     return false;
 
@@ -338,8 +335,8 @@ bool QuotaDatabase::DeleteOriginLastEvictionTime(const GURL& origin,
   return true;
 }
 
-bool QuotaDatabase::RegisterInitialOriginInfo(
-    const std::set<GURL>& origins, StorageType type) {
+bool QuotaDatabase::RegisterInitialOriginInfo(const std::set<GURL>& origins,
+                                              blink::StorageType type) {
   if (!LazyOpen(true))
     return false;
 
@@ -362,7 +359,7 @@ bool QuotaDatabase::RegisterInitialOriginInfo(
 }
 
 bool QuotaDatabase::GetOriginInfo(const GURL& origin,
-                                  StorageType type,
+                                  blink::StorageType type,
                                   QuotaDatabase::OriginInfoTableEntry* entry) {
   if (!LazyOpen(false))
     return false;
@@ -379,15 +376,16 @@ bool QuotaDatabase::GetOriginInfo(const GURL& origin,
 
   *entry = OriginInfoTableEntry(
       GURL(statement.ColumnString(0)),
-      static_cast<StorageType>(statement.ColumnInt(1)), statement.ColumnInt(2),
+      static_cast<blink::StorageType>(statement.ColumnInt(1)),
+      statement.ColumnInt(2),
       base::Time::FromInternalValue(statement.ColumnInt64(3)),
       base::Time::FromInternalValue(statement.ColumnInt64(4)));
 
   return true;
 }
 
-bool QuotaDatabase::DeleteHostQuota(
-    const std::string& host, StorageType type) {
+bool QuotaDatabase::DeleteHostQuota(const std::string& host,
+                                    blink::StorageType type) {
   if (!LazyOpen(false))
     return false;
 
@@ -406,8 +404,8 @@ bool QuotaDatabase::DeleteHostQuota(
   return true;
 }
 
-bool QuotaDatabase::DeleteOriginInfo(
-    const GURL& origin, StorageType type) {
+bool QuotaDatabase::DeleteOriginInfo(const GURL& origin,
+                                     blink::StorageType type) {
   if (!LazyOpen(false))
     return false;
 
@@ -440,11 +438,10 @@ bool QuotaDatabase::SetQuotaConfigValue(const char* key, int64_t value) {
   return meta_table_->SetValue(key, value);
 }
 
-bool QuotaDatabase::GetLRUOrigin(
-    StorageType type,
-    const std::set<GURL>& exceptions,
-    SpecialStoragePolicy* special_storage_policy,
-    GURL* origin) {
+bool QuotaDatabase::GetLRUOrigin(blink::StorageType type,
+                                 const std::set<GURL>& exceptions,
+                                 SpecialStoragePolicy* special_storage_policy,
+                                 GURL* origin) {
   DCHECK(origin);
   if (!LazyOpen(false))
     return false;
@@ -484,8 +481,9 @@ bool QuotaDatabase::GetLRUOrigin(
   return statement.Succeeded();
 }
 
-bool QuotaDatabase::GetOriginsModifiedSince(
-    StorageType type, std::set<GURL>* origins, base::Time modified_since) {
+bool QuotaDatabase::GetOriginsModifiedSince(blink::StorageType type,
+                                            std::set<GURL>* origins,
+                                            base::Time modified_since) {
   DCHECK(origins);
   if (!LazyOpen(false))
     return false;
@@ -728,7 +726,7 @@ bool QuotaDatabase::UpgradeSchema(int current_version) {
 }
 
 bool QuotaDatabase::InsertOrReplaceHostQuota(const std::string& host,
-                                             StorageType type,
+                                             blink::StorageType type,
                                              int64_t quota) {
   DCHECK(db_.get());
   const char* kSql =
@@ -750,10 +748,10 @@ bool QuotaDatabase::DumpQuotaTable(const QuotaTableCallback& callback) {
   sql::Statement statement(db_->GetCachedStatement(SQL_FROM_HERE, kSql));
 
   while (statement.Step()) {
-    QuotaTableEntry entry = QuotaTableEntry(
-      statement.ColumnString(0),
-      static_cast<StorageType>(statement.ColumnInt(1)),
-      statement.ColumnInt64(2));
+    QuotaTableEntry entry =
+        QuotaTableEntry(statement.ColumnString(0),
+                        static_cast<blink::StorageType>(statement.ColumnInt(1)),
+                        statement.ColumnInt64(2));
 
     if (!callback.Run(entry))
       return true;
@@ -773,11 +771,11 @@ bool QuotaDatabase::DumpOriginInfoTable(
 
   while (statement.Step()) {
     OriginInfoTableEntry entry(
-      GURL(statement.ColumnString(0)),
-      static_cast<StorageType>(statement.ColumnInt(1)),
-      statement.ColumnInt(2),
-      base::Time::FromInternalValue(statement.ColumnInt64(3)),
-      base::Time::FromInternalValue(statement.ColumnInt64(4)));
+        GURL(statement.ColumnString(0)),
+        static_cast<blink::StorageType>(statement.ColumnInt(1)),
+        statement.ColumnInt(2),
+        base::Time::FromInternalValue(statement.ColumnInt64(3)),
+        base::Time::FromInternalValue(statement.ColumnInt64(4)));
 
     if (!callback.Run(entry))
       return true;
