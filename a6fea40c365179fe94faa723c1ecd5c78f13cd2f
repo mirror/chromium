@@ -34,6 +34,24 @@
       "revId": "a6fea40c365179fe94faa723c1ecd5c78f13cd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cb8ce59_7ccd1479",
+        "filename": "chromeos/dbus/fake_shill_profile_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-08T18:38:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "286db6f8_7007e6bc",
+      "revId": "a6fea40c365179fe94faa723c1ecd5c78f13cd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

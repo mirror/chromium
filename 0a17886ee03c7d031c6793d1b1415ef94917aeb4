@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7fb4ec_4bd9f11f",
+        "filename": "chromeos/dbus/fake_shill_profile_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-08T18:38:16Z",
+      "side": 1,
+      "message": "This casting is strange and seems backwards to me. We should cast |entry| to a DictionaryValue* since that is clearly valid for FindKeyOfType(..., DICTIONARY).",
+      "revId": "0a17886ee03c7d031c6793d1b1415ef94917aeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
