@@ -180,6 +180,30 @@
       "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38935b2d_feae9e6f",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T23:42:57Z",
+      "side": 1,
+      "message": "assuming we don\u0027t want to assign, const makes sense to me, but given Fady\u0027s other comments, it sounds like we want a setter for this, so let\u0027s keep it non-const.",
+      "parentUuid": "c9b19dc1_31523c21",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
