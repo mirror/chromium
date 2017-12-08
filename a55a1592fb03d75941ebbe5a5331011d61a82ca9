@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e37bfae_586c5024",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-08T03:00:31Z",
+      "side": 1,
+      "message": "Can\u0027t this be written as \"using BookmarkAppNavigationThrottle::ProcessNavigationResult\"?\n\nhttp://en.cppreference.com/w/cpp/language/using_declaration",
+      "revId": "a55a1592fb03d75941ebbe5a5331011d61a82ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0db250c_b5b81056",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-12-08T03:00:31Z",
+      "side": 1,
+      "message": "Nit: \"The first\" (for consistency with \"the second\").",
+      "range": {
+        "startLine": 1447,
+        "startChar": 5,
+        "endLine": 1447,
+        "endChar": 10
+      },
+      "revId": "a55a1592fb03d75941ebbe5a5331011d61a82ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
