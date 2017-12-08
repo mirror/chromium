@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b781e6ab_1310dfc5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T15:20:37Z",
+      "side": 1,
+      "message": "yukishiino: Oh, I was thinking that this security check is auto-generated. Do we need to add the security check to all C++-side implementations of Window\u0027s methods?",
+      "revId": "884ff9d8d583e17109e34832b446604fcf66d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318c7012_6b4699a9",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T15:20:37Z",
+      "side": 1,
+      "message": "Don\u0027t we need to add [TreatNullAs\u003dEmptyString] to |url|?\n\nThe removed custom bindings had |kTreatNullAndUndefinedAsNullString|.",
+      "revId": "884ff9d8d583e17109e34832b446604fcf66d4c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
