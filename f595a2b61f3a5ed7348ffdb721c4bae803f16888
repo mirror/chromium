@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b90c8608_ae9b1744",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "better to pass \"const MtpStorageInfo\u0026\" ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 63
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5775d0_31d3ef9a",
+        "filename": "components/storage_monitor/media_transfer_protocol_device_observer_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01cc40d5_66e73adc",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "Seems we can always pass a nullptr if the second parameter is true?\nCould u pls have a check?",
+      "range": {
+        "startLine": 115,
+        "startChar": 19,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b932b73_7423b42a",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 229,
+        "startChar": 19,
+        "endLine": 229,
+        "endChar": 51
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e16cd9_ed44fa70",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 390,
+        "startChar": 8,
+        "endLine": 390,
+        "endChar": 42
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cf6792_fbd18cfa",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-08T08:27:06Z",
+      "side": 1,
+      "message": "this true also means error? if yes, same as above.",
+      "range": {
+        "startLine": 547,
+        "startChar": 41,
+        "endLine": 548,
+        "endChar": 45
+      },
+      "revId": "f595a2b61f3a5ed7348ffdb721c4bae803f16888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
