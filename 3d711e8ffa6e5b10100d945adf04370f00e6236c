@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eea5431b_31847e6a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:30:55Z",
+      "side": 1,
+      "message": "Yeah, I did a couple of rounds on this :-J.  Done.",
+      "parentUuid": "68e50bc9_32da500f",
+      "revId": "3d711e8ffa6e5b10100d945adf04370f00e6236c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e69bf28_0a591c2e",
         "filename": "extensions/shell/browser/shell_extension_system.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "3d711e8ffa6e5b10100d945adf04370f00e6236c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45224150_bebf14e3",
+        "filename": "extensions/shell/browser/shell_extension_system.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:30:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e69bf28_0a591c2e",
+      "revId": "3d711e8ffa6e5b10100d945adf04370f00e6236c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

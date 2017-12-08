@@ -16,6 +16,24 @@
       "revId": "f4a73c31ebdae8378e53c591fdf418778b532f25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8df625_bec5811f",
+        "filename": "extensions/shell/browser/shell_extension_system.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:30:55Z",
+      "side": 1,
+      "message": "No skin off my typing fingers :-}.  Done.",
+      "parentUuid": "08e31ef1_febd5c03",
+      "revId": "f4a73c31ebdae8378e53c591fdf418778b532f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
