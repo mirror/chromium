@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03dc8ca7_ee6b7438",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "The downside of using the context from the Frame\u0027s current document is that this test is now invalid, since the script context we invalidated isn\u0027t the main document\u0027s script context anymore.  Do you have a suggestion of how to update it to test the \"context is invalid at the time of call\"-scenario?",
+      "revId": "0e568a1587ad2590f86a49bda57066f462d839e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

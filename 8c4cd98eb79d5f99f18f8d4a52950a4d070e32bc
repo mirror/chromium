@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a43b1c1_5c239a55",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd48255_69610919",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0b3546_a17328fa",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e9270d_a7752700",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Whoops!  Removed.  (Why do we not have clang warnings for these yet?)",
+      "parentUuid": "7c0b3546_a17328fa",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45ff3727_d70c6b2b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Right - I blatantly stole this from PausableScriptExecutor.  With the below, moot.  FWIW, I think this actually *was* necessary, since PausableObject has a DCHECK that PauseIfNeeded() was called [1].  But cleaner now. :)\n\n[1] https://chromium.googlesource.com/chromium/src/+/182dd1a3b8d8a57d9eb796b6027bd6ed2009a2a7/third_party/WebKit/Source/core/dom/PausableObject.cpp#49",
+      "parentUuid": "9ba86b8f_b1a34d9c",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d637ee_2999e523",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96bf932_1f430236",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d637ee_2999e523",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "49bd2bf6_aa56763b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954967de_beb266a7",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04575751_d229d03c",
         "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447790e4_c77a9266",
+        "filename": "third_party/WebKit/public/web/WebScriptNotPausedCallback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-08T18:57:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04575751_d229d03c",
+      "revId": "8c4cd98eb79d5f99f18f8d4a52950a4d070e32bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
