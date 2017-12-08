@@ -14,7 +14,7 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/command_observer.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/ui/browser.h"
@@ -152,7 +152,7 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
 
 @interface BrowserWindowTouchBar () {
   // Used to execute commands such as navigating back and forward.
-  CommandUpdater* commandUpdater_;  // Weak, owned by Browser.
+  CommandUpdaterProxy* commandUpdaterProxy_;  // Weak, owned by Browser.
 
   // The browser associated with the touch bar.
   Browser* browser_;  // Weak.
@@ -206,9 +206,11 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
     notificationBridge_.reset(
         new BrowserTouchBarNotificationBridge(self, bwc_));
 
-    commandUpdater_ = browser->command_controller()->command_updater();
-    commandUpdater_->AddCommandObserver(IDC_BACK, notificationBridge_.get());
-    commandUpdater_->AddCommandObserver(IDC_FORWARD, notificationBridge_.get());
+    commandUpdaterProxy_ = browser->command_controller();
+    commandUpdaterProxy_->AddCommandObserver(IDC_BACK,
+                                             notificationBridge_.get());
+    commandUpdaterProxy_->AddCommandObserver(IDC_FORWARD,
+                                             notificationBridge_.get());
 
     PrefService* prefs = browser->profile()->GetPrefs();
     showHomeButton_.Init(
@@ -429,10 +431,12 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
   if (@available(macOS 10.10, *))
     [backForwardControl_ setSegmentStyle:NSSegmentStyleSeparated];
 
-  [backForwardControl_ setEnabled:commandUpdater_->IsCommandEnabled(IDC_BACK)
-                       forSegment:kBackSegmentIndex];
-  [backForwardControl_ setEnabled:commandUpdater_->IsCommandEnabled(IDC_FORWARD)
-                       forSegment:kForwardSegmentIndex];
+  [backForwardControl_
+      setEnabled:commandUpdaterProxy_->IsCommandEnabled(IDC_BACK)
+      forSegment:kBackSegmentIndex];
+  [backForwardControl_
+      setEnabled:commandUpdaterProxy_->IsCommandEnabled(IDC_FORWARD)
+      forSegment:kForwardSegmentIndex];
 }
 
 - (void)updateStarredButton {
@@ -496,7 +500,7 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
   int command =
       [control selectedSegment] == kBackSegmentIndex ? IDC_BACK : IDC_FORWARD;
   LogTouchBarUMA(TouchBarActionFromCommand(command));
-  commandUpdater_->ExecuteCommand(command);
+  commandUpdaterProxy_->ExecuteCommand(command);
 }
 
 - (void)exitFullscreenForTab:(id)sender {
@@ -508,7 +512,7 @@ class BrowserTouchBarNotificationBridge : public CommandObserver {
 - (void)executeCommand:(id)sender {
   int command = [sender tag];
   ui::LogTouchBarUMA(TouchBarActionFromCommand(command));
-  commandUpdater_->ExecuteCommand(command);
+  commandUpdaterProxy_->ExecuteCommand(command);
 }
 
 - (void)setIsPageLoading:(BOOL)isPageLoading {
