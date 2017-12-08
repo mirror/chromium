@@ -33,6 +33,23 @@
       "revId": "fb519e1e08fc40d2131409f58ef81c365e2f42db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e755d6_4b56348e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5040,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-08T22:10:57Z",
+      "side": 1,
+      "message": "Why bubble this here if it is unconditional to the state of WebContents? The same code can be executed in FTN itself, without the need to go to the delegate.",
+      "revId": "fb519e1e08fc40d2131409f58ef81c365e2f42db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
