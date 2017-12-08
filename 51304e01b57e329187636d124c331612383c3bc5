@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8033f3fb_5bf3e236",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T19:13:19Z",
+      "side": 1,
+      "message": "Does Firefox no longer store favicons at all, or have they simply moved?  It would be best to continue to import favicons if it\u0027s feasible.",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 725,
+        "endChar": 65
+      },
+      "revId": "51304e01b57e329187636d124c331612383c3bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
