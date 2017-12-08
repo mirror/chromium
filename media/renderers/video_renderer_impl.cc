@@ -130,13 +130,9 @@ VideoRendererImpl::VideoRendererImpl(
       pending_read_(false),
       drop_frames_(drop_frames),
       buffering_state_(BUFFERING_HAVE_NOTHING),
-      frames_decoded_(0),
-      frames_dropped_(0),
-      frames_decoded_power_efficient_(0),
       tick_clock_(base::DefaultTickClock::GetInstance()),
       was_background_rendering_(false),
       time_progressing_(false),
-      last_video_memory_usage_(0),
       have_renderered_frames_(false),
       last_frame_opaque_(false),
       painted_first_frame_(false),
@@ -316,8 +312,7 @@ scoped_refptr<VideoFrame> VideoRendererImpl::Render(
   // Just after resuming from background rendering, we also don't count the
   // dropped frames since they are likely just dropped due to being too old.
   if (!background_rendering && !was_background_rendering_)
-    frames_dropped_ += frames_dropped;
-  UpdateStats_Locked();
+    stats_.video_frames_dropped += frames_dropped;
   was_background_rendering_ = background_rendering;
 
   // Always post this task, it will acquire new frames if necessary and since it
@@ -566,9 +561,8 @@ void VideoRendererImpl::FrameReady(base::TimeTicks read_time,
   // We may have removed all frames above and have reached end of stream.
   MaybeFireEndedCallback_Locked(time_progressing_);
 
-  // Update statistics here instead of during Render() when the sink is stopped.
-  if (!sink_started_)
-    UpdateStats_Locked();
+  // Update any statistics since the last call.
+  UpdateStats_Locked();
 
   // Paint the first frame if possible and necessary. Paint ahead of
   // HAVE_ENOUGH_DATA to ensure the user sees the frame as early as possible.
@@ -611,7 +605,7 @@ bool VideoRendererImpl::HaveEnoughData_Locked() const {
     return true;
   }
 
-  if (was_background_rendering_ && frames_decoded_)
+  if (was_background_rendering_ && stats_.video_frames_decoded)
     return true;
 
   if (!low_delay_ && video_frame_stream_->CanReadWithoutStalling())
@@ -663,13 +657,13 @@ void VideoRendererImpl::AddReadyFrame_Locked(
   lock_.AssertAcquired();
   DCHECK(!frame->metadata()->IsTrue(VideoFrameMetadata::END_OF_STREAM));
 
-  frames_decoded_++;
+  ++stats_.video_frames_decoded;
 
   bool power_efficient = false;
   if (frame->metadata()->GetBoolean(VideoFrameMetadata::POWER_EFFICIENT,
                                     &power_efficient) &&
       power_efficient) {
-    ++frames_decoded_power_efficient_;
+    ++stats_.video_frames_decoded_power_efficient;
   }
 
   algorithm_->EnqueueFrame(frame);
@@ -723,37 +717,29 @@ void VideoRendererImpl::OnVideoFrameStreamResetDone() {
 }
 
 void VideoRendererImpl::UpdateStats_Locked() {
+  DCHECK(task_runner_->BelongsToCurrentThread());
   lock_.AssertAcquired();
-  DCHECK_GE(frames_decoded_, 0);
-  DCHECK_GE(frames_dropped_, 0);
 
-  // No need to check for `frames_decoded_power_efficient_` because if it is
-  // greater than 0, `frames_decoded_` will too.
-  if (frames_decoded_ || frames_dropped_) {
-    if (frames_dropped_)
-      TRACE_EVENT_INSTANT2("media", "VideoFramesDropped",
-                           TRACE_EVENT_SCOPE_THREAD, "count", frames_dropped_,
-                           "id", media_log_->id());
-    PipelineStatistics statistics;
-    statistics.video_frames_decoded = frames_decoded_;
-    statistics.video_frames_dropped = frames_dropped_;
-    statistics.video_frames_decoded_power_efficient =
-        frames_decoded_power_efficient_;
+  // No need to check for `stats_.video_frames_decoded_power_efficient` because
+  // if it is greater than 0, `stats_.video_frames_decoded` will too.
+  if (!stats_.video_frames_decoded && !stats_.video_frames_dropped)
+    return;
 
-    const size_t memory_usage = algorithm_->GetMemoryUsage();
-    statistics.video_memory_usage = memory_usage - last_video_memory_usage_;
-
-    statistics.video_frame_duration_average =
-        algorithm_->average_frame_duration();
-
-    task_runner_->PostTask(FROM_HERE,
-                           base::Bind(&VideoRendererImpl::OnStatisticsUpdate,
-                                      weak_factory_.GetWeakPtr(), statistics));
-    frames_decoded_ = 0;
-    frames_dropped_ = 0;
-    frames_decoded_power_efficient_ = 0;
-    last_video_memory_usage_ = memory_usage;
+  if (stats_.video_frames_dropped) {
+    TRACE_EVENT_INSTANT2("media", "VideoFramesDropped",
+                         TRACE_EVENT_SCOPE_THREAD, "count",
+                         stats_.video_frames_dropped, "id", media_log_->id());
   }
+
+  const size_t memory_usage = algorithm_->GetMemoryUsage();
+  stats_.video_memory_usage = memory_usage - stats_.video_memory_usage;
+  stats_.video_frame_duration_average = algorithm_->average_frame_duration();
+  OnStatisticsUpdate(stats_);
+
+  stats_.video_frames_decoded = 0;
+  stats_.video_frames_dropped = 0;
+  stats_.video_frames_decoded_power_efficient = 0;
+  stats_.video_memory_usage = memory_usage;
 }
 
 bool VideoRendererImpl::HaveReachedBufferingCap() const {
@@ -856,7 +842,7 @@ void VideoRendererImpl::RemoveFramesForUnderflowOrBackgroundRendering() {
   // the entire queue.  Note: this may cause slight inaccuracies in the number
   // of dropped frames since the frame may have been rendered before.
   if (!sink_started_ && !algorithm_->effective_frames_queued()) {
-    frames_dropped_ += algorithm_->frames_queued();
+    stats_.video_frames_dropped += algorithm_->frames_queued();
     algorithm_->Reset(
         VideoRendererAlgorithm::ResetFlag::kPreserveNextFrameEstimates);
     painted_first_frame_ = false;
@@ -874,7 +860,7 @@ void VideoRendererImpl::RemoveFramesForUnderflowOrBackgroundRendering() {
   // subtract from the given value). It's important to always call this so
   // that frame statistics are updated correctly.
   if (buffering_state_ == BUFFERING_HAVE_NOTHING) {
-    frames_dropped_ += algorithm_->RemoveExpiredFrames(
+    stats_.video_frames_dropped += algorithm_->RemoveExpiredFrames(
         current_time + algorithm_->average_frame_duration());
     return;
   }
