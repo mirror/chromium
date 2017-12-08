@@ -13,6 +13,10 @@
 namespace blink {
 namespace {
 
+TimeTicks TimeTicksFromMilliseconds(int milliseconds) {
+  return TimeTicks() + TimeDelta::FromMilliseconds(milliseconds);
+}
+
 class MockIdleDeadlineScheduler final : public WebScheduler {
  public:
   MockIdleDeadlineScheduler() {}
@@ -87,14 +91,16 @@ class IdleDeadlineTest : public ::testing::Test {
 
 TEST_F(IdleDeadlineTest, deadlineInFuture) {
   IdleDeadline* deadline =
-      IdleDeadline::Create(1.25, IdleDeadline::CallbackType::kCalledWhenIdle);
+      IdleDeadline::Create(TimeTicksFromMilliseconds(1250),
+                           IdleDeadline::CallbackType::kCalledWhenIdle);
   // Note: the deadline is computed with reduced resolution.
   EXPECT_FLOAT_EQ(249.995, deadline->timeRemaining());
 }
 
 TEST_F(IdleDeadlineTest, deadlineInPast) {
   IdleDeadline* deadline =
-      IdleDeadline::Create(0.75, IdleDeadline::CallbackType::kCalledWhenIdle);
+      IdleDeadline::Create(TimeTicksFromMilliseconds(750),
+                           IdleDeadline::CallbackType::kCalledWhenIdle);
   EXPECT_FLOAT_EQ(0, deadline->timeRemaining());
 }
 
@@ -102,7 +108,8 @@ TEST_F(IdleDeadlineTest, yieldForHighPriorityWork) {
   ScopedTestingPlatformSupport<MockIdleDeadlinePlatform> platform;
 
   IdleDeadline* deadline =
-      IdleDeadline::Create(1.25, IdleDeadline::CallbackType::kCalledWhenIdle);
+      IdleDeadline::Create(TimeTicksFromMilliseconds(1250),
+                           IdleDeadline::CallbackType::kCalledWhenIdle);
   EXPECT_FLOAT_EQ(0, deadline->timeRemaining());
 }
 

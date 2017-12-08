@@ -46,6 +46,7 @@
 #include "platform/wtf/ThreadSpecific.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/WebThread.h"
 
 namespace v8 {
@@ -234,8 +235,8 @@ class PLATFORM_EXPORT ThreadState {
   // in the dangling pointer situation.
   void RunTerminationGC();
 
-  void PerformIdleGC(double deadline_seconds);
-  void PerformIdleLazySweep(double deadline_seconds);
+  void PerformIdleGC(base::TimeTicks deadline);
+  void PerformIdleLazySweep(base::TimeTicks deadline);
 
   void ScheduleIdleGC();
   void ScheduleIdleLazySweep();
@@ -464,7 +465,7 @@ class PLATFORM_EXPORT ThreadState {
     }
   }
 
-  void AccumulateSweepingTime(double time) {
+  void AccumulateSweepingTime(TimeDelta time) {
     accumulated_sweeping_time_ += time;
   }
 
@@ -617,7 +618,7 @@ class PLATFORM_EXPORT ThreadState {
   size_t no_allocation_count_;
   size_t gc_forbidden_count_;
   size_t mixins_being_constructed_count_;
-  double accumulated_sweeping_time_;
+  TimeDelta accumulated_sweeping_time_;
   bool object_resurrection_forbidden_;
 
   GarbageCollectedMixinConstructorMarkerBase* gc_mixin_marker_;

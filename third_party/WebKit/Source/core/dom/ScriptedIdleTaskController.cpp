@@ -33,7 +33,7 @@ class IdleRequestCallbackWrapper
 
   static void IdleTaskFired(
       scoped_refptr<IdleRequestCallbackWrapper> callback_wrapper,
-      double deadline_seconds) {
+      base::TimeTicks deadline) {
     // TODO(rmcilroy): Implement clamping of deadline in some form.
     if (ScriptedIdleTaskController* controller =
             callback_wrapper->Controller()) {
@@ -47,7 +47,7 @@ class IdleRequestCallbackWrapper
                                      /* timeout_millis */ 0);
         return;
       }
-      controller->CallbackFired(callback_wrapper->Id(), deadline_seconds,
+      controller->CallbackFired(callback_wrapper->Id(), deadline,
                                 IdleDeadline::CallbackType::kCalledWhenIdle);
     }
     callback_wrapper->Cancel();
@@ -57,8 +57,7 @@ class IdleRequestCallbackWrapper
       scoped_refptr<IdleRequestCallbackWrapper> callback_wrapper) {
     if (ScriptedIdleTaskController* controller =
             callback_wrapper->Controller()) {
-      controller->CallbackFired(callback_wrapper->Id(),
-                                MonotonicallyIncreasingTime(),
+      controller->CallbackFired(callback_wrapper->Id(), TimeTicks::Now(),
                                 IdleDeadline::CallbackType::kCalledByTimeout);
     }
     callback_wrapper->Cancel();
@@ -186,7 +185,7 @@ void ScriptedIdleTaskController::CancelCallback(CallbackId id) {
 
 void ScriptedIdleTaskController::CallbackFired(
     CallbackId id,
-    double deadline_seconds,
+    TimeTicks deadline,
     IdleDeadline::CallbackType callback_type) {
   if (!idle_tasks_.Contains(id))
     return;
@@ -201,25 +200,23 @@ void ScriptedIdleTaskController::CallbackFired(
     return;
   }
 
-  RunCallback(id, deadline_seconds, callback_type);
+  RunCallback(id, deadline, callback_type);
 }
 
 void ScriptedIdleTaskController::RunCallback(
     CallbackId id,
-    double deadline_seconds,
+    TimeTicks deadline,
     IdleDeadline::CallbackType callback_type) {
   DCHECK(!paused_);
   IdleTask* idle_task = idle_tasks_.Take(id);
   if (!idle_task)
     return;
 
-  double allotted_time_millis =
-      std::max((deadline_seconds - MonotonicallyIncreasingTime()) * 1000, 0.0);
-
+  TimeDelta allotted_time = std::max(deadline - TimeTicks::Now(), TimeDelta());
   DEFINE_STATIC_LOCAL(
       CustomCountHistogram, idle_callback_deadline_histogram,
       ("WebCore.ScriptedIdleTaskController.IdleCallbackDeadline", 0, 50, 50));
-  idle_callback_deadline_histogram.Count(allotted_time_millis);
+  idle_callback_deadline_histogram.Count(allotted_time.InMilliseconds());
 
   probe::AsyncTask async_task(GetExecutionContext(), idle_task);
   probe::UserCallback probe(GetExecutionContext(), "requestIdleCallback",
@@ -228,9 +225,9 @@ void ScriptedIdleTaskController::RunCallback(
   TRACE_EVENT1(
       "devtools.timeline", "FireIdleCallback", "data",
       InspectorIdleCallbackFireEvent::Data(
-          GetExecutionContext(), id, allotted_time_millis,
+          GetExecutionContext(), id, allotted_time.InMilliseconds(),
           callback_type == IdleDeadline::CallbackType::kCalledByTimeout));
-  idle_task->invoke(IdleDeadline::Create(deadline_seconds, callback_type));
+  idle_task->invoke(IdleDeadline::Create(deadline, callback_type));
 }
 
 void ScriptedIdleTaskController::ContextDestroyed(ExecutionContext*) {
@@ -249,7 +246,7 @@ void ScriptedIdleTaskController::Unpause() {
   Vector<CallbackId> pending_timeouts;
   pending_timeouts_.swap(pending_timeouts);
   for (auto& id : pending_timeouts)
-    RunCallback(id, MonotonicallyIncreasingTime(),
+    RunCallback(id, TimeTicks::Now(),
                 IdleDeadline::CallbackType::kCalledByTimeout);
 
   // Repost idle tasks for any remaining callbacks.

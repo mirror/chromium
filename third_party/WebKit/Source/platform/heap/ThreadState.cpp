@@ -112,7 +112,6 @@ ThreadState::ThreadState()
       no_allocation_count_(0),
       gc_forbidden_count_(0),
       mixins_being_constructed_count_(0),
-      accumulated_sweeping_time_(0),
       object_resurrection_forbidden_(false),
       gc_mixin_marker_(nullptr),
       gc_state_(kNoGCScheduled),
@@ -560,7 +559,7 @@ ThreadState* ThreadState::FromObject(const void* object) {
   return page->Arena()->GetThreadState();
 }
 
-void ThreadState::PerformIdleGC(double deadline_seconds) {
+void ThreadState::PerformIdleGC(base::TimeTicks deadline) {
   DCHECK(CheckThread());
   DCHECK(Platform::Current()->CurrentThread()->Scheduler());
 
@@ -573,9 +572,9 @@ void ThreadState::PerformIdleGC(double deadline_seconds) {
     return;
   }
 
-  double idle_delta_in_seconds =
-      deadline_seconds - MonotonicallyIncreasingTime();
-  if (idle_delta_in_seconds <= heap_->HeapStats().EstimatedMarkingTime() &&
+  TimeDelta idle_delta = deadline - TimeTicks::Now();
+  if (idle_delta <=
+          TimeDelta::FromSecondsD(heap_->HeapStats().EstimatedMarkingTime()) &&
       !Platform::Current()
            ->CurrentThread()
            ->Scheduler()
@@ -587,13 +586,13 @@ void ThreadState::PerformIdleGC(double deadline_seconds) {
   }
 
   TRACE_EVENT2("blink_gc", "ThreadState::performIdleGC", "idleDeltaInSeconds",
-               idle_delta_in_seconds, "estimatedMarkingTime",
+               idle_delta.InSecondsF(), "estimatedMarkingTime",
                heap_->HeapStats().EstimatedMarkingTime());
   CollectGarbage(BlinkGC::kNoHeapPointersOnStack, BlinkGC::kGCWithoutSweep,
                  BlinkGC::kIdleGC);
 }
 
-void ThreadState::PerformIdleLazySweep(double deadline_seconds) {
+void ThreadState::PerformIdleLazySweep(base::TimeTicks deadline) {
   DCHECK(CheckThread());
 
   // If we are not in a sweeping phase, there is nothing to do here.
@@ -611,18 +610,19 @@ void ThreadState::PerformIdleLazySweep(double deadline_seconds) {
 
   TRACE_EVENT1("blink_gc,devtools.timeline",
                "ThreadState::performIdleLazySweep", "idleDeltaInSeconds",
-               deadline_seconds - MonotonicallyIncreasingTime());
+               (deadline - TimeTicks::Now()).InSecondsF());
 
   SweepForbiddenScope scope(this);
   ScriptForbiddenScope script_forbidden_scope;
 
-  double start_time = WTF::MonotonicallyIncreasingTimeMS();
-  bool sweep_completed = Heap().AdvanceLazySweep(deadline_seconds);
+  TimeTicks start_time = TimeTicks::Now();
+  bool sweep_completed =
+      Heap().AdvanceLazySweep((deadline - TimeTicks()).InSecondsF());
   // We couldn't finish the sweeping within the deadline.
   // We request another idle task for the remaining sweeping.
   if (!sweep_completed)
     ScheduleIdleLazySweep();
-  AccumulateSweepingTime(WTF::MonotonicallyIncreasingTimeMS() - start_time);
+  AccumulateSweepingTime(TimeTicks::Now() - start_time);
 
   if (sweep_completed)
     PostSweep();
@@ -845,7 +845,7 @@ void ThreadState::PreSweep(BlinkGC::GCType gc_type) {
   // a dead object gets resurrected.
   InvokePreFinalizers();
 
-  accumulated_sweeping_time_ = 0;
+  accumulated_sweeping_time_ = TimeDelta();
 
   EagerSweep();
 
@@ -890,9 +890,9 @@ void ThreadState::EagerSweep() {
   SweepForbiddenScope scope(this);
   ScriptForbiddenScope script_forbidden_scope;
 
-  double start_time = WTF::MonotonicallyIncreasingTimeMS();
+  TimeTicks start_time = TimeTicks::Now();
   Heap().Arena(BlinkGC::kEagerSweepArenaIndex)->CompleteSweep();
-  AccumulateSweepingTime(WTF::MonotonicallyIncreasingTimeMS() - start_time);
+  AccumulateSweepingTime(TimeTicks::Now() - start_time);
 }
 
 void ThreadState::CompleteSweep() {
@@ -911,18 +911,17 @@ void ThreadState::CompleteSweep() {
   ScriptForbiddenScope script_forbidden_scope;
 
   TRACE_EVENT0("blink_gc,devtools.timeline", "ThreadState::completeSweep");
-  double start_time = WTF::MonotonicallyIncreasingTimeMS();
+  TimeTicks start_time = TimeTicks::Now();
 
   Heap().CompleteSweep();
 
-  double time_for_complete_sweep =
-      WTF::MonotonicallyIncreasingTimeMS() - start_time;
+  TimeDelta time_for_complete_sweep = TimeTicks::Now() - start_time;
   AccumulateSweepingTime(time_for_complete_sweep);
 
   if (IsMainThread()) {
     DEFINE_STATIC_LOCAL(CustomCountHistogram, complete_sweep_histogram,
                         ("BlinkGC.CompleteSweep", 1, 10 * 1000, 50));
-    complete_sweep_histogram.Count(time_for_complete_sweep);
+    complete_sweep_histogram.Count(time_for_complete_sweep.InMillisecondsF());
   }
 
   PostSweep();
@@ -974,7 +973,8 @@ void ThreadState::PostSweep() {
     DEFINE_STATIC_LOCAL(
         CustomCountHistogram, time_for_sweep_histogram,
         ("BlinkGC.TimeForSweepingAllObjects", 1, 10 * 1000, 50));
-    time_for_sweep_histogram.Count(accumulated_sweeping_time_);
+    time_for_sweep_histogram.Count(
+        accumulated_sweeping_time_.InMillisecondsF());
 
 #define COUNT_COLLECTION_RATE_HISTOGRAM_BY_GC_REASON(GCReason)              \
   case BlinkGC::k##GCReason: {                                              \

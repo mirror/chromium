@@ -282,7 +282,7 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   // Schedule an idle task to perform a lazy (incremental) clean up of
   // wrappers.
   void ScheduleIdleLazyCleanup();
-  void PerformLazyCleanup(double deadline_seconds);
+  void PerformLazyCleanup(base::TimeTicks deadline);
 
   void InvalidateDeadObjectsInMarkingDeque();
 

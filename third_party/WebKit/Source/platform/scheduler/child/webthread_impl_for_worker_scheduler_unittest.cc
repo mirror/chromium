@@ -30,7 +30,7 @@ class MockTask {
 
 class MockIdleTask {
  public:
-  MOCK_METHOD1(Run, void(double deadline));
+  MOCK_METHOD1(Run, void(base::TimeTicks deadline));
 };
 
 class TestObserver : public blink::WebThread::TaskObserver {
@@ -144,7 +144,7 @@ TEST_F(WebThreadImplForWorkerSchedulerTest, TestIdleTask) {
       base::WaitableEvent::InitialState::NOT_SIGNALED);
 
   EXPECT_CALL(task, Run(_));
-  ON_CALL(task, Run(_)).WillByDefault(Invoke([&completion](double) {
+  ON_CALL(task, Run(_)).WillByDefault(Invoke([&completion](base::TimeTicks) {
     completion.Signal();
   }));
 

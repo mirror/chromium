@@ -48,10 +48,16 @@ class V8IdleTaskRunner : public gin::V8IdleTaskRunner {
   void PostIdleTask(v8::IdleTask* task) override {
     DCHECK(RuntimeEnabledFeatures::V8IdleTasksEnabled());
     scheduler_->PostIdleTask(
-        BLINK_FROM_HERE, WTF::Bind(&v8::IdleTask::Run, WTF::WrapUnique(task)));
+        BLINK_FROM_HERE,
+        WTF::Bind(&V8IdleTaskRunner::RunTask, WTF::WrapUnique(task)));
   }
 
  private:
+  static void RunTask(std::unique_ptr<v8::IdleTask> task,
+                      base::TimeTicks deadline) {
+    task->Run((deadline - base::TimeTicks()).InSecondsF());
+  }
+
   WebScheduler* scheduler_;
 };
 

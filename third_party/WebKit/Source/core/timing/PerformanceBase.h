@@ -75,6 +75,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   // Reduce the resolution to 5µs to prevent timing attacks. See:
   // http://www.w3.org/TR/hr-time-2/#privacy-security
   static double ClampTimeResolution(double time_seconds);
+  static TimeDelta ClampTimeResolution(TimeDelta time);
 
   static DOMHighResTimeStamp MonotonicTimeToDOMHighResTimeStamp(
       double time_origin,

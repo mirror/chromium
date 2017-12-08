@@ -864,7 +864,7 @@ void HTMLCanvasElement::toBlob(V8BlobCallback* callback,
     return;
   }
 
-  double start_time = WTF::MonotonicallyIncreasingTime();
+  TimeTicks start_time = TimeTicks::Now();
   double quality = kUndefinedQualityValue;
   if (!quality_argument.IsEmpty()) {
     v8::Local<v8::Value> v8_value = quality_argument.V8Value();

@@ -86,17 +86,9 @@ void WebThreadBase::RemoveTaskObserverInternal(
   base::MessageLoop::current()->RemoveTaskObserver(observer);
 }
 
-// static
-void WebThreadBase::RunWebThreadIdleTask(blink::WebThread::IdleTask idle_task,
-                                         base::TimeTicks deadline) {
-  std::move(idle_task).Run((deadline - base::TimeTicks()).InSecondsF());
-}
-
 void WebThreadBase::PostIdleTask(const blink::WebTraceLocation& location,
                                  IdleTask idle_task) {
-  GetIdleTaskRunner()->PostIdleTask(
-      location, base::BindOnce(&WebThreadBase::RunWebThreadIdleTask,
-                               std::move(idle_task)));
+  GetIdleTaskRunner()->PostIdleTask(location, std::move(idle_task));
 }
 
 bool WebThreadBase::IsCurrentThread() const {
