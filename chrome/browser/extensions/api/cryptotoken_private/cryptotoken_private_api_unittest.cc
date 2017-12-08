@@ -10,8 +10,11 @@
 #include <utility>
 #include <vector>
 
+#include "base/base64.h"
 #include "chrome/browser/extensions/extension_api_unittest.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
+#include "chrome/common/pref_names.h"
+#include "crypto/sha2.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
@@ -61,7 +64,26 @@ class CryptoTokenPrivateApiTest : public extensions::ExtensionApiUnittest {
         extension_function_test_utils::NONE);
 
     bool result;
-    GetSingleBooleanResult(function.get(), &result);
+    CHECK(GetSingleBooleanResult(function.get(), &result));
+    return result;
+  }
+
+  bool IsAppIdHashInEnterpriseContext(const std::string& appId) {
+    scoped_refptr<api::CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction>
+        function(
+            new api::
+                CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction());
+    function->set_has_callback(true);
+
+    std::unique_ptr<base::ListValue> args(new base::ListValue);
+    args->AppendString(appId);
+
+    extension_function_test_utils::RunFunction(
+        function.get(), std::move(args), browser(),
+        extension_function_test_utils::NONE);
+
+    bool result;
+    CHECK(GetSingleBooleanResult(function.get(), &result));
     return result;
   }
 };
@@ -88,6 +110,39 @@ TEST_F(CryptoTokenPrivateApiTest, CanOriginAssertAppId) {
   // Not all gstatic urls are allowed, just those specifically whitelisted.
   std::string gstatic_otherurl("https://www.gstatic.com/foobar");
   EXPECT_FALSE(GetCanOriginAssertAppIdResult(google_origin, gstatic_otherurl));
+}
+
+static std::string SHA256Base64(base::StringPiece in) {
+  std::string ret;
+  base::Base64Encode(crypto::SHA256HashString(in), &ret);
+
+  // Trim trailing '=' from the end of the base64 data in order to mirror what
+  // the Javascript cryptotoken code does.
+  while (!ret.empty() && ret.back() == '=') {
+    ret.pop_back();
+  }
+
+  return ret;
+}
+
+TEST_F(CryptoTokenPrivateApiTest, IsAppIdHashInEnterpriseContext) {
+  const std::string example_com("https://example.com/");
+  const std::string example_com_hash(SHA256Base64(example_com));
+  const std::string rp_id_hash(SHA256Base64("example.com"));
+  const std::string foo_com_hash(SHA256Base64("https://foo.com/"));
+
+  EXPECT_FALSE(IsAppIdHashInEnterpriseContext(example_com_hash));
+  EXPECT_FALSE(IsAppIdHashInEnterpriseContext(foo_com_hash));
+  EXPECT_FALSE(IsAppIdHashInEnterpriseContext(rp_id_hash));
+
+  base::Value::ListStorage permitted_list;
+  permitted_list.emplace_back(example_com);
+  profile()->GetPrefs()->Set(prefs::kSecurityKeyPermitAttestation,
+                             base::Value(permitted_list));
+
+  EXPECT_TRUE(IsAppIdHashInEnterpriseContext(example_com_hash));
+  EXPECT_FALSE(IsAppIdHashInEnterpriseContext(foo_com_hash));
+  EXPECT_FALSE(IsAppIdHashInEnterpriseContext(rp_id_hash));
 }
 
 }  // namespace
