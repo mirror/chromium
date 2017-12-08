@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58382b81_ab6e9cad",
+        "filename": "chrome/browser/ssl/bad_clock_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ll definitely plan to do this in a follow-up. My thought was that there\u0027s probably lots of repeated code among these blocking pages that we can push into the base class.",
+      "parentUuid": "452e9ebd_e7da4772",
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b4c7cdc_144424f1",
         "filename": "chrome/browser/ssl/cert_report_helper.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7254a40d_3d2faea9",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "Done (just added the comment for now)",
+      "parentUuid": "9b4c7cdc_144424f1",
+      "range": {
+        "startLine": 124,
+        "startChar": 29,
+        "endLine": 124,
+        "endChar": 0
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "314a1046_8ab68cab",
+        "filename": "chrome/browser/ssl/cert_report_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "oops, yeah I messed that up, fixed",
+      "parentUuid": "79cc2410_b757fe4d",
+      "range": {
+        "startLine": 34,
+        "startChar": 29,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f70d3c14_3cdb69e0",
         "filename": "chrome/browser/ssl/ssl_blocking_page_base.h",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d05ea97_c264a17a",
+        "filename": "chrome/browser/ssl/ssl_blocking_page_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f70d3c14_3cdb69e0",
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3ca9009e_877bbb1c",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "646d05ab_e5a5fd58",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7faa1274_1548061f",
         "filename": "components/security_interstitials/content/security_interstitial_page.cc",
         "patchSetId": 2
@@ -125,6 +233,30 @@
       "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddd04c5_6c25ee34",
+        "filename": "components/security_interstitials/content/security_interstitial_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-08T00:31:11Z",
+      "side": 1,
+      "message": "No, it calls SetUpMetricsOnShow() which modifies member variables. I renamed it to OnReadyToShowHTMLContents() to try to be a bit more clear that it\u0027s the thing that you call when you want to show the interstitial, but you\u0027re showing it by retrieving the HTML contents instead of by asking it to create a content::InterstitialPage. I think this will be clearer when we enable committed interstitials and can get rid of the old code path -- then we won\u0027t have to have two ways to show an interstitial.",
+      "parentUuid": "7faa1274_1548061f",
+      "range": {
+        "startLine": 68,
+        "startChar": 63,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
