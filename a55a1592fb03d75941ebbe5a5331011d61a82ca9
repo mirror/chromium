@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fce42dbe_1bdea9d9",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-08T05:55:11Z",
+      "side": 1,
+      "message": "It can\u0027t: We get `using declaration cannot refer to class member`.",
+      "parentUuid": "6e37bfae_586c5024",
+      "revId": "a55a1592fb03d75941ebbe5a5331011d61a82ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0db250c_b5b81056",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "a55a1592fb03d75941ebbe5a5331011d61a82ca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf590cd5_5e9b2c09",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-12-08T05:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0db250c_b5b81056",
+      "range": {
+        "startLine": 1447,
+        "startChar": 5,
+        "endLine": 1447,
+        "endChar": 10
+      },
+      "revId": "a55a1592fb03d75941ebbe5a5331011d61a82ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
