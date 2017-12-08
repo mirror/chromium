@@ -87,6 +87,7 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
     'MobileEmulationCapabilityTest.testDeviceName',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabs',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
+    'ChromeDriverTest.testSendTextToAlert',
 ]
 
 _VERSION_SPECIFIC_FILTER['64'] = [
