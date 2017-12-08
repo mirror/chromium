@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b3ee579_243a4f9f",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T21:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48be78a7_2a2d13cf",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a6bb27_f14197b2",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T19:25:25Z",
       "side": 1,
       "message": "I think we need to move everything to the if block, since we only want to notify observers when there\u0027s indeed a change.",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92fc00a_bb5a7975",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T21:15:30Z",
+      "side": 1,
+      "message": "Is it fine to do it once like or do I need move into if block?",
+      "parentUuid": "85a6bb27_f14197b2",
       "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47586dae_99387376",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T21:15:30Z",
+      "side": 1,
+      "message": "1. We need blur removal for cancellable animation started with power button. If user lifts finger before going to lock screen we would stay with blurred wallpaper. Also it is needed to delay removal as explained in the next paragraph.\n\n2. It is not correct that this cl removes blur earlier. There are 2 parts of the animation: hiding lock screen animation and showing the non lock UI. Session state changes between those animations. Blur is removed now after the second animation finishes. It is later than it used to be and also noticeable to the user therefore.\nSo I cannot remove the check for |is_unlocking|.\n\nWDYT?",
+      "parentUuid": "4b21e7ea_63a73f82",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e3d552_14937698",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4b5d8c_8e69e957",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T21:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e3d552_14937698",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
