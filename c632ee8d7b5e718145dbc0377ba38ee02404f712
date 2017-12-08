@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "e4f085d8_c3ac2708",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-08T01:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d9ace8_5d916f83",
+      "range": {
+        "startLine": 110,
+        "startChar": 19,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5130746c_231a872d",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 44
@@ -325,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "2c179bd3_3a0800d3",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-08T01:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b315c3_22b4dbb9",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b09a6c_c4c4b93c",
         "filename": "components/cronet/ios/cronet_metrics.mm",
         "patchSetId": 44
@@ -372,6 +414,24 @@
       "side": 1,
       "message": "Would it be better to remove a line-break after the comment then?",
       "parentUuid": "945132c2_3df0cb6d",
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96731bf9_31aa10ca",
+        "filename": "components/cronet/ios/cronet_metrics.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-08T01:49:51Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "1005cc68_6a26b841",
       "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -481,6 +541,30 @@
       "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9831ab38_0bf6ed4a",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 44
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-08T01:49:51Z",
+      "side": 1,
+      "message": "It\u0027s mostly in there to avoid code duplication - I put the call in the subclass methods, you can let me know if it\u0027s clearer.",
+      "parentUuid": "cb132b84_2b91233c",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "c632ee8d7b5e718145dbc0377ba38ee02404f712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
