@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b032311d_dd3e06e1",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/TestPathUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-08T17:46:58Z",
+      "side": 1,
+      "message": "Done, baked into UrlUtils.java.",
+      "parentUuid": "12095a65_b9f18f15",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5479ac_3e0f486e",
         "filename": "base/test/android/path_utils.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T00:15:17Z",
       "side": 1,
       "message": "Is this needed in the header?",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3bbe83_e025abc6",
+        "filename": "base/test/android/path_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-08T17:46:58Z",
+      "side": 1,
+      "message": "Done, moved to cc file.",
+      "parentUuid": "bf5479ac_3e0f486e",
       "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a260a97a_0ba96827",
+        "filename": "base/test/android/path_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-08T17:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c99ea3_cc29fed0",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c433932_404a9b36",
         "filename": "net/test/test_data_directory.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05aee385_2392d7a7",
+        "filename": "net/test/test_data_directory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-08T17:46:58Z",
+      "side": 1,
+      "message": "Done, moved to network_service_test_helper.cc",
+      "parentUuid": "6c433932_404a9b36",
+      "revId": "4dc6b42b6d321546c075ae4b3f3b250f6057ced6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
