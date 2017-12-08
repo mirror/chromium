@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44cce918_965aa8e4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T10:22:03Z",
+      "side": 1,
+      "message": "nit: could we right actual member variable name(s) here too?",
+      "revId": "fee80a0f4e2e66149b8150b57c0b6c8e7cc8eb3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a6c9ec_5db1e209",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T10:22:03Z",
+      "side": 1,
+      "message": "Maybe annotate this comment with: \"(as of M65)\" or something for convenience...",
+      "revId": "fee80a0f4e2e66149b8150b57c0b6c8e7cc8eb3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167030a3_064761dd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T10:22:03Z",
+      "side": 1,
+      "message": "nit: slightly prefer phrasing like below\n\n\u0027Returns the instance that represents an invalid report, which can be used... \u0027",
+      "revId": "fee80a0f4e2e66149b8150b57c0b6c8e7cc8eb3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
