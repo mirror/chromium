@@ -4,6 +4,8 @@
 
 #include "ash/public/cpp/shelf_item_delegate.h"
 
+#include "ash/shelf/shelf_constants.h"
+#include "base/metrics/histogram_macros.h"
 #include "ui/base/models/menu_model.h"
 
 namespace ash {
@@ -71,6 +73,10 @@ bool ShelfItemDelegate::ExecuteContextMenuCommand(int64_t command_id,
     return false;
 
   model->ActivatedAt(index, event_flags);
+  base::HistogramBase* histogram = base::SparseHistogram::FactoryGet(
+      kAppContextMenuExecuteCommand,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram->Add(command_id);
   return true;
 }
 
