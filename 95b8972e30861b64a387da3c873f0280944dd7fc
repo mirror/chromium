@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "a7e4d896_c43d40ea",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T22:00:42Z",
+      "side": 1,
+      "message": "Works for me.",
+      "parentUuid": "a0eebcab_548261c2",
+      "range": {
+        "startLine": 23,
+        "startChar": 40,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e62ea6c_d6a0b7e2",
         "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
         "patchSetId": 2
@@ -123,6 +147,30 @@
       "writtenOn": "2017-12-08T01:38:43Z",
       "side": 1,
       "message": "nit: we are inconsistent on this in our code, but I like marking this as const if it\u0027s only ever set from the constructor. WDYT?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b19dc1_31523c21",
+        "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-08T22:00:42Z",
+      "side": 1,
+      "message": "It prevents assignment, which is often a problem.\nI like the idea but I think the loss of assignment might be painful.\nI can try it if you want.",
+      "parentUuid": "6e62ea6c_d6a0b7e2",
       "range": {
         "startLine": 29,
         "startChar": 11,
