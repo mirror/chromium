@@ -360,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "80382432_6be2b976",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T14:54:44Z",
+      "side": 1,
+      "message": "(correction) The last passage in my comment about the binary size bloating refers ONLY to Chrome OS.",
+      "parentUuid": "5e7132fe_79b82979",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a20e735_a6540847",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.h",
         "patchSetId": 5
