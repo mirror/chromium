@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dda05f2_f015dd37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/fullscreen/ChromeFullscreenManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-08T20:36:31Z",
+      "side": 0,
+      "message": "(This hack is no longer necessary with my fix)",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 479,
+        "endChar": 56
+      },
+      "revId": "6bf7985c1c1ef4d27701c1a06b7b641bbaafddd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a86a22e_b486abe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2525,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-08T20:36:31Z",
+      "side": 0,
+      "message": "My editor does this automagically. I can revert if you prefer.",
+      "range": {
+        "startLine": 2525,
+        "startChar": 60,
+        "endLine": 2525,
+        "endChar": 73
+      },
+      "revId": "6bf7985c1c1ef4d27701c1a06b7b641bbaafddd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
