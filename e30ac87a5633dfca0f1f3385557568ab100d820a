@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "268150e1_9eb91f20",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:00:38Z",
+      "side": 1,
+      "message": "weak_ptr is a pretty good idea. I think our previous code may still have been correct though. WeakPtr makes it better.",
+      "parentUuid": "05a79d1b_1c41b80e",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1725a2d3_dd1f0db2",
         "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfe6e17_fe1c1185",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1725a2d3_dd1f0db2",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "259899f6_f07a5701",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:00:38Z",
+      "side": 1,
+      "message": "OnAddressValidatorCreated uses weak_ptr so I think we\u0027re good. As for the |address_validator_| member, I think that upon its destruction it will clear its |load_rules_listener_| pointer (this) which means we will not get events anymore. Do you see any other potential issues?",
+      "parentUuid": "b78c7a60_d31415d5",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21e9d503_4cb2bee3",
         "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bb96aa_2f764473",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T19:00:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e9d503_4cb2bee3",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
