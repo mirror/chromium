@@ -6527,9 +6527,22 @@ void RenderFrameImpl::NavigateInternal(
     } else {
       bool navigation_started = !browser_side_navigation;
       // Load the request.
-      frame_->Load(request, load_type, item_for_history_navigation,
-                   history_load_type, is_client_redirect,
-                   devtools_navigation_token);
+      if (IsBrowserSideNavigationEnabled()) {
+        if (is_same_document) {
+          // TODO(clamy): Move same document navigations to a different IPC.
+          navigation_started = frame_->CommitSameDocumentNavigation(
+              request, load_type, item_for_history_navigation,
+              history_load_type, is_client_redirect, devtools_navigation_token);
+        } else {
+          navigation_started = frame_->CommitNavigation(
+              request, load_type, item_for_history_navigation,
+              history_load_type, is_client_redirect, devtools_navigation_token);
+        }
+      } else {
+        frame_->Load(request, load_type, item_for_history_navigation,
+                     history_load_type, is_client_redirect,
+                     devtools_navigation_token);
+      }
 
       // The load of the URL can result in this frame being removed. Use a
       // WeakPtr as an easy way to detect whether this has occured. If so, this

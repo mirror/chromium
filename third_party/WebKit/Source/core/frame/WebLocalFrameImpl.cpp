@@ -2070,7 +2070,67 @@ void WebLocalFrameImpl::Load(
   if (is_client_redirect)
     frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
   HistoryItem* history_item = item;
-  GetFrame()->Loader().Load(
+  GetFrame()->Loader().StartNavigation(
+      frame_request, static_cast<FrameLoadType>(web_frame_load_type),
+      history_item, static_cast<HistoryLoadType>(web_history_load_type));
+}
+
+bool WebLocalFrameImpl::CommitNavigation(
+    const WebURLRequest& request,
+    WebFrameLoadType web_frame_load_type,
+    const WebHistoryItem& item,
+    WebHistoryLoadType web_history_load_type,
+    bool is_client_redirect,
+    const base::UnguessableToken& devtools_navigation_token) {
+  DCHECK(GetFrame());
+  DCHECK(!request.IsNull());
+  const ResourceRequest& resource_request = request.ToResourceRequest();
+
+  if (resource_request.Url().ProtocolIs("javascript") &&
+      web_frame_load_type == WebFrameLoadType::kStandard) {
+    // TODO(clamy): Expose a method to load Javascript URLs and call it directly
+    // from content/.
+    LoadJavaScriptURL(resource_request.Url());
+    return false;
+  }
+
+  if (text_finder_)
+    text_finder_->ClearActiveFindMatch();
+
+  FrameLoadRequest frame_request =
+      FrameLoadRequest(nullptr, resource_request, /*frame_name=*/AtomicString(),
+                       kCheckContentSecurityPolicy, devtools_navigation_token);
+  if (is_client_redirect)
+    frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
+  HistoryItem* history_item = item;
+  return GetFrame()->Loader().CommitNavigation(
+      frame_request, static_cast<FrameLoadType>(web_frame_load_type),
+      history_item, static_cast<HistoryLoadType>(web_history_load_type));
+}
+
+bool WebLocalFrameImpl::CommitSameDocumentNavigation(
+    const WebURLRequest& request,
+    WebFrameLoadType web_frame_load_type,
+    const WebHistoryItem& item,
+    WebHistoryLoadType web_history_load_type,
+    bool is_client_redirect,
+    const base::UnguessableToken& devtools_navigation_token) {
+  DCHECK(GetFrame());
+  DCHECK(!request.IsNull());
+  const ResourceRequest& resource_request = request.ToResourceRequest();
+
+  DCHECK(!resource_request.Url().ProtocolIs("javascript"));
+
+  if (text_finder_)
+    text_finder_->ClearActiveFindMatch();
+
+  FrameLoadRequest frame_request =
+      FrameLoadRequest(nullptr, resource_request, /*frame_name=*/AtomicString(),
+                       kCheckContentSecurityPolicy, devtools_navigation_token);
+  if (is_client_redirect)
+    frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
+  HistoryItem* history_item = item;
+  return GetFrame()->Loader().CommitSameDocumentNavigation(
       frame_request, static_cast<FrameLoadType>(web_frame_load_type),
       history_item, static_cast<HistoryLoadType>(web_history_load_type));
 }
@@ -2118,7 +2178,9 @@ void WebLocalFrameImpl::LoadData(const WebData& data,
   if (is_client_redirect)
     frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
 
-  GetFrame()->Loader().Load(
+  // TODO(clamy): consider replacing this with CommitNavigation and renaming
+  // this method CommitNavigationToDataURL.
+  GetFrame()->Loader().StartNavigation(
       frame_request, static_cast<FrameLoadType>(web_frame_load_type),
       history_item, static_cast<HistoryLoadType>(web_history_load_type));
 }

@@ -322,8 +322,8 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     request.SetCacheMode(mojom::FetchCacheMode::kBypassCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  child_frame->Loader().StartNavigation(
+      FrameLoadRequest(&GetDocument(), request), child_load_type);
   return true;
 }
 

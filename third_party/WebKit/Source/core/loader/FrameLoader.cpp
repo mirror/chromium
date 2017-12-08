@@ -855,10 +855,10 @@ static NavigationPolicy NavigationPolicyForRequest(
   return policy;
 }
 
-void FrameLoader::Load(const FrameLoadRequest& passed_request,
-                       FrameLoadType frame_load_type,
-                       HistoryItem* history_item,
-                       HistoryLoadType history_load_type) {
+void FrameLoader::StartNavigation(const FrameLoadRequest& passed_request,
+                                  FrameLoadType frame_load_type, HistoryItem*
+                                  history_item, HistoryLoadType
+                                  history_load_type) {
   DCHECK(frame_->GetDocument());
 
   if (IsBackForwardLoadType(frame_load_type) && !frame_->IsNavigationAllowed())
@@ -935,32 +935,119 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
 
   // Perform same document navigation.
   if (same_document_history_navigation || same_document_navigation) {
-    DCHECK(history_item || !same_document_history_navigation);
-    scoped_refptr<SerializedScriptValue> state_object =
-        same_document_history_navigation ? history_item->StateObject()
-                                         : nullptr;
-
-    if (!same_document_history_navigation) {
-      document_loader_->SetNavigationType(DetermineNavigationType(
-          new_load_type, false, request.TriggeringEvent()));
-      if (ShouldTreatURLAsSameAsCurrent(url))
-        new_load_type = kFrameLoadTypeReplaceCurrentItem;
-    }
-
-    LoadInSameDocument(url, state_object, new_load_type, history_item,
-                       request.ClientRedirect(), request.OriginDocument());
+    CommitSameDocumentNavigation(request, new_load_type, history_item,
+                                 history_load_type);
     return;
   }
 
-  // PlzNavigate
-  // If the loader classifies this navigation as a different document navigation
-  // while the browser intended the navigation to be same-document, it means
-  // that a different navigation must have committed while the IPC was sent.
-  // This navigation is no more same-document. The navigation is simply dropped.
-  if (request.GetResourceRequest().IsSameDocumentNavigation())
+  DCHECK(Client()->HasWebView());
+  ResourceRequest& resource_request = request.GetResourceRequest();
+  NavigationType navigation_type = DetermineNavigationType(
+      new_load_type, resource_request.HttpBody() || request.Form(),
+      request.TriggeringEvent());
+  resource_request.SetRequestContext(
+      DetermineRequestContextFromNavigationType(navigation_type));
+  resource_request.SetFrameType(frame_->IsMainFrame()
+                                    ? WebURLRequest::kFrameTypeTopLevel
+                                    : WebURLRequest::kFrameTypeNested);
+
+  policy = CheckLoadCanStart(request, new_load_type, policy, navigation_type);
+  if (policy == kNavigationPolicyIgnore)
     return;
 
-  StartLoad(request, new_load_type, policy, history_item);
+  DCHECK(policy == kNavigationPolicyCurrentTab ||
+         policy == kNavigationPolicyHandledByClient ||
+         policy == kNavigationPolicyHandledByClientForInitialHistory);
+
+  if (!CreateProvisionalDocumentLoader(request, new_load_type, history_item))
+    return;
+
+  if (policy == kNavigationPolicyCurrentTab) {
+    DCHECK(!frame_->GetSettings()->GetBrowserSideNavigationEnabled());
+    // TODO(clamy): This case should no longer happen once PlzNavigate ships.
+    provisional_document_loader_->StartLoading();
+    // This should happen after the request is sent, so that the state
+    // the inspector stored in the matching frameScheduledClientNavigation()
+    // is available while sending the request.
+    probe::frameClearedScheduledClientNavigation(frame_);
+  } else {
+    probe::frameScheduledClientNavigation(frame_);
+  }
+
+  TakeObjectSnapshot();
+}
+
+bool FrameLoader::CommitNavigation(const FrameLoadRequest& passed_request,
+                                   FrameLoadType frame_load_type,
+                                   HistoryItem* history_item,
+                                   HistoryLoadType history_load_type) {
+  DCHECK(frame_->GetDocument());
+
+  // Check whether the commit can proceed.
+  if (!frame_->IsNavigationAllowed() || in_stop_all_loaders_ ||
+      frame_->GetDocument()->PageDismissalEventBeingDispatched() !=
+          Document::kNoDismissal) {
+    return false;
+  }
+
+  FrameLoadRequest request(passed_request);
+
+  // Create a new provisional DocumentLoader to commit the navigation.
+  if (!CreateProvisionalDocumentLoader(request, frame_load_type, history_item))
+    return false;
+
+  DCHECK(provisional_document_loader_);
+  provisional_document_loader_->StartLoading();
+
+  // This should happen after the request is sent, so that the state
+  // the inspector stored in the matching frameScheduledClientNavigation()
+  // is available while sending the request.
+  probe::frameClearedScheduledClientNavigation(frame_);
+
+  TakeObjectSnapshot();
+
+  return true;
+}
+
+bool FrameLoader::CommitSameDocumentNavigation(
+    const FrameLoadRequest& passed_request,
+    FrameLoadType frame_load_type,
+    HistoryItem* history_item,
+    HistoryLoadType history_load_type) {
+  DCHECK(frame_->GetDocument());
+
+  if (!frame_->IsNavigationAllowed() || in_stop_all_loaders_)
+    return false;
+
+  FrameLoadRequest request(passed_request);
+  const KURL& url = request.GetResourceRequest().Url();
+
+  bool same_document_history_navigation =
+      IsBackForwardLoadType(frame_load_type) &&
+      history_load_type == kHistorySameDocumentLoad;
+  bool same_document_navigation = ShouldPerformFragmentNavigation(
+      request.Form(), request.GetResourceRequest().HttpMethod(),
+      frame_load_type, url);
+
+  // Check that this is a same-document navigation.
+  if (!same_document_history_navigation && !same_document_navigation)
+    return false;
+
+  DCHECK(history_item || !same_document_history_navigation);
+  scoped_refptr<SerializedScriptValue> state_object =
+      same_document_history_navigation ? history_item->StateObject() : nullptr;
+
+  if (!same_document_history_navigation) {
+    document_loader_->SetNavigationType(DetermineNavigationType(
+        frame_load_type, false, request.TriggeringEvent()));
+    if (ShouldTreatURLAsSameAsCurrent(url))
+      frame_load_type = kFrameLoadTypeReplaceCurrentItem;
+  }
+
+  // Perform the same-document navigation.
+  LoadInSameDocument(url, state_object, frame_load_type, history_item,
+                     request.ClientRedirect(), request.OriginDocument());
+  return true;
 }
 
 SubstituteData FrameLoader::DefaultSubstituteDataForURL(const KURL& url) {
@@ -1489,37 +1576,18 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       triggering_event_info, frame_load_request.Form());
 }
 
-void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
-                            FrameLoadType type,
-                            NavigationPolicy navigation_policy,
-                            HistoryItem* history_item) {
-  DCHECK(Client()->HasWebView());
-  ResourceRequest& resource_request = frame_load_request.GetResourceRequest();
-  NavigationType navigation_type = DetermineNavigationType(
-      type, resource_request.HttpBody() || frame_load_request.Form(),
-      frame_load_request.TriggeringEvent());
-  resource_request.SetRequestContext(
-      DetermineRequestContextFromNavigationType(navigation_type));
-  resource_request.SetFrameType(frame_->IsMainFrame()
-                                    ? WebURLRequest::kFrameTypeTopLevel
-                                    : WebURLRequest::kFrameTypeNested);
-
+bool FrameLoader::CreateProvisionalDocumentLoader(
+    FrameLoadRequest& frame_load_request,
+    FrameLoadType type,
+    HistoryItem* history_item) {
   bool had_placeholder_client_document_loader =
       provisional_document_loader_ && !provisional_document_loader_->DidStart();
-  navigation_policy = CheckLoadCanStart(frame_load_request, type,
-                                        navigation_policy, navigation_type);
-  if (navigation_policy == kNavigationPolicyIgnore) {
-    if (had_placeholder_client_document_loader &&
-        !resource_request.CheckForBrowserSideNavigation()) {
-      DetachDocumentLoader(provisional_document_loader_);
-    }
-    return;
-  }
 
-  // For PlzNavigate placeholder DocumentLoaders, don't send failure callbacks
-  // for a placeholder simply being replaced with a new DocumentLoader.
+  // For placeholder DocumentLoaders, don't send failure callbacks for a
+  // placeholder simply being replaced with a new DocumentLoader.
   if (had_placeholder_client_document_loader)
     provisional_document_loader_->SetSentDidFinishLoad();
+
   frame_->GetDocument()->CancelParsing();
 
   // If we're starting a regular navigation on a regular document (i.e., there
@@ -1536,16 +1604,9 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   // beforeunload fired above, and detaching a DocumentLoader can fire events,
   // which can detach this frame.
   if (!frame_->GetPage())
-    return;
+    return false;
 
   progress_tracker_->ProgressStarted(type);
-  // TODO(japhet): This case wants to flag the frame as loading and do nothing
-  // else. It'd be nice if it could go through the placeholder DocumentLoader
-  // path, too.
-  if (navigation_policy == kNavigationPolicyHandledByClientForInitialHistory)
-    return;
-  DCHECK(navigation_policy == kNavigationPolicyCurrentTab ||
-         navigation_policy == kNavigationPolicyHandledByClient);
 
   provisional_document_loader_ =
       CreateDocumentLoader(resource_request, frame_load_request, type,
@@ -1553,13 +1614,9 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
 
   // PlzNavigate: We need to ensure that script initiated navigations are
   // honored.
-  if (!had_placeholder_client_document_loader ||
-      navigation_policy == kNavigationPolicyHandledByClient) {
+  if (!had_placeholder_client_document_loader) {
     frame_->GetNavigationScheduler().Cancel();
   }
-
-  if (frame_load_request.Form())
-    Client()->DispatchWillSubmitForm(frame_load_request.Form());
 
   provisional_document_loader_->AppendRedirect(
       provisional_document_loader_->Url());
@@ -1569,7 +1626,6 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     provisional_document_loader_->SetItemForHistoryNavigation(history_item);
   }
 
-  DCHECK(!frame_load_request.GetResourceRequest().IsSameDocumentNavigation());
   frame_->FrameScheduler()->DidStartProvisionalLoad(frame_->IsMainFrame());
 
   // TODO(ananta):
@@ -1578,18 +1634,7 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   Client()->DispatchDidStartProvisionalLoad(provisional_document_loader_,
                                             resource_request);
   DCHECK(provisional_document_loader_);
-
-  if (navigation_policy == kNavigationPolicyCurrentTab) {
-    provisional_document_loader_->StartLoading();
-    // This should happen after the request is sent, so that the state
-    // the inspector stored in the matching frameScheduledClientNavigation()
-    // is available while sending the request.
-    probe::frameClearedScheduledClientNavigation(frame_);
-  } else {
-    probe::frameScheduledClientNavigation(frame_);
-  }
-
-  TakeObjectSnapshot();
+  return true;
 }
 
 bool FrameLoader::ShouldTreatURLAsSameAsCurrent(const KURL& url) const {

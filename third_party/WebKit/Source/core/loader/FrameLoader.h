@@ -87,12 +87,18 @@ class CORE_EXPORT FrameLoader final {
 
   ProgressTracker& Progress() const { return *progress_tracker_; }
 
-  // Starts a load. It will eventually call StartLoad() or LoadInSameDocument().
-  // For history navigations or reloads, an appropriate FrameLoadType should be
-  // given. Otherwise, FrameLoadTypeStandard should be used (and the final
-  // FrameLoadType will be computed). For history navigations, a history item
-  // and a HistoryLoadType should also be provided.
-  void Load(const FrameLoadRequest&,
+  // Starts a navigation. It will eventually send the navigation to the browser
+  // process, or call LoadInSameDocument if it is a same-document navigation.
+  // For reloads, an appropriate FrameLoadType should be given. Otherwise,
+  // FrameLoadTypeStandard should be used (and the final FrameLoadType will be
+  // computed).
+  // Non-PlzNavigate: For history navigations,an appropriate FrameLoadType
+  // should be given. A history item and a HistoryLoadType should also be
+  // provided. A different-document navigation will not be sent to the
+  // browser-process. Instead Load will be called.
+  // TODO(clamy): Remove HistoryItem and HistoryLoadType from this function once
+  // PlzNavigate has fully shipped.
+  void StartNavigation(const FrameLoadRequest&,
             FrameLoadType = kFrameLoadTypeStandard,
             HistoryItem* = nullptr,
             HistoryLoadType = kHistoryDifferentDocumentLoad);
@@ -256,10 +262,9 @@ class CORE_EXPORT FrameLoader final {
                                      FrameLoadType,
                                      NavigationPolicy,
                                      NavigationType);
-  void StartLoad(FrameLoadRequest&,
-                 FrameLoadType,
-                 NavigationPolicy,
-                 HistoryItem*);
+  bool CreateProvisionalDocumentLoader(FrameLoadRequest&,
+                                       FrameLoadType,
+                                       HistoryItem*);
 
   void LoadInSameDocument(const KURL&,
                           scoped_refptr<SerializedScriptValue> state_object,
