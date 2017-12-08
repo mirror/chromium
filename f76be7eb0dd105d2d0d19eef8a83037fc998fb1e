@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aeea7349_f7ef5f3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb32184e_963ebadc",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ce0a4a_4d2e927d",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5e355b_a4846439",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ce0a4a_4d2e927d",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bb4710fd_ffb2e258",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4417fc1e_b7887335",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcc08f3b_cc17b5bb",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1bc133de_dfa8ba4a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "I think what you meant here was:\nconst NGPhysicalLineBoxFragment* linebox \u003d ToNGPhysicalLineBoxFragment",
+      "parentUuid": "bcc08f3b_cc17b5bb",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb956ddd_18761895",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-07T13:10:58Z",
       "side": 1,
       "message": "Don\u0027t we need to check children of this box fragment?\ne.g., \u003cdiv\u003e\u003cspan\u003e\u003cspan style\u003d\"position: relative\"\u003e\u003cspan style\u003d\"position: absolute\"\u003e",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a3a60a_88996544",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "Can you give me a full example? \n\nI was trying to generate an example, and came up with this:\n\n\u003cdiv style\u003d\"border:1px dotted gray;width:200px;height:200px\"\u003e\n  \u003cspan style\u003d\"position:relative;\"\u003e\n    \u003cspan style\u003d\"position:absolute;width:30px;height:30px;background:yellow;\"\u003e\u003c/span\u003e\n  \u003c/span\u003e\n\u003c/div\u003e\n\nCurrently, my code is broken for this case because all I get is:\n\nContainerFragment 202.00x202.00, Children 1\n  LineBox offset:unplaced size:0x0\n\nThat is the case you already filed #791531 for: Static position for empty boxes",
+      "parentUuid": "cb956ddd_18761895",
       "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "85907f5e_89a5b4af",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "I will remove this for now, and add a TODO to implement later. Does this work for you?\n\nRTL does not work in Legacy right now, so it is tough to test.\n\nI think that your idea of merging fragments might work. Will experiment will the CL is in progress.",
+      "parentUuid": "13d0e2ba_d45f37af",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55c899c6_2d160617",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6ab54c_5138fdf0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T01:31:32Z",
+      "side": 1,
+      "message": "Done: 1. DISALLOW_NEW_EXCEPT_PLACEMENT_NEW()\n\nThere has been several times where in your CR you pointed out that my allocation strategy needs clarification. Is there a document that explains what macros should we use for different  allocation options so I can get it right the first time?\n\nDone: 2. scoped_refptr. Thanks for pointing this out. I am still a little unsure about when do we use refcounting.",
+      "parentUuid": "55c899c6_2d160617",
+      "revId": "f76be7eb0dd105d2d0d19eef8a83037fc998fb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
