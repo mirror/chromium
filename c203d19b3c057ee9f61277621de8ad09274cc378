@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b9964eae_6941c72f",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-08T16:23:55Z",
+      "side": 1,
+      "message": "Ah, cool, ok.",
+      "parentUuid": "73dfd27b_16ecb9d8",
+      "revId": "c203d19b3c057ee9f61277621de8ad09274cc378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d73fcde_e1059ce3",
         "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
         "patchSetId": 12

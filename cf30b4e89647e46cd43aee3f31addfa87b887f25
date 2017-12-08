@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "320e4103_e66fc6fb",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-08T16:23:55Z",
+      "side": 1,
+      "message": "Update this comment to reflect the fact that you\u0027re just checking the match contents. Same for other tests below.",
+      "revId": "cf30b4e89647e46cd43aee3f31addfa87b887f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8fdead_87d946d1",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-08T16:23:55Z",
+      "side": 1,
+      "message": "This comment seems a little misleading. It makes it sound like we only care about the case where the scheme doesn\u0027t match. What we\u0027re most interested in is the case where there\u0027s no match because the \"www\" was trimmed. I don\u0027t think it\u0027s worth trying to explain all that but a more general comment would avoid creating a false impression about the scheme:\n\n// Verifies that \"http://\" is not trimmed for input that has a scheme,\n// even if the input string doesn\u0027t match the URL.",
+      "revId": "cf30b4e89647e46cd43aee3f31addfa87b887f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d92f953_efd706bd",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-08T16:23:55Z",
+      "side": 1,
+      "message": "If you\u0027re going to the trouble of testing the behavior of this flag, can you add a case that verifies we do trim https with the flag on and no scheme or scheme match in the input? (And for the other providers as well.)",
+      "revId": "cf30b4e89647e46cd43aee3f31addfa87b887f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
