@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "519c23e5_b8855ef2",
+        "filename": "services/service_manager/embedder/embedded_instance_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-08T21:34:40Z",
+      "side": 1,
+      "message": "If it is really required that calls to ShutDown() block until |service_thread_| has quit, then we will not be able to simply schedule that thread join on a background task.",
+      "revId": "9e87bb3197de014c418b6e1e29ea6a0b797214a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
