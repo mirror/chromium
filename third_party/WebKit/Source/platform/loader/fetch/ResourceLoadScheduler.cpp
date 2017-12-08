@@ -349,7 +349,7 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
   if (!scheduler)
     return;
 
-  if (Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {
+  if (IsRendererSideResourceSchedulerSolelyEnabled()) {
     policy_ = context->InitialLoadThrottlingPolicy();
     outstanding_limit_ =
         GetFieldTrialUint32Param(kRendererSideResourceScheduler,
@@ -415,7 +415,7 @@ void ResourceLoadScheduler::Request(ResourceLoadSchedulerClient* client,
   if (is_shutdown_)
     return;
 
-  if (!Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {
+  if (!IsRendererSideResourceSchedulerSolelyEnabled()) {
     // Prioritization is effectively disabled as we use the constant priority.
     priority = ResourceLoadPriority::kMedium;
     intra_priority = 0;
@@ -556,7 +556,7 @@ void ResourceLoadScheduler::OnNetworkQuiet() {
 
 bool ResourceLoadScheduler::IsThrottablePriority(
     ResourceLoadPriority priority) const {
-  if (!Platform::Current()->IsRendererSideResourceSchedulerEnabled())
+  if (!IsRendererSideResourceSchedulerSolelyEnabled())
     return true;
 
   if (RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled()) {
@@ -665,6 +665,11 @@ void ResourceLoadScheduler::Run(ResourceLoadScheduler::ClientId id,
 void ResourceLoadScheduler::SetOutstandingLimitAndMaybeRun(size_t limit) {
   outstanding_limit_ = limit;
   MaybeRun();
+}
+
+bool ResourceLoadScheduler::IsRendererSideResourceSchedulerSolelyEnabled() {
+  return Platform::Current()->IsRendererSideResourceSchedulerEnabled() &&
+         !RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled();
 }
 
 }  // namespace blink

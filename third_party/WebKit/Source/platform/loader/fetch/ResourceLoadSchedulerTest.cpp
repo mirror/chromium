@@ -73,11 +73,15 @@ class RendererSideResourceSchedulerTest : public ::testing::Test {
 
   void SetUp() override {
     DCHECK(RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled());
+    RuntimeEnabledFeatures::SetResourceLoadSchedulerEnabled(false);
     scheduler_ = ResourceLoadScheduler::Create(
         MockFetchContext::Create(MockFetchContext::kShouldNotLoadNewResource));
     Scheduler()->SetOutstandingLimitForTesting(1);
   }
-  void TearDown() override { Scheduler()->Shutdown(); }
+  void TearDown() override {
+    Scheduler()->Shutdown();
+    RuntimeEnabledFeatures::SetResourceLoadSchedulerEnabled(true);
+  }
 
   ResourceLoadScheduler* Scheduler() { return scheduler_; }
 

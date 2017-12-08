@@ -247,6 +247,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   void SetOutstandingLimitAndMaybeRun(size_t limit);
 
+  static bool IsRendererSideResourceSchedulerSolelyEnabled();
+
   // A flag to indicate an internal running state.
   // TODO(toyoshim): We may want to use enum once we start to have more states.
   bool is_shutdown_ = false;
