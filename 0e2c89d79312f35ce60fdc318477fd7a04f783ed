@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f57f9952_523349c3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-08T10:09:47Z",
+      "side": 1,
+      "message": "The failure was during during execution of |setFakeDataToShowOnNtp| though. \nIf we really want retries, marking only one method would probably result in someone else having to investigate the very same issue again.",
+      "parentUuid": "700ef4d3_6f017183",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0395f338_a652ca7e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d8aa0c_18c71088",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-08T10:09:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0395f338_a652ca7e",
+      "range": {
+        "startLine": 138,
+        "startChar": 14,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3f66230f_c322ed79",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-08T10:09:47Z",
+      "side": 1,
+      "message": "Same setup method used as above.",
+      "parentUuid": "567d5c5c_cf831297",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 50
+      },
+      "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645fcb05_eb14b17a",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8bea64_66c4bb13",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-08T10:09:47Z",
+      "side": 1,
+      "message": "Same setup method used as above.",
+      "parentUuid": "645fcb05_eb14b17a",
+      "range": {
+        "startLine": 178,
+        "startChar": 16,
+        "endLine": 178,
+        "endChar": 38
+      },
+      "revId": "0e2c89d79312f35ce60fdc318477fd7a04f783ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
