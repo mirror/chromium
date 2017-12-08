@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595d572d_8345ca71",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3bff52_443b718a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "no need for this comment",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87acc578_ac9bfe12",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "make these package, and comment it should be only called by WCUD",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbee2ab_4f28f138",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "final",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4118c03b_214b12bf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "this doesn\u0027t need to be generic",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffb3c96_8bcf3d31",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-08T02:48:53Z",
+      "side": 1,
+      "message": "move all of these things into the impl class. Just have fromWebContents here call Impl.fromWebContents",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
