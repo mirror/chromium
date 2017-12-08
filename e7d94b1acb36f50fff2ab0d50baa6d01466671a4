@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe12f3d_ac24936d",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-08T19:40:41Z",
+      "side": 0,
+      "message": "It sounds like neither \"constructive\" (e.g. initiating connections to servers) nor \"destructive\"  (e.g. disconnecting existing connections) actions are taken, so updating the network list should just be done ASAP whenever a network change occurs.  I\u0027d recommend changing this from \"\u003d\u003d\" to \"!\u003d\" so that it\u0027s triggered whenever an offline event occurs (i.e. CONNECTION_NONE is broadcast) or an online event occurs (i.e. CONNECTION_NONE followed by !CONNECTION_NONE is broadcast).",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
