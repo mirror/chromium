@@ -492,6 +492,30 @@
       "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1857f4_c3c084a3",
+        "filename": "components/previews/core/previews_user_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-08T22:50:43Z",
+      "side": 1,
+      "message": "Discussed with Tarun and Ryan. If/when we want to support multiple treatments we will need to design (include metrics and developer alignment).",
+      "parentUuid": "ecabf9c2_263dac13",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 49
+      },
+      "revId": "38131e33955f6c7e698c6158cf5f7d794fbefb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
