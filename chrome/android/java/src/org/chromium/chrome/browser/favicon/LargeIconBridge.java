@@ -150,6 +150,13 @@ public class LargeIconBridge {
         }
     }
 
+    /**
+     * Clears the favicon cache.
+     */
+    public void clearCache() {
+        mFaviconCache.evictAll();
+    }
+
     private static native long nativeInit();
     private static native void nativeDestroy(long nativeLargeIconBridge);
     private static native boolean nativeGetLargeIconForURL(long nativeLargeIconBridge,
