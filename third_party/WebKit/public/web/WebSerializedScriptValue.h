@@ -31,14 +31,15 @@
 #ifndef WebSerializedScriptValue_h
 #define WebSerializedScriptValue_h
 
+#include <memory>
+#include <utility>
+
 #include "public/platform/WebCommon.h"
-#include "public/platform/WebPrivatePtr.h"
 
 namespace v8 {
 class Isolate;
 class Value;
-template <class T>
-class Local;
+template <class T> class Local;
 }
 
 namespace blink {
@@ -49,14 +50,11 @@ class WebString;
 // FIXME: Should this class be in platform?
 class WebSerializedScriptValue {
  public:
-  ~WebSerializedScriptValue() { Reset(); }
+  BLINK_EXPORT ~WebSerializedScriptValue();
 
-  WebSerializedScriptValue() {}
-  WebSerializedScriptValue(const WebSerializedScriptValue& d) { Assign(d); }
-  WebSerializedScriptValue& operator=(const WebSerializedScriptValue& d) {
-    Assign(d);
-    return *this;
-  }
+  WebSerializedScriptValue() = default;
+  BLINK_EXPORT WebSerializedScriptValue(WebSerializedScriptValue&& d);
+  BLINK_EXPORT WebSerializedScriptValue& operator=(WebSerializedScriptValue&& d);
 
   // Creates a serialized script value from its wire format data.
   BLINK_EXPORT static WebSerializedScriptValue FromString(const WebString&);
@@ -67,26 +65,28 @@ class WebSerializedScriptValue {
   // Create a WebSerializedScriptValue that represents a serialization error.
   BLINK_EXPORT static WebSerializedScriptValue CreateInvalid();
 
-  BLINK_EXPORT void Reset();
-  BLINK_EXPORT void Assign(const WebSerializedScriptValue&);
-
-  bool IsNull() const { return private_.IsNull(); }
+  bool IsNull() const { return private_.get() == nullptr; }
 
   // Returns a string representation of the WebSerializedScriptValue.
   BLINK_EXPORT WebString ToString() const;
 
   // Convert the serialized value to a parsed v8 value.
-  BLINK_EXPORT v8::Local<v8::Value> Deserialize(v8::Isolate*);
+  //
+  // This method destroys the WebSerializedScriptValue's state. After it is
+  // called, IsNull() will return true.
+  //
+  // TODO(pwnall): Ref-qualified member function requires C++ OWNERS approval.
+  BLINK_EXPORT v8::Local<v8::Value> Deserialize(v8::Isolate*) &&;
 
 #if INSIDE_BLINK
-  BLINK_EXPORT WebSerializedScriptValue(scoped_refptr<SerializedScriptValue>);
+  BLINK_EXPORT WebSerializedScriptValue(std::unique_ptr<SerializedScriptValue>);
   BLINK_EXPORT WebSerializedScriptValue& operator=(
-      scoped_refptr<SerializedScriptValue>);
-  BLINK_EXPORT operator scoped_refptr<SerializedScriptValue>() const;
+      std::unique_ptr<SerializedScriptValue>);
+  BLINK_EXPORT operator SerializedScriptValue*() const;
 #endif
 
  private:
-  WebPrivatePtr<SerializedScriptValue> private_;
+  std::unique_ptr<SerializedScriptValue> private_;
 };
 
 }  // namespace blink

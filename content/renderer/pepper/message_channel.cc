@@ -129,12 +129,12 @@ void MessageChannel::PostMessageToJavaScript(PP_Var message_data) {
     // We can't just PostTask here; the messages would arrive out of
     // order. Instead, we queue them up until we're ready to post
     // them.
-    js_message_queue_.push_back(serialized_val);
+    js_message_queue_.emplace_back(std::move(serialized_val));
   } else {
     // The proxy sent an asynchronous message, so the plugin is already
     // unblocked. Therefore, there's no need to PostTask.
     DCHECK(js_message_queue_.empty());
-    PostMessageToJavaScriptImpl(serialized_val);
+    PostMessageToJavaScriptImpl(std::move(serialized_val));
   }
 }
 
@@ -346,7 +346,7 @@ void MessageChannel::PostBlockingMessageToNative(gin::Arguments* args) {
 }
 
 void MessageChannel::PostMessageToJavaScriptImpl(
-    const WebSerializedScriptValue& message_data) {
+    WebSerializedScriptValue&& message_data) {
   DCHECK(instance_);
 
   WebPluginContainer* container = instance_->container();
@@ -436,7 +436,7 @@ void MessageChannel::DrainJSMessageQueue() {
   // corresponding MessageChannel.
   scoped_refptr<PepperPluginInstanceImpl> instance_ref(instance_);
   while (!js_message_queue_.empty()) {
-    PostMessageToJavaScriptImpl(js_message_queue_.front());
+    PostMessageToJavaScriptImpl(std::move(js_message_queue_.front()));
     js_message_queue_.pop_front();
   }
   js_message_queue_state_ = SEND_DIRECTLY;

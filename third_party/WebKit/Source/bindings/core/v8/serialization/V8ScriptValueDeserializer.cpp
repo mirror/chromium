@@ -95,7 +95,7 @@ V8ScriptValueDeserializer::V8ScriptValueDeserializer(
 
 V8ScriptValueDeserializer::V8ScriptValueDeserializer(
     scoped_refptr<ScriptState> script_state,
-    scoped_refptr<SerializedScriptValue> value,
+    std::unique_ptr<SerializedScriptValue> value,
     const Options& options)
     : V8ScriptValueDeserializer(std::move(script_state),
                                 nullptr,
@@ -110,7 +110,7 @@ V8ScriptValueDeserializer::V8ScriptValueDeserializer(
 V8ScriptValueDeserializer::V8ScriptValueDeserializer(
     scoped_refptr<ScriptState> script_state,
     UnpackedSerializedScriptValue* unpacked_value,
-    scoped_refptr<SerializedScriptValue> value,
+    SerializedScriptValue* value,
     const Options& options)
     : script_state_(std::move(script_state)),
       unpacked_value_(unpacked_value),

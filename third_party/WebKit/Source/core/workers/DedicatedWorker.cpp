@@ -66,7 +66,7 @@ DedicatedWorker::~DedicatedWorker() {
 }
 
 void DedicatedWorker::postMessage(ScriptState* script_state,
-                                  scoped_refptr<SerializedScriptValue> message,
+                                  std::unique_ptr<SerializedScriptValue> message,
                                   const MessagePortArray& ports,
                                   ExceptionState& exception_state) {
   DCHECK(IsMainThread());

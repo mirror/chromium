@@ -62,7 +62,7 @@ class CORE_EXPORT UnpackedSerializedScriptValue
   explicit UnpackedSerializedScriptValue(scoped_refptr<SerializedScriptValue>);
 
   // The underlying serialized data.
-  scoped_refptr<SerializedScriptValue> value_;
+  std::unique_ptr<SerializedScriptValue> value_;
 
   // These replace their corresponding members in SerializedScriptValue, once
   // set. Once the value is being deserialized, objects will be materialized

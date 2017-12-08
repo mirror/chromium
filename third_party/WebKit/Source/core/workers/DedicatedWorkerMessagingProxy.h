@@ -6,7 +6,6 @@
 #define DedicatedWorkerMessagingProxy_h
 
 #include <memory>
-#include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
@@ -46,7 +45,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                               const String& source_code,
                               ReferrerPolicy,
                               const v8_inspector::V8StackTraceId&);
-  void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
+  void PostMessageToWorkerGlobalScope(std::unique_ptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>,
                                       const v8_inspector::V8StackTraceId&);
 
@@ -57,7 +56,7 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
 
   // These methods come from worker context thread via
   // DedicatedWorkerObjectProxy and are called on the parent context thread.
-  void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
+  void PostMessageToWorkerObject(std::unique_ptr<SerializedScriptValue>,
                                  Vector<MessagePortChannel>,
                                  const v8_inspector::V8StackTraceId&);
   void DispatchErrorEvent(const String& error_message,
