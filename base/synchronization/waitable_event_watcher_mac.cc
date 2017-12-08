@@ -10,7 +10,9 @@
 
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher() : weak_ptr_factory_(this) {}
+WaitableEventWatcher::WaitableEventWatcher(
+    scoped_refptr<SequencedTaskRunner> task_runner)
+    : task_runner_(task_runner), weak_ptr_factory_(this) {}
 
 WaitableEventWatcher::~WaitableEventWatcher() {
   StopWatching();
@@ -29,8 +31,6 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
   // Locals for capture by the block. Accessing anything through the |this| or
   // |event| pointers is not safe, since either may have been deleted by the
   // time the handler block is invoked.
-  scoped_refptr<SequencedTaskRunner> task_runner =
-      SequencedTaskRunnerHandle::Get();
   WeakPtr<WaitableEventWatcher> weak_this = weak_ptr_factory_.GetWeakPtr();
   const bool auto_reset =
       event->policy_ == WaitableEvent::ResetPolicy::AUTOMATIC;
@@ -61,7 +61,7 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
       // source to prevent receiving future event signals.
       dispatch_source_cancel(source);
 
-      task_runner->PostTask(
+      task_runner_->PostTask(
           FROM_HERE,
           BindOnce(&WaitableEventWatcher::InvokeCallback, weak_this));
     });
@@ -70,7 +70,7 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
     // The |event->watch_list_| closures can be run from any thread, so bind
     // the callback as an invocation of PostTask.
     OnceClosure watcher =
-        BindOnce(IgnoreResult(&TaskRunner::PostTask), task_runner, FROM_HERE,
+        BindOnce(IgnoreResult(&TaskRunner::PostTask), task_runner_, FROM_HERE,
                  BindOnce(&WaitableEventWatcher::InvokeCallback, weak_this));
 
     // Hold an additional reference to the ReceiveRight, in case |watcher|
