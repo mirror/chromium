@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab2cafbe_21996058",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-08T07:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b33939dd_7b906bff",
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26f22ad6_7229e09b",
         "filename": "extensions/browser/api/socket/socket.cc",
         "patchSetId": 4
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "See https://cs.chromium.org/chromium/src/chrome/browser/extensions/component_extensions_whitelist/whitelist.h for the list of component extensions.",
       "parentUuid": "2eb9b3e9_eb717cb3",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c8ffa1_30f1d55a",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-08T07:40:12Z",
+      "side": 1,
+      "message": "Do we publish a list for the bundled extensions for the users?\nAm I correct to assume that one cannot uninstall them or prevent install on demand?",
+      "parentUuid": "86ccbd95_f6b12d65",
       "range": {
         "startLine": 160,
         "startChar": 13,
