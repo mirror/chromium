@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e694879_232074f5",
+        "filename": "chrome/installer/util/install_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T10:31:42Z",
+      "side": 1,
+      "message": "nit: since |disposition| is never used, delete line 549 and pass nullptr here.",
+      "range": {
+        "startLine": 553,
+        "startChar": 52,
+        "endLine": 553,
+        "endChar": 64
+      },
+      "revId": "4c92d5de84ba4a2566d382dea09f229014bd715d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
