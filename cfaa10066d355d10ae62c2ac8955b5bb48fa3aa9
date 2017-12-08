@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6563e51e_1892f592",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "I\u0027m confused by this part.",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 87
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70915006_1f9a3b8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7234014d_12837d94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "No need to specify type here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 51,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f181cef7_c73f83d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "No need to specify type here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 65,
+        "endLine": 33,
+        "endChar": 77
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456476e9_ba034b97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "These seem to be redundant.",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 24
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d1213d_3dc1d556",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "We can use DEPRECATED_SUCCESS to be more clear.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6417eea_1e0f8c14",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-08T21:08:33Z",
+      "side": 1,
+      "message": "We need to update the xml as well.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "cfaa10066d355d10ae62c2ac8955b5bb48fa3aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
