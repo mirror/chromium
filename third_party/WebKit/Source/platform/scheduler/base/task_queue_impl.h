@@ -229,6 +229,10 @@ class PLATFORM_EXPORT TaskQueueImpl {
     main_thread_only().heap_handle = heap_handle;
   }
 
+  // Pushes |task| onto the _front_ of the specified work queue.  Caution must
+  // be taken with this API.
+  void RequeueDeferredNestibleTask(TaskQueueImpl::Task&& task, bool delayed);
+
   void PushImmediateIncomingTaskForTest(TaskQueueImpl::Task&& task);
   EnqueueOrder GetFenceForTest() const;
 

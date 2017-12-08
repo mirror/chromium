@@ -876,6 +876,15 @@ void TaskQueueImpl::PushImmediateIncomingTaskForTest(
   immediate_incoming_queue().push_back(std::move(task));
 }
 
+void TaskQueueImpl::RequeueDeferredNestibleTask(TaskQueueImpl::Task&& task,
+                                                bool delayed) {
+  if (delayed) {
+    main_thread_only().delayed_work_queue->PushFront(std::move(task));
+  } else {
+    main_thread_only().immediate_work_queue->PushFront(std::move(task));
+  }
+}
+
 void TaskQueueImpl::SetOnNextWakeUpChangedCallback(
     TaskQueueImpl::OnNextWakeUpChangedCallback callback) {
 #if DCHECK_IS_ON()
