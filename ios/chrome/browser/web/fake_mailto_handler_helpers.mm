@@ -32,9 +32,9 @@
 }
 @end
 
-@implementation CountingMailtoURLRewriterObserver
+@implementation CountingMailtoHandlerManagerObserver
 @synthesize changeCount = _changeCount;
-- (void)rewriterDidChange:(MailtoURLRewriter*)rewriter {
+- (void)mailtoHandlerDidChange:(MailtoHandlerManager*)manager {
   ++_changeCount;
 }
 @end
