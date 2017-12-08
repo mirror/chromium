@@ -79,7 +79,7 @@ bool Use2016Q2UI() {
 }  // namespace
 
 // static
-TranslateBubbleView* TranslateBubbleView::translate_bubble_view_ = NULL;
+TranslateBubbleView* TranslateBubbleView::translate_bubble_view_ = nullptr;
 
 TranslateBubbleView::~TranslateBubbleView() {
   // A child view could refer to a model which is owned by this class when
@@ -204,23 +204,6 @@ bool TranslateBubbleView::ShouldShowCloseButton() const {
   return Use2016Q2UI();
 }
 
-void TranslateBubbleView::WindowClosing() {
-  // The operations for |model_| are valid only when a WebContents is alive.
-  // TODO(hajimehoshi): TranslateBubbleViewModel(Impl) should not hold a
-  // WebContents as a member variable because the WebContents might be destroyed
-  // while the TranslateBubbleViewModel(Impl) is still alive. Instead,
-  // TranslateBubbleViewModel should take a reference of a WebContents at each
-  // method. (crbug/320497)
-  if (web_contents())
-    model_->OnBubbleClosing();
-
-  // We have to reset |translate_bubble_view_| here, not in our destructor,
-  // because we'll be destroyed asynchronously and the shown state will be
-  // checked before then.
-  DCHECK_EQ(translate_bubble_view_, this);
-  translate_bubble_view_ = NULL;
-}
-
 bool TranslateBubbleView::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
   switch (model_->GetViewState()) {
@@ -335,10 +318,26 @@ void TranslateBubbleView::WebContentsDestroyed() {
 }
 
 void TranslateBubbleView::OnWidgetClosing(views::Widget* widget) {
-  if (GetBubbleFrameView()->close_button_clicked()) {
-    model_->DeclineTranslation();
-    translate::ReportUiAction(translate::CLOSE_BUTTON_CLICKED);
+  if (web_contents()) {
+    if (GetBubbleFrameView()->close_button_clicked()) {
+      model_->DeclineTranslation();
+      translate::ReportUiAction(translate::CLOSE_BUTTON_CLICKED);
+    }
+
+    model_->OnBubbleClosing();
   }
+
+  // We have to reset |translate_bubble_view_| here, not in our destructor,
+  // because we'll be destroyed asynchronously and the shown state will be
+  // checked before then.
+  DCHECK_EQ(translate_bubble_view_, this);
+  translate_bubble_view_ = nullptr;
+
+  widget->RemoveObserver(this);
+}
+
+void TranslateBubbleView::OnWidgetDestroying(views::Widget* widget) {
+  OnWidgetClosing(widget);
 }
 
 TranslateBubbleModel::ViewState TranslateBubbleView::GetViewState() const {
@@ -353,19 +352,19 @@ TranslateBubbleView::TranslateBubbleView(
     content::WebContents* web_contents)
     : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
       WebContentsObserver(web_contents),
-      before_translate_view_(NULL),
-      translating_view_(NULL),
-      after_translate_view_(NULL),
-      error_view_(NULL),
-      advanced_view_(NULL),
-      denial_combobox_(NULL),
-      source_language_combobox_(NULL),
-      target_language_combobox_(NULL),
-      before_always_translate_checkbox_(NULL),
-      advanced_always_translate_checkbox_(NULL),
-      advanced_cancel_button_(NULL),
-      advanced_done_button_(NULL),
-      denial_menu_button_(NULL),
+      before_translate_view_(nullptr),
+      translating_view_(nullptr),
+      after_translate_view_(nullptr),
+      error_view_(nullptr),
+      advanced_view_(nullptr),
+      denial_combobox_(nullptr),
+      source_language_combobox_(nullptr),
+      target_language_combobox_(nullptr),
+      before_always_translate_checkbox_(nullptr),
+      advanced_always_translate_checkbox_(nullptr),
+      advanced_cancel_button_(nullptr),
+      advanced_done_button_(nullptr),
+      denial_menu_button_(nullptr),
       model_(std::move(model)),
       error_type_(error_type),
       is_in_incognito_window_(
@@ -391,7 +390,7 @@ views::View* TranslateBubbleView::GetCurrentView() const {
       return advanced_view_;
   }
   NOTREACHED();
-  return NULL;
+  return nullptr;
 }
 
 void TranslateBubbleView::HandleButtonPressed(

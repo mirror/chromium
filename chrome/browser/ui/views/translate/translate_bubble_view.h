@@ -94,7 +94,6 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
   // views::WidgetDelegate methods.
   View* GetInitiallyFocusedView() override;
   bool ShouldShowCloseButton() const override;
-  void WindowClosing() override;
 
   // views::View methods.
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
@@ -126,6 +125,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
 
   // Overridden from views::WidgetObserver:
   void OnWidgetClosing(views::Widget* widget) override;
+  void OnWidgetDestroying(views::Widget* widget) override;
 
   // Returns the current view state.
   TranslateBubbleModel::ViewState GetViewState() const;

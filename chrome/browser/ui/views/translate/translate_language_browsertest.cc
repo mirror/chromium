@@ -95,14 +95,6 @@ class TranslateLanguageBrowserTest : public InProcessBrowserTest {
   }
 
   void NavigateToUrl(const base::FilePath::StringPieceType path) {
-    // Close previous Translate bubble, if it exists. This is intended to
-    // prevent a race condition in which the previous page's call to
-    // TranslateBubbleView::WindowClosing doesn't occur until after the new page
-    // has been loaded and translated, thus eroneously clearing the new
-    // translate bubble.
-    // TODO(789593): investigate a more robust fix.
-    TranslateBubbleView::CloseCurrentBubble();
-
     const GURL url =
         ui_test_utils::GetTestUrl(base::FilePath(), base::FilePath(path));
     ui_test_utils::NavigateToURL(browser_, url);
