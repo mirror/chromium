@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c32afc02_027b030c",
+        "filename": "chrome/browser/sync/test/integration/single_client_user_events_sync_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T17:13:05Z",
+      "side": 1,
+      "message": "Ah, of course, you\u0027re right.",
+      "parentUuid": "a9f8ba25_87b2026d",
+      "revId": "af273602bd69be0530f07f713797502db1d6a731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a493ca6f_d9282e96",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 4
