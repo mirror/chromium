@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "695dc686_6534f335",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-12-08T05:20:38Z",
+      "side": 1,
+      "message": "It still works, but it\u0027s being deprecated. I\u0027d use base::BindOnce/base::BindRepeating where we can.",
+      "parentUuid": "069848f3_f3e00f84",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0dec997_c5d760ef",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/web_scheduler_impl.cc",
         "patchSetId": 10
@@ -64,6 +82,24 @@
       "writtenOn": "2017-12-07T11:09:54Z",
       "side": 1,
       "message": "I\u0027m not sure if it\u0027s worth keeping this alias though.",
+      "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323d58ec_ed2b722b",
+        "filename": "third_party/WebKit/public/platform/scheduler/child/single_thread_idle_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-12-08T05:20:38Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s common usage to define an alias for a callback that the class uses, as its verbose.\nAnyway, let me postpone it until WebThread::IdleTask starts using TimeTicks instead of double for smaller refactoring diff.",
+      "parentUuid": "c95bc75f_9a83227b",
       "revId": "a7ec531116d1487d5f17893598a3e22701511a56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
