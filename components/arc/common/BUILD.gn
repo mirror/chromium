@@ -5,6 +5,12 @@
 import("//mojo/public/tools/bindings/mojom.gni")
 
 if (is_chromeos) {
+  mojom("gfx") {
+    sources = [
+      "gfx.mojom",
+    ]
+  }
+
   mojom("common") {
     sources = [
       "accessibility_helper.mojom",
@@ -22,7 +28,6 @@ if (is_chromeos) {
       "crash_collector.mojom",
       "enterprise_reporting.mojom",
       "file_system.mojom",
-      "gfx.mojom",
       "ime.mojom",
       "intent_helper.mojom",
       "kiosk.mojom",
@@ -50,27 +55,30 @@ if (is_chromeos) {
     ]
 
     public_deps = [
+      ":gfx",
       ":media",
       "//mojo/common:common_custom_types",
       "//ui/gfx/geometry/mojo",
     ]
   }
-}
 
-# Media related mojo interfaces. There are used by
-# //services/ui/public/interfaces. We have this separate mojom target to avoid
-# pulling in unnecessary interfaces,
-mojom("media") {
-  sources = [
-    "protected_buffer_manager.mojom",
-    "video.mojom",
-    "video_common.mojom",
-    "video_decode_accelerator_deprecated.mojom",
-    "video_encode_accelerator.mojom",
-  ]
+  # Media related mojo interfaces. There are used by
+  # //services/ui/public/interfaces. We have this separate mojom target to avoid
+  # pulling in unnecessary interfaces,
+  mojom("media") {
+    sources = [
+      "protected_buffer_manager.mojom",
+      "video.mojom",
+      "video_common.mojom",
+      "video_decode_accelerator.mojom",
+      "video_decode_accelerator_deprecated.mojom",
+      "video_encode_accelerator.mojom",
+    ]
 
-  public_deps = [
-    "//mojo/common:common_custom_types",
-    "//ui/gfx/geometry/mojo",
-  ]
+    public_deps = [
+      ":gfx",
+      "//mojo/common:common_custom_types",
+      "//ui/gfx/geometry/mojo",
+    ]
+  }
 }
