@@ -272,9 +272,9 @@ bool TaskQueueSelector::SelectWorkQueueToService(WorkQueue** out_work_queue) {
   }
 
   TrySelectingBlockedQueueOverEnabledQueue(**out_work_queue);
-  DidSelectQueueWithPriority(
-      (*out_work_queue)->task_queue()->GetQueuePriority(),
-      chose_delayed_over_immediate);
+  DidSelectQueueWithPriority(static_cast<TaskQueue::QueuePriority>(
+                                 (*out_work_queue)->work_queue_set_index()),
+                             chose_delayed_over_immediate);
   return true;
 }
 

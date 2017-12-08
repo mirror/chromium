@@ -34,6 +34,7 @@ class PLATFORM_EXPORT WorkQueue {
  public:
   enum class QueueType { kDelayed, kImmediate };
 
+  // Note |task_queue| can be null if queue_type is kNonNestible.
   WorkQueue(TaskQueueImpl* task_queue, const char* name, QueueType queue_type);
   ~WorkQueue();
 
@@ -67,6 +68,10 @@ class PLATFORM_EXPORT WorkQueue {
   // it informs the WorkQueueSets if the head changed.
   void Push(TaskQueueImpl::Task task);
 
+  // Pushes the task onto the front of the |work_queue_| and if it's before any
+  // fence it informs the WorkQueueSets the head changed.
+  void PushFront(TaskQueueImpl::Task task);
+
   // Reloads the empty |work_queue_| with
   // |task_queue_->TakeImmediateIncomingQueue| and if a fence hasn't been
   // reached it informs the WorkQueueSets if the head changed.
@@ -90,6 +95,8 @@ class PLATFORM_EXPORT WorkQueue {
   HeapHandle heap_handle() const { return heap_handle_; }
 
   void set_heap_handle(HeapHandle handle) { heap_handle_ = handle; }
+
+  QueueType queue_type() const { return queue_type_; }
 
   // Returns true if the front task in this queue has an older enqueue order
   // than the front task of |other_queue|. Both queue are assumed to be

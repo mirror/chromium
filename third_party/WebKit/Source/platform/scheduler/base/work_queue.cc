@@ -78,6 +78,31 @@ void WorkQueue::Push(TaskQueueImpl::Task task) {
     work_queue_sets_->OnTaskPushedToEmptyQueue(this);
 }
 
+void WorkQueue::PushFront(TaskQueueImpl::Task task) {
+  bool was_empty = work_queue_.empty();
+#ifndef NDEBUG
+  DCHECK(task.enqueue_order_set());
+#endif
+
+  // Amoritized O(1).
+  work_queue_.push_front(std::move(task));
+
+  if (!work_queue_sets_)
+    return;
+
+  // Pretend  to WorkQueueSets that nothing has changed if we're blocked.
+  if (BlockedByFence())
+    return;
+
+  if (was_empty) {
+    work_queue_sets_->OnTaskPushedToEmptyQueue(this);
+  } else {
+    // We need to update our position in the sets. Equivalent to erasing and
+    // re-adding.
+    work_queue_sets_->ChangeSetIndex(this, work_queue_set_index_);
+  }
+}
+
 void WorkQueue::ReloadEmptyImmediateQueue() {
   DCHECK(work_queue_.empty());
 

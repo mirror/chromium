@@ -404,11 +404,19 @@ class PLATFORM_EXPORT TaskQueueManager
     return any_thread_;
   }
 
+  struct NonNestibleTask {
+    internal::TaskQueueImpl::Task task;
+    internal::TaskQueueImpl* task_queue;
+    bool delayed;
+  };
+  using NonNestibleTaskDeque = WTF::Deque<NonNestibleTask, 8>;
+
   // TODO(alexclarke): Move more things into MainThreadOnly
   struct MainThreadOnly {
     MainThreadOnly();
 
     bool is_nested;  // Whether or not the message loop is currently nested.
+    NonNestibleTaskDeque non_nestable_task_queue;
   };
 
   base::ThreadChecker main_thread_checker_;
