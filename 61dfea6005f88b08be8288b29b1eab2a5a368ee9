@@ -229,6 +229,24 @@
       "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f869852_76a778f7",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-08T07:13:47Z",
+      "side": 1,
+      "message": "I think we are close there, just need a clean \u0026 right way.\n\nI uploaded a new patch, making UpdateSnappedWidthRatio taking |event| parameter:\n(1) no update if not snapped state;\n(2) reset snapped_width_ratio_ whenever event is snapping event;\n(3) change snapped_width_ratio_ also if event is bounds event.\n\nI think it would be ok to keep last snapped width ratio if not snapped for two reasons (a) we shall always reset it on the above (2) and it is used only when state is snapped on workspace events, (b) 0.5f is not exactly right default value, see this [1].\n\nBasically, I want UpdateSnappedWidthRatio getting called in just one place.\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/window_positioning_utils.cc?sq\u003dpackage:chromium\u0026l\u003d34",
+      "parentUuid": "4705da89_a8cef752",
+      "revId": "61dfea6005f88b08be8288b29b1eab2a5a368ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
