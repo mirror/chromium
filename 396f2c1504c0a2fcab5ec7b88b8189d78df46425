@@ -16,6 +16,24 @@
       "revId": "396f2c1504c0a2fcab5ec7b88b8189d78df46425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c743c11f_c0939ce8",
+        "filename": "ios/chrome/browser/ui/fullscreen/voice_over_fullscreen_disabler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-08T18:30:32Z",
+      "side": 1,
+      "message": "I\u0027m going to land this CL then reparent the keyboard disabler CL onto this one so that they can be combined.",
+      "parentUuid": "408f66d2_a13a2394",
+      "revId": "396f2c1504c0a2fcab5ec7b88b8189d78df46425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
