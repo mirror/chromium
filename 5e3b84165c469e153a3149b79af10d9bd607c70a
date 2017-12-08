@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "d642a475_a65fb7ce",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:53:17Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "11aad098_adc2e612",
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856adb4a_56ad3158",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T00:53:17Z",
+      "side": 1,
+      "message": "Comment to explain what this is doing -- \"Compute a frame for the new page by removing the status bar height from the bounds of |self.view|\"",
+      "range": {
+        "startLine": 1727,
+        "startChar": 6,
+        "endLine": 1727,
+        "endChar": 18
+      },
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901707c9_ca7fce63",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 4
