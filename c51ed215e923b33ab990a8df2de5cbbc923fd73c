@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246099d0_ab0b8a3d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-08T23:21:16Z",
+      "side": 1,
+      "message": "I do not like creating a dummy constraint space here. Any ideas on how to fix it?",
+      "revId": "c51ed215e923b33ab990a8df2de5cbbc923fd73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
