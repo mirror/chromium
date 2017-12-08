@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1415f114_9d9194ce",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:26:08Z",
+      "side": 1,
+      "message": "This isn\u0027t entirely true for CHECKBOX anymore, mind updating the comment?",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 66
+      },
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe80af1_a4aaaa21",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:26:08Z",
+      "side": 1,
+      "message": "Instead of repeating the code for SetChecked/error, consider collapsing them together as before, sth like:\n\nconst bool should_toggle_checked \u003d\n    // If radio item was unchecked nothing should happen...\n    (item-\u003etype() \u003d\u003d RADIO \u0026\u0026 checked) ||\n    // Checkboxes are always updated.\n    item-\u003etype() \u003d\u003d CHECKBOX;\n\nif (should_toggle_check) {\n  if (!item-\u003eSetChecked...) { .. }\n  radio_item_updated \u003d true;\n}",
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f180f2a_4133aada",
+        "filename": "chrome/browser/extensions/extension_context_menu_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:26:08Z",
+      "side": 1,
+      "message": "Instead of creating 4 ExtensionTestMessageListeners, can you only send one from JavaScript when everything is set up correctly? you can use Promise in JavaScript to wait for multiple async JS callbacks to complete, or something similar.",
+      "revId": "2783e2c92e559a4c51b39ccd772713cf8ef03d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
