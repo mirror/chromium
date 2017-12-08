@@ -43,8 +43,8 @@ class ShellExtensionSystem : public ExtensionSystem {
   // than other extensions. Use LaunchApp() to actually launch the loaded app.
   const Extension* LoadApp(const base::FilePath& app_dir);
 
-  // Initializes the extension system.
-  void Init();
+  // Finish initialization for the shell extension system.
+  void FinishInitialization();
 
   // Launch the app with id |extension_id|.
   void LaunchApp(const std::string& extension_id);
@@ -53,6 +53,7 @@ class ShellExtensionSystem : public ExtensionSystem {
   void Shutdown() override;
 
   // ExtensionSystem implementation:
+  void Init() override;
   void InitForRegularProfile(bool extensions_enabled) override;
   ExtensionService* extension_service() override;
   RuntimeData* runtime_data() override;

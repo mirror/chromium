@@ -93,7 +93,7 @@ const Extension* ShellExtensionSystem::LoadApp(const base::FilePath& app_dir) {
   return LoadExtension(app_dir);
 }
 
-void ShellExtensionSystem::Init() {
+void ShellExtensionSystem::FinishInitialization() {
   // Inform the rest of the extensions system to start.
   ready_.Signal();
   content::NotificationService::current()->Notify(
@@ -116,6 +116,8 @@ void ShellExtensionSystem::LaunchApp(const ExtensionId& extension_id) {
 
 void ShellExtensionSystem::Shutdown() {
 }
+
+void ShellExtensionSystem::Init() {}
 
 void ShellExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
   service_worker_manager_.reset(new ServiceWorkerManager(browser_context_));
