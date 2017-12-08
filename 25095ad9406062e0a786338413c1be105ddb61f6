@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78795064_8922e0be",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T14:44:16Z",
+      "side": 1,
+      "message": "I would recommend to drop this line now when the code below ignores hardware_buffer_size completely.",
+      "revId": "25095ad9406062e0a786338413c1be105ddb61f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d20653b_e9db3013",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T14:44:16Z",
+      "side": 1,
+      "message": "\"minimum hardware size\"",
+      "revId": "25095ad9406062e0a786338413c1be105ddb61f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

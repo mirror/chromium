@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7888d811_7e2bfffb",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-08T14:44:16Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to overthink here. We can just document the behavior and explain how it can be potentially extended in the future.\nUnderlying hardware buffer size is already available to WebAudio, right? This function does not give any extra info on it.",
+      "parentUuid": "0b5c0371_01fe684c",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e7ee70_901be269",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 4
