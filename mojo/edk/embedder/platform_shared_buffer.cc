@@ -180,6 +180,27 @@ ScopedPlatformHandle PlatformSharedBuffer::DuplicatePlatformHandle() {
   return SharedMemoryToPlatformHandle(handle);
 }
 
+ScopedPlatformHandle PlatformSharedBuffer::GetPlatformHandleForIPC() {
+  DCHECK(shared_memory_);
+  base::SharedMemoryHandle handle;
+  {
+    base::AutoLock locker(lock_);
+    handle = base::SharedMemory::DuplicateHandle(shared_memory_->handle());
+  }
+  if (!handle.IsValid())
+    return ScopedPlatformHandle();
+
+#if defined(OS_ANDROID)
+  if (handle.IsReadOnly()) {
+    if (!handle.IsRegionReadOnly()) {
+      LOG(ERROR) << "Sending unsealed read-only region through IPC";
+      handle.SetRegionReadOnly();
+    }
+  }
+#endif
+  return SharedMemoryToPlatformHandle(handle);
+}
+
 ScopedPlatformHandle PlatformSharedBuffer::PassPlatformHandle() {
   DCHECK(HasOneRef());
 
