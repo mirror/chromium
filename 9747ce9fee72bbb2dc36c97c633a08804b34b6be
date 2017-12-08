@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebdba0c5_dd241901",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-08T20:47:46Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure what to do with this part. It looks awkward to me if I do a new line with just \u0027), test_desc;\u0027",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "9747ce9fee72bbb2dc36c97c633a08804b34b6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
