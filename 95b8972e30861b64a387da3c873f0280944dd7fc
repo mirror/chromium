@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7dd0825_9f646a94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-08T01:40:45Z",
+      "side": 1,
+      "message": "This makes it sound like this patch is wiring up the logic, rather than just creating groundwork. Maybe \"Add ChildLocalSurfaceIdAllocator\" or something?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "95b8972e30861b64a387da3c873f0280944dd7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b729ff3f_dc8e85b3",
         "filename": "components/viz/common/surfaces/child_local_surface_id_allocator.cc",
         "patchSetId": 2
