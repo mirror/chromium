@@ -36,6 +36,121 @@
     },
     {
       "key": {
+        "uuid": "850229a2_45e8978b",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "Formatting!",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 31
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca471d1_e097537c",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "Maybe hoist this block up into a local variable just to make this more readable.",
+      "range": {
+        "startLine": 226,
+        "startChar": 31,
+        "endLine": 226,
+        "endChar": 32
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b65b343_046dd1d4",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "Maybe DCHECK(browserState) here?",
+      "range": {
+        "startLine": 135,
+        "startChar": 27,
+        "endLine": 135,
+        "endChar": 39
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cec7ff7_aa11eb92",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "Does this line need to wrap?\n\nBTW I really like moving this dependency into here. We should make a note and see if other deferred init stuff that MainController launches for UI parts can instead be moved closer to the actual places they are needed.\n\n(Obviously this will move into the coordinator instead of staying in the VC).",
+      "range": {
+        "startLine": 307,
+        "startChar": 35,
+        "endLine": 307,
+        "endChar": 49
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a99b898_bae3283b",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "No line wrap.",
+      "range": {
+        "startLine": 342,
+        "startChar": 48,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37886099_90749ea2",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h",
         "patchSetId": 2
@@ -47,6 +162,29 @@
       "writtenOn": "2017-12-07T21:36:01Z",
       "side": 1,
       "message": "This is a separate protocol for now, but I imagine as more classes are refactored everything will begin to adopt both the SettingsBrowserStateProvider and the existing SettingsNavigationControllerDelegate, and these can then be merged.",
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe16790_fa41ec42",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-08T01:09:24Z",
+      "side": 1,
+      "message": "One forward declaration per line.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 46
+      },
       "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
