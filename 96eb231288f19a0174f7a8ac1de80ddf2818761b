@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3957b240_a55f4f21",
+        "filename": "chrome/browser/media/webrtc/webrtc_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-12-08T09:26:12Z",
+      "side": 1,
+      "message": "I suggest you create a new test fixture (webrtc_desktop_capture_browsertest.cc) and just set these flags there.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 74
+      },
+      "revId": "96eb231288f19a0174f7a8ac1de80ddf2818761b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
