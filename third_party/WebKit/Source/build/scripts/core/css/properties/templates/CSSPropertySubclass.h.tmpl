@@ -29,17 +29,18 @@ namespace CSS{{property.namespace_group}} {
   {% if property.alias_for != None%}
 class {{property_classname}} : public CSSUnresolvedProperty {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : CSSUnresolvedProperty(id) {}
+  constexpr {{property_classname}}() : CSSUnresolvedProperty() {}
   {% else %}
 class {{property_classname}} : public {{property.namespace_group}} {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : {{property.namespace_group}}(id) {}
+  constexpr {{property_classname}}() : {{property.namespace_group}}() {}
   {% endif %}
   const char* GetPropertyName() const override { return "{{property.name}}\0"; }
   const WTF::AtomicString& GetPropertyNameAtomicString() const override {
     static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}\0");
     return name;
   }
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% if property.alias_for == None %}
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
