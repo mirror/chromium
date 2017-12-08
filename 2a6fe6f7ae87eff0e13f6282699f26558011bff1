@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1294c6c5_3e682dd8",
+        "filename": "chromecast/browser/renderer_prelauncher_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1203029
+      },
+      "writtenOn": "2017-12-08T16:55:09Z",
+      "side": 1,
+      "message": "I feel this is fine.\n\nThe RunUntilIdle() basically tell UI thread to finish all tasks\nso we need another one to tell all other thread to finish all tasks.\nThese are preconditions of browsertests\n\n\"3 seconds\" looks bad, but I don\u0027t know any other way to RunAllThreadUntilIdle ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 32,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "2a6fe6f7ae87eff0e13f6282699f26558011bff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
