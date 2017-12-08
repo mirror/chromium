@@ -171,6 +171,16 @@ class CONTENT_EXPORT SimpleURLLoader {
   // TODO(mmenke): Consider adding a new error code for this.
   virtual void SetAllowHttpErrorResults(bool allow_http_error_results) = 0;
 
+  // Helper method to attach a file for upload, so the consumer won't need to
+  // open the file itself off-thread. Currently just sends the upload as a path,
+  // but will open it in a future revision. May only be called once, and only if
+  // the ResourceRequest passed to the constructor had a null |request_body|.
+  //
+  // |content_type| will overwrite any Content-Type header in the
+  // ResourceRequest passed to Create().
+  virtual void AttachFileForUpload(const base::FilePath& upload_file_path,
+                                   const std::string& upload_content_type) = 0;
+
   // Sets the when to try and the max number of times to retry a request, if
   // any. |max_retries| is the number of times to retry the request, not
   // counting the initial request. |retry_mode| is a combination of one or more
