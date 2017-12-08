@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5331568a_d93e4dbd",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T20:57:17Z",
+      "side": 1,
+      "message": "nit: extra \"don\u0027t\"",
+      "range": {
+        "startLine": 176,
+        "startChar": 16,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "397fd542727bb49bfb9e3497daf7ff998eecfd96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e6e7c6_e28bd15e",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-08T20:57:17Z",
+      "side": 1,
+      "message": "nit: Perhaps instead of this last sentence, something like \"Consider recordSparseValue for sparse enums or enums not starting at 0.\"  WDYT?",
+      "range": {
+        "startLine": 194,
+        "startChar": 120,
+        "endLine": 194,
+        "endChar": 168
+      },
+      "revId": "397fd542727bb49bfb9e3497daf7ff998eecfd96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
