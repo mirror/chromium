@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3f9194_f9c7c96f",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-08T18:25:10Z",
+      "side": 1,
+      "message": "Don\u0027t fully understand why we need to do this. |getIsSelected_| executes for every single \u003coption\u003e. So if we loop over all \u003coption\u003es in here, we are basically doing a n^2 search. Is that necessary?\n\nIf we can\u0027t determine whether a given \u003coption\u003e should be the selected one in O(1), without looking at other \u003coption\u003es, then I think we should use an alternate approach to select the default \u003coption\u003e.\n\n// HTML\n\u003ctemplate is\u003d\"dom-repeat\" notify-dom-change on-dom-change\u003d\"onDomChange_\"\u003e\n  ...\n\u003c/template\u003e\n\n// JS\nonDomChange_: function() {\n  const options \u003d this.shadowRoot.querySelectorAll(\u0027option\u0027);\n  ...figure out selectedIndex here.\n\n  this.$$(\u0027select\u0027).selectedIndex \u003d selectedIndex;\n},",
+      "revId": "6d850b5ad3a7b68548e67499866a3e2b6ba4b4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
