@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/memory/weak_ptr.h"
+#include "base/values.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/navigation_url_loader.h"
 #include "content/common/navigation_params.h"
@@ -18,7 +19,6 @@ struct RedirectInfo;
 
 namespace content {
 
-class NavigationData;
 class NavigationURLLoaderDelegate;
 class StreamHandle;
 struct ResourceResponse;
@@ -47,7 +47,7 @@ class TestNavigationURLLoader
                                const scoped_refptr<ResourceResponse>& response);
   void CallOnResponseStarted(const scoped_refptr<ResourceResponse>& response,
                              std::unique_ptr<StreamHandle> body,
-                             std::unique_ptr<NavigationData> navigation_data);
+                             base::Value navigation_data);
 
   int redirect_count() { return redirect_count_; }
 

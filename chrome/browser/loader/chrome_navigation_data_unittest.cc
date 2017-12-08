@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
 #include "components/previews/core/previews_user_data.h"
-#include "content/public/browser/navigation_data.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class ChromeNavigationDataTest : public testing::Test {
@@ -31,26 +30,4 @@ TEST_F(ChromeNavigationDataTest, AddingPreviewsUserData) {
   EXPECT_FALSE(data.previews_user_data());
   data.set_previews_user_data(std::make_unique<previews::PreviewsUserData>(1u));
   EXPECT_TRUE(data.previews_user_data());
-}
-
-TEST_F(ChromeNavigationDataTest, Clone) {
-  ChromeNavigationData data;
-  EXPECT_FALSE(data.GetDataReductionProxyData());
-  data.SetDataReductionProxyData(
-      std::make_unique<data_reduction_proxy::DataReductionProxyData>());
-  EXPECT_FALSE(data.previews_user_data());
-  data.set_previews_user_data(std::make_unique<previews::PreviewsUserData>(1u));
-
-  std::unique_ptr<content::NavigationData> clone_data = data.Clone();
-  ChromeNavigationData* clone_chrome_data =
-      static_cast<ChromeNavigationData*>(clone_data.get());
-  EXPECT_NE(&data, clone_data.get());
-  EXPECT_NE(&data, clone_chrome_data);
-  EXPECT_NE(data.GetDataReductionProxyData(),
-            clone_chrome_data->GetDataReductionProxyData());
-  EXPECT_NE(data.previews_user_data(), clone_chrome_data->previews_user_data());
-  EXPECT_TRUE(data.GetDataReductionProxyData());
-  EXPECT_TRUE(data.previews_user_data());
-  EXPECT_TRUE(clone_chrome_data->GetDataReductionProxyData());
-  EXPECT_TRUE(clone_chrome_data->previews_user_data());
 }
