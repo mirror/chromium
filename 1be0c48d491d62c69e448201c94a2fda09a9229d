@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be7b7dc7_72eb4544",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-08T19:22:49Z",
+      "side": 1,
+      "message": "\"correct\"?",
+      "range": {
+        "startLine": 442,
+        "startChar": 58,
+        "endLine": 442,
+        "endChar": 71
+      },
+      "revId": "1be0c48d491d62c69e448201c94a2fda09a9229d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b43f055_d861d84c",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-12-08T19:22:49Z",
+      "side": 1,
+      "message": "Instead of \"main_thread_failed_to_respond_last_deadline\", would it make sense to use a scheduler deadline/threshold that is compared to \"time_since_main_frame_sent\"?\n\nThe state machine doesn\u0027t use \"main_thread_failed_to_respond_last_deadline\" internally, so the logic ends up being unfortunately split. At the same time, using a deadline makes the logic fuzzier. So I\u0027m fine with either approach really.",
+      "range": {
+        "startLine": 451,
+        "startChar": 21,
+        "endLine": 451,
+        "endChar": 64
+      },
+      "revId": "1be0c48d491d62c69e448201c94a2fda09a9229d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
