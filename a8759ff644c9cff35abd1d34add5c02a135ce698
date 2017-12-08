@@ -52,6 +52,24 @@
       "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e383be42_7a761ba3",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-08T16:54:06Z",
+      "side": 1,
+      "message": "Thanks! Given the frequency with which this runs (~once per page load), I don\u0027t think this optimization makes the right performance / code complexity tradeoff. Specifically, it would require UrlNeedsSanitizing to stay in sync with SanitizeURL - it\u0027d be easy for someone to update one and not the other, leading to a bug. It\u0027s critical that this code be correct (it implements privacy team requirements) so reducing code complexity is very important here.\n\nIf you think it\u0027s important that performance for this and similar calls be optimized when it\u0027s a no-op, I\u0027d suggest filing a GURL bug about it to improve the ReplaceComponents implementation. See the many calls to scrub ClearUsername() here for example: https://cs.chromium.org/chromium/src/url/url_canon.h?l\u003d702 that are doing this unconditionally on all processed URLs. We could either optimize every call site, or fix it once in the implementation. The latter seems better to me.",
+      "parentUuid": "960a82a8_0c00bf3a",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
