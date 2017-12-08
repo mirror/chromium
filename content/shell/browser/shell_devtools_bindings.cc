@@ -116,6 +116,19 @@ void ShellDevToolsBindings::InspectElementAt(int x, int y) {
   }
 }
 
+void ShellDevToolsBindings::Attach() {
+  if (agent_host_)
+    agent_host_->DetachClient(this);
+  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
+  agent_host_->AttachClient(this);
+  if (inspect_element_at_x_ != -1) {
+    agent_host_->InspectElement(this, inspect_element_at_x_,
+                                inspect_element_at_y_);
+    inspect_element_at_x_ = -1;
+    inspect_element_at_y_ = -1;
+  }
+}
+
 ShellDevToolsBindings::ShellDevToolsBindings(WebContents* devtools_contents,
                                              WebContents* inspected_contents,
                                              ShellDevToolsDelegate* delegate)
@@ -154,19 +167,6 @@ void ShellDevToolsBindings::ReadyToCommitNavigation(
 #endif
 }
 
-void ShellDevToolsBindings::DocumentAvailableInMainFrame() {
-  if (agent_host_)
-    agent_host_->DetachClient(this);
-  agent_host_ = DevToolsAgentHost::GetOrCreateFor(inspected_contents_);
-  agent_host_->AttachClient(this);
-  if (inspect_element_at_x_ != -1) {
-    agent_host_->InspectElement(this, inspect_element_at_x_,
-                                inspect_element_at_y_);
-    inspect_element_at_x_ = -1;
-    inspect_element_at_y_ = -1;
-  }
-}
-
 void ShellDevToolsBindings::WebContentsDestroyed() {
   if (agent_host_) {
     agent_host_->DetachClient(this);
@@ -191,8 +191,6 @@ void ShellDevToolsBindings::SetPreferences(const std::string& json) {
 
 void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
     const std::string& message) {
-  if (!agent_host_)
-    return;
   std::string method;
   base::ListValue* params = nullptr;
   base::DictionaryValue* dict = nullptr;
@@ -207,7 +205,7 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
 
   if (method == "dispatchProtocolMessage" && params && params->GetSize() == 1) {
     std::string protocol_message;
-    if (!params->GetString(0, &protocol_message))
+    if (!agent_host_ || !params->GetString(0, &protocol_message))
       return;
     agent_host_->DispatchProtocolMessage(this, protocol_message);
   } else if (method == "loadCompleted") {
@@ -289,6 +287,8 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
     web_contents()->GetMainFrame()->ExecuteJavaScriptForTests(
         base::ASCIIToUTF16("DevToolsAPI.fileSystemsLoaded([]);"));
   } else if (method == "reattach") {
+    if (!agent_host_)
+      return;
     agent_host_->DetachClient(this);
     agent_host_->AttachClient(this);
   } else if (method == "registerExtensionsAPI") {
