@@ -16,6 +16,24 @@
       "revId": "e29021a2bd08cccc04c23e1a8ab96dc63524b9b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8862d8c_626b6ae2",
+        "filename": "components/offline_pages/core/model/offline_page_model_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-08T00:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5b50a1_bcb9d572",
+      "revId": "e29021a2bd08cccc04c23e1a8ab96dc63524b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
