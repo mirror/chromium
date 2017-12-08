@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc2fe971_89634a72",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-08T04:17:03Z",
+      "side": 1,
+      "message": "Can you assign this to me? Chromium code base shouldn\u0027t have an internal link as it\u0027s open source.",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 20
+      },
+      "revId": "564c89e08dc9e09a39778e3aeecce335d950bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
