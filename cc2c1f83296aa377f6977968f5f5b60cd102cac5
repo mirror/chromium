@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d032b626_f3d37db4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator_v8.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-08T16:35:12Z",
+      "side": 1,
+      "message": "This is almost copy\u0026paste from line 120.",
+      "revId": "cc2c1f83296aa377f6977968f5f5b60cd102cac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
