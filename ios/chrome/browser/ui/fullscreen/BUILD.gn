@@ -53,6 +53,10 @@ source_set("new_fullscreen_internal") {
     "fullscreen_web_state_list_observer.mm",
     "fullscreen_web_state_observer.h",
     "fullscreen_web_state_observer.mm",
+    "keyboard_fullscreen_disabler.h",
+    "keyboard_fullscreen_disabler.mm",
+    "system_notification_fullscreen_disabler.h",
+    "system_notification_fullscreen_disabler.mm",
     "voice_over_fullscreen_disabler.h",
     "voice_over_fullscreen_disabler.mm",
   ]
