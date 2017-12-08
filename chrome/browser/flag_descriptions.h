@@ -989,6 +989,9 @@ extern const char kWebvrDescription[];
 extern const char kWebVrExperimentalRenderingName[];
 extern const char kWebVrExperimentalRenderingDescription[];
 
+extern const char kWebXrName[];
+extern const char kWebXrDescription[];
+
 extern const char kWifiCredentialSyncName[];
 extern const char kWifiCredentialSyncDescription[];
 
