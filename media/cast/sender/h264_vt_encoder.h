@@ -47,7 +47,7 @@ class H264VideoToolboxEncoder : public VideoEncoder,
   void EmitFrames() final;
 
   // base::PowerObserver
-  void OnSuspend() final;
+  void OnSuspend(bool) final;
   void OnResume() final;
 
  private:

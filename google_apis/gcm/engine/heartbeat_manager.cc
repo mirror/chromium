@@ -136,7 +136,7 @@ void HeartbeatManager::UpdateHeartbeatTimer(
     heartbeat_timer_->Start(FROM_HERE, remaining_delay, timer_task);
 }
 
-void HeartbeatManager::OnSuspend() {
+void HeartbeatManager::OnSuspend(bool) {
   // The system is going to sleep. Record the time, so on resume we know how
   // much time the machine was suspended.
   suspend_time_ = base::Time::Now();

@@ -57,7 +57,7 @@ HttpNetworkSession* HttpNetworkLayer::GetSession() {
   return session_;
 }
 
-void HttpNetworkLayer::OnSuspend() {
+void HttpNetworkLayer::OnSuspend(bool) {
   suspended_ = true;
   session_->CloseIdleConnections();
 }

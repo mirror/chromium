@@ -488,7 +488,7 @@ class AudioManagerMac::AudioPowerObserver : public base::PowerObserver {
   }
 
  private:
-  void OnSuspend() override {
+  void OnSuspend(bool) override {
     DCHECK(thread_checker_.CalledOnValidThread());
     DVLOG(1) << "OnSuspend";
     is_suspending_ = true;

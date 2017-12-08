@@ -103,7 +103,7 @@ class AudioManagerHelper : public base::PowerObserver {
  private:
   // base::PowerObserver overrides.
   // Disable hang detection when the system goes into the suspend state.
-  void OnSuspend() override {
+  void OnSuspend(bool) override {
     base::AutoLock lock(hang_lock_);
     hang_detection_enabled_ = false;
     failed_pings_ = successful_pings_ = 0;

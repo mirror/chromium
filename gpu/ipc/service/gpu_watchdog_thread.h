@@ -80,7 +80,7 @@ class GPU_EXPORT GpuWatchdogThread : public base::Thread,
   void OnAddPowerObserver();
 
   // Implement PowerObserver.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
 #if defined(OS_WIN)

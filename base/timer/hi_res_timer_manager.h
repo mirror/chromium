@@ -23,7 +23,7 @@ class BASE_EXPORT HighResolutionTimerManager : public base::PowerObserver {
 
   // base::PowerObserver methods.
   void OnPowerStateChange(bool on_battery_power) override;
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   // Returns true if the hi resolution clock could be used right now.

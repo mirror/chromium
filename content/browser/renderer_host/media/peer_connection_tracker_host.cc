@@ -123,7 +123,7 @@ void PeerConnectionTrackerHost::OnWebRtcEventLogWrite(
   manager->OnWebRtcEventLogWrite(render_process_id_, lid, output);
 }
 
-void PeerConnectionTrackerHost::OnSuspend() {
+void PeerConnectionTrackerHost::OnSuspend(bool) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&PeerConnectionTrackerHost::SendOnSuspendOnUIThread,

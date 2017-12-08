@@ -1454,7 +1454,7 @@ void MediaStreamManager::Aborted(MediaStreamType stream_type,
   StopDevice(stream_type, capture_session_id);
 }
 
-void MediaStreamManager::OnSuspend() {
+void MediaStreamManager::OnSuspend(bool) {
   SendMessageToNativeLog("Power state suspended.");
 }
 

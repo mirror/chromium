@@ -63,7 +63,7 @@ class GCM_EXPORT HeartbeatManager : public base::PowerObserver {
   void UpdateHeartbeatTimer(std::unique_ptr<base::Timer> timer);
 
   // base::PowerObserver override.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   // Maximum and minimum of the custom client interval that can be requested,

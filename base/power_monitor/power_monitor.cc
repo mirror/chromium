@@ -54,7 +54,7 @@ void PowerMonitor::NotifyPowerStateChange(bool battery_in_use) {
 
 void PowerMonitor::NotifySuspend() {
   DVLOG(1) << "Power Suspending";
-  observers_->Notify(FROM_HERE, &PowerObserver::OnSuspend);
+  observers_->Notify(FROM_HERE, &PowerObserver::OnSuspend, true);
 }
 
 void PowerMonitor::NotifyResume() {

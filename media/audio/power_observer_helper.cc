@@ -43,12 +43,12 @@ bool PowerObserverHelper::IsSuspending() const {
   return is_suspending_;
 }
 
-void PowerObserverHelper::OnSuspend() {
+void PowerObserverHelper::OnSuspend(bool) {
   DVLOG(1) << "OnSuspend";
   if (!task_runner_->RunsTasksInCurrentSequence()) {
     task_runner_->PostTask(FROM_HERE,
                            base::BindOnce(&PowerObserverHelper::OnSuspend,
-                                          weak_factory_.GetWeakPtr()));
+                                          weak_factory_.GetWeakPtr(), true));
     return;
   }
 

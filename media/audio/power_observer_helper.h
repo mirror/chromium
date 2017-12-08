@@ -58,7 +58,7 @@ class MEDIA_EXPORT PowerObserverHelper : public base::PowerObserver {
   base::RepeatingClosure resume_callback_;
 
   // base::PowerObserver implementation.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   // Flag if we are suspending.
