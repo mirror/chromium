@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a716899_1f046e29",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Add a comment that:\n* New namespaces should be put at the end of this list.\n* Corresponding enum value should be added for them.",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78cc182_3cdc17e8",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "I would rename only this and I would actually repeat the question about suggestions on how to disambiguate this and histogram suffixes to the metrics reviewer. (see the enums.xml file for details)",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d83a80c_d92e5a42",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Except one accidental prefetch case we are using plural for feature name in the enums.\nTherefore OfflinePagesNamespace would be better.",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff0b8b7_20ab546f",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Once reordered (per comment below), please number explicitly:\nDEFAULT \u003d 0,\nBOOKMARK \u003d 1,\n...",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b5c50b_9d4524e0",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "put this one first. Is is ok if you put kDefaultNamespac before other namespaces as well.\n\nThe way I see this is this one is not going to be reported much and it is best if we can put it outside of the range...",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8a41d7_52a1d570",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Now that this is not going to be handled in a single query, transaction scope needs to be explicit. Please open transaction before this call.",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68634baf_b5d58650",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Since the name is not generated at runtime, I think you should go with a MACRO instead.\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_functions.h?q\u003dbase::UmaHistogramEnumeration\u0026sq\u003dpackage:chromium\u0026l\u003d19\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?sq\u003dpackage:chromium\n\nThis applies to all histogram in this patch.",
+      "range": {
+        "startLine": 281,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 31
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9acd28_39e5cd83",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "is this necessary?",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b7cf4a_aefa94df",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "is this necessary?",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6327a016_d54bb174",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Please add a test.",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd15a97_c76409b4",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Does this work?",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0704e1f8_eec14795",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30611,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "This will be confusing, as we already have a histogram suffix with almost the same name and same values. Can we update the name? \n\nOfflinePageNamespaceEnumeration \n\nI hope this help avoid confusion.",
+      "range": {
+        "startLine": 30611,
+        "startChar": 12,
+        "endLine": 30611,
+        "endChar": 32
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e522be21_dbb84d55",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30612,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Please add documentation to each namespace\n\u003cint value...\u003e\n  Namespace used when offline page is saved when bookmarking.\n\u003c/int\u003e",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5e152d_e8e12cb6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30620,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Remember to put first per earlier comment.",
+      "range": {
+        "startLine": 30620,
+        "startChar": 24,
+        "endLine": 30620,
+        "endChar": 31
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd42f1d_eb746d1b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 53566,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-08T20:19:22Z",
+      "side": 1,
+      "message": "Hey, how about:\n\n\"\"\"Counts the number of times an offline page is accessed. Events are reported per offline page category.\"\"\"\n\nApplies below as well.",
+      "range": {
+        "startLine": 53566,
+        "startChar": 11,
+        "endLine": 53566,
+        "endChar": 17
+      },
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
