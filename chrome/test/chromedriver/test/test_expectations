@@ -109,6 +109,18 @@ _REVISION_NEGATIVE_FILTER['HEAD'] = [
     'UnexpectedAlertBehaviorTest.canSpecifyUnhandledAlertBehaviourUsingCapabilities',
     # https://bugs.chromium.org/p/chromium/issues/detail?id=764519
     'FrameSwitchingTest.testShouldBeAbleToClickInAFrameThatRewritesTopWindowLocation',
+    # Disabling failing tests until the Chromium bug 793105 is not fixed
+    'AlertsTest.testSwitchingToMissingAlertInAClosedWindowThrows',
+    'WindowSwitchingTest.testShouldThrowNoSuchWindowExceptionOnAnyElementOperationIfAWindowIsClosed',
+    'WindowSwitchingTest.testShouldFocusOnTheTopMostFrameAfterSwitchingToAWindow',
+    'WindowSwitchingTest.testShouldThrowNoSuchWindowExceptionOnAnyOperationIfAWindowIsClosed',
+    'WindowSwitchingTest.testShouldSwitchFocusToANewWindowWhenItIsOpenedAndNotStopFutureOperations',
+    'WindowSwitchingTest.testClickingOnAButtonThatClosesAnOpenWindowDoesNotCauseTheBrowserToHang',
+    'WindowSwitchingTest.testCanCloseWindowWhenMultipleWindowsAreOpen',
+    'WindowSwitchingTest.testCanCloseWindowAndSwitchBackToMainWindow',
+    'WindowSwitchingTest.testFailingToSwitchToAWindowLeavesTheCurrentWindowAsIs',
+    'WindowSwitchingTest.testShouldThrowNoSuchWindowExceptionOnAnAttemptToGetItsHandle',
+    'WindowSwitchingTest.testCanCallGetWindowHandlesAfterClosingAWindow',
 ]
 
 _REVISION_NEGATIVE_FILTER['64'] = (
