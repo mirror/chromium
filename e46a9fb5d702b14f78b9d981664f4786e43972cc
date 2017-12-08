@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61338635_0e9e3c7b",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T22:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4911a9e_3f34e9af",
+      "revId": "e46a9fb5d702b14f78b9d981664f4786e43972cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4a87cb_89562d34",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "e46a9fb5d702b14f78b9d981664f4786e43972cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d3fccc_8e2082ae",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T22:29:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4a87cb_89562d34",
+      "revId": "e46a9fb5d702b14f78b9d981664f4786e43972cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
