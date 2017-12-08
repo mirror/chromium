@@ -94,9 +94,15 @@ cr.define('extensions', function() {
      * @private
      */
     observeDataChanges_: function() {
+      // Need to reset this, otherwise going between error-consoles would
+      // briefly show the last extension's source before showing the right one.
+      this.$['code-section'].code = null;
       const errors = this.data.manifestErrors.concat(this.data.runtimeErrors);
       this.entries_ = errors;
       this.selectedEntry_ = this.entries_.length ? 0 : -1;
+      // this.data change means we're looking at a different error console,
+      // so we want to force trigger the selectedEntry_ change handler.
+      this.onSelectedErrorChanged_();
     },
 
     /** @private */
