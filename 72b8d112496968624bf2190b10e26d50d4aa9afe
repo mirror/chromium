@@ -45,6 +45,30 @@
       "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3ebcec_cc77d655",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-08T20:20:59Z",
+      "side": 1,
+      "message": "This is a shorthand for editing template functions so that they don\u0027t need to perform ToDOMTree conversions.\n\nOtherwise the code looks too verbose.",
+      "parentUuid": "eea1343b_e9644c9f",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
