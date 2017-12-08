@@ -59,6 +59,8 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   // Weak. Owns this.
   View* view_;
 
+  int32_t unique_id_;
+
  protected:
   virtual gfx::RectF GetBoundsInScreen() const;
 

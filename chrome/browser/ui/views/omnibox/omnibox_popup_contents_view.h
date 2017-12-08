@@ -63,6 +63,7 @@ class OmniboxPopupContentsView : public views::View,
   gfx::Rect GetTargetBounds() override;
   void PaintUpdatesNow() override;
   void OnDragCanceled() override;
+  void GetAccessibleNodeData(ui::AXNodeData*) override;
 
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;

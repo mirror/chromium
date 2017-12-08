@@ -19,6 +19,10 @@ namespace gfx {
 class Rect;
 }
 
+namespace ui {
+struct AXNodeData;
+}
+
 class OmniboxPopupView {
  public:
   virtual ~OmniboxPopupView() {}
@@ -52,6 +56,8 @@ class OmniboxPopupView {
   // action (e.g. releasing mouse capture).  Note that this can be called when
   // no drag is in progress.
   virtual void OnDragCanceled() = 0;
+
+  virtual void GetAccessibleNodeData(ui::AXNodeData*) = 0;
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_POPUP_VIEW_H_
