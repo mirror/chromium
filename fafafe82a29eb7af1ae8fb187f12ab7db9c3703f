@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6bfe973_8916b579",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T18:33:58Z",
+      "side": 1,
+      "message": "I agreed. So, let\u0027s work on it in another CL to focus on Callback in this CL.",
+      "parentUuid": "70f0898c_97e45b68",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "422d4edc_c7e37663",
         "filename": "chromeos/dbus/fake_cros_disks_client.cc",
         "patchSetId": 1
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "427ceecc_754c2ace",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T18:33:58Z",
+      "side": 1,
+      "message": "Good point. Fixed.",
+      "parentUuid": "03fea9f8_f13ee3c1",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72808dc4_57dccc1c",
         "filename": "chromeos/dbus/fake_cros_disks_client.h",
         "patchSetId": 1
@@ -137,6 +173,24 @@
       "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93788463_c1e85359",
+        "filename": "chromeos/dbus/fake_cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-08T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "471ca6ac_8276e93f",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
