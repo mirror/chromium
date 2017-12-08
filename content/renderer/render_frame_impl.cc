@@ -6266,6 +6266,7 @@ void RenderFrameImpl::NavigateInternal(
     const base::UnguessableToken& devtools_navigation_token) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
 
+  // TODO(clamy): Don't send Javascript URLs here.
   // First, check if this is a Debug URL. If so, handle it and stop the
   // navigation right away.
   base::WeakPtr<RenderFrameImpl> weak_this = weak_factory_.GetWeakPtr();
