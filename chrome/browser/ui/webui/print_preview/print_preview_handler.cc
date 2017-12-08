@@ -68,6 +68,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "google_apis/gaia/oauth2_token_service.h"
+#include "ipc/ipc_channel.h"
 #include "net/base/url_util.h"
 #include "printing/backend/print_backend.h"
 #include "printing/backend/print_backend_consts.h"
@@ -87,6 +88,12 @@ using printing::PrintViewManager;
 using printing::PrinterType;
 
 namespace {
+
+// Maximum size for PDF data: divide IPC max by 2, since data will be converted
+// from string8 to string16. Subtract 512 bytes to have buffer for the rest of
+// the message.
+const int64_t kMaxPdfDataSizeInBytes =
+    static_cast<int64_t>(IPC::Channel::kMaximumMessageSize) / 2 - 512;
 
 // This enum is used to back an UMA histogram, and should therefore be treated
 // as append only.
@@ -1083,7 +1090,18 @@ void PrintPreviewHandler::SendCloudPrintJob(const std::string& callback_id,
   std::string base64_data;
   base::Base64Encode(raw_data, &base64_data);
 
-  ResolveJavascriptCallback(base::Value(callback_id), base::Value(base64_data));
+  int num_blocks = base64_data.size() / kMaxPdfDataSizeInBytes + 1;
+  for (int index = 0; index < num_blocks; index++) {
+    size_t data_size =
+        (index < num_blocks - 1)
+            ? kMaxPdfDataSizeInBytes
+            : base64_data.size() - kMaxPdfDataSizeInBytes * (num_blocks - 1);
+    size_t start = index * kMaxPdfDataSizeInBytes;
+    FireWebUIListener("cloud-print-data", base::Value(index),
+                      base::Value(num_blocks),
+                      base::Value(base64_data.substr(start, data_size)));
+  }
+  ResolveJavascriptCallback(base::Value(callback_id), base::Value());
 }
 
 WebContents* PrintPreviewHandler::GetInitiator() const {

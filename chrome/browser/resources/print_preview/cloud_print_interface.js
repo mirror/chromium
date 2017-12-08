@@ -35,10 +35,13 @@ cr.define('cloudprint', function() {
      * @param {!print_preview.NativeLayer} nativeLayer Native layer used to get
      *     Auth2 tokens.
      * @param {!print_preview.UserInfo} userInfo User information repository.
+     * @param {!WebUIListenerTracker} listenerTracker Tracker for WebUI
+     *     listeners added in CloudPrintInterface constructor.
      * @param {boolean} isInAppKioskMode Whether the print preview is in App
      *     Kiosk mode.
      */
-    constructor(baseUrl, nativeLayer, userInfo, isInAppKioskMode) {
+    constructor(
+        baseUrl, nativeLayer, userInfo, listenerTracker, isInAppKioskMode) {
       super();
 
       /**
@@ -93,6 +96,21 @@ cr.define('cloudprint', function() {
        * @private {?Promise<string>}
        */
       this.accessTokenRequestPromise_ = null;
+
+      /**
+       * Data for sending as the print job to cloud print. Used to concatenate
+       * chunks of PDF data.
+       * @private {string}
+       */
+      this.printData_ = '';
+
+      /**
+       * How many more blocks of data are expected.
+       * @private {number}
+       */
+      this.numBlocksLeft_ = 0;
+
+      this.addWebUIEventListeners_(listenerTracker);
     }
 
     /** @return {string} Base URL of the Google Cloud Print service. */
@@ -105,6 +123,35 @@ cr.define('cloudprint', function() {
      */
     get isCloudDestinationSearchInProgress() {
       return this.outstandingCloudSearchRequests_.length > 0;
+    }
+
+    /**
+     * Starts listening for relevant WebUI events and adds the listeners to
+     * |listenerTracker|. |listenerTracker| is responsible for removing the
+     * listeners when necessary.
+     * @param {!WebUIListenerTracker} listenerTracker
+     * @private
+     */
+    addWebUIEventListeners_(listenerTracker) {
+      listenerTracker.add('cloud-print-data', this.onNewData_.bind(this));
+    }
+
+    /**
+     * Updates the print data with the new block in |data|.
+     * @param {number} index The index of this data block.
+     * @param {number} totalBlocks The total number of blocks to be received.
+     * @param {string} data The data for this block.
+     * @private
+     */
+    onNewData_(index, totalBlocks, data) {
+      if (index == 0) {
+        assert(this.numBlocksLeft_ == 0);
+        assert(!this.printData_);
+        this.numBlocksLeft_ = totalBlocks;
+      }
+      this.printData_ += data;
+      this.numBlocksLeft_--;
+      assert(this.numBlocksLeft_ == totalBlocks - index - 1);
     }
 
     /**
@@ -194,9 +241,11 @@ cr.define('cloudprint', function() {
      * @param {!print_preview.PrintTicketStore} printTicketStore Contains the
      *     print ticket to print.
      * @param {!print_preview.DocumentInfo} documentInfo Document data model.
-     * @param {string} data Base64 encoded data of the document.
      */
-    submit(destination, printTicketStore, documentInfo, data) {
+    submit(destination, printTicketStore, documentInfo) {
+      assert(this.printData_);
+      assert(this.numBlocksLeft_ == 0);
+
       const result = VERSION_REGEXP_.exec(navigator.userAgent);
       let chromeVersion = 'unknown';
       if (result && result.length == 2) {
@@ -208,7 +257,8 @@ cr.define('cloudprint', function() {
         new HttpParam('title', documentInfo.title),
         new HttpParam(
             'ticket', printTicketStore.createPrintTicket(destination)),
-        new HttpParam('content', 'data:application/pdf;base64,' + data),
+        new HttpParam(
+            'content', 'data:application/pdf;base64,' + this.printData_),
         new HttpParam('tag', '__google__chrome_version=' + chromeVersion),
         new HttpParam('tag', '__google__os=' + navigator.platform)
       ];
@@ -216,6 +266,7 @@ cr.define('cloudprint', function() {
           'POST', 'submit', params, destination.origin, destination.account,
           this.onSubmitDone_.bind(this));
       this.sendOrQueueRequest_(cpRequest);
+      this.printData_ = '';
     }
 
     /**
