@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea0cdf5b_504275c3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T07:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7969be17_fa93af0a",
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6a0c6e_279bbd41",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-08T05:48:31Z",
       "side": 1,
       "message": "My bad, but any chance to make this const reference?",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90f3543_15b07018",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T07:01:21Z",
+      "side": 1,
+      "message": "This class is very cheep to instantiate and I generally prefer creating cheap objects to having a shared global instance which may trigger lock acquisitions.",
+      "parentUuid": "2d6a0c6e_279bbd41",
       "range": {
         "startLine": 105,
         "startChar": 27,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3694023a_1e2f20dd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T07:01:21Z",
+      "side": 1,
+      "message": "https://groups.google.com/a/chromium.org/forum/#!topic/Blink-dev/9aAJamXilD8\n\n\"\nNote that Blink will not be using hacker_case for simple getters and setters. Methods will always be CasedLikeThis(), even if it’s a simple inlined getter/setter.\n\"",
+      "parentUuid": "cb4797ba_d627c14c",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7662a1f7_bece8466",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "7e8e883e_df47cbae",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T07:01:21Z",
+      "side": 1,
+      "message": "I generally don\u0027t like to use inheritance to remove code duplication when they don\u0027t have a conceptual is-a relationship. In this case, ResourceLoadSchedulerTest is for one experiment and RendererSideResourceSchedulerTest is for another experiment and I feel just having this class inherit ResourceLoadSchedulerTest is not the right thing to do. Perhaps we could create a common parent class and have two subclasses...",
+      "parentUuid": "7662a1f7_bece8466",
+      "range": {
+        "startLine": 64,
+        "startChar": 42,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4a576fa_81d36078",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "c59f6d302268fce8ca1010386e148847de644eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac714f4_7c3f2129",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-08T07:01:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4a576fa_81d36078",
+      "range": {
+        "startLine": 88,
+        "startChar": 25,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
