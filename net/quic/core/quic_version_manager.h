@@ -35,8 +35,6 @@ class QUIC_EXPORT_PRIVATE QuicVersionManager {
   bool enable_version_43_;
   // FLAGS_quic_enable_version_42
   bool enable_version_42_;
-  // FLAGS_quic_reloadable_flag_quic_enable_version_41
-  bool enable_version_41_;
   // The list of versions that may be supported.
   QuicTransportVersionVector allowed_supported_versions_;
   // This vector contains QUIC versions which are currently supported based on

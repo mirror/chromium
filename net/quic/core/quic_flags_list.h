@@ -103,10 +103,6 @@ QUIC_FLAG(uint32_t, FLAGS_quic_send_buffer_max_data_slice_size, 4096u)
 // protocol.
 QUIC_FLAG(bool, FLAGS_quic_supports_tls_handshake, false)
 
-// If true, QUIC v40 is enabled which includes changes to RST_STREAM, ACK
-// and STREAM frames match IETF format.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_41, true)
-
 // If true, QUIC can take ownership of data provided in a reference counted
 // memory to avoid data copy.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_mem_slices, false)
