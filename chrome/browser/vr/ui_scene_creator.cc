@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
+#include "chrome/browser/vr/elements/background.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/controller.h"
@@ -653,6 +654,7 @@ void UiSceneCreator::CreateUnderDevelopmentNotice() {
 }
 
 void UiSceneCreator::CreateBackground() {
+#if 0
   // Background solid-color panels.
   struct Panel {
     UiElementName name;
@@ -716,8 +718,20 @@ void UiSceneCreator::CreateBackground() {
   BindColor(model_, ceiling.get(), &ColorScheme::world_background,
             &Rect::SetEdgeColor);
   scene_->AddUiElement(k2dBrowsingBackground, std::move(ceiling));
+#endif
 
-  scene_->set_first_foreground_draw_phase(kPhaseForeground);
+  auto background = base::MakeUnique<Background>();
+  background->SetName(kCeiling);
+  background->SetDrawPhase(kPhaseBackground);
+  background->SetTransitionedProperties({OPACITY});
+  background->AddBinding(base::MakeUnique<Binding<float>>(
+      base::BindRepeating(
+          [](Model* m) { return m->color_scheme().background_brightness; },
+          base::Unretained(model_)),
+      base::BindRepeating(
+          [](Background* b, const float& f) { b->SetOpacity(f); },
+          base::Unretained(background.get()))));
+  scene_->AddUiElement(k2dBrowsingBackground, std::move(background));
 }
 
 void UiSceneCreator::CreateViewportAwareRoot() {
