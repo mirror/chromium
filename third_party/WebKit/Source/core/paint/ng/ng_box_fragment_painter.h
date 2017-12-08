@@ -89,6 +89,9 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintInlineObject(const PaintInfo&, const LayoutPoint&);
   void PaintContents(const PaintInfo&, const LayoutPoint&);
   void PaintFloats(const PaintInfo&, const LayoutPoint&);
+  void PaintFloatingChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
+                             const PaintInfo&,
+                             const LayoutPoint&);
   void PaintMask(const PaintInfo&, const LayoutPoint&);
   void PaintClippingMask(const PaintInfo&, const LayoutPoint&);
   void PaintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
