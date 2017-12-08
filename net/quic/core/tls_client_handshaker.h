@@ -85,6 +85,11 @@ class QUIC_EXPORT_PRIVATE TlsClientHandshaker
   // Static method to supply to SSL_set_custom_verify.
   static enum ssl_verify_result_t VerifyCallback(SSL* ssl, uint8_t* out_alert);
 
+  // Takes an SSL* |ssl| and returns a pointer to the TlsClientHandshaker that
+  // it belongs to. This is a specialization of
+  // TlsHandshaker::HandshakerFromSsl.
+  static TlsClientHandshaker* HandshakerFromSsl(SSL* ssl);
+
   QuicServerId server_id_;
 
   // Objects used for verifying the server's certificate chain.

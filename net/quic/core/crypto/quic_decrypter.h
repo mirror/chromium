@@ -20,6 +20,11 @@ class QUIC_EXPORT_PRIVATE QuicDecrypter {
 
   static QuicDecrypter* Create(QuicTag algorithm);
 
+  // Creates an IETF QuicDecrypter based on |cipher_suite| which must be an id
+  // returned by SSL_CIPHER_get_id. The caller is responsible for taking
+  // ownership of the new QuicDecrypter.
+  static QuicDecrypter* CreateFromCipherSuite(uint32_t cipher_suite);
+
   // Sets the encryption key. Returns true on success, false on failure.
   //
   // NOTE: The key is the client_write_key or server_write_key derived from
