@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "94c9428b_9ffee599",
+        "filename": "media/base/video_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-08T18:00:09Z",
+      "side": 1,
+      "message": "Add a comment here with a reference to the spec on why we are doing this.",
+      "revId": "edc8571719859f248e5917cd68fcb25f368297aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fede5acb_277bf4bc",
         "filename": "media/base/video_util.cc",
         "patchSetId": 2
@@ -13,6 +30,40 @@
       "writtenOn": "2017-12-08T17:52:29Z",
       "side": 1,
       "message": "Drive-by, don\u0027t use else when the previous block has a return in it.",
+      "revId": "edc8571719859f248e5917cd68fcb25f368297aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a2c94a_840f86f6",
+        "filename": "media/base/video_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-08T18:00:09Z",
+      "side": 1,
+      "message": "Please take a look at video_util_unittest.cc. We should add a new test, which will fail without your CL, but now starts to pass with your CL :)",
+      "revId": "edc8571719859f248e5917cd68fcb25f368297aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f6f1f9_06149ef5",
+        "filename": "third_party/WebKit/LayoutTests/media/video-display-aspect-ratio.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-08T18:00:09Z",
+      "side": 1,
+      "message": "It seems you are fixing an existing issue, which I am not sure why we didn\u0027t notice before.\n\nCan we add a new test case that will exercise the new code path you added? Then it\u0027s also interesting to see how those tests perform in other browsers.",
       "revId": "edc8571719859f248e5917cd68fcb25f368297aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
