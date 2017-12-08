@@ -151,7 +151,7 @@ void NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(
   if ((enabled_bindings & BINDINGS_POLICY_WEB_UI) &&
       !is_allowed_in_web_ui_renderer) {
     // Log the URL to help us diagnose any future failures of this CHECK.
-    GetContentClient()->SetActiveURL(url);
+    GetContentClient()->SetActiveURL(url, std::string());
     CHECK(0);
   }
 }
