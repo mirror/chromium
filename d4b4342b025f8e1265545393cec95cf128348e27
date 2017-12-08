@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bf3a8cb_34694667",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-center-ref.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aafa2164_bcd5a274",
+      "range": {
+        "startLine": 29,
+        "startChar": 66,
+        "endLine": 29,
+        "endChar": 69
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30d4a8bc_02032705",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-center.html",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ad6166_cc7c6c19",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-center.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d4a8bc_02032705",
+      "range": {
+        "startLine": 26,
+        "startChar": 62,
+        "endLine": 26,
+        "endChar": 63
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "605b6adc_c66e1cac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-left-ref.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21b8b3da_19ad507c",
+      "range": {
+        "startLine": 29,
+        "startChar": 64,
+        "endLine": 29,
+        "endChar": 65
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b506f051_123f34e0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-left.html",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d54f17a_c7a4a6e1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-left.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b506f051_123f34e0",
+      "range": {
+        "startLine": 26,
+        "startChar": 63,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3c12a640_87997359",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-right-ref.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8698471c_29d3f8f3",
+      "range": {
+        "startLine": 29,
+        "startChar": 61,
+        "endLine": 29,
+        "endChar": 62
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac4f736_2ea71424",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-right.html",
         "patchSetId": 15
@@ -137,6 +257,30 @@
       "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcf71e7_91ed922d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/rendering/cues-with-video/processing-model/track-cue-rendering-position-align-rtl-line-right.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-08T06:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac4f736_2ea71424",
+      "range": {
+        "startLine": 26,
+        "startChar": 63,
+        "endLine": 26,
+        "endChar": 67
+      },
+      "revId": "d4b4342b025f8e1265545393cec95cf128348e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
