@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "731d7c1d_59e2e6ba",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T16:54:24Z",
+      "side": 0,
+      "message": "Vector icons are defined in .icon files. The CL explains why there\u0027s no .icon being removed for this one: \"Icons that are not removed are referenced in somewhere.\"",
+      "parentUuid": "b31ff7a1_456c09ba",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b823b9_2f81426b",
         "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-08T14:44:36Z",
       "side": 0,
       "message": "I don\u0027t quite understand the reasoning you give in the CL description for removing this. This code isn\u0027t just used on Chrome OS, right?",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab29af09_9fbeb4db",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-08T16:54:24Z",
+      "side": 0,
+      "message": "yes, it is Chrome OS only.",
+      "parentUuid": "52b823b9_2f81426b",
       "range": {
         "startLine": 57,
         "startChar": 22,
