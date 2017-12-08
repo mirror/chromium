@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa55f087_297a3036",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-12-08T10:58:54Z",
+      "side": 1,
+      "message": "You\u0027re right that it\u0027s not a good idea to rely on any knowledge about what the framework might do. I\u0027ve made that more explicit in AndroidNetworkLibrary#isCleartextPermitted - it doesn\u0027t check for hosts starting with \u0027.\u0027 now, but instead always calls the per-host version, and catches the exception and falls back to the default check.\n\nI think what\u0027s here is ok for the test, however, because this test just needs to be a way to simulate the framework throwing an exception. The change in AndroidNetworkLibrary needs to be balanced, though, with a check that the default method is also called in the case where an exception is thrown.",
+      "parentUuid": "8aca6908_28f5596d",
+      "range": {
+        "startLine": 301,
+        "startChar": 17,
+        "endLine": 301,
+        "endChar": 27
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7972df3_62275f58",
         "filename": "net/url_request/url_request_http_job_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T17:01:09Z",
       "side": 1,
       "message": "Do we still need this, now that this doesn\u0027t depend on android::BuildInfo / SDK_VERSION_MARSHMALLOW?",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df17341_89b2012c",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-12-08T10:58:54Z",
+      "side": 1,
+      "message": "Nope. Removed.",
+      "parentUuid": "f7972df3_62275f58",
       "range": {
         "startLine": 49,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee5a2d48_0a2f1bb5",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-12-08T10:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7e9a05_7adb32a4",
+      "range": {
+        "startLine": 1470,
+        "startChar": 4,
+        "endLine": 1470,
+        "endChar": 9
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec415543_3d8aa6e5",
         "filename": "net/url_request/url_request_http_job_unittest.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-07T17:01:09Z",
       "side": 1,
       "message": "What is this the call count of?",
+      "range": {
+        "startLine": 1501,
+        "startChar": 22,
+        "endLine": 1501,
+        "endChar": 69
+      },
+      "revId": "cebcfd93721d71e670798a471958273ba43bf352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a65bd1e_2047244f",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1133706
+      },
+      "writtenOn": "2017-12-08T10:58:54Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "ec415543_3d8aa6e5",
       "range": {
         "startLine": 1501,
         "startChar": 22,
