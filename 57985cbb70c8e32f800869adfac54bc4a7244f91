@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dfd8344_b6c8a59b",
+        "filename": "extensions/browser/api/runtime/runtime_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3974abb7_e8b07efc",
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d54276_f03155c3",
         "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7482c118_afbf96d0",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d54276_f03155c3",
+      "range": {
+        "startLine": 234,
+        "startChar": 45,
+        "endLine": 234,
+        "endChar": 46
+      },
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1209606f_3a6c37ce",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:33:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0144d5f_3fb9257c",
+      "range": {
+        "startLine": 256,
+        "startChar": 12,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26377134_f4d45823",
         "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a009f0ab_21125537",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-12-08T20:33:49Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I added an observer to wait until the uninstallation is complete.",
+      "parentUuid": "26377134_f4d45823",
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
