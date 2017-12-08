@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17b91a48_7f689a6c",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-08T06:23:21Z",
+      "side": 1,
+      "message": "Hmm, this is interesting. Not all places require both ... : ( Maybe we need a bug to follow up and ensure we have a method that we call in all places that actually enforces this.",
+      "revId": "cd1a10cf27e2e047b2fb5c8c0865d1d4cc67b469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
