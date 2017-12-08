@@ -65,13 +65,9 @@ class AbstractPreferenceMergeTest : public testing::Test {
   void SetContentPattern(base::Value* patterns_dict,
                          const std::string& expression,
                          int setting) {
-    base::Value* expression_dict =
-        patterns_dict->FindKeyOfType(expression, base::Value::Type::DICTIONARY);
-    if (!expression_dict) {
-      expression_dict = patterns_dict->SetKey(
-          expression, base::Value(base::Value::Type::DICTIONARY));
-    }
-    expression_dict->SetKey("setting", base::Value(setting));
+    patterns_dict
+        ->FindOrCreateKeyOfType(expression, base::Value::Type::DICTIONARY)
+        .SetKey("setting", base::Value(setting));
   }
 
   void SetPrefToEmpty(const std::string& pref_name) {

@@ -73,12 +73,8 @@ std::unique_ptr<base::DictionaryValue> GetOriginDict(
 
 base::Value* GetOrCreatePermissionDict(base::Value* origin_dict,
                                        const std::string& permission) {
-  base::Value* permission_dict =
-      origin_dict->FindKeyOfType(permission, base::Value::Type::DICTIONARY);
-  if (permission_dict)
-    return permission_dict;
-  return origin_dict->SetKey(permission,
-                             base::Value(base::Value::Type::DICTIONARY));
+  return &origin_dict->FindOrCreateKeyOfType(permission,
+                                             base::Value::Type::DICTIONARY);
 }
 
 int RecordActionInWebsiteSettings(const GURL& url,
@@ -92,9 +88,9 @@ int RecordActionInWebsiteSettings(const GURL& url,
   base::Value* permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  base::Value* value =
-      permission_dict->FindKeyOfType(key, base::Value::Type::INTEGER);
-  int current_count = value ? value->GetInt() : 0;
+  int current_count =
+      permission_dict->FindOrCreateKeyOfType(key, base::Value::Type::INTEGER)
+          .GetInt();
   permission_dict->SetKey(key, base::Value(++current_count));
 
   map->SetWebsiteSettingDefaultScope(
