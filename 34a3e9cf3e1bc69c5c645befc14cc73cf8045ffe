@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e663a14_fb7cbcda",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-08T22:42:46Z",
+      "side": 1,
+      "message": "BTW it is 6 bit wide. Otherwise the max value is 15, which is always less than 64. But even with your fix the comparison is always true: unsigned 6-bit bitfield is always less or equal than 63. I think this DCHECK should be removed completely.",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "34a3e9cf3e1bc69c5c645befc14cc73cf8045ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
