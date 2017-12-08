@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b21d84_30a36b5c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-08T19:23:59Z",
+      "side": 1,
+      "message": "How much of new fullscreen involves frame manipulation vs autolayout constraint updates?",
+      "range": {
+        "startLine": 3669,
+        "startChar": 13,
+        "endLine": 3669,
+        "endChar": 18
+      },
+      "revId": "cb25d81528aed05ceb34d1e3908037c4f90df330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
