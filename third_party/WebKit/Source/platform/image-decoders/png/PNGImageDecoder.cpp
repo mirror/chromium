@@ -37,6 +37,7 @@
  */
 
 #include "platform/image-decoders/png/PNGImageDecoder.h"
+#include "platform/image-decoders/png/SetRGBA.h"
 
 #include <memory>
 
@@ -402,12 +403,7 @@ void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
           alpha_mask &= src_ptr[3];
         }
       } else {
-        for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
-             dst_pixel++, src_ptr += 4) {
-          ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2],
-                                 src_ptr[3]);
-          alpha_mask &= src_ptr[3];
-        }
+        SetRGBARawRow<true>(src_ptr, width, dst_row, &alpha_mask);
       }
     } else {
       // Now, the blend method is ImageFrame::BlendAtopPreviousFrame. Since the
@@ -435,12 +431,7 @@ void PNGImageDecoder::RowAvailable(unsigned char* row_buffer,
       current_buffer_saw_alpha_ = true;
 
   } else {
-    for (auto *dst_pixel = dst_row; dst_pixel < dst_row + width;
-         src_ptr += 3, ++dst_pixel) {
-      ImageFrame::SetRGBARaw(dst_pixel, src_ptr[0], src_ptr[1], src_ptr[2],
-                             255);
-    }
-
+    SetRGBARawRowNoAlpha<true>(src_ptr, width, dst_row);
     // We'll apply the color space xform to opaque pixels after they have been
     // written to the ImageFrame, purely because SkColorSpaceXform supports
     // RGBA (and not RGB).
