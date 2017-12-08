@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f01a2f8_e9943e86",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-08T23:19:06Z",
+      "side": 1,
+      "message": "Are you sure that we want to do this for all Vivante GPUs? Is it possible that newer ones don\u0027t exhibit this corruption? In other words, should we specialize this for the specific phone? It will have a significant performance impact.",
+      "revId": "43da860847fcf4e0c4c4f71a268930c944efc539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
