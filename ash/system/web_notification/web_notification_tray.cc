@@ -379,7 +379,8 @@ bool WebNotificationTray::ShowMessageCenter(bool show_by_click) {
 }
 
 void WebNotificationTray::HideMessageCenter() {
-  if (!IsMessageCenterVisible())
+  if ((switches::IsSidebarEnabled() && !IsMessageCenterVisible()) ||
+      !message_center_bubble())
     return;
 
   SetIsActive(false);
