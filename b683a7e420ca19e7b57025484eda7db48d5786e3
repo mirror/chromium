@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ad9838_8a008053",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-08T23:24:09Z",
+      "side": 1,
+      "message": "Note: it never made much sense to call invalid settings here, since that is generally used when there is an error communicating with the printer when getting its capabilities. The generic \"Printing failed\" error is not particularly useful in the case that the PDF is too large. However, since this needs to be merged to M-64, we can\u0027t add a new UI message at this point.",
+      "range": {
+        "startLine": 579,
+        "startChar": 0,
+        "endLine": 579,
+        "endChar": 77
+      },
+      "revId": "b683a7e420ca19e7b57025484eda7db48d5786e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
