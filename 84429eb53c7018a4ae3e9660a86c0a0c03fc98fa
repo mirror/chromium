@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8754606d_79868422",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 41
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T17:52:51Z",
+      "side": 1,
+      "message": "Can you move this next to :media? Also add a similar comment.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "84429eb53c7018a4ae3e9660a86c0a0c03fc98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2287fd1_7a608c8f",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 41
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T17:52:51Z",
+      "side": 1,
+      "message": "Investigated why the Windows bot was trying to build this. Can you add a comment here?\n\n # This needs to be conditionally-compiled since the typemaps are\n # unconditionally-included from //mojo/public/tools/bindings/mojom.gni. The\n # inclusion is done through read_file(), which does not respect the global\n # defines for GN, so it itself cannot use the \"is_chromeos\" variable.\n\nAnd also thanks for giving it a try!",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "84429eb53c7018a4ae3e9660a86c0a0c03fc98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08248f30_f1e84e26",
+        "filename": "components/arc/common/BUILD.gn",
+        "patchSetId": 41
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T17:52:51Z",
+      "side": 1,
+      "message": "This is already in :media\u0027s public_deps, so any component that depends on //components/arc/common should transitively have it, since :common public_deps :media.\n\nYou _should_ be able to drop it (of course, keep it if the build complains).",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "84429eb53c7018a4ae3e9660a86c0a0c03fc98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
