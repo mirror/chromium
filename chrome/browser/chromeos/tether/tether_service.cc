@@ -294,6 +294,11 @@ void TetherService::DeviceListChanged() {
   UpdateTetherTechnologyState();
 }
 
+void TetherService::DevicePropertiesUpdated(
+    const chromeos::DeviceState* device) {
+  DeviceListChanged();
+}
+
 void TetherService::OnShutdownComplete() {
   DCHECK(tether_component_->status() ==
          chromeos::tether::TetherComponent::Status::SHUT_DOWN);

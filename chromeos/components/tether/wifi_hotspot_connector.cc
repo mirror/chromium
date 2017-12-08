@@ -164,6 +164,10 @@ void WifiHotspotConnector::NetworkPropertiesUpdated(
   }
 }
 
+void WifiHotspotConnector::DevicePropertiesUpdated(const DeviceState* device) {
+  DeviceListChanged();
+}
+
 void WifiHotspotConnector::CompleteActiveConnectionAttempt(bool success) {
   DCHECK(!callback_.is_null());
   DCHECK(!wifi_network_guid_.empty());

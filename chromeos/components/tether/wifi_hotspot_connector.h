@@ -50,6 +50,7 @@ class WifiHotspotConnector : public NetworkStateHandlerObserver {
   // NetworkStateHandlerObserver:
   void DeviceListChanged() override;
   void NetworkPropertiesUpdated(const NetworkState* network) override;
+  void DevicePropertiesUpdated(const DeviceState* device) override;
 
  private:
   friend class WifiHotspotConnectorTest;
