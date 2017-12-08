@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d128df_02167a81",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "as an outsider, it seems a little odd for a function called \"Create\" to not return the thing that it creates. there\u0027s no documentation for this in text_detection_impl.h to explain what it does. could you please add some?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302f8d1b_773a81b0",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "nit: \"supports\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf403d2_2052fc40",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "Latin 1 is much more than \"en\". if the language of the to-be-detected text cannot be sniffed out, can you at least default to the current locale (g_browser_process-\u003eGetApplicationLocale()), provided that it can be represented in Latin 1? jshin@ may know more about how to figure that out.",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a2b414_a8998fb3",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e61fbe_ca5c7d60",
+        "filename": "services/shape_detection/text_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "nit:\n  // mojom::TextDetection:",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc93a5f0_734dfbbb",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-08T11:30:08Z",
+      "side": 1,
+      "message": "nit: blank line before this",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
