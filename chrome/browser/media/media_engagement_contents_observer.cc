@@ -10,6 +10,7 @@
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/media/media_engagement_session.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -536,5 +537,6 @@ MediaEngagementContentsObserver::GetOrCreateSession(
     return opener_observer->session_;
   }
 
-  return new MediaEngagementSession(service_, origin);
+  return new MediaEngagementSession(
+      service_, origin, ukm::GetSourceIdForWebContentsDocument(opener));
 }
