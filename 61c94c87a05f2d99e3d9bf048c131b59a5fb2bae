@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7bfb9e4_f667b9ca",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T11:26:53Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer not mentioning an already removed thing.",
+      "revId": "61c94c87a05f2d99e3d9bf048c131b59a5fb2bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
