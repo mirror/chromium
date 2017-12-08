@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "167f49dc_a66b3f75",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "\u003d std::make_unique\u003c...\u003e()",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7d73f5_5009455a",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "do you expect browser contexts to change over the life of this logger?\n\nIf not, maybe do:\n\n  if (browser_context_) {\n    DCHECK(browser_context_ \u003d\u003d web_contents_-\u003eGetBrowserContext());\n    return;\n  }\n\n  browser_context_ \u003d web_contents_-\u003eGetBrowserContext();\n  ...",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79be36b7_c7ca114e",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "put multi-line then-statement into {}",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57212d29_c90ae420",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761787db_1dbff097",
+        "filename": "components/assist_ranker/assist_ranker_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "DVLOG",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 8
+      },
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd37470_f05ea124",
+        "filename": "components/assist_ranker/assist_ranker_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "DVLOG",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ee0794_26a77776",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "no else afer return",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620dec8f_80e7814f",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64407e9_dadd63c9",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "maybe structure this as\n\n  if (!predictor-\u003eis_query_enabled()) {\n    DVLOG()...\n    return predictor;\n  }\n\n  ...\n  return predictor;",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593f86f1_b1386b5c",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "no else after return",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c4f1c4_2bf40a3a",
+        "filename": "components/assist_ranker/predictor_config.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "if you\u0027re returning by pointer then change to auto*, skip the *() around the new, and drop the \u0026 on return.",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10594ffd_e623ac11",
+        "filename": "components/assist_ranker/predictor_config_definitions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "this generates static constructor code. Convert to a function with a static local var.",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f99371_7bfc1aad",
+        "filename": "components/assist_ranker/predictor_config_definitions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "this generates static constructor code. Convert to a function with a static local var.",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a61260_da25bba3",
+        "filename": "components/assist_ranker/predictor_config_definitions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T20:46:02Z",
+      "side": 1,
+      "message": "missing trailing ;?",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
