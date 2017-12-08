@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "88505dc7_4453733c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-08T18:52:59Z",
+      "side": 1,
+      "message": "You can add tests here:\nhttps://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/cups_printer_page_tests.js\n\nLooking back at my previous comment, an invalid ipv4 address is actually a valid hostname, so no need to call it out",
+      "parentUuid": "2d55238d_e434a622",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "7a72015a10dc4f4c8468229242ffe71c9b64d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04d4f0eb_08a75599",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 4
