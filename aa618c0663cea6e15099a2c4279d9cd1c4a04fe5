@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d020c5_086e0620",
+        "filename": "ui/ozone/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-08T15:10:48Z",
+      "side": 1,
+      "message": "So, we decided to have ozone x11 unittests to be separate from ozone unittests?",
+      "revId": "aa618c0663cea6e15099a2c4279d9cd1c4a04fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
