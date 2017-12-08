@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74b1f602_fc7c5e74",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:48:10Z",
+      "side": 1,
+      "message": "nit: Maybe add the word \"Elf\" or \"Native\" in method name now that there are other section sizes?",
+      "revId": "f03445604da34e31a97b6476a526503f1a63fa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6314e69_b105394c",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:48:10Z",
+      "side": 1,
+      "message": "nit: 2 lines",
+      "revId": "f03445604da34e31a97b6476a526503f1a63fa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6255b7d_96d15380",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:48:10Z",
+      "side": 1,
+      "message": "nit: short to do:\nsection_sizes[models.SECTION_OTHER] \u003d sum(\n    s.size for s in apk_symbols)",
+      "revId": "f03445604da34e31a97b6476a526503f1a63fa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0ad9ec_869c6b75",
+        "filename": "tools/binary_size/libsupersize/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:48:10Z",
+      "side": 1,
+      "message": "nit: I think (compressed) is probably misleading, since gzipping the apk is a size we track as representative of the transfer size. How about:\n  # File size of apk in bytes.",
+      "revId": "f03445604da34e31a97b6476a526503f1a63fa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
