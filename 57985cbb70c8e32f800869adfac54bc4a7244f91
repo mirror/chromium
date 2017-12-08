@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3974abb7_e8b07efc",
+        "filename": "extensions/browser/api/runtime/runtime_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:53:27Z",
+      "side": 1,
+      "message": "nit: need {} since this spans multiple lines.\nAlso add a comment here (like line 570 above) about the intention:\n// Blacklisted extensions should not open uninstall_url.",
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d54276_f03155c3",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:53:27Z",
+      "side": 1,
+      "message": "nit: prefer meaningful variable name, e.g. |extension|",
+      "range": {
+        "startLine": 234,
+        "startChar": 45,
+        "endLine": 234,
+        "endChar": 46
+      },
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0144d5f_3fb9257c",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:53:27Z",
+      "side": 1,
+      "message": "prefer:  kAboutBlankURL from url_constants.h",
+      "range": {
+        "startLine": 256,
+        "startChar": 12,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26377134_f4d45823",
+        "filename": "extensions/browser/api/runtime/runtime_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-08T19:53:27Z",
+      "side": 1,
+      "message": "Q: is there a guarantee that UninstallExtension on line 270 will already call RuntimeEventRouter::OnExtensionUninstalled by this time? I think it does. If it would have been called asynchronously, then if there\u0027s a bug, the tab might be added after this line. Just doing sanity check.",
+      "revId": "57985cbb70c8e32f800869adfac54bc4a7244f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
