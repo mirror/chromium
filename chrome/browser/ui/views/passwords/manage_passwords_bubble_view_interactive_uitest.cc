@@ -30,6 +30,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/base/ui_base_features.h"
 #include "ui/base/ui_features.h"
+#include "ui/views/window/dialog_client_view.h"
 
 using testing::Eq;
 using testing::Field;
@@ -60,6 +61,14 @@ bool IsBubbleShowing() {
   return ManagePasswordsBubbleView::manage_password_bubble() &&
       ManagePasswordsBubbleView::manage_password_bubble()->
           GetWidget()->IsVisible();
+}
+
+const views::DialogClientView* GetDialogClientView(
+    const LocationBarBubbleDelegateView* bubble) {
+  const views::DialogClientView* view =
+      bubble->GetWidget()->client_view()->AsDialogClientView();
+  DCHECK(view);
+  return view;
 }
 
 }  // namespace
@@ -93,7 +102,8 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, BasicOpenAndClose) {
   SetupPendingPassword();
   EXPECT_TRUE(IsBubbleShowing());
   const ManagePasswordsBubbleView* bubble =
-      ManagePasswordsBubbleView::manage_password_bubble();
+      static_cast<const ManagePasswordsBubbleView*>(
+          ManagePasswordsBubbleView::manage_password_bubble());
   EXPECT_TRUE(bubble->initially_focused_view());
   EXPECT_FALSE(bubble->GetFocusManager()->GetFocusedView());
   ManagePasswordsBubbleView::CloseCurrentBubble();
@@ -108,7 +118,8 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, BasicOpenAndClose) {
       browser()->tab_strip_model()->GetActiveWebContents())
       ->ShowManagePasswordsBubble(true /* user_action */);
   EXPECT_TRUE(IsBubbleShowing());
-  bubble = ManagePasswordsBubbleView::manage_password_bubble();
+  bubble = static_cast<const ManagePasswordsBubbleView*>(
+      ManagePasswordsBubbleView::manage_password_bubble());
   EXPECT_TRUE(bubble->initially_focused_view());
   EXPECT_EQ(bubble->initially_focused_view(),
             bubble->GetFocusManager()->GetFocusedView());
@@ -125,10 +136,10 @@ IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleViewTest, CommandControlsBubble) {
   EXPECT_FALSE(IsBubbleShowing());
   ExecuteManagePasswordsCommand();
   EXPECT_TRUE(IsBubbleShowing());
-  const ManagePasswordsBubbleView* bubble =
+  const LocationBarBubbleDelegateView* bubble =
       ManagePasswordsBubbleView::manage_password_bubble();
-  EXPECT_TRUE(bubble->initially_focused_view());
-  EXPECT_EQ(bubble->initially_focused_view(),
+  EXPECT_TRUE(GetDialogClientView(bubble)->ok_button());
+  EXPECT_EQ(GetDialogClientView(bubble)->ok_button(),
             bubble->GetFocusManager()->GetFocusedView());
   ManagePasswordsBubbleView::CloseCurrentBubble();
   EXPECT_FALSE(IsBubbleShowing());
