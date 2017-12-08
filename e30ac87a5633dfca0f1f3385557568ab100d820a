@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a79d1b_1c41b80e",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T17:52:07Z",
+      "side": 1,
+      "message": "Should this be by weakptr?\n\nCould this could point to freed memory by the time the delayed task gets to run. It looks like there\u0027s an implicit dependency on the shutdown order being that the task runner gets stopped before the normalizer is destroyed.",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1725a2d3_dd1f0db2",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T17:52:07Z",
+      "side": 1,
+      "message": "use weakptr directly instead of cancelable callback?",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78c7a60_d31415d5",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T17:52:07Z",
+      "side": 1,
+      "message": "this should probably cancel all pending loads.\n\nIt\u0027s not clear to me as to when the normalizer gets destroyed, and how that relates to its task scheduler.",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e9d503_4cb2bee3",
+        "filename": "components/autofill/core/browser/address_normalizer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-08T17:52:07Z",
+      "side": 1,
+      "message": "will this fit as a single line?\n\npending_normalization_[region_code].push_back(std::move(request));",
+      "revId": "e30ac87a5633dfca0f1f3385557568ab100d820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
