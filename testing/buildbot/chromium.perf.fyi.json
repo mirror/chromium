@@ -268,7 +268,12 @@
         ],
         "isolate_name": "telemetry_perf_tests",
         "merge": {
-          "args": [],
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
           "script": "//tools/perf/upload_perf_results.py"
         },
         "name": "benchmark1 smoothness.maps",
@@ -300,7 +305,12 @@
         ],
         "isolate_name": "telemetry_perf_tests",
         "merge": {
-          "args": [],
+          "args": [
+            "--configuration-name",
+            "buildbot-test",
+            "--results-url",
+            "https://chromeperf.appspot.com"
+          ],
           "script": "//tools/perf/upload_perf_results.py"
         },
         "name": "benchmark2 blink_perf.css",
