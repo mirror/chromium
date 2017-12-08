@@ -213,7 +213,6 @@ enum BadMessageReason {
   CSDH_UNEXPECTED_OPERATION = 186,
   RMF_BAD_URL_CACHEABLE_METADATA = 187,
   RFH_INTERFACE_PROVIDER_MISSING = 188,
-  RFH_INTERFACE_PROVIDER_SUPERFLUOUS = 189,
 
   // Please add new elements here. The naming convention is abbreviated class
   // name (e.g. RenderFrameHost becomes RFH) plus a unique description of the

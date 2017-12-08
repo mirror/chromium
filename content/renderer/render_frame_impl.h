@@ -941,13 +941,6 @@ class CONTENT_EXPORT RenderFrameImpl
   bool IsLocalRoot() const;
   const RenderFrameImpl* GetLocalRoot() const;
 
-  // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(
-      blink::WebLocalFrame* frame,
-      blink::WebHistoryCommitType commit_type,
-      service_manager::mojom::InterfaceProviderRequest
-          remote_interface_provider_request);
-
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
   // the swap operation succeeded.  This should only be used for provisional
@@ -1273,6 +1266,21 @@ class CONTENT_EXPORT RenderFrameImpl
   mojom::URLLoaderFactory* custom_url_loader_factory() {
     return custom_url_loader_factory_.get();
   }
+
+  // Build typical DidCommitProvisionalLoad_Params based on the frame internal
+  // state.
+  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+  MakeDidCommitProvisionalLoadParams(blink::WebHistoryCommitType commit_type);
+
+  // Updates the Zoom level of the render view to match current content.
+  void UpdateZoomLevel();
+
+  // Updates the navigation history depending on the passed parameters.
+  // This could result either in the creation of a new entry or a modification
+  // in the history current offset or nothing. If a new entry was created,
+  // returns true, false otherwise.
+  bool UpdateNavigationHistory(const blink::WebHistoryItem& item,
+                               blink::WebHistoryCommitType commit_type);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
