@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f559b6_0e4b052b",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-08T05:08:00Z",
+      "side": 1,
+      "message": "Minor nit: \"function\"",
+      "range": {
+        "startLine": 595,
+        "startChar": 38,
+        "endLine": 595,
+        "endChar": 47
+      },
+      "revId": "c84bc7e63a8702d21695d3074868d72894aeebbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2591d1c7_62c28bf6",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-08T05:08:00Z",
+      "side": 1,
+      "message": "This is always going to fail since CreateHostedAppFromWebContents calls this method with action \u003d CREATE_HOSTED_APP and you set the variable on line 594. You need to place the DCHECK above line 594, before you set |pending_web_app_action_|.",
+      "range": {
+        "startLine": 596,
+        "startChar": 37,
+        "endLine": 596,
+        "endChar": 41
+      },
+      "revId": "c84bc7e63a8702d21695d3074868d72894aeebbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
