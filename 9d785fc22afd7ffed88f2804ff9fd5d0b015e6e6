@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff00d5ac_e1bb33a0",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T20:07:04Z",
+      "side": 1,
+      "message": "A little thread story in a comment - justifying why this is here, what happens on each thread broadly, so future code authors can reason about if it still applies and such - could be useful!\n\n\"This function must be the first Xlib function a multi-threaded program calls, and it must complete before any other Xlib call is made.\" - https://www.x.org/archive/X11R6.8.2/doc/XInitThreads.3.html\n\nThe placement of this call makes me suspect this isn\u0027t being held true, is it?",
+      "revId": "9d785fc22afd7ffed88f2804ff9fd5d0b015e6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
