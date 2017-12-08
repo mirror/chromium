@@ -81,8 +81,8 @@ void DeviceOrientationEventPump::SendStartMessage() {
       render_frame->GetRemoteInterfaces()->GetInterface(
           mojo::MakeRequest(&sensor_provider_));
       sensor_provider_.set_connection_error_handler(
-          base::Bind(&DeviceSensorEventPump::HandleSensorProviderError,
-                     base::Unretained(this)));
+          base::BindOnce(&DeviceSensorEventPump::HandleSensorProviderError,
+                         base::Unretained(this)));
     }
     if (absolute_) {
       GetSensor(&absolute_orientation_sensor_);

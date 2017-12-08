@@ -137,12 +137,12 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
       default_config.set_frequency(kDefaultPumpFrequencyHz);
 
-      sensor.set_connection_error_handler(
-          base::Bind(&SensorEntry::HandleSensorError, base::Unretained(this)));
+      sensor.set_connection_error_handler(base::BindOnce(
+          &SensorEntry::HandleSensorError, base::Unretained(this)));
       sensor->ConfigureReadingChangeNotifications(false /* disabled */);
       sensor->AddConfiguration(
-          default_config, base::Bind(&SensorEntry::OnSensorAddConfiguration,
-                                     base::Unretained(this)));
+          default_config, base::BindOnce(&SensorEntry::OnSensorAddConfiguration,
+                                         base::Unretained(this)));
     }
 
     // Mojo callback for Sensor::AddConfiguration().
@@ -191,8 +191,8 @@ class CONTENT_EXPORT DeviceSensorEventPump
 
   void GetSensor(SensorEntry* sensor_entry) {
     sensor_provider_->GetSensor(sensor_entry->type,
-                                base::Bind(&SensorEntry::OnSensorCreated,
-                                           base::Unretained(sensor_entry)));
+                                base::BindOnce(&SensorEntry::OnSensorCreated,
+                                               base::Unretained(sensor_entry)));
   }
 
   virtual void DidStartIfPossible() {
