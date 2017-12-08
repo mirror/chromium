@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99843bb_a4a013e8",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T17:49:33Z",
+      "side": 1,
+      "message": "Why can\u0027t this be a member of ChromeExtensionsNetworkDelegateImpl?\n\nThat would also let us DCHECK that it\u0027s empty on ChromeExtensionsNetworkDelegateImpl destruction.",
+      "range": {
+        "startLine": 48,
+        "startChar": 49,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "0f2db83e7a33e166e478dbcc1f9cb4490decb9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ee3c6a_cbb0b34c",
+        "filename": "chrome/browser/net/chrome_extensions_network_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T17:49:33Z",
+      "side": 1,
+      "message": "Use a pointer, not a reference.  While the style guide doesn\u0027t explicitly ban non-const reverences that are not function arguments, it\u0027s reason for banning such references seems to apply more generally.",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "0f2db83e7a33e166e478dbcc1f9cb4490decb9a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
