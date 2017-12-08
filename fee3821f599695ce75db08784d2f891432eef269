@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "369fffd5_e0cfe091",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:52:26Z",
+      "side": 1,
+      "message": "I don\u0027t want to point to a broken API, yet.  If you try to use TYPE_RAW_FILE, you\u0027ll get a DCHECK, currently - the async flag isn\u0027t set.  Turns out NetworkContext tests use the mojo API on a ptr instead of an interface ptr.  And retries are broken, even if I fixed that.",
+      "parentUuid": "ae3b9a58_b95f768a",
+      "range": {
+        "startLine": 772,
+        "startChar": 39,
+        "endLine": 772,
+        "endChar": 41
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ffb2d69_a08e8578",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 5
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "\u003e This will use ResourceRequest-\u003eDataElement.  The problem is that I want to pass in a base::File to the network service (Can\u0027t do it yet, but this will do it eventually).  So something needs to open the base::File.  This can\u0027t be done on the UI thread, or the IO thread.\n\n\u003e Rather than having a bunch of consumers jump over to another thread, this will handle that logic for them, \n\nAh, gotcha.  How would you feel about commenting something like \"This is a helper method so that consumer won\u0027t need to open the file (with related thread hopping) themselves\"?  (I\u0027m not wedded to that, I just think it helps frame the context for the method and how it\u0027s expected to be used.)\n\nI\u0027d also keep an eye on how often consumers of this interface have to open files themselves; I find myself wondering if an async helper function to convert a base::FilePath -\u003e base::File wouldn\u0027t be a better way to address this use case.  (It\u0027s more general, but I consider that a minus unless the generality would actually be used.)\n\n\u003e though I\u0027ll still allow base::Files to be attached as DataElements directly, just not base::FilePaths.\n\nCould the Create() method have documentation on what DataElements are ok and what not?\n\n\u003e Moreover, base::Files can\u0027t be destroyed on a thread that doesn\u0027t allow blocking IO, so I\u0027ll also need to post a task to delete the ResourceRequest offthread, if it has one (Regardless of whether this method was used to attach a file or not).\n\nAck.  Where is the documentation that base::Files attached to DataElements for upload will be deleted by the request processing?  I presume that\u0027s pre-existing, but it wasn\u0027t obvious to me just based on this function.",
       "parentUuid": "eee81c8f_09a59e0e",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 20
+      },
+      "revId": "fee3821f599695ce75db08784d2f891432eef269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544cec9c_87e90d29",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:52:26Z",
+      "side": 1,
+      "message": "There are only 3 consumers, currently, which isn\u0027t huge.\n\nI\u0027m reluctant to add documentation about what\u0027s allowed in Create until it actually works, simply because incorrect documentation is often worse than no documentation.  Once we have file uploads working, though...\n\nI\u0027m not sure what you\u0027re asking me about files being deleted.  The base::Files are destroyed, not deleted, and we have ownership of the base::File itself, so I think this follows from the fact we own them, and never relinquish ownership?",
+      "parentUuid": "45ddee43_4a08525b",
       "range": {
         "startLine": 180,
         "startChar": 5,

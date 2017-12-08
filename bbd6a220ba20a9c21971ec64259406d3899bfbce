@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a44ec63d_f63a07bf",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:52:26Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "c9c7ad02_f053068d",
+      "range": {
+        "startLine": 162,
+        "startChar": 33,
+        "endLine": 162,
+        "endChar": 39
+      },
+      "revId": "bbd6a220ba20a9c21971ec64259406d3899bfbce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae4a977_d474208d",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "586de567_f73bb768",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:52:26Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "7ae4a977_d474208d",
+      "range": {
+        "startLine": 95,
+        "startChar": 26,
+        "endLine": 95,
+        "endChar": 38
+      },
+      "revId": "bbd6a220ba20a9c21971ec64259406d3899bfbce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ead0965_9127e6d9",
         "filename": "content/public/common/simple_url_loader_unittest.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T19:07:58Z",
       "side": 1,
       "message": "What is being tested?  Is this just a crash test?  (Also below.)",
+      "range": {
+        "startLine": 946,
+        "startChar": 17,
+        "endLine": 946,
+        "endChar": 18
+      },
+      "revId": "bbd6a220ba20a9c21971ec64259406d3899bfbce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e709ad0e_1e87b636",
+        "filename": "content/public/common/simple_url_loader_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-08T19:52:26Z",
+      "side": 1,
+      "message": "These are mostly for when we\u0027re actually opening files - in the latter test, in particular, we\u0027ll be holding onto a file handle on the current thread, which will need to be torn down.  In this test, could imagine an implementation that starts opening the file when it\u0027s attached (My implementation won\u0027t do that, but it could in theory).\n\nOf course, we\u0027re not opening files yet, so a comment seems a bit weird.  Included them in this CL on the basis of wanting to have as little unlanded code as I can, since it might be a while before we have enough information to decide on what path to take.",
+      "parentUuid": "6ead0965_9127e6d9",
       "range": {
         "startLine": 946,
         "startChar": 17,
