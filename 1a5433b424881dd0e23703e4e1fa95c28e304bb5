@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d781c2_90465fb9",
+        "filename": "ios/chrome/browser/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-08T11:15:11Z",
+      "side": 1,
+      "message": "This is temporary. In a followup CL I\u0027ll introduce a SnapshotTabHelper, and update code to use the tab helper and the delegate will be updated to no longer be Tab.",
+      "range": {
+        "startLine": 85,
+        "startChar": 49,
+        "endLine": 85,
+        "endChar": 74
+      },
+      "revId": "1a5433b424881dd0e23703e4e1fa95c28e304bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7aceba4_3a90c460",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_cache.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-08T11:15:11Z",
+      "side": 1,
+      "message": "This is temporary. In a followup CL I\u0027ll introduce a SnapshotTabHelper. The tab helper will have a method to query for the size of the snapshot without generating/capturing it.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 68
+      },
+      "revId": "1a5433b424881dd0e23703e4e1fa95c28e304bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
