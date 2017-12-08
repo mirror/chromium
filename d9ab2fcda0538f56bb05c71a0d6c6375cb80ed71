@@ -63,6 +63,30 @@
       "revId": "d9ab2fcda0538f56bb05c71a0d6c6375cb80ed71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43a2507_d3fed4c2",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-08T20:57:24Z",
+      "side": 0,
+      "message": "Got it",
+      "parentUuid": "435b9b7e_7c862bc1",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "d9ab2fcda0538f56bb05c71a0d6c6375cb80ed71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
