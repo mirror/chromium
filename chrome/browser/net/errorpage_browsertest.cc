@@ -1117,8 +1117,9 @@ class ErrorPageAutoReloadTest : public InProcessBrowserTest {
                 content::ResourceResponseHead response;
                 response.headers = info.headers;
                 response.headers->GetMimeType(&response.mime_type);
-                params->client->OnReceiveResponse(response, base::nullopt,
-                                                  nullptr);
+                params->client->OnReceiveResponse(
+                    response, base::nullopt, nullptr,
+                    content::mojom::URLLoaderNavigationDataPtr());
 
                 std::string body = URLRequestTestJob::test_data_1();
                 uint32_t bytes_written = body.size();

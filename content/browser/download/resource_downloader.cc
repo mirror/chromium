@@ -27,7 +27,8 @@ class URLLoaderStatusMonitor : public mojom::URLLoaderClient {
   void OnReceiveResponse(
       const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {}
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {}
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head) override {}
   void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override {}
@@ -187,9 +188,9 @@ void ResourceDownloader::InterceptResponse(
   // Simulate on the new URLLoaderClient calls that happened on the old client.
   net::SSLInfo info;
   info.cert_status = cert_status;
-  url_loader_client_->OnReceiveResponse(response->head,
-                                        base::Optional<net::SSLInfo>(info),
-                                        mojom::DownloadedTempFilePtr());
+  url_loader_client_->OnReceiveResponse(
+      response->head, base::Optional<net::SSLInfo>(info),
+      mojom::DownloadedTempFilePtr(), mojom::URLLoaderNavigationDataPtr());
 
   // Bind the new client.
   url_loader_client_binding_ =
