@@ -22,6 +22,30 @@
       "revId": "34a3e9cf3e1bc69c5c645befc14cc73cf8045ffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db31fd82_06ea6df2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-08T22:46:46Z",
+      "side": 1,
+      "message": "Oops right, it\u0027s a 6-bit field.\n\nI know the check is always true, but it does have effect if someone were to add another bit to the field.\n\nIf you don\u0027t think it\u0027s serving any purpose, I\u0027m happy to drop it. Let me know what you prefer.",
+      "parentUuid": "5e663a14_fb7cbcda",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "34a3e9cf3e1bc69c5c645befc14cc73cf8045ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
