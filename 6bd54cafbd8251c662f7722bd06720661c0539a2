@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7b8d31_de61211b",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:32:58Z",
+      "side": 1,
+      "message": "nit: mention that all resources will be selected when no whitelist is passed, and also mention that the format of this file is that of an R.txt.",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064c9ad8_8b90e98a",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:32:58Z",
+      "side": 1,
+      "message": "I think this is an input, not an output?",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb498e0_1113bdc5",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:32:58Z",
+      "side": 1,
+      "message": "nit: move these to be defined right before they are used.",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864614a4_7704f5ae",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-08T01:32:58Z",
+      "side": 1,
+      "message": "Should this be made overridable by invoker?\n\nNote that the forward_variables_from() below will fail if any existing args are replaced by it, so this should probably go after that line, and then do:\n\nif (!defined(shared_resources_whitelist_target)) {\n  shared_resources_whitelist_target \u003d ...\n}\n\nBut actually, I think we could even get away with defining shared_resources_whitelist_target direclty in monochrome_public_apk, and not have it here at all.",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
