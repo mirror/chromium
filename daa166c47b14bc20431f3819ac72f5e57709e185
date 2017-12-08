@@ -34,6 +34,24 @@
       "revId": "daa166c47b14bc20431f3819ac72f5e57709e185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d37757_aa235c24",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-08T23:55:08Z",
+      "side": 1,
+      "message": "We actually expect \"all\" to work on every platform and should have builders explicitly testing that, though we don\u0027t actually do official builds of \"all\" because we don\u0027t want to make *everything* build with LTO/LTCG/PGO/etc.\n\nWe make an exception for platforms that are still being brought up, of course :).\n\nFor the reasons I gave above, I don\u0027t actually expect \"gn_all\" to ever go away as a target, but once \"all\" does work, I expect it to stay working and for a platform to use that rather than \"gn_all\" in builder configs.\n\nAnd, because of that, I don\u0027t actually think of gn_all\" as a practical approximation of \"all\", but that\u0027s probably because I\u0027m an overly hypercritical build guy :).",
+      "parentUuid": "1cfeac99_7edbb0ff",
+      "revId": "daa166c47b14bc20431f3819ac72f5e57709e185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
