@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "17c0f387_1d6eaafe",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-08T00:19:04Z",
+      "side": 1,
+      "message": "To elaborate, that you have to explicitly call to update the window icon when entering overview mode tells me some other code path isn\u0027t doing the right thing (the window icon should be updated as necessary, not when entering immersive mode).\n\nI believe Browser calls UpdateTitleBar when the titlebar/window-icon may need to be updated. BrowserView short circuits this in certain cases. Under what conditions is ShouldShowWindowIcon returning false and you want the icon updated?",
+      "parentUuid": "0cd4596a_a61b4cab",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab2a87_eda128bd",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
