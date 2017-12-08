@@ -181,6 +181,23 @@
     },
     {
       "key": {
+        "uuid": "d032d617_aaf303f1",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T00:40:31Z",
+      "side": 1,
+      "message": "Nit: Consider using base::TimeTicks.",
+      "revId": "6b883a8c863809784c006fe8fd86fe3805a24ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b43d486d_9e82645d",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRWebGLDrawingBuffer.cpp",
         "patchSetId": 3
