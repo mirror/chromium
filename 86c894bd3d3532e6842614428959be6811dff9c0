@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0040e5aa_dbfc680c",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-08T15:03:51Z",
+      "side": 1,
+      "message": "It\u0027s not clear from the code here that this doesn\u0027t just use what the window\u0027s bounds were when entering snapping. I can see that\u0027s not the case from the test, but it would be worth having a comment to explain why. I\u0027m assuming it\u0027s because we update the bounds before the WMEvent fires?",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 63
+      },
+      "revId": "86c894bd3d3532e6842614428959be6811dff9c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
