@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b14bca9_7b707137",
+        "filename": "base/synchronization/waitable_event_watcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "Comment explaining what task runner is passed in is used for please",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310eced9_1a5e83fc",
+        "filename": "base/synchronization/waitable_event_watcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "Also mention here what this is for",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8ea2d6_3e39937d",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "std::move() refptrs when assigning",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b301568_5515dbee",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "Using |task_runner_| in this method seems to violate this comment?",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e719de_eb085a32",
+        "filename": "base/synchronization/waitable_event_watcher_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "std::move()",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4576de67_ca713d61",
+        "filename": "base/synchronization/waitable_event_watcher_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-08T19:21:50Z",
+      "side": 1,
+      "message": "std::move()",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
