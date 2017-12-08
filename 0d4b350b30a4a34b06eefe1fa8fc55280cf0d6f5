@@ -68,6 +68,30 @@
       "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f10945_3f085bc2",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-08T15:42:34Z",
+      "side": 1,
+      "message": "Yes, I second this question.\nIt may be a good thing to have the tests here rather than in the other file, but I don\u0027t think we should have two implementations of the same tests.",
+      "parentUuid": "7a91fc77_651c2017",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
