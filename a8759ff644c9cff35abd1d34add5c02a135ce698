@@ -88,6 +88,24 @@
       "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c99b76_12cd4bb7",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-08T17:14:14Z",
+      "side": 1,
+      "message": "Great, thanks! I suspect optimizing ReplaceComponents will bring real perf benefits (given all the many cases it will fast path, across the whole codebase), while also keeping the call sites of all ReplaceComponents invocations simpler (no need to special case). That seems like the best outcome. Thanks!",
+      "parentUuid": "099a80e4_df0ce4f4",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
