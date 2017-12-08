@@ -22,6 +22,30 @@
       "revId": "00440366bd38865fae75a55ce0a2d905081bb87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8b3df8_6e4d63ef",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-12-08T18:22:02Z",
+      "side": 1,
+      "message": "Switched to a CustomCount with 50 buckets.",
+      "parentUuid": "86f0dc5f_ee905520",
+      "range": {
+        "startLine": 254,
+        "startChar": 53,
+        "endLine": 254,
+        "endChar": 0
+      },
+      "revId": "00440366bd38865fae75a55ce0a2d905081bb87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
