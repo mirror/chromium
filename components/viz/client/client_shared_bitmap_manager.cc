@@ -163,15 +163,15 @@ ClientSharedBitmapManager::GetBitmapForSharedMemory(base::SharedMemory* mem) {
 uint32_t ClientSharedBitmapManager::NotifyAllocatedSharedBitmap(
     base::SharedMemory* memory,
     const SharedBitmapId& id) {
-  base::SharedMemoryHandle handle_to_send =
-      base::SharedMemory::DuplicateHandle(memory->handle());
+  base::SharedMemoryHandle handle_to_send = memory->GetReadOnlyHandle();
   if (!base::SharedMemory::IsHandleValid(handle_to_send)) {
     LOG(ERROR) << "Failed to duplicate shared memory handle for bitmap.";
     return 0;
   }
 
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
-      handle_to_send, memory->mapped_size(), true /* read_only */);
+      handle_to_send, memory->mapped_size(),
+      mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
 
   {
     base::AutoLock lock(lock_);
