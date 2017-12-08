@@ -15,12 +15,14 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "net/base/ip_endpoint.h"
 #include "net/base/logging_network_change_observer.h"
 #include "net/base/network_change_notifier.h"
 #include "net/log/file_net_log_observer.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_util.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "services/network/udp_socket_impl.h"
 
 namespace content {
 
@@ -208,6 +210,14 @@ net::NetLog* NetworkServiceImpl::net_log() const {
 void NetworkServiceImpl::GetNetworkChangeManager(
     network::mojom::NetworkChangeManagerRequest request) {
   network_change_manager_->AddRequest(std::move(request));
+}
+
+void NetworkServiceImpl::CreateUDPSocket(
+    network::mojom::UDPSocketRequest request,
+    network::mojom::UDPSocketReceiverPtr receiver) {
+  mojo::MakeStrongBinding(
+      std::make_unique<network::UDPSocketImpl>(std::move(receiver)),
+      std::move(request));
 }
 
 void NetworkServiceImpl::OnBindInterface(

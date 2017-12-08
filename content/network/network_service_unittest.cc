@@ -14,11 +14,13 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "net/base/ip_endpoint.h"
 #include "net/base/mock_network_change_notifier.h"
 #include "net/proxy/proxy_config.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/network/public/interfaces/network_change_manager.mojom.h"
+#include "services/network/udp_socket_test_util.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
@@ -460,6 +462,77 @@ TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
   TestNetworkChangeManagerClient manager_client(service());
   manager_client.WaitForNotification(
       network::mojom::ConnectionType::CONNECTION_3G);
+}
+
+net::IPEndPoint GetLocalHostWithAnyPort() {
+  return net::IPEndPoint(net::IPAddress(127, 0, 0, 1), 0);
+}
+
+std::vector<uint8_t> CreateTestMessage(uint8_t initial, size_t size) {
+  std::vector<uint8_t> array(size);
+  for (size_t i = 0; i < size; ++i)
+    array[i] = static_cast<uint8_t>((i + initial) % 256);
+  return array;
+}
+
+TEST_F(NetworkServiceTestWithService, CreateUDPSocket) {
+  // Create a server socket to listen for incoming datagrams.
+  network::test::UDPSocketReceiverImpl receiver;
+  mojo::Binding<network::mojom::UDPSocketReceiver> receiver_binding(&receiver);
+  network::mojom::UDPSocketReceiverPtr receiver_interface_ptr;
+  receiver_binding.Bind(mojo::MakeRequest(&receiver_interface_ptr));
+
+  net::IPEndPoint server_addr(GetLocalHostWithAnyPort());
+  network::mojom::UDPSocketPtr server_socket;
+  network::mojom::UDPSocketRequest request(mojo::MakeRequest(&server_socket));
+  service()->CreateUDPSocket(std::move(request),
+                             std::move(receiver_interface_ptr));
+  ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::OpenSync(
+                         &server_socket, server_addr.GetFamily()));
+  ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::BindSync(
+                         &server_socket, server_addr, &server_addr));
+
+  // Create a client socket to send datagrams.
+  network::mojom::UDPSocketPtr client_socket;
+  network::mojom::UDPSocketRequest client_socket_request(
+      mojo::MakeRequest(&client_socket));
+  network::test::UDPSocketReceiverImpl client_receiver;
+  mojo::Binding<network::mojom::UDPSocketReceiver> client_receiver_binding(
+      &client_receiver);
+  network::mojom::UDPSocketReceiverPtr client_receiver_ptr;
+  client_receiver_binding.Bind(mojo::MakeRequest(&client_receiver_ptr));
+  service()->CreateUDPSocket(std::move(client_socket_request),
+                             std::move(client_receiver_ptr));
+
+  net::IPEndPoint client_addr(GetLocalHostWithAnyPort());
+  ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::OpenSync(
+                         &client_socket, client_addr.GetFamily()));
+  ASSERT_EQ(net::OK, network::test::UDPSocketTestHelper::ConnectSync(
+                         &client_socket, server_addr, &client_addr));
+
+  const size_t kDatagramCount = 6;
+  const size_t kDatagramSize = 255;
+  server_socket->ReceiveMore(kDatagramCount);
+
+  for (size_t i = 0; i < kDatagramCount; ++i) {
+    std::vector<uint8_t> test_msg(
+        CreateTestMessage(static_cast<uint8_t>(i), kDatagramSize));
+    int result = network::test::UDPSocketTestHelper::SendToSync(
+        &client_socket, server_addr, test_msg);
+    EXPECT_EQ(static_cast<int>(kDatagramSize), result);
+  }
+
+  receiver.WaitForReceivedResults(kDatagramCount);
+  EXPECT_EQ(kDatagramCount, receiver.results().size());
+
+  int i = 0;
+  for (const auto& result : receiver.results()) {
+    EXPECT_EQ(net::OK, result.net_error);
+    EXPECT_EQ(result.src_addr, client_addr);
+    EXPECT_EQ(CreateTestMessage(static_cast<uint8_t>(i), kDatagramSize),
+              result.data.value());
+    i++;
+  }
 }
 
 }  // namespace
