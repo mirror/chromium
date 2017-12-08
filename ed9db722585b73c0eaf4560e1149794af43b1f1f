@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31ce544e_f13c661c",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T09:57:46Z",
+      "side": 1,
+      "message": "I suspect you don\u0027t need this intermediate vector if WebEmbeddedWorker::Create takes WebVector\u003cWebURL\u003e",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8365a4_092d6228",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T09:57:46Z",
+      "side": 1,
+      "message": "Unrelated?",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8e2698_3b332ea9",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T09:57:46Z",
+      "side": 1,
+      "message": "nit: WebVector",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3e3f88_81f52b25",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T09:57:46Z",
+      "side": 1,
+      "message": "We have WTF equivalents for these (Mutex / MutexLocker, ThreadCondition), if there\u0027re no particular reasons we could just use them",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209e10a5_20a82b5c",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T09:57:46Z",
+      "side": 1,
+      "message": "nit: WebVector\u003cWebURL\u003e",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
