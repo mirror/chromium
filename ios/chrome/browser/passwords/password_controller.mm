@@ -671,19 +671,18 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                                   webState:(web::WebState*)webState
                          completionHandler:
                              (SuggestionsAvailableCompletion)completion {
-  if (!sentRequestToStore_ && [type isEqual:@"focus"]) {
+  if (!GetPageURLAndCheckTrustLevel(webState, nullptr)) {
+    completion(NO);
+    return;
+  }
+  if (!sentRequestToStore_ && [type isEqual:@"focus"])
     [self findPasswordFormsAndSendThemToPasswordStore];
-    completion(NO);
+  
+  if ([fieldType isEqual:@"password"]) {
+    completion(YES);
     return;
   }
-  if (fillData_.Empty() || !GetPageURLAndCheckTrustLevel(webState, nullptr)) {
-    completion(NO);
-    return;
-  }
-
-  // Suggestions are available for the username field of the password form.
-  completion(fillData_.IsSuggestionsAvailable(
-      base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName)));
+  completion(!fillData_.Empty() && fillData_.IsSuggestionsAvailable(base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName)));
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
