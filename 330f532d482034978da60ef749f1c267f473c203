@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66cc8bde_c92ab74f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-08T22:10:54Z",
+      "side": 1,
+      "message": "I have trouble identifying what is different from the reverted CL. Did you change anything here, or were there other CLs landed in the meantime that make the CL work this time?\n\nIn case you did change something, a great way to make this obvious to reviewers is to upload the verbatim reverted CL as PatchSet 1 and then add a PatchSet 2 with the changes on top.",
+      "revId": "330f532d482034978da60ef749f1c267f473c203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e96e88a_41c31a8e",
+        "filename": "media/capture/video/mojo_enabled_test_environment.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-08T22:10:54Z",
+      "side": 1,
+      "message": "I appreciate this environment going to a class and pair of files for itself, which is already much closer to being reusable than having it buried in a *.cc file.\n\nNow the next step would be to move these files to a location that matches how general the provided functionality really is (this functionality is completely unspecific to media/capture/video). I have seen almost identical duplicates of this class in a few other places I believe (usually buried inside a *.cc file). If all these duplicates had been created at a canonical reusable place instead, they would be both reusable and discoverable and we would decrease the risk of ending up with duplicates.\n\nCould you do me a favor and see if you find any duplicates and merge them into one?",
+      "revId": "330f532d482034978da60ef749f1c267f473c203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
