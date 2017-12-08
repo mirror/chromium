@@ -1000,13 +1000,18 @@ std::unique_ptr<TextInput> UiSceneCreator::CreateTextInput(
 }
 
 void UiSceneCreator::CreateKeyboard() {
+  auto scaler = base::MakeUnique<ScaledDepthAdjuster>(kKeyboardDistance);
+  scaler->SetName(kKeyboardDmmRoot);
+  scene_->AddUiElement(kRoot, std::move(scaler));
+
   auto keyboard = base::MakeUnique<Keyboard>();
   keyboard->SetKeyboardDelegate(keyboard_delegate_);
   keyboard->SetDrawPhase(kPhaseForeground);
-  keyboard->SetTranslate(0.0, kKeyboardVerticalOffset, -kKeyboardDistance);
+  keyboard->SetTranslate(0.0, kKeyboardVerticalOffset, 0.0);
+  keyboard->SetRotate(1, 0, 0, kKeyboardRotationRad);
   keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_, editing_input,
                                     UiElement, keyboard.get(), SetVisible));
-  scene_->AddUiElement(kRoot, std::move(keyboard));
+  scene_->AddUiElement(kKeyboardDmmRoot, std::move(keyboard));
 }
 
 void UiSceneCreator::CreateUrlBar() {
