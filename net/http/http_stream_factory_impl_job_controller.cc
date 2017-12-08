@@ -608,11 +608,18 @@ void HttpStreamFactoryImpl::JobController::MaybeResumeMainJob(
 
 void HttpStreamFactoryImpl::JobController::OnConnectionInitialized(Job* job,
                                                                    int rv) {
-  if (rv != OK) {
-    // Resume the main job as there's an error raised in connection
-    // initiation.
-    return MaybeResumeMainJob(job, main_job_wait_time_);
+  // Resume the main job unless connection initiation has already completed
+  // successfully.
+  // If the alternative job is QUIC, do not resume the main job; it will be
+  // resumed once host resolution finishes (or if the whole QUIC job finishes,
+  // successfully or not).
+  if (rv != OK && !(job == alternative_job_.get() && rv == ERR_IO_PENDING)) {
+    MaybeResumeMainJob(job, main_job_wait_time_);
   }
+}
+
+void HttpStreamFactoryImpl::JobController::OnQuicHostResolution(Job* job) {
+  MaybeResumeMainJob(job, main_job_wait_time_);
 }
 
 bool HttpStreamFactoryImpl::JobController::ShouldWait(Job* job) {

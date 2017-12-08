@@ -132,6 +132,10 @@ class HttpStreamFactoryImpl::Job {
     // Invoked when |job| finishes initiating a connection.
     virtual void OnConnectionInitialized(Job* job, int rv) = 0;
 
+    // Invoked when |job| is a QUIC job and successfully completes host
+    // resolution.
+    virtual void OnQuicHostResolution(Job* job) = 0;
+
     // Return false if |job| can advance to the next state. Otherwise, |job|
     // will wait for Job::Resume() to be called before advancing.
     virtual bool ShouldWait(Job* job) = 0;
@@ -309,6 +313,8 @@ class HttpStreamFactoryImpl::Job {
   void OnHttpsProxyTunnelResponseCallback(const HttpResponseInfo& response_info,
                                           std::unique_ptr<HttpStream> stream);
   void OnPreconnectsComplete();
+
+  void OnQuicHostResolution();
 
   void OnIOComplete(int result);
   // RunLoop() finishes asynchronously and invokes one of the On* methods (see

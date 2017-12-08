@@ -160,6 +160,10 @@ class HttpStreamFactoryImpl::JobController
   // Resume the other job if there's an error raised.
   void OnConnectionInitialized(Job* job, int rv) override;
 
+  // Invoked when |job| is a QUIC job and successfully completes host
+  // resolution.
+  void OnQuicHostResolution(Job* job) override;
+
   // Return false if |job| can advance to the next state. Otherwise, |job|
   // will wait for Job::Resume() to be called before advancing.
   bool ShouldWait(Job* job) override;

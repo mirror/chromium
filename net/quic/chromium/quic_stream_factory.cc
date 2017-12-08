@@ -493,6 +493,7 @@ int QuicStreamFactory::Job::DoResolveHost() {
 
 int QuicStreamFactory::Job::DoResolveHostComplete(int rv) {
   dns_resolution_end_time_ = base::TimeTicks::Now();
+
   if (rv != OK)
     return rv;
 
@@ -502,6 +503,10 @@ int QuicStreamFactory::Job::DoResolveHostComplete(int rv) {
   // a session alias, if possible.
   if (factory_->OnResolution(key_, address_list_))
     return OK;
+
+  for (auto* request : stream_requests_) {
+    request->OnHostResolution();
+  }
 
   io_state_ = STATE_CONNECT;
   return OK;
@@ -596,9 +601,11 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
                                const GURL& url,
                                const NetLogWithSource& net_log,
                                NetErrorDetails* net_error_details,
+                               base::OnceClosure host_resolution_callback,
                                const CompletionCallback& callback) {
   DCHECK_NE(quic_version, QUIC_VERSION_UNSUPPORTED);
   DCHECK(net_error_details);
+  DCHECK(host_resolution_callback_.is_null());
   DCHECK(callback_.is_null());
   DCHECK(factory_);
 
@@ -609,6 +616,7 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
                             cert_verify_flags, url, net_log, this);
   if (rv == ERR_IO_PENDING) {
     net_log_ = net_log;
+    host_resolution_callback_ = std::move(host_resolution_callback);
     callback_ = callback;
   } else {
     factory_ = nullptr;
@@ -626,6 +634,10 @@ void QuicStreamRequest::SetSession(
 void QuicStreamRequest::OnRequestComplete(int rv) {
   factory_ = nullptr;
   base::ResetAndReturn(&callback_).Run(rv);
+}
+
+void QuicStreamRequest::OnHostResolution() {
+  base::ResetAndReturn(&host_resolution_callback_).Run();
 }
 
 base::TimeDelta QuicStreamRequest::GetTimeDelayForWaitingJob() const {
