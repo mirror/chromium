@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6916e8_41b68ca6",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-08T07:42:12Z",
+      "side": 0,
+      "message": "I dug a bit about the history of this comment, and found this:\nhttps://codereview.chromium.org/383163003\nThis was written in 3+ years ago, and the patch author once tried to do\nexactly this, while eseidel (who now doesn\u0027t work for Blink any more) responded\n\n\u003e I too was skeptical of this optimization.  But we\u0027ve had it for years and it\n\u003e hasn\u0027t broken the web.  We should just get the spec changed.\n\nBut the time passed, and we should focus more on interop than ever, IMO.",
+      "revId": "4e3f9a3296f0e0cae45f62ee84678b27473797ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
