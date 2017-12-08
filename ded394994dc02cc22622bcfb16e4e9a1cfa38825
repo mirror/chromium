@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2279599_261b92dd",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Huh.  I don\u0027t think so.  Done.",
+      "parentUuid": "ea47430b_41a3e184",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e3f7e0_b9e2687b",
         "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-30T16:14:32Z",
       "side": 1,
       "message": "Presumably GetAllCookies() sets the appropriate options?",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e87898c_78a0b40a",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "So this code was pretty much copied from the old implementation, modulo the API change.  GetCookieListFromStore split into GetAllCookiesAsync \u0026 GetAllCookiesForURLAsync, no options specified.  GetAllCookiesAsync is the same place this ends up.  GetAllCookiesForURLAsync set some options and called GetCookieListWithOptionsAsync, which is where the below call ends up.  So I think this code is equivalent to what was here before by copying--do you see any holes in that reasoning?",
+      "parentUuid": "99e3f7e0_b9e2687b",
       "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7f95b1a8_bd008ab8",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc51998_e7de280b",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f83eaf_0549ffb7",
         "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-30T16:14:32Z",
       "side": 1,
       "message": "Would it be worth having a CreateCookieOptions() helper since we\u0027re using this config in 3 places?  That way, we ensure that we keep them in sync.",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f767ba18_76900165",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done.  I flip-flopped a bit on the signature (returning the structure would make the code simpler but involve more copies, could return a const ref to a static structure initialized on first call, but that seems a bit baroque ...); feel free to poke me if you have a more preferred signature.",
+      "parentUuid": "86f83eaf_0549ffb7",
       "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7fd0399f_197c3d8a",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea2d804_c74d4386",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ca439f_334f39ca",
         "filename": "chrome/browser/extensions/extension_service_unittest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d214264_77f53964",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4961,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ca439f_334f39ca",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b0ff7906_31a10cc3",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5020,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "178ee325_e32ee45d",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f54d25b2_2da9180c",
         "filename": "chrome/browser/extensions/extension_service_unittest.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c09c2db_a8055047",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-08T19:36:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54d25b2_2da9180c",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
