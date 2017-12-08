@@ -32,6 +32,10 @@
 #include "media/gpu/vaapi/vaapi_wrapper.h"
 #endif
 
+#if defined(USE_X11)
+#include "ui/gfx/x/x11.h"
+#endif
+
 namespace {
 
 std::unique_ptr<base::Thread> CreateAndStartCompositorThread() {
@@ -232,6 +236,13 @@ void VizMainImpl::CreateFrameSinkManager(
     mojom::FrameSinkManagerParamsPtr params) {
   DCHECK(compositor_thread_task_runner_);
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+
+#if defined(USE_X11)
+  // Both GPU and compositor threads will make Xlib function calls, so call
+  // XInitThreads() before starting the compositor thread.
+  XInitThreads();
+#endif
+
   if (!gpu_service_ || !gpu_service_->is_initialized()) {
     DCHECK(pending_frame_sink_manager_params_.is_null());
     pending_frame_sink_manager_params_ = std::move(params);
