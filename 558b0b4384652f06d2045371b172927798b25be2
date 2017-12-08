@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdcb340c_dda8a95b",
+        "filename": "components/payments/core/payment_currency_amount_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-08T19:34:01Z",
+      "side": 1,
+      "message": "Please check the values of \"actual.currency\" and \"actual.value\" in the test.",
+      "range": {
+        "startLine": 54,
+        "startChar": 41,
+        "endLine": 54,
+        "endChar": 52
+      },
+      "revId": "558b0b4384652f06d2045371b172927798b25be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
