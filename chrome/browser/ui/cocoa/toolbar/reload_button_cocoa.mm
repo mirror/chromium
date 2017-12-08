@@ -9,7 +9,7 @@
 #include "base/macros.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #import "chrome/browser/ui/cocoa/accelerators_cocoa.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "chrome/browser/ui/cocoa/view_id_util.h"
@@ -158,8 +158,8 @@ const int kReloadMenuCommands[]  = {
   [self setOpenMenuOnClickHold:enabled];
 }
 
-- (void)setCommandUpdater:(CommandUpdater*)commandUpdater {
-  commandUpdater_ = commandUpdater;
+- (void)setCommandUpdaterProxy:(CommandUpdaterProxy*)commandUpdaterProxy {
+  commandUpdaterProxy_ = commandUpdaterProxy;
 }
 
 - (void)forceReloadState:(NSTimer *)timer {
@@ -249,12 +249,12 @@ const int kReloadMenuCommands[]  = {
 
 // Action for menu items.
 - (void)executeMenuItem:(id)sender {
-  if (!commandUpdater_)
+  if (!commandUpdaterProxy_)
     return;
   DCHECK([sender isKindOfClass:[NSMenuItem class]]);
   int command = [sender tag];
   int event_flags = ui::EventFlagsFromNative([NSApp currentEvent]);
-  commandUpdater_->ExecuteCommandWithDisposition(
+  commandUpdaterProxy_->ExecuteCommandWithDispositionProxy(
       command, ui::DispositionFromEventFlags(event_flags));
 }
 

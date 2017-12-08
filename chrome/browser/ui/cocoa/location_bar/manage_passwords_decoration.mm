@@ -6,7 +6,7 @@
 
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_proxy.h"
 #include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
 #include "chrome/browser/ui/cocoa/passwords/passwords_bubble_cocoa.h"
@@ -38,9 +38,9 @@ void ManagePasswordsIconCocoa::OnChangingState() {
 // ManagePasswordsDecoration
 
 ManagePasswordsDecoration::ManagePasswordsDecoration(
-    CommandUpdater* command_updater,
+    CommandUpdaterProxy* command_updater_proxy,
     LocationBarViewMac* location_bar)
-    : command_updater_(command_updater),
+    : command_updater_proxy_(command_updater_proxy),
       location_bar_(location_bar),
       icon_(new ManagePasswordsIconCocoa(this)) {
   UpdateUIState();
@@ -64,7 +64,7 @@ bool ManagePasswordsDecoration::OnMousePressed(NSRect frame, NSPoint location) {
   if (ManagePasswordsBubbleCocoa::instance())
     ManagePasswordsBubbleCocoa::instance()->Close();
   else
-    command_updater_->ExecuteCommand(IDC_MANAGE_PASSWORDS_FOR_PAGE);
+    command_updater_proxy_->ExecuteCommand(IDC_MANAGE_PASSWORDS_FOR_PAGE);
   return true;
 }
 
