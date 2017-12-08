@@ -24,6 +24,7 @@
 #include "content/public/common/content_switches.h"
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/config/gpu_finch_features.h"
+#include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 #include "media/media_features.h"
 #include "ui/gl/gl_switches.h"
