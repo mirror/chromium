@@ -115,6 +115,7 @@ public class TileGridLayoutTest {
     private final CallbackHelper mLoadCompleteHelper = new CallbackHelper();
 
     @Test
+    @RetryOnFailure(message = "crbug.com/771648")
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageIsMovedToFirstPositionWhenMultipleRowsExist() throws Exception {
@@ -129,6 +130,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    @RetryOnFailure(message = "crbug.com/771648")
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageRemainsAsLastElementInOnlyRow() throws Exception {
@@ -146,6 +148,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    @RetryOnFailure(message = "crbug.com/771648")
     @SmallTest
     @Feature({"NewTabPage"})
     public void testHomePageKeepsPositionInOnlyRow() throws Exception {
@@ -161,6 +164,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
+    @RetryOnFailure(message = "crbug.com/771648")
     @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     public void testTileGridAppearance() throws Exception {
