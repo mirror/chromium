@@ -428,8 +428,7 @@
       'test': 'ash_unittests',
       'override_isolate_target': 'ash_unittests',
       'args': [
-        '--mus',
-        '--test-launcher-filter-file=../../testing/buildbot/filters/ash_unittests_mus.filter',
+        '--mus'
       ],
     },
     'chromevox_tests': {},
@@ -464,8 +463,7 @@
       'test': 'content_browsertests',
       'override_isolate_target': 'content_browsertests',
       'args': [
-        '--mus',
-        '--test-launcher-filter-file=../../testing/buildbot/filters/mus.content_browsertests.filter',
+        '--mus'
       ],
       'swarming': {
         'shards': 2,
