@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9c88ce_c240159c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-08T20:30:43Z",
+      "side": 1,
+      "message": "\"Do not skip to payment app if it is not the only one or it\u0027s not pre-selected.\"",
+      "range": {
+        "startLine": 667,
+        "startChar": 15,
+        "endLine": 667,
+        "endChar": 92
+      },
+      "revId": "9f652faae7832b239b4fa3a437c6a286ea140b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
