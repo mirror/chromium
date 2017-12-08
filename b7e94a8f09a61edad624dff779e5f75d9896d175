@@ -141,6 +141,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec908f2_8c8f9f36",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-08T00:39:46Z",
+      "side": 1,
+      "message": "\u003e What is last_pressed_handler_ in this case?\n\nlast_click_handler_ is null.  That explains it.  It\u0027s because DesktopLinuxBrowserFrameView::OnMouseEvent wasn\u0027t setting single-click events as handled.  Handling single-clicks partially fixes the issue.  Now double clicking fails to open a menu.  Then succeeds.  Then fails.  Then succeeds...\n\nThis is because the first click is handled here:\nhttps://cs.chromium.org/chromium/src/ui/views/widget/desktop_aura/window_event_filter.cc?rcl\u003d74bb7a6a374cd4cbc666ec6f34fd3cc3e10c782e\u0026l\u003d101\nThen the double-click sets last_click_handler_, priming the next double-click.\n\nI made a change that removes the StopPropagation() from X11WindowEventFilter and this seems to fix the issue, but I\u0027m not sure if this is the right solution either.",
+      "parentUuid": "4875b210_e7f9071d",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
