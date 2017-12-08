@@ -593,6 +593,30 @@
     },
     {
       "key": {
+        "uuid": "1e7cf725_cef7b3ab",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-12-08T03:14:45Z",
+      "side": 1,
+      "message": "I commented on how to check it in the test otherwise.",
+      "parentUuid": "2f2cd8c8_e722dbe5",
+      "range": {
+        "startLine": 147,
+        "startChar": 36,
+        "endLine": 147,
+        "endChar": 37
+      },
+      "revId": "4ecdc10bff626753b3bc878df61e2a55cec2193c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2979f6b5_18f3e367",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 18
