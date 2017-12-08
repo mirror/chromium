@@ -23,6 +23,7 @@
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
+#include "components/exo/test/test_client_controlled_state_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/window.h"
@@ -41,7 +42,25 @@
 namespace exo {
 namespace {
 
-using ShellSurfaceTest = test::ExoTestBase;
+class ShellSurfaceTest : public test::ExoTestBase {
+ public:
+  ShellSurfaceTest() = default;
+  ~ShellSurfaceTest() override = default;
+
+  // Overridden from exo::test::ExoTestBase:
+  void SetUp() override {
+    test::ExoTestBase::SetUp();
+    test::TestClientControlledStateDelegate::InstallFactory();
+  }
+
+  void TearDown() override {
+    test::TestClientControlledStateDelegate::UninstallFactory();
+    test::ExoTestBase::TearDown();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ShellSurfaceTest);
+};
 
 bool HasBackdrop() {
   ash::WorkspaceController* wc =

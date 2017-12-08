@@ -867,9 +867,6 @@ void ShellSurfaceBase::OnPostWindowStateTypeChange(
     UpdateBackdrop();
   }
 
-  if (old_type != new_type && !state_changed_callback_.is_null())
-    state_changed_callback_.Run(old_type, new_type);
-
   // Re-enable animations if they were disabled in pre state change handler.
   scoped_animations_disabled_.reset();
 }
@@ -1102,13 +1099,6 @@ void ShellSurfaceBase::CreateShellSurfaceWidget(
   window_state->AddObserver(this);
 
   InitializeWindowState(window_state);
-
-  // Notify client of initial state if different than normal.
-  if (window_state->GetStateType() != ash::mojom::WindowStateType::NORMAL &&
-      !state_changed_callback_.is_null()) {
-    state_changed_callback_.Run(ash::mojom::WindowStateType::NORMAL,
-                                window_state->GetStateType());
-  }
 
   // AutoHide shelf in fullscreen state.
   window_state->SetHideShelfWhenFullscreen(false);
