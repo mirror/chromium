@@ -457,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "e2b44647_8cda1f5f",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-12-08T01:46:44Z",
+      "side": 1,
+      "message": "Added a unique check as discussed.",
+      "parentUuid": "7e824fe5_e7b8b6e8",
+      "revId": "b01f71550c7996f06672ea3f194ca02a6d54b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb35b1de_ff23632a",
         "filename": "chrome/browser/ui/content_settings/content_setting_image_model_browsertest.cc",
         "patchSetId": 9
