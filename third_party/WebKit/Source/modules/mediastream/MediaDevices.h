@@ -5,18 +5,24 @@
 #ifndef MediaDevices_h
 #define MediaDevices_h
 
+#include "base/callback.h"
 #include "bindings/core/v8/ActiveScriptWrappable.h"
-#include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
+#include "modules/mediastream/MediaDeviceInfo.h"
 #include "platform/AsyncMethodRunner.h"
+#include "platform/heap/HeapAllocator.h"
+#include "public/platform/modules/mediastream/media_devices.mojom-blink.h"
 
 namespace blink {
 
+class LocalFrame;
 class MediaStreamConstraints;
 class MediaTrackSupportedConstraints;
+class ScriptPromise;
+class ScriptPromiseResolver;
 class ScriptState;
 class UserMediaController;
 
@@ -52,6 +58,23 @@ class MODULES_EXPORT MediaDevices final
   void Pause() override;
   void Unpause() override;
 
+  // Callbacks for testing only.
+  using EnumerateDevicesCallback =
+      base::OnceCallback<void(const MediaDeviceInfoVector&)>;
+  using ConnectionErrorCallback = base::OnceCallback<void()>;
+
+  void SetDispatcherHostForTesting(mojom::blink::MediaDevicesDispatcherHostPtr);
+
+  void SetEnumerateDevicesCallbackForTesting(
+      EnumerateDevicesCallback test_callback) {
+    enumerate_devices_test_callback_ = std::move(test_callback);
+  }
+
+  void SetConnectionErrorCallbackForTesting(
+      ConnectionErrorCallback test_callback) {
+    connection_error_test_callback_ = std::move(test_callback);
+  }
+
   virtual void Trace(blink::Visitor*);
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(devicechange);
@@ -71,11 +94,21 @@ class MODULES_EXPORT MediaDevices final
   void StopObserving();
   UserMediaController* GetUserMediaController();
   void Dispose();
+  void DevicesEnumerated(ScriptPromiseResolver*,
+                         Vector<Vector<mojom::blink::MediaDeviceInfoPtr>>);
+  void OnDispatcherHostConnectionError();
+  const mojom::blink::MediaDevicesDispatcherHostPtr& GetDispatcherHost(
+      LocalFrame*);
 
   bool observing_;
   bool stopped_;
   Member<AsyncMethodRunner<MediaDevices>> dispatch_scheduled_event_runner_;
   HeapVector<Member<Event>> scheduled_events_;
+  mojom::blink::MediaDevicesDispatcherHostPtr dispatcher_host_;
+  HeapHashSet<Member<ScriptPromiseResolver>> requests_;
+
+  EnumerateDevicesCallback enumerate_devices_test_callback_;
+  ConnectionErrorCallback connection_error_test_callback_;
 };
 
 }  // namespace blink
