@@ -24,6 +24,21 @@ bool SiteIsolationPolicy::UseDedicatedProcessesForAllSites() {
 }
 
 // static
+bool SiteIsolationPolicy::IsCrossSiteDocumentBlockingEnabled() {
+  if (base::FeatureList::IsEnabled(
+          ::features::kCrossSiteDocumentBlockingAlways))
+    return true;
+
+  if (base::FeatureList::IsEnabled(
+          ::features::kCrossSiteDocumentBlockingIfIsolating)) {
+    if (UseDedicatedProcessesForAllSites() || AreIsolatedOriginsEnabled())
+      return true;
+  }
+
+  return false;
+}
+
+// static
 bool SiteIsolationPolicy::IsTopDocumentIsolationEnabled() {
   // --site-per-process trumps --top-document-isolation.
   if (UseDedicatedProcessesForAllSites())

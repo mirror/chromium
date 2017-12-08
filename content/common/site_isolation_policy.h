@@ -27,6 +27,9 @@ class CONTENT_EXPORT SiteIsolationPolicy {
   // Returns true if every site should be placed in a dedicated process.
   static bool UseDedicatedProcessesForAllSites();
 
+  // Returns true if cross-site document responses can be blocked.
+  static bool IsCrossSiteDocumentBlockingEnabled();
+
   // Returns true if third-party subframes of a page should be kept in a
   // different process from the main frame.
   static bool IsTopDocumentIsolationEnabled();

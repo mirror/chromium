@@ -326,11 +326,8 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
   // TODO(creis): This check can go away once the logic here is made fully
   // backward compatible and we can enforce it always, regardless of Site
   // Isolation policy.
-  if (!SiteIsolationPolicy::UseDedicatedProcessesForAllSites() &&
-      !ChildProcessSecurityPolicyImpl::GetInstance()->IsIsolatedOrigin(
-          url::Origin::Create(url))) {
+  if (!SiteIsolationPolicy::IsCrossSiteDocumentBlockingEnabled())
     return false;
-  }
 
   // Look up MIME type.  If it doesn't claim to be a blockable type (i.e., HTML,
   // XML, JSON, or plain text), don't block it.
