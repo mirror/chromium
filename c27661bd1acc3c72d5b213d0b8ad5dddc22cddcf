@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b7d87723_08f5274a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 4004,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-08T01:03:31Z",
+      "side": 1,
+      "message": "Yes. Added the same comment.\n\nI\u0027m experimenting also generating PaintOffsetTranslation for SPv2 if the object has a paint property node with direct compositing reason: https://chromium-review.googlesource.com/c/chromium/src/+/813234, but still need to invetigate some test failures (related to escaping clip). If that succeeds, we\u0027ll reduce some of such differences.",
+      "parentUuid": "15750f3f_1da00cd3",
+      "revId": "c27661bd1acc3c72d5b213d0b8ad5dddc22cddcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5de606b_c4821555",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
         "patchSetId": 8
