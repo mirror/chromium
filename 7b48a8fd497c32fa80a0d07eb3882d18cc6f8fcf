@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1978ead7_95388dd1",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-08T15:40:19Z",
+      "side": 1,
+      "message": "It\u0027s Android.  I don\u0027t think there\u0027s anything bad about these numbers because we log them to the android logs that anyone can read from their device.  But if you\u0027re unsure, we can remove them.",
+      "parentUuid": "67ad721c_47d9ed53",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88cb0225_b553fe60",
         "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Hmm, that\u0027s a good question. The check above has existed in Blink in the AudioDestination.cpp for awhile and this is just a double-checking here that the value is sane. rtoy@ are there Android devices in the wild today that have their hardware buffer sizes set to \u003e8192? I assume we would be seeing problems on these already due to the kFIFOSize?",
       "parentUuid": "88cb0225_b553fe60",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c40392_09dbcb62",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-08T15:40:19Z",
+      "side": 1,
+      "message": "Hongchan and I have wondered about that as well once we saw the stats.  But since there aren\u0027t any reports on this, I\u0027m guessing it didn\u0027t really matter to anyone.\n\nThe internal stats say there are such devices, but I have no idea what they are or why they are so large.",
+      "parentUuid": "198e9607_92d8c564",
       "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +172,24 @@
       "writtenOn": "2017-12-08T11:21:35Z",
       "side": 1,
       "message": "rtoy@ - Do I understand correctly that it has it been tested on a range of most common devices?",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27494356_ab79c76a",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-08T15:40:19Z",
+      "side": 1,
+      "message": "You mean using the hardware buffer size? I\u0027ve tested it on the devices I have (Nexus 4, 5, and 9). I ran a bunch of web audio demos and was surprised that they all seemed to work just fine with the hardware sizes (240, 240, and 256).\n\nI don\u0027t have any others devices, but could possibly dig up more. It will take some time.\n\nI asked Dale about this a month or two ago, and he said we should just use the HW size.",
+      "parentUuid": "49e7ee70_901be269",
       "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
