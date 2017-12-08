@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "657c0f9d_fd4dedf5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T12:46:47Z",
+      "side": 1,
+      "message": "Could you explain offset at middle of fragment is candidate?\nIs this offset at edge of other fragments?",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea1343b_e9644c9f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-12-08T12:46:47Z",
+      "side": 1,
+      "message": "As we discussed before, we should not use flat tree version outside\nediting/.",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "72b8d112496968624bf2190b10e26d50d4aa9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
