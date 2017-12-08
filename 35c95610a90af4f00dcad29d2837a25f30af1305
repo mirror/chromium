@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "70c60db2_b0d953fe",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-08T00:52:11Z",
+      "side": 1,
+      "message": "optional: Moving (a part of?) this comment to the header file might be helpful, because ProduceCache() looks like always creating cache, but in fact it doesn\u0027t.",
+      "revId": "35c95610a90af4f00dcad29d2837a25f30af1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27a88d3f_5dfb4e7e",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 3
@@ -13,6 +30,46 @@
       "writtenOn": "2017-12-07T19:30:38Z",
       "side": 1,
       "message": "scoped_ptr",
+      "revId": "35c95610a90af4f00dcad29d2837a25f30af1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f42d3b5_9239e7e1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-08T00:52:11Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as |code_cache_tag|?",
+      "range": {
+        "startLine": 607,
+        "startChar": 19,
+        "endLine": 607,
+        "endChar": 69
+      },
+      "revId": "35c95610a90af4f00dcad29d2837a25f30af1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a3f0e7_4c7b9334",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-08T00:52:11Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/791493 is about to land.\nHow about taking a |const ScriptSourceCode\u0026| argument and using source_code.Source() and source_code.CacheHandler() instead of CachedMetadataHandler and |source_code|?",
       "revId": "35c95610a90af4f00dcad29d2837a25f30af1305",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

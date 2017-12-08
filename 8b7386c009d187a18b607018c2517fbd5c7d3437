@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5be805d_c8ee8d61",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-08T00:52:11Z",
+      "side": 0,
+      "message": "What is the context behind removing SetCacheTimeStamp()?\nJust curious.",
+      "revId": "8b7386c009d187a18b607018c2517fbd5c7d3437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
