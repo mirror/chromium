@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "70f0898c_97e45b68",
+        "filename": "chromeos/dbus/cros_disks_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T17:13:45Z",
+      "side": 1,
+      "message": "out of scope, especially since this class uses strings all over the place, but it might be cleaner for all of these to be const base::FilePath\u0026. please don\u0027t feel obligated to fix this, though :-)",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "422d4edc_c7e37663",
         "filename": "chromeos/dbus/fake_cros_disks_client.cc",
         "patchSetId": 1
@@ -19,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d3badf12_c96d7929",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T17:13:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "422d4edc_c7e37663",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186e4176_0c60e590",
         "filename": "chromeos/dbus/fake_cros_disks_client.cc",
         "patchSetId": 1
@@ -33,6 +68,24 @@
       "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1111c08c_0097c8db",
+        "filename": "chromeos/dbus/fake_cros_disks_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-08T17:13:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "186e4176_0c60e590",
+      "revId": "fafafe82a29eb7af1ae8fb187f12ab7db9c3703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
