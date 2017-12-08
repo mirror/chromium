@@ -856,7 +856,9 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
   int max_texture_size =
       layer_tree_impl()->resource_provider()->max_texture_size();
 
-  if (mask_type_ == Layer::LayerMaskType::SINGLE_TEXTURE_MASK) {
+  const bool kUseExactTileSize = true;
+  if (kUseExactTileSize ||
+      mask_type_ == Layer::LayerMaskType::SINGLE_TEXTURE_MASK) {
     // Masks are not tiled, so if we can't cover the whole mask with one tile,
     // we shouldn't have such a tiling at all.
     DCHECK_LE(content_bounds.width(), max_texture_size);
