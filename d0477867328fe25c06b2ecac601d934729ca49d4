@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9291593_9d7fb39d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-08T18:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527a55f5_2575b756",
+      "range": {
+        "startLine": 1197,
+        "startChar": 74,
+        "endLine": 1197,
+        "endChar": 83
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f1d99d_bdd99985",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5b259a28_49ba7838",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-08T18:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f1d99d_bdd99985",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 84
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42dcce33_1ea49a3c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T16:16:04Z",
       "side": 1,
       "message": "Is it possible to handle back press on app modal dialogs too e.g. in the ModalDialogManager?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d290e86_23dc210a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-08T18:48:34Z",
+      "side": 1,
+      "message": "For app modal dialogs, the back press is handled by AlertDialog built in AppModalPresenter. The only thing needed is to add an onCancelListener to the AlertDialog to notify ModalDialogManager. \n\nSo when mManager.cancelDialog() is called in OnCancel() from AlertDialog, the AlertDialog is already dismissed, but it is not considered \"dismissed\" in the Manager or in the Presenter until we update the status.\n\nI think it makes sense to let each presenter handle back press itself. Here is my reasoning:\n\n  1) moving this to ModalDialogManager makes the logic for handleBackPress a bit messy \n     (whether it is actually used or Presenter is handling this like app modal)\n  2) it\u0027s probably not a good idea to have ModalDialogManager to handle this user-related \n     action since the manager is currently just handling logic for show/dismiss/cancel of a \n     queue of dialogs.\n  3) presenters might want different behavior.\n\nSee comments here: https://chromium-review.googlesource.com/c/chromium/src/+/757166/10/chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java#1907",
+      "parentUuid": "42dcce33_1ea49a3c",
       "range": {
         "startLine": 109,
         "startChar": 19,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "85d2c610_69d2f5c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-08T18:48:34Z",
+      "side": 1,
+      "message": "I wonder if tab modal dialog must be shown on a tab. if there is no active tab, maybe showing a tab modal dialog is not even valid. Let\u0027s assert activeTab !\u003d null instead?",
+      "parentUuid": "bba73db4_82293d93",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 21
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "199e419c_7a9008f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
         "patchSetId": 13
@@ -114,6 +210,30 @@
       "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0686ac_6d53ebac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-08T18:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199e419c_7a9008f8",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 87
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
