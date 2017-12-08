@@ -9,8 +9,10 @@
 #include "base/test/scoped_task_environment.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "content/public/browser/web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {
@@ -28,14 +30,26 @@ class TestTabStatsTracker : public TabStatsTracker {
 
   // Helper functions to update the number of tabs/windows.
 
-  size_t AddTabs(size_t tab_count) {
-    tab_stats_data_store()->OnTabsAdded(tab_count);
+  size_t AddTabs(size_t tab_count,
+                 ChromeRenderViewHostTestHarness* test_harness) {
+    EXPECT_NE(nullptr, test_harness);
+    for (size_t i = 0; i < tab_count; ++i) {
+      content::WebContents* tab = test_harness->CreateTestWebContents();
+      tab_stats_data_store()->OnTabAdded(tab);
+      tabs_.push_back(base::WrapUnique(tab));
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
-  size_t RemoveTabs(size_t tab_count) {
+  size_t RemoveTabs(size_t tab_count,
+                    ChromeRenderViewHostTestHarness* test_harness) {
+    EXPECT_NE(nullptr, test_harness);
     EXPECT_LE(tab_count, tab_stats_data_store()->tab_stats().total_tab_count);
-    tab_stats_data_store()->OnTabsRemoved(tab_count);
+    EXPECT_LE(tab_count, tabs_.size());
+    for (size_t i = 0; i < tab_count; ++i) {
+      tab_stats_data_store()->OnTabRemoved(tabs_.back().get());
+      tabs_.pop_back();
+    }
     return tab_stats_data_store()->tab_stats().total_tab_count;
   }
 
@@ -78,6 +92,8 @@ class TestTabStatsTracker : public TabStatsTracker {
  private:
   PrefService* pref_service_;
 
+  std::vector<std::unique_ptr<content::WebContents>> tabs_;
+
   DISALLOW_COPY_AND_ASSIGN(TestTabStatsTracker);
 };
 
@@ -95,7 +111,7 @@ class TestUmaStatsReportingDelegate
   DISALLOW_COPY_AND_ASSIGN(TestUmaStatsReportingDelegate);
 };
 
-class TabStatsTrackerTest : public testing::Test {
+class TabStatsTrackerTest : public ChromeRenderViewHostTestHarness {
  public:
   using UmaStatsReportingDelegate =
       TestTabStatsTracker::UmaStatsReportingDelegate;
@@ -112,10 +128,10 @@ class TabStatsTrackerTest : public testing::Test {
     tab_stats_tracker_.reset(new TestTabStatsTracker(&pref_service_));
   }
 
-  void TearDown() override { tab_stats_tracker_.reset(nullptr); }
-
-  // The Power Monitor requires a task environment.
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  void TearDown() override {
+    tab_stats_tracker_.reset(nullptr);
+    ChromeRenderViewHostTestHarness::TearDown();
+  }
 
   // The tabs stat tracker instance, it should be created in the SetUp
   std::unique_ptr<TestTabStatsTracker> tab_stats_tracker_;
@@ -156,7 +172,7 @@ TEST_F(TabStatsTrackerTest, OnResume) {
       UmaStatsReportingDelegate::kNumberOfTabsOnResumeHistogramName, 0);
 
   // Creates some tabs.
-  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12);
+  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12, this);
 
   std::vector<base::Bucket> count_buckets;
   count_buckets.push_back(base::Bucket(expected_tab_count, 1));
@@ -175,7 +191,7 @@ TEST_F(TabStatsTrackerTest, OnResume) {
             count_buckets);
 
   // Removes some tabs and update the expectations.
-  expected_tab_count = tab_stats_tracker_->RemoveTabs(5);
+  expected_tab_count = tab_stats_tracker_->RemoveTabs(5, this);
   count_buckets.push_back(base::Bucket(expected_tab_count, 1));
   std::sort(count_buckets.begin(), count_buckets.end(), CompareHistogramBucket);
 
@@ -198,12 +214,12 @@ TEST_F(TabStatsTrackerTest, StatsGetReportedDaily) {
 
   // Adds some tabs and windows, then remove some so the maximums are not equal
   // to the current state.
-  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12);
+  size_t expected_tab_count = tab_stats_tracker_->AddTabs(12, this);
   size_t expected_window_count = tab_stats_tracker_->AddWindows(5);
   size_t expected_max_tab_per_window = expected_tab_count - 1;
   tab_stats_tracker_->data_store()->UpdateMaxTabsPerWindowIfNeeded(
       expected_max_tab_per_window);
-  expected_tab_count = tab_stats_tracker_->RemoveTabs(5);
+  expected_tab_count = tab_stats_tracker_->RemoveTabs(5, this);
   expected_window_count = tab_stats_tracker_->RemoveWindows(2);
   expected_max_tab_per_window = expected_tab_count - 1;
 
