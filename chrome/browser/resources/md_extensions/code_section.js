@@ -65,10 +65,16 @@ cr.define('extensions', function() {
 
     /** @private */
     onHighlightChanged_: function() {
-      // Smooth scroll the highlight to roughly the middle.
+      // Scroll the highlight to roughly the middle.
+      const targetTop = this.$.highlight.offsetTop - this.clientHeight * 0.5;
+      // Smooth scrolling if moving within ~100 LOC, otherwise just jump to it.
+      const behavior =
+          Math.abs(this.$['scroll-container'].scrollTop - targetTop) < 2000 ?
+          'smooth' :
+          'auto';
       this.$['scroll-container'].scrollTo({
-        top: this.$.highlight.offsetTop - this.clientHeight * 0.5,
-        behavior: 'smooth',
+        top: targetTop,
+        behavior: behavior,
       });
     },
   });
