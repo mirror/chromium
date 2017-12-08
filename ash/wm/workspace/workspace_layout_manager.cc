@@ -77,6 +77,8 @@ void WorkspaceLayoutManager::SetBackdropDelegate(
 void WorkspaceLayoutManager::OnWindowResized() {}
 
 void WorkspaceLayoutManager::OnWindowAddedToLayout(aura::Window* child) {
+  LOG(ERROR) << "JAMES OnWindowAddedToLayout bounds " << child->bounds().ToString();
+
   wm::WindowState* window_state = wm::GetWindowState(child);
   wm::WMEvent event(wm::WM_EVENT_ADDED_TO_WORKSPACE);
   window_state->OnWMEvent(&event);
@@ -137,7 +139,29 @@ void WorkspaceLayoutManager::OnChildWindowVisibilityChanged(aura::Window* child,
 
 void WorkspaceLayoutManager::SetChildBounds(aura::Window* child,
                                             const gfx::Rect& requested_bounds) {
-  wm::SetBoundsEvent event(wm::WM_EVENT_SET_BOUNDS, requested_bounds);
+  gfx::Rect bounds_in_out = requested_bounds;
+/***
+  This was trying to use an aura window property, but that doesn't really
+  work in mash since there are multiple aura windows per top-level (even if you
+  mirror the properties there are differences in when child bounds are set).
+  TopLevelWindowFactory is probably the right place for mash.
+
+  if (child->GetProperty(kNeedsInitialPositionKey)) {
+    LOG(ERROR) << "JAMES WLM SetChildBounds had kNeedsInitialPositionKey";
+    const bool is_saved_bounds = true; //???
+    //JAMES widget from native widget?
+    const ui::WindowShowState show_state_in = ui::SHOW_STATE_DEFAULT;
+    gfx::Rect bounds_in_out = requested_bounds;
+    ui::WindowShowState show_state_out = ui::SHOW_STATE_DEFAULT;
+    // browser set the size (maybe?) but we need a position.
+    WindowPositioner::GetBoundsAndShowStateForNewWindow(child,
+        is_saved_bounds, show_state_in, &bounds_in_out, &show_state_out);
+    //JAMES set show state?
+    // We only need to fix up the initial position once.
+    child->SetProperty(kNeedsInitialPositionKey, false);
+  }
+***/
+  wm::SetBoundsEvent event(wm::WM_EVENT_SET_BOUNDS, bounds_in_out);
   wm::GetWindowState(child)->OnWMEvent(&event);
   UpdateShelfVisibility();
 }

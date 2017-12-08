@@ -77,6 +77,13 @@ ChromeNewWindowClient* ChromeNewWindowClient::Get() {
   return g_instance;
 }
 
+int64_t ChromeNewWindowClient::GetDisplayIdForNewWindows() const {
+  //JAMES cache this.
+  // alternately, this interface could call into WindowSizer and set the
+  // requested display there
+  return -1;
+}
+
 // TabRestoreHelper is used to restore a tab. In particular when the user
 // attempts to a restore a tab if the TabRestoreService hasn't finished loading
 // this waits for it. Once the TabRestoreService finishes loading the tab is

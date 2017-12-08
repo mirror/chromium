@@ -61,6 +61,10 @@ bool ShouldRemoveStandardFrame(const InitProperties& properties);
 
 bool ShouldEnableImmersive(const InitProperties& properties);
 
+// Needs the window manager to compute the initial position.
+//JAMES better name
+bool NeedsPosition(const InitProperties& properties);
+
 mojom::WindowStyle GetWindowStyle(const InitProperties& properties);
 
 // Applies |properties| to |window| using |property_converter|.

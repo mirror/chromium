@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_ASH_CHROME_NEW_WINDOW_CLIENT_H_
 #define CHROME_BROWSER_UI_ASH_CHROME_NEW_WINDOW_CLIENT_H_
 
+#include <stddef.h>
+
 #include <memory>
 
 #include "ash/public/interfaces/new_window.mojom.h"
@@ -17,6 +19,9 @@ class ChromeNewWindowClient : public ash::mojom::NewWindowClient {
   ~ChromeNewWindowClient() override;
 
   static ChromeNewWindowClient* Get();
+
+  //JAMES
+  int64_t GetDisplayIdForNewWindows() const;
 
   // Overridden from ash::mojom::NewWindowClient:
   void NewTab() override;

@@ -147,9 +147,11 @@ class DefaultTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
 
   display::Display GetTargetDisplay(const display::Screen* screen,
                                     const gfx::Rect& bounds) const override {
+//JAMES - use ChromeNewWindowClient.
 #if defined(OS_CHROMEOS)
     // Use the target display on ash.
     if (ash_util::ShouldOpenAshOnStartup()) {
+      LOG(ERROR) << "JAMES GetTargetDisplay";
       aura::Window* target = ash::Shell::GetRootWindowForNewWindows();
       return screen->GetDisplayNearestWindow(target);
     }
@@ -199,6 +201,8 @@ void WindowSizer::GetBrowserWindowBoundsAndShowState(
     const Browser* browser,
     gfx::Rect* window_bounds,
     ui::WindowShowState* show_state) {
+  LOG(ERROR) << "JAMES WindowSizer::GetBrowserWindowBoundsAndShowState app_name "
+      << app_name << " specified_bounds " << specified_bounds.ToString();
   std::unique_ptr<StateProvider> state_provider(
       new DefaultStateProvider(app_name, browser));
   std::unique_ptr<TargetDisplayProvider> target_display_provider(
@@ -224,9 +228,22 @@ void WindowSizer::DetermineWindowBoundsAndShowState(
   *bounds = specified_bounds;
 
 #if defined(OS_CHROMEOS)
-  // See if ash should decide the window placement.
-  if (GetBrowserBoundsAsh(bounds, show_state))
+
+//JAMES - note that this is not called for file manager app. Dunno who
+//positions that one.
+#if 0
+  LOG(ERROR) << "JAMES skipping ash path";
+#else
+  // See if ash should decide the window placement. specified_bounds is 0,0 on first pass
+  if (GetBrowserBoundsAsh(bounds, show_state)) {//on second pass, specified_bounds and bounds start at 0,0 0x0
+    LOG(ERROR) << "JAMES GetBrowserBoundsAsh returned bounds "
+               << bounds->ToString() << " show_state " << int(*show_state);
     return;
+  } else {
+    LOG(ERROR) << "JAMES GetBrowserBoundsAsh did not set browser bounds";
+  }
+#endif
+
 #endif
 
   if (bounds->IsEmpty()) {

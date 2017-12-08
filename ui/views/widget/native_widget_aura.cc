@@ -213,7 +213,7 @@ void NativeWidgetAura::InitNativeWidget(const Widget::InitParams& params) {
     parent->AddChild(window_);
   } else {
     aura::client::ParentWindowWithContext(
-        window_, context->GetRootWindow(), window_bounds);
+        window_, context->GetRootWindow(), window_bounds);//bounds 50,16 1100x784
   }
 
   // Start observing property changes.

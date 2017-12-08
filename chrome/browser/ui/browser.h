@@ -516,6 +516,9 @@ class Browser : public TabStripModelObserver,
   bool ShouldRunUnloadListenerBeforeClosing(content::WebContents* web_contents);
   bool RunUnloadListenerBeforeClosing(content::WebContents* web_contents);
 
+  //JAMES HACK
+  bool needs_initial_position_ = false;
+
  private:
   friend class BrowserTest;
   friend class FullscreenControllerInteractiveTest;

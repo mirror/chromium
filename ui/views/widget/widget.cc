@@ -333,7 +333,7 @@ void Widget::Init(const InitParams& in_params) {
     is_mouse_button_pressed_ =
         internal::NativeWidgetPrivate::IsMouseButtonDown();
   }
-  native_widget_->InitNativeWidget(params);
+  native_widget_->InitNativeWidget(params);//bounds are 50,16 1100x784 here
   if (RequiresNonClientView(params.type)) {
     non_client_view_ = new NonClientView;
     non_client_view_->SetFrameView(CreateNonClientFrameView());
@@ -353,7 +353,7 @@ void Widget::Init(const InitParams& in_params) {
     UpdateWindowIcon();
     UpdateWindowTitle();
     non_client_view_->ResetWindowControls();
-    SetInitialBounds(params.bounds);
+    SetInitialBounds(params.bounds);//bounds are still 50,16 1100x784
 
     // Perform the initial layout. This handles the case where the size might
     // not actually change when setting the initial bounds. If it did, child

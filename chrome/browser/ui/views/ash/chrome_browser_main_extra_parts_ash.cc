@@ -95,6 +95,7 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
         aura::PropertyConverter::CreateAcceptAnyValueCallback());
     converter->RegisterStringProperty(
         ash::kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
+    //JAMES tried aura window properties here
 
     mus_client->SetMusPropertyMirror(
         base::MakeUnique<ash::MusPropertyMirrorAsh>());

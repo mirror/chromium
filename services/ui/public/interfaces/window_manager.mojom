@@ -80,6 +80,9 @@ interface WindowManager {
   // Type: mojom::WindowType (int32_t).
   const string kWindowType_InitProperty = "init:window-type";
 
+// JAMES the window manager should set initial position (but not size?)
+  const string kNeedsPosition_InitProperty = "init:needs-position";
+
   // End properties used only during creation time. ----------------------------
 
   // Long lived properties. ----------------------------------------------------

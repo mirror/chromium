@@ -14,6 +14,7 @@
 #include "ash/wm/container_finder.h"
 #include "ash/wm/non_client_frame_controller.h"
 #include "ash/wm/property_util.h"
+#include "ash/wm/window_positioner.h"
 #include "ash/wm/window_state.h"
 #include "mojo/public/cpp/bindings/type_converter.h"
 #include "services/ui/public/cpp/property_type_converters.h"
@@ -82,8 +83,10 @@ gfx::Rect CalculateDefaultBounds(
     aura::Window* container_window,
     const std::map<std::string, std::vector<uint8_t>>* properties) {
   gfx::Rect requested_bounds;
-  if (GetInitialBounds(*properties, &requested_bounds))
+  if (GetInitialBounds(*properties, &requested_bounds)) {
+    LOG(ERROR) << "JAMES CalculateDefaultBounds had initial bounds " << requested_bounds.ToString();
     return requested_bounds;
+  }
 
   const gfx::Size root_size =
       root_window_controller->GetRootWindow()->bounds().size();
@@ -113,9 +116,22 @@ gfx::Rect CalculateDefaultBounds(
     window_size.SetSize(root_size.width() - kRootSizeDelta,
                         root_size.height() - kRootSizeDelta);
   }
-  // TODO(sky): this should use code in chrome/browser/ui/window_sizer.
+
   static constexpr int kOriginOffset = 40;
-  return gfx::Rect(gfx::Point(kOriginOffset, kOriginOffset), window_size);
+  gfx::Rect bounds(gfx::Point(kOriginOffset, kOriginOffset), window_size);
+
+  //JAMES maybe here?
+  LOG(ERROR) << "JAMES NeedsPosition " << NeedsPosition(*properties);
+  if (NeedsPosition(*properties)) {
+    // Pick some random defaults for this, should probably use the real show
+    // state.
+    ui::WindowShowState show_state_out_ignored;
+    WindowPositioner::GetBoundsAndShowStateForNewWindow(
+        nullptr /* new_window */, false /* is_saved_bounds */,
+        ui::SHOW_STATE_DEFAULT /* show_state_in */, &bounds,
+        &show_state_out_ignored);
+  }
+  return bounds;
 }
 
 // Does the real work of CreateAndParentTopLevelWindow() once the appropriate
@@ -174,6 +190,7 @@ aura::Window* CreateAndParentTopLevelWindowInRoot(
                       aura::client::WindowEmbedType::TOP_LEVEL_IN_WM);
   ApplyProperties(window, property_converter, *properties);
   window->Init(ui::LAYER_TEXTURED);
+  //JAMES or maybe here?
   window->SetBounds(bounds);
 
   if (container_window) {
@@ -198,6 +215,7 @@ aura::Window* CreateAndParentTopLevelWindow(
     WindowManager* window_manager,
     ui::mojom::WindowType window_type,
     std::map<std::string, std::vector<uint8_t>>* properties) {
+  LOG(ERROR) << "JAMES CreateAndParentTopLevelWindow";
   RootWindowController* root_window_controller =
       GetRootWindowControllerForNewTopLevelWindow(properties);
   aura::Window* window = CreateAndParentTopLevelWindowInRoot(

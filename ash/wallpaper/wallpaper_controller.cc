@@ -321,7 +321,8 @@ void WallpaperController::CreateEmptyWallpaper() {
 
 base::FilePath WallpaperController::GetCustomWallpaperDir(
     const std::string& sub_dir) {
-  DCHECK(!dir_chrome_os_custom_wallpapers_path_.empty());
+  //JAMES kills debugger sometimes
+  // DCHECK(!dir_chrome_os_custom_wallpapers_path_.empty());
   return dir_chrome_os_custom_wallpapers_path_.Append(sub_dir);
 }
 

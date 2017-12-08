@@ -34,6 +34,8 @@
 
 #if defined(OS_CHROMEOS)
 #include "components/user_manager/user_manager.h"
+#include "services/ui/public/cpp/property_type_converters.h"
+#include "services/ui/public/interfaces/window_manager.mojom.h"
 #endif
 
 #if defined(OS_LINUX)
@@ -75,10 +77,12 @@ void BrowserFrame::InitBrowserFrame() {
   params.delegate = browser_view_;
   if (browser_view_->browser()->is_type_tabbed()) {
     // Typed panel/popup can only return a size once the widget has been
-    // created.
+    // created. JAMES this is also used for regular browsers, not just popups.
     chrome::GetSavedWindowBoundsAndShowState(browser_view_->browser(),
                                              &params.bounds,
                                              &params.show_state);
+    LOG(ERROR) << "JAMES InitBrowserFrame bounds " << params.bounds.ToString()
+      << " show_state " << int(params.show_state);
 
     params.workspace = browser_view_->browser()->initial_workspace();
     const base::CommandLine& parsed_command_line =
@@ -90,7 +94,18 @@ void BrowserFrame::InitBrowserFrame() {
     }
   }
 
+  if (browser_view_->browser()->needs_initial_position_) {
+    params.mus_properties
+        [ui::mojom::WindowManager::kNeedsPosition_InitProperty] =
+        mojo::ConvertTo<std::vector<uint8_t>>(true);
+  }
+
   Init(params);
+  //JAMES don't have a nativewidget / aura::Window until here.
+  // if (browser_view_->browser()->needs_initial_position_) {
+  //   LOG(ERROR) << "JAMES setting aura window property kNeedsInitialPositionKey";
+  //   GetNativeWindow()->SetProperty(ash::kNeedsInitialPositionKey, true);
+  // }
 
   if (!native_browser_frame_->UsesNativeSystemMenu()) {
     DCHECK(non_client_view());

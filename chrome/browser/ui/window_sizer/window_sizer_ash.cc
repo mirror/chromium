@@ -15,10 +15,13 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 
+#include "ash/public/cpp/window_properties.h"
+#include "base/command_line.h"
+
 bool WindowSizer::GetBrowserBoundsAsh(gfx::Rect* bounds,
                                       ui::WindowShowState* show_state) const {
   // TODO(crbug.com/764009): Mash support.
-  if (ash_util::IsRunningInMash() || !browser_)
+  if (!browser_)
     return false;
 
   bool determined = false;
@@ -41,11 +44,14 @@ bool WindowSizer::GetBrowserBoundsAsh(gfx::Rect* bounds,
                                             &ignored_work_area,
                                             show_state);
       }
+      //JAMES this is the only path that doesn't set |determined|.
     }
   } else if (browser_->is_type_popup() && bounds->origin().IsOrigin()) {
     // In case of a popup with an 'unspecified' location in ash, we are
     // looking for a good screen location. We are interpreting (0,0) as an
     // unspecified location.
+    if (ash_util::IsRunningInMash())
+      return false;
     *bounds = ash::Shell::Get()->window_positioner()->GetPopupPosition(
         bounds->size());
     determined = true;
@@ -110,9 +116,22 @@ void WindowSizer::GetTabbedBrowserBoundsAsh(
   aura::Window* browser_window =
       browser_->window() ? browser_->window()->GetNativeWindow() : NULL;
 
-  ash::WindowPositioner::GetBoundsAndShowStateForNewWindow(
-      browser_window, is_saved_bounds, passed_show_state, bounds_in_screen,
-      show_state);
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch("james") ||
+      ash_util::IsRunningInMash()) {
+    LOG(ERROR) << "JAMES setting needs_initial_pos on Browser";
+    const_cast<Browser*>(browser_)->needs_initial_position_ = true;
+  } else {
+    ash::WindowPositioner::GetBoundsAndShowStateForNewWindow(
+        browser_window, is_saved_bounds, passed_show_state, bounds_in_screen,
+        show_state);
+  }
+  // On initial load browser_window is null, bounds_in_screen are 50,16 1100x784, is_saved_bounds = false
+  //ditto second pass
+  if (*show_state == passed_show_state) {
+    LOG(ERROR) << "JAMES show_state unchanged " << int(passed_show_state);
+  } else {
+    LOG(ERROR) << "JAMES show_state was " << int(passed_show_state) << " now " << int(*show_state);
+  }
 }
 
 gfx::Rect WindowSizer::GetDefaultWindowBoundsAsh(

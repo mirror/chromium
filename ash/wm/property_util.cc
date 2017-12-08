@@ -65,6 +65,12 @@ bool ShouldEnableImmersive(const InitProperties& properties) {
   return iter == properties.end() || !mojo::ConvertTo<bool>(iter->second);
 }
 
+bool NeedsPosition(const InitProperties& properties) {
+  auto iter =
+      properties.find(ui::mojom::WindowManager::kNeedsPosition_InitProperty);
+  return iter == properties.end() || !mojo::ConvertTo<bool>(iter->second);
+}
+
 mojom::WindowStyle GetWindowStyle(const InitProperties& properties) {
   auto iter = properties.find(mojom::kAshWindowStyle_InitProperty);
   if (iter == properties.end())

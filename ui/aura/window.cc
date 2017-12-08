@@ -368,7 +368,7 @@ void Window::AddChild(Window* child) {
 
   Window* old_root = child->GetRootWindow();
 
-  port_->OnWillAddChild(child);
+  port_->OnWillAddChild(child);//does this wipe bounds?
 
   DCHECK(!base::ContainsValue(children_, child));
   if (child->parent())
@@ -379,7 +379,7 @@ void Window::AddChild(Window* child) {
 
   children_.push_back(child);
   if (layout_manager_)
-    layout_manager_->OnWindowAddedToLayout(child);
+    layout_manager_->OnWindowAddedToLayout(child);//bounds are 0,0 now
   for (WindowObserver& observer : observers_)
     observer.OnWindowAdded(child);
   child->OnParentChanged();

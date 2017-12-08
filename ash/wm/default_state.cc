@@ -158,11 +158,18 @@ void DefaultState::HandleWorkspaceEvents(WindowState* window_state,
 
       aura::Window* window = window_state->window();
       gfx::Rect bounds = window->bounds();
+      // Called from WorkspaceLayoutManager::OnWindowAddedToLayout
+      LOG(ERROR) << "JAMES WM_EVENT_ADDED_TO_WORKSPACE "
+                 << window_state->window()->GetName() << " bounds "
+                 << bounds.ToString();
+
       // When window is added to a workspace, |bounds| may be not the original
       // not-changed-by-user bounds, for example a resized bounds truncated by
       // available workarea.
-      if (window_state->pre_added_to_workspace_window_bounds())
+      if (window_state->pre_added_to_workspace_window_bounds()) {
         bounds = *window_state->pre_added_to_workspace_window_bounds();
+        LOG(ERROR) << "JAMES had pre_added_to_workspace_bounds " << bounds.ToString();
+      }
 
       // Don't adjust window bounds if the bounds are empty as this
       // happens when a new views::Widget is created.
@@ -406,6 +413,8 @@ bool DefaultState::SetMaximizedOrFullscreenBounds(WindowState* window_state) {
 // static
 void DefaultState::SetBounds(WindowState* window_state,
                              const SetBoundsEvent* event) {
+  LOG(ERROR) << "JAMES SetBounds " << window_state->window()->GetName()
+      << " " << event->requested_bounds().ToString();
   if (window_state->is_dragged() || window_state->allow_set_bounds_direct()) {
     // TODO(oshima|varkha): Is this still needed? crbug.com/485612.
     window_state->SetBoundsDirect(event->requested_bounds());

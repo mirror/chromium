@@ -753,6 +753,8 @@ TEST_F(WindowSizerAshTest, DefaultStateBecomesMaximized) {
   EXPECT_EQ(specified_bounds.ToString(), bounds.ToString());
 }
 
+//JAMES maybe delete or re-write this next one?
+
 // Test that the target root window is used as the destination of
 // the non browser window. This differ from PersistedBoundsCase
 // in that this uses real ash shell implementations + StateProvider

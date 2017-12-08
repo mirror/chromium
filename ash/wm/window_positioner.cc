@@ -214,6 +214,11 @@ void WindowPositioner::GetBoundsAndShowStateForNewWindow(
     ui::WindowShowState show_state_in,
     gfx::Rect* bounds_in_out,
     ui::WindowShowState* show_state_out) {
+  LOG(ERROR) << "JAMES GetBoundsAndShowStateForNewWindow name "
+      << (new_window ? new_window->GetName() : std::string("none"))
+      << " is_saved_bounds " << is_saved_bounds
+      << " show_state_in " << int(show_state_in)
+      << " bounds_in_out " << bounds_in_out->ToString();
   // Always open new window in the target display.
   aura::Window* target = Shell::GetRootWindowForNewWindows();
 
@@ -310,6 +315,7 @@ bool WindowPositioner::DisableAutoPositioning(bool ignore) {
 // static
 void WindowPositioner::RearrangeVisibleWindowOnShow(
     aura::Window* added_window) {
+  LOG(ERROR) << "JAMES RearrangeVisibleWindowsOnShow";
   wm::WindowState* added_window_state = wm::GetWindowState(added_window);
   if (!added_window->TargetVisibility())
     return;
