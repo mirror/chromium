@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+var style = document.body.style;
+
+test(function() {
+    style.color = 'white';
+
+    assert_equals(style.color, 'white');
+    style.setProperty('color', undefined);
+    assert_equals(style.color, 'white');
+}, "Verify that setting a CSS property to undefined has no effect.");
+
+test(function() {
+    style.color = 'white';
+
+    assert_equals(style.color, 'white');
+    style.setProperty('color', 'red', undefined);
+    assert_equals(style.color, 'white');
+}, "Verify that setting a CSS property priority to undefined has no effect.");
+</script>
+</body>
+</html>
