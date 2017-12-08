@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016ddbc3_f010b9b0",
+        "filename": "third_party/WebKit/common/quota/quota_status_code.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T10:12:14Z",
+      "side": 1,
+      "message": "We create DOMException from this one and the numbers come from dom/ExceptionCode.h, I guess we might still need them (but things might have changed).",
+      "revId": "8a34cc98bea2d0e4f2beae3229f832aa38769b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe332c5b_7851a9ec",
+        "filename": "third_party/WebKit/common/quota/quota_types.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-08T10:12:14Z",
+      "side": 1,
+      "message": "Ok, so we\u0027re going to be able to remove the typemaps too...",
+      "revId": "8a34cc98bea2d0e4f2beae3229f832aa38769b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
