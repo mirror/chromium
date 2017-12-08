@@ -37,6 +37,8 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
       const ash::ShelfItem* item,
       int64_t display_id);
 
+  void RecordHistogram(int command_id);
+
   // ui::SimpleMenuModel::Delegate overrides:
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;

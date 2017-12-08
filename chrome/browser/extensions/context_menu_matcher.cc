@@ -5,6 +5,8 @@
 #include "chrome/browser/extensions/context_menu_matcher.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_base.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/extension_util.h"
@@ -12,6 +14,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/common/context_menu_params.h"
 #include "extensions/browser/extension_registry.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/gfx/favicon_size.h"
 #include "ui/gfx/image/image.h"
 
@@ -23,6 +26,14 @@ namespace {
 // TODO(oshima): These values will be injected by embedders.
 int extensions_context_custom_first = IDC_EXTENSIONS_CONTEXT_CUSTOM_FIRST;
 int extensions_context_custom_last = IDC_EXTENSIONS_CONTEXT_CUSTOM_LAST;
+
+void RecordHistogram(int command_id) {
+  base::HistogramBase* histogram = base::SparseHistogram::FactoryGet(
+      app_list::kAppContextMenuExecuteCommand,
+      base::HistogramBase::kUmaTargetedHistogramFlag);
+  if (histogram)
+    histogram->Add(command_id);
+}
 
 }  // namespace
 
@@ -206,6 +217,7 @@ void ContextMenuMatcher::ExecuteCommand(
   MenuManager* manager = MenuManager::Get(browser_context_);
   manager->ExecuteCommand(browser_context_, web_contents, render_frame_host,
                           params, item->id());
+  RecordHistogram(command_id);
 }
 
 bool ContextMenuMatcher::GetRelevantExtensionTopLevelItems(

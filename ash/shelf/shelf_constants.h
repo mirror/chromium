@@ -10,6 +10,26 @@
 
 namespace ash {
 
+// The UMA histogram that logs the lifetime of a context menu from a
+// ShelfButton.
+constexpr char kShelfContextMenuUserJourneyTimeShelfButton[] =
+    "Apps.ContextMenuUserJourneyTime.ShelfButton";
+
+// The UMA histogram that logs the source of a context menu originating from
+// ShelfButton.
+constexpr char kShelfContextMenuShowSource[] =
+    "Apps.ContextMenuShowSource.ShelfButton";
+
+// The UMA histogram that logs the commands which are executed on non-app
+// context menus in the system UI.
+constexpr char kNonAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.NotFromApp";
+
+// The UMA histogram that logs the commands which are executed on app context
+// menus in the system UI.
+constexpr char kAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.FromApp";
+
 // Size of the shelf when visible (height when the shelf is horizontal and
 // width when the shelf is vertical).
 ASH_EXPORT constexpr int kShelfSize = 48;
