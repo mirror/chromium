@@ -19,6 +19,8 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._selectedTreeElement = null;
     /** @type {!Array<!Console.ConsoleSidebar.FilterTreeElement>} */
     this._treeElements = [];
+    Console.ConsoleSidebar._selectedFilterSetting =
+        Common.settings.createSetting('console.sidebarSelectedFilter', null);
 
     var Levels = ConsoleModel.ConsoleMessage.MessageLevel;
     var consoleAPIParsedFilters = [{
@@ -44,7 +46,10 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._appendGroup(
         Console.ConsoleSidebar._groupSingularName.Verbose, [], Console.ConsoleFilter.singleLevelMask(Levels.Verbose),
         UI.Icon.create('mediumicon-bug'), badgePool);
-    this._treeElements[0].select();
+    var selectedTreeElementName = Console.ConsoleSidebar._selectedFilterSetting.get();
+    var defaultTreeElement =
+        this._treeElements.find(x => x.name() === selectedTreeElementName) || this._treeElements[0];
+    defaultTreeElement.select();
   }
 
   /**
@@ -146,6 +151,24 @@ Console.ConsoleSidebar.FilterTreeElement = class extends UI.TreeElement {
     this.removeChildren();
     this._messageCount = 0;
     this._updateCounter();
+  }
+
+  /**
+   * @return {string}
+   */
+  name() {
+    return this._filter.name;
+  }
+
+  /**
+   * @param {boolean=} selectedByUser
+   * @return {boolean}
+   * @override
+   */
+  onselect(selectedByUser) {
+    if (Console.ConsoleSidebar._selectedFilterSetting)
+      Console.ConsoleSidebar._selectedFilterSetting.set(this._filter.name);
+    return super.onselect(selectedByUser);
   }
 
   _updateCounter() {
