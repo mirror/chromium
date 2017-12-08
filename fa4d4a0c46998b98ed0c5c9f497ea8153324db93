@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e09287_f2f45ccb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T23:24:34Z",
+      "side": 1,
+      "message": "A note for myself -- since this has an anchor rect that\u0027s programatically computed, the help bubble needs to be re-positioned or dismissed on rotation or MW resize.",
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
