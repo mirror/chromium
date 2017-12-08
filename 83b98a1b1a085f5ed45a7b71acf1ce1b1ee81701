@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a3eab4_b197f4ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-08T16:07:31Z",
+      "side": 1,
+      "message": "nit: this is not about helpfulness but rather correctness.",
+      "range": {
+        "startLine": 11,
+        "startChar": 54,
+        "endLine": 11,
+        "endChar": 70
+      },
+      "revId": "83b98a1b1a085f5ed45a7b71acf1ce1b1ee81701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497a8b92_f576a432",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-08T16:07:31Z",
+      "side": 1,
+      "message": "nit: I think it affects all alignments. In some cases depending on \nlogical writing direction the scrollbars may be at the start of the\nelement..",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "83b98a1b1a085f5ed45a7b71acf1ce1b1ee81701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e167fe_69428d8c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-08T16:07:31Z",
+      "side": 1,
+      "message": "Looking more closely at the spec this is what I understand:\n\nscroll-padding: represent inward offsets from the corresponding edge of the scrollport. [1]\nscrollport: The visual viewport of the scroll container (through which the scrollable overflow\nregion can be viewed) coincides with its padding box, and is called the scrollport. [2]\n\nThe logic here is computing \"scroll snapport\" which is effectively (scrollport - padding). So the\ncontainer should be set to  the scrollport i.e. padding box. So using client size is correct.\n\nHowever may I suggest using |LayoutBox::PaddingBoxRect().Size()| instead. It makes it more\nreadable and matches spec better. Also perhaps add a small comment pointing out why we are\nusing padding box and referring to scrollport definition.\n\n\n\n\n[1] https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding\n[2] https://drafts.csswg.org/css-overflow-3/#scrollport",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 79
+      },
+      "revId": "83b98a1b1a085f5ed45a7b71acf1ce1b1ee81701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8abac8e_a4856f0a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-08T16:07:31Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t the comment say \"scroller.width\". same for the other comment.",
+      "range": {
+        "startLine": 421,
+        "startChar": 38,
+        "endLine": 421,
+        "endChar": 72
+      },
+      "revId": "83b98a1b1a085f5ed45a7b71acf1ce1b1ee81701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0caf88_b34d37b7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-08T16:07:31Z",
+      "side": 1,
+      "message": "just our of curiosity, is this not a constant because of scrollbar width?",
+      "range": {
+        "startLine": 423,
+        "startChar": 32,
+        "endLine": 423,
+        "endChar": 70
+      },
+      "revId": "83b98a1b1a085f5ed45a7b71acf1ce1b1ee81701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
