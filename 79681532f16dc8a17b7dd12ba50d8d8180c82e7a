@@ -16,6 +16,24 @@
       "revId": "79681532f16dc8a17b7dd12ba50d8d8180c82e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b406099d_e1a59783",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-08T16:00:02Z",
+      "side": 0,
+      "message": "From similar logic in OffscreenTab::DidShowFullscreenWidget, I believe that this should be:\n\n  if (contents_-\u003eIsBeingCaptured() \u0026\u0026 !contents-\u003eGetPreferredSize().IsEmpty())\n    ResizeWebContents(contents, gfx::Rect(contents-\u003eGetPreferredSize()));\n\nCL that introduced this code: https://codereview.chromium.org/1150613003/\n\nmiu@: Can you confirm?",
+      "parentUuid": "5796fd3a_fb08d814",
+      "revId": "79681532f16dc8a17b7dd12ba50d8d8180c82e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
