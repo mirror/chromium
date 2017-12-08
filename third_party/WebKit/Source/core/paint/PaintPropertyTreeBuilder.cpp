@@ -257,9 +257,7 @@ class FragmentPaintPropertyTreeBuilder {
         full_context_(full_context),
         context_(context),
         fragment_data_(fragment_data),
-        properties_(fragment_data.GetRarePaintData()
-                        ? fragment_data.GetRarePaintData()->PaintProperties()
-                        : nullptr) {}
+        properties_(fragment_data.PaintProperties()) {}
 
   ALWAYS_INLINE void UpdateForSelf();
   ALWAYS_INLINE void UpdateForChildren();
@@ -918,23 +916,17 @@ void FragmentPaintPropertyTreeBuilder::UpdateLocalBorderBoxContext() {
       !full_context_.force_subtree_update)
     return;
 
-  auto* rare_paint_data = fragment_data_.GetRarePaintData();
-
   if (!object_.HasLayer() && !NeedsPaintOffsetTranslation(object_)) {
-    if (rare_paint_data)
-      rare_paint_data->ClearLocalBorderBoxProperties();
+    fragment_data_.ClearLocalBorderBoxProperties();
   } else {
-    DCHECK(rare_paint_data);
     const ClipPaintPropertyNode* clip = context_.current.clip;
-    if (rare_paint_data->PaintProperties() &&
-        rare_paint_data->PaintProperties()->FragmentClip()) {
-      clip = rare_paint_data->PaintProperties()->FragmentClip();
-    }
+    if (properties_ && properties_->FragmentClip())
+      clip = properties_->FragmentClip();
 
     PropertyTreeState local_border_box = PropertyTreeState(
         context_.current.transform, clip, context_.current_effect);
 
-    rare_paint_data->SetLocalBorderBoxProperties(local_border_box);
+    fragment_data_.SetLocalBorderBoxProperties(local_border_box);
   }
 }
 
@@ -1316,7 +1308,7 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         BoundingBoxInPaginationContainer(object_, *enclosing_pagination_layer)
             .Location();
 
-    paint_offset.MoveBy(fragment_data_.GetRarePaintData()->PaginationOffset());
+    paint_offset.MoveBy(fragment_data_.PaginationOffset());
     paint_offset.MoveBy(
         VisualOffsetFromPaintOffsetRoot(context_, enclosing_pagination_layer));
 
@@ -1566,7 +1558,7 @@ void ObjectPaintPropertyTreeBuilder::InitSingleFragmentFromParent(
       object_.GetMutableForPainting().FirstFragment();
   first_fragment.ClearNextFragment();
   if (needs_paint_properties)
-    first_fragment.EnsureRarePaintData().EnsurePaintProperties();
+    first_fragment.EnsurePaintProperties();
   if (context_.fragments.IsEmpty()) {
     context_.fragments.push_back(PaintPropertyTreeBuilderFragmentContext());
   } else {
@@ -1593,7 +1585,7 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
   if (!needs_paint_properties && !needs_fragments && !object_.HasLayer()) {
     if (had_paint_properties) {
       context_.force_subtree_update = true;
-      object_.FirstFragment().GetRarePaintData()->ClearPaintProperties();
+      object_.GetMutableForPainting().FirstFragment().ClearPaintProperties();
     }
     InitSingleFragmentFromParent(needs_paint_properties);
   } else {
@@ -1628,11 +1620,8 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
           current_fragment_data = &current_fragment_data->EnsureNextFragment();
         }
 
-        RarePaintData& rare_paint_data =
-            current_fragment_data->EnsureRarePaintData();
-
         if (needs_paint_properties)
-          rare_paint_data.EnsurePaintProperties();
+          current_fragment_data->EnsurePaintProperties();
 
         // 1. Compute clip in flow thread space of the containing flow thread.
         LayoutRect fragment_clip(iterator.ClipRectInFlowThread());
@@ -1664,7 +1653,7 @@ void ObjectPaintPropertyTreeBuilder::UpdateFragments() {
         // 5. Save off PaginationOffset (which allows us to adjust
         // logical paint offsets into the space of the current fragment later.
 
-        current_fragment_data->GetRarePaintData()->SetPaginationOffset(
+        current_fragment_data->SetPaginationOffset(
             ToLayoutPoint(iterator.PaginationOffset()));
       }
       if (current_fragment_data) {
