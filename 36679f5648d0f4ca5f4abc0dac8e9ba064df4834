@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ea71c7_bd82a98f",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-08T22:17:43Z",
+      "side": 1,
+      "message": "We can still check the count here. If all three counts are 0, it means there is no IPC during that 1 min, then we can skip reporting. Or do we care how often there is no IPC in a minute?",
+      "revId": "36679f5648d0f4ca5f4abc0dac8e9ba064df4834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11395e4d_f8756ad4",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-08T22:17:43Z",
+      "side": 1,
+      "message": "Why are the counts 1?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "36679f5648d0f4ca5f4abc0dac8e9ba064df4834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
